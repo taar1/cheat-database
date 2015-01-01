@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="C:\Users\Dominik\Development\Workspaces\AndroidStudio\Cheat-Database\app\build\intermediates\exploded-aar\com.android.support\support-v4\21.0.2\classes.jar"
+        jumboMode="false"
+        revision="21.1.1"
+        sha1="d1bf02de1c56d942e7a9d093b8610ba1ef4128e3">
+        <dex dex="C:\Users\Dominik\Development\Workspaces\AndroidStudio\Cheat-Database\app\build\intermediates\pre-dexed\debug\classes-7e706761fb77d8df61ed51f03ada226e945c92b2.jar" />
+    </item>
+    <item
+        jar="C:\Users\Dominik\Development\Workspaces\AndroidStudio\Cheat-Database\app\build\intermediates\exploded-aar\Cheat-Database\VPILibrary\unspecified\classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="c0356b28f54c25f823e87fb8d77024a952bf20be">
+        <dex dex="C:\Users\Dominik\Development\Workspaces\AndroidStudio\Cheat-Database\app\build\intermediates\pre-dexed\debug\classes-34a0a216cb9a6ddf152e1ee532cc0482557d5852.jar" />
+    </item>
+    <item
+        jar="C:\Users\Dominik\Development\ADT_April2014\sdk\extras\android\m2repository\com\android\support\support-annotations\21.0.2\support-annotations-21.0.2.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="99373741f99a0556ee293c41e8faa1ca3ae8a4e6">
+        <dex dex="C:\Users\Dominik\Development\Workspaces\AndroidStudio\Cheat-Database\app\build\intermediates\pre-dexed\debug\support-annotations-21.0.2-38e8e32045da58d282b604372d06448f78c10e00.jar" />
+    </item>
+    <item
+        jar="C:\Users\Dominik\Development\ADT_April2014\sdk\extras\android\m2repository\com\android\support\support-annotations\21.0.2\support-annotations-21.0.2.jar"
+        jumboMode="false"
+        revision="21.1.1"
+        sha1="99373741f99a0556ee293c41e8faa1ca3ae8a4e6">
+        <dex dex="C:\Users\Dominik\Development\Workspaces\AndroidStudio\Cheat-Database\app\build\intermediates\pre-dexed\debug\support-annotations-21.0.2-38e8e32045da58d282b604372d06448f78c10e00.jar" />
+    </item>
+    <item
+        jar="C:\Users\Dominik\.gradle\caches\modules-2\files-2.1\com.google.code.gson\gson\2.3\5fc52c41ef0239d1093a1eb7c3697036183677ce\gson-2.3.jar"
+        jumboMode="false"
+        revision="21.1.1"
+        sha1="5fc52c41ef0239d1093a1eb7c3697036183677ce">
+        <dex dex="C:\Users\Dominik\Development\Workspaces\AndroidStudio\Cheat-Database\app\build\intermediates\pre-dexed\debug\gson-2.3-d388785d51c5c5b27bcb82aba8daf387c99f58cd.jar" />
+    </item>
+    <item
+        jar="C:\Users\Dominik\Development\Workspaces\AndroidStudio\Cheat-Database\app\build\intermediates\exploded-aar\com.mopub\mopub-v3.3.0\unspecified\classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="70f674fd02ad798d129257f90ccab2d3ad06b1e7">
+        <dex dex="C:\Users\Dominik\Development\Workspaces\AndroidStudio\Cheat-Database\app\build\intermediates\pre-dexed\debug\classes-bc700f6444e07384fda53ee087ac1c5a43b3b2ee.jar" />
+    </item>
+    <item
+        jar="C:\Users\Dominik\Development\Workspaces\AndroidStudio\Cheat-Database\app\libs\libGoogleAnalyticsServices.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="db1e65d9e3ee616f871cb23120fbea8f18ad3e4c">
+        <dex dex="C:\Users\Dominik\Development\Workspaces\AndroidStudio\Cheat-Database\app\build\intermediates\pre-dexed\debug\libGoogleAnalyticsServices-47c7818c1d3569d83e3356934e0662aa002e5272.jar" />
+    </item>
+    <item
+        jar="C:\Users\Dominik\Development\Workspaces\AndroidStudio\Cheat-Database\app\build\intermediates\exploded-aar\com.google.android.gms\play-services\6.5.87\classes.jar"
+        jumboMode="false"
+        revision="21.1.1"
+        sha1="dd9247ea0fabe8ee479638c4b4a23e93752be256">
+        <dex dex="C:\Users\Dominik\Development\Workspaces\AndroidStudio\Cheat-Database\app\build\intermediates\pre-dexed\debug\classes-0d5471853406ab22fc95a23527fe62bd4e534566.jar" />
+    </item>
+    <item
+        jar="C:\Users\Dominik\Development\Workspaces\AndroidStudio\Cheat-Database\app\build\intermediates\exploded-aar\com.google.android.gms\play-services\6.5.87\classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="dd9247ea0fabe8ee479638c4b4a23e93752be256">
+        <dex dex="C:\Users\Dominik\Development\Workspaces\AndroidStudio\Cheat-Database\app\build\intermediates\pre-dexed\debug\classes-0d5471853406ab22fc95a23527fe62bd4e534566.jar" />
+    </item>
+    <item
+        jar="C:\Users\Dominik\Development\Workspaces\AndroidStudio\Cheat-Database\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\21.0.2\classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="7ae2d38807a43b2f2185ff4089a92c790b579e54">
+        <dex dex="C:\Users\Dominik\Development\Workspaces\AndroidStudio\Cheat-Database\app\build\intermediates\pre-dexed\debug\classes-cb9f0d04ee3ecbc773e0de3f9a62532a34b2bacf.jar" />
+    </item>
+    <item
+        jar="C:\Users\Dominik\.gradle\caches\modules-2\files-2.1\com.squareup.picasso\picasso\2.3.2\d6b7f0093cec6c9faf65dbfd6a6a345d0ed25e27\picasso-2.3.2.jar"
+        jumboMode="false"
+        revision="21.1.1"
+        sha1="d6b7f0093cec6c9faf65dbfd6a6a345d0ed25e27">
+        <dex dex="C:\Users\Dominik\Development\Workspaces\AndroidStudio\Cheat-Database\app\build\intermediates\pre-dexed\debug\picasso-2.3.2-7f003be69a62f67624e31b926edce0c3b3e26e6f.jar" />
+    </item>
+    <item
+        jar="C:\Users\Dominik\Development\Workspaces\AndroidStudio\Cheat-Database\app\libs\appbrain-applift-sdk-v10.2.jar"
+        jumboMode="false"
+        revision="21.1.1"
+        sha1="38d2117e6c9656d88e4ea9c305cafd00d674665e">
+        <dex dex="C:\Users\Dominik\Development\Workspaces\AndroidStudio\Cheat-Database\app\build\intermediates\pre-dexed\debug\appbrain-applift-sdk-v10.2-93d45271663537a70b465de606e4b296e1710bfe.jar" />
+    </item>
+    <item
+        jar="C:\Users\Dominik\Development\Workspaces\AndroidStudio\Cheat-Database\app\build\intermediates\exploded-aar\com.android.support\support-v4\21.0.2\libs\internal_impl-21.0.2.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="962e8b12569c56dbdcf8367eb4eac8bb129cd18f">
+        <dex dex="C:\Users\Dominik\Development\Workspaces\AndroidStudio\Cheat-Database\app\build\intermediates\pre-dexed\debug\internal_impl-21.0.2-06cb8b80257752f44c9fc422912e11539d9e349a.jar" />
+    </item>
+    <item
+        jar="C:\Users\Dominik\Development\Workspaces\AndroidStudio\Cheat-Database\app\libs\MMSDK.jar"
+        jumboMode="false"
+        revision="21.1.1"
+        sha1="85796fefd8fac06dd032ac5db3f387017c0b5e98">
+        <dex dex="C:\Users\Dominik\Development\Workspaces\AndroidStudio\Cheat-Database\app\build\intermediates\pre-dexed\debug\MMSDK-6a4a74ea39750778610e6508aa565e34115167bb.jar" />
+    </item>
+    <item
+        jar="C:\Users\Dominik\.gradle\caches\modules-2\files-2.1\com.google.code.gson\gson\2.3\5fc52c41ef0239d1093a1eb7c3697036183677ce\gson-2.3.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="5fc52c41ef0239d1093a1eb7c3697036183677ce">
+        <dex dex="C:\Users\Dominik\Development\Workspaces\AndroidStudio\Cheat-Database\app\build\intermediates\pre-dexed\debug\gson-2.3-d388785d51c5c5b27bcb82aba8daf387c99f58cd.jar" />
+    </item>
+    <item
+        jar="C:\Users\Dominik\Development\Workspaces\AndroidStudio\Cheat-Database\app\libs\amazon-ads-5.4.192.jar"
+        jumboMode="false"
+        revision="21.1.1"
+        sha1="3736e3b6947d35fc1b91f14c2f6446302c1ce7b6">
+        <dex dex="C:\Users\Dominik\Development\Workspaces\AndroidStudio\Cheat-Database\app\build\intermediates\pre-dexed\debug\amazon-ads-5.4.192-2d622abb0ac86a8794ea2af0b9a9d793906d18e0.jar" />
+    </item>
+    <item
+        jar="C:\Users\Dominik\.gradle\caches\modules-2\files-2.1\com.squareup.picasso\picasso\2.3.2\d6b7f0093cec6c9faf65dbfd6a6a345d0ed25e27\picasso-2.3.2.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="d6b7f0093cec6c9faf65dbfd6a6a345d0ed25e27">
+        <dex dex="C:\Users\Dominik\Development\Workspaces\AndroidStudio\Cheat-Database\app\build\intermediates\pre-dexed\debug\picasso-2.3.2-7f003be69a62f67624e31b926edce0c3b3e26e6f.jar" />
+    </item>
+    <item
+        jar="C:\Users\Dominik\Development\Workspaces\AndroidStudio\Cheat-Database\app\libs\amazon-ads-5.4.192.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="3736e3b6947d35fc1b91f14c2f6446302c1ce7b6">
+        <dex dex="C:\Users\Dominik\Development\Workspaces\AndroidStudio\Cheat-Database\app\build\intermediates\pre-dexed\debug\amazon-ads-5.4.192-2d622abb0ac86a8794ea2af0b9a9d793906d18e0.jar" />
+    </item>
+    <item
+        jar="C:\Users\Dominik\Development\Workspaces\AndroidStudio\Cheat-Database\app\build\intermediates\exploded-aar\com.mopub\mopub-v3.3.0\unspecified\classes.jar"
+        jumboMode="false"
+        revision="21.1.1"
+        sha1="16ebe6c1798b5eaede3f99d54a0380da42d78c1c">
+        <dex dex="C:\Users\Dominik\Development\Workspaces\AndroidStudio\Cheat-Database\app\build\intermediates\pre-dexed\debug\classes-bc700f6444e07384fda53ee087ac1c5a43b3b2ee.jar" />
+    </item>
+    <item
+        jar="C:\Users\Dominik\Development\Workspaces\AndroidStudio\Cheat-Database\app\libs\appbrain-applift-sdk-v10.2.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="38d2117e6c9656d88e4ea9c305cafd00d674665e">
+        <dex dex="C:\Users\Dominik\Development\Workspaces\AndroidStudio\Cheat-Database\app\build\intermediates\pre-dexed\debug\appbrain-applift-sdk-v10.2-93d45271663537a70b465de606e4b296e1710bfe.jar" />
+    </item>
+    <item
+        jar="C:\Users\Dominik\Development\Workspaces\AndroidStudio\Cheat-Database\app\libs\libGoogleAnalyticsServices.jar"
+        jumboMode="false"
+        revision="21.1.1"
+        sha1="db1e65d9e3ee616f871cb23120fbea8f18ad3e4c">
+        <dex dex="C:\Users\Dominik\Development\Workspaces\AndroidStudio\Cheat-Database\app\build\intermediates\pre-dexed\debug\libGoogleAnalyticsServices-47c7818c1d3569d83e3356934e0662aa002e5272.jar" />
+    </item>
+    <item
+        jar="C:\Users\Dominik\Development\Workspaces\AndroidStudio\Cheat-Database\app\libs\InMobi-4.5.1.jar"
+        jumboMode="false"
+        revision="21.1.1"
+        sha1="e1ae950efd342a3fef63e0defb7c8daf290e2c34">
+        <dex dex="C:\Users\Dominik\Development\Workspaces\AndroidStudio\Cheat-Database\app\build\intermediates\pre-dexed\debug\InMobi-4.5.1-43347683df70d201b96141ec95ee469dcf5c4842.jar" />
+    </item>
+    <item
+        jar="C:\Users\Dominik\Development\Workspaces\AndroidStudio\Cheat-Database\app\libs\InMobi-4.5.1.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="e1ae950efd342a3fef63e0defb7c8daf290e2c34">
+        <dex dex="C:\Users\Dominik\Development\Workspaces\AndroidStudio\Cheat-Database\app\build\intermediates\pre-dexed\debug\InMobi-4.5.1-43347683df70d201b96141ec95ee469dcf5c4842.jar" />
+    </item>
+    <item
+        jar="C:\Users\Dominik\Development\Workspaces\AndroidStudio\Cheat-Database\app\build\intermediates\exploded-aar\com.android.support\support-v4\21.0.2\libs\internal_impl-21.0.2.jar"
+        jumboMode="false"
+        revision="21.1.1"
+        sha1="962e8b12569c56dbdcf8367eb4eac8bb129cd18f">
+        <dex dex="C:\Users\Dominik\Development\Workspaces\AndroidStudio\Cheat-Database\app\build\intermediates\pre-dexed\debug\internal_impl-21.0.2-06cb8b80257752f44c9fc422912e11539d9e349a.jar" />
+    </item>
+    <item
+        jar="C:\Users\Dominik\Development\Workspaces\AndroidStudio\Cheat-Database\app\libs\MMSDK.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="0caf3cd39dfd94dc3095e335d0b1ec9b7069b54e">
+        <dex dex="C:\Users\Dominik\Development\Workspaces\AndroidStudio\Cheat-Database\app\build\intermediates\pre-dexed\debug\MMSDK-6a4a74ea39750778610e6508aa565e34115167bb.jar" />
+    </item>
+    <item
+        jar="C:\Users\Dominik\Development\Workspaces\AndroidStudio\Cheat-Database\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\21.0.2\classes.jar"
+        jumboMode="false"
+        revision="21.1.1"
+        sha1="7ae2d38807a43b2f2185ff4089a92c790b579e54">
+        <dex dex="C:\Users\Dominik\Development\Workspaces\AndroidStudio\Cheat-Database\app\build\intermediates\pre-dexed\debug\classes-cb9f0d04ee3ecbc773e0de3f9a62532a34b2bacf.jar" />
+    </item>
+    <item
+        jar="C:\Users\Dominik\Development\Workspaces\AndroidStudio\Cheat-Database\app\build\intermediates\exploded-aar\com.android.support\support-v4\21.0.2\classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="d1bf02de1c56d942e7a9d093b8610ba1ef4128e3">
+        <dex dex="C:\Users\Dominik\Development\Workspaces\AndroidStudio\Cheat-Database\app\build\intermediates\pre-dexed\debug\classes-7e706761fb77d8df61ed51f03ada226e945c92b2.jar" />
+    </item>
+
+</items>
