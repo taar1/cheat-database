@@ -1,0 +1,2 @@
+include ':app', ':VPILibrary', ':NiceButtons2'
+include ':libraries:mopub-v3.3.0'
