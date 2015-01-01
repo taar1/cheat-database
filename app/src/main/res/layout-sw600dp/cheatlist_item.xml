@@ -1,0 +1,77 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/outer"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:baselineAligned="false"
+    android:fastScrollEnabled="true"
+    android:minHeight="60dp"
+    android:orientation="vertical"
+    android:padding="5dp" >
+
+    <TextView
+        android:id="@+id/cheat_title"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center_vertical"
+        android:minHeight="20dp"
+        android:paddingBottom="2dp"
+        android:singleLine="true"
+        android:text="@string/placeholder"
+        android:textAppearance="@style/ListItemTablet" />
+
+    <RatingBar
+        android:id="@+id/small_ratingbar"
+        style="?android:attr/ratingBarStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="1"
+        android:paddingBottom="10dp" />
+
+    <LinearLayout
+        android:id="@+id/inner_right"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_gravity="start"
+        android:layout_weight="10"
+        android:gravity="center|start"
+        android:minHeight="40dp"
+        android:orientation="horizontal"
+        android:showDividers="middle" >
+
+        <ImageView
+            android:id="@+id/screenshots"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:layout_marginEnd="6dp"
+            android:layout_marginRight="6dp"
+            android:gravity="start"
+            android:src="@drawable/flag_img" >
+        </ImageView>
+
+        <ImageView
+            android:id="@+id/flag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:layout_marginEnd="6dp"
+            android:layout_marginRight="6dp"
+            android:gravity="start"
+            android:src="@drawable/flag_german" >
+        </ImageView>
+
+        <ImageView
+            android:id="@+id/newaddition"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:layout_marginEnd="6dp"
+            android:layout_marginRight="6dp"
+            android:gravity="start"
+            android:src="@drawable/flag_new" >
+        </ImageView>
+    </LinearLayout>
+
+</LinearLayout>

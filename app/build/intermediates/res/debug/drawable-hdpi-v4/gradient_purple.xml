@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle" >
+
+    <gradient
+        android:angle="270"
+        android:endColor="#220022"
+        android:startColor="#420058" />
+
+</shape><!-- From: file:/C:/Users/Dominik/Development/Workspaces/AndroidStudio/Cheat-Database/app/src/main/res/drawable-hdpi/gradient_purple.xml -->
