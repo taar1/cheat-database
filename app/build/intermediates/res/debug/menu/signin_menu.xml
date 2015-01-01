@@ -1,0 +1,10 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/action_login"
+        android:icon="@drawable/ic_action_login"
+        android:orderInCategory="1000"
+        android:showAsAction="never"
+        android:title="@string/login"/>
+
+</menu><!-- From: file:/C:/Users/Dominik/Development/Workspaces/AndroidStudio/Cheat-Database/app/src/main/res/menu/signin_menu.xml -->

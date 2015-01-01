@@ -1,0 +1,98 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/standard_background"
+    android:baselineAligned="false"
+    android:orientation="vertical"
+    tools:context=".CheatDetailTabletFragment" >
+
+    <include
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        layout="@layout/incl_cheat_detail_fragment_action_bar" />
+
+    <TextView
+        android:id="@+id/text_cheat_title"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:textAppearance="@style/CheatTitleTablet"
+        android:textIsSelectable="false" />
+
+    <LinearLayout
+        android:id="@+id/llMain"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="10"
+        android:orientation="vertical"
+        android:paddingBottom="6dp"
+        android:paddingEnd="6dp"
+        android:paddingLeft="6dp"
+        android:paddingRight="6dp"
+        android:paddingStart="6dp" >
+
+        <ScrollView
+            android:id="@+id/sv"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            android:scrollbars="vertical" >
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/text_cheat_before_table"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@style/NormalText"
+                    android:textIsSelectable="true" />
+
+                <TableLayout
+                    android:id="@+id/tblCheatListMain"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="top"
+                    android:paddingTop="10dp" />
+
+                <TextView
+                    android:id="@+id/text_cheat_text"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:maxWidth="250dp"
+                    android:padding="5dp"
+                    android:textAppearance="@style/NormalText"
+                    android:textIsSelectable="true" />
+
+                <ProgressBar
+                    android:id="@+id/progressBar1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="top"
+                    android:visibility="invisible" />
+
+                <Gallery
+                    android:id="@+id/gallery"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="bottom"
+                    android:paddingTop="30dp" />
+
+                <TextView
+                    android:id="@+id/gallery_info"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:paddingTop="4dp"
+                    android:text="@string/slide_gallery"
+                    android:textAppearance="@style/NormalText" />
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
+
+</LinearLayout><!-- From: file:/C:/Users/Dominik/Development/Workspaces/AndroidStudio/Cheat-Database/app/src/main/res/layout/fragment_cheat_detail.xml -->

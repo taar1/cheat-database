@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- UNIQUE NEWS -->
+    <string name="news_welcome">本版本中的更新</string>
+    <string name="news_title">版本</string>
+
+    <!-- VARIOUS -->
+    <string name="app_name">游戏秘籍数据库2</string>
+    <string name="app_label">游戏秘籍数据库2</string>
+    <string name="ok">确定</string>
+    <string name="showGameList">游戏列表</string>
+    <string name="showCheatList">秘籍列表</string>
+    <string name="search_results">搜索查询结果</string>
+    <string name="no_cheats_title">没有可用的秘籍</string>
+    <string name="no_cheats_text">在我们的数据库中，对于此游戏暂时没有可用的秘籍。请稍后再查找。</string>
+    <string name="please_wait">请稍等</string>
+    <string name="retrieving_data">查找数据</string>
+    <string name="cheat">秘籍</string>
+    <string name="cheats">秘籍</string>
+    <string name="game">游戏</string>
+    <string name="games">游戏</string>
+    <string name="no_internet">无可用的网络连接。请稍后重试。</string>
+    <string name="search_hint">寻找一个游戏</string>
+    <string name="splash_screen">读取秘笈列表&#8230;</string>
+    <string name="members_cheats_title">%s的秘笈</string>
+    <string name="placeholder">Placeholder</string>
+
+    <!-- ADS TEXT -->
+    <string name="lead_bolt_text">Our App recommendations ></string>
+
+    <!-- MAIN SCREEN -->
+    <string name="enterGame">输入游戏名:</string>
+    <string name="enter_game_hint">遊戲名</string>
+    <string name="game_platform">系统</string>
+    <string name="button_searchCheats">搜索秘籍</string>
+    <string name="cancel">取消</string>
+    <string name="clearForm">清除</string>
+    <string name="error_nothing_found_title">根据您的关键字什么都没找到。</string>
+    <string name="error_nothing_found_text">对于您的搜索未找到对应的游戏。请缩减关键词再搜索一次。</string>
+    <string name="button_closeNothingFoundPopup">精简查询</string>
+    <string name="cheat_counter_headline">包含超过%s个秘籍！</string>
+    <string name="total_cheats_unknown">成百上千的秘籍！</string>
+    <string name="new_cheats_title">这些游戏的新秘籍:</string>
+
+    <!-- MAIN MENU -->
+    <string name="favorites">个人收藏</string>
+    <string name="goto_main_screen">主界面</string>
+    <string name="goto_cheat">转到秘籍</string>
+    <string name="goto_cheat_list">转到秘籍视图</string>
+    <string name="menu_fulltext_search_short">全文搜索</string>
+    <string name="menu_fulltext_search_long">全文搜索</string>
+    <string name="menu_server_status">服务器状态</string>
+    <string name="menu_more_apps">More Apps from us</string>
+    <string name="menu_pocketchange">Pocket Change Balance</string>
+
+    <!-- REPORT CHEAT -->
+    <string name="report_cheat_title">上报秘籍</string>
+    <string name="thanks_for_reporting">谢谢。我们会检查这个问题。</string>
+
+    <!-- RATE CHEAT -->
+    <string name="rate_cheat_plain">Rate</string>
+    <string name="rate_cheat">评级秘籍</string>
+    <string name="rate_cheat_here">为这个秘籍在这评级</string>
+    <string name="rating_your">Your cheat rating:</string>
+    <string name="rating_inserted">谢谢</string>
+    <string name="rating_updated">谢谢.</string>
+    <string name="rating_processing">你正在评分&#8230;</string>
+
+    <!-- REGISTER MEMBER -->
+    <string name="register_title">在这注册</string>
+    <string name="username">用户名</string>
+    <string name="password">密码</string>
+    <string name="email">E-Mail</string>
+    <string name="register_thanks">感谢您的注册！</string>
+    <string name="register">注册</string>
+    <string name="register_instead">注册</string>
+    <string name="register_login">注册 / 登陆</string>
+
+    <!-- LOGIN MEMBER -->
+    <string name="login_title">在这登陆</string>
+    <string name="login_instead">登陆</string>
+    <string name="username_email">用户名或者E-Mail地址</string>
+    <string name="login_failed">登陆失败。用户名与密码不匹配。访问www.cheat-database.com重置您的密码。</string>
+    <string name="member_banned">您的账户已失效。</string>
+    <string name="login_ok">登陆成功。</string>
+    <string name="logout">登出</string>
+    <string name="logout_ok">登出成功。</string>
+    <string name="login_forgot">忘记登录</string>
+    <string name="login_send_password">通过电子邮件发送登录数据</string>
+    <string name="login_sent_ok">登录数据会发送给你邮件</string>
+
+    <!-- ERROR MESSAGES -->
+    <string name="err">错误</string>
+    <string name="err_username_length">用户名至少为6个字符。</string>
+    <string name="err_username_used">用户名已被他人注册使用。</string>
+    <string name="err_email_invalid">Email地址无效。</string>
+    <string name="err_email_used">此Email已被他人注册使用。</string>
+    <string name="err_password_length">密码至少为6个字符。</string>
+    <string name="err_other_problem">创建用户账户时出错。请稍后重试。</string>
+    <string name="err_email_user_not_found">没有发现用户数据.</string>
+    <string name="err_data_not_accessible">请重试.</string>
+    <string name="err_no_member_data">错误.</string>
+    <string name="err_somethings_wrong">Something just went wrong. Please try again.</string>
+
+    <!-- FAVORITES -->
+    <string name="my_favorites">个人收藏</string>
+    <string name="add_favorite">添加到我的个人收藏</string>
+    <string name="add_favorite_ok">秘籍成功添加到个人收藏。</string>
+    <string name="remove_favorite">从个人收藏中移除</string>
+    <string name="remove_favorite_ok">秘籍%s从个人收藏中成功移除。</string>
+    <string name="remove_favorite_nok">从个人收藏中移除秘籍出错。</string>
+    <string name="remove_favorites_ok">游戏成功移入你的最爱文件夹中华.</string>
+    <string name="remove_favorites_nok">错误数据s.</string>
+    <string name="goto_favorites">转到个人收藏</string>
+    <string name="favorite_deleted">秘籍将会从个人收藏中移除。</string>
+    <string name="favorite_error">此秘籍已经存在于个人收藏中了。</string>
+    <string name="favorite_empty">您尚没有任何收藏。当查看这个视图之前您需要添加一些密接到个人收藏中。</string>
+    <string name="favorite_no_cheats">个人收藏中暂时还没有这个游戏的秘籍。</string>
+    <string name="favorites_welcome_text">在这个区域将会显示您收藏的秘籍。如果您想添加一个秘籍到收藏中，只需要在秘籍视图界面按下Menu按钮，然后在菜单中选择\"添加到我的个人收藏\"。如果您想移除一个秘籍，则在刚刚的菜单中选择\"从个人收藏中移除\" 。</string>
+    <string name="add_favorites_ok">成功使用秘笈.</string>
+    <string name="add_favorites_error">一些或所有欺骗已经在你的最爱。这些新的已经被加入到游戏</string>
+    <string name="add_one_favorite">把秘笈加入最爱</string>
+    <string name="add_all_favorites">把所有秘笈加入最爱</string>
+    <string name="favorite_adding">加入最爱中&#8230;</string>
+
+    <!-- FORUM -->
+    <string name="forum_goto">转到专题讨论区</string>
+    <string name="forum_goto_online">转到专题讨论区(在线)</string>
+    <string name="forum_button_submit">发送</string>
+    <string name="forum_submit_failed">您的提交暂时无法完成。请稍后重试。</string>
+    <string name="forum_submit_ok">提交成功。</string>
+    <string name="forum_yet_empty">此秘籍的专题讨论区暂时为空。成为第一个在这里写东西的。小贴士:收藏这个秘籍可以让您很容易的回到这个专题讨论区。</string>
+
+    <!-- SUBMIT CHEAT -->
+    <string name="submit_cheat_short">提交一个秘籍</string>
+    <string name="submit_cheat_long">为这游戏提交一个秘籍</string>
+    <string name="submit_cheat_your_title">秘籍标题</string>
+    <string name="submit_cheat_your_body">您的秘籍</string>
+    <string name="submit_cheat_review">提交秘籍以供审核</string>
+    <string name="cheat_submit_ok">感谢您的提交！在把它添加到数据库之前我们会审核这个秘籍并通知您。顺便说一句，您还可以访问我们的网站www.cheat-database.com来编辑或删除您提交的秘籍。</string>
+    <string name="cheat_submit_nok">秘籍提交过程中出现了一些问题。请稍后重试。</string>
+    <string name="submit_cheat_instructions_title">关于秘籍提交的信息</string>
+    <string name="submit_cheat_instructions_text">所有您提交的秘籍都保存在您ACheat-Database的账户上。一旦我们审核通过了这个秘籍，我们将发送Email通知您。\n\n如果您想对您秘籍做出更改，您可以使用电脑登陆访问www.cheat-database.com。然后您可以为您的秘籍添加截图，编辑文字或者删除您的秘籍。</string>
+    <string name="submit_cheat_guidelines">Thanks for submitting a cheat to us, we really appreciate your help! However, before you write a cheat, please read our short writing guidelines which makes your submitted cheats easier to understand for other readers.\n\n
+- Use capital letters for character or object names. Always use a capital letter after a full stop.\n\n
+- Try not to make long sentences. Short sentences are easier to understand. Try not to use \"then\" to connect sentences either.\n\n
+- Don\'t use \"I did\" or \"it helped me\" etc. in sentences. Use the third person for instructions.</string>
+    <string name="help">帮助</string>
+    <string name="fill_everything">请填写所有的领域.</string>
+    <string name="submit_cheat_consent_title">同意</string>
+    <string name="submit_cheat_consent_text">I hereby agree that my submission may be grammatically altered and corrected in order to meet the minimum quality levels required.</string>
+
+    <!-- CRASHREPORT -->
+    <string name="crashreport_submit">提交错误报告</string>
+    <string name="crashreport_your_device">您的手机型号</string>
+    <string name="crashreport_when_crashed">这个错误是什么时候发生的？</string>
+    <string name="crashreport_missing_devicemodel">请输入您的手机型号。</string>
+    <string name="crashreport_missing_email">请输入您的Email地址以便当我们需要更多关于这个问题的信息时联系您。</string>
+    <string name="crashreport_missing_crashreport">请给我们提供详细的描述，在这个软件出错前您点击了哪儿。</string>
+    <string name="crashreport_thanks">感谢您的错误报告！如果您需要更多的关于这个错误的修复信息，我们会通过Email联系您。</string>
+
+    <!-- FULL-TEXT SEARCH -->
+    <string name="fulltext_search_title">全文搜索</string>
+    <string name="fulltext_search_titles_also">也在秘籍标题中搜索</string>
+    <string name="fulltext_search_systems">选择系统</string>
+    <string name="fulltext_search_listed_cheats">在已列出的秘籍中搜索</string>
+    <string name="fulltext_search_all_cheats">在所有秘籍中搜索</string>
+    <string name="fulltext_search_results">全文搜索结果</string>
+    <string name="fulltext_search_cheats">搜索秘籍</string>
+    <string name="fulltext_search_keywords">关键字</string>
+    <string name="fulltext_search_error_nosystem_selected">请选择至少一个系统</string>
+
+    <!-- CONTEXT MENU -->
+    <string name="context_menu_title">右键菜单</string>
+    <string name="context_menu_copied">欺骗复制到剪贴板.</string>
+
+    <!-- NOTIFICATIONS -->
+    <string name="notify_rotate_device">给你的设备评分</string>
+    <string name="fullscreen_mode_exit">双击退出全屏</string>
+
+    <!-- CHEAT META -->
+    <string name="meta_info">Meta Info</string>
+    <string name="meta_unknown">未知</string>
+    <string name="meta_submission_date">投稿日期</string>
+    <string name="meta_submitted_by">提交人 </string>
+    <string name="meta_submission_total">总提交由会员</string>
+    <string name="meta_views_lifetime">生存时间</string>
+    <string name="meta_views_today">查看日趋</string>
+    <string name="meta_show_all_cheats">显示所有秘笈</string>
+    <string name="meta_rating_average">平均分</string>
+    <string name="meta_return">返回聊天</string>
+    <string name="meta_average_rating1">%s 两成</string>
+    <string name="meta_average_rating2">基于 %s 投票</string>
+    <string name="meta_member_homepage">网站</string>
+
+    <!-- TOP MEMBERS -->
+    <string name="top_members_title">成员 Top 20</string>
+    <string name="top_members_visit_website">访问网站</string>
+    <string name="top_members_no_website">成员不访问网站</string>
+    <string name="top_members_cheats_count"># 条秘笈</string>
+
+    <!-- SHARE CHEAT -->
+    <string name="share_title">Share cheat</string>
+    <string name="share_error_no_client">There are no email clients installed.</string>
+    <string name="share_email_subject">I just found this cheat for %s</string>
+    <string name="share_email_body">I just found this cheat on Cheat-Database for Android. Click the link below to check it out:</string>
+    <string name="share_download_cheatdatabase">Download Cheat-Database for Android here:</string>
+
+</resources>

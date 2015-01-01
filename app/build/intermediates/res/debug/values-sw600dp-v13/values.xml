@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- From: file:/C:/Users/Dominik/Development/Workspaces/AndroidStudio/Cheat-Database/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.2/res/values-sw600dp/values.xml -->
+    <eat-comment/>
+    <dimen name="abc_action_bar_default_height_material">64dp</dimen>
+    <dimen name="abc_action_bar_default_padding_material">4dp</dimen>
+    <dimen name="abc_config_prefDialogWidth">580dp</dimen>
+    <dimen name="abc_text_size_subtitle_material_toolbar">16dp</dimen>
+    <dimen name="abc_text_size_title_material_toolbar">20dp</dimen>
+    <integer name="abc_max_action_buttons">5</integer>
+    <!-- From: file:/C:/Users/Dominik/Development/Workspaces/AndroidStudio/Cheat-Database/app/src/main/res/values-sw600dp/refs.xml -->
+    <eat-comment/>
+    <item name="activity_cheat_list" type="layout">@layout/activity_cheat_twopane</item>
+    <item name="activity_favorite_list" type="layout">@layout/activity_favorite_twopane</item>
+    <!-- From: file:/C:/Users/Dominik/Development/Workspaces/AndroidStudio/Cheat-Database/app/src/main/res/values-sw600dp/screen.xml -->
+    <eat-comment/>
+    <string name="screen_type">7-inch-tablet</string>
+</resources>

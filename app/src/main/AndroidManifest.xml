@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.cheatdatabase">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+
+
+    <application
+        android:allowBackup="true"
+        android:hardwareAccelerated="true"
+        android:icon="@drawable/app_icon_fox"
+        android:label="@string/app_name"
+        android:launchMode="singleTop"
+        android:logo="@drawable/logo_full_centered"
+        android:theme="@style/Theme.Navyblue">
+        <provider
+            android:name="com.cheatdatabase.search.SearchSuggestionProvider"
+            android:authorities="com.cheatdatabase.search.SearchSuggestionProvider" />
+
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
+        <activity
+            android:name="com.cheatdatabase.MainActivity"
+            android:label="@string/title_activity_main">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.app.default_searchable"
+                android:value="com.cheatdatabase.search.SearchResultsActivity" />
+        </activity>
+        <activity
+            android:name="com.cheatdatabase.search.SearchResultsActivity"
+            android:label="@string/title_activity_search_result"
+            android:logo="@drawable/app_icon_fox"
+            android:parentActivityName="com.cheatdatabase.MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/searchable" />
+            <meta-data
+                android:name="android.app.default_searchable"
+                android:value="com.cheatdatabase.search.SearchResultsActivity" />
+        </activity>
+        <activity
+            android:name="com.cheatdatabase.GamesBySystemActivity"
+            android:logo="@drawable/app_icon_fox"
+            android:parentActivityName="com.cheatdatabase.MainActivity"
+            android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.app.default_searchable"
+                android:value="com.cheatdatabase.search.SearchResultsActivity" />
+        </activity>
+        <activity android:name="com.cheatdatabase.helpers.Helper"></activity>
+        <activity
+            android:name="com.cheatdatabase.SubmitCheatActivity"
+            android:logo="@drawable/app_icon_fox"></activity>
+        <activity
+            android:name="com.cheatdatabase.CheatListActivity"
+            android:label="@string/title_cheat_list"
+            android:logo="@drawable/app_icon_fox"
+            android:parentActivityName="com.cheatdatabase.GamesBySystemActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.cheatdatabase.GamesBySystemActivity" />
+            <meta-data
+                android:name="android.app.default_searchable"
+                android:value="com.cheatdatabase.search.SearchResultsActivity" />
+        </activity>
+        <activity
+            android:name="com.cheatdatabase.LoginActivity"
+            android:label="@string/title_activity_login"
+            android:logo="@drawable/app_icon_fox"
+            android:windowSoftInputMode="adjustResize|stateVisible"></activity>
+        <activity
+            android:name="com.cheatdatabase.RecoverActivity"
+            android:label="@string/title_activity_recover"
+            android:logo="@drawable/app_icon_fox"
+            android:parentActivityName="com.cheatdatabase.LoginActivity"
+            android:windowSoftInputMode="adjustResize|stateVisible"></activity>
+        <activity
+            android:name="com.cheatdatabase.RegisterActivity"
+            android:label="@string/title_activity_register"
+            android:logo="@drawable/app_icon_fox"
+            android:parentActivityName="com.cheatdatabase.LoginActivity"
+            android:windowSoftInputMode="adjustResize|stateVisible"></activity>
+        <activity
+            android:name="com.cheatdatabase.CheatForumActivity"
+            android:logo="@drawable/app_icon_fox"
+            android:parentActivityName="com.cheatdatabase.handset.cheatview.CheatViewPageIndicator"
+            android:uiOptions="splitActionBarWhenNarrow"
+            android:windowSoftInputMode="adjustResize|stateHidden">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.cheatdatabase.handset.cheatview.CheatViewPageIndicator" />
+            <meta-data
+                android:name="android.app.default_searchable"
+                android:value="com.cheatdatabase.search.SearchResultsActivity" />
+        </activity>
+        <activity
+            android:name="com.cheatdatabase.MemberCheatListActivity"
+            android:logo="@drawable/app_icon_fox"
+            android:parentActivityName="com.cheatdatabase.MainActivity">
+            <meta-data
+                android:name="android.app.default_searchable"
+                android:value="com.cheatdatabase.search.SearchResultsActivity" />
+        </activity>
+        <activity
+            android:name="com.cheatdatabase.members.cheatview.MemberCheatViewPageIndicator"
+            android:logo="@drawable/app_icon_fox"
+            android:parentActivityName="com.cheatdatabase.MemberCheatListActivity"
+            android:uiOptions="splitActionBarWhenNarrow">
+            <meta-data
+                android:name="android.app.default_searchable"
+                android:value="com.cheatdatabase.search.SearchResultsActivity" />
+        </activity>
+        <activity
+            android:name="com.cheatdatabase.handset.cheatview.CheatViewPageIndicator"
+            android:label="@string/title_cheat_detail"
+            android:logo="@drawable/app_icon_fox"
+            android:parentActivityName="com.cheatdatabase.CheatListActivity"
+            android:uiOptions="splitActionBarWhenNarrow">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".CheatListActivity" />
+            <meta-data
+                android:name="android.app.default_searchable"
+                android:value="com.cheatdatabase.search.SearchResultsActivity" />
+        </activity>
+        <activity
+            android:name="com.cheatdatabase.favorites.FavoriteCheatListActivity"
+            android:label="@string/title_favorite_list"
+            android:logo="@drawable/app_icon_fox"
+            android:parentActivityName="com.cheatdatabase.MainActivity"
+            android:theme="@style/Theme.Navyblue">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.cheatdatabase.MainActivity" />
+            <meta-data
+                android:name="android.app.default_searchable"
+                android:value="com.cheatdatabase.search.SearchResultsActivity" />
+        </activity>
+        <activity
+            android:name="com.cheatdatabase.favorites.handset.cheatview.FavoritesCheatViewPageIndicator"
+            android:label="@string/title_cheat_detail"
+            android:logo="@drawable/app_icon_fox"
+            android:theme="@style/Theme.Navyblue"
+            android:uiOptions="splitActionBarWhenNarrow">
+            <meta-data
+                android:name="android.app.default_searchable"
+                android:value="com.cheatdatabase.search.SearchResultsActivity" />
+        </activity>
+
+        <!-- =========== -->
+        <!-- AD NETWORKS -->
+        <!-- =========== -->
+
+
+        <!-- MOPUB -->
+        <activity
+            android:name="com.mopub.mobileads.MoPubActivity"
+            android:configChanges="keyboardHidden|orientation" />
+        <activity
+            android:name="com.mopub.mobileads.MraidActivity"
+            android:configChanges="keyboardHidden|orientation" />
+        <activity
+            android:name="com.mopub.common.MoPubBrowser"
+            android:configChanges="keyboardHidden|orientation" />
+        <activity
+            android:name="com.mopub.mobileads.MraidVideoPlayerActivity"
+            android:configChanges="keyboardHidden|orientation" />
+        <activity
+            android:name="com.millennialmedia.android.MMActivity"
+            android:configChanges="keyboardHidden|orientation|keyboard"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
+        <!-- AppBrain SDK -->
+        <activity
+            android:name="com.appbrain.AppBrainActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation" />
+
+        <service android:name="com.appbrain.AppBrainService" />
+
+        <receiver
+            android:name="com.appbrain.ReferrerReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.android.vending.INSTALL_REFERRER" />
+            </intent-filter>
+        </receiver>
+
+        <!-- INMOBI -->
+        <activity
+            android:name="com.inmobi.androidsdk.IMBrowserActivity"
+            android:configChanges="keyboardHidden|orientation|keyboard|smallestScreenSize|screenSize"
+            android:hardwareAccelerated="true" />
+
+        <!-- AMAZON ADS -->
+        <activity
+            android:name="com.amazon.device.ads.AdActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize" />
+    </application>
+
+</manifest>
