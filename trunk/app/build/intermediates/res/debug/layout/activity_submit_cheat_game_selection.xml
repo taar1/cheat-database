@@ -1,0 +1,49 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:bootstrapbutton="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:gravity="top"
+    android:orientation="vertical"
+    android:padding="10dp" >
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingBottom="10sp"
+        android:text="@string/submit_cheat_instructions_activity_title"
+        android:textAppearance="@style/ActivityMainTitle" />
+
+    <TextView
+        android:id="@+id/subtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingBottom="30sp"
+        android:text="@string/submit_cheat_instructions_activity_subtitle"
+        android:textAppearance="@style/NormalText" /> 
+
+    <!--
+         <com.beardedhen.androidbootstrap.BootstrapButton
+        android:id="@+id/search_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/search_game"
+        android:textSize="24sp"
+        bootstrapbutton:bb_icon_left="fa-search"
+        bootstrapbutton:bb_roundedCorners="true"
+        bootstrapbutton:bb_type="default" />
+    -->
+
+    <Button
+        android:id="@+id/search_button"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:layout_weight="5"
+        android:background="@drawable/btn_cab_done_navyblue"
+        android:text="@string/search_game"
+        android:textSize="20sp" />
+
+</LinearLayout><!-- From: file:/C:/Users/Dominik/Development/Workspaces/AndroidStudio/Cheat-Database/app/src/main/res/layout/activity_submit_cheat_game_selection.xml -->

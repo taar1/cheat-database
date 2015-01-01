@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/action_forum"
+        android:icon="@drawable/ic_action_chat"
+        android:orderInCategory="100"
+        android:showAsAction="ifRoom"
+        android:title="@string/forum_goto"/>
+    <item
+        android:id="@+id/action_rate"
+        android:icon="@drawable/ic_action_star"
+        android:orderInCategory="200"
+        android:showAsAction="always"
+        android:title="@string/rate_cheat"/>
+    <item
+        android:id="@+id/action_remove_from_favorites"
+        android:icon="@drawable/ic_action_remove"
+        android:orderInCategory="300"
+        android:showAsAction="ifRoom"
+        android:title="@string/remove_favorite"/>
+    <item
+        android:id="@+id/action_share"
+        android:actionProviderClass="android.widget.ShareActionProvider"
+        android:icon="@android:drawable/ic_menu_share"
+        android:orderInCategory="150"
+        android:showAsAction="ifRoom"
+        android:title="@string/share_title"/>
+    <item
+        android:id="@+id/action_metainfo"
+        android:icon="@android:drawable/ic_menu_info_details"
+        android:orderInCategory="500"
+        android:showAsAction="ifRoom"
+        android:title="@string/meta_info"/>
+    <item
+        android:id="@+id/action_report"
+        android:icon="@drawable/ic_action_report"
+        android:orderInCategory="600"
+        android:showAsAction="ifRoom"
+        android:title="@string/report_cheat_title"/>
+    <item
+        android:id="@+id/action_submit_cheat"
+        android:icon="@drawable/ic_action_upload"
+        android:orderInCategory="700"
+        android:showAsAction="ifRoom"
+        android:title="@string/submit_cheat_short"/>
+
+</menu><!-- From: file:/C:/Users/Dominik/Development/Workspaces/AndroidStudio/Cheat-Database/app/src/main/res/menu/handset_favorites_cheatview_rating_on_menu.xml -->

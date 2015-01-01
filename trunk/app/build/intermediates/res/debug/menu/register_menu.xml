@@ -1,0 +1,13 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/action_register"
+        android:showAsAction="ifRoom|withText"
+        android:title="@string/register"/>
+    <item
+        android:id="@+id/action_forgot_password"
+        android:showAsAction="ifRoom|withText"
+        android:title="@string/action_forgot_password"/>
+
+</menu>
+<!-- From: file:/C:/Users/Dominik/Development/Workspaces/AndroidStudio/Cheat-Database/app/src/main/res/menu/register_menu.xml -->

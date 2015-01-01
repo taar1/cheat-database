@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/action_cheatview"
+        android:icon="@drawable/ic_action_view_as_list"
+        android:orderInCategory="100"
+        android:showAsAction="ifRoom"
+        android:title="@string/goto_cheat"/>
+    <item
+        android:id="@+id/action_rate"
+        android:icon="@drawable/ic_action_not_important"
+        android:orderInCategory="200"
+        android:showAsAction="always"
+        android:title="@string/rate_cheat"/>
+    <item
+        android:id="@+id/action_add_to_favorites"
+        android:icon="@drawable/ic_action_add_favorite"
+        android:orderInCategory="300"
+        android:showAsAction="ifRoom"
+        android:title="@string/add_favorite"/>
+    <item
+        android:id="@+id/action_share"
+        android:actionProviderClass="android.widget.ShareActionProvider"
+        android:icon="@android:drawable/ic_menu_share"
+        android:orderInCategory="150"
+        android:showAsAction="ifRoom"
+        android:title="@string/share_title"/>
+    <item
+        android:id="@+id/action_metainfo"
+        android:icon="@android:drawable/ic_menu_info_details"
+        android:orderInCategory="500"
+        android:showAsAction="ifRoom"
+        android:title="@string/meta_info"/>
+    <item
+        android:id="@+id/action_report"
+        android:icon="@drawable/ic_action_report"
+        android:orderInCategory="600"
+        android:showAsAction="ifRoom"
+        android:title="@string/report_cheat_title"/>
+    <item
+        android:id="@+id/action_submit_cheat"
+        android:icon="@drawable/ic_action_upload"
+        android:orderInCategory="700"
+        android:showAsAction="ifRoom"
+        android:title="@string/submit_cheat_short"/>
+
+</menu>

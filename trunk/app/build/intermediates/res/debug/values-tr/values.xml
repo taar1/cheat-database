@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:ns1="urn:oasis:names:tc:xliff:document:1.2">
+    <!-- From: file:/C:/Users/Dominik/Development/Workspaces/AndroidStudio/Cheat-Database/app/src/main/res/values-tr/arrays.xml -->
+    <eat-comment/>
+    <string-array name="contextmenu_cheatview">
+        <item>Copy to clipboard</item>
+    </string-array>
+    <string-array name="months">
+        <item>January</item>
+        <item>February</item>
+        <item>March</item>
+        <item>April</item>
+        <item>May</item>
+        <item>June</item>
+        <item>July</item>
+        <item>August</item>
+        <item>September</item>
+        <item>October</item>
+        <item>November</item>
+        <item>December</item>
+    </string-array>
+    <string-array name="report_reasons">
+        <item>Cheat is not working</item>
+        <item>Scam</item>
+        <item>Spoof</item>
+        <item>Copyright issue</item>
+        <item>Other reason</item>
+    </string-array>
+    <!-- From: file:/C:/Users/Dominik/Development/Workspaces/AndroidStudio/Cheat-Database/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.2/res/values-tr/values.xml -->
+    <eat-comment/>
+    <string msgid="4600421777120114993" name="abc_action_bar_home_description">"Ana ekrana git"</string>
+    <string msgid="1397052879051804371" name="abc_action_bar_home_description_format">"%1$s, %2$s"</string>
+    <string msgid="6623331958280229229" name="abc_action_bar_home_subtitle_description_format">"%1$s, %2$s, %3$s"</string>
+    <string msgid="1594238315039666878" name="abc_action_bar_up_description">"Yukarı git"</string>
+    <string msgid="3588849162933574182" name="abc_action_menu_overflow_description">"Diğer seçenekler"</string>
+    <string msgid="4076576682505996667" name="abc_action_mode_done">"Tamamlandı"</string>
+    <string msgid="7468859129482906941" name="abc_activity_chooser_view_see_all">"Tümünü göster"</string>
+    <string msgid="2031811694353399454" name="abc_activitychooserview_choose_application">"Bir uygulama seçin"</string>
+    <string msgid="3691816814315814921" name="abc_searchview_description_clear">"Sorguyu temizle"</string>
+    <string msgid="2550479030709304392" name="abc_searchview_description_query">"Arama sorgusu"</string>
+    <string msgid="8264924765203268293" name="abc_searchview_description_search">"Ara"</string>
+    <string msgid="8928215447528550784" name="abc_searchview_description_submit">"Sorguyu gönder"</string>
+    <string msgid="893419373245838918" name="abc_searchview_description_voice">"Sesli arama"</string>
+    <string msgid="3421042268587513524" name="abc_shareactionprovider_share_with">"Şununla paylaş"</string>
+    <string msgid="7165123711973476752" name="abc_shareactionprovider_share_with_application">"%s ile paylaş"</string>
+    <!-- From: file:/C:/Users/Dominik/Development/Workspaces/AndroidStudio/Cheat-Database/app/src/main/res/values-tr/strings.xml -->
+    <eat-comment/>
+    <string name="add_all_favorites">Add all cheats to favorites</string>
+    <string name="add_favorite">Favorilerime ekle</string>
+    <string name="add_favorite_ok">İpucu, Favorilerime başarıyla eklendi.</string>
+    <string name="add_favorites_error">Some or all cheats are already in your favorites. The new ones have been added.</string>
+    <string name="add_favorites_ok">Cheats successfully added to your favorites.</string>
+    <string name="add_one_favorite">Add cheat to favorites</string>
+    <string name="advanced_search">advanced / full text search</string>
+    <string name="app_name">İpucu-Veritabanı 2</string>
+    <string name="button_closeNothingFoundPopup">Sorguyu daraltın</string>
+    <string name="button_searchCheats">İpucu arama</string>
+    <string name="cancel">İptal</string>
+    <string name="cheat">İpucu</string>
+    <string name="cheat_counter_headline">%s üzerinde ipucu mevcut ve giderek artıyor!</string>
+    <string name="cheat_submit_nok">İpucu eklenirken bir hata meydana geldi. Lütfen
+		daha sonra tekrar deneyin.</string>
+    <string name="cheat_submit_ok">Gönderiniz için çok teşekkürler! İpucunuzu gözden
+		geçirip, veritabanına ekleyip eklememe konusunda sizi mail yoluyla
+		haberdar edeceğiz. Ayrıca; Gönderdiğiniz ipuçlarını
+		www.cheat-database.com sitesi üzerinden silebilir ya da
+		düzenleyebilirsiniz.</string>
+    <string name="cheats">İpuçları</string>
+    <string name="clearForm">Temizle</string>
+    <!-- From: file:/C:/Users/Dominik/Development/Workspaces/AndroidStudio/Cheat-Database/app/build/intermediates/exploded-aar/com.google.android.gms/play-services/6.5.87/res/values-tr/common_strings.xml -->
+    <eat-comment/>
+    <string msgid="473679118463211576" name="common_android_wear_notification_needs_update_text">"Bir uygulama, Android Wear uygulamasında güncelleme yapılmasını gerektiriyor."</string>
+    <string msgid="3046420540094071256" name="common_android_wear_update_text">"Android Wear uygulaması güncelleninceye kadar bu uygulama çalışmayacak."</string>
+    <string msgid="1366439133145190222" name="common_android_wear_update_title">"Android Wear\'ı Güncelle"</string>
+    <string msgid="4181637455539816337" name="common_google_play_services_enable_button">"Google Play hizmetlerini etkinleştir"</string>
+    <string msgid="7627896071867667758" name="common_google_play_services_enable_text">"Bu uygulama, Google Play Hizmetleri etkinleştirilmeden çalışmaz"</string>
+    <string msgid="529078775174559253" name="common_google_play_services_enable_title">"Google Play hizmetlerini etkinleştir"</string>
+    <string msgid="2443362625939284971" name="common_google_play_services_error_notification_requested_by_msg">"İstekte bulunan: <ns1:g id="APP_NAME">%1$s</ns1:g>"</string>
+    <string msgid="8515591849428043265" name="common_google_play_services_install_button">"Google Play hizmetlerini edin"</string>
+    <string msgid="8685301130651051380" name="common_google_play_services_install_text_phone">"Google Play Hizmetleri telefonunuzda yok ve bu uygulama Google Play Hizmetleri olmadan çalışmaz."</string>
+    <string msgid="1589957570365247855" name="common_google_play_services_install_text_tablet">"Google Play Hizmetleri tabletinizde yok ve bu uygulama Google Play Hizmetleri olmadan çalışmaz."</string>
+    <string msgid="26645092511305524" name="common_google_play_services_install_title">"Google Play hizmetlerini edinin"</string>
+    <string msgid="4983316348021735578" name="common_google_play_services_invalid_account_text">"Belirtilen hesap bu cihazda mevcut değil. Lütfen farklı bir hesap seçin."</string>
+    <string msgid="1066672360770936753" name="common_google_play_services_invalid_account_title">"Geçersiz Hesap"</string>
+    <string msgid="2583358409598976717" name="common_google_play_services_needs_enabling_title">"Bir uygulama, Google Play Hizmetleri\'nin etkin olmasını gerektiriyor."</string>
+    <string msgid="9038847255613537209" name="common_google_play_services_network_error_text">"Google Play hizmetlerine bağlanmak için bir veri bağlantısı gerekiyor."</string>
+    <string msgid="3827284619958211114" name="common_google_play_services_network_error_title">"Ağ Hatası"</string>
+    <string msgid="8120534356798772974" name="common_google_play_services_notification_needs_installation_title">"Bir uygulama, Google Play hizmetlerinin yüklenmesini gerektiriyor."</string>
+    <string msgid="1388129345631079938" name="common_google_play_services_notification_needs_update_title">"Bir uygulama, Google Play Hizmetleri için bir güncelleme gerektiriyor."</string>
+    <string msgid="1852570676146674985" name="common_google_play_services_notification_ticker">"Google Play Hizmetleri hatası"</string>
+    <string msgid="4762332809710093730" name="common_google_play_services_unknown_issue">"Google Play hizmetleriyle ilgili bilinmeyen sorun."</string>
+    <string msgid="3542578567569488671" name="common_google_play_services_unsupported_text">"Cihazınız, uygulamalarınızdan bazıları için gerekli olan Google Play hizmetlerini desteklemiyor. Lütfen yardım için üreticiyle iletişim kurun."</string>
+    <string msgid="6334768798839376943" name="common_google_play_services_unsupported_title">"Google Play hizmetleri"</string>
+    <string msgid="8932944190611227642" name="common_google_play_services_update_button">"Güncelle"</string>
+    <string msgid="448354684997260580" name="common_google_play_services_update_text">"Bu uygulama Google Play Hizmetleri güncellenmeden çalışmaz."</string>
+    <string msgid="6006316683626838685" name="common_google_play_services_update_title">"Google Play hizmetlerini güncelle"</string>
+    <string msgid="411506735369601515" name="common_open_on_phone">"Telefonda aç"</string>
+    <string msgid="9071884888741449141" name="common_signin_button_text">"Oturum aç"</string>
+    <string msgid="2429381841831957106" name="common_signin_button_text_long">"Google\'da oturum aç"</string>
+    <!-- From: file:/C:/Users/Dominik/Development/Workspaces/AndroidStudio/Cheat-Database/app/src/main/res/values-tr/strings.xml -->
+    <eat-comment/>
+    <string name="context_menu_copied">Cheat copied to clipboard.</string>
+    <string name="context_menu_title">Context Menu</string>
+    <string name="crashreport_missing_crashreport">Please provide us with a detailed description of where you clicked just before the app crashed.</string>
+    <string name="crashreport_missing_devicemodel">Please enter the model of your phone.</string>
+    <string name="crashreport_missing_email">Please enter your email address so we can contact you if we need further information about the crash.</string>
+    <string name="crashreport_submit">Submit bug report</string>
+    <string name="crashreport_thanks">Thank you for your crash report! If we need any further information about the crash we may contact you by email.</string>
+    <string name="crashreport_when_crashed">When did the application crash?</string>
+    <string name="crashreport_your_device">Your device model</string>
+    <string name="email">E-Mail</string>
+    <string name="enterGame">Oyun adını girin:</string>
+    <string name="enter_game_hint">Oyun adını</string>
+    <string name="err">Error</string>
+    <string name="err_data_not_accessible">Requested data could not be retrieved. Please try again a bit later.</string>
+    <string name="err_email_invalid">Email geçerli değil.</string>
+    <string name="err_email_used">Bu email adresi zaten kullanılıyor.</string>
+    <string name="err_email_user_not_found">No user found with this email address.</string>
+    <string name="err_no_member_data">Error: No member data could be found.</string>
+    <string name="err_other_problem">Kullanıcı hesabını oluştururken bir hata meydana geldi. Lütfen daha sonra tekrar deneyin. If the problem remains you can also register at www.cheat-database.com/register.</string>
+    <string name="err_password_length">Şifre en az 6 karakterden oluşmalıdır.</string>
+    <string name="err_somethings_wrong">Something just went wrong. Please try again.</string>
+    <string name="err_username_length">Kullanıcı adı en az 6 karakterden oluşmalıdır.</string>
+    <string name="err_username_used">Bu kullanıcı adı şu anda kullanımda.</string>
+    <string name="error_nothing_found_text">Girdiğiniz kritere uygun bir oyun bulunamadı. Lütfen daha kısa kelimelerle tekrar deneyin.</string>
+    <string name="error_nothing_found_title">Sonuç bulunamadı!</string>
+    <string name="favorite_adding">Adding favorites…</string>
+    <string name="favorite_deleted">İpucu Favorilerimden silindi.</string>
+    <string name="favorite_empty">Henüz bir Favori Listeniz yok. Bu kısma ulaşmadan önce Favori listenize birkaç ipucu eklemelisiniz.</string>
+    <string name="favorite_error">İpucu zaten Favori Listesinde kayıtlı.</string>
+    <string name="favorite_no_cheats">Favori listenizde bu oyun için henüz bir ipucu mevcut değil.</string>
+    <string name="favorites">Favorilerim</string>
+    <string name="favorites_welcome_text">Bu bölüm, favori ipuçlarınızın görüleceği alan
+		olacaktır. Favorilerinize bir ipucu eklemek için ilgili ipucunun
+		üzerinde iken \"Menu\" tuşuna basın ve \"Favorilerime Ekle\"
+		seçeneğini seçin. Favorilerinizden bir ipucunu silmek için ise oyun
+		menüsünden \"Favori Listemden Çıkart\" seçeneğini seçin..</string>
+    <string name="fill_everything">Please fill out all fields.</string>
+    <string name="forum_button_submit">Postala</string>
+    <string name="forum_goto">Foruma Git</string>
+    <string name="forum_goto_online">Foruma Git (online)</string>
+    <string name="forum_submit_failed">Talebiniz yerine getirilemedi. Lütfen daha sonra tekrar deneyin.</string>
+    <string name="forum_submit_ok">Talep yerine getirildi.</string>
+    <string name="forum_yet_empty">Bu ipucu için forum henüz boş. İlk yazan siz olun. Öneri: Bu ipucunu favorilerinize eklerseniz, bu alana daha kolay erişebilirsiniz.</string>
+    <string name="fullscreen_mode_exit">Double tap to exit full screen mode</string>
+    <string name="fulltext_search_all_cheats">Search through all cheats</string>
+    <string name="fulltext_search_cheats">Search cheats</string>
+    <string name="fulltext_search_error_nosystem_selected">Please pick at least one system</string>
+    <string name="fulltext_search_keywords">Keywords</string>
+    <string name="fulltext_search_listed_cheats">Search through listed cheats</string>
+    <string name="fulltext_search_results">Full-text search results</string>
+    <string name="fulltext_search_systems">Choose systems</string>
+    <string name="fulltext_search_title">Full-text search</string>
+    <string name="fulltext_search_titles_also">Search in cheat titles also</string>
+    <string name="game">game</string>
+    <string name="game_platform">Sistem</string>
+    <string name="games">games</string>
+    <string name="goto_cheat">İpucu oluştur</string>
+    <string name="goto_cheat_list">İpucunu gözden geçir</string>
+    <string name="goto_favorites">Favorilerime Git</string>
+    <string name="goto_main_screen">Ana Sayfa</string>
+    <string name="help">Yardım</string>
+    <string name="lead_bolt_text">Our App recommendations ></string>
+    <string name="login_failed">Giriş Başarılı Olamadı. Yanlış Kullanıcı Adı/Şifre Kombinasyonu. Kullanıcı Adı/Şifrenizi geri almak için lütfen www.cheat-database.com adresini ziyaret edin.</string>
+    <string name="login_forgot">Forgot login data</string>
+    <string name="login_instead">Giriş Bölümü</string>
+    <string name="login_ok">Giriş Başarılı.</string>
+    <string name="login_send_password">Send login data by email</string>
+    <string name="login_sent_ok">Login data has been sent to you via email</string>
+    <string name="login_title">Giriş Yap</string>
+    <string name="logout">Çıkış</string>
+    <string name="logout_ok">Çıkış Başarılı.</string>
+    <string name="member_banned">Hesabınız bloke oldu.</string>
+    <string name="members_cheats_title">%s\'s Cheats</string>
+    <string name="menu_fulltext_search_long">Full text search in listed cheats</string>
+    <string name="menu_fulltext_search_short">Full text search</string>
+    <string name="menu_more_apps">More Apps from us</string>
+    <string name="menu_pocketchange">Pocket Change Balance</string>
+    <string name="menu_server_status">Server status</string>
+    <string name="meta_average_rating1">%s out of 10</string>
+    <string name="meta_average_rating2">based on %s votes</string>
+    <string name="meta_info">Meta Info</string>
+    <string name="meta_info_retrieved">Cheat meta info retrieved. Swipe left to view.</string>
+    <string name="meta_member_homepage">website</string>
+    <string name="meta_rating_average">Average cheat rating by members</string>
+    <string name="meta_return">Return to cheat</string>
+    <string name="meta_show_all_cheats">Show all cheats</string>
+    <string name="meta_submission_date">Date of submission</string>
+    <string name="meta_submission_total">Total submitted cheats by member</string>
+    <string name="meta_submitted_by">Submitted by</string>
+    <string name="meta_unknown">Unknown</string>
+    <string name="meta_views_lifetime">Lifetime views</string>
+    <string name="meta_views_today">Views today</string>
+    <string name="my_favorites">Favorilerim</string>
+    <string name="new_cheats_title">Bu oyunlar için yeni ipuçları:</string>
+    <string name="news_title">Version</string>
+    <string name="news_welcome">New in this version</string>
+    <string name="no_cheats_text">Veritabanımızda bu oyun için henüz ipucu bulunmamaktadır. Lütfen daha sonra tekrar deneyin.</string>
+    <string name="no_cheats_title">İpucu Bulunamadı</string>
+    <string name="no_internet">No Internet connection available. Try again a bit later.</string>
+    <string name="notify_rotate_device">Rotate your device if the cheat is not being displayed properly.</string>
+    <string name="ok">OK</string>
+    <string name="password">Şifre</string>
+    <string name="placeholder">Placeholder</string>
+    <string name="please_wait">Lütfen bekleyin…</string>
+    <string name="rate_cheat">İpucunu oyla</string>
+    <string name="rate_cheat_here">İlgili ipucunu şimdi burada oyla</string>
+    <string name="rate_cheat_plain">Oyla</string>
+    <string name="rating_inserted">Thank you! Your rating has been registered.</string>
+    <string name="rating_processing">Your rating is being processed…</string>
+    <string name="rating_updated">Thank you! Your rating has been updated.</string>
+    <string name="rating_your">Your cheat rating:</string>
+    <string name="register">Kayıt</string>
+    <string name="register_instead">Kayıt Bölümü</string>
+    <string name="register_login">Kayıt / Giriş</string>
+    <string name="register_thanks">Kayıt olduğunuz için teşekkürler!</string>
+    <string name="register_title">Kayıt Ol</string>
+    <string name="remove_favorite">Favorilerimden çıkart</string>
+    <string name="remove_favorite_nok">İpucunu Favori Listesinden silerken hata!</string>
+    <string name="remove_favorite_ok">%s İpucu, Favorilerimden başarılı bir şekilde çıkartıldı.</string>
+    <string name="remove_favorites_nok">Error removing game from your favorites.</string>
+    <string name="remove_favorites_ok">Game successfully removed from your favorites.</string>
+    <string name="report_cheat_title">İpucunu rapor et</string>
+    <string name="retrieving_data">Veriye ulaşılıyor</string>
+    <string name="search_hint">Search a game</string>
+    <string name="search_results">Arama Sonuçları</string>
+    <string name="share_download_cheatdatabase">Download Cheat-Database for Android here:</string>
+    <string name="share_email_body">I just found this cheat on Cheat-Database for Android. Click the link below to check it out:</string>
+    <string name="share_email_subject">I just found this cheat for %s</string>
+    <string name="share_error_no_client">There are no email clients installed.</string>
+    <string name="share_title">Share cheat</string>
+    <string name="showCheatList">Hile Listesi</string>
+    <string name="showGameList">Oyun Listesi</string>
+    <string name="splash_screen">Loading Cheat-Database…</string>
+    <string name="submit_cheat_consent_title">Agreement</string>
+    <string name="submit_cheat_instructions_text">Gönderdiğiniz tüm ipuçları, sizin
+		ipucu-veritabanınızda kaydedilecektir. İpucu, bizim tarafımızca
+		onaylanıp kabul edildiğinde siz de mail yoluyla
+		bilgilendirileceksiniz.\n\nGönderdiğiniz ipuçlarında herhangi bir
+		değişiklik yapmak istediğinizde, bilgisayarınızı kullanarak
+		www.cheat-database.com adresine kendi hesap bilgilerinizle giriş
+		yapmalısınız. Burada ipuçlarınıza ekran görüntüsü ekleyebilir,
+		bilgilerini düzenleyebilir veya silebilirsiniz.</string>
+    <string name="submit_cheat_instructions_title">İpuçlarını gönderme konusunda bilgi</string>
+    <string name="submit_cheat_long">Bu oyun için bir ipucu gönder</string>
+    <string name="submit_cheat_review">İpucunu gözden geçir</string>
+    <string name="submit_cheat_short">İpucu’nu gönder</string>
+    <string name="submit_cheat_your_body">İpucunuz</string>
+    <string name="submit_cheat_your_title">İpucu içeriği</string>
+    <string name="thanks_for_reporting">Teşekkürler. Sorun incelenecektir.</string>
+    <string name="top_members_cheats_count"># of cheats</string>
+    <string name="top_members_no_website">Member %s has no website</string>
+    <string name="top_members_title">Members Top 20</string>
+    <string name="top_members_visit_website">Visit %s\'s website</string>
+    <string name="total_cheats_unknown">Hundreds of thousands of cheats!</string>
+    <string name="username">Kullanıcı adı</string>
+    <string name="username_email">Kullanıcı Adı ya da E-Mail</string>
+</resources>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="ActionBar.Solid.Navyblue" parent="@android:style/Widget.Holo.ActionBar.Solid">
+        <item name="android:background">@drawable/ab_solid_navyblue</item>
+        <item name="android:backgroundStacked">@drawable/ab_stacked_solid_navyblue</item>
+        <item name="android:backgroundSplit">@drawable/ab_bottom_solid_navyblue</item>
+        <item name="android:progressBarStyle">@style/ProgressBar.Navyblue</item>
+    </style>
+
+    <style name="ActionBar.Transparent.Navyblue" parent="@android:style/Widget.Holo.ActionBar">
+        <item name="android:background">@drawable/ab_transparent_navyblue</item>
+        <item name="android:progressBarStyle">@style/ProgressBar.Navyblue</item>
+    </style>
+
+    <style name="PopupMenu.Navyblue" parent="@android:style/Widget.Holo.ListPopupWindow">
+        <item name="android:popupBackground">@drawable/menu_dropdown_panel_navyblue</item>
+    </style>
+
+    <style name="DropDownListView.Navyblue" parent="@android:style/Widget.Holo.ListView.DropDown">
+        <item name="android:listSelector">@drawable/selectable_background_navyblue</item>
+    </style>
+
+    <style name="ActionBarTabStyle.Navyblue" parent="@android:style/Widget.Holo.ActionBar.TabView">
+        <item name="android:background">@drawable/tab_indicator_ab_navyblue</item>
+    </style>
+
+    <style name="DropDownNav.Navyblue" parent="@android:style/Widget.Holo.Spinner">
+        <item name="android:background">@drawable/spinner_background_ab_navyblue</item>
+        <item name="android:popupBackground">@drawable/menu_dropdown_panel_navyblue</item>
+        <item name="android:dropDownSelector">@drawable/selectable_background_navyblue</item>
+    </style>
+
+    <style name="ProgressBar.Navyblue" parent="@android:style/Widget.Holo.ProgressBar.Horizontal">
+        <item name="android:progressDrawable">@drawable/progress_horizontal_navyblue</item>
+    </style>
+
+    <style name="ActionButton.CloseMode.Navyblue" parent="@android:style/Widget.Holo.ActionButton.CloseMode">
+        <item name="android:background">@drawable/btn_cab_done_navyblue</item>
+    </style>
+
+    <!-- this style is only referenced in a Light.DarkActionBar based theme -->
+    <!--
+    <style name="Theme.Navyblue.Widget" parent="@android:style/Theme.Holo">
+        <item name="android:popupMenuStyle">@style/PopupMenu.Navyblue</item>
+        <item name="android:dropDownListViewStyle">@style/DropDownListView.Navyblue</item>
+    </style>
+    -->
+
+</resources>
