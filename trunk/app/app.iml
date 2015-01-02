@@ -95,7 +95,7 @@
     <orderEntry type="library" exported="" name="picasso-2.3.2" level="project" />
     <orderEntry type="library" exported="" name="gson-2.3" level="project" />
     <orderEntry type="module" module-name="mopub-v3.3.0" exported="" />
-    <orderEntry type="module" module-name="ViewPagerIndicatorLibrary" exported="" />
+    <orderEntry type="module" module-name="VPILibrary" exported="" />
   </component>
 </module>
 

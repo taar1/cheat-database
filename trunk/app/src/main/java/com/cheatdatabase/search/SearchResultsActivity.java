@@ -38,7 +38,7 @@ import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.helpers.Tools;
 import com.cheatdatabase.helpers.Webservice;
-import com.cheatdatabase.pojo.Game;
+import com.cheatdatabase.businessobjects.Game;
 
 @SuppressLint("NewApi")
 public class SearchResultsActivity extends Activity {

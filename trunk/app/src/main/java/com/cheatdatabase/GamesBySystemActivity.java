@@ -1,9 +1,6 @@
 package com.cheatdatabase;
 
-import java.util.ArrayList;
-
 import android.app.AlertDialog;
-import android.app.ListActivity;
 import android.app.ProgressDialog;
 import android.app.SearchManager;
 import android.content.Context;
@@ -32,17 +29,20 @@ import com.amazon.device.ads.AdError;
 import com.amazon.device.ads.AdListener;
 import com.amazon.device.ads.AdProperties;
 import com.amazon.device.ads.AdRegistration;
+import com.cheatdatabase.businessobjects.Game;
+import com.cheatdatabase.businessobjects.SystemPlatform;
+import com.cheatdatabase.helpers.ActionBarListActivity;
 import com.cheatdatabase.helpers.Group;
 import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.helpers.Tools;
 import com.cheatdatabase.helpers.Webservice;
-import com.cheatdatabase.pojo.Game;
-import com.cheatdatabase.pojo.SystemPlatform;
 import com.google.analytics.tracking.android.Tracker;
 import com.mopub.mobileads.MoPubView;
 
-public class GamesBySystemActivity extends ListActivity implements AdListener {
+import java.util.ArrayList;
+
+public class GamesBySystemActivity extends ActionBarListActivity implements AdListener {
 
 	SparseArray<Group> groups = new SparseArray<Group>();
 
@@ -80,8 +80,8 @@ public class GamesBySystemActivity extends ListActivity implements AdListener {
 		setContentView(R.layout.activity_gamelist);
 		Reachability.registerReachability(this.getApplicationContext());
 
-		Tools.styleActionbar(this);
-		getActionBar().setHomeButtonEnabled(true);
+		//Tools.styleActionbar(this);
+		//getActionBar().setHomeButtonEnabled(true);
 
 		// Initialize ad views
 		AdRegistration.setAppKey(Konstanten.AMAZON_API_KEY);
@@ -173,7 +173,9 @@ public class GamesBySystemActivity extends ListActivity implements AdListener {
 				// yourTextView.setTextColor(getResources().getColor(R.color.white));
 				// yourTextView.setTypeface(Tools.getFont(getAssets(),
 				// "Lato-Bold.ttf"));
-				getActionBar().setTitle(systemObj.getSystemName());
+
+
+                //getActionBar().setTitle(systemObj.getSystemName());
 
 				Tools.initGA(GamesBySystemActivity.this, tracker, SCREEN_LABEL, "Game List", systemObj.getSystemName());
 			}

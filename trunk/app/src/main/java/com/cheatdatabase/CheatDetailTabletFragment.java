@@ -41,9 +41,9 @@ import com.cheatdatabase.helpers.Helper;
 import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Tools;
 import com.cheatdatabase.helpers.Webservice;
-import com.cheatdatabase.pojo.Cheat;
-import com.cheatdatabase.pojo.Member;
-import com.cheatdatabase.pojo.Screenshot;
+import com.cheatdatabase.businessobjects.Cheat;
+import com.cheatdatabase.businessobjects.Member;
+import com.cheatdatabase.businessobjects.Screenshot;
 import com.google.gson.Gson;
 
 /**

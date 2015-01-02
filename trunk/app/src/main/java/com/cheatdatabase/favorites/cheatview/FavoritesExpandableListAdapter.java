@@ -18,7 +18,7 @@ import com.cheatdatabase.favorites.FavoriteCheatListActivity;
 import com.cheatdatabase.helpers.Group;
 import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.helpers.Tools;
-import com.cheatdatabase.pojo.Game;
+import com.cheatdatabase.businessobjects.Game;
 
 public class FavoritesExpandableListAdapter extends BaseExpandableListAdapter {
 

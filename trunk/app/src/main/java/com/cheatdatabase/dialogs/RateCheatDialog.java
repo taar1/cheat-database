@@ -15,8 +15,8 @@ import com.cheatdatabase.R;
 import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Tools;
 import com.cheatdatabase.helpers.Webservice;
-import com.cheatdatabase.pojo.Cheat;
-import com.cheatdatabase.pojo.Member;
+import com.cheatdatabase.businessobjects.Cheat;
+import com.cheatdatabase.businessobjects.Member;
 import com.google.analytics.tracking.android.Log;
 import com.google.gson.Gson;
 

@@ -10,8 +10,9 @@ import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -24,20 +25,20 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.cheatdatabase.businessobjects.Member;
 import com.cheatdatabase.dialogs.AlreadyLoggedInDialog;
 import com.cheatdatabase.dialogs.AlreadyLoggedInDialog.AlreadyLoggedInDialogListener;
 import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.helpers.Tools;
 import com.cheatdatabase.helpers.Webservice;
-import com.cheatdatabase.pojo.Member;
 import com.google.gson.Gson;
 
 /**
  * Activity which displays a login screen to the user, offering registration as
  * well.
  */
-public class LoginActivity extends FragmentActivity implements AlreadyLoggedInDialogListener {
+public class LoginActivity extends ActionBarActivity implements AlreadyLoggedInDialogListener {
 
 	/**
 	 * The default email to populate the email field with.
@@ -76,7 +77,12 @@ public class LoginActivity extends FragmentActivity implements AlreadyLoggedInDi
 		setContentView(R.layout.activity_login);
 		Reachability.registerReachability(this.getApplicationContext());
 
-		Tools.styleActionbar(this);
+		//Tools.styleActionbar(this);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        if (toolbar != null) {
+            setSupportActionBar(toolbar);
+        }
+        toolbar.setTitle("LOGIN NOWWW");
 
 		settings = getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
 		editor = settings.edit();
