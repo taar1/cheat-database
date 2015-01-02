@@ -14,11 +14,7 @@
     </style>
 
     <style name="AppTheme.Base" parent="Theme.AppCompat">
-        <item name="android:colorPrimary">@color/color_primary_light</item>
-        <item name="android:colorPrimaryDark">@color/color_primary_dark</item>
         <item name="colorAccent">@color/color_accent</item>
-        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
-        <item name="android:windowTranslucentStatus">false</item>
         <item name="android:windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
         <item name="android:textColorPrimary">#fff</item>

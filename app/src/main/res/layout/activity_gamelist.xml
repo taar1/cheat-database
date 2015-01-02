@@ -1,9 +1,18 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res/com.cheatdatabase"
     android:id="@+id/outerLayout"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="@drawable/bg"
-    android:orientation="vertical" >
+    android:orientation="vertical">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/color_primary_light"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <ImageView
         android:id="@+id/reload"
@@ -21,11 +30,10 @@
         android:layout_height="fill_parent"
         android:layout_weight="10"
         android:cacheColorHint="#00000000"
-        
+
         android:fadingEdge="vertical"
         android:fastScrollEnabled="true"
-        android:scrollbars="vertical" >
-    </ListView>
+        android:scrollbars="vertical"></ListView>
 
     <!--
          <com.mopub.mobileads.MoPubView
@@ -34,7 +42,8 @@
         android:layout_height="50dp"
         android:layout_gravity="bottom"
         android:layout_weight="1"
-        android:gravity="top" />
+        android:gravity="top" />
+
     -->
 
     <com.amazon.device.ads.AdLayout

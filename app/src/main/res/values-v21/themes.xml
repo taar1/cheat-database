@@ -9,6 +9,11 @@
         <item name="android:windowAllowReturnTransitionOverlap">true</item>
         <item name="android:windowSharedElementEnterTransition">@android:transition/move</item>
         <item name="android:windowSharedElementExitTransition">@android:transition/move</item>
+        <item name="android:navigationBarColor">@color/color_navigation_bar</item>
+        <item name="android:colorPrimary">@color/color_primary_light</item>
+        <item name="android:colorPrimaryDark">@color/color_primary_dark</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:windowTranslucentStatus">false</item>
     </style>
 
 </resources>

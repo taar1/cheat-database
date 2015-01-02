@@ -32,8 +32,8 @@ import com.cheatdatabase.favorites.cheatview.FavoritesExpandableListAdapter;
 import com.cheatdatabase.helpers.CheatDatabaseAdapter;
 import com.cheatdatabase.helpers.Group;
 import com.cheatdatabase.helpers.Tools;
-import com.cheatdatabase.pojo.Game;
-import com.cheatdatabase.pojo.SystemPlatform;
+import com.cheatdatabase.businessobjects.Game;
+import com.cheatdatabase.businessobjects.SystemPlatform;
 import com.google.analytics.tracking.android.Tracker;
 
 public class FavoriteGamesListFragment extends Fragment {

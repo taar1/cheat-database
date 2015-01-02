@@ -17,7 +17,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.cheatdatabase.R;
-import com.cheatdatabase.pojo.Cheat;
+import com.cheatdatabase.businessobjects.Cheat;
 
 /**
  * Code abstracting helper class

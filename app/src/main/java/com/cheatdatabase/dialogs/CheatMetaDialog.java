@@ -17,8 +17,8 @@ import android.widget.TextView;
 import com.cheatdatabase.MemberCheatListActivity;
 import com.cheatdatabase.R;
 import com.cheatdatabase.helpers.Webservice;
-import com.cheatdatabase.pojo.Cheat;
-import com.cheatdatabase.pojo.Member;
+import com.cheatdatabase.businessobjects.Cheat;
+import com.cheatdatabase.businessobjects.Member;
 
 @SuppressLint("SimpleDateFormat")
 public class CheatMetaDialog extends Dialog implements OnClickListener {

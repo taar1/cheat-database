@@ -10,9 +10,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import com.cheatdatabase.pojo.Cheat;
-import com.cheatdatabase.pojo.Game;
-import com.cheatdatabase.pojo.Screenshot;
+import com.cheatdatabase.businessobjects.Cheat;
+import com.cheatdatabase.businessobjects.Game;
+import com.cheatdatabase.businessobjects.Screenshot;
 
 /**
  * Database Adapter More Info:
