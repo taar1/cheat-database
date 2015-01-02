@@ -4,7 +4,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.cheatdatabase.pojo.Game;
+import com.cheatdatabase.businessobjects.Game;
 
 public class CheatViewFragmentAdapter extends FragmentPagerAdapter {
 

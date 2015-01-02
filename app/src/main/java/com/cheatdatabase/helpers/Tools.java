@@ -32,8 +32,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cheatdatabase.R;
-import com.cheatdatabase.pojo.Game;
-import com.cheatdatabase.pojo.SystemPlatform;
+import com.cheatdatabase.businessobjects.Game;
+import com.cheatdatabase.businessobjects.SystemPlatform;
 import com.google.analytics.tracking.android.Fields;
 import com.google.analytics.tracking.android.GoogleAnalytics;
 import com.google.analytics.tracking.android.Tracker;

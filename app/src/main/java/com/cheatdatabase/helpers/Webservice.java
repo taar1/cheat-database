@@ -31,13 +31,13 @@ import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.cheatdatabase.R;
-import com.cheatdatabase.pojo.Cheat;
-import com.cheatdatabase.pojo.ForumPost;
-import com.cheatdatabase.pojo.Game;
-import com.cheatdatabase.pojo.Member;
-import com.cheatdatabase.pojo.Screenshot;
-import com.cheatdatabase.pojo.SystemPlatform;
-import com.cheatdatabase.pojo.WelcomeMessage;
+import com.cheatdatabase.businessobjects.Cheat;
+import com.cheatdatabase.businessobjects.ForumPost;
+import com.cheatdatabase.businessobjects.Game;
+import com.cheatdatabase.businessobjects.Member;
+import com.cheatdatabase.businessobjects.Screenshot;
+import com.cheatdatabase.businessobjects.SystemPlatform;
+import com.cheatdatabase.businessobjects.WelcomeMessage;
 import com.google.gson.Gson;
 
 /**

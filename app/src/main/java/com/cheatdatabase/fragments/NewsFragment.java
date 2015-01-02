@@ -23,7 +23,7 @@ import com.cheatdatabase.R;
 import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.helpers.Tools;
 import com.cheatdatabase.helpers.Webservice;
-import com.cheatdatabase.pojo.WelcomeMessage;
+import com.cheatdatabase.businessobjects.WelcomeMessage;
 
 public class NewsFragment extends Fragment {
 

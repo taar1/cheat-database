@@ -3,7 +3,7 @@ package com.cheatdatabase.helpers;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.cheatdatabase.pojo.Game;
+import com.cheatdatabase.businessobjects.Game;
 
 public class Group {
 

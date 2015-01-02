@@ -8,7 +8,7 @@ import android.support.v4.app.DialogFragment;
 
 import com.cheatdatabase.R;
 import com.cheatdatabase.helpers.Konstanten;
-import com.cheatdatabase.pojo.Member;
+import com.cheatdatabase.businessobjects.Member;
 import com.google.gson.Gson;
 
 public class AlreadyLoggedInDialog extends DialogFragment {

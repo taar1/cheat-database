@@ -1,9 +1,21 @@
-<merge xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res/com.cheatdatabase"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".LoginActivity" >
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    tools:context="com.cheatdatabase.LoginActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/color_primary_light"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <!-- Login progress -->
-
     <LinearLayout
         android:id="@+id/send_status"
         android:layout_width="wrap_content"
@@ -11,7 +23,8 @@
         android:layout_gravity="center"
         android:gravity="center_horizontal"
         android:orientation="vertical"
-        android:visibility="gone" >
+        android:visibility="gone">
+
 
         <ProgressBar
             style="?android:attr/progressBarStyleLarge"
@@ -30,17 +43,18 @@
     </LinearLayout>
 
     <!-- Login form -->
-
     <ScrollView
         android:id="@+id/login_form"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/bg" >
+        android:background="@drawable/bg">
+
 
         <LinearLayout
             style="@style/LoginFormContainer"
             android:gravity="end"
-            android:orientation="vertical" >
+            android:orientation="vertical">
+
 
             <EditText
                 android:id="@+id/email"
@@ -67,7 +81,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
-                android:orientation="horizontal" >
+                android:orientation="horizontal">
 
                 <Button
                     android:id="@+id/cancel_button"
@@ -105,5 +119,4 @@
                 android:textAppearance="@style/NormalText" />
         </LinearLayout>
     </ScrollView>
-
-</merge>
+</LinearLayout>

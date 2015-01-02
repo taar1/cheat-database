@@ -22,7 +22,7 @@ import com.cheatdatabase.R;
 import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.helpers.Tools;
 import com.cheatdatabase.helpers.Webservice;
-import com.cheatdatabase.pojo.SystemPlatform;
+import com.cheatdatabase.businessobjects.SystemPlatform;
 import com.google.analytics.tracking.android.Tracker;
 
 public class SystemListFragment extends ListFragment {
