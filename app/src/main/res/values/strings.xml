@@ -291,11 +291,11 @@
     <string name="facebook_app_secret" translatable="false">5491bc37cc41561439d96c514d201bcb</string>
     <string name="title_favorite_list">Favorites</string>
     <string name="title_favorite_detail">Favorite Detail</string>
-       
+
     <string name="action">Perform action</string>
     <string name="undobar_sample_message">Action performed.</string>
     <string name="undo">Undo</string>
-    
+
     <string name="remove_favorite_neutral_ok">Favorite deleted.</string>
     <string name="remove_favorite_areyousure">Remove this cheat from favorites?</string>
     <string name="confirm">Confirm</string>

@@ -1,12 +1,5 @@
 package com.cheatdatabase.favorites.handset.cheatview;
 
-import java.io.BufferedInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
-import java.net.URLConnection;
-import java.util.ArrayList;
-
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -40,537 +33,545 @@ import android.widget.Toast;
 
 import com.cheatdatabase.CheatDetailTabletFragment;
 import com.cheatdatabase.R;
-import com.cheatdatabase.helpers.Konstanten;
-import com.cheatdatabase.helpers.Reachability;
-import com.cheatdatabase.helpers.Tools;
-import com.cheatdatabase.helpers.Webservice;
 import com.cheatdatabase.businessobjects.Cheat;
 import com.cheatdatabase.businessobjects.Game;
 import com.cheatdatabase.businessobjects.Member;
 import com.cheatdatabase.businessobjects.Screenshot;
+import com.cheatdatabase.helpers.Konstanten;
+import com.cheatdatabase.helpers.Reachability;
+import com.cheatdatabase.helpers.Tools;
+import com.cheatdatabase.helpers.Webservice;
 import com.google.gson.Gson;
+
+import java.io.BufferedInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+import java.net.URLConnection;
+import java.util.ArrayList;
 
 /**
  * List of all cheats for a game optimized for handsets.
- * 
- * @version 1.0
+ *
  * @author Dominik Erbsland
- * 
+ * @version 1.0
  */
 public class FavoritesCheatViewFragment extends Fragment implements OnClickListener {
 
-	private TableLayout mainTable;
-	private LinearLayout ll;
-	private TextView tvCheatText;
-	private TextView tvTextBeforeTable;
-	private TextView tvCheatTitle;
-	private TextView tvGalleryInfo;
-	private Gallery screenshotGallery;
-	private int biggestHeight;
+    private TableLayout mainTable;
+    private LinearLayout ll;
+    private TextView tvCheatText;
+    private TextView tvTextBeforeTable;
+    private TextView tvCheatTitle;
+    private TextView tvGalleryInfo;
+    private Gallery screenshotGallery;
+    private int biggestHeight;
 
-	private Cheat cheatObj;
-	private Cheat[] cheats;
-	private Game game;
-	private int offset;
-	public ArrayList<String[]> al_images;
-	private ImageView[] imageViews;
-	private ProgressBar progressBar;
-	private Member member;
+    private Cheat cheatObj;
+    private Cheat[] cheats;
+    private Game game;
+    private int offset;
+    public ArrayList<String[]> al_images;
+    private ImageView[] imageViews;
+    private ProgressBar progressBar;
+    private Member member;
 
-	private SharedPreferences settings;
-	private Editor editor;
+    private SharedPreferences settings;
+    private Editor editor;
 
-	public AlertDialog.Builder builder;
-	public AlertDialog alert;
+    public AlertDialog.Builder builder;
+    public AlertDialog alert;
 
-	private static final String KEY_CONTENT = "CheatViewFragment:Content";
+    private static final String KEY_CONTENT = "CheatViewFragment:Content";
 
-	public static FavoritesCheatViewFragment newInstance(String content, Game game, int offset) {
+    public static FavoritesCheatViewFragment newInstance(String content, Game game, int offset) {
 
-		FavoritesCheatViewFragment fragment = new FavoritesCheatViewFragment();
+        FavoritesCheatViewFragment fragment = new FavoritesCheatViewFragment();
 
-		// Uebergebene Parameter ins Bundle Objekt eintragen
-		Bundle args = new Bundle();
-		args.putSerializable("gameObj", game);
-		args.putInt("offset", offset);
-		fragment.setArguments(args);
+        // Uebergebene Parameter ins Bundle Objekt eintragen
+        Bundle args = new Bundle();
+        args.putSerializable("gameObj", game);
+        args.putInt("offset", offset);
+        fragment.setArguments(args);
 
-		StringBuilder builder = new StringBuilder();
-		for (int i = 0; i < 20; i++) {
-			builder.append(content).append(" ");
-		}
-		builder.deleteCharAt(builder.length() - 1);
-		fragment.mContent = builder.toString();
+        StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < 20; i++) {
+            builder.append(content).append(" ");
+        }
+        builder.deleteCharAt(builder.length() - 1);
+        fragment.mContent = builder.toString();
 
-		return fragment;
-	}
+        return fragment;
+    }
 
-	private String mContent = "???";
-	private Typeface latoFontBold;
-	private Typeface latoFontLight;
-	private FavoritesCheatViewPageIndicator ca;
-	private ImageView reloadView;
+    private String mContent = "???";
+    private Typeface latoFontBold;
+    private Typeface latoFontLight;
+    private FavoritesCheatViewPageIndicator ca;
+    private ImageView reloadView;
 
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
-		ca = (FavoritesCheatViewPageIndicator) getActivity();
+        ca = (FavoritesCheatViewPageIndicator) getActivity();
 
-		latoFontLight = Tools.getFont(ca.getAssets(), "Lato-Light.ttf");
-		latoFontBold = Tools.getFont(ca.getAssets(), "Lato-Bold.ttf");
+        latoFontLight = Tools.getFont(ca.getAssets(), "Lato-Light.ttf");
+        latoFontBold = Tools.getFont(ca.getAssets(), "Lato-Bold.ttf");
 
-		settings = getActivity().getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
-		editor = settings.edit();
+        settings = getActivity().getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
+        editor = settings.edit();
 
-		member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
+        member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
 
-		// TODO hier genauer anschauen wegen dem setzen des contents. TODO TODO
-		if ((savedInstanceState != null) && savedInstanceState.containsKey(KEY_CONTENT)) {
-			mContent = savedInstanceState.getString(KEY_CONTENT);
-		}
-	}
+        // TODO hier genauer anschauen wegen dem setzen des contents. TODO TODO
+        if ((savedInstanceState != null) && savedInstanceState.containsKey(KEY_CONTENT)) {
+            mContent = savedInstanceState.getString(KEY_CONTENT);
+        }
+    }
 
-	@Override
-	public void onSaveInstanceState(Bundle outState) {
-		super.onSaveInstanceState(outState);
-		outState.putString(KEY_CONTENT, mContent);
-	}
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString(KEY_CONTENT, mContent);
+    }
 
-	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-		getFragmentRelevantData();
+        getFragmentRelevantData();
 
-		try {
-			ll = (LinearLayout) inflater.inflate(R.layout.fragment_cheat_detail_handset, container, false);
+        try {
+            ll = (LinearLayout) inflater.inflate(R.layout.fragment_cheat_detail_handset, container, false);
 
-			cheats = game.getCheats();
-			cheatObj = cheats[offset];
+            cheats = game.getCheats();
+            cheatObj = cheats[offset];
 
-			new FetchCheatRatingOnlineBackgroundTask().execute();
+            new FetchCheatRatingOnlineBackgroundTask().execute();
 
-			mainTable = (TableLayout) ll.findViewById(R.id.tblCheatListMain);
+            mainTable = (TableLayout) ll.findViewById(R.id.tblCheatListMain);
 
-			tvTextBeforeTable = (TextView) ll.findViewById(R.id.text_cheat_before_table);
-			tvTextBeforeTable.setOnClickListener(this);
-			tvTextBeforeTable.setVisibility(View.VISIBLE);
-			tvTextBeforeTable.setTypeface(latoFontLight);
+            tvTextBeforeTable = (TextView) ll.findViewById(R.id.text_cheat_before_table);
+            tvTextBeforeTable.setOnClickListener(this);
+            tvTextBeforeTable.setVisibility(View.VISIBLE);
+            tvTextBeforeTable.setTypeface(latoFontLight);
 
-			tvCheatTitle = (TextView) ll.findViewById(R.id.text_cheat_title);
-			tvCheatTitle.setTypeface(latoFontBold);
-			tvCheatTitle.setText(cheatObj.getCheatTitle());
+            tvCheatTitle = (TextView) ll.findViewById(R.id.text_cheat_title);
+            tvCheatTitle.setTypeface(latoFontBold);
+            tvCheatTitle.setText(cheatObj.getCheatTitle());
 
-			tvGalleryInfo = (TextView) ll.findViewById(R.id.gallery_info);
-			tvGalleryInfo.setVisibility(View.INVISIBLE);
-			tvGalleryInfo.setTypeface(latoFontLight);
+            tvGalleryInfo = (TextView) ll.findViewById(R.id.gallery_info);
+            tvGalleryInfo.setVisibility(View.INVISIBLE);
+            tvGalleryInfo.setTypeface(latoFontLight);
 
-			screenshotGallery = (Gallery) ll.findViewById(R.id.gallery);
+            screenshotGallery = (Gallery) ll.findViewById(R.id.gallery);
 
-			progressBar = (ProgressBar) ll.findViewById(R.id.progressBar1);
-			progressBar.setVisibility(View.INVISIBLE);
+            progressBar = (ProgressBar) ll.findViewById(R.id.progressBar1);
+            progressBar.setVisibility(View.INVISIBLE);
 
-			tvCheatText = (TextView) ll.findViewById(R.id.text_cheat_text);
-			tvCheatText.setTypeface(latoFontLight);
+            tvCheatText = (TextView) ll.findViewById(R.id.text_cheat_text);
+            tvCheatText.setTypeface(latoFontLight);
 
-			reloadView = (ImageView) ll.findViewById(R.id.reload);
-			if (Reachability.reachability.isReachable) {
-				getOnlineContent();
-			} else {
-				reloadView.setVisibility(View.VISIBLE);
-				reloadView.setOnClickListener(new OnClickListener() {
+            reloadView = (ImageView) ll.findViewById(R.id.reload);
+            if (Reachability.reachability.isReachable) {
+                getOnlineContent();
+            } else {
+                reloadView.setVisibility(View.VISIBLE);
+                reloadView.setOnClickListener(new OnClickListener() {
 
-					@Override
-					public void onClick(View v) {
-						if (Reachability.reachability.isReachable) {
-							getOnlineContent();
-						} else {
-							Toast.makeText(ca, R.string.no_internet, Toast.LENGTH_SHORT).show();
-						}
-					}
-				});
-				Toast.makeText(ca, R.string.no_internet, Toast.LENGTH_SHORT).show();
-			}
+                    @Override
+                    public void onClick(View v) {
+                        if (Reachability.reachability.isReachable) {
+                            getOnlineContent();
+                        } else {
+                            Toast.makeText(ca, R.string.no_internet, Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+                Toast.makeText(ca, R.string.no_internet, Toast.LENGTH_SHORT).show();
+            }
 
-		} catch (Exception e) {
-			Log.e(FavoritesCheatViewFragment.class.getName(), "BB: " + e.getMessage());
-		}
+        } catch (Exception e) {
+            Log.e(FavoritesCheatViewFragment.class.getName(), "BB: " + e.getMessage());
+        }
 
-		return ll;
-	}
+        return ll;
+    }
 
-	private void getOnlineContent() {
-		reloadView.setVisibility(View.GONE);
-		
-		/**
-		 * Get thumbnails if there are screenshots.
-		 */
-		if (cheatObj.isScreenshots() == true) {
-			biggestHeight = 100; // init value
-			imageViews = new ImageView[cheatObj.getScreens().length];
-			progressBar.setVisibility(View.VISIBLE);
+    private void getOnlineContent() {
+        reloadView.setVisibility(View.GONE);
 
-			new LoadScreenshotsInBackgroundTask().execute();
-		} else {
-			tvGalleryInfo.setVisibility(View.GONE);
-			progressBar.setVisibility(View.GONE);
-			screenshotGallery.setVisibility(View.GONE);
-		}
+        /**
+         * Get thumbnails if there are screenshots.
+         */
+        if (cheatObj.isScreenshots() == true) {
+            biggestHeight = 100; // init value
+            imageViews = new ImageView[cheatObj.getScreens().length];
+            progressBar.setVisibility(View.VISIBLE);
 
-		/**
-		 * If the user came from the search results the cheat-text might not be
-		 * complete (trimmed for the search results) and therefore has to be
-		 * re-fetched in a background process.
-		 */
-		if ((cheatObj.getCheatText() == null) || (cheatObj.getCheatText().length() < 10)) {
-			progressBar.setVisibility(View.VISIBLE);
-			new FetchCheatTextTask().execute();
-		} else {
-			populateView();
-		}
+            new LoadScreenshotsInBackgroundTask().execute();
+        } else {
+            tvGalleryInfo.setVisibility(View.GONE);
+            progressBar.setVisibility(View.GONE);
+            screenshotGallery.setVisibility(View.GONE);
+        }
 
-		editor.putString("cheat" + offset, new Gson().toJson(cheatObj));
-		editor.commit();
-	}
+        /**
+         * If the user came from the search results the cheat-text might not be
+         * complete (trimmed for the search results) and therefore has to be
+         * re-fetched in a background process.
+         */
+        if ((cheatObj.getCheatText() == null) || (cheatObj.getCheatText().length() < 10)) {
+            progressBar.setVisibility(View.VISIBLE);
+            new FetchCheatTextTask().execute();
+        } else {
+            populateView();
+        }
 
-	private void getFragmentRelevantData() {
-		Bundle arguments = getArguments();
-		try {
-			game = (Game) arguments.getSerializable("gameObj");
-			offset = arguments.getInt("offset");
-		} catch (Exception e) {
-			offset = 0;
-			// TODO message ausgeben, dass kein Game objekt besteht
-		}
-	}
+        editor.putString("cheat" + offset, new Gson().toJson(cheatObj));
+        editor.commit();
+    }
 
-	private void buildGallery() {
-		screenshotGallery.setAdapter(new ImageAdapter(ca));
-		screenshotGallery.setOnItemClickListener(new OnItemClickListener() {
-			@Override
-			public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-				Screenshot[] screens = cheatObj.getScreens();
-				Screenshot screenShot = screens[position];
+    private void getFragmentRelevantData() {
+        Bundle arguments = getArguments();
+        try {
+            game = (Game) arguments.getSerializable("gameObj");
+            offset = arguments.getInt("offset");
+        } catch (Exception e) {
+            offset = 0;
+            // TODO message ausgeben, dass kein Game objekt besteht
+        }
+    }
 
-				Uri uri = Uri.parse(Konstanten.SCREENSHOT_ROOT_WEBDIR + screenShot.getCheatId() + screenShot.getFilename());
-				Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-				startActivity(intent);
-			}
-		});
+    private void buildGallery() {
+        screenshotGallery.setAdapter(new ImageAdapter(ca));
+        screenshotGallery.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+                Screenshot[] screens = cheatObj.getScreens();
+                Screenshot screenShot = screens[position];
 
-	}
+                Uri uri = Uri.parse(Konstanten.SCREENSHOT_ROOT_WEBDIR + screenShot.getCheatId() + screenShot.getFilename());
+                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                startActivity(intent);
+            }
+        });
 
-	private void populateView() {
-		try {
-			if (cheatObj.getCheatText().contains("</td>")) {
-				fillTableContent();
-			} else {
-				fillSimpleContent();
-			}
-		} catch (Exception e) {
-			Log.e(FavoritesCheatViewFragment.class.getName(), "Cheat " + cheatObj.getCheatId() + " contains(</td>) - Error creating table");
-			fillSimpleContent();
-		}
-	}
+    }
 
-	private void fillTableContent() {
+    private void populateView() {
+        try {
+            if (cheatObj.getCheatText().contains("</td>")) {
+                fillTableContent();
+            } else {
+                fillSimpleContent();
+            }
+        } catch (Exception e) {
+            Log.e(FavoritesCheatViewFragment.class.getName(), "Cheat " + cheatObj.getCheatId() + " contains(</td>) - Error creating table");
+            fillSimpleContent();
+        }
+    }
 
-		mainTable.setColumnShrinkable(0, true);
-		// mainTable.setColumnShrinkable(1, true);
-		mainTable.setOnClickListener(this);
-		mainTable.setVisibility(View.VISIBLE);
+    private void fillTableContent() {
 
-		// Cheat-Text oberhalb der Tabelle
-		String[] textBeforeTable = null;
+        mainTable.setColumnShrinkable(0, true);
+        // mainTable.setColumnShrinkable(1, true);
+        mainTable.setOnClickListener(this);
+        mainTable.setVisibility(View.VISIBLE);
 
-		// Einige tabellarische Cheats beginnen direkt mit der
-		// Tabelle
-		if (cheatObj.getCheatText().startsWith("<br><table")) {
-			textBeforeTable = cheatObj.getCheatText().split("<br>");
-			tvTextBeforeTable.setVisibility(View.GONE);
-		} else {
-			textBeforeTable = cheatObj.getCheatText().split("<br><br>");
-			if (textBeforeTable[0].trim().length() > 2) {
-				tvTextBeforeTable.setText(textBeforeTable[0].replaceAll("<br>", "\n").trim());
-			}
-		}
+        // Cheat-Text oberhalb der Tabelle
+        String[] textBeforeTable = null;
 
-		String[] trs = cheatObj.getCheatText().split("</tr><tr valign='top'>");
+        // Einige tabellarische Cheats beginnen direkt mit der
+        // Tabelle
+        if (cheatObj.getCheatText().startsWith("<br><table")) {
+            textBeforeTable = cheatObj.getCheatText().split("<br>");
+            tvTextBeforeTable.setVisibility(View.GONE);
+        } else {
+            textBeforeTable = cheatObj.getCheatText().split("<br><br>");
+            if (textBeforeTable[0].trim().length() > 2) {
+                tvTextBeforeTable.setText(textBeforeTable[0].replaceAll("<br>", "\n").trim());
+            }
+        }
 
-		// Check, ob die Tabelle ein TH Element besitzt.
-		String firstTag = "th";
-		if (!trs[0].contains("</" + firstTag + ">")) {
-			firstTag = "td";
-		}
+        String[] trs = cheatObj.getCheatText().split("</tr><tr valign='top'>");
 
-		String[] ths = trs[0].split("</" + firstTag + "><" + firstTag + ">");
-		String[] th1 = ths[0].split("<" + firstTag + ">");
-		String[] th2 = ths[1].split("</" + firstTag + ">");
+        // Check, ob die Tabelle ein TH Element besitzt.
+        String firstTag = "th";
+        if (!trs[0].contains("</" + firstTag + ">")) {
+            firstTag = "td";
+        }
 
-		String firstThColumn = "<b>" + th1[1].trim() + "</b>";
-		String secondThColumn = "<b>" + th2[0].trim() + "</b>";
+        String[] ths = trs[0].split("</" + firstTag + "><" + firstTag + ">");
+        String[] th1 = ths[0].split("<" + firstTag + ">");
+        String[] th2 = ths[1].split("</" + firstTag + ">");
+
+        String firstThColumn = "<b>" + th1[1].trim() + "</b>";
+        String secondThColumn = "<b>" + th2[0].trim() + "</b>";
 
 		/* Create a new row to be added. */
-		TableRow trTh = new TableRow(ca);
-		trTh.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
+        TableRow trTh = new TableRow(ca);
+        trTh.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
 
-		TextView tvFirstThCol = new TextView(ca);
-		tvFirstThCol.setText(Html.fromHtml(firstThColumn));
-		tvFirstThCol.setPadding(1, 1, 5, 1);
-		tvFirstThCol.setMinimumWidth(Konstanten.TABLE_ROW_MINIMUM_WIDTH);
-		tvFirstThCol.setTextAppearance(ca, R.style.NormalText);
-		tvFirstThCol.setTypeface(latoFontLight);
-		trTh.addView(tvFirstThCol);
+        TextView tvFirstThCol = new TextView(ca);
+        tvFirstThCol.setText(Html.fromHtml(firstThColumn));
+        tvFirstThCol.setPadding(1, 1, 5, 1);
+        tvFirstThCol.setMinimumWidth(Konstanten.TABLE_ROW_MINIMUM_WIDTH);
+        tvFirstThCol.setTextAppearance(ca, R.style.NormalText);
+        tvFirstThCol.setTypeface(latoFontLight);
+        trTh.addView(tvFirstThCol);
 
-		TextView tvSecondThCol = new TextView(ca);
-		tvSecondThCol.setText(Html.fromHtml(secondThColumn));
-		tvSecondThCol.setPadding(5, 1, 1, 1);
-		tvSecondThCol.setTextAppearance(ca, R.style.NormalText);
-		tvSecondThCol.setTypeface(latoFontLight);
-		trTh.addView(tvSecondThCol);
+        TextView tvSecondThCol = new TextView(ca);
+        tvSecondThCol.setText(Html.fromHtml(secondThColumn));
+        tvSecondThCol.setPadding(5, 1, 1, 1);
+        tvSecondThCol.setTextAppearance(ca, R.style.NormalText);
+        tvSecondThCol.setTypeface(latoFontLight);
+        trTh.addView(tvSecondThCol);
 
 		/* Add row to TableLayout. */
-		mainTable.addView(trTh, new TableLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
+        mainTable.addView(trTh, new TableLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
 
-		for (int i = 1; i < trs.length; i++) {
+        for (int i = 1; i < trs.length; i++) {
 
-			String[] tds = trs[i].split("</td><td>");
-			String[] td1 = tds[0].split("<td>");
-			String[] td2 = tds[1].split("</td>");
+            String[] tds = trs[i].split("</td><td>");
+            String[] td1 = tds[0].split("<td>");
+            String[] td2 = tds[1].split("</td>");
 
-			String firstTdColumn = td1[1].replaceAll("<br>", "\n").trim();
-			String secondTdColumn = td2[0].replaceAll("<br>", "\n").trim();
+            String firstTdColumn = td1[1].replaceAll("<br>", "\n").trim();
+            String secondTdColumn = td2[0].replaceAll("<br>", "\n").trim();
 
 			/* Create a new row to be added. */
-			TableRow trTd = new TableRow(ca);
-			trTd.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
+            TableRow trTd = new TableRow(ca);
+            trTd.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
 
-			TextView tvFirstTdCol = new TextView(ca);
-			tvFirstTdCol.setText(firstTdColumn);
-			tvFirstTdCol.setPadding(1, 1, 10, 1);
-			tvFirstTdCol.setMinimumWidth(Konstanten.TABLE_ROW_MINIMUM_WIDTH);
-			tvFirstTdCol.setTextAppearance(ca, R.style.NormalText);
-			tvFirstTdCol.setTypeface(latoFontLight);
-			trTd.addView(tvFirstTdCol);
+            TextView tvFirstTdCol = new TextView(ca);
+            tvFirstTdCol.setText(firstTdColumn);
+            tvFirstTdCol.setPadding(1, 1, 10, 1);
+            tvFirstTdCol.setMinimumWidth(Konstanten.TABLE_ROW_MINIMUM_WIDTH);
+            tvFirstTdCol.setTextAppearance(ca, R.style.NormalText);
+            tvFirstTdCol.setTypeface(latoFontLight);
+            trTd.addView(tvFirstTdCol);
 
-			TextView tvSecondTdCol = new TextView(ca);
-			tvSecondTdCol.setText(secondTdColumn);
-			tvSecondTdCol.setPadding(10, 1, 30, 1);
-			tvSecondTdCol.setTextAppearance(ca, R.style.NormalText);
-			tvSecondTdCol.setTypeface(latoFontLight);
-			trTd.addView(tvSecondTdCol);
+            TextView tvSecondTdCol = new TextView(ca);
+            tvSecondTdCol.setText(secondTdColumn);
+            tvSecondTdCol.setPadding(10, 1, 30, 1);
+            tvSecondTdCol.setTextAppearance(ca, R.style.NormalText);
+            tvSecondTdCol.setTypeface(latoFontLight);
+            trTd.addView(tvSecondTdCol);
 
 			/* Add row to TableLayout. */
-			mainTable.addView(trTd, new TableLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
-		}
-	}
+            mainTable.addView(trTd, new TableLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
+        }
+    }
 
-	private void fillSimpleContent() {
-		mainTable.setVisibility(View.GONE);
-		tvTextBeforeTable.setVisibility(View.GONE);
+    private void fillSimpleContent() {
+        mainTable.setVisibility(View.GONE);
+        tvTextBeforeTable.setVisibility(View.GONE);
 
-		CharSequence styledText = Html.fromHtml(cheatObj.getCheatText());
-		tvCheatText.setText(styledText);
+        CharSequence styledText = Html.fromHtml(cheatObj.getCheatText());
+        tvCheatText.setText(styledText);
 
-		if (cheatObj.isWalkthroughFormat()) {
-			tvCheatText.setTextAppearance(ca, R.style.WalkthroughText);
-		}
-	}
+        if (cheatObj.isWalkthroughFormat()) {
+            tvCheatText.setTextAppearance(ca, R.style.WalkthroughText);
+        }
+    }
 
-	// public void highlightRatingIcon(boolean highlight) {
-	// if (highlight) {
-	// btnRateCheat.setImageResource(R.drawable.ic_action_star);
-	// } else {
-	// btnRateCheat.setImageResource(R.drawable.ic_action_not_important);
-	// }
-	// }
+    // public void highlightRatingIcon(boolean highlight) {
+    // if (highlight) {
+    // btnRateCheat.setImageResource(R.drawable.ic_action_star);
+    // } else {
+    // btnRateCheat.setImageResource(R.drawable.ic_action_not_important);
+    // }
+    // }
 
-	@Override
-	public void onResume() {
-		super.onResume();
-		// TODO update member rating
-	}
+    @Override
+    public void onResume() {
+        super.onResume();
+        // TODO update member rating
+    }
 
-	@Override
-	public void onClick(View v) {
-		Log.d("onClick", "onClick");
-		Bundle arguments = new Bundle();
-		arguments.putInt(CheatDetailTabletFragment.ARG_ITEM_ID, 1);
-		arguments.putString("cheatObj", new Gson().toJson(cheatObj));
-	}
+    @Override
+    public void onClick(View v) {
+        Log.d("onClick", "onClick");
+        Bundle arguments = new Bundle();
+        arguments.putInt(CheatDetailTabletFragment.ARG_ITEM_ID, 1);
+        arguments.putString("cheatObj", new Gson().toJson(cheatObj));
+    }
 
-	private class FetchCheatTextTask extends AsyncTask<Void, Void, Void> {
+    private class FetchCheatTextTask extends AsyncTask<Void, Void, Void> {
 
-		String fullCheatText;
+        String fullCheatText;
 
-		@Override
-		protected Void doInBackground(Void... params) {
-			fullCheatText = Webservice.getCheatById(cheatObj.getCheatId());
+        @Override
+        protected Void doInBackground(Void... params) {
+            fullCheatText = Webservice.getCheatById(cheatObj.getCheatId());
 
-			return null;
-		}
+            return null;
+        }
 
-		@Override
-		protected void onPostExecute(Void result) {
-			super.onPostExecute(result);
-			if (fullCheatText.substring(0, 1).equalsIgnoreCase("2")) {
-				cheatObj.setWalkthroughFormat(true);
-			}
-			progressBar.setVisibility(View.GONE);
-			cheatObj.setCheatText(fullCheatText.substring(1));
+        @Override
+        protected void onPostExecute(Void result) {
+            super.onPostExecute(result);
+            if (fullCheatText.substring(0, 1).equalsIgnoreCase("2")) {
+                cheatObj.setWalkthroughFormat(true);
+            }
+            progressBar.setVisibility(View.GONE);
+            cheatObj.setCheatText(fullCheatText.substring(1));
 
-			populateView();
-		}
-	}
+            populateView();
+        }
+    }
 
-	private class FetchCheatRatingOnlineBackgroundTask extends AsyncTask<Void, Void, Void> {
+    private class FetchCheatRatingOnlineBackgroundTask extends AsyncTask<Void, Void, Void> {
 
-		float cheatRating;
+        float cheatRating;
 
-		@Override
-		protected Void doInBackground(Void... params) {
-			try {
-				cheatRating = Webservice.getCheatRatingByMemberId(member.getMid(), cheatObj.getCheatId());
-			} catch (Exception e) {
-				cheatRating = 0;
-			}
+        @Override
+        protected Void doInBackground(Void... params) {
+            try {
+                cheatRating = Webservice.getCheatRatingByMemberId(member.getMid(), cheatObj.getCheatId());
+            } catch (Exception e) {
+                cheatRating = 0;
+            }
 
-			return null;
-		}
+            return null;
+        }
 
-		@Override
-		protected void onPostExecute(Void result) {
-			super.onPostExecute(result);
+        @Override
+        protected void onPostExecute(Void result) {
+            super.onPostExecute(result);
 
-			if (cheatRating > 0) {
-				editor.putFloat("c" + cheatObj.getCheatId(), cheatRating);
-				editor.commit();
+            if (cheatRating > 0) {
+                editor.putFloat("c" + cheatObj.getCheatId(), cheatRating);
+                editor.commit();
 
-				ca.setRating(offset, cheatRating);
+                ca.setRating(offset, cheatRating);
 
-				// ratingBar.setRating(cheatRating / 2);
-			}
-		}
-	}
+                // ratingBar.setRating(cheatRating / 2);
+            }
+        }
+    }
 
-	private class LoadScreenshotsInBackgroundTask extends AsyncTask<Void, Void, Void> {
+    private class LoadScreenshotsInBackgroundTask extends AsyncTask<Void, Void, Void> {
 
-		@Override
-		protected Void doInBackground(Void... params) {
-			try {
-				Screenshot[] screens = cheatObj.getScreens();
+        @Override
+        protected Void doInBackground(Void... params) {
+            try {
+                Screenshot[] screens = cheatObj.getScreens();
 
-				String[] myRemoteImages = new String[screens.length];
+                String[] myRemoteImages = new String[screens.length];
 
-				for (int i = 0; i < screens.length; i++) {
-					Screenshot s = screens[i];
-					String filename = s.getCheatId() + s.getFilename();
-					myRemoteImages[i] = Konstanten.SCREENSHOT_ROOT_WEBDIR + "image.php?width=150&image=/cheatpics/" + filename;
-				}
+                for (int i = 0; i < screens.length; i++) {
+                    Screenshot s = screens[i];
+                    String filename = s.getCheatId() + s.getFilename();
+                    myRemoteImages[i] = Konstanten.SCREENSHOT_ROOT_WEBDIR + "image.php?width=150&image=/cheatpics/" + filename;
+                }
 
-				Bitmap bms[] = new Bitmap[imageViews.length];
-				for (int i = 0; i < imageViews.length; i++) {
+                Bitmap bms[] = new Bitmap[imageViews.length];
+                for (int i = 0; i < imageViews.length; i++) {
 
 					/*
-					 * Open a new URL and get the InputStream to load data from
+                     * Open a new URL and get the InputStream to load data from
 					 * it.
 					 */
-					URL aURL = new URL(myRemoteImages[i]);
-					URLConnection conn = aURL.openConnection();
-					conn.connect();
-					InputStream is = conn.getInputStream();
+                    URL aURL = new URL(myRemoteImages[i]);
+                    URLConnection conn = aURL.openConnection();
+                    conn.connect();
+                    InputStream is = conn.getInputStream();
 					/* Buffered is always good for a performance plus. */
-					BufferedInputStream bis = new BufferedInputStream(is);
+                    BufferedInputStream bis = new BufferedInputStream(is);
 					/* Decode url-data to a bitmap. */
-					Bitmap bm = BitmapFactory.decodeStream(bis);
-					bis.close();
-					is.close();
+                    Bitmap bm = BitmapFactory.decodeStream(bis);
+                    bis.close();
+                    is.close();
 
-					bms[i] = bm;
+                    bms[i] = bm;
 
-					if (biggestHeight < bm.getHeight()) {
-						biggestHeight = bm.getHeight();
-					}
-				}
+                    if (biggestHeight < bm.getHeight()) {
+                        biggestHeight = bm.getHeight();
+                    }
+                }
 
 				/*
 				 * Apply the Bitmap to the ImageView that will be returned.
 				 */
-				for (int i = 0; i < imageViews.length; i++) {
-					imageViews[i] = new ImageView(ca);
-					imageViews[i].setScaleType(ImageView.ScaleType.MATRIX);
-					imageViews[i].setLayoutParams(new Gallery.LayoutParams(300, biggestHeight));
-					imageViews[i].setImageBitmap(bms[i]);
-				}
+                for (int i = 0; i < imageViews.length; i++) {
+                    imageViews[i] = new ImageView(ca);
+                    imageViews[i].setScaleType(ImageView.ScaleType.MATRIX);
+                    imageViews[i].setLayoutParams(new Gallery.LayoutParams(300, biggestHeight));
+                    imageViews[i].setImageBitmap(bms[i]);
+                }
 
-			} catch (IOException e) {
-				Log.e(FavoritesCheatViewFragment.class.getName(), "Remtoe Image Exception", e);
-			}
+            } catch (IOException e) {
+                Log.e(FavoritesCheatViewFragment.class.getName(), "Remtoe Image Exception", e);
+            }
 
-			return null;
-		}
+            return null;
+        }
 
-		@Override
-		protected void onPostExecute(Void result) {
-			super.onPostExecute(result);
-			progressBar.setVisibility(View.GONE);
-			if (cheatObj.getScreens().length <= 1) {
-				tvGalleryInfo.setVisibility(View.GONE);
-			} else {
-				tvGalleryInfo.setVisibility(View.VISIBLE);
-			}
-			buildGallery();
-		}
-	}
+        @Override
+        protected void onPostExecute(Void result) {
+            super.onPostExecute(result);
+            progressBar.setVisibility(View.GONE);
+            if (cheatObj.getScreens().length <= 1) {
+                tvGalleryInfo.setVisibility(View.GONE);
+            } else {
+                tvGalleryInfo.setVisibility(View.VISIBLE);
+            }
+            buildGallery();
+        }
+    }
 
-	/**
-	 * Innere Klasse zum Anzeigen der Screenshot-Thumbnails
-	 * 
-	 * Copyright (c) 2010-2012<br>
-	 * 
-	 * @author Dominik Erbsland
-	 * @version 1.0
-	 */
-	public class ImageAdapter extends BaseAdapter {
+    /**
+     * Innere Klasse zum Anzeigen der Screenshot-Thumbnails
+     * <p/>
+     * Copyright (c) 2010-2012<br>
+     *
+     * @author Dominik Erbsland
+     * @version 1.0
+     */
+    public class ImageAdapter extends BaseAdapter {
 
-		/** Simple Constructor saving the 'parent' context. */
-		public ImageAdapter(Context c) {
-		}
+        /**
+         * Simple Constructor saving the 'parent' context.
+         */
+        public ImageAdapter(Context c) {
+        }
 
-		@Override
-		public int getCount() {
-			return imageViews.length;
-			// return cheat.getScreens().length;
-		}
+        @Override
+        public int getCount() {
+            return imageViews.length;
+            // return cheat.getScreens().length;
+        }
 
-		@Override
-		public Object getItem(int position) {
-			return position;
-		}
+        @Override
+        public Object getItem(int position) {
+            return position;
+        }
 
-		@Override
-		public long getItemId(int position) {
-			return position;
-		}
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
 
-		/**
-		 * Returns a new ImageView to be displayed, depending on the position
-		 * passed.
-		 */
-		@Override
-		public View getView(int position, View convertView, ViewGroup parent) {
-			return imageViews[position];
-		}
+        /**
+         * Returns a new ImageView to be displayed, depending on the position
+         * passed.
+         */
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            return imageViews[position];
+        }
 
-		/**
-		 * Returns the size (0.0f to 1.0f) of the views depending on the
-		 * 'offset' to the center.
-		 */
-		public float getScale(boolean focused, int offset) {
+        /**
+         * Returns the size (0.0f to 1.0f) of the views depending on the
+         * 'offset' to the center.
+         */
+        public float getScale(boolean focused, int offset) {
 			/* Formula: 1 / (2 ^ offset) */
-			return Math.max(0, 1.0f / (float) Math.pow(2, Math.abs(offset)));
-		}
+            return Math.max(0, 1.0f / (float) Math.pow(2, Math.abs(offset)));
+        }
 
-	}
+    }
 
 }

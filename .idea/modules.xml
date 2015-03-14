@@ -6,7 +6,7 @@
       <module fileurl="file://$PROJECT_DIR$/NiceButtons2/NiceButtons2.iml" filepath="$PROJECT_DIR$/NiceButtons2/NiceButtons2.iml" />
       <module fileurl="file://$PROJECT_DIR$/VPILibrary/VPILibrary.iml" filepath="$PROJECT_DIR$/VPILibrary/VPILibrary.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/libraries/mopub-v3.3.0/mopub-v3.3.0.iml" filepath="$PROJECT_DIR$/libraries/mopub-v3.3.0/mopub-v3.3.0.iml" />
+      <module fileurl="file://$PROJECT_DIR$/mopub-sdk/mopub-sdk.iml" filepath="$PROJECT_DIR$/mopub-sdk/mopub-sdk.iml" />
     </modules>
   </component>
 </project>

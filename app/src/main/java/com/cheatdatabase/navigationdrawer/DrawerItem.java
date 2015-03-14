@@ -2,43 +2,43 @@ package com.cheatdatabase.navigationdrawer;
 
 public class DrawerItem {
 
-	String ItemName;
-	int imgResID;
-	String title;
+    String ItemName;
+    int imgResID;
+    String title;
 
-	public DrawerItem(String itemName, int imgResID) {
-		super();
-		ItemName = itemName;
-		this.imgResID = imgResID;
-	}
-	
-	public DrawerItem(String title) {
-		this(null, 0);
-		this.title = title;
-	}
+    public DrawerItem(String itemName, int imgResID) {
+        super();
+        ItemName = itemName;
+        this.imgResID = imgResID;
+    }
 
-	public String getItemName() {
-		return ItemName;
-	}
+    public DrawerItem(String title) {
+        this(null, 0);
+        this.title = title;
+    }
 
-	public void setItemName(String itemName) {
-		ItemName = itemName;
-	}
+    public String getItemName() {
+        return ItemName;
+    }
 
-	public int getImgResID() {
-		return imgResID;
-	}
+    public void setItemName(String itemName) {
+        ItemName = itemName;
+    }
 
-	public void setImgResID(int imgResID) {
-		this.imgResID = imgResID;
-	}
-	
-	public String getTitle() {
-		return title;
-	}
+    public int getImgResID() {
+        return imgResID;
+    }
 
-	public void setTitle(String title) {
-		this.title = title;
-	}
+    public void setImgResID(int imgResID) {
+        this.imgResID = imgResID;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
 }

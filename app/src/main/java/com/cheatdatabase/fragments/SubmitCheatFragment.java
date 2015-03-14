@@ -19,59 +19,59 @@ import com.cheatdatabase.helpers.Tools;
 
 public class SubmitCheatFragment extends Fragment {
 
-	ImageView ivIcon;
-	TextView tvItemName;
-	private Activity ca;
-	private Typeface latoFontLight;
-	private Typeface latoFontBold;
-	private TextView title;
-	private TextView subtitle;
-	private Button searchButton;
+    ImageView ivIcon;
+    TextView tvItemName;
+    private Activity ca;
+    private Typeface latoFontLight;
+    private Typeface latoFontBold;
+    private TextView title;
+    private TextView subtitle;
+    private Button searchButton;
 
-	public static final String IMAGE_RESOURCE_ID = "iconResourceID";
-	public static final String ITEM_NAME = "itemName";
+    public static final String IMAGE_RESOURCE_ID = "iconResourceID";
+    public static final String ITEM_NAME = "itemName";
 
-	public SubmitCheatFragment() {
+    public SubmitCheatFragment() {
 
-	}
+    }
 
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		ca = getActivity();
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        ca = getActivity();
 
-		Reachability.registerReachability(ca.getApplicationContext());
+        Reachability.registerReachability(ca.getApplicationContext());
 
-		latoFontLight = Tools.getFont(ca.getAssets(), "Lato-Light.ttf");
-		latoFontBold = Tools.getFont(ca.getAssets(), "Lato-Bold.ttf");
+        latoFontLight = Tools.getFont(ca.getAssets(), "Lato-Light.ttf");
+        latoFontBold = Tools.getFont(ca.getAssets(), "Lato-Bold.ttf");
 
-		ca.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+        ca.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
-		// Update action bar menu items?
-		setHasOptionsMenu(true);
-	}
+        // Update action bar menu items?
+        setHasOptionsMenu(true);
+    }
 
-	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		View rootView = inflater.inflate(R.layout.activity_submit_cheat_game_selection, container, false);
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View rootView = inflater.inflate(R.layout.activity_submit_cheat_game_selection, container, false);
 
-		title = (TextView) rootView.findViewById(R.id.title);
-		title.setTypeface(latoFontBold);
-		subtitle = (TextView) rootView.findViewById(R.id.subtitle);
-		subtitle.setTypeface(latoFontLight);
+        title = (TextView) rootView.findViewById(R.id.title);
+        title.setTypeface(latoFontBold);
+        subtitle = (TextView) rootView.findViewById(R.id.subtitle);
+        subtitle.setTypeface(latoFontLight);
 
-		searchButton = (Button) rootView.findViewById(R.id.search_button);
-		searchButton.setOnClickListener(new OnClickListener() {
+        searchButton = (Button) rootView.findViewById(R.id.search_button);
+        searchButton.setOnClickListener(new OnClickListener() {
 
-			@Override
-			public void onClick(View v) {
-				ca.onSearchRequested();
-			}
+            @Override
+            public void onClick(View v) {
+                ca.onSearchRequested();
+            }
 
-		});
-		searchButton.setTypeface(latoFontBold);
+        });
+        searchButton.setTypeface(latoFontBold);
 
-		return rootView;
-	}
+        return rootView;
+    }
 
 }

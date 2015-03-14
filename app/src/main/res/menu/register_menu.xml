@@ -1,12 +1,12 @@
-<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
         android:id="@+id/action_register"
         android:showAsAction="ifRoom|withText"
-        android:title="@string/register"/>
+        android:title="@string/register" />
     <item
         android:id="@+id/action_forgot_password"
         android:showAsAction="ifRoom|withText"
-        android:title="@string/action_forgot_password"/>
+        android:title="@string/action_forgot_password" />
 
 </menu>

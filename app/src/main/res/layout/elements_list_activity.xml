@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".FavoritesListActivity" >
+    tools:context=".FavoritesListActivity">
 
     <fragment
         android:id="@+id/fragment1"
@@ -13,5 +13,5 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true" />
-    
+
 </RelativeLayout>

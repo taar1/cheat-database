@@ -1,10 +1,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/standard_background"
     android:baselineAligned="false"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
     <include
         android:layout_width="wrap_content"
@@ -24,19 +23,19 @@
         android:layout_width="fill_parent"
         android:layout_height="0dp"
         android:layout_weight="100"
-        android:orientation="vertical" >
+        android:orientation="vertical">
 
         <ScrollView
             android:id="@+id/scrollView1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:minHeight="300dp"
-            android:minWidth="300dp" >
+            android:minWidth="300dp">
 
             <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="0dp"
-                android:orientation="vertical" >
+                android:orientation="vertical">
 
                 <LinearLayout
                     android:id="@+id/llSubmissionDate"
@@ -46,23 +45,21 @@
                     android:paddingBottom="6dp"
                     android:paddingLeft="10dp"
                     android:paddingStart="8dp"
-                    android:paddingTop="6dp" >
+                    android:paddingTop="6dp">
 
                     <TextView
                         android:id="@+id/tvSubmissionDateTitle"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/meta_submission_date"
-                        android:textAppearance="@style/NormalText" >
-                    </TextView>
+                        android:textAppearance="@style/NormalText"></TextView>
 
                     <TextView
                         android:id="@+id/tvSubmissionDateText"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/meta_unknown"
-                        android:textAppearance="@style/NormalText" >
-                    </TextView>
+                        android:textAppearance="@style/NormalText"></TextView>
                 </LinearLayout>
 
                 <LinearLayout
@@ -70,8 +67,7 @@
                     android:layout_width="fill_parent"
                     android:layout_height="1dp"
                     android:background="@color/drawer_divier_bars_background"
-                    android:orientation="horizontal" >
-                </LinearLayout>
+                    android:orientation="horizontal"></LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/llViewsLifetime"
@@ -81,23 +77,21 @@
                     android:paddingBottom="6dp"
                     android:paddingLeft="10dp"
                     android:paddingStart="8dp"
-                    android:paddingTop="6dp" >
+                    android:paddingTop="6dp">
 
                     <TextView
                         android:id="@+id/tvLifetimeViewsTitle"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/meta_views_lifetime"
-                        android:textAppearance="@style/NormalText" >
-                    </TextView>
+                        android:textAppearance="@style/NormalText"></TextView>
 
                     <TextView
                         android:id="@+id/tvLifetimeViewsText"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/meta_unknown"
-                        android:textAppearance="@style/NormalText" >
-                    </TextView>
+                        android:textAppearance="@style/NormalText"></TextView>
                 </LinearLayout>
 
                 <LinearLayout
@@ -105,8 +99,7 @@
                     android:layout_width="fill_parent"
                     android:layout_height="1dp"
                     android:background="@color/drawer_divier_bars_background"
-                    android:orientation="horizontal" >
-                </LinearLayout>
+                    android:orientation="horizontal"></LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/llViewsToday"
@@ -116,23 +109,21 @@
                     android:paddingBottom="6dp"
                     android:paddingLeft="10dp"
                     android:paddingStart="8dp"
-                    android:paddingTop="6dp" >
+                    android:paddingTop="6dp">
 
                     <TextView
                         android:id="@+id/tvViewsTodayTitle"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/meta_views_today"
-                        android:textAppearance="@style/NormalText" >
-                    </TextView>
+                        android:textAppearance="@style/NormalText"></TextView>
 
                     <TextView
                         android:id="@+id/tvViewsTodayText"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/meta_unknown"
-                        android:textAppearance="@style/NormalText" >
-                    </TextView>
+                        android:textAppearance="@style/NormalText"></TextView>
                 </LinearLayout>
 
                 <LinearLayout
@@ -140,8 +131,7 @@
                     android:layout_width="fill_parent"
                     android:layout_height="1dp"
                     android:background="@color/drawer_divier_bars_background"
-                    android:orientation="horizontal" >
-                </LinearLayout>
+                    android:orientation="horizontal"></LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/llRating"
@@ -151,23 +141,21 @@
                     android:paddingBottom="6dp"
                     android:paddingLeft="10dp"
                     android:paddingStart="8dp"
-                    android:paddingTop="6dp" >
+                    android:paddingTop="6dp">
 
                     <TextView
                         android:id="@+id/tvAverageRatingTitle"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/meta_rating_average"
-                        android:textAppearance="@style/NormalText" >
-                    </TextView>
+                        android:textAppearance="@style/NormalText"></TextView>
 
                     <TextView
                         android:id="@+id/tvAverageRatingText"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/meta_unknown"
-                        android:textAppearance="@style/NormalText" >
-                    </TextView>
+                        android:textAppearance="@style/NormalText"></TextView>
                 </LinearLayout>
 
                 <LinearLayout
@@ -175,8 +163,7 @@
                     android:layout_width="fill_parent"
                     android:layout_height="1dp"
                     android:background="@color/drawer_divier_bars_background"
-                    android:orientation="horizontal" >
-                </LinearLayout>
+                    android:orientation="horizontal"></LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/llSubmittedBy"
@@ -186,23 +173,21 @@
                     android:paddingBottom="6dp"
                     android:paddingLeft="10dp"
                     android:paddingStart="8dp"
-                    android:paddingTop="6dp" >
+                    android:paddingTop="6dp">
 
                     <TextView
                         android:id="@+id/tvSubmittedByTitle"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/meta_submitted_by"
-                        android:textAppearance="@style/NormalText" >
-                    </TextView>
+                        android:textAppearance="@style/NormalText"></TextView>
 
                     <TextView
                         android:id="@+id/tvSubmittedByText"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/meta_unknown"
-                        android:textAppearance="@style/NormalText" >
-                    </TextView>
+                        android:textAppearance="@style/NormalText"></TextView>
                 </LinearLayout>
 
                 <LinearLayout
@@ -210,8 +195,7 @@
                     android:layout_width="fill_parent"
                     android:layout_height="1dp"
                     android:background="@color/drawer_divier_bars_background"
-                    android:orientation="horizontal" >
-                </LinearLayout>
+                    android:orientation="horizontal"></LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/llCountSubmissions"
@@ -221,15 +205,14 @@
                     android:paddingBottom="6dp"
                     android:paddingLeft="10dp"
                     android:paddingStart="8dp"
-                    android:paddingTop="6dp" >
+                    android:paddingTop="6dp">
 
                     <TextView
                         android:id="@+id/tvTotalSubmissionsMemberTitle"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/meta_submission_total"
-                        android:textAppearance="@style/NormalText" >
-                    </TextView>
+                        android:textAppearance="@style/NormalText"></TextView>
                 </LinearLayout>
 
                 <LinearLayout
@@ -239,7 +222,7 @@
                     android:orientation="horizontal"
                     android:paddingBottom="6dp"
                     android:paddingLeft="10dp"
-                    android:paddingStart="8dp" >
+                    android:paddingStart="8dp">
 
                     <TextView
                         android:id="@+id/tvTotalSubmissionsMemberText"
@@ -247,8 +230,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="top|start"
                         android:text="@string/meta_unknown"
-                        android:textAppearance="@style/NormalText" >
-                    </TextView>
+                        android:textAppearance="@style/NormalText"></TextView>
 
                     <TextView
                         android:id="@+id/tvTotalSubmissionsShow"
@@ -259,8 +241,7 @@
                         android:paddingRight="10dp"
                         android:text="@string/meta_show_all_cheats"
                         android:textAppearance="@style/NormalText"
-                        android:textColorHighlight="#FF0000" >
-                    </TextView>
+                        android:textColorHighlight="#FF0000"></TextView>
                 </LinearLayout>
 
                 <LinearLayout
@@ -268,8 +249,7 @@
                     android:layout_width="fill_parent"
                     android:layout_height="1dp"
                     android:background="@color/drawer_divier_bars_background"
-                    android:orientation="horizontal" >
-                </LinearLayout>
+                    android:orientation="horizontal"></LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/llMemberHomepage"
@@ -279,23 +259,21 @@
                     android:paddingBottom="6dp"
                     android:paddingLeft="10dp"
                     android:paddingStart="8dp"
-                    android:paddingTop="6dp" >
+                    android:paddingTop="6dp">
 
                     <TextView
                         android:id="@+id/tvMemberHomepageTitle"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/meta_member_homepage"
-                        android:textAppearance="@style/NormalText" >
-                    </TextView>
+                        android:textAppearance="@style/NormalText"></TextView>
 
                     <TextView
                         android:id="@+id/tvMemberHomepageText"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/meta_unknown"
-                        android:textAppearance="@style/NormalText" >
-                    </TextView>
+                        android:textAppearance="@style/NormalText"></TextView>
                 </LinearLayout>
             </LinearLayout>
         </ScrollView>

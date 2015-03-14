@@ -19,6 +19,7 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.util.SparseArray;
@@ -33,15 +34,9 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.amazon.device.ads.Ad;
-import com.amazon.device.ads.AdError;
-import com.amazon.device.ads.AdListener;
-import com.amazon.device.ads.AdProperties;
-import com.amazon.device.ads.AdRegistration;
 import com.appbrain.AppBrain;
 import com.cheatdatabase.businessobjects.Member;
 import com.cheatdatabase.fragments.ContactFormFragment;
@@ -64,7 +59,7 @@ import com.mopub.mobileads.MoPubView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends ActionBarActivity implements ActionBar.OnNavigationListener, AdListener {
+public class MainActivity extends ActionBarActivity implements ActionBar.OnNavigationListener {
 
     private static Typeface latoFontBold;
 
@@ -92,8 +87,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
     private Editor editor;
 
     private ViewGroup adViewContainer;
-    private com.amazon.device.ads.AdLayout amazonAdView;
-    private boolean amazonAdEnabled;
+
     private MoPubView mAdView;
 
     private static final String SCREEN_LABEL = "Main Activity";
@@ -105,28 +99,13 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
         setContentView(R.layout.activity_main);
         setTitle(R.string.app_name);
 
-        Reachability.registerReachability(this.getApplicationContext());
-
-        settings = getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
-        editor = settings.edit();
-
-        member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
-
-        latoFontBold = Tools.getFont(getAssets(), "Lato-Bold.ttf");
-
         init();
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        if (toolbar != null) {
-            setSupportActionBar(toolbar);
-        }
-
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeButtonEnabled(true);
-//        Tools.styleActionbar(this);
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        getSupportActionBar().setHomeButtonEnabled(true);
 
         DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        //drawerLayout.setStatusBarBackgroundColor(getResources().getColor(R.color.page_indicator_background));
+        drawerLayout.setStatusBarBackgroundColor(getResources().getColor(R.color.page_indicator_background));
 
         // Create Drawer
         createNavigationDrawer(savedInstanceState);
@@ -162,20 +141,22 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
     }
 
     private void init() {
-        AppBrain.init(this);
+        Reachability.registerReachability(this.getApplicationContext());
+
+        Tools.initLocalStorage(getApplicationContext(), settings, editor);
+
+//        settings = getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
+//        editor = settings.edit();
+
+        Tools.initToolbar(this, toolbar);
+        Tools.initMoPubAdView(this, mAdView);
         Tools.initGA(MainActivity.this, tracker, SCREEN_LABEL, "Main Activity", "Cheat-Database Main Activity");
+        AppBrain.init(this);
 
-        // Initialize ad views
-        AdRegistration.setAppKey(Konstanten.AMAZON_API_KEY);
-        amazonAdView = new com.amazon.device.ads.AdLayout(this, com.amazon.device.ads.AdSize.SIZE_320x50);
-        amazonAdView.setListener(this);
-        // Initialize view container
-        adViewContainer = (ViewGroup) findViewById(R.id.adview);
-        amazonAdEnabled = true;
-        adViewContainer.addView(amazonAdView);
-        amazonAdView.loadAd(new com.amazon.device.ads.AdTargetingOptions());
+        // FIXME - SETTINGS IS NULL HERE. WHY? >> Tools.initLocalStorage(getApplicationContext(), settings, editor);
+        member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
 
-        mAdView = Tools.createMoPubAdView(this);
+        latoFontBold = Tools.getFont(getAssets(), Konstanten.FONT_BOLD);
 
         // TODO FIXME - find out where this part was before and re-add it.
         FragmentManager frgManager = getFragmentManager();
@@ -272,7 +253,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
         getMenuInflater().inflate(R.menu.search_menu, menu);
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
-//		searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
 
         return super.onCreateOptionsMenu(menu);
     }
@@ -293,12 +274,12 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
         getMenuInflater().inflate(R.menu.search_menu, menu);
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
-//		searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
 
         // If the nav drawer is open, hide action items related to the content
         // view
-//		boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
-//		menu.findItem(R.id.search).setVisible(!drawerOpen);
+        boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
+        menu.findItem(R.id.search).setVisible(!drawerOpen);
 
         return super.onPrepareOptionsMenu(menu);
     }
@@ -543,45 +524,4 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
         finish();
     }
 
-    @Override
-    public void onAdCollapsed(Ad arg0) {
-        // TODO Auto-generated method stub
-    }
-
-    @Override
-    public void onAdDismissed(Ad arg0) {
-        // TODO Auto-generated method stub
-    }
-
-    @Override
-    public void onAdExpanded(Ad arg0) {
-        // TODO Auto-generated method stub
-    }
-
-    @Override
-    public void onAdFailedToLoad(Ad arg0, AdError arg1) {
-        Log.d("AMAZON ADS", "onAdFailedToLoad");
-        // Call AdMob SDK for backfill
-        if (amazonAdEnabled) {
-            amazonAdEnabled = false;
-            adViewContainer.removeView(amazonAdView);
-            adViewContainer.addView(mAdView);
-        }
-
-        mAdView.loadAd();
-    }
-
-    @Override
-    public void onAdLoaded(Ad arg0, AdProperties arg1) {
-        Log.d("AMAZON ADS", "onAdLoaded");
-        if (!amazonAdEnabled) {
-            amazonAdEnabled = true;
-            adViewContainer.removeView(mAdView);
-            adViewContainer.addView(amazonAdView);
-        }
-    }
-
-    public void refreshAd() {
-        amazonAdView.loadAd(new com.amazon.device.ads.AdTargetingOptions());
-    }
 }

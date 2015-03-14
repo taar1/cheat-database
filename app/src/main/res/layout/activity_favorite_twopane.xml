@@ -2,12 +2,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/standard_background" 
+    android:background="@color/standard_background"
     android:baselineAligned="false"
     android:divider="?android:attr/dividerHorizontal"
     android:orientation="horizontal"
-    android:showDividers="middle" 
-    tools:context="com.cheatdatabase.favorites.FavoriteCheatListActivity" >
+    android:showDividers="middle"
+    tools:context="com.cheatdatabase.favorites.FavoriteCheatListActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/color_primary_light"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <!--
     This layout is a two-pane layout for the Favorites

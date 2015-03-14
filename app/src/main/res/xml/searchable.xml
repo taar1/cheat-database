@@ -4,6 +4,6 @@
     android:searchSuggestAuthority="com.cheatdatabase.search.SearchSuggestionProvider"
     android:searchSuggestSelection=" ?"
     android:voiceLanguage="en"
-    android:voiceSearchMode="showVoiceSearchButton|launchRecognizer" >
+    android:voiceSearchMode="showVoiceSearchButton|launchRecognizer">
 
 </searchable>

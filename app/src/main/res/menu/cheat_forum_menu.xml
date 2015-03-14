@@ -1,10 +1,10 @@
-<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
         android:id="@+id/action_submit_cheat"
         android:icon="@android:drawable/stat_sys_upload"
         android:orderInCategory="200"
         android:showAsAction="ifRoom|withText"
-        android:title="@string/submit_cheat_short"/>
+        android:title="@string/submit_cheat_short" />
 
 </menu>

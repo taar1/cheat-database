@@ -4,7 +4,14 @@
     android:layout_height="match_parent"
     android:background="@color/standard_background"
     android:orientation="vertical"
-    android:weightSum="10" >
+    android:weightSum="10">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/color_primary_light"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <ImageView
         android:id="@+id/reload"
@@ -27,7 +34,7 @@
         android:paddingStart="4dp"
         android:showDividers="middle"
         android:weightSum="3"
-        tools:context="com.cheatdatabase.CheatListActivity" >
+        tools:context="com.cheatdatabase.CheatListActivity">
 
         <!--
     This layout is a two-pane layout for the Cheats
