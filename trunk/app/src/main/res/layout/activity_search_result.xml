@@ -1,8 +1,17 @@
-<merge xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:bootstrapbutton="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
     android:background="@drawable/bg"
-    tools:context=".SearchResultsActivity" >
+    android:orientation="vertical"
+    tools:context=".SearchResultsActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/color_primary_light"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <RelativeLayout
         android:id="@+id/somethingfound_layout"
@@ -15,7 +24,7 @@
         android:paddingRight="@dimen/activity_searchresult_horizontal_margin"
         android:paddingStart="@dimen/activity_searchresult_horizontal_margin"
         android:paddingTop="@dimen/activity_searchresult_vertical_margin"
-        tools:context="com.cheatdatabase.search.SearchResultsActivity" >
+        tools:context="com.cheatdatabase.search.SearchResultsActivity">
 
         <ImageView
             android:id="@+id/reload"
@@ -28,8 +37,7 @@
         <ExpandableListView
             android:id="@+id/listView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
-        </ExpandableListView>
+            android:layout_height="wrap_content"></ExpandableListView>
     </RelativeLayout>
 
     <LinearLayout
@@ -44,7 +52,7 @@
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:paddingStart="@dimen/activity_horizontal_margin"
         android:paddingTop="@dimen/activity_vertical_margin"
-        android:visibility="gone" >
+        android:visibility="gone">
 
         <TextView
             android:id="@+id/nothingfound_title"
@@ -72,4 +80,4 @@
             android:textSize="24sp" />
     </LinearLayout>
 
-</merge>
+</LinearLayout>

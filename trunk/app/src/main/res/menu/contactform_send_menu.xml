@@ -1,9 +1,9 @@
-<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
         android:id="@+id/action_send"
         android:icon="@drawable/ic_send"
         android:showAsAction="always|withText"
-        android:title="@string/contactform_sendmessage"/>
+        android:title="@string/contactform_sendmessage" />
 
 </menu>

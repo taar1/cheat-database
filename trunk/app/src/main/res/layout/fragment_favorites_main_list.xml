@@ -1,11 +1,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:bootstrapbutton="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="@drawable/bg"
     android:orientation="vertical"
-    tools:context=".MainActivity" >
+    tools:context=".MainActivity">
 
     <RelativeLayout
         android:id="@+id/somethingfound_layout"
@@ -18,13 +17,12 @@
         android:paddingRight="@dimen/activity_searchresult_horizontal_margin"
         android:paddingStart="@dimen/activity_searchresult_horizontal_margin"
         android:paddingTop="@dimen/activity_searchresult_vertical_margin"
-        tools:context="com.cheatdatabase.MainActivity" >
+        tools:context="com.cheatdatabase.MainActivity">
 
         <ExpandableListView
             android:id="@+id/listView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
-        </ExpandableListView>
+            android:layout_height="wrap_content"></ExpandableListView>
     </RelativeLayout>
 
     <LinearLayout
@@ -39,7 +37,7 @@
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:paddingStart="@dimen/activity_horizontal_margin"
         android:paddingTop="@dimen/activity_vertical_margin"
-        android:visibility="gone" >
+        android:visibility="gone">
 
         <TextView
             android:id="@+id/nothingfound_title"
@@ -67,16 +65,10 @@
             android:textSize="24sp" />
     </LinearLayout>
 
-    <!-- <com.mopub.mobileads.MoPubView
+    <com.mopub.mobileads.MoPubView
         android:id="@+id/adview"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom" /> -->
-    
-    <com.amazon.device.ads.AdLayout
-        android:id="@+id/adview"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_gravity="bottom"/>
+        android:layout_gravity="bottom" />
 
 </LinearLayout>

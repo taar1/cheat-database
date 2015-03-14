@@ -6,7 +6,7 @@
     android:paddingEnd="10dp"
     android:paddingLeft="3dp"
     android:paddingRight="10dp"
-    android:paddingStart="3dp" >
+    android:paddingStart="3dp">
 
     <TextView
         android:id="@+id/numeration"
@@ -22,7 +22,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:minWidth="80dp" >
+        android:minWidth="80dp">
 
         <ImageView
             android:id="@+id/avatar"
@@ -36,7 +36,7 @@
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical" >
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/membername"
@@ -45,8 +45,7 @@
             android:layout_weight="100"
             android:gravity="start"
             android:textAppearance="@style/TopMemberName"
-            android:textIsSelectable="false" >
-        </TextView>
+            android:textIsSelectable="false"></TextView>
 
         <TextView
             android:id="@+id/cheatcount"
@@ -55,8 +54,7 @@
             android:layout_weight="1"
             android:gravity="end"
             android:textAppearance="@style/TopMemberCheatCount"
-            android:textIsSelectable="false" >
-        </TextView>
+            android:textIsSelectable="false"></TextView>
 
         <TextView
             android:id="@+id/hi_message"

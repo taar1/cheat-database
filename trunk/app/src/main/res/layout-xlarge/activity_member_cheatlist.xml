@@ -3,7 +3,7 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="@drawable/bg"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
     <ImageView
         android:id="@+id/reload"
@@ -22,8 +22,7 @@
         android:cacheColorHint="#00000000"
         android:fadingEdge="vertical"
         android:fastScrollEnabled="true"
-        android:scrollbars="vertical" >
-    </ListView>
+        android:scrollbars="vertical"></ListView>
 
     <com.mopub.mobileads.MoPubView
         android:id="@+id/adview"

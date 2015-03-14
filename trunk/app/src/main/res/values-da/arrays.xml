@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<string-array name="report_reasons">
-		<item>Cheaten virker ikke</item>
-		<item>Snyd</item>
-		<item>Sjovt</item>
-		<item>Copyright-problem</item>
-		<item>Anden grund</item>
-	</string-array>
-	<string-array name="months">
-		<item>Januar</item>
-		<item>Februar</item>
-		<item>Marts</item>
-		<item>April</item>
-		<item>Maj</item>
-		<item>Juni</item>
-		<item>Juli</item>
-		<item>August</item>
-		<item>September</item>
-		<item>Oktober</item>
-		<item>November</item>
-		<item>December</item>
-	</string-array>
-	<string-array name="contextmenu_cheatview">
-		<item>kopier til udklipsholderen</item>
-	</string-array>
+    <string-array name="report_reasons">
+        <item>Cheaten virker ikke</item>
+        <item>Snyd</item>
+        <item>Sjovt</item>
+        <item>Copyright-problem</item>
+        <item>Anden grund</item>
+    </string-array>
+    <string-array name="months">
+        <item>Januar</item>
+        <item>Februar</item>
+        <item>Marts</item>
+        <item>April</item>
+        <item>Maj</item>
+        <item>Juni</item>
+        <item>Juli</item>
+        <item>August</item>
+        <item>September</item>
+        <item>Oktober</item>
+        <item>November</item>
+        <item>December</item>
+    </string-array>
+    <string-array name="contextmenu_cheatview">
+        <item>kopier til udklipsholderen</item>
+    </string-array>
 </resources>
