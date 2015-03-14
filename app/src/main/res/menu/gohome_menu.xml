@@ -1,7 +1,7 @@
-<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
         android:id="@+id/go_home"
-        android:title="@string/goto_main_screen"/>
+        android:title="@string/goto_main_screen" />
 
 </menu>

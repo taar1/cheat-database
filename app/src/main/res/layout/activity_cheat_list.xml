@@ -3,7 +3,14 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="@drawable/bg"
-    android:orientation="vertical" >
+    android:orientation="vertical">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/color_primary_light"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <ImageView
         android:id="@+id/reload"
@@ -13,7 +20,7 @@
         android:gravity="top"
         android:paddingTop="10dp"
         android:src="@drawable/reload"
-        android:visibility="invisible" /> 
+        android:visibility="invisible" />
 
     <!-- List item layout: cheatlist_item.xml -->
 
@@ -26,20 +33,11 @@
         tools:context=".CheatListActivity"
         tools:layout="@android:layout/list_content" />
 
-    <!-- <com.mopub.mobileads.MoPubView
+    <com.mopub.mobileads.MoPubView
         android:id="@+id/adview"
         android:layout_width="fill_parent"
         android:layout_height="50dp"
         android:layout_gravity="bottom"
         android:layout_weight="1"
-        android:gravity="top" /> -->
-    
-    <com.amazon.device.ads.AdLayout
-        android:id="@+id/adview"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_gravity="bottom"
-        android:layout_weight="1"
         android:gravity="top" />
-
 </LinearLayout>

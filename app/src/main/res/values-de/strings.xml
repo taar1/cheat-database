@@ -146,7 +146,7 @@
     <string name="submit_cheat_short">Cheat einsenden</string>
     <string name="submit_cheat_long">Für dieses Game ein Cheat einsenden</string>
     <string name="submit_cheat_your_title">Cheat Titel</string>
-    <string name="submit_cheat_your_body">Dein Cheat hier</string>
+    <string name="submit_cheat_your_body">Dein Cheat Text</string>
     <string name="submit_cheat_review">Cheat einsenden</string>
     <string name="cheat_submit_ok">Vielen Dank für Deinen Beitrag! Wir werden den Cheat prüfen und dich per E-Mail informieren, wenn wir ihn in unsere Datenbank aufnehmen werden. Du kannst jederzeit Deine geposteten Cheats auf www.cheat-database.com editieren oder löschen.</string>
     <string name="cheat_submit_nok">Irgendwas ist beim abschicken schiefgelaufen. Versuche es nochmals.</string>
@@ -165,7 +165,7 @@
     <string name="submit_cheat_consent_text">Ich bin damit einverstanden, dass mein eingesandter Cheat korrigiert und unter Umständen angepasst werden kann, damit er den minimalen Qualitätsanforderungen von Cheat-Database entspricht.\n\nDurch das Übermitteln des Cheats gewährst du Cheat-Database das Recht der Verwendung und Verbreitung des Inhaltes via App und Website. Für den Autor entstehen dadurch keinerlei finanziellen Ansprüche von Cheat-Database.\n\nAlle eingeschickten Cheats werden in Deinem Cheat-Database Account gespeichert. Wenn ein eingesendeter Cheat geprüft und aufgenommen wurde, wirst du per E-Mail darüber informiert.\n\nWenn du nachträglich irgendwelche Änderungen am Cheat vornehmen willst, kannst du dich via Webbrowser auf www.cheat-database.com einloggen. Im Member-Bereich kannst du Deine Cheats editieren, Screenshots hinzufügen/ändern oder den kompletten Cheat aus der Datenbank entfernen.</string>
     <string name="submit_cheat_title">Cheat einsenden</string>
     <string name="submit_cheat_agree_terms_conditions">Einsendekonditionen bestätigen</string>
-    <string name="guidelines">Richtlinien</string>
+    <string name="guidelines">Richtlinien zum Verfassen</string>
     <string name="submit_cheat_error_accept_conditions">Bitte bestätige die Einsendekonditionen indem du das Kästchen anklickst.</string>
 
     <!-- CRASHREPORT -->
@@ -272,10 +272,11 @@
     <string name="clear_search_history">Lösche den Suchverlauf</string>
     <string name="search_history_cleared">Suchverlauf gelöscht.</string>
     <string name="submit_cheat_instructions_activity_title">Für welches Game möchtest du einen Cheat einsenden?</string>
-    <string name="submit_cheat_instructions_activity_subtitle">Um einen Cheat einsenden zu können musst du zuerst die Datenbank nach dem passenden Game durchsuchen. In der Game-Ansicht befindet sich ein Link, um für dieses Game einen Cheat einzusenden. Beachte bitte, dass du für diese Aktion eingeloggt sein musst.</string>   
+    <string name="submit_cheat_instructions_activity_subtitle">Um einen Cheat einsenden zu können musst du zuerst die Datenbank nach dem passenden Game durchsuchen. In der Game-Ansicht befindet sich ein Link, um für dieses Game einen Cheat einzusenden. Beachte bitte, dass du für diese Aktion eingeloggt sein musst.</string>
     <string name="already_logged_in">Du bist bereits als %s eingeloggt. Möchtest du ausloggen?</string>
-    
-    <string name="sign_out">Ausloggen</string><string name="search_again">Nochmals suchen</string>
+
+    <string name="sign_out">Ausloggen</string>
+    <string name="search_again">Nochmals suchen</string>
     <string name="coming_soon">Folgt in Kürze!</string>
     <string name="login_to_submit">Einloggen um einzusenden</string>
     <string name="title_article_list">Artikel</string>
@@ -287,7 +288,7 @@
     <string name="rate_why_title">Bewerte Cheat-Database jetzt!</string>
     <string name="rate_why_text">Es würde uns wahnsinnig freuen, von dir 5 Sterne zu erhalten. Kriegen wir gute Bewertungen, werden mehr Leute Cheat-Database installieren. Mehr Benutzer bedeutet, mehr Cheats werden eingesendet. Und das bedeutet wiederum, mehr Cheats für DICH! :-)</string>
     <string name="system_overview">System Übersicht</string>
-    
+
     <string name="remove_favorite_neutral_ok">Favorit gelöscht.</string>
     <string name="remove_favorite_areyousure">Cheat von den Favoriten entfernen?</string>
     <string name="confirm">Bestätigen</string>

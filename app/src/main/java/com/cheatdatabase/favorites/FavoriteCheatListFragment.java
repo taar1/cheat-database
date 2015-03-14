@@ -1,7 +1,5 @@
 package com.cheatdatabase.favorites;
 
-import java.util.ArrayList;
-
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -24,193 +22,195 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.cheatdatabase.R;
-import com.cheatdatabase.helpers.CheatDatabaseAdapter;
-import com.cheatdatabase.helpers.Konstanten;
-import com.cheatdatabase.helpers.Tools;
 import com.cheatdatabase.businessobjects.Cheat;
 import com.cheatdatabase.businessobjects.Game;
 import com.cheatdatabase.businessobjects.Member;
+import com.cheatdatabase.helpers.CheatDatabaseAdapter;
+import com.cheatdatabase.helpers.Konstanten;
+import com.cheatdatabase.helpers.Tools;
 import com.google.gson.Gson;
+
+import java.util.ArrayList;
 
 /**
  * A list fragment representing a list of Favorites. This fragment also supports
  * tablet devices by allowing list items to be given an 'activated' state upon
  * selection. This helps indicate which item is currently being viewed in a
  * {@link FavoriteCheatDetailFragment}.
- * <p>
+ * <p/>
  * Activities containing this fragment MUST implement the
  * {@link com.cheatdatabase.favorites.FavoriteCheatListFragment.ElementsListClickHandler} interface.
  */
 public class FavoriteCheatListFragment extends ListFragment {
 
-	/**
-	 * The serialization (saved instance state) Bundle key representing the
-	 * activated item position. Only used on tablets.
-	 */
-	private static final String STATE_ACTIVATED_POSITION = "activated_position";
+    /**
+     * The serialization (saved instance state) Bundle key representing the
+     * activated item position. Only used on tablets.
+     */
+    private static final String STATE_ACTIVATED_POSITION = "activated_position";
 
-	/**
-	 * The fragment's current callback object, which is notified of list item
-	 * clicks.
-	 */
-	private ElementsListClickHandler handler = sDummyCallbacks;
+    /**
+     * The fragment's current callback object, which is notified of list item
+     * clicks.
+     */
+    private ElementsListClickHandler handler = sDummyCallbacks;
 
-	/**
-	 * The current activated item position. Only used on tablets.
-	 */
-	private int mActivatedPosition = ListView.INVALID_POSITION;
+    /**
+     * The current activated item position. Only used on tablets.
+     */
+    private int mActivatedPosition = ListView.INVALID_POSITION;
 
-	private FavoriteCheatListActivity ca;
+    private FavoriteCheatListActivity ca;
 
-	private CheatDatabaseAdapter db;
+    private CheatDatabaseAdapter db;
 
-	private SharedPreferences settings;
+    private SharedPreferences settings;
 
-	private Editor editor;
+    private Editor editor;
 
-	private Intent intent;
+    private Intent intent;
 
-	private Game gameObj;
+    private Game gameObj;
 
-	private ArrayList<Cheat> cheatsArray;
+    private ArrayList<Cheat> cheatsArray;
 
-//	private CheatAdapter mAdapter;
-	private ArrayList<Cheat> cheatsArrayList = new ArrayList<Cheat>();
+    //	private CheatAdapter mAdapter;
+    private ArrayList<Cheat> cheatsArrayList = new ArrayList<Cheat>();
 
-	private Cheat[] cheats;
+    private Cheat[] cheats;
 
-	private ProgressDialog mProgressDialog;
+    private ProgressDialog mProgressDialog;
 
-	private Typeface latoFontRegular;
+    private Typeface latoFontRegular;
 
-	private Member member;
-	private CheatAdapter cheatAdapter;
+    private Member member;
+    private CheatAdapter cheatAdapter;
 
-	/**
-	 * A callback interface that all activities containing this fragment must
-	 * implement. This mechanism allows activities to be notified of item
-	 * selections.
-	 */
-	public interface ElementsListClickHandler {
-		/**
-		 * Callback for when an item has been selected.
-		 */
-		public void onItemSelected(int id);
-	}
+    /**
+     * A callback interface that all activities containing this fragment must
+     * implement. This mechanism allows activities to be notified of item
+     * selections.
+     */
+    public interface ElementsListClickHandler {
+        /**
+         * Callback for when an item has been selected.
+         */
+        public void onItemSelected(int id);
+    }
 
-	/**
-	 * A dummy implementation of the {@link com.cheatdatabase.favorites.FavoriteCheatListFragment.ElementsListClickHandler} interface
-	 * that does nothing. Used only when this fragment is not attached to an
-	 * activity.
-	 */
-	private static ElementsListClickHandler sDummyCallbacks = new ElementsListClickHandler() {
-		@Override
-		public void onItemSelected(int id) {
-		}
-	};
+    /**
+     * A dummy implementation of the {@link com.cheatdatabase.favorites.FavoriteCheatListFragment.ElementsListClickHandler} interface
+     * that does nothing. Used only when this fragment is not attached to an
+     * activity.
+     */
+    private static ElementsListClickHandler sDummyCallbacks = new ElementsListClickHandler() {
+        @Override
+        public void onItemSelected(int id) {
+        }
+    };
 
-	/**
-	 * Mandatory empty constructor for the fragment manager to instantiate the
-	 * fragment (e.g. upon screen orientation changes).
-	 */
-	public FavoriteCheatListFragment() {
-	}
+    /**
+     * Mandatory empty constructor for the fragment manager to instantiate the
+     * fragment (e.g. upon screen orientation changes).
+     */
+    public FavoriteCheatListFragment() {
+    }
 
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
-		ca = (FavoriteCheatListActivity) getActivity();
-		latoFontRegular = Tools.getFont(getActivity().getAssets(), "Lato-Regular.ttf");
+        ca = (FavoriteCheatListActivity) getActivity();
+        latoFontRegular = Tools.getFont(getActivity().getAssets(), "Lato-Regular.ttf");
 
-		settings = ca.getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
+        settings = ca.getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
 
-		db = new CheatDatabaseAdapter(ca);
-		db.open();
+        db = new CheatDatabaseAdapter(ca);
+        db.open();
 
-		if (member == null) {
-			member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
-		}
+        if (member == null) {
+            member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
+        }
 
-		gameObj = (Game) ca.getIntent().getSerializableExtra("gameObj");
-		if (gameObj == null) {
-			new GetCheatsTask().execute(new Game());
-		} else {
-			new GetCheatsTask().execute(gameObj);
-		}
+        gameObj = (Game) ca.getIntent().getSerializableExtra("gameObj");
+        if (gameObj == null) {
+            new GetCheatsTask().execute(new Game());
+        } else {
+            new GetCheatsTask().execute(gameObj);
+        }
 
-		// db = new CheatDatabaseAdapter(ca);
-		// db.open();
+        // db = new CheatDatabaseAdapter(ca);
+        // db.open();
 
-		// intent = ca.getIntent();
-		// // Game Object without the Cheat contents
-		// gameObj = (Game) intent.getSerializableExtra("gameObj");
-		//
-		// ActionBar actionBar = ca.getActionBar();
-		// actionBar.setDisplayHomeAsUpEnabled(true);
-		// actionBar.setTitle(gameObj.getGameName());
-		// actionBar.setSubtitle(gameObj.getSystemName());
+        // intent = ca.getIntent();
+        // // Game Object without the Cheat contents
+        // gameObj = (Game) intent.getSerializableExtra("gameObj");
+        //
+        // ActionBar actionBar = ca.getActionBar();
+        // actionBar.setDisplayHomeAsUpEnabled(true);
+        // actionBar.setTitle(gameObj.getGameName());
+        // actionBar.setSubtitle(gameObj.getSystemName());
 
-		// TODO: replace with a real list adapter.
-		// setListAdapter(new
-		// ArrayAdapter<DummyContent.DummyItem>(getActivity(),
-		// android.R.layout.simple_list_item_activated_1, android.R.id.text1,
-		// DummyContent.ITEMS));
+        // TODO: replace with a real list adapter.
+        // setListAdapter(new
+        // ArrayAdapter<DummyContent.DummyItem>(getActivity(),
+        // android.R.layout.simple_list_item_activated_1, android.R.id.text1,
+        // DummyContent.ITEMS));
 
-	}
+    }
 
-	// @Override
-	// public View onCreateView(LayoutInflater inflater, ViewGroup container,
-	// Bundle savedInstanceState) {
-	//
-	// View rootView = inflater.inflate(R.layout.activity_favorite_list,
-	// container, false);
-	//
-	// // ca = getActivity();
-	// // latoFontRegular = Tools.getFont(getActivity().getAssets(),
-	// // "Lato-Regular.ttf");
-	//
-	// // db = new CheatDatabaseAdapter(ca);
-	// // db.open();
-	//
-	// // settings = ca.getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
-	// // editor = settings.edit();
-	//
-	// // intent = ca.getIntent();
-	// // // Game Object without the Cheat contents
-	// // gameObj = (Game) intent.getSerializableExtra("gameObj");
-	// //
-	// // ActionBar actionBar = ca.getActionBar();
-	// // actionBar.setDisplayHomeAsUpEnabled(true);
-	// // actionBar.setTitle(gameObj.getGameName());
-	// // actionBar.setSubtitle(gameObj.getSystemName());
-	// //
-	//
-	// // db = new CheatDatabaseAdapter(ca);
-	// // db.open();
-	// // cheats = db.getAllFavoritedCheatsByGame(gameObj.getGameId());
-	//
-	// // populateList();
-	//
-	// return rootView;
-	// }
+    // @Override
+    // public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    // Bundle savedInstanceState) {
+    //
+    // View rootView = inflater.inflate(R.layout.activity_favorite_list,
+    // container, false);
+    //
+    // // ca = getActivity();
+    // // latoFontRegular = Tools.getFont(getActivity().getAssets(),
+    // // "Lato-Regular.ttf");
+    //
+    // // db = new CheatDatabaseAdapter(ca);
+    // // db.open();
+    //
+    // // settings = ca.getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
+    // // editor = settings.edit();
+    //
+    // // intent = ca.getIntent();
+    // // // Game Object without the Cheat contents
+    // // gameObj = (Game) intent.getSerializableExtra("gameObj");
+    // //
+    // // ActionBar actionBar = ca.getActionBar();
+    // // actionBar.setDisplayHomeAsUpEnabled(true);
+    // // actionBar.setTitle(gameObj.getGameName());
+    // // actionBar.setSubtitle(gameObj.getSystemName());
+    // //
+    //
+    // // db = new CheatDatabaseAdapter(ca);
+    // // db.open();
+    // // cheats = db.getAllFavoritedCheatsByGame(gameObj.getGameId());
+    //
+    // // populateList();
+    //
+    // return rootView;
+    // }
 
-	// @Override
-	// public void onActivityCreated(Bundle savedInstanceState) {
-	// super.onActivityCreated(savedInstanceState);
-	//
-	// // Bundle elements = this.getArguments();
-	// // // cheats = (Cheat[]) elements.getSerializable("cheats");
-	// // gameObj = (Game) elements.getSerializable("gameObj");
-	//
-	// // ActionBar actionBar = ca.getActionBar();
-	// // actionBar.setDisplayHomeAsUpEnabled(true);
-	// // actionBar.setTitle(gameObj.getGameName());
-	// // actionBar.setSubtitle(gameObj.getSystemName());
-	//
-	// populateList();
-	//
-	// }
+    // @Override
+    // public void onActivityCreated(Bundle savedInstanceState) {
+    // super.onActivityCreated(savedInstanceState);
+    //
+    // // Bundle elements = this.getArguments();
+    // // // cheats = (Cheat[]) elements.getSerializable("cheats");
+    // // gameObj = (Game) elements.getSerializable("gameObj");
+    //
+    // // ActionBar actionBar = ca.getActionBar();
+    // // actionBar.setDisplayHomeAsUpEnabled(true);
+    // // actionBar.setTitle(gameObj.getGameName());
+    // // actionBar.setSubtitle(gameObj.getSystemName());
+    //
+    // populateList();
+    //
+    // }
 
 //	private void populateList() {
 //
@@ -246,13 +246,13 @@ public class FavoriteCheatListFragment extends ListFragment {
 //
 //	}
 
-	// @Override
-	// public void onResume() {
-	// super.onResume();
-	// setListAdapter(mAdapter);
-	// getViewContent();
-	// mAdapter.notifyDataSetChanged();
-	// }
+    // @Override
+    // public void onResume() {
+    // super.onResume();
+    // setListAdapter(mAdapter);
+    // getViewContent();
+    // mAdapter.notifyDataSetChanged();
+    // }
 
 //	private final Runnable returnRes = new Runnable() {
 //
@@ -276,167 +276,167 @@ public class FavoriteCheatListFragment extends ListFragment {
 //		}
 //	};
 
-	private class GetCheatsTask extends AsyncTask<Game, Void, Void> {
+    private class GetCheatsTask extends AsyncTask<Game, Void, Void> {
 
-		@Override
-		protected Void doInBackground(Game... params) {
+        @Override
+        protected Void doInBackground(Game... params) {
 
-			if (params[0].getCheats() == null) {
-				cheats = getCheatsNow();
-			} else {
-				cheats = params[0].getCheats();
-			}
-			
+            if (params[0].getCheats() == null) {
+                cheats = getCheatsNow();
+            } else {
+                cheats = params[0].getCheats();
+            }
 
-			return null;
-		}
 
-		@Override
-		protected void onPostExecute(Void result) {
-			super.onPostExecute(result);
+            return null;
+        }
 
-			cheatAdapter = new CheatAdapter(getActivity(), R.layout.cheatlist_item, cheatsArrayList);
-			setListAdapter(cheatAdapter);
-		}
-	}
+        @Override
+        protected void onPostExecute(Void result) {
+            super.onPostExecute(result);
 
-	private Cheat[] getCheatsNow() {
+            cheatAdapter = new CheatAdapter(getActivity(), R.layout.cheatlist_item, cheatsArrayList);
+            setListAdapter(cheatAdapter);
+        }
+    }
 
-		try {
-			cheats = db.getAllFavoritedCheatsByGame(gameObj.getGameId());
-			cheatsArrayList = new ArrayList<Cheat>();
+    private Cheat[] getCheatsNow() {
 
-			if (cheats != null) {
-				for (int j = 0; j < cheats.length; j++) {
-					cheatsArrayList.add(cheats[j]);
-				}
-			} else {
-				Log.e("FavoriteCheatListActivity()", "db.getAllFavoritedCheatsByGame() == null");
-			}
+        try {
+            cheats = db.getAllFavoritedCheatsByGame(gameObj.getGameId());
+            cheatsArrayList = new ArrayList<Cheat>();
 
-			gameObj.setCheats(cheats);
+            if (cheats != null) {
+                for (int j = 0; j < cheats.length; j++) {
+                    cheatsArrayList.add(cheats[j]);
+                }
+            } else {
+                Log.e("FavoriteCheatListActivity()", "db.getAllFavoritedCheatsByGame() == null");
+            }
 
-		} catch (Exception ex) {
-			Log.e(getClass().getName(), "Error executing getCheats()", ex);
-		}
+            gameObj.setCheats(cheats);
 
-		return cheats;
-	}
+        } catch (Exception ex) {
+            Log.e(getClass().getName(), "Error executing getCheats()", ex);
+        }
 
-	private class CheatAdapter extends ArrayAdapter<Cheat> {
+        return cheats;
+    }
 
-		private final ArrayList<Cheat> arr_cheats;
+    private class CheatAdapter extends ArrayAdapter<Cheat> {
 
-		public CheatAdapter(Context context, int textViewResourceId, ArrayList<Cheat> items) {
-			super(context, textViewResourceId, items);
-			this.arr_cheats = items;
-		}
+        private final ArrayList<Cheat> arr_cheats;
 
-		@Override
-		public View getView(int position, View convertView, ViewGroup parent) {
-			View v = convertView;
-			if (v == null) {
-				LayoutInflater vi = (LayoutInflater) ca.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-				v = vi.inflate(R.layout.cheatlist_item, null);
-			}
+        public CheatAdapter(Context context, int textViewResourceId, ArrayList<Cheat> items) {
+            super(context, textViewResourceId, items);
+            this.arr_cheats = items;
+        }
 
-			Cheat cheat = arr_cheats.get(position);
-			if (cheat != null) {
-				TextView tt = (TextView) v.findViewById(R.id.cheat_title);
-				tt.setText(cheat.getCheatTitle());
-				tt.setTypeface(latoFontRegular);
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            View v = convertView;
+            if (v == null) {
+                LayoutInflater vi = (LayoutInflater) ca.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                v = vi.inflate(R.layout.cheatlist_item, null);
+            }
 
-				ImageView flag_new = (ImageView) v.findViewById(R.id.newaddition);
-				flag_new.setVisibility(View.GONE);
+            Cheat cheat = arr_cheats.get(position);
+            if (cheat != null) {
+                TextView tt = (TextView) v.findViewById(R.id.cheat_title);
+                tt.setText(cheat.getCheatTitle());
+                tt.setTypeface(latoFontRegular);
 
-				ImageView flag_screenshots = (ImageView) v.findViewById(R.id.screenshots);
-				if (cheat.hasScreenshotOnSd()) {
-					flag_screenshots.setVisibility(View.VISIBLE);
-					flag_screenshots.setImageResource(R.drawable.flag_img);
-				} else {
-					flag_screenshots.setVisibility(View.GONE);
-				}
+                ImageView flag_new = (ImageView) v.findViewById(R.id.newaddition);
+                flag_new.setVisibility(View.GONE);
 
-				ImageView flag_german = (ImageView) v.findViewById(R.id.flag);
-				if (cheat.getLanguageId() == 2) { // 2 = Deutsch
-					flag_german.setVisibility(View.VISIBLE);
-					flag_german.setImageResource(R.drawable.flag_german);
-				} else {
-					flag_german.setVisibility(View.GONE);
-				}
+                ImageView flag_screenshots = (ImageView) v.findViewById(R.id.screenshots);
+                if (cheat.hasScreenshotOnSd()) {
+                    flag_screenshots.setVisibility(View.VISIBLE);
+                    flag_screenshots.setImageResource(R.drawable.flag_img);
+                } else {
+                    flag_screenshots.setVisibility(View.GONE);
+                }
 
-			}
-			return v;
-		}
-	}
+                ImageView flag_german = (ImageView) v.findViewById(R.id.flag);
+                if (cheat.getLanguageId() == 2) { // 2 = Deutsch
+                    flag_german.setVisibility(View.VISIBLE);
+                    flag_german.setImageResource(R.drawable.flag_german);
+                } else {
+                    flag_german.setVisibility(View.GONE);
+                }
 
-	@Override
-	public void onViewCreated(View view, Bundle savedInstanceState) {
-		super.onViewCreated(view, savedInstanceState);
+            }
+            return v;
+        }
+    }
 
-		// Restore the previously serialized activated item position.
-		if (savedInstanceState != null && savedInstanceState.containsKey(STATE_ACTIVATED_POSITION)) {
-			setActivatedPosition(savedInstanceState.getInt(STATE_ACTIVATED_POSITION));
-		}
-	}
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
-	@Override
-	public void onAttach(Activity activity) {
-		super.onAttach(activity);
+        // Restore the previously serialized activated item position.
+        if (savedInstanceState != null && savedInstanceState.containsKey(STATE_ACTIVATED_POSITION)) {
+            setActivatedPosition(savedInstanceState.getInt(STATE_ACTIVATED_POSITION));
+        }
+    }
 
-		// Activities containing this fragment must implement its callbacks.
-		if (!(activity instanceof ElementsListClickHandler)) {
-			throw new IllegalStateException("Activity must implement fragment's callbacks.");
-		}
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
 
-		handler = (ElementsListClickHandler) activity;
-	}
+        // Activities containing this fragment must implement its callbacks.
+        if (!(activity instanceof ElementsListClickHandler)) {
+            throw new IllegalStateException("Activity must implement fragment's callbacks.");
+        }
 
-	@Override
-	public void onDetach() {
-		super.onDetach();
+        handler = (ElementsListClickHandler) activity;
+    }
 
-		// Reset the active callbacks interface to the dummy implementation.
-		handler = sDummyCallbacks;
-	}
+    @Override
+    public void onDetach() {
+        super.onDetach();
 
-	@Override
-	public void onListItemClick(ListView listView, View view, int position, long id) {
-		super.onListItemClick(listView, view, position, id);
+        // Reset the active callbacks interface to the dummy implementation.
+        handler = sDummyCallbacks;
+    }
 
-		// Notify the active callbacks interface (the activity, if the
-		// fragment is attached to one) that an item has been selected.
-		// mCallbacks.onItemSelected(DummyContent.ITEMS.get(position).id);
-		handler.onItemSelected(position);
-	}
+    @Override
+    public void onListItemClick(ListView listView, View view, int position, long id) {
+        super.onListItemClick(listView, view, position, id);
 
-	@Override
-	public void onSaveInstanceState(Bundle outState) {
-		super.onSaveInstanceState(outState);
-		if (mActivatedPosition != AdapterView.INVALID_POSITION) {
-			// Serialize and persist the activated item position.
-			outState.putInt(STATE_ACTIVATED_POSITION, mActivatedPosition);
-		}
-	}
+        // Notify the active callbacks interface (the activity, if the
+        // fragment is attached to one) that an item has been selected.
+        // mCallbacks.onItemSelected(DummyContent.ITEMS.get(position).id);
+        handler.onItemSelected(position);
+    }
 
-	/**
-	 * Turns on activate-on-click mode. When this mode is on, list items will be
-	 * given the 'activated' state when touched.
-	 */
-	public void setActivateOnItemClick(boolean activateOnItemClick) {
-		// When setting CHOICE_MODE_SINGLE, ListView will automatically
-		// give items the 'activated' state when touched.
-		getListView().setChoiceMode(activateOnItemClick ? AbsListView.CHOICE_MODE_SINGLE : AbsListView.CHOICE_MODE_NONE);
-	}
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        if (mActivatedPosition != AdapterView.INVALID_POSITION) {
+            // Serialize and persist the activated item position.
+            outState.putInt(STATE_ACTIVATED_POSITION, mActivatedPosition);
+        }
+    }
 
-	private void setActivatedPosition(int position) {
-		if (position == AdapterView.INVALID_POSITION) {
-			getListView().setItemChecked(mActivatedPosition, false);
-		} else {
-			getListView().setItemChecked(position, true);
-		}
+    /**
+     * Turns on activate-on-click mode. When this mode is on, list items will be
+     * given the 'activated' state when touched.
+     */
+    public void setActivateOnItemClick(boolean activateOnItemClick) {
+        // When setting CHOICE_MODE_SINGLE, ListView will automatically
+        // give items the 'activated' state when touched.
+        getListView().setChoiceMode(activateOnItemClick ? AbsListView.CHOICE_MODE_SINGLE : AbsListView.CHOICE_MODE_NONE);
+    }
 
-		mActivatedPosition = position;
-	}
+    private void setActivatedPosition(int position) {
+        if (position == AdapterView.INVALID_POSITION) {
+            getListView().setItemChecked(mActivatedPosition, false);
+        } else {
+            getListView().setItemChecked(position, true);
+        }
+
+        mActivatedPosition = position;
+    }
 
 }

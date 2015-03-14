@@ -12,8 +12,7 @@
             <option value="$PROJECT_DIR$/NiceButtons2" />
             <option value="$PROJECT_DIR$/VPILibrary" />
             <option value="$PROJECT_DIR$/app" />
-            <option value="$PROJECT_DIR$/libraries" />
-            <option value="$PROJECT_DIR$/libraries/mopub-v3.3.0" />
+            <option value="$PROJECT_DIR$/mopub-sdk" />
           </set>
         </option>
       </GradleProjectSettings>

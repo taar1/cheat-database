@@ -3,7 +3,7 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical"
-    tools:context=".TopMembersActivity" >
+    tools:context=".TopMembersActivity">
 
     <ImageView
         android:id="@+id/reload"
@@ -24,7 +24,6 @@
         android:fadingEdge="vertical"
         android:fastScrollEnabled="true"
         android:paddingTop="10dp"
-        android:scrollbars="vertical" >
-    </ListView>
+        android:scrollbars="vertical"></ListView>
 
 </LinearLayout>

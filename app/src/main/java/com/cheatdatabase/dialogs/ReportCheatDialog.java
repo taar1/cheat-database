@@ -10,32 +10,31 @@ import com.cheatdatabase.R;
 
 /**
  * Dialog displaying a list of reasons to report a particular cheat.
- * 
+ *
  * @author Dominik
- * 
  */
 public class ReportCheatDialog extends DialogFragment {
 
-	public interface ReportCheatDialogListener {
-		void onFinishReportDialog(int selectedReason);
-	}
+    public interface ReportCheatDialogListener {
+        void onFinishReportDialog(int selectedReason);
+    }
 
-	public ReportCheatDialog() {
+    public ReportCheatDialog() {
 
-	}
+    }
 
-	@Override
-	public Dialog onCreateDialog(Bundle savedInstanceState) {
-		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-		builder.setTitle(R.string.report_cheat_title).setItems(R.array.report_reasons, new DialogInterface.OnClickListener() {
-			@Override
-			public void onClick(DialogInterface dialog, int selectedReason) {
-				ReportCheatDialogListener activity = (ReportCheatDialogListener) getActivity();
-				activity.onFinishReportDialog(selectedReason);
-				dismiss();
-			}
-		});
-		return builder.create();
-	}
+    @Override
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle(R.string.report_cheat_title).setItems(R.array.report_reasons, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int selectedReason) {
+                ReportCheatDialogListener activity = (ReportCheatDialogListener) getActivity();
+                activity.onFinishReportDialog(selectedReason);
+                dismiss();
+            }
+        });
+        return builder.create();
+    }
 
 }

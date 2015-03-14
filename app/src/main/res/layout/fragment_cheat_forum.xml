@@ -3,7 +3,7 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="@color/standard_background"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
     <include
         android:layout_width="wrap_content"
@@ -22,7 +22,7 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_weight="100"
-        android:orientation="vertical" >
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/tvEmpty"
@@ -39,14 +39,13 @@
             android:id="@+id/sv"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:scrollbars="vertical" >
+            android:scrollbars="vertical">
 
             <LinearLayout
                 android:id="@+id/llForumMain"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical" >
-            </LinearLayout>
+                android:orientation="vertical"></LinearLayout>
         </ScrollView>
     </LinearLayout>
 
@@ -54,7 +53,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#ff0000"
-        android:orientation="vertical" >
+        android:orientation="vertical">
 
         <com.mopub.mobileads.MoPubView
             android:id="@+id/adview"
@@ -62,8 +61,7 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:background="#000000"
-            android:minHeight="52dp" >
-        </com.mopub.mobileads.MoPubView>
+            android:minHeight="52dp"></com.mopub.mobileads.MoPubView>
     </LinearLayout>
 
     <LinearLayout
@@ -72,7 +70,7 @@
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:padding="2dp" >
+        android:padding="2dp">
 
         <EditText
             android:id="@+id/etEnterForumPost"
@@ -84,7 +82,7 @@
             android:background="@android:drawable/editbox_background"
             android:hint="@string/forum_hint"
             android:minWidth="200dp"
-            android:textColor="#000000" >
+            android:textColor="#000000">
 
             <requestFocus />
         </EditText>
