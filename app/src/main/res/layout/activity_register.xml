@@ -1,6 +1,18 @@
-<merge xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
     tools:context=".RegisterActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/color_primary_light"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <!-- Login progress -->
 
@@ -73,9 +85,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="top"
-                    android:background="@drawable/bluedark01_btn_default_holo_dark"
                     android:layout_marginTop="16dp"
                     android:layout_weight="1"
+                    android:background="@drawable/bluedark01_btn_default_holo_dark"
                     android:paddingLeft="32dp"
                     android:paddingRight="32dp"
                     android:text="@string/action_register_short" />
@@ -83,4 +95,4 @@
         </LinearLayout>
     </ScrollView>
 
-</merge>
+</LinearLayout>

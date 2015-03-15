@@ -51,6 +51,7 @@
     <string name="goto_main_screen">Startseite</string>
     <string name="goto_cheat">Zum Cheat</string>
     <string name="goto_news">News</string>
+    <string name="goto_games_and_cheats">Games &amp; Cheats</string>
     <string name="goto_cheat_list">Zur Cheat-Liste</string>
     <string name="menu_fulltext_search_short">Volltextsuche</string>
     <string name="menu_fulltext_search_long">Volltextsuche in diesen Cheats</string>

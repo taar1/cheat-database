@@ -86,12 +86,10 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
     private SharedPreferences settings;
     private Editor editor;
 
-    private ViewGroup adViewContainer;
-
     private MoPubView mAdView;
 
     private static final String SCREEN_LABEL = "Main Activity";
-    private Toolbar toolbar;
+    private Toolbar mToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,9 +98,6 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
         setTitle(R.string.app_name);
 
         init();
-
-//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-//        getSupportActionBar().setHomeButtonEnabled(true);
 
         DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawerLayout.setStatusBarBackgroundColor(getResources().getColor(R.color.page_indicator_background));
@@ -143,17 +138,21 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
     private void init() {
         Reachability.registerReachability(this.getApplicationContext());
 
-        Tools.initLocalStorage(getApplicationContext(), settings, editor);
+        settings = getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
+        editor = settings.edit();
 
-//        settings = getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
-//        editor = settings.edit();
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        mAdView = new MoPubView(this);
 
-        Tools.initToolbar(this, toolbar);
-        Tools.initMoPubAdView(this, mAdView);
+        Tools.initToolbarBase(this, mToolbar);
+
+        // FIXME ads werden nicht angezeigt...
+        mAdView = Tools.initMoPubAdView(this, mAdView);
         Tools.initGA(MainActivity.this, tracker, SCREEN_LABEL, "Main Activity", "Cheat-Database Main Activity");
+
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.app_icon_fox);
         AppBrain.init(this);
 
-        // FIXME - SETTINGS IS NULL HERE. WHY? >> Tools.initLocalStorage(getApplicationContext(), settings, editor);
         member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
 
         latoFontBold = Tools.getFont(getAssets(), Konstanten.FONT_BOLD);
@@ -173,10 +172,12 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
     // http://developer.android.com/training/implementing-navigation/nav-drawer.html#Init
     private void createNavigationDrawer(Bundle savedInstanceState) {
         mTitle = mDrawerTitle = getTitle();
-//        mNavigationDrawerListEntries =
-//        getResources().getStringArray(R.array.main_navigation_drawer);
+
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        mDrawerList = (ListView) findViewById(R.id.left_drawer);
+        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, mToolbar, R.string.drawer_open, R.string.drawer_close);
+        mDrawerLayout.setDrawerListener(mDrawerToggle);
+        getSupportActionBar().setHomeButtonEnabled(true);
+        mDrawerToggle.syncState();
 
         LinearLayout drawerHeaderLayout = new LinearLayout(this);
         drawerHeaderLayout.setPadding(0, 40, 0, 60);
@@ -186,6 +187,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
         drawerHeaderLogo.setImageResource(R.drawable.logo_full_small);
         drawerHeaderLayout.addView(drawerHeaderLogo);
 
+        mDrawerList = (ListView) findViewById(R.id.left_drawer);
         mDrawerList.addHeaderView(drawerHeaderLayout);
         mDrawerList.setHeaderDividersEnabled(true);
 
@@ -194,7 +196,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
 
         // Add Drawer Item to dataList
         dataList = new ArrayList<>();
-        dataList.add(new DrawerItem(getString(R.string.goto_main_screen), R.drawable.ic_home));
+        dataList.add(new DrawerItem(getString(R.string.goto_games_and_cheats), R.drawable.ic_home));
         dataList.add(new DrawerItem(getString(R.string.goto_news), R.drawable.ic_info));
         dataList.add(new DrawerItem(getString(R.string.favorites), R.drawable.ic_favorite));
         dataList.add(new DrawerItem(getString(R.string.top_members_title), R.drawable.ic_topmembers));
@@ -216,6 +218,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
             public void onDrawerClosed(View view) {
                 //getActionBar().setTitle(mTitle);
                 invalidateOptionsMenu();
+                syncState();
             }
 
             /** Called when a drawer has settled in a completely open state. */
@@ -225,9 +228,10 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
 
                 // creates call to onPrepareOptionsMenu()
                 invalidateOptionsMenu();
+                syncState();
             }
         };
-
+        mDrawerToggle.syncState();
         // Set the drawer toggle as the DrawerListener
         mDrawerLayout.setDrawerListener(mDrawerToggle);
 
@@ -311,7 +315,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
         // startActivity(explicitIntent);
         // } else {
         Fragment fragment = new SystemListFragment();
-        //getActionBar().setTitle(R.string.app_name);
+        //getSupportActionBar().setTitle(R.string.app_name);
 
         FragmentManager frgManager = getFragmentManager();
         frgManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
@@ -368,7 +372,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
                 invalidateOptionsMenu();
                 return true;
             default:
-                return false;
+                return super.onOptionsItemSelected(item);
         }
     }
 
@@ -399,7 +403,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
                 // actionBar.setListNavigationCallbacks(new
                 // GameSystemsAdapter(getActionBarThemedContextCompat(),
                 // allSystemsPlusEmpty), this);
-                toolbar.setTitle(R.string.app_name);
+                mToolbar.setTitle(R.string.app_name);
                 isFragment = true;
                 break;
             case DRAWER_NEWS:
@@ -407,7 +411,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
                 // Remove System-Select Drop-Down
 //                actionBar.setListNavigationCallbacks(null, null);
 //                actionBar.setNavigationMode(0);
-                toolbar.setTitle(R.string.news_title);
+                mToolbar.setTitle(R.string.news_title);
                 isFragment = true;
                 break;
             case DRAWER_FAVORITES:
@@ -417,7 +421,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
                 // Remove System-Select Drop-Down
 //                actionBar.setListNavigationCallbacks(null, null);
 //                actionBar.setNavigationMode(0);
-                toolbar.setTitle(R.string.favorites);
+                mToolbar.setTitle(R.string.favorites);
                 isFragment = true;
                 break;
             case DRAWER_TOP_MEMBERS:
@@ -427,7 +431,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
 //                actionBar.setNavigationMode(0);
 //                // Remove System-Select Drop-Down
 //                actionBar.setListNavigationCallbacks(null, null);
-                toolbar.setTitle(R.string.top_members_top_helping);
+                mToolbar.setTitle(R.string.top_members_top_helping);
                 isFragment = true;
                 break;
             case DRAWER_SUBMIT_CHEAT:
@@ -437,7 +441,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
 //                actionBar.setNavigationMode(0);
 //                // Remove System-Select Drop-Down
 //                actionBar.setListNavigationCallbacks(null, null);
-                toolbar.setTitle(R.string.submit_cheat_short);
+                mToolbar.setTitle(R.string.submit_cheat_short);
                 isFragment = true;
                 break;
             case DRAWER_CONTACT:
@@ -447,7 +451,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
 //                actionBar.setNavigationMode(0);
 //                // Remove System-Select Drop-Down
 //                actionBar.setListNavigationCallbacks(null, null);
-                toolbar.setTitle(R.string.contactform_title);
+                mToolbar.setTitle(R.string.contactform_title);
                 isFragment = true;
                 break;
             case DRAWER_MORE_APPS:

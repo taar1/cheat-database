@@ -90,7 +90,7 @@ public class CheatForumActivity extends ActionBarActivity implements CheatListFr
     private ImageView reloadView;
 
     private static final String SCREEN_LABEL = "Cheat Forum Activity";
-    private Toolbar toolbar;
+    private Toolbar mToolbar;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -153,9 +153,13 @@ public class CheatForumActivity extends ActionBarActivity implements CheatListFr
     private void init() {
         Reachability.registerReachability(this.getApplicationContext());
 
-        Tools.initLocalStorage(this, settings, editor);
+        settings = getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
+        editor = settings.edit();
+
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        mAdView = new MoPubView(this);
         Tools.initMoPubAdView(this, mAdView);
-        Tools.initToolbar(this, toolbar);
+        Tools.initToolbarBase(this, mToolbar);
 
         latoFontLight = Tools.getFont(getAssets(), "Lato-Light.ttf");
         latoFontBold = Tools.getFont(getAssets(), "Lato-Bold.ttf");

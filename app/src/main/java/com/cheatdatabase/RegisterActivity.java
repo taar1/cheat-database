@@ -3,8 +3,6 @@ package com.cheatdatabase;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
-import android.app.ActionBar;
-import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -12,6 +10,8 @@ import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
@@ -32,7 +32,7 @@ import com.cheatdatabase.helpers.Webservice;
  * Activity which displays a login screen to the user, offering registration as
  * well.
  */
-public class RegisterActivity extends Activity {
+public class RegisterActivity extends ActionBarActivity {
 
     /**
      * The default email to populate the email field with.
@@ -65,22 +65,14 @@ public class RegisterActivity extends Activity {
     private Typeface latoFontLight;
 
     private Button registerButton;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-        Reachability.registerReachability(this.getApplicationContext());
 
-        Tools.styleActionbar(this);
-        ActionBar actionBar = getActionBar();
-        actionBar.setHomeButtonEnabled(true);
-
-        latoFontBold = Tools.getFont(getAssets(), "Lato-Bold.ttf");
-        latoFontLight = Tools.getFont(getAssets(), "Lato-Light.ttf");
-
-        settings = getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
-        editor = settings.edit();
+        init();
 
         // Set up the login form.
         mEmail = getIntent().getStringExtra(EXTRA_EMAIL);
@@ -135,6 +127,19 @@ public class RegisterActivity extends Activity {
                 }
             }
         });
+
+    }
+
+    private void init() {
+        Reachability.registerReachability(this.getApplicationContext());
+
+        settings = getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
+        editor = settings.edit();
+
+        Tools.initToolbarBase(this, toolbar);
+
+        latoFontBold = Tools.getFont(getAssets(), "Lato-Bold.ttf");
+        latoFontLight = Tools.getFont(getAssets(), "Lato-Light.ttf");
 
     }
 

@@ -95,7 +95,7 @@ public class SearchResultsActivity extends ActionBarActivity {
 //            setSupportActionBar(toolbar);
 //        }
 //        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        Tools.initToolbar(this, toolbar);
+        Tools.initToolbarBase(this, toolbar);
 
         listView = (ExpandableListView) findViewById(R.id.listView);
         adapter = new SearchresultExpandableListAdapter(SearchResultsActivity.this, groups);

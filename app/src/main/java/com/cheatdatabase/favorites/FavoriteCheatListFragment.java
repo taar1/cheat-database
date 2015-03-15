@@ -120,17 +120,7 @@ public class FavoriteCheatListFragment extends ListFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        ca = (FavoriteCheatListActivity) getActivity();
-        latoFontRegular = Tools.getFont(getActivity().getAssets(), "Lato-Regular.ttf");
-
-        settings = ca.getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
-
-        db = new CheatDatabaseAdapter(ca);
-        db.open();
-
-        if (member == null) {
-            member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
-        }
+        init();
 
         gameObj = (Game) ca.getIntent().getSerializableExtra("gameObj");
         if (gameObj == null) {
@@ -156,7 +146,20 @@ public class FavoriteCheatListFragment extends ListFragment {
         // ArrayAdapter<DummyContent.DummyItem>(getActivity(),
         // android.R.layout.simple_list_item_activated_1, android.R.id.text1,
         // DummyContent.ITEMS));
+    }
 
+    private void init() {
+        ca = (FavoriteCheatListActivity) getActivity();
+        latoFontRegular = Tools.getFont(getActivity().getAssets(), "Lato-Regular.ttf");
+
+        settings = ca.getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
+
+        db = new CheatDatabaseAdapter(ca);
+        db.open();
+
+        if (member == null) {
+            member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
+        }
     }
 
     // @Override

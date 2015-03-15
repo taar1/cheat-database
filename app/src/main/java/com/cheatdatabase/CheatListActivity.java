@@ -100,27 +100,9 @@ public class CheatListActivity extends ActionBarActivity implements CheatListFra
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cheat_list);
+
         Reachability.registerReachability(this.getApplicationContext());
-        //Tools.styleActionbar(this);
-
-        // TODO FIXME toolbar ist hier NULL... kann sie nicht finden im layout XML
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        if (toolbar != null) {
-            setSupportActionBar(toolbar);
-        }
-
-        // MATERIAL DESIGN: ERROR. CRASHT MIT NULLPOINTER HIER... WARUM? MAINACTIVITY.JAVA ALS VORLAGE NEHMEN.
-        // getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        // getSupportActionBar().setHomeButtonEnabled(true);
-
-        settings = getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
-        editor = settings.edit();
-
-        Tools.initMoPubAdView(this, mAdView);
-
-        if (member == null) {
-            member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
-        }
+        init();
 
         reloadView = (ImageView) findViewById(R.id.reload);
         if (Reachability.reachability.isReachable) {
@@ -164,7 +146,18 @@ public class CheatListActivity extends ActionBarActivity implements CheatListFra
         }
         cheatProgressDialog.dismiss();
         // TODO: If exposing deep links into your app, handle intents here.
+    }
 
+    private void init() {
+        settings = getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
+        editor = settings.edit();
+
+        Tools.initToolbarBase(this, toolbar);
+        Tools.initMoPubAdView(this, mAdView);
+
+        if (member == null) {
+            member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
+        }
     }
 
     @Override
@@ -189,7 +182,6 @@ public class CheatListActivity extends ActionBarActivity implements CheatListFra
                 gameObj = (Game) intent.getSerializableExtra("gameObj");
 
                 Tools.initGA(CheatListActivity.this, tracker, SCREEN_LABEL, "Cheat List", gameObj.getGameName());
-                getSupportActionBar().setDisplayHomeAsUpEnabled(true);
                 getSupportActionBar().setTitle(gameObj.getGameName());
                 getSupportActionBar().setSubtitle(gameObj.getSystemName());
                 runOnUiThread(new Runnable() {
