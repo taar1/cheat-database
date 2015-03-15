@@ -8,12 +8,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.NavUtils;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.support.v7.widget.SearchView;
 import android.widget.Toast;
 
 import com.cheatdatabase.R;
@@ -45,7 +45,7 @@ import com.google.gson.Gson;
  * listen for item selections.
  */
 @SuppressLint("NewApi")
-public class FavoriteCheatListActivity extends FragmentActivity implements FavoriteCheatListFragment.ElementsListClickHandler, RateCheatDialogListener {
+public class FavoriteCheatListActivity extends ActionBarActivity implements FavoriteCheatListFragment.ElementsListClickHandler, RateCheatDialogListener {
 
     String tag = this.getClass().getSimpleName();
 
@@ -77,16 +77,8 @@ public class FavoriteCheatListActivity extends FragmentActivity implements Favor
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_favorite_list);
-        Tools.styleActionbar(this);
 
-        // mAdView = (MoPubView) findViewById(R.id.adview);
-        // Tools.getAds(mAdView, this);
-
-        settings = getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
-
-        if (member == null) {
-            member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
-        }
+        init();
 
         cheatProgressDialog = ProgressDialog.show(FavoriteCheatListActivity.this, getString(R.string.please_wait) + "...", getString(R.string.retrieving_data) + "...", true);
         handleIntent(getIntent());
@@ -110,6 +102,16 @@ public class FavoriteCheatListActivity extends FragmentActivity implements Favor
 
     }
 
+    private void init() {
+        Tools.styleActionbar(this);
+
+        settings = getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
+
+        if (member == null) {
+            member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
+        }
+    }
+
     private void handleIntent(final Intent intent) {
 
         new Thread(new Runnable() {
@@ -124,7 +126,6 @@ public class FavoriteCheatListActivity extends FragmentActivity implements Favor
 
                     @Override
                     public void run() {
-                        getActionBar().setDisplayHomeAsUpEnabled(true);
                         getActionBar().setTitle(gameObj.getGameName());
                         getActionBar().setSubtitle(gameObj.getSystemName());
 

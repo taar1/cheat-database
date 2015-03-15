@@ -1,0 +1,16 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/action_add_to_favorites"
+        android:icon="@drawable/ic_action_add_favorite"
+        android:orderInCategory="100"
+        android:showAsAction="ifRoom"
+        android:title="@string/add_all_favorites" />
+    <item
+        android:id="@+id/action_submit_cheat"
+        android:icon="@android:drawable/stat_sys_upload"
+        android:orderInCategory="200"
+        android:showAsAction="ifRoom"
+        android:title="@string/submit_cheat_short" />
+
+</menu><!-- From: file:/C:/Users/Dominik/Workspaces/Android/Cheat-Database/app/src/main/res/menu/cheats_by_game_menu.xml -->

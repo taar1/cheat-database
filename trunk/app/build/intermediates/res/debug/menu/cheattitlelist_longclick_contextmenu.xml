@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/add_fav"
+        android:icon="@drawable/ic_action_add_favorite"
+        android:showAsAction="ifRoom"
+        android:title="@string/add_one_favorite" />
+    <item
+        android:id="@+id/add_all"
+        android:title="@string/add_all_favorites" />
+    <item
+        android:id="@+id/share_cheat"
+        android:title="@string/share_title" />
+
+</menu><!-- From: file:/C:/Users/Dominik/Workspaces/Android/Cheat-Database/app/src/main/res/menu/cheattitlelist_longclick_contextmenu.xml -->

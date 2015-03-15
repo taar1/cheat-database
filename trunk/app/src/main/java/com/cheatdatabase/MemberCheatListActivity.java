@@ -75,30 +75,11 @@ public class MemberCheatListActivity extends ActionBarListActivity implements Ad
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_member_cheatlist);
-        Reachability.registerReachability(this.getApplicationContext());
 
-        settings = getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
-        editor = settings.edit();
+        init();
 
         registerForContextMenu(getListView());
 
-        latoFontLight = Tools.getFont(getAssets(), "Lato-Light.ttf");
-
-        memberToDisplayCheatsFrom = (Member) getIntent().getSerializableExtra("memberObj");
-
-        // TODO FIXME wie verwendet man das?
-        //Tools.styleActionbar(this);
-//        getActionBar().setHomeButtonEnabled(true);
-//        getActionBar().setDisplayHomeAsUpEnabled(true);
-//        getActionBar().setTitle(getString(R.string.members_cheats_title, memberToDisplayCheatsFrom.getUsername()));
-
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        if (toolbar != null) {
-            setSupportActionBar(toolbar);
-        }
-
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeButtonEnabled(true);
         // Custom background
         // LinearLayout ol = (LinearLayout) findViewById(R.id.outerLayout);
         // ol.setBackgroundResource(R.drawable.bg_top_members);
@@ -122,8 +103,22 @@ public class MemberCheatListActivity extends ActionBarListActivity implements Ad
             Toast.makeText(this, R.string.no_internet, Toast.LENGTH_SHORT).show();
         }
 
-        Tools.initMoPubAdView(this, mAdView);
         getListView().setOnItemClickListener(this);
+    }
+
+    private void init() {
+        Reachability.registerReachability(this.getApplicationContext());
+
+        settings = getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
+        editor = settings.edit();
+
+        latoFontLight = Tools.getFont(getAssets(), "Lato-Light.ttf");
+
+        memberToDisplayCheatsFrom = (Member) getIntent().getSerializableExtra("memberObj");
+
+        Tools.initMoPubAdView(this, mAdView);
+        Tools.initToolbarBase(this, toolbar);
+//        getActionBar().setTitle(getString(R.string.members_cheats_title, memberToDisplayCheatsFrom.getUsername()));
     }
 
     private void getThemCheats() {

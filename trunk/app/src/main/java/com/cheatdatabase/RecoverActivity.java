@@ -4,12 +4,13 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.ActionBar;
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
@@ -28,7 +29,7 @@ import com.cheatdatabase.helpers.Webservice;
  * Activity which displays a login screen to the user, offering registration as
  * well.
  */
-public class RecoverActivity extends Activity {
+public class RecoverActivity extends ActionBarActivity {
 
     /**
      * The default email to populate the email field with.
@@ -57,19 +58,14 @@ public class RecoverActivity extends Activity {
 
     private Typeface latoFontBold;
     private Typeface latoFontLight;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recover);
-        Reachability.registerReachability(this.getApplicationContext());
 
-        Tools.styleActionbar(this);
-        ActionBar actionBar = getActionBar();
-        actionBar.setHomeButtonEnabled(true);
-
-        latoFontBold = Tools.getFont(getAssets(), "Lato-Bold.ttf");
-        latoFontLight = Tools.getFont(getAssets(), "Lato-Light.ttf");
+        init();
 
         mEmail = getIntent().getStringExtra(EXTRA_EMAIL);
         mEmailView = (EditText) findViewById(R.id.email);
@@ -110,6 +106,20 @@ public class RecoverActivity extends Activity {
                 }
             }
         });
+
+    }
+
+    private void init() {
+        Reachability.registerReachability(this.getApplicationContext());
+
+        Tools.initToolbarBase(this, toolbar);
+        Tools.styleActionbar(this);
+        ActionBar actionBar = getActionBar();
+        actionBar.setHomeButtonEnabled(true);
+
+        latoFontBold = Tools.getFont(getAssets(), "Lato-Bold.ttf");
+        latoFontLight = Tools.getFont(getAssets(), "Lato-Light.ttf");
+
 
     }
 

@@ -51,6 +51,7 @@
     <string name="favorites">Favorites</string>
     <string name="goto_main_screen">Home</string>
     <string name="goto_news">News</string>
+    <string name="goto_games_and_cheats">Games &amp; Cheats</string>
     <string name="goto_cheat">To cheat</string>
     <string name="goto_cheat_list">To cheat overview</string>
     <string name="menu_fulltext_search_short">Full Text Search</string>

@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <merge xmlns:android="http://schemas.android.com/apk/res/android">
 
     <LinearLayout
@@ -16,10 +15,8 @@
             android:layout_height="wrap_content"
             android:background="@color/drawer_divier_bars_background"
             android:contentDescription="@string/goto_cheat"
-            android:paddingEnd="12dp"
             android:paddingLeft="12dp"
             android:paddingRight="12dp"
-            android:paddingStart="12dp"
             android:src="@drawable/ic_action_view_as_list" />
 
         <ImageButton
@@ -28,10 +25,8 @@
             android:layout_height="wrap_content"
             android:background="@color/drawer_divier_bars_background"
             android:contentDescription="@string/meta_info"
-            android:paddingEnd="12dp"
             android:paddingLeft="12dp"
             android:paddingRight="12dp"
-            android:paddingStart="12dp"
             android:src="@android:drawable/ic_menu_info_details" />
 
         <ImageButton
@@ -40,10 +35,8 @@
             android:layout_height="wrap_content"
             android:background="@color/drawer_divier_bars_background"
             android:contentDescription="@string/forum_goto"
-            android:paddingEnd="12dp"
             android:paddingLeft="12dp"
             android:paddingRight="12dp"
-            android:paddingStart="12dp"
             android:src="@drawable/ic_action_chat" />
 
         <ImageButton
@@ -52,10 +45,8 @@
             android:layout_height="wrap_content"
             android:background="@color/drawer_divier_bars_background"
             android:contentDescription="@string/report_cheat_title"
-            android:paddingEnd="12dp"
             android:paddingLeft="12dp"
             android:paddingRight="12dp"
-            android:paddingStart="12dp"
             android:src="@drawable/ic_action_report" />
 
         <ImageButton
@@ -64,10 +55,8 @@
             android:layout_height="wrap_content"
             android:background="@color/drawer_divier_bars_background"
             android:contentDescription="@string/remove_favorite"
-            android:paddingEnd="12dp"
             android:paddingLeft="12dp"
             android:paddingRight="12dp"
-            android:paddingStart="12dp"
             android:src="@drawable/ic_action_remove" />
 
         <ImageButton
@@ -76,10 +65,8 @@
             android:layout_height="wrap_content"
             android:background="@color/drawer_divier_bars_background"
             android:contentDescription="@string/share_title"
-            android:paddingEnd="12dp"
             android:paddingLeft="12dp"
             android:paddingRight="12dp"
-            android:paddingStart="12dp"
             android:src="@android:drawable/ic_menu_share" />
 
         <ImageButton
@@ -88,10 +75,8 @@
             android:layout_height="wrap_content"
             android:background="@color/drawer_divier_bars_background"
             android:contentDescription="@string/rate_cheat"
-            android:paddingEnd="12dp"
             android:paddingLeft="12dp"
             android:paddingRight="12dp"
-            android:paddingStart="12dp"
             android:src="@drawable/ic_action_not_important" />
     </LinearLayout>
 

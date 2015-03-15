@@ -471,7 +471,7 @@ public class Tools {
 
     public static MoPubView initMoPubAdView(final Activity activity, MoPubView mAdView) {
 
-        mAdView = new MoPubView(activity);
+//        mAdView = new MoPubView(activity);
 
         try {
             String screen = activity.getString(R.string.screen_type);
@@ -511,17 +511,13 @@ public class Tools {
         actionBarSubtitle.setTypeface(Tools.getFont(a.getAssets(), "Lato-Regular.ttf"));
     }
 
-    public static void initToolbar(ActionBarActivity a, Toolbar toolbar) {
-        toolbar = (Toolbar) a.findViewById(R.id.toolbar);
+    public static void initToolbarBase(ActionBarActivity a, Toolbar toolbar) {
+//        toolbar = (Toolbar) a.findViewById(R.id.toolbar);
         if (toolbar != null) {
             a.setSupportActionBar(toolbar);
         }
         a.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-    }
-
-    public static void initLocalStorage(Context c, SharedPreferences settings, Editor editor) {
-        settings = c.getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
-        editor = settings.edit();
+        a.getSupportActionBar().setHomeButtonEnabled(true);
     }
 
     // public static boolean isOnline(Context context) {

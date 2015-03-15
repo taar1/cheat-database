@@ -11,6 +11,7 @@ import android.content.SharedPreferences.Editor;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.util.SparseArray;
@@ -22,7 +23,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.support.v7.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -73,24 +73,8 @@ public class GamesBySystemActivity extends ActionBarListActivity implements Acti
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gamelist);
-        Reachability.registerReachability(this.getApplicationContext());
 
-        //Tools.styleActionbar(this);
-        //getActionBar().setHomeButtonEnabled(true);
-
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        if (toolbar != null) {
-            setSupportActionBar(toolbar);
-        }
-
-
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeButtonEnabled(true);
-
-        Tools.initMoPubAdView(this, mAdView);
-
-        latoFontLight = Tools.getFont(getAssets(), "Lato-Light.ttf");
-        latoFontRegular = Tools.getFont(getAssets(), "Lato-Regular.ttf");
+        init();
 
         handleIntent(getIntent());
 
@@ -125,6 +109,15 @@ public class GamesBySystemActivity extends ActionBarListActivity implements Acti
         // AppFlood.showList(this, 1);
     }
 
+    private void init() {
+        Reachability.registerReachability(this.getApplicationContext());
+        Tools.initToolbarBase(this, toolbar);
+        Tools.initMoPubAdView(this, mAdView);
+
+        latoFontLight = Tools.getFont(getAssets(), "Lato-Light.ttf");
+        latoFontRegular = Tools.getFont(getAssets(), "Lato-Regular.ttf");
+    }
+
     private void startGameListAdapter() {
         reloadView.setVisibility(View.GONE);
         gameListAdapter = new GameListAdapter(this, R.layout.activity_gamelist, gameArrayList);
@@ -149,8 +142,7 @@ public class GamesBySystemActivity extends ActionBarListActivity implements Acti
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
 
-        // TODO FIXME DIES VERURSACHT CRASH MIT NEUER TOOLBAR
-        // searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
 
         return super.onCreateOptionsMenu(menu);
     }

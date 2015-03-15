@@ -83,7 +83,7 @@ public class LoginActivity extends ActionBarActivity implements AlreadyLoggedInD
 //        if (toolbar != null) {
 //            setSupportActionBar(toolbar);
 //        }
-        Tools.initToolbar(this, toolbar);
+        Tools.initToolbarBase(this, toolbar);
 
         settings = getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
         editor = settings.edit();
