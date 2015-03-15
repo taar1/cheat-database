@@ -1,0 +1,20 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/standard_background"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <RatingBar
+        android:id="@+id/ratingbar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:numStars="5"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp"
+        android:progressDrawable="@drawable/ratingbarorange_ratingbar_full_holo_dark"
+        android:stepSize="0.5" />
+
+</LinearLayout><!-- From: file:/C:/Users/Dominik/Workspaces/Android/Cheat-Database/app/src/main/res/layout/layout_rate_cheat.xml -->

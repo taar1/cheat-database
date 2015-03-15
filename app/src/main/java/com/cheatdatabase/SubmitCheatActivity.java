@@ -59,7 +59,7 @@ public class SubmitCheatActivity extends ActionBarActivity implements OnClickLis
         setContentView(R.layout.activity_submit_cheat_layout);
         Reachability.registerReachability(this.getApplicationContext());
 
-        Tools.initToolbar(this, toolbar);
+        Tools.initToolbarBase(this, toolbar);
 
         settings = getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
         member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);

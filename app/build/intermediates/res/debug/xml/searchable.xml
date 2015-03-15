@@ -1,0 +1,9 @@
+<searchable xmlns:android="http://schemas.android.com/apk/res/android"
+    android:hint="@string/search_game"
+    android:label="@string/app_name"
+    android:searchSuggestAuthority="com.cheatdatabase.search.SearchSuggestionProvider"
+    android:searchSuggestSelection=" ?"
+    android:voiceLanguage="en"
+    android:voiceSearchMode="showVoiceSearchButton|launchRecognizer">
+
+</searchable><!-- From: file:/C:/Users/Dominik/Workspaces/Android/Cheat-Database/app/src/main/res/xml/searchable.xml -->

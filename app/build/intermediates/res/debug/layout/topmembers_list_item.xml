@@ -1,0 +1,76 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="300dp"
+    android:orientation="horizontal"
+    android:paddingBottom="5dp"
+    android:paddingEnd="10dp"
+    android:paddingLeft="3dp"
+    android:paddingRight="10dp"
+    android:paddingStart="3dp">
+
+    <TextView
+        android:id="@+id/numeration"
+        android:layout_width="45dp"
+        android:layout_height="wrap_content"
+        android:gravity="end"
+        android:textColor="#FFFFFF"
+        android:textIsSelectable="false"
+        android:textSize="32sp"
+        android:textStyle="bold" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:minWidth="80dp">
+
+        <ImageView
+            android:id="@+id/avatar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:paddingTop="6dp"
+            android:src="@drawable/avatar" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/membername"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="100"
+            android:gravity="start"
+            android:textAppearance="@style/TopMemberName"
+            android:textIsSelectable="false"></TextView>
+
+        <TextView
+            android:id="@+id/cheatcount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="end"
+            android:textAppearance="@style/TopMemberCheatCount"
+            android:textIsSelectable="false"></TextView>
+
+        <TextView
+            android:id="@+id/hi_message"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TopMemberFreetext"
+            android:textIsSelectable="false" />
+
+        <TextView
+            android:id="@+id/website"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:ellipsize="end"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:textAppearance="@style/TopMemberHomepage"
+            android:textIsSelectable="false" />
+    </LinearLayout>
+
+</LinearLayout><!-- From: file:/C:/Users/Dominik/Workspaces/Android/Cheat-Database/app/src/main/res/layout/topmembers_list_item.xml -->
