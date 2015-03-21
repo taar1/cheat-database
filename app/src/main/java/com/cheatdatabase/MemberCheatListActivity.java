@@ -41,6 +41,7 @@ import com.cheatdatabase.helpers.Webservice;
 import com.cheatdatabase.members.cheatview.MemberCheatViewPageIndicator;
 import com.google.gson.Gson;
 import com.mopub.mobileads.MoPubView;
+import com.splunk.mint.Mint;
 
 /**
  * Shows all cheats of one particular member.
@@ -108,6 +109,7 @@ public class MemberCheatListActivity extends ActionBarListActivity implements Ad
 
     private void init() {
         Reachability.registerReachability(this.getApplicationContext());
+        Mint.initAndStartSession(this, "b19b084a");
 
         settings = getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
         editor = settings.edit();

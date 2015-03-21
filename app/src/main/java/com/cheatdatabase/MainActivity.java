@@ -55,6 +55,7 @@ import com.cheatdatabase.search.SearchSuggestionProvider;
 import com.google.analytics.tracking.android.Tracker;
 import com.google.gson.Gson;
 import com.mopub.mobileads.MoPubView;
+import com.splunk.mint.Mint;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -137,17 +138,14 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
 
     private void init() {
         Reachability.registerReachability(this.getApplicationContext());
+        Mint.initAndStartSession(this, "b19b084a");
 
         settings = getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
         editor = settings.edit();
 
-        mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        mAdView = new MoPubView(this);
-
-        Tools.initToolbarBase(this, mToolbar);
-
-        // FIXME ads werden nicht angezeigt...
+        mToolbar = Tools.initToolbarBase(this, mToolbar);
         mAdView = Tools.initMoPubAdView(this, mAdView);
+
         Tools.initGA(MainActivity.this, tracker, SCREEN_LABEL, "Main Activity", "Cheat-Database Main Activity");
 
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.app_icon_fox);

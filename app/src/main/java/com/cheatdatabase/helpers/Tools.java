@@ -471,7 +471,7 @@ public class Tools {
 
     public static MoPubView initMoPubAdView(final Activity activity, MoPubView mAdView) {
 
-//        mAdView = new MoPubView(activity);
+        mAdView = new MoPubView(activity);
 
         try {
             String screen = activity.getString(R.string.screen_type);
@@ -482,12 +482,12 @@ public class Tools {
             }
 
             mAdView.setAutorefreshEnabled(true);
-            mAdView.setTesting(false);
+            mAdView.setTesting(true);
             mAdView.setKeywords("m_age:15,m_gender:m,m_marital:single");
             mAdView.loadAd();
         } catch (Exception e) {
 //			mAdView.setAdUnitId(Konstanten.MOPUB_PHONE_UNIT_ID);
-            Log.i("ADVIEW LOAD", e.getMessage());
+            Log.e("ADVIEW LOAD", e.getMessage());
         }
 
         return mAdView;
@@ -511,13 +511,15 @@ public class Tools {
         actionBarSubtitle.setTypeface(Tools.getFont(a.getAssets(), "Lato-Regular.ttf"));
     }
 
-    public static void initToolbarBase(ActionBarActivity a, Toolbar toolbar) {
-//        toolbar = (Toolbar) a.findViewById(R.id.toolbar);
+    public static Toolbar initToolbarBase(ActionBarActivity a, Toolbar toolbar) {
+        toolbar = (Toolbar) a.findViewById(R.id.toolbar);
         if (toolbar != null) {
             a.setSupportActionBar(toolbar);
         }
         a.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         a.getSupportActionBar().setHomeButtonEnabled(true);
+
+        return toolbar;
     }
 
     // public static boolean isOnline(Context context) {

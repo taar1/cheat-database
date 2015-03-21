@@ -69,7 +69,7 @@ public class Game extends SystemPlatform implements Serializable {
     /**
      * Deletes the cheat collection and adds one single cheat to the game object
      *
-     * @param cheats
+     * @param cheat
      */
     public void setCheat(Cheat cheat) {
         this.cheats = new Cheat[1];

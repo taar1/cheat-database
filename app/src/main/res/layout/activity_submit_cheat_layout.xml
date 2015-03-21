@@ -75,8 +75,7 @@
                 android:background="@drawable/bluedark01_btn_default_holo_dark"
                 android:paddingLeft="5dp"
                 android:paddingRight="5dp"
-                android:text="@string/submit_cheat_review"
-                android:textSize="20sp" />
+                android:text="@string/submit_cheat_review" />
         </LinearLayout>
 
     </LinearLayout>
