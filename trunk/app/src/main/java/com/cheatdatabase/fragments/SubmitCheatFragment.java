@@ -14,8 +14,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.cheatdatabase.R;
+import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.helpers.Tools;
+import com.splunk.mint.Mint;
 
 public class SubmitCheatFragment extends Fragment {
 
@@ -24,9 +26,9 @@ public class SubmitCheatFragment extends Fragment {
     private Activity ca;
     private Typeface latoFontLight;
     private Typeface latoFontBold;
-    private TextView title;
-    private TextView subtitle;
-    private Button searchButton;
+    private TextView mTitle;
+    private TextView mSubtitle;
+    private Button mSearchButton;
 
     public static final String IMAGE_RESOURCE_ID = "iconResourceID";
     public static final String ITEM_NAME = "itemName";
@@ -40,28 +42,33 @@ public class SubmitCheatFragment extends Fragment {
         super.onCreate(savedInstanceState);
         ca = getActivity();
 
+        init();
+
+        // Update action bar menu items?
+        setHasOptionsMenu(true);
+    }
+
+    private void init() {
         Reachability.registerReachability(ca.getApplicationContext());
+        Mint.initAndStartSession(ca.getApplicationContext(), Konstanten.SPLUNK_MINT_API_KEY);
 
         latoFontLight = Tools.getFont(ca.getAssets(), "Lato-Light.ttf");
         latoFontBold = Tools.getFont(ca.getAssets(), "Lato-Bold.ttf");
 
         ca.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-
-        // Update action bar menu items?
-        setHasOptionsMenu(true);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.activity_submit_cheat_game_selection, container, false);
 
-        title = (TextView) rootView.findViewById(R.id.title);
-        title.setTypeface(latoFontBold);
-        subtitle = (TextView) rootView.findViewById(R.id.subtitle);
-        subtitle.setTypeface(latoFontLight);
+        mTitle = (TextView) rootView.findViewById(R.id.title);
+        mTitle.setTypeface(latoFontBold);
+        mSubtitle = (TextView) rootView.findViewById(R.id.subtitle);
+        mSubtitle.setTypeface(latoFontLight);
 
-        searchButton = (Button) rootView.findViewById(R.id.search_button);
-        searchButton.setOnClickListener(new OnClickListener() {
+        mSearchButton = (Button) rootView.findViewById(R.id.search_button);
+        mSearchButton.setOnClickListener(new OnClickListener() {
 
             @Override
             public void onClick(View v) {
@@ -69,7 +76,7 @@ public class SubmitCheatFragment extends Fragment {
             }
 
         });
-        searchButton.setTypeface(latoFontBold);
+        mSearchButton.setTypeface(latoFontBold);
 
         return rootView;
     }

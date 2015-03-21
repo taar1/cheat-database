@@ -39,6 +39,7 @@ import com.cheatdatabase.helpers.Webservice;
 import com.google.analytics.tracking.android.Tracker;
 import com.google.gson.Gson;
 import com.mopub.mobileads.MoPubView;
+import com.splunk.mint.Mint;
 
 /**
  * An activity representing a list of Cheats. This activity has different
@@ -90,7 +91,7 @@ public class CheatListActivity extends ActionBarActivity implements CheatListFra
 
     private ViewGroup adViewContainer;
     private MoPubView mAdView;
-    private Toolbar toolbar;
+    private Toolbar mToolbar;
 
     public ShareActionProvider getmShareActionProvider() {
         return mShareActionProvider;
@@ -101,7 +102,6 @@ public class CheatListActivity extends ActionBarActivity implements CheatListFra
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cheat_list);
 
-        Reachability.registerReachability(this.getApplicationContext());
         init();
 
         reloadView = (ImageView) findViewById(R.id.reload);
@@ -149,11 +149,14 @@ public class CheatListActivity extends ActionBarActivity implements CheatListFra
     }
 
     private void init() {
+        Reachability.registerReachability(this.getApplicationContext());
+        Mint.initAndStartSession(this, "b19b084a");
+
         settings = getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
         editor = settings.edit();
 
-        Tools.initToolbarBase(this, toolbar);
-        Tools.initMoPubAdView(this, mAdView);
+        mToolbar = Tools.initToolbarBase(this, mToolbar);
+        mAdView = Tools.initMoPubAdView(this, mAdView);
 
         if (member == null) {
             member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);

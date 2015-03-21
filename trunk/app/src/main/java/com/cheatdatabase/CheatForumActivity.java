@@ -12,8 +12,10 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.SearchView;
+import android.support.v7.widget.ShareActionProvider;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Gravity;
@@ -28,7 +30,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
-import android.widget.ShareActionProvider;
 import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -50,6 +51,7 @@ import com.cheatdatabase.helpers.Webservice;
 import com.google.analytics.tracking.android.Tracker;
 import com.google.gson.Gson;
 import com.mopub.mobileads.MoPubView;
+import com.splunk.mint.Mint;
 
 import java.util.Calendar;
 
@@ -91,6 +93,7 @@ public class CheatForumActivity extends ActionBarActivity implements CheatListFr
 
     private static final String SCREEN_LABEL = "Cheat Forum Activity";
     private Toolbar mToolbar;
+    private ShareActionProvider mShare;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -152,6 +155,7 @@ public class CheatForumActivity extends ActionBarActivity implements CheatListFr
 
     private void init() {
         Reachability.registerReachability(this.getApplicationContext());
+        Mint.initAndStartSession(this, Konstanten.SPLUNK_MINT_API_KEY);
 
         settings = getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
         editor = settings.edit();
@@ -347,16 +351,8 @@ public class CheatForumActivity extends ActionBarActivity implements CheatListFr
         MenuItem item = menu.findItem(R.id.action_share);
 
         // Sharing
-        ShareActionProvider mShare = (ShareActionProvider) item.getActionProvider();
-        Intent shareIntent = new Intent(Intent.ACTION_SEND);
-        shareIntent.setAction(Intent.ACTION_SEND);
-        shareIntent.setType("text/plain");
-        String result = String.format(getString(R.string.share_email_subject), cheatObj.getGameName());
-        shareIntent.putExtra(Intent.EXTRA_SUBJECT, result);
-        String fullBody = cheatObj.getGameName() + " (" + cheatObj.getSystemName() + "): " + cheatObj.getCheatTitle() + "\n";
-        fullBody += Konstanten.BASE_URL + "display/switch.php?id=" + cheatObj.getCheatId() + "\n\n";
-        shareIntent.putExtra(Intent.EXTRA_TEXT, fullBody);
-        mShare.setShareIntent(shareIntent);
+        mShare = (android.support.v7.widget.ShareActionProvider) MenuItemCompat.getActionProvider(item);
+        setShareText(cheatObj);
 
         // Search
         getMenuInflater().inflate(R.menu.search_menu, menu);
@@ -367,6 +363,28 @@ public class CheatForumActivity extends ActionBarActivity implements CheatListFr
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
 
         return super.onCreateOptionsMenu(menu);
+    }
+
+    private void setShareText(Cheat visibleCheat) {
+
+        String cheatShareTitle = String.format(getString(R.string.share_email_subject), visibleCheat.getGameName());
+        String cheatShareBody = visibleCheat.getGameName() + " (" + visibleCheat.getSystemName() + "): " + visibleCheat.getCheatTitle() + "\n";
+        cheatShareBody += Konstanten.BASE_URL + "display/switch.php?id=" + visibleCheat.getCheatId() + "\n\n";
+
+
+        Intent shareIntent = new Intent(Intent.ACTION_SEND);
+        shareIntent.setAction(Intent.ACTION_SEND);
+        shareIntent.setType("text/plain");
+        shareIntent.putExtra(Intent.EXTRA_SUBJECT, cheatShareTitle);
+        shareIntent.putExtra(Intent.EXTRA_TEXT, cheatShareBody);
+        setShareIntent(shareIntent);
+    }
+
+    // Call to update the share intent
+    private void setShareIntent(Intent shareIntent) {
+        if (mShare != null) {
+            mShare.setShareIntent(shareIntent);
+        }
     }
 
     @Override

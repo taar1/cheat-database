@@ -35,6 +35,7 @@ import com.cheatdatabase.helpers.Tools;
 import com.cheatdatabase.helpers.Webservice;
 import com.google.analytics.tracking.android.Tracker;
 import com.mopub.mobileads.MoPubView;
+import com.splunk.mint.Mint;
 
 import java.util.ArrayList;
 
@@ -65,7 +66,7 @@ public class GamesBySystemActivity extends ActionBarListActivity implements Acti
 
     private ViewGroup adViewContainer;
     private MoPubView mAdView;
-    private Toolbar toolbar;
+    private Toolbar mToolbar;
 
     private static final String SCREEN_LABEL = "Game List By System ID Screen";
 
@@ -111,8 +112,10 @@ public class GamesBySystemActivity extends ActionBarListActivity implements Acti
 
     private void init() {
         Reachability.registerReachability(this.getApplicationContext());
-        Tools.initToolbarBase(this, toolbar);
-        Tools.initMoPubAdView(this, mAdView);
+        Mint.initAndStartSession(this, "b19b084a");
+
+        mToolbar = Tools.initToolbarBase(this, mToolbar);
+        mAdView = Tools.initMoPubAdView(this, mAdView);
 
         latoFontLight = Tools.getFont(getAssets(), "Lato-Light.ttf");
         latoFontRegular = Tools.getFont(getAssets(), "Lato-Regular.ttf");

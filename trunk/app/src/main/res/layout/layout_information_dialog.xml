@@ -1,13 +1,14 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical">
+    android:background="@color/navy_blue_medium_dark"
+    android:orientation="vertical"
+    android:padding="5dp">
 
     <TextView
         android:id="@+id/termsandconditions_title"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:background="@color/navy_blue_medium_dark"
         android:gravity="center"
         android:padding="5dp"
         android:text="@string/submit_cheat_consent_title"
@@ -41,7 +42,6 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:background="@color/navy_blue_medium_dark"
         android:text="@string/ok" />
 
 </LinearLayout>

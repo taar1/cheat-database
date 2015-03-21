@@ -33,15 +33,6 @@
         android:layout_height="0dip"
         android:layout_weight="20" />
 
-    <!--
-    <com.viewpagerindicator.UnderlinePageIndicator
-        android:id="@+id/indicator"
-        android:layout_width="fill_parent"
-        android:layout_height="3dp"
-        android:background="@color/page_indicator_background"
-        app:fadeDelay="1000"
-        app:fadeLength="1000" />
-    -->
 
     <com.viewpagerindicator.UnderlinePageIndicator
         android:id="@+id/indicator"
