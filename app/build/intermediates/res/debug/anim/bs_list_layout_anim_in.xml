@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layoutAnimation xmlns:android="http://schemas.android.com/apk/res/android"
+    android:delay="12%"
+    android:animation="@anim/bs_list_item_in"
+    android:interpolator="@android:anim/decelerate_interpolator"/><!-- From: file:/D:/develop/BottomSheet/library/src/main/res/anim/bs_list_layout_anim_in.xml --><!-- From: file:/C:/Users/Dominik/Workspaces/Android/Cheat-Database/app/build/intermediates/exploded-aar/com.cocosw/bottomsheet/0.9/res/anim/bs_list_layout_anim_in.xml -->

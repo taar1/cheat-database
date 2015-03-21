@@ -27,6 +27,7 @@ import com.cheatdatabase.helpers.Tools;
 import com.cheatdatabase.helpers.Webservice;
 import com.google.analytics.tracking.android.Tracker;
 import com.google.gson.Gson;
+import com.splunk.mint.Mint;
 
 /**
  * Liste mit allen Cheats eines Games.
@@ -51,23 +52,15 @@ public class SubmitCheatActivity extends ActionBarActivity implements OnClickLis
 
     private static final String SCREEN_LABEL = "Submit Cheat Screen";
     protected Tracker tracker;
-    private Toolbar toolbar;
+    private Toolbar mToolbar;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_submit_cheat_layout);
-        Reachability.registerReachability(this.getApplicationContext());
-
-        Tools.initToolbarBase(this, toolbar);
-
-        settings = getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
-        member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
 
         handleIntent(getIntent());
-
-        latoFontLight = Tools.getFont(getAssets(), "Lato-Light.ttf");
-        latoFontBold = Tools.getFont(getAssets(), "Lato-Bold.ttf");
+        init();
 
         textCheatTitle = (TextView) findViewById(R.id.text_cheat_submission_title);
         textCheatTitle.setTypeface(latoFontBold);
@@ -82,6 +75,19 @@ public class SubmitCheatActivity extends ActionBarActivity implements OnClickLis
         sendButton.setOnClickListener(this);
         sendButton.setTypeface(latoFontBold);
         changeButton();
+    }
+
+    private void init() {
+        Reachability.registerReachability(this.getApplicationContext());
+        Mint.initAndStartSession(this, Konstanten.SPLUNK_MINT_API_KEY);
+
+        Tools.initToolbarBase(this, mToolbar);
+
+        settings = getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
+        member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
+
+        latoFontLight = Tools.getFont(getAssets(), "Lato-Light.ttf");
+        latoFontBold = Tools.getFont(getAssets(), "Lato-Bold.ttf");
 
         Tools.initGA(SubmitCheatActivity.this, tracker, SCREEN_LABEL, "Submit Cheat", "Cheat submission form");
     }
@@ -122,13 +128,11 @@ public class SubmitCheatActivity extends ActionBarActivity implements OnClickLis
                 onBackPressed();
                 return true;
             case R.id.action_termsandconditions:
-//			showAlertDialog(R.string.submit_cheat_consent_title, R.string.submit_cheat_consent_text);
                 PlainInformationDialog termsDialog = new PlainInformationDialog(this);
                 termsDialog.setContent(R.string.guidelines, R.string.submit_cheat_consent_text, R.string.ok);
                 termsDialog.show();
                 return true;
             case R.id.action_guidelines:
-//			showAlertDialog(R.string.submit_cheat_instructions_title, R.string.submit_cheat_guidelines);
                 PlainInformationDialog instructionsDialog = new PlainInformationDialog(this);
                 instructionsDialog.setContent(R.string.submit_cheat_instructions_title, R.string.submit_cheat_guidelines, R.string.ok);
                 instructionsDialog.show();
@@ -196,28 +200,32 @@ public class SubmitCheatActivity extends ActionBarActivity implements OnClickLis
 
                     if (Reachability.reachability.isReachable) {
 
-                        if (Webservice.hasMemberPermissions(member)) {
+                        new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                if (Webservice.hasMemberPermissions(member)) {
 
-                            Webservice.insertCheat(member.getMid(), gameObj.getGameId(), cheatTitle.getText().toString().trim(), cheatText.getText().toString().trim());
-                            runOnUiThread(new Runnable() {
+                                    Webservice.insertCheat(member.getMid(), gameObj.getGameId(), cheatTitle.getText().toString().trim(), cheatText.getText().toString().trim());
+                                    runOnUiThread(new Runnable() {
 
-                                @Override
-                                public void run() {
-                                    try {
-                                        cheatTitle.setText("");
-                                        cheatText.setText("");
+                                        @Override
+                                        public void run() {
+                                            try {
+                                                cheatTitle.setText("");
+                                                cheatText.setText("");
 
-                                        showAlertDialog(R.string.thanks, R.string.cheat_submit_ok);
-                                    } catch (Exception e) {
-                                        showAlertDialog(R.string.err, R.string.cheat_submit_nok);
-                                    }
-                                    finish();
+                                                showAlertDialog(R.string.thanks, R.string.cheat_submit_ok);
+                                            } catch (Exception e) {
+                                                showAlertDialog(R.string.err, R.string.cheat_submit_nok);
+                                            }
+                                        }
+                                    });
+
+                                } else {
+                                    showAlertDialog(R.string.err, R.string.member_banned);
                                 }
-                            });
-
-                        } else {
-                            showAlertDialog(R.string.err, R.string.member_banned);
-                        }
+                            }
+                        }).start();
                     } else {
                         Toast.makeText(SubmitCheatActivity.this, R.string.no_internet, Toast.LENGTH_SHORT).show();
                     }
@@ -225,7 +233,6 @@ public class SubmitCheatActivity extends ActionBarActivity implements OnClickLis
             } else {
                 login();
             }
-
         }
     }
 

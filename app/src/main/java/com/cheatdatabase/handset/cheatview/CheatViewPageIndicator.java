@@ -44,6 +44,7 @@ import com.cheatdatabase.helpers.Webservice;
 import com.google.analytics.tracking.android.Tracker;
 import com.google.gson.Gson;
 import com.mopub.mobileads.MoPubView;
+import com.splunk.mint.Mint;
 import com.viewpagerindicator.UnderlinePageIndicator;
 
 import java.util.ArrayList;
@@ -93,7 +94,7 @@ public class CheatViewPageIndicator extends ActionBarActivity implements ReportC
     private String cheatShareTitle;
     private String cheatShareBody;
 
-    private Toolbar toolbar;
+    private Toolbar mToolbar;
     private ShareActionProvider mShare;
 
 
@@ -133,11 +134,12 @@ public class CheatViewPageIndicator extends ActionBarActivity implements ReportC
 
     private void init() {
         Reachability.registerReachability(this.getApplicationContext());
+        Mint.initAndStartSession(this, Konstanten.SPLUNK_MINT_API_KEY);
 
         settings = getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
         editor = settings.edit();
 
-        Tools.initToolbarBase(this, toolbar);
+        Tools.initToolbarBase(this, mToolbar);
         Tools.initMoPubAdView(this, mAdView);
 
         member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
@@ -320,6 +322,18 @@ public class CheatViewPageIndicator extends ActionBarActivity implements ReportC
                 return true;
             case R.id.action_report:
                 showReportDialog();
+
+                // TODO FIXME bottom sheet fertigstellen
+//                new BottomSheet.Builder(this).title("title").darkTheme().sheet(R.menu.cheat_view_action_menu).listener(new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//                        switch (which) {
+////                            case R.id.help:
+////                                q.toast("Help me!");
+////                                break;
+//                        }
+//                    }
+//                }).show();
                 return true;
             case R.id.action_metainfo:
                 if (Reachability.reachability.isReachable) {

@@ -221,7 +221,7 @@
     <string name="top_members_cheats_count">Anzahl Cheats</string>
 
     <!-- SHARE CHEAT -->
-    <string name="share_title">Cheat weiterleiten</string>
+    <string name="share_title">Cheat teilen</string>
     <string name="share_error_no_client">Es ist keine E-Mail Applikation installiert.</string>
     <string name="share_email_subject">Ich habe soeben diesen Cheat für %1$s entdeckt</string>
     <string name="share_email_body">Ich habe soeben diesen Cheat mit der Cheat-Database App für Android entdeckt. Klicke auf den untenstehenden Link, um den Cheat anzuschauen:</string>

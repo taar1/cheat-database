@@ -114,6 +114,15 @@ public class CheatViewFragment extends Fragment implements OnClickListener {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        init();
+
+        // TODO hier genauer anschauen wegen dem setzen des contents. TODO TODO
+        if ((savedInstanceState != null) && savedInstanceState.containsKey(KEY_CONTENT)) {
+            mContent = savedInstanceState.getString(KEY_CONTENT);
+        }
+    }
+
+    private void init() {
         ca = (CheatViewPageIndicator) getActivity();
 
         latoFontLight = Tools.getFont(ca.getAssets(), "Lato-Light.ttf");
@@ -123,11 +132,6 @@ public class CheatViewFragment extends Fragment implements OnClickListener {
         editor = settings.edit();
 
         member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
-
-        // TODO hier genauer anschauen wegen dem setzen des contents. TODO TODO
-        if ((savedInstanceState != null) && savedInstanceState.containsKey(KEY_CONTENT)) {
-            mContent = savedInstanceState.getString(KEY_CONTENT);
-        }
     }
 
     @Override
@@ -141,58 +145,53 @@ public class CheatViewFragment extends Fragment implements OnClickListener {
 
         getFragmentRelevantData();
 
-        try {
-            ll = (LinearLayout) inflater.inflate(R.layout.fragment_cheat_detail_handset, container, false);
+        ll = (LinearLayout) inflater.inflate(R.layout.fragment_cheat_detail_handset, container, false);
 
-            cheats = game.getCheats();
-            cheatObj = cheats[offset];
+        cheats = game.getCheats();
+        cheatObj = cheats[offset];
 
-            new FetchCheatRatingOnlineBackgroundTask().execute();
+        new FetchCheatRatingOnlineBackgroundTask().execute();
 
-            mainTable = (TableLayout) ll.findViewById(R.id.tblCheatListMain);
+        mainTable = (TableLayout) ll.findViewById(R.id.tblCheatListMain);
 
-            tvTextBeforeTable = (TextView) ll.findViewById(R.id.text_cheat_before_table);
-            tvTextBeforeTable.setOnClickListener(this);
-            tvTextBeforeTable.setVisibility(View.VISIBLE);
-            tvTextBeforeTable.setTypeface(latoFontLight);
+        tvTextBeforeTable = (TextView) ll.findViewById(R.id.text_cheat_before_table);
+        tvTextBeforeTable.setOnClickListener(this);
+        tvTextBeforeTable.setVisibility(View.VISIBLE);
+        tvTextBeforeTable.setTypeface(latoFontLight);
 
-            tvCheatTitle = (TextView) ll.findViewById(R.id.text_cheat_title);
-            tvCheatTitle.setTypeface(latoFontBold);
-            tvCheatTitle.setText(cheatObj.getCheatTitle());
+        tvCheatTitle = (TextView) ll.findViewById(R.id.text_cheat_title);
+        tvCheatTitle.setTypeface(latoFontBold);
+        tvCheatTitle.setText(cheatObj.getCheatTitle());
 
-            tvGalleryInfo = (TextView) ll.findViewById(R.id.gallery_info);
-            tvGalleryInfo.setVisibility(View.INVISIBLE);
-            tvGalleryInfo.setTypeface(latoFontLight);
+        tvGalleryInfo = (TextView) ll.findViewById(R.id.gallery_info);
+        tvGalleryInfo.setVisibility(View.INVISIBLE);
+        tvGalleryInfo.setTypeface(latoFontLight);
 
-            screenshotGallery = (Gallery) ll.findViewById(R.id.gallery);
+        screenshotGallery = (Gallery) ll.findViewById(R.id.gallery);
 
-            progressBar = (ProgressBar) ll.findViewById(R.id.progressBar1);
-            progressBar.setVisibility(View.INVISIBLE);
+        progressBar = (ProgressBar) ll.findViewById(R.id.progressBar1);
+        progressBar.setVisibility(View.INVISIBLE);
 
-            tvCheatText = (TextView) ll.findViewById(R.id.text_cheat_text);
-            tvCheatText.setTypeface(latoFontLight);
+        tvCheatText = (TextView) ll.findViewById(R.id.text_cheat_text);
+        tvCheatText.setTypeface(latoFontLight);
 
-            reloadView = (ImageView) ll.findViewById(R.id.reload);
-            if (Reachability.reachability.isReachable) {
-                getOnlineContent();
-            } else {
-                reloadView.setVisibility(View.VISIBLE);
-                reloadView.setOnClickListener(new OnClickListener() {
+        reloadView = (ImageView) ll.findViewById(R.id.reload);
+        if (Reachability.reachability.isReachable) {
+            getOnlineContent();
+        } else {
+            reloadView.setVisibility(View.VISIBLE);
+            reloadView.setOnClickListener(new OnClickListener() {
 
-                    @Override
-                    public void onClick(View v) {
-                        if (Reachability.reachability.isReachable) {
-                            getOnlineContent();
-                        } else {
-                            Toast.makeText(ca, R.string.no_internet, Toast.LENGTH_SHORT).show();
-                        }
+                @Override
+                public void onClick(View v) {
+                    if (Reachability.reachability.isReachable) {
+                        getOnlineContent();
+                    } else {
+                        Toast.makeText(ca, R.string.no_internet, Toast.LENGTH_SHORT).show();
                     }
-                });
-                Toast.makeText(ca, R.string.no_internet, Toast.LENGTH_SHORT).show();
-            }
-
-        } catch (Exception e) {
-            Log.e(CheatViewFragment.class.getName(), "BB: " + e.getMessage());
+                }
+            });
+            Toast.makeText(ca, R.string.no_internet, Toast.LENGTH_SHORT).show();
         }
 
         return ll;
@@ -478,9 +477,9 @@ public class CheatViewFragment extends Fragment implements OnClickListener {
                     URLConnection conn = aURL.openConnection();
                     conn.connect();
                     InputStream is = conn.getInputStream();
-					/* Buffered is always good for a performance plus. */
+                    /* Buffered is always good for a performance plus. */
                     BufferedInputStream bis = new BufferedInputStream(is);
-					/* Decode url-data to a bitmap. */
+                    /* Decode url-data to a bitmap. */
                     Bitmap bm = BitmapFactory.decodeStream(bis);
                     bis.close();
                     is.close();
@@ -493,7 +492,7 @@ public class CheatViewFragment extends Fragment implements OnClickListener {
                 }
 
 				/*
-				 * Apply the Bitmap to the ImageView that will be returned.
+                 * Apply the Bitmap to the ImageView that will be returned.
 				 */
                 for (int i = 0; i < imageViews.length; i++) {
                     imageViews[i] = new ImageView(ca);

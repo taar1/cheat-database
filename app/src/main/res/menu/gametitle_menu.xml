@@ -1,23 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
         android:id="@+id/add_fav"
         android:icon="@drawable/ic_action_add_favorite"
         android:orderInCategory="100"
-        android:showAsAction="never"
-        android:title="@string/add_all_favorites" />
+        android:title="@string/add_all_favorites"
+        app:showAsAction="never" />
     <item
         android:id="@+id/submit"
         android:icon="@drawable/ic_action_upload"
         android:orderInCategory="200"
-        android:showAsAction="never"
-        android:title="@string/submit_cheat_long" />
+        android:title="@string/submit_cheat_long"
+        app:showAsAction="never" />
     <item
         android:id="@+id/search"
         android:icon="@android:drawable/ic_menu_search"
         android:orderInCategory="300"
-        android:showAsAction="never"
-        android:title="@string/menu_fulltext_search_long" />
+        android:title="@string/menu_fulltext_search_long"
+        app:showAsAction="never" />
 
 </menu>

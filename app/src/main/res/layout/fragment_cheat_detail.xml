@@ -17,11 +17,6 @@
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
 
-    <include
-        layout="@layout/incl_cheat_detail_fragment_action_bar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
     <TextView
         android:id="@+id/text_cheat_title"
         android:layout_width="fill_parent"
@@ -102,6 +97,12 @@
                     android:textAppearance="@style/NormalText" />
             </LinearLayout>
         </ScrollView>
+
     </LinearLayout>
+
+    <include
+        layout="@layout/incl_cheat_detail_fragment_action_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
 </LinearLayout>

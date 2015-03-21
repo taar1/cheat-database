@@ -364,16 +364,16 @@ public class Webservice {
         send.go();
     }
 
+
     /**
      * Bewertet einen Cheat. Wenn noch kein Benutzerkonto eingerichtet wurde,
      * wird dieses vorher automatisch erstellt. Besteht noch kein Rating, wird
      * eins eingetragen, ansonsten wird das Rating von diesem User mit dem neuen
      * überschrieben.
      *
-     * @param int    memberId
-     * @param string password MD5 hash tag
-     * @param int    cheatId
-     * @param int    rating 1-10
+     * @param memberId
+     * @param cheatId
+     * @param rating
      * @return 1 = INSERT, 2 = UPDATE
      */
     public static int rateCheat(int memberId, int cheatId, int rating) {
@@ -595,12 +595,12 @@ public class Webservice {
             editor.putString(Konstanten.PREF_NEWCHEATS_LAST_UPDATE_VARIABLE, Tools.now("yyyy-MM-dd"));
 
 			/*
-			 * Total Cheats ins Flat-File speichern
+             * Total Cheats ins Flat-File speichern
 			 */
             editor.putInt(Konstanten.PREF_TOTAL_CHEATS_VARIABLE, totalCheats);
 
 			/*
-			 * Anzahl Games pro System auslesen und ins Flat-File speichern
+             * Anzahl Games pro System auslesen und ins Flat-File speichern
 			 */
             for (int j = 0; j < jaGamesPerSystem.length(); j++) {
                 JSONObject gpsObject = jaGamesPerSystem.getJSONObject(j);
@@ -712,7 +712,7 @@ public class Webservice {
                 Cheat cheat = new Cheat();
 
 				/*
-				 * Screenshot-Informationen auslesen
+                 * Screenshot-Informationen auslesen
 				 */
                 JSONArray screenshots = jsonObject.getJSONArray("screenshots");
                 Screenshot[] screens = new Screenshot[screenshots.length()];
@@ -752,7 +752,7 @@ public class Webservice {
     /**
      * Holt alle Cheats inkl. Member- und Average-Rating anhand einer Game-ID
      *
-     * @param gameId
+     * @param game
      * @param memberId
      * @return
      */
@@ -782,7 +782,7 @@ public class Webservice {
                 Cheat cheat = new Cheat();
 
 				/*
-				 * Screenshot-Informationen auslesen
+                 * Screenshot-Informationen auslesen
 				 */
                 JSONArray screenshots = jsonObject.getJSONArray("screenshots");
                 Screenshot[] screens = new Screenshot[screenshots.length()];
@@ -1054,7 +1054,7 @@ public class Webservice {
                 tmpGame.setGameName(tmpGameName);
 
 				/*
-				 * Dem Game-Objekt die System-ID und System-Namen ergünzen
+                 * Dem Game-Objekt die System-ID und System-Namen ergünzen
 				 */
                 for (int k = 0; k < temporaryGameList.size(); k++) {
                     Game gg = temporaryGameList.get(k);
@@ -1071,7 +1071,7 @@ public class Webservice {
                         matchingCheats.add(cc);
                     }
                 }
-				/*
+                /*
 				 * Dem Game-Object die korrekte Anzahl Cheat-Objekten zuweisen
 				 */
                 tmpGame.createCheatCollection(matchingCheats.size());
@@ -1440,21 +1440,21 @@ public class Webservice {
         al.add(param1);
 
         try {
-            // FIXME : funktioniert irgendwie nicht....
-            String gggg = getDataAsStringFromServer(Konstanten.BASE_URL_ANDROID + "checkMember.php", al);
-            Integer returnValue = Integer.valueOf(gggg);
+            JSONObject retValObj = new JSONObject(getDataAsStringFromServer(Konstanten.BASE_URL_ANDROID + "checkMemberNew.php", al));
 
-            if (returnValue == 0) {
+            if (retValObj.getInt("allow") == 0) {
                 return false;
             } else {
+                // allow = 1
                 return true;
             }
-
         } catch (Exception e) {
             Log.d("ERROR", e.getMessage());
+            e.getStackTrace();
             return false;
         }
     }
+
 
     /**
      * Gets a cheat by cheat ID and highlights
@@ -1531,6 +1531,7 @@ public class Webservice {
 
         } catch (Exception e) {
             Log.e("getDataFromServer ERROR", "" + e.getMessage());
+            e.printStackTrace();
         }
         return responseString;
     }

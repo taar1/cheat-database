@@ -64,7 +64,6 @@ public class Konstanten {
     public final static int REFRESH_INTERVAL_NEWCHEATS = 10; // In Tagen
 
     // Position in systems.xml file
-    public final static int DEFAULT_PRESELECTED_SYSTEM_SPINNER_POSITION = 34; // 3DS
     public final static String GOOGLE_ANALYTICS_ID = "UA-6697147-6";
     public final static int TABLE_ROW_MINIMUM_WIDTH = 300;
     public final static int CHEAT_DAY_AGE_SHOW_NEWADDITION_ICON = 10;
@@ -84,6 +83,7 @@ public class Konstanten {
     public final static String MOBILECORE_DEVELOPER_HASH = "199AFTT5YE9OVNXRKEAT08E4BWV2T";
     public final static String MDOTM_API_KEY = "ee6de4fe5b8fde6a06f161973f712ded";
     public final static String AMAZON_API_KEY = "cf2064f5f51249ecbd6b86f6c86d382a";
+    public final static String SPLUNK_MINT_API_KEY = "b19b084a";
 
     // SD CARD SETTINGS
     public final static String APP_PATH_SD_CARD = "/Android/data/com.cheatdatabase/files/";
