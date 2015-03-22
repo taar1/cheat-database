@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- From: file:/C:/Users/Dominik/Workspaces/Android/Cheat-Database/app/src/main/res/values-ph/arrays.xml -->
+    <eat-comment/>
+    <string-array name="contextmenu_cheatview">
+        <item>Copy to clipboard</item>
+    </string-array>
+    <string-array name="months">
+        <item>January</item>
+        <item>February</item>
+        <item>March</item>
+        <item>April</item>
+        <item>May</item>
+        <item>June</item>
+        <item>July</item>
+        <item>August</item>
+        <item>September</item>
+        <item>October</item>
+        <item>November</item>
+        <item>December</item>
+    </string-array>
+    <string-array name="report_reasons">
+        <item>Cheat is not working</item>
+        <item>Scam</item>
+        <item>Spoof</item>
+        <item>Copyright issue</item>
+        <item>Other reason</item>
+    </string-array>
+    <!-- From: file:/C:/Users/Dominik/Workspaces/Android/Cheat-Database/app/src/main/res/values-ph/strings.xml -->
+    <eat-comment/>
+    <string name="add_all_favorites">Add all cheats to favorites</string>
+    <string name="add_favorite">Add to your favorites</string>
+    <string name="add_favorite_ok">Na i add na ang cheat sa favorites.</string>
+    <string name="add_favorites_error">Ang napiling cheats ay nasa favorites na. The new ones have been added.</string>
+    <string name="add_favorites_ok">Cheats successfully added sa favorites.</string>
+    <string name="add_one_favorite">Add cheat to favorites</string>
+    <string name="advanced_search">advanced / full text search</string>
+    <string name="app_name">Cheat-Database</string>
+    <string name="button_closeNothingFoundPopup">Refine query</string>
+    <string name="button_searchCheats">Search ng cheats</string>
+    <string name="cancel">Cancel</string>
+    <string name="cheat">cheat</string>
+    <string name="cheat_counter_headline">Over %s cheats and padami pa!</string>
+    <string name="cheat_submit_nok">Meron mali sa pag submit ng  cheat. Please try again.</string>
+    <string name="cheat_submit_ok">Salamat sa pag submit! We will review the cheat and will inform you by email if we are going to add it to the database. By the way: You can edit or delete your submitted cheats via our website www.cheat-database.com.</string>
+    <string name="cheats">cheats</string>
+    <string name="clearForm">Clear</string>
+    <string name="context_menu_copied">Cheat copied to clipboard.</string>
+    <string name="context_menu_title">Context Menu</string>
+    <string name="crashreport_missing_crashreport">Please provide us with a detailed description of where you clicked just before the app crashed.</string>
+    <string name="crashreport_missing_devicemodel">Please enter the model of your phone.</string>
+    <string name="crashreport_missing_email">Please enter your email address so we can contact you if we need further information about the crash.</string>
+    <string name="crashreport_submit">Submit crash report</string>
+    <string name="crashreport_thanks">Salamat sa pag report ng crash! If we need any further information about the crash we may contact you by email.</string>
+    <string name="crashreport_when_crashed">Kelan nag crash ang application?</string>
+    <string name="crashreport_your_device">Your device model</string>
+    <string name="email">E-Mail</string>
+    <string name="enterGame">Enter game title:</string>
+    <string name="enter_game_hint">Game Title</string>
+    <string name="err">Error</string>
+    <string name="err_data_not_accessible">Hindi ma retrieve and ni request na data. Please try again a bit later.</string>
+    <string name="err_email_invalid">Ang email na ito ay hindi valid.</string>
+    <string name="err_email_used">Ang email address na ito ay gamit na.</string>
+    <string name="err_email_user_not_found">Walang user na nakita na gumagamit ng email address na ito.</string>
+    <string name="err_no_member_data">Error: No member data could be found.</string>
+    <string name="err_other_problem">Nag ka problema sa pag gawa ng account na ito. Please try again a bit later. If the problem remains you can also register at www.cheat-database.com/register.</string>
+    <string name="err_password_length">Ang password na ito ay dapat atleast 6 characters pataas.</string>
+    <string name="err_saving_to_sd">Saving to SD card failed.</string>
+    <string name="err_sd_not_accessible">Hindi available ang SD card.</string>
+    <string name="err_somethings_wrong">Something just went wrong. Please try again.</string>
+    <string name="err_username_length">Ang username ay dapat atleast 6 characters pataas.</string>
+    <string name="err_username_used">Ang username na ito na gamit na.</string>
+    <string name="error_nothing_found_text">Walang mahanap na game sa search query nyo. Please try again with less keywords.</string>
+    <string name="error_nothing_found_title">Walang resulta!</string>
+    <string name="favorite_adding">Adding favorites…</string>
+    <string name="favorite_deleted">Cheat was removed from your favorites.</string>
+    <string name="favorite_empty">Wala pang napiling favorites. Bago ma access ang view na ito kailangan mo magdagdag ng favorite muna.</string>
+    <string name="favorite_error">Cheat already exists in your favorites.</string>
+    <string name="favorite_no_cheats">Wala pang cheat sa game na napili sa favorites.</string>
+    <string name="favorites">Favorites</string>
+    <string name="favorites_welcome_text">Dito nakadisplay ang cheats na paborito nyo. Pag gusto mo mag add ng cheat sa Favorites mo just press the \"Menu\" button on a cheat view and choose \"Add to your favorites\" in the Menu. Pag gusto mo alisin ang cheat sa favorites  mo just click  \"Remove from your favorites\" sa game menu.</string>
+    <string name="fill_everything">Please fill out all fields.</string>
+    <string name="forum_button_submit">Post</string>
+    <string name="forum_goto">Go to forum</string>
+    <string name="forum_goto_online">Go to forum (online)</string>
+    <string name="forum_submit_failed">Hindi pa sumbit ang post. Please try again later.</string>
+    <string name="forum_submit_ok">Submission successful.</string>
+    <string name="forum_yet_empty">The forum for this cheat is yet empty. Be the first to write something. Tip: Favorite this cheat so you can come back to the forum easier.</string>
+    <string name="fullscreen_mode_exit">Double tap to para umalis sa full screen mode</string>
+    <string name="fulltext_search_all_cheats">Search through all cheats</string>
+    <string name="fulltext_search_cheats">Search cheats</string>
+    <string name="fulltext_search_error_nosystem_selected">Please pick at least one system</string>
+    <string name="fulltext_search_keywords">Keywords</string>
+    <string name="fulltext_search_listed_cheats">Search through listed cheats</string>
+    <string name="fulltext_search_results">Full-text search results</string>
+    <string name="fulltext_search_systems">Choose systems</string>
+    <string name="fulltext_search_title">Full-text search</string>
+    <string name="fulltext_search_titles_also">Search in cheat titles also</string>
+    <string name="game">game</string>
+    <string name="game_platform">System</string>
+    <string name="games">games</string>
+    <string name="goto_cheat">To cheat</string>
+    <string name="goto_cheat_list">To cheat overview</string>
+    <string name="goto_favorites">Go to your favorites</string>
+    <string name="goto_main_screen">Home</string>
+    <string name="help">Help</string>
+    <string name="lead_bolt_text">Our App recommendations ></string>
+    <string name="login_failed">Login not successful. Mali ang Username/Password combination. Visit www.cheat-database.com para recover ang password nyo.</string>
+    <string name="login_forgot">Forgot login data</string>
+    <string name="login_instead">Login instead</string>
+    <string name="login_ok">Login successful.</string>
+    <string name="login_send_password">Padala ang login data by email</string>
+    <string name="login_sent_ok">Ang login data ay na padala na sa email nyo.</string>
+    <string name="login_title">Login here</string>
+    <string name="logout">Logout</string>
+    <string name="logout_ok">Logout successful.</string>
+    <string name="member_banned">Na disable yung account nyo.</string>
+    <string name="members_cheats_title">%s\'s Cheats</string>
+    <string name="menu_fulltext_search_long">Full text search in listed cheats</string>
+    <string name="menu_fulltext_search_short">Full text search</string>
+    <string name="menu_more_apps">More Apps from us</string>
+    <string name="menu_pocketchange">Pocket Change Balance</string>
+    <string name="menu_server_status">Status ng server</string>
+    <string name="meta_average_rating1">%s out of 10</string>
+    <string name="meta_average_rating2">based on %s votes</string>
+    <string name="meta_info">Meta Info</string>
+    <string name="meta_info_retrieved">Cheat meta info retrieved. Swipe left to view.</string>
+    <string name="meta_member_homepage">website</string>
+    <string name="meta_rating_average">Average cheat rating by members</string>
+    <string name="meta_return">Return to cheat</string>
+    <string name="meta_show_all_cheats">Show all cheats</string>
+    <string name="meta_submission_date">Petsa ng pag sumbit</string>
+    <string name="meta_submission_total">Total submitted cheats ng member</string>
+    <string name="meta_submitted_by">Submitted by</string>
+    <string name="meta_unknown">Unknown</string>
+    <string name="meta_views_lifetime">Lifetime views</string>
+    <string name="meta_views_today">Views ngayon</string>
+    <string name="my_favorites">Your favorites</string>
+    <string name="new_cheats_title">Mga bagong cheats para sa games na ito:</string>
+    <string name="news_title">Version</string>
+    <string name="news_welcome">Latest version update</string>
+    <string name="no_cheats_text">Wala pang available cheats sa database namin. Please check again later.</string>
+    <string name="no_cheats_title">Walang available cheat</string>
+    <string name="no_internet">Walang Internet connection available. Try again a bit later.</string>
+    <string name="notify_rotate_device">I rotate and device pag hindi mabasa ng maayos ang nasa display.</string>
+    <string name="ok">OK</string>
+    <string name="password">Password</string>
+    <string name="placeholder">Placeholder</string>
+    <string name="please_wait">Please wait</string>
+    <string name="rate_cheat">Rate cheat</string>
+    <string name="rate_cheat_here">Rate this cheat here</string>
+    <string name="rate_cheat_plain">Rate</string>
+    <string name="rating_inserted">Maraming salamat po sa pag rate! Ang rating nyo po na i rehistro na.</string>
+    <string name="rating_processing">Ang rating nyo ay pinoprocess na…</string>
+    <string name="rating_updated">Maraming salamat po. na update na po ang rating nyo.</string>
+    <string name="rating_your">Your cheat rating:</string>
+    <string name="register">Register</string>
+    <string name="register_instead">Register instead</string>
+    <string name="register_login">Register / Login</string>
+    <string name="register_thanks">Salamat sa pag register!</string>
+    <string name="register_title">Register here</string>
+    <string name="remove_favorite">Alisin sa favorites</string>
+    <string name="remove_favorite_nok">Error removing cheat from your favorites.</string>
+    <string name="remove_favorite_ok">Cheat %s successfully removed from your favorites.</string>
+    <string name="remove_favorites_nok">Error removing game from your favorites.</string>
+    <string name="remove_favorites_ok">Game successfully removed from your favorites.</string>
+    <string name="report_cheat_title">Report cheat</string>
+    <string name="retrieving_data">Retrieving data</string>
+    <string name="search_hint">Search Game</string>
+    <string name="search_results">Resulta ng search query</string>
+    <string name="share_download_cheatdatabase">Download Cheat-Database for Android here:</string>
+    <string name="share_email_body">I just found this cheat on Cheat-Database for Android. Click the link below to check it out:</string>
+    <string name="share_email_subject">I just found this cheat for %s</string>
+    <string name="share_error_no_client">There are no email clients installed.</string>
+    <string name="share_title">Share cheat</string>
+    <string name="showCheatList">Cheat list</string>
+    <string name="showGameList">List ng Games</string>
+    <string name="splash_screen">Loading Cheat-Database…</string>
+    <string name="submit_cheat_consent_text">I hereby agree that my submission may be grammatically altered and corrected in order to meet the minimum quality levels required.</string>
+    <string name="submit_cheat_consent_title">Agreement</string>
+    <string name="submit_cheat_guidelines">Thanks for submitting a cheat to us, we really appreciate your help! However, before you write a cheat, please read our short writing guidelines which makes your submitted cheats easier to understand for other readers.\n\n
+- Use capital letters for character or object names. Always use a capital letter after a full stop.\n\n
+- Try not to make long sentences. Short sentences are easier to understand. Try not to use \"then\" to connect sentences either.\n\n
+- Don\'t use \"I did\" or \"it helped me\" etc. in sentences. Use the third person for instructions.</string>
+    <string name="submit_cheat_instructions_text">Lahat ng na submit na cheat ay ma sisave sa Cheat-Database account. Once a cheat has been approved by us you will be notified by email about this.\n\nPag may gusto kayong baguhin sa cheats na submit nyo maglogin lang kayo sa www.cheat-database.com via sa computer nyo. Pwede din kayo mag add ng screenshots, edit the text or delete your own cheats.</string>
+    <string name="submit_cheat_instructions_title">Information sa pag submit ng cheat</string>
+    <string name="submit_cheat_long">Submit a cheat for this game</string>
+    <string name="submit_cheat_review">Submit cheat for review</string>
+    <string name="submit_cheat_short">Submit a cheat</string>
+    <string name="submit_cheat_your_body">Your Cheat Content</string>
+    <string name="submit_cheat_your_title">Cheat Title</string>
+    <string name="thanks_for_reporting">Maraming salamat sa pag report sa issue na ito. Maasahan nyo ang mabilis namin pag responde.</string>
+    <string name="top_members_cheats_count"># of cheats</string>
+    <string name="top_members_no_website">Member %s walang website</string>
+    <string name="top_members_title">Members Top 20</string>
+    <string name="top_members_visit_website">Visit %s\'s website</string>
+    <string name="total_cheats_unknown">Libo libong cheats!</string>
+    <string name="username">Username</string>
+    <string name="username_email">Username or E-Mail</string>
+</resources>

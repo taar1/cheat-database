@@ -89,6 +89,7 @@ public class Konstanten {
     public final static String APP_PATH_SD_CARD = "/Android/data/com.cheatdatabase/files/";
 
     public final static String FONT_BOLD = "Lato-Bold.ttf";
+    public final static String FONT_LIGHT = "Lato-Light.ttf";
 
     // COLORS
     public final static int COBALT_DARK = 0xFF003f50;
