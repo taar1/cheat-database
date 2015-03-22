@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:ns1="urn:oasis:names:tc:xliff:document:1.2">
+    <!-- From: file:/C:/Users/Dominik/Workspaces/Android/Cheat-Database/app/src/main/res/values-da/arrays.xml -->
+    <eat-comment/>
+    <string-array name="contextmenu_cheatview">
+        <item>kopier til udklipsholderen</item>
+    </string-array>
+    <string-array name="months">
+        <item>Januar</item>
+        <item>Februar</item>
+        <item>Marts</item>
+        <item>April</item>
+        <item>Maj</item>
+        <item>Juni</item>
+        <item>Juli</item>
+        <item>August</item>
+        <item>September</item>
+        <item>Oktober</item>
+        <item>November</item>
+        <item>December</item>
+    </string-array>
+    <string-array name="report_reasons">
+        <item>Cheaten virker ikke</item>
+        <item>Snyd</item>
+        <item>Sjovt</item>
+        <item>Copyright-problem</item>
+        <item>Anden grund</item>
+    </string-array>
+    <!-- From: file:/C:/Users/Dominik/Workspaces/Android/Cheat-Database/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/values-da/values.xml -->
+    <eat-comment/>
+    <string msgid="4600421777120114993" name="abc_action_bar_home_description">"Naviger hjem"</string>
+    <string msgid="1397052879051804371" name="abc_action_bar_home_description_format">"%1$s, %2$s"</string>
+    <string msgid="6623331958280229229" name="abc_action_bar_home_subtitle_description_format">"%1$s, %2$s, %3$s"</string>
+    <string msgid="1594238315039666878" name="abc_action_bar_up_description">"Naviger op"</string>
+    <string msgid="3588849162933574182" name="abc_action_menu_overflow_description">"Flere muligheder"</string>
+    <string msgid="4076576682505996667" name="abc_action_mode_done">"Luk"</string>
+    <string msgid="7468859129482906941" name="abc_activity_chooser_view_see_all">"Se alle"</string>
+    <string msgid="2031811694353399454" name="abc_activitychooserview_choose_application">"Vælg en app"</string>
+    <string msgid="3691816814315814921" name="abc_searchview_description_clear">"Ryd forespørgslen"</string>
+    <string msgid="2550479030709304392" name="abc_searchview_description_query">"Søgeforespørgsel"</string>
+    <string msgid="8264924765203268293" name="abc_searchview_description_search">"Søg"</string>
+    <string msgid="8928215447528550784" name="abc_searchview_description_submit">"Indsend forespørgslen"</string>
+    <string msgid="893419373245838918" name="abc_searchview_description_voice">"Talesøgning"</string>
+    <string msgid="3421042268587513524" name="abc_shareactionprovider_share_with">"Del med"</string>
+    <string msgid="7165123711973476752" name="abc_shareactionprovider_share_with_application">"Del med %s"</string>
+    <!-- From: file:/C:/Users/Dominik/Workspaces/Android/Cheat-Database/app/src/main/res/values-da/strings.xml -->
+    <eat-comment/>
+    <string name="add_all_favorites">Add all cheats to favorites</string>
+    <string name="add_favorite">Tilføj til favoritter</string>
+    <string name="add_favorite_ok">Cheaten er blevet tilføjet til dine favoritter.</string>
+    <string name="add_favorites_error">Some or all cheats are already in your favorites. The new ones have been added.</string>
+    <string name="add_favorites_ok">Cheats successfully added to your favorites.</string>
+    <string name="add_one_favorite">Add cheat to favorites</string>
+    <string name="advanced_search">Avanceret søgning</string>
+    <string name="app_name">Cheat-Database</string>
+    <string name="button_closeNothingFoundPopup">Ret søgning</string>
+    <string name="button_searchCheats">Søg cheats</string>
+    <string name="cancel">Afbryd</string>
+    <string name="cheat">cheat</string>
+    <string name="cheat_counter_headline">Flere end %s cheats tilgængelige!</string>
+    <string name="cheat_submit_nok">Der opstod en fejl. Prøv venligst igen.</string>
+    <string name="cheat_submit_ok">Tusind tak for din indsendelse! Vi kontrollerer cheaten og informerer dig via e-mail, hvis den bliver tilføjet til vores database. Du kan rette eller slette alle dine indsendte cheats på www.cheat-database.com.</string>
+    <string name="cheats">cheats</string>
+    <string name="clearForm">Slet</string>
+    <!-- From: file:/C:/Users/Dominik/Workspaces/Android/Cheat-Database/app/build/intermediates/exploded-aar/com.google.android.gms/play-services/6.5.87/res/values-da/common_strings.xml -->
+    <eat-comment/>
+    <string msgid="473679118463211576" name="common_android_wear_notification_needs_update_text">"En applikation kræver en opdatering af appen Android Wear."</string>
+    <string msgid="3046420540094071256" name="common_android_wear_update_text">"Denne app kan ikke køre, medmindre du opdaterer appen Android Wear."</string>
+    <string msgid="1366439133145190222" name="common_android_wear_update_title">"Opdater Android Wear"</string>
+    <string msgid="4181637455539816337" name="common_google_play_services_enable_button">"Aktivér Google Play-tjenester"</string>
+    <string msgid="7627896071867667758" name="common_google_play_services_enable_text">"Denne app virker ikke, medmindre du aktiverer Google Play-tjenester."</string>
+    <string msgid="529078775174559253" name="common_google_play_services_enable_title">"Aktivér Google Play-tjenester"</string>
+    <string msgid="2443362625939284971" name="common_google_play_services_error_notification_requested_by_msg">"Anmodning fra <ns1:g id="APP_NAME">%1$s</ns1:g>"</string>
+    <string msgid="8515591849428043265" name="common_google_play_services_install_button">"Hent Google Play-tjenester"</string>
+    <string msgid="8685301130651051380" name="common_google_play_services_install_text_phone">"Denne app kan ikke køre uden Google Play-tjenester, som mangler på din telefon."</string>
+    <string msgid="1589957570365247855" name="common_google_play_services_install_text_tablet">"Denne app kan ikke køre uden Google Play-tjenester, som mangler på din tablet."</string>
+    <string msgid="26645092511305524" name="common_google_play_services_install_title">"Hent Google Play-tjenester"</string>
+    <string msgid="4983316348021735578" name="common_google_play_services_invalid_account_text">"Den angivne konto findes ikke på denne enhed. Vælg en anden konto."</string>
+    <string msgid="1066672360770936753" name="common_google_play_services_invalid_account_title">"Ugyldig konto"</string>
+    <string msgid="2583358409598976717" name="common_google_play_services_needs_enabling_title">"En applikation kræver, at Google Play-tjenester aktiveres."</string>
+    <string msgid="9038847255613537209" name="common_google_play_services_network_error_text">"Der kræves en dataforbindelse for at oprette forbindelse til Google Play-tjenester."</string>
+    <string msgid="3827284619958211114" name="common_google_play_services_network_error_title">"Netværksfejl"</string>
+    <string msgid="8120534356798772974" name="common_google_play_services_notification_needs_installation_title">"En applikation kræver, at Google Play-tjenester installeres."</string>
+    <string msgid="1388129345631079938" name="common_google_play_services_notification_needs_update_title">"En applikation kræver, at Google Play-tjenester opdateres."</string>
+    <string msgid="1852570676146674985" name="common_google_play_services_notification_ticker">"Fejl i Google Play-tjenester"</string>
+    <string msgid="4762332809710093730" name="common_google_play_services_unknown_issue">"Ukendt problem med Google Play-tjenester."</string>
+    <string msgid="3542578567569488671" name="common_google_play_services_unsupported_text">"Google Play-tjenester, som nogle af dine applikationer er afhængige af, understøttes ikke af din enhed. Kontakt producenten for at få hjælp."</string>
+    <string msgid="6334768798839376943" name="common_google_play_services_unsupported_title">"Google Play-tjenester"</string>
+    <string msgid="8932944190611227642" name="common_google_play_services_update_button">"Opdater"</string>
+    <string msgid="448354684997260580" name="common_google_play_services_update_text">"Denne app kan ikke køre, medmindre du opdaterer Google Play-tjenester."</string>
+    <string msgid="6006316683626838685" name="common_google_play_services_update_title">"Opdater Google Play-tjenester"</string>
+    <string msgid="411506735369601515" name="common_open_on_phone">"Åbn på telefonen"</string>
+    <string msgid="9071884888741449141" name="common_signin_button_text">"Log ind"</string>
+    <string msgid="2429381841831957106" name="common_signin_button_text_long">"Log ind med Google"</string>
+    <!-- From: file:/C:/Users/Dominik/Workspaces/Android/Cheat-Database/app/src/main/res/values-da/strings.xml -->
+    <eat-comment/>
+    <string name="context_menu_copied">Cheat er blevet kopieret til udklipsholderen.</string>
+    <string name="context_menu_title">Kontekstmenu</string>
+    <string name="crashreport_missing_crashreport">Beskriv venligst så præcist som muligt, hvad du lavede da fejlen skete.</string>
+    <string name="crashreport_missing_devicemodel">Angiv venligst modellen på din mobil.</string>
+    <string name="crashreport_missing_email">Angiv venligst din e-mail-adresse, så vi kan kontakte dig hvis der er spørgsmål.</string>
+    <string name="crashreport_submit">Send fejlbeskrivelse</string>
+    <string name="crashreport_thanks">Mange tak for din fejlbeskrivelse! Vi kontakterer dig hvis der er spørgsmål om fejlen.</string>
+    <string name="crashreport_when_crashed">Hvornår fejlede applikationen?</string>
+    <string name="crashreport_your_device">Model på din mobil</string>
+    <string name="email">E-mail</string>
+    <string name="enterGame">Søg på spiltitlen:</string>
+    <string name="enter_game_hint">Spiltitlen</string>
+    <string name="err">Error</string>
+    <string name="err_data_not_accessible">Requested data could not be retrieved. Please try again a bit later.</string>
+    <string name="err_email_invalid">Ugyldig e-mail-adresse.</string>
+    <string name="err_email_used">E-mail-adressen er optaget.</string>
+    <string name="err_email_user_not_found">No user found with this email address.</string>
+    <string name="err_no_member_data">Error: No member data could be found.</string>
+    <string name="err_other_problem">Der var et problem med oprettelsen af din brugerkonto. Prøv venligst igen senere. If the problem remains you can also register at www.cheat-database.com/register.</string>
+    <string name="err_password_length">Adgangskoden skal være mindst 6 tegn lang.</string>
+    <string name="err_somethings_wrong">Something just went wrong. Please try again.</string>
+    <string name="err_username_length">Dit brugernavn skal være mindst 6 tegn langt.</string>
+    <string name="err_username_used">Brugernavnet er optaget.</string>
+    <string name="error_nothing_found_text">Ingen spil med disse søgeord blev fundet. Prøv venligst igen med færre eller andre søgeord.</string>
+    <string name="error_nothing_found_title">Din søgning gav ingen resultater.</string>
+    <string name="favorite_adding">Adding favorites…</string>
+    <string name="favorite_deleted">Cheaten er blevet fjernet fra favoritterne.</string>
+    <string name="favorite_empty">Der er ingen favoritter i listen endnu. Tilføj en cheat til listen først.</string>
+    <string name="favorite_error">Cheaten kunne ikke blive tilføjet, fordi den allerede er en favorit.</string>
+    <string name="favorite_no_cheats">Der er ingen cheats til dette spil i dine favoritter.</string>
+    <string name="favorites">Mine favoritter</string>
+    <string name="favorites_welcome_text">I dette afsnit finder du dine favoritcheats. For at tilføje en cheat til listen, tryk på \"menu\"-knappen i cheatens detaljer og vælg \"Tilføj til favoritter\". For at fjerne en chat fra listen igen, vælg optionen \"Fjern fra favoritterne\".</string>
+    <string name="fill_everything">Please fill out all fields.</string>
+    <string name="forum_button_submit">Afsend</string>
+    <string name="forum_goto">Til forummet</string>
+    <string name="forum_goto_online">Til forummet (online)</string>
+    <string name="forum_submit_failed">Dit indlæg kunne ikke blive sendt. Prøv venligst igen senere.</string>
+    <string name="forum_submit_ok">Indlægget er blevet sendt.</string>
+    <string name="forum_yet_empty">Forummet til denne cheat er stadig tomt. Bliv den første der skriver noget. Tilføj cheaten til dine favoritter, på den måde er det nemt at finde forummet igen senere.</string>
+    <string name="fullscreen_mode_exit">Double tap to exit full screen mode</string>
+    <string name="fulltext_search_all_cheats">Søg i alle cheats</string>
+    <string name="fulltext_search_cheats">Søg i cheats</string>
+    <string name="fulltext_search_error_nosystem_selected">Vælg mindst ét system</string>
+    <string name="fulltext_search_keywords">Indtast søgeord</string>
+    <string name="fulltext_search_listed_cheats">Søg i cheats i listen</string>
+    <string name="fulltext_search_results">Resultater</string>
+    <string name="fulltext_search_systems">Vælg systemet</string>
+    <string name="fulltext_search_title">Avanceret søgning</string>
+    <string name="fulltext_search_titles_also">Søg også på titlen</string>
+    <string name="game">spil</string>
+    <string name="game_platform">system</string>
+    <string name="games">spil</string>
+    <string name="goto_cheat">Til cheaten</string>
+    <string name="goto_cheat_list">Til cheat-listen</string>
+    <string name="goto_favorites">Mine favoritter</string>
+    <string name="goto_main_screen">Startside</string>
+    <string name="goto_news">News</string>
+    <string name="help">Hjælp</string>
+    <string name="lead_bolt_text">Our App recommendations ></string>
+    <string name="login_failed">Login mislykkedes. Forkert kombination af brugernavn/adgangskode. Gå til www.cheat-database.com, for at nulstille din adgangskode.</string>
+    <string name="login_forgot">Forgot login data</string>
+    <string name="login_instead">… eller log ind</string>
+    <string name="login_ok">Login lykkedes.</string>
+    <string name="login_send_password">Send login data by email</string>
+    <string name="login_sent_ok">Login data has been sent to you via email</string>
+    <string name="login_title">Log ind</string>
+    <string name="logout">Log ud</string>
+    <string name="logout_ok">Logout lykkedes.</string>
+    <string name="member_banned">Din brugerkonto er blevet blokeret.</string>
+    <string name="members_cheats_title">%s\'s Cheats</string>
+    <string name="menu_fulltext_search_long">Fuldtekstsøgning i de her cheats</string>
+    <string name="menu_fulltext_search_short">Fuldtekstsøgning</string>
+    <string name="menu_more_apps">More Apps from us</string>
+    <string name="menu_pocketchange">Pocket Change Balance</string>
+    <string name="menu_server_status">Server status</string>
+    <string name="meta_average_rating1">%s out of 10</string>
+    <string name="meta_average_rating2">based on %s votes</string>
+    <string name="meta_info">Meta Info</string>
+    <string name="meta_info_retrieved">Cheat meta info retrieved. Swipe left to view.</string>
+    <string name="meta_member_homepage">website</string>
+    <string name="meta_rating_average">Average cheat rating by members</string>
+    <string name="meta_return">Return to cheat</string>
+    <string name="meta_show_all_cheats">Show all cheats</string>
+    <string name="meta_submission_date">Date of submission</string>
+    <string name="meta_submission_total">Total submitted cheats by member</string>
+    <string name="meta_submitted_by">Submitted by</string>
+    <string name="meta_unknown">Unknown</string>
+    <string name="meta_views_lifetime">Lifetime views</string>
+    <string name="meta_views_today">Views today</string>
+    <string name="my_favorites">Favoritter</string>
+    <string name="new_cheats_title">Nye cheats til disse spil:</string>
+    <string name="news_title">Version</string>
+    <string name="news_welcome">Nyt i denne version</string>
+    <string name="no_cheats_text">Til dette spil har vi ingen cheats i databasen endnu. Prøv venligst igen på et senere tidspunkt.</string>
+    <string name="no_cheats_title">Ingen cheats fundet</string>
+    <string name="no_internet">Ingen internetforbindelse. Prøv venligst igen senere.</string>
+    <string name="notify_rotate_device"> Drej din mobil 90 grader, hvis cheaten ikke bliver vist på den rigtige måde.</string>
+    <string name="ok">OK</string>
+    <string name="password">Adgangskode</string>
+    <string name="placeholder">Placeholder</string>
+    <string name="please_wait">Vent venligst</string>
+    <string name="rate_cheat">Bedøm cheat</string>
+    <string name="rate_cheat_here">Bedøm denne cheat</string>
+    <string name="rate_cheat_plain">Bedøm</string>
+    <string name="rating_inserted">Tak! Din bedømmelse blev registreret.</string>
+    <string name="rating_processing">Your rating is being processed…</string>
+    <string name="rating_updated">Tak! Din bedømmelse blev opdateret.</string>
+    <string name="rating_your">Your cheat rating:</string>
+    <string name="register">Registrering</string>
+    <string name="register_instead">Registrering</string>
+    <string name="register_login">Registrering / Log ind</string>
+    <string name="register_thanks">Tak for din registrering!</string>
+    <string name="register_title">Registrering</string>
+    <string name="remove_favorite">Fjern fra favoritterne</string>
+    <string name="remove_favorite_nok">Fjernelsen af denne favorit er slået fejl.</string>
+    <string name="remove_favorite_ok">Cheaten %s er blevet fjernet fra favoritterne.</string>
+    <string name="remove_favorites_nok">Error removing game from your favorites.</string>
+    <string name="remove_favorites_ok">Game successfully removed from your favorites.</string>
+    <string name="report_cheat_title">Fejlmeld cheat</string>
+    <string name="retrieving_data">Henter data</string>
+    <string name="search_hint">Søg efter et spil</string>
+    <string name="search_results">Søgeresultater</string>
+    <string name="share_download_cheatdatabase">Download Cheat-Database for Android here:</string>
+    <string name="share_email_body">I just found this cheat on Cheat-Database for Android. Click the link below to check it out:</string>
+    <string name="share_email_subject">I just found this cheat for %s</string>
+    <string name="share_error_no_client">There are no email clients installed.</string>
+    <string name="share_title">Share cheat</string>
+    <string name="showCheatList">Cheat-liste</string>
+    <string name="showGameList">Spil-liste</string>
+    <string name="splash_screen">Loading Cheat-Database…</string>
+    <string name="submit_cheat_consent_text">I hereby agree that my submission may be grammatically altered and corrected in order to meet the minimum quality levels required.</string>
+    <string name="submit_cheat_consent_title">Agreement</string>
+    <string name="submit_cheat_guidelines">Thanks for submitting a cheat to us, we really appreciate your help! However, before you write a cheat, please read our short writing guidelines which makes your submitted cheats easier to understand for other readers.\n\n
+- Use capital letters for character or object names. Always use a capital letter after a full stop.\n\n
+- Try not to make long sentences. Short sentences are easier to understand. Try not to use \"then\" to connect sentences either.\n\n
+- Don\'t use \"I did\" or \"it helped me\" etc. in sentences. Use the third person for instructions.</string>
+    <string name="submit_cheat_instructions_text">Alle indsendte cheats bliver gemt på din brugerkonto. Når en cheat er blevet kontrolleret, bliver du informeret via e-mail.\n\nHvis du ønsker at redigere din cheat, kan du logge ind med en browser på www.cheat-database.com. I medlemsafsnittet kan du redigere dine cheats, tilføje screenshots eller fjerne cheaten fra databasen.</string>
+    <string name="submit_cheat_instructions_title">Om indsendelse af cheats</string>
+    <string name="submit_cheat_long">Indsend cheat til dette spil</string>
+    <string name="submit_cheat_review">Afsend cheat til kontrol</string>
+    <string name="submit_cheat_short">Indsend cheat</string>
+    <string name="submit_cheat_your_body">Cheatens indhold:</string>
+    <string name="submit_cheat_your_title">Cheatens titel:</string>
+    <string name="thanks_for_reporting">Mange Tak. Vi kontrollerer cheaten.</string>
+    <string name="top_members_cheats_count"># of cheats</string>
+    <string name="top_members_no_website">Member %s has no website</string>
+    <string name="top_members_title">Members Top 20</string>
+    <string name="top_members_visit_website">Visit %s\'s website</string>
+    <string name="total_cheats_unknown">Hundrede tusinde af cheats!</string>
+    <string name="username">Brugernavn</string>
+    <string name="username_email">Brugernavn eller e-mail</string>
+</resources>

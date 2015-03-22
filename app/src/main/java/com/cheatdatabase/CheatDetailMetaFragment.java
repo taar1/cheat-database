@@ -20,10 +20,12 @@ import android.widget.TextView;
 import com.cheatdatabase.businessobjects.Cheat;
 import com.cheatdatabase.businessobjects.Member;
 import com.cheatdatabase.helpers.Helper;
+import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.helpers.Tools;
 import com.cheatdatabase.helpers.Webservice;
 import com.google.gson.Gson;
+import com.splunk.mint.Mint;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -85,12 +87,18 @@ public class CheatDetailMetaFragment extends Fragment implements OnClickListener
         super.onCreate(savedInstanceState);
 
         ca = (CheatListActivity) getActivity();
-        Reachability.registerReachability(ca.getApplicationContext());
+        init();
 
         Bundle element = this.getArguments();
         cheatObj = (Cheat) element.getSerializable("cheatObj");
         cheatDetailTabletFragment = new Gson().fromJson(element.getString("cheatDetailTabletFragment"), CheatDetailTabletFragment.class);
         cheatForumFragment = new Gson().fromJson(element.getString("cheatForumFragment"), CheatForumFragment.class);
+
+    }
+
+    private void init() {
+        Reachability.registerReachability(ca.getApplicationContext());
+        Mint.initAndStartSession(ca.getApplicationContext(), Konstanten.SPLUNK_MINT_API_KEY);
 
         latoFontLight = Tools.getFont(getActivity().getAssets(), "Lato-Light.ttf");
         latoFontBold = Tools.getFont(getActivity().getAssets(), "Lato-Bold.ttf");
@@ -108,11 +116,11 @@ public class CheatDetailMetaFragment extends Fragment implements OnClickListener
         tvAverageRatingText = (TextView) rootView.findViewById(R.id.tvAverageRatingText);
         tvAverageRatingText.setTypeface(latoFontLight);
 
-        tvTotalViewsText = (TextView) rootView.findViewById(R.id.tvLifetimeViewsText);
+        tvTotalViewsText = (TextView) rootView.findViewById(R.id.lifetime_views_text);
         tvTotalViewsText.setTypeface(latoFontLight);
         tvTotalViewsText.setOnClickListener(this);
 
-        tvViewsTodayText = (TextView) rootView.findViewById(R.id.tvViewsTodayText);
+        tvViewsTodayText = (TextView) rootView.findViewById(R.id.views_today_text);
         tvViewsTodayText.setTypeface(latoFontLight);
         tvViewsTodayText.setOnClickListener(this);
 
@@ -124,7 +132,7 @@ public class CheatDetailMetaFragment extends Fragment implements OnClickListener
         tvTotalSubmissionShowAll.setTypeface(latoFontLight);
         tvTotalSubmissionShowAll.setOnClickListener(this);
 
-        tvSubmissionDateText = (TextView) rootView.findViewById(R.id.tvSubmissionDateText);
+        tvSubmissionDateText = (TextView) rootView.findViewById(R.id.submission_date_text);
         tvSubmissionDateText.setTypeface(latoFontLight);
         tvSubmissionDateText.setOnClickListener(this);
 

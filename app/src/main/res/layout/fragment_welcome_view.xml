@@ -19,7 +19,7 @@
         android:paddingTop="@dimen/activity_vertical_margin">
 
         <ScrollView
-            android:id="@+id/scrollView1"
+            android:id="@+id/scroll_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
