@@ -108,11 +108,11 @@ public class FavoritesCheatMetaFragment extends Fragment implements OnClickListe
         tvAverageRatingText = (TextView) rootView.findViewById(R.id.tvAverageRatingText);
         tvAverageRatingText.setTypeface(latoFontLight);
 
-        tvTotalViewsText = (TextView) rootView.findViewById(R.id.tvLifetimeViewsText);
+        tvTotalViewsText = (TextView) rootView.findViewById(R.id.lifetime_views_text);
         tvTotalViewsText.setTypeface(latoFontLight);
         tvTotalViewsText.setOnClickListener(this);
 
-        tvViewsTodayText = (TextView) rootView.findViewById(R.id.tvViewsTodayText);
+        tvViewsTodayText = (TextView) rootView.findViewById(R.id.views_today_text);
         tvViewsTodayText.setTypeface(latoFontLight);
         tvViewsTodayText.setOnClickListener(this);
 
@@ -124,7 +124,7 @@ public class FavoritesCheatMetaFragment extends Fragment implements OnClickListe
         tvTotalSubmissionShowAll.setTypeface(latoFontLight);
         tvTotalSubmissionShowAll.setOnClickListener(this);
 
-        tvSubmissionDateText = (TextView) rootView.findViewById(R.id.tvSubmissionDateText);
+        tvSubmissionDateText = (TextView) rootView.findViewById(R.id.submission_date_text);
         tvSubmissionDateText.setTypeface(latoFontLight);
         tvSubmissionDateText.setOnClickListener(this);
 

@@ -26,7 +26,7 @@
         android:orientation="vertical">
 
         <ScrollView
-            android:id="@+id/scrollView1"
+            android:id="@+id/scroll_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:minHeight="300dp"
@@ -38,7 +38,7 @@
                 android:orientation="vertical">
 
                 <LinearLayout
-                    android:id="@+id/llSubmissionDate"
+                    android:id="@+id/submission_date_layout"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
@@ -48,14 +48,14 @@
                     android:paddingTop="6dp">
 
                     <TextView
-                        android:id="@+id/tvSubmissionDateTitle"
+                        android:id="@+id/submission_date_title"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/meta_submission_date"
                         android:textAppearance="@style/NormalText"></TextView>
 
                     <TextView
-                        android:id="@+id/tvSubmissionDateText"
+                        android:id="@+id/submission_date_text"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/meta_unknown"
@@ -80,14 +80,14 @@
                     android:paddingTop="6dp">
 
                     <TextView
-                        android:id="@+id/tvLifetimeViewsTitle"
+                        android:id="@+id/lifetime_views_title"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/meta_views_lifetime"
                         android:textAppearance="@style/NormalText"></TextView>
 
                     <TextView
-                        android:id="@+id/tvLifetimeViewsText"
+                        android:id="@+id/lifetime_views_text"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/meta_unknown"
@@ -112,14 +112,14 @@
                     android:paddingTop="6dp">
 
                     <TextView
-                        android:id="@+id/tvViewsTodayTitle"
+                        android:id="@+id/views_today_title"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/meta_views_today"
                         android:textAppearance="@style/NormalText"></TextView>
 
                     <TextView
-                        android:id="@+id/tvViewsTodayText"
+                        android:id="@+id/views_today_text"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/meta_unknown"

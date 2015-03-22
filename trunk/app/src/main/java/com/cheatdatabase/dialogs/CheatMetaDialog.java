@@ -4,10 +4,12 @@ import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.Window;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -15,7 +17,10 @@ import com.cheatdatabase.MemberCheatListActivity;
 import com.cheatdatabase.R;
 import com.cheatdatabase.businessobjects.Cheat;
 import com.cheatdatabase.businessobjects.Member;
+import com.cheatdatabase.helpers.Konstanten;
+import com.cheatdatabase.helpers.Tools;
 import com.cheatdatabase.helpers.Webservice;
+import com.splunk.mint.Mint;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -23,10 +28,21 @@ import java.util.Date;
 @SuppressLint("SimpleDateFormat")
 public class CheatMetaDialog extends Dialog implements OnClickListener {
 
+    private final Typeface latoFontBold;
+    private final Typeface latoFontLight;
     private Context context;
 
     private Cheat cheat;
     private Member member;
+
+    private TextView title_cheat_details;
+    private TextView submission_date_title;
+    private TextView lifetime_views_title;
+    private TextView views_today_title;
+    private TextView tvAverageRatingTitle;
+    private TextView tvSubmittedByTitle;
+    private TextView tvTotalSubmissionsMemberTitle;
+
 
     private TextView tvAverageRatingText;
     private TextView tvTotalViewsText;
@@ -52,30 +68,55 @@ public class CheatMetaDialog extends Dialog implements OnClickListener {
         this.context = context;
         this.cheat = cheat;
 
-        // requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.layout_cheatview_meta);
-        setTitle(R.string.meta_info);
+        latoFontBold = Tools.getFont(context.getAssets(), Konstanten.FONT_BOLD);
+        latoFontLight = Tools.getFont(context.getAssets(), Konstanten.FONT_LIGHT);
+
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        setContentView(R.layout.layout_cheatview_meta_dialog);
+
+        Mint.initAndStartSession(context.getApplicationContext(), Konstanten.SPLUNK_MINT_API_KEY);
 
         member = cheat.getSubmittingMember();
 
         new MetaDataLoader().execute(cheat);
 
+        title_cheat_details = (TextView) findViewById(R.id.title_cheat_details);
+        title_cheat_details.setTypeface(latoFontBold);
+        submission_date_title = (TextView) findViewById(R.id.submission_date_title);
+        submission_date_title.setTypeface(latoFontBold);
+        lifetime_views_title = (TextView) findViewById(R.id.lifetime_views_title);
+        lifetime_views_title.setTypeface(latoFontBold);
+        views_today_title = (TextView) findViewById(R.id.views_today_title);
+        views_today_title.setTypeface(latoFontBold);
+        tvAverageRatingTitle = (TextView) findViewById(R.id.tvAverageRatingTitle);
+        tvAverageRatingTitle.setTypeface(latoFontBold);
+        tvSubmittedByTitle = (TextView) findViewById(R.id.tvSubmittedByTitle);
+        tvSubmittedByTitle.setTypeface(latoFontBold);
+        tvTotalSubmissionsMemberTitle = (TextView) findViewById(R.id.tvTotalSubmissionsMemberTitle);
+        tvTotalSubmissionsMemberTitle.setTypeface(latoFontBold);
+
         tvAverageRatingText = (TextView) findViewById(R.id.tvAverageRatingText);
+        tvAverageRatingText.setTypeface(latoFontLight);
 
-        tvTotalViewsText = (TextView) findViewById(R.id.tvLifetimeViewsText);
+        tvTotalViewsText = (TextView) findViewById(R.id.lifetime_views_text);
         tvTotalViewsText.setOnClickListener(this);
+        tvTotalViewsText.setTypeface(latoFontLight);
 
-        tvViewsTodayText = (TextView) findViewById(R.id.tvViewsTodayText);
+        tvViewsTodayText = (TextView) findViewById(R.id.views_today_text);
         tvViewsTodayText.setOnClickListener(this);
+        tvViewsTodayText.setTypeface(latoFontLight);
 
         tvTotalSubmissionCountMemberText = (TextView) findViewById(R.id.tvTotalSubmissionsMemberText);
         tvTotalSubmissionCountMemberText.setOnClickListener(this);
+        tvTotalSubmissionCountMemberText.setTypeface(latoFontLight);
 
         tvTotalSubmissionShowAll = (TextView) findViewById(R.id.tvTotalSubmissionsShow);
         tvTotalSubmissionShowAll.setOnClickListener(this);
+        tvTotalSubmissionShowAll.setTypeface(latoFontLight);
 
-        tvSubmissionDateText = (TextView) findViewById(R.id.tvSubmissionDateText);
+        tvSubmissionDateText = (TextView) findViewById(R.id.submission_date_text);
         tvSubmissionDateText.setOnClickListener(this);
+        tvSubmissionDateText.setTypeface(latoFontLight);
 
         llRating = (LinearLayout) findViewById(R.id.llRating);
         llRating.setVisibility(View.GONE);
@@ -96,7 +137,6 @@ public class CheatMetaDialog extends Dialog implements OnClickListener {
         llBuffer5.setVisibility(View.GONE);
         llBuffer6 = (LinearLayout) findViewById(R.id.llBuffer6);
         llBuffer6.setVisibility(View.GONE);
-
     }
 
     private class MetaDataLoader extends AsyncTask<Cheat, Void, Void> {
@@ -135,8 +175,8 @@ public class CheatMetaDialog extends Dialog implements OnClickListener {
                     llBuffer3.setVisibility(View.VISIBLE);
                     llBuffer4.setVisibility(View.VISIBLE);
 
-                    String averageRatingText = String.format(context.getString(R.string.meta_average_rating1, Math.round(cheat.getRatingAverage())));
-                    averageRatingText += " " + String.format(context.getString(R.string.meta_average_rating2, String.valueOf(cheat.getVotes())));
+                    String averageRatingText = context.getString(R.string.meta_average_rating1, Math.round(cheat.getRatingAverage()));
+                    averageRatingText += " " + context.getString(R.string.meta_average_rating2, String.valueOf(cheat.getVotes()));
                     tvAverageRatingText.setText(averageRatingText);
                 } else {
                     llBuffer3.setVisibility(View.GONE);
@@ -179,11 +219,14 @@ public class CheatMetaDialog extends Dialog implements OnClickListener {
                         tvMemberHomepageText = (TextView) findViewById(R.id.tvMemberHomepageText);
                         tvMemberHomepageText.setText(member.getWebsite());
                         tvMemberHomepageText.setOnClickListener(CheatMetaDialog.this);
+                        tvMemberHomepageText.setTypeface(latoFontLight);
                     } else {
                         llBuffer6.setVisibility(View.INVISIBLE);
                     }
                     tvAuthorText = (TextView) findViewById(R.id.tvSubmittedByText);
+                    tvAuthorText.setTypeface(latoFontLight);
                     tvMemberHomepageTitle = (TextView) findViewById(R.id.tvMemberHomepageTitle);
+                    tvMemberHomepageTitle.setTypeface(latoFontBold);
                     if (member.getUsername().length() > 1) {
                         tvAuthorText.setText(member.getUsername());
                         tvMemberHomepageTitle.setText(member.getUsername() + "'s " + context.getString(R.string.meta_member_homepage));
@@ -197,7 +240,7 @@ public class CheatMetaDialog extends Dialog implements OnClickListener {
                 String newDateStr = dateFormat.format(dateObj);
                 tvSubmissionDateText.setText(newDateStr);
             } catch (Exception e) {
-                // do nothing
+                e.getStackTrace();
             }
         }
     }

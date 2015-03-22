@@ -256,6 +256,7 @@
     <!-- NEW VALUES FROM VERSION 2.0 -->
     <string name="title_cheat_list">Cheats</string>
     <string name="title_cheat_detail">Cheat Detail</string>
+    <string name="title_cheat_details">Cheat Details</string>
     <string name="game_search_results_title">Suchresultate für &#8220;%s&#8221;</string>
     <string name="button_dismiss">Ausblenden</string>
     <string name="contactform_title">Kontaktiere uns</string>
