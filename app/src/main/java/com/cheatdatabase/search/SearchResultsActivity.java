@@ -77,8 +77,8 @@ public class SearchResultsActivity extends ActionBarActivity {
 
         settings = getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
 
-        latoFontLight = Tools.getFont(getAssets(), "Lato-Light.ttf");
-        latoFontBold = Tools.getFont(getAssets(), "Lato-Bold.ttf");
+        latoFontLight = Tools.getFont(getAssets(), Konstanten.FONT_LIGHT);
+        latoFontBold = Tools.getFont(getAssets(), Konstanten.FONT_BOLD);
 
         somethingfoundLayout = (RelativeLayout) findViewById(R.id.somethingfound_layout);
         nothingFoundLayout = (LinearLayout) findViewById(R.id.nothingfound_layout);

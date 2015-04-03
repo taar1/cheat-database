@@ -1,9 +1,0 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/favorite_detail_container"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.cheatdatabase.FavoriteCheatDetailActivity"
-    tools:ignore="MergeRootFrame" />
-
-<!-- From: file:/C:/Users/Dominik/Workspaces/Android/Cheat-Database/app/src/main/res/layout/activity_favorite_detail.xml -->

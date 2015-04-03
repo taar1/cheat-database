@@ -114,7 +114,7 @@ public class MemberCheatListActivity extends ActionBarListActivity implements Ad
         settings = getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
         editor = settings.edit();
 
-        latoFontLight = Tools.getFont(getAssets(), "Lato-Light.ttf");
+        latoFontLight = Tools.getFont(getAssets(), Konstanten.FONT_LIGHT);
 
         memberToDisplayCheatsFrom = (Member) getIntent().getSerializableExtra("memberObj");
 

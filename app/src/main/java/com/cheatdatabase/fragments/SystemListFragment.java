@@ -20,6 +20,7 @@ import android.widget.Toast;
 import com.cheatdatabase.GamesBySystemActivity;
 import com.cheatdatabase.R;
 import com.cheatdatabase.businessobjects.SystemPlatform;
+import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.helpers.Tools;
 import com.cheatdatabase.helpers.Webservice;
@@ -55,8 +56,8 @@ public class SystemListFragment extends ListFragment {
         parentActivity = getActivity();
         // Reachability.registerReachability(ca.getApplicationContext());
 
-        latoFontLight = Tools.getFont(parentActivity.getAssets(), "Lato-Light.ttf");
-        latoFontBold = Tools.getFont(parentActivity.getAssets(), "Lato-Bold.ttf");
+        latoFontLight = Tools.getFont(parentActivity.getAssets(), Konstanten.FONT_LIGHT);
+        latoFontBold = Tools.getFont(parentActivity.getAssets(), Konstanten.FONT_BOLD);
 
         // Update action bar menu items?
         setHasOptionsMenu(true);

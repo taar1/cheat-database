@@ -30,6 +30,7 @@ import com.cheatdatabase.businessobjects.Game;
 import com.cheatdatabase.businessobjects.SystemPlatform;
 import com.cheatdatabase.helpers.ActionBarListActivity;
 import com.cheatdatabase.helpers.Group;
+import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.helpers.Tools;
 import com.cheatdatabase.helpers.Webservice;
@@ -117,7 +118,7 @@ public class GamesBySystemActivity extends ActionBarListActivity implements Acti
         mToolbar = Tools.initToolbarBase(this, mToolbar);
         mAdView = Tools.initMoPubAdView(this, mAdView);
 
-        latoFontLight = Tools.getFont(getAssets(), "Lato-Light.ttf");
+        latoFontLight = Tools.getFont(getAssets(), Konstanten.FONT_LIGHT);
         latoFontRegular = Tools.getFont(getAssets(), "Lato-Regular.ttf");
     }
 
@@ -164,7 +165,7 @@ public class GamesBySystemActivity extends ActionBarListActivity implements Acti
                 // TextView yourTextView = (TextView) findViewById(titleId);
                 // yourTextView.setTextColor(getResources().getColor(R.color.white));
                 // yourTextView.setTypeface(Tools.getFont(getAssets(),
-                // "Lato-Bold.ttf"));
+                // Konstanten.FONT_BOLD));
 
 
                 setTitle(systemObj.getSystemName());

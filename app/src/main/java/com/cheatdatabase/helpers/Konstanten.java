@@ -2,7 +2,7 @@ package com.cheatdatabase.helpers;
 
 public class Konstanten {
 
-    public final static String CURRENT_VERSION = "2.0.9";
+    public final static String CURRENT_VERSION = "2.1.0";
     public final static int DEFAULT_TOTAL_CHEATS = 137000;
 
     // GOOGLE VALUES
@@ -90,6 +90,7 @@ public class Konstanten {
 
     public final static String FONT_BOLD = "Lato-Bold.ttf";
     public final static String FONT_LIGHT = "Lato-Light.ttf";
+    public final static String FONT_REGULAR = "Lato-Regular.ttf";
 
     // COLORS
     public final static int COBALT_DARK = 0xFF003f50;
