@@ -117,8 +117,8 @@ public class RecoverActivity extends ActionBarActivity {
         ActionBar actionBar = getActionBar();
         actionBar.setHomeButtonEnabled(true);
 
-        latoFontBold = Tools.getFont(getAssets(), "Lato-Bold.ttf");
-        latoFontLight = Tools.getFont(getAssets(), "Lato-Light.ttf");
+        latoFontBold = Tools.getFont(getAssets(), Konstanten.FONT_BOLD);
+        latoFontLight = Tools.getFont(getAssets(), Konstanten.FONT_LIGHT);
 
 
     }

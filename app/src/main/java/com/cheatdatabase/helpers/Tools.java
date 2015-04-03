@@ -2,7 +2,6 @@ package com.cheatdatabase.helpers;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.content.res.AssetManager;
 import android.content.res.Resources;
@@ -482,12 +481,13 @@ public class Tools {
             }
 
             mAdView.setAutorefreshEnabled(true);
-            mAdView.setTesting(true);
+            mAdView.setTesting(false);
             mAdView.setKeywords("m_age:15,m_gender:m,m_marital:single");
             mAdView.loadAd();
         } catch (Exception e) {
 //			mAdView.setAdUnitId(Konstanten.MOPUB_PHONE_UNIT_ID);
             Log.e("ADVIEW LOAD", e.getMessage());
+            e.printStackTrace();
         }
 
         return mAdView;
@@ -504,7 +504,7 @@ public class Tools {
         int titleId = a.getResources().getIdentifier("action_bar_title", "id", "android");
         TextView actionBarTitle = (TextView) a.findViewById(titleId);
         actionBarTitle.setTextColor(a.getResources().getColor(R.color.white));
-        actionBarTitle.setTypeface(Tools.getFont(a.getAssets(), "Lato-Bold.ttf"));
+        actionBarTitle.setTypeface(Tools.getFont(a.getAssets(), Konstanten.FONT_BOLD));
         int subtitleId = a.getResources().getIdentifier("action_bar_subtitle", "id", "android");
         TextView actionBarSubtitle = (TextView) a.findViewById(subtitleId);
         actionBarSubtitle.setTextColor(a.getResources().getColor(R.color.white));

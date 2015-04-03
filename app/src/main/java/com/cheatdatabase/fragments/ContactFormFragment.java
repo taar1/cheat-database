@@ -82,7 +82,7 @@ public class ContactFormFragment extends Fragment {
         settings = ca.getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
         member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
 
-        latoFontLight = Tools.getFont(ca.getAssets(), "Lato-Light.ttf");
+        latoFontLight = Tools.getFont(ca.getAssets(), Konstanten.FONT_LIGHT);
 
         // Update action bar menu items?
         setHasOptionsMenu(true);

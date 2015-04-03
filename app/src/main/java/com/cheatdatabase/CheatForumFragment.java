@@ -77,8 +77,8 @@ public class CheatForumFragment extends Fragment implements OnClickListener {
         ca = (CheatListActivity) getActivity();
         Reachability.registerReachability(ca.getApplicationContext());
 
-        latoFontLight = Tools.getFont(getActivity().getAssets(), "Lato-Light.ttf");
-        latoFontBold = Tools.getFont(getActivity().getAssets(), "Lato-Bold.ttf");
+        latoFontLight = Tools.getFont(getActivity().getAssets(), Konstanten.FONT_LIGHT);
+        latoFontBold = Tools.getFont(getActivity().getAssets(), Konstanten.FONT_BOLD);
 
         cheatObj = (Cheat) getArguments().getSerializable("cheatObj");
         cheatDetailTabletFragment = new Gson().fromJson(getArguments().getString("cheatDetailTabletFragment"), CheatDetailTabletFragment.class);
@@ -266,7 +266,7 @@ public class CheatForumFragment extends Fragment implements OnClickListener {
         rowForumPostHeader.setBackgroundColor(Color.DKGRAY);
         rowForumPostHeader.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
         rowForumPostHeader.setGravity(Gravity.CENTER_HORIZONTAL);
-        rowForumPostHeader.setPadding(4, 1, 8, 1);
+        rowForumPostHeader.setPadding(5, 5, 10, 5);
         rowForumPostHeader.setOrientation(LinearLayout.HORIZONTAL);
 
         if (!tempFP.getUsername().equalsIgnoreCase("null")) {

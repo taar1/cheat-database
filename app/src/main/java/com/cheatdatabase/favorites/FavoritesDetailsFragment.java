@@ -99,8 +99,8 @@ public class FavoritesDetailsFragment extends Fragment implements OnClickListene
         super.onCreate(savedInstanceState);
         ca = (FavoriteCheatListActivity) getActivity();
 
-        latoFontLight = Tools.getFont(ca.getAssets(), "Lato-Light.ttf");
-        latoFontBold = Tools.getFont(ca.getAssets(), "Lato-Bold.ttf");
+        latoFontLight = Tools.getFont(ca.getAssets(), Konstanten.FONT_LIGHT);
+        latoFontBold = Tools.getFont(ca.getAssets(), Konstanten.FONT_BOLD);
 
         settings = ca.getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
         editor = settings.edit();

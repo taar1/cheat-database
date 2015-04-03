@@ -71,7 +71,8 @@
             android:name=".CheatListActivity"
             android:label="@string/title_cheat_list"
             android:logo="@drawable/app_icon_fox"
-            android:parentActivityName=".GamesBySystemActivity">
+            android:parentActivityName=".GamesBySystemActivity"
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.cheatdatabase.GamesBySystemActivity" />

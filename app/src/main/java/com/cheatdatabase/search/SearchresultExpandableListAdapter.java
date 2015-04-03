@@ -17,6 +17,7 @@ import com.cheatdatabase.CheatListActivity;
 import com.cheatdatabase.R;
 import com.cheatdatabase.businessobjects.Game;
 import com.cheatdatabase.helpers.Group;
+import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.helpers.Tools;
 
@@ -35,9 +36,9 @@ public class SearchresultExpandableListAdapter extends BaseExpandableListAdapter
         inflater = act.getLayoutInflater();
         Reachability.registerReachability(activity.getApplicationContext());
 
-        latoFontLight = Tools.getFont(act.getAssets(), "Lato-Light.ttf");
+        latoFontLight = Tools.getFont(act.getAssets(), Konstanten.FONT_LIGHT);
         latoFontRegular = Tools.getFont(act.getAssets(), "Lato-Regular.ttf");
-        latoFontBold = Tools.getFont(act.getAssets(), "Lato-Bold.ttf");
+        latoFontBold = Tools.getFont(act.getAssets(), Konstanten.FONT_BOLD);
     }
 
     @Override

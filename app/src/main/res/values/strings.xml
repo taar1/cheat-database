@@ -61,11 +61,11 @@
     <string name="menu_pocketchange">Pocket Change Balance</string>
 
     <!-- REPORT CHEAT -->
-    <string name="report_cheat_title">Report cheat</string>
+    <string name="report_cheat_title">Report Cheat</string>
     <string name="thanks_for_reporting">Thank you for your report. If we get enough (individual) reports we will consider removing this cheat from the database.</string>
     <!-- RATE CHEAT -->
     <string name="rate_cheat_plain">Rate</string>
-    <string name="rate_cheat">Rate cheat</string>
+    <string name="rate_cheat">Rate Cheat</string>
     <string name="rate_cheat_here">Rate this cheat here</string>
     <string name="rating_your">Your cheat rating:</string>
     <string name="rating_inserted">Thank you! Your rating has been registered.</string>

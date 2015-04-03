@@ -90,8 +90,8 @@ public class LoginActivity extends ActionBarActivity implements AlreadyLoggedInD
 
         member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
 
-        latoFontBold = Tools.getFont(getAssets(), "Lato-Bold.ttf");
-        latoFontLight = Tools.getFont(getAssets(), "Lato-Light.ttf");
+        latoFontBold = Tools.getFont(getAssets(), Konstanten.FONT_BOLD);
+        latoFontLight = Tools.getFont(getAssets(), Konstanten.FONT_LIGHT);
 
         // Set up the login form.
         mEmail = getIntent().getStringExtra(EXTRA_EMAIL);

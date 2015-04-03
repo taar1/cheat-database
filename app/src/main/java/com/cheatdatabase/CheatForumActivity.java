@@ -165,8 +165,8 @@ public class CheatForumActivity extends ActionBarActivity implements CheatListFr
         Tools.initMoPubAdView(this, mAdView);
         Tools.initToolbarBase(this, mToolbar);
 
-        latoFontLight = Tools.getFont(getAssets(), "Lato-Light.ttf");
-        latoFontBold = Tools.getFont(getAssets(), "Lato-Bold.ttf");
+        latoFontLight = Tools.getFont(getAssets(), Konstanten.FONT_LIGHT);
+        latoFontBold = Tools.getFont(getAssets(), Konstanten.FONT_BOLD);
 
         cheatObj = (Cheat) intent.getSerializableExtra("cheatObj");
         // if (cheatObj.getMemberRating() > 0) {
@@ -288,12 +288,12 @@ public class CheatForumActivity extends ActionBarActivity implements CheatListFr
         tvFirstThCol.setTypeface(latoFontBold);
         tvSecondThCol.setTypeface(latoFontBold);
 
-        // Headerinfo zu Forumpost
+        // Headerinfo of Forumpost
         LinearLayout rowForumPostHeader = new LinearLayout(this);
         rowForumPostHeader.setBackgroundColor(Color.DKGRAY);
         rowForumPostHeader.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
         rowForumPostHeader.setGravity(Gravity.CENTER_HORIZONTAL);
-        rowForumPostHeader.setPadding(4, 1, 8, 1);
+        rowForumPostHeader.setPadding(5, 5, 10, 5);
         rowForumPostHeader.setOrientation(LinearLayout.HORIZONTAL);
 
         if (!tempFP.getUsername().equalsIgnoreCase("null")) {

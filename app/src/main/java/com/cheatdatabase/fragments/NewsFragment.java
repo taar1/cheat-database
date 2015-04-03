@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 import com.cheatdatabase.R;
 import com.cheatdatabase.businessobjects.WelcomeMessage;
+import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.helpers.Tools;
 import com.cheatdatabase.helpers.Webservice;
@@ -50,8 +51,8 @@ public class NewsFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_welcome_view, container, false);
         parentActivity = getActivity();
 
-        latoFontBold = Tools.getFont(parentActivity.getAssets(), "Lato-Bold.ttf");
-        latoFontLight = Tools.getFont(parentActivity.getAssets(), "Lato-Light.ttf");
+        latoFontBold = Tools.getFont(parentActivity.getAssets(), Konstanten.FONT_BOLD);
+        latoFontLight = Tools.getFont(parentActivity.getAssets(), Konstanten.FONT_LIGHT);
 
         progressBar = (ProgressBar) rootView.findViewById(R.id.progress_bar);
         progressBar.setVisibility(View.VISIBLE);
