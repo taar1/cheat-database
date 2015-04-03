@@ -79,8 +79,8 @@ public class FavoritesCheatForumFragment extends Fragment implements OnClickList
         ca = (FavoriteCheatListActivity) getActivity();
         Reachability.registerReachability(ca.getApplicationContext());
 
-        latoFontLight = Tools.getFont(getActivity().getAssets(), "Lato-Light.ttf");
-        latoFontBold = Tools.getFont(getActivity().getAssets(), "Lato-Bold.ttf");
+        latoFontLight = Tools.getFont(getActivity().getAssets(), Konstanten.FONT_LIGHT);
+        latoFontBold = Tools.getFont(getActivity().getAssets(), Konstanten.FONT_BOLD);
 
         Bundle element = this.getArguments();
         cheatObj = (Cheat) element.getSerializable("cheatObj");

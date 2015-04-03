@@ -52,8 +52,8 @@ public class SubmitCheatFragment extends Fragment {
         Reachability.registerReachability(ca.getApplicationContext());
         Mint.initAndStartSession(ca.getApplicationContext(), Konstanten.SPLUNK_MINT_API_KEY);
 
-        latoFontLight = Tools.getFont(ca.getAssets(), "Lato-Light.ttf");
-        latoFontBold = Tools.getFont(ca.getAssets(), "Lato-Bold.ttf");
+        latoFontLight = Tools.getFont(ca.getAssets(), Konstanten.FONT_LIGHT);
+        latoFontBold = Tools.getFont(ca.getAssets(), Konstanten.FONT_BOLD);
 
         ca.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
     }

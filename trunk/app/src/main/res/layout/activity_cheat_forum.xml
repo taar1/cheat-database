@@ -106,9 +106,9 @@
             android:layout_marginEnd="5dp"
             android:layout_marginRight="5dp"
             android:layout_weight="1"
+            android:background="@drawable/bluedark01_btn_default_holo_dark"
             android:minWidth="90dp"
-            android:text="@string/forum_button_submit"
-            android:textAppearance="@style/GrayButtonText" />
+            android:text="@string/forum_button_submit" />
     </LinearLayout>
 
 </LinearLayout>

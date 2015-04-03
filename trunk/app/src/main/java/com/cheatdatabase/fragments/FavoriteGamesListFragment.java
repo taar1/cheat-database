@@ -27,6 +27,7 @@ import com.cheatdatabase.businessobjects.SystemPlatform;
 import com.cheatdatabase.favorites.cheatview.FavoritesExpandableListAdapter;
 import com.cheatdatabase.helpers.CheatDatabaseAdapter;
 import com.cheatdatabase.helpers.Group;
+import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Tools;
 import com.google.analytics.tracking.android.Tracker;
 
@@ -81,8 +82,8 @@ public class FavoriteGamesListFragment extends Fragment {
         super.onCreate(savedInstanceState);
         parentActivity = getActivity();
 
-        latoFontLight = Tools.getFont(parentActivity.getAssets(), "Lato-Light.ttf");
-        latoFontBold = Tools.getFont(parentActivity.getAssets(), "Lato-Bold.ttf");
+        latoFontLight = Tools.getFont(parentActivity.getAssets(), Konstanten.FONT_LIGHT);
+        latoFontBold = Tools.getFont(parentActivity.getAssets(), Konstanten.FONT_BOLD);
 
         db = new CheatDatabaseAdapter(parentActivity);
         db.open();

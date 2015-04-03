@@ -138,8 +138,8 @@ public class RegisterActivity extends ActionBarActivity {
 
         Tools.initToolbarBase(this, toolbar);
 
-        latoFontBold = Tools.getFont(getAssets(), "Lato-Bold.ttf");
-        latoFontLight = Tools.getFont(getAssets(), "Lato-Light.ttf");
+        latoFontBold = Tools.getFont(getAssets(), Konstanten.FONT_BOLD);
+        latoFontLight = Tools.getFont(getAssets(), Konstanten.FONT_LIGHT);
 
     }
 

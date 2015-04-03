@@ -100,8 +100,8 @@ public class CheatDetailMetaFragment extends Fragment implements OnClickListener
         Reachability.registerReachability(ca.getApplicationContext());
         Mint.initAndStartSession(ca.getApplicationContext(), Konstanten.SPLUNK_MINT_API_KEY);
 
-        latoFontLight = Tools.getFont(getActivity().getAssets(), "Lato-Light.ttf");
-        latoFontBold = Tools.getFont(getActivity().getAssets(), "Lato-Bold.ttf");
+        latoFontLight = Tools.getFont(getActivity().getAssets(), Konstanten.FONT_LIGHT);
+        latoFontBold = Tools.getFont(getActivity().getAssets(), Konstanten.FONT_BOLD);
     }
 
     @Override

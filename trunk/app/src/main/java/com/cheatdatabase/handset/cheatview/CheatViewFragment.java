@@ -125,8 +125,8 @@ public class CheatViewFragment extends Fragment implements OnClickListener {
     private void init() {
         ca = (CheatViewPageIndicator) getActivity();
 
-        latoFontLight = Tools.getFont(ca.getAssets(), "Lato-Light.ttf");
-        latoFontBold = Tools.getFont(ca.getAssets(), "Lato-Bold.ttf");
+        latoFontLight = Tools.getFont(ca.getAssets(), Konstanten.FONT_LIGHT);
+        latoFontBold = Tools.getFont(ca.getAssets(), Konstanten.FONT_BOLD);
 
         settings = getActivity().getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
         editor = settings.edit();

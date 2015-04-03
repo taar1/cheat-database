@@ -86,8 +86,8 @@ public class SubmitCheatActivity extends ActionBarActivity implements OnClickLis
         settings = getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
         member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
 
-        latoFontLight = Tools.getFont(getAssets(), "Lato-Light.ttf");
-        latoFontBold = Tools.getFont(getAssets(), "Lato-Bold.ttf");
+        latoFontLight = Tools.getFont(getAssets(), Konstanten.FONT_LIGHT);
+        latoFontBold = Tools.getFont(getAssets(), Konstanten.FONT_BOLD);
 
         Tools.initGA(SubmitCheatActivity.this, tracker, SCREEN_LABEL, "Submit Cheat", "Cheat submission form");
     }

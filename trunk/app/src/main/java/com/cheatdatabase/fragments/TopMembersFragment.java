@@ -73,8 +73,8 @@ public class TopMembersFragment extends ListFragment {
         ca = getActivity();
         Reachability.registerReachability(ca.getApplicationContext());
 
-        latoFontLight = Tools.getFont(ca.getAssets(), "Lato-Light.ttf");
-        latoFontBold = Tools.getFont(ca.getAssets(), "Lato-Bold.ttf");
+        latoFontLight = Tools.getFont(ca.getAssets(), Konstanten.FONT_LIGHT);
+        latoFontBold = Tools.getFont(ca.getAssets(), Konstanten.FONT_BOLD);
 
         // Update action bar menu items?
         setHasOptionsMenu(true);

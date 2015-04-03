@@ -22,6 +22,7 @@ import com.cheatdatabase.MemberCheatListActivity;
 import com.cheatdatabase.R;
 import com.cheatdatabase.businessobjects.Cheat;
 import com.cheatdatabase.businessobjects.Member;
+import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.helpers.Tools;
 import com.cheatdatabase.helpers.Webservice;
@@ -92,8 +93,8 @@ public class FavoritesCheatMetaFragment extends Fragment implements OnClickListe
         favoritesDetailsFragment = new Gson().fromJson(element.getString("favoritesDetailsFragment"), FavoritesDetailsFragment.class);
         favoritesCheatForumFragment = new Gson().fromJson(element.getString("favoritesCheatForumFragment"), FavoritesCheatForumFragment.class);
 
-        latoFontLight = Tools.getFont(getActivity().getAssets(), "Lato-Light.ttf");
-        latoFontBold = Tools.getFont(getActivity().getAssets(), "Lato-Bold.ttf");
+        latoFontLight = Tools.getFont(getActivity().getAssets(), Konstanten.FONT_LIGHT);
+        latoFontBold = Tools.getFont(getActivity().getAssets(), Konstanten.FONT_BOLD);
     }
 
     @Override

@@ -150,7 +150,7 @@ public class CheatListActivity extends ActionBarActivity implements CheatListFra
 
     private void init() {
         Reachability.registerReachability(this.getApplicationContext());
-        Mint.initAndStartSession(this, "b19b084a");
+        Mint.initAndStartSession(this, Konstanten.SPLUNK_MINT_API_KEY);
 
         settings = getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
         editor = settings.edit();
@@ -237,12 +237,16 @@ public class CheatListActivity extends ActionBarActivity implements CheatListFra
         reloadView.setVisibility(View.GONE);
     }
 
-    // @Override
-    // protected void onDestroy() {
-    // editor.remove(Konstanten.PREFERENCES_TEMP_GAME_OBJECT_VIEW);
-    // editor.commit();
-    // super.onDestroy();
-    // }
+    @Override
+    protected void onDestroy() {
+//        editor.remove(Konstanten.PREFERENCES_TEMP_GAME_OBJECT_VIEW);
+//        editor.commit();
+
+        if (mAdView != null) {
+            mAdView.destroy();
+        }
+        super.onDestroy();
+    }
 
     public void showReportDialog() {
         if ((member == null) || (member.getMid() == 0)) {

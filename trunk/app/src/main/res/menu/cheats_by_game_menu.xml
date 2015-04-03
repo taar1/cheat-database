@@ -6,12 +6,12 @@
         android:icon="@drawable/ic_action_add_favorite"
         android:orderInCategory="100"
         android:title="@string/add_all_favorites"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="never" />
     <item
         android:id="@+id/action_submit_cheat"
         android:icon="@android:drawable/stat_sys_upload"
         android:orderInCategory="200"
         android:title="@string/submit_cheat_short"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="never" />
 
 </menu>
