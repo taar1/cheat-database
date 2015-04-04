@@ -69,6 +69,7 @@ public class CheatForumActivity extends ActionBarActivity implements CheatListFr
     private TextView tvEmpty;
     private Intent intent;
     private Cheat cheatObj;
+    private Game gameObj;
     private Button postButton;
     private EditText editText;
 
@@ -169,9 +170,7 @@ public class CheatForumActivity extends ActionBarActivity implements CheatListFr
         latoFontBold = Tools.getFont(getAssets(), Konstanten.FONT_BOLD);
 
         cheatObj = (Cheat) intent.getSerializableExtra("cheatObj");
-        // if (cheatObj.getMemberRating() > 0) {
-        // highlightRatingIcon(true);
-        // }
+        gameObj = (Game) intent.getSerializableExtra("gameObj");
 
         member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
 
@@ -415,7 +414,7 @@ public class CheatForumActivity extends ActionBarActivity implements CheatListFr
                 return true;
             case R.id.action_submit_cheat:
                 Intent explicitIntent = new Intent(this, SubmitCheatActivity.class);
-                explicitIntent.putExtra("gameObj", new Gson().toJson(new Game(cheatObj.getGameId(), cheatObj.getGameName(), cheatObj.getSystemId(), cheatObj.getSystemName())));
+                explicitIntent.putExtra("gameObj", gameObj);
                 startActivity(explicitIntent);
                 return true;
             case R.id.action_login:
@@ -451,34 +450,6 @@ public class CheatForumActivity extends ActionBarActivity implements CheatListFr
             }
         }
     }
-
-    // @Override
-    // public void onClick(View v) {
-    // Log.d("onClick", "onClick");
-    // Bundle arguments = new Bundle();
-    // arguments.putInt(CheatDetailTabletFragment.ARG_ITEM_ID, 1);
-    // arguments.putString("cheatObj", new Gson().toJson(cheatObj));
-    //
-    // if (v == btnViewCheat) {
-    // Log.d("onClick", "btnViewCheat");
-    // finish();
-    // } else if (v == btnMetaInfo) {
-    // Log.d("onClick", "btnMetaInfo");
-    // // TODO
-    // } else if (v == btnShare) {
-    // Log.d("onClick", "btnShare");
-    // Helper.shareCheat(cheatObj, this);
-    // } else if (v == btnReport) {
-    // Log.d("onClick", "btnReport");
-    // showReportDialog();
-    // } else if (v == btnShare) {
-    // Log.d("onClick", "btnShare");
-    // Helper.shareCheat(cheatObj, this);
-    // } else if (v == btnRateCheat) {
-    // Log.d("onClick", "btnRateCheat");
-    // showRatingDialog();
-    // }
-    // }
 
     public void showReportDialog() {
         if ((member == null) || (member.getMid() == 0)) {

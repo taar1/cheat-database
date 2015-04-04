@@ -140,7 +140,7 @@ public class CheatViewPageIndicator extends ActionBarActivity implements ReportC
         editor = settings.edit();
 
         Tools.initToolbarBase(this, mToolbar);
-        Tools.initMoPubAdView(this, mAdView);
+        mAdView = Tools.initMoPubAdView(this, mAdView);
 
         member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
     }
@@ -307,6 +307,7 @@ public class CheatViewPageIndicator extends ActionBarActivity implements ReportC
             case R.id.action_forum:
                 if (Reachability.reachability.isReachable) {
                     Intent forumIntent = new Intent(CheatViewPageIndicator.this, CheatForumActivity.class);
+                    forumIntent.putExtra("gameObj", gameObj);
                     forumIntent.putExtra("cheatObj", visibleCheat);
                     startActivity(forumIntent);
                 } else {

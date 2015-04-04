@@ -36,7 +36,7 @@ import java.util.ArrayList;
  * A list fragment representing a list of Favorites. This fragment also supports
  * tablet devices by allowing list items to be given an 'activated' state upon
  * selection. This helps indicate which item is currently being viewed in a
- * {@link FavoriteCheatDetailFragment}.
+ * {@link //FavoriteCheatDetailFragment}.
  * <p/>
  * Activities containing this fragment MUST implement the
  * {@link com.cheatdatabase.favorites.FavoriteCheatListFragment.ElementsListClickHandler} interface.
@@ -85,6 +85,7 @@ public class FavoriteCheatListFragment extends ListFragment {
 
     private Member member;
     private CheatAdapter cheatAdapter;
+
 
     /**
      * A callback interface that all activities containing this fragment must
@@ -141,7 +142,7 @@ public class FavoriteCheatListFragment extends ListFragment {
         // actionBar.setTitle(gameObj.getGameName());
         // actionBar.setSubtitle(gameObj.getSystemName());
 
-        // TODO: replace with a real list adapter.
+
         // setListAdapter(new
         // ArrayAdapter<DummyContent.DummyItem>(getActivity(),
         // android.R.layout.simple_list_item_activated_1, android.R.id.text1,
@@ -150,9 +151,10 @@ public class FavoriteCheatListFragment extends ListFragment {
 
     private void init() {
         ca = (FavoriteCheatListActivity) getActivity();
-        latoFontRegular = Tools.getFont(getActivity().getAssets(), "Lato-Regular.ttf");
+        latoFontRegular = Tools.getFont(getActivity().getAssets(), Konstanten.FONT_REGULAR);
 
         settings = ca.getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
+
 
         db = new CheatDatabaseAdapter(ca);
         db.open();
@@ -397,11 +399,11 @@ public class FavoriteCheatListFragment extends ListFragment {
 
     @Override
     public void onDetach() {
-        super.onDetach();
-
         // Reset the active callbacks interface to the dummy implementation.
         handler = sDummyCallbacks;
+        super.onDetach();
     }
+
 
     @Override
     public void onListItemClick(ListView listView, View view, int position, long id) {

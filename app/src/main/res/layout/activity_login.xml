@@ -25,7 +25,6 @@
         android:orientation="vertical"
         android:visibility="gone">
 
-
         <ProgressBar
             style="?android:attr/progressBarStyleLarge"
             android:layout_width="wrap_content"

@@ -445,32 +445,33 @@ public class Tools {
         return Typeface.createFromAsset(assetManager, fontName);
     }
 
-    public static void getAds(MoPubView mAdView, final Activity activity) {
-        if (mAdView == null) {
-            mAdView = (MoPubView) activity.findViewById(R.id.adview);
-        }
-
-        // FIXME fehler hier???
-        try {
-            String screen = activity.getString(R.string.screen_type);
-            if (screen.equalsIgnoreCase("phone")) {
-                mAdView.setAdUnitId(Konstanten.MOPUB_PHONE_UNIT_ID);
-            } else {
-                mAdView.setAdUnitId(Konstanten.MOPUB_TABLET_UNIT_ID);
-            }
-
-            mAdView.setAutorefreshEnabled(true);
-            mAdView.setTesting(false);
-            mAdView.setKeywords("m_age:15,m_gender:m,m_marital:single");
-            mAdView.loadAd();
-        } catch (Exception e) {
-            Log.i("ADVIEW LOAD", e.getMessage());
-        }
-    }
+//    public static void getAds(MoPubView mAdView, final Activity activity) {
+//        if (mAdView == null) {
+//            mAdView = (MoPubView) activity.findViewById(R.id.adview);
+//        }
+//
+//        // FIXME fehler hier???
+//        try {
+//            String screen = activity.getString(R.string.screen_type);
+//            if (screen.equalsIgnoreCase("phone")) {
+//                mAdView.setAdUnitId(Konstanten.MOPUB_PHONE_UNIT_ID);
+//            } else {
+//                mAdView.setAdUnitId(Konstanten.MOPUB_TABLET_UNIT_ID);
+//            }
+//
+//            mAdView.setAutorefreshEnabled(true);
+//            mAdView.setTesting(false);
+//            mAdView.setKeywords("m_age:15,m_gender:m,m_marital:single");
+//            mAdView.loadAd();
+//        } catch (Exception e) {
+//            Log.i("ADVIEW LOAD", e.getMessage());
+//        }
+//    }
 
     public static MoPubView initMoPubAdView(final Activity activity, MoPubView mAdView) {
 
-        mAdView = new MoPubView(activity);
+//        mAdView = new MoPubView(activity);
+        mAdView = (MoPubView) activity.findViewById(R.id.adview);
 
         try {
             String screen = activity.getString(R.string.screen_type);
@@ -500,16 +501,16 @@ public class Tools {
         Toast.makeText(activity, R.string.logout_ok, Toast.LENGTH_LONG).show();
     }
 
-    public static void styleActionbar(Activity a) {
-        int titleId = a.getResources().getIdentifier("action_bar_title", "id", "android");
-        TextView actionBarTitle = (TextView) a.findViewById(titleId);
-        actionBarTitle.setTextColor(a.getResources().getColor(R.color.white));
-        actionBarTitle.setTypeface(Tools.getFont(a.getAssets(), Konstanten.FONT_BOLD));
-        int subtitleId = a.getResources().getIdentifier("action_bar_subtitle", "id", "android");
-        TextView actionBarSubtitle = (TextView) a.findViewById(subtitleId);
-        actionBarSubtitle.setTextColor(a.getResources().getColor(R.color.white));
-        actionBarSubtitle.setTypeface(Tools.getFont(a.getAssets(), "Lato-Regular.ttf"));
-    }
+//    public static void styleActionbar(Activity a) {
+//        int titleId = a.getResources().getIdentifier("action_bar_title", "id", "android");
+//        TextView actionBarTitle = (TextView) a.findViewById(titleId);
+//        actionBarTitle.setTextColor(a.getResources().getColor(R.color.white));
+//        actionBarTitle.setTypeface(Tools.getFont(a.getAssets(), Konstanten.FONT_BOLD));
+//        int subtitleId = a.getResources().getIdentifier("action_bar_subtitle", "id", "android");
+//        TextView actionBarSubtitle = (TextView) a.findViewById(subtitleId);
+//        actionBarSubtitle.setTextColor(a.getResources().getColor(R.color.white));
+//        actionBarSubtitle.setTypeface(Tools.getFont(a.getAssets(), "Lato-Regular.ttf"));
+//    }
 
     public static Toolbar initToolbarBase(ActionBarActivity a, Toolbar toolbar) {
         toolbar = (Toolbar) a.findViewById(R.id.toolbar);
