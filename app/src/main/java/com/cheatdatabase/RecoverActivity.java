@@ -3,7 +3,6 @@ package com.cheatdatabase;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
-import android.app.ActionBar;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
@@ -58,7 +57,7 @@ public class RecoverActivity extends ActionBarActivity {
 
     private Typeface latoFontBold;
     private Typeface latoFontLight;
-    private Toolbar toolbar;
+    private Toolbar mToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,15 +111,10 @@ public class RecoverActivity extends ActionBarActivity {
     private void init() {
         Reachability.registerReachability(this.getApplicationContext());
 
-        Tools.initToolbarBase(this, toolbar);
-        Tools.styleActionbar(this);
-        ActionBar actionBar = getActionBar();
-        actionBar.setHomeButtonEnabled(true);
+        Tools.initToolbarBase(this, mToolbar);
 
         latoFontBold = Tools.getFont(getAssets(), Konstanten.FONT_BOLD);
         latoFontLight = Tools.getFont(getAssets(), Konstanten.FONT_LIGHT);
-
-
     }
 
     public void attemptRecover() {

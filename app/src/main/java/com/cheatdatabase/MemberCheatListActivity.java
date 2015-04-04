@@ -118,7 +118,7 @@ public class MemberCheatListActivity extends ActionBarListActivity implements Ad
 
         memberToDisplayCheatsFrom = (Member) getIntent().getSerializableExtra("memberObj");
 
-        Tools.initMoPubAdView(this, mAdView);
+        mAdView = Tools.initMoPubAdView(this, mAdView);
         Tools.initToolbarBase(this, toolbar);
 //        getActionBar().setTitle(getString(R.string.members_cheats_title, memberToDisplayCheatsFrom.getUsername()));
     }

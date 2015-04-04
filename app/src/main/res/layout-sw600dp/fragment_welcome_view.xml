@@ -109,6 +109,7 @@
             android:layout_width="fill_parent"
             android:layout_height="90dp"
             android:layout_gravity="center"
+            android:background="@color/black"
             android:textAlignment="center" />
     </LinearLayout>
 

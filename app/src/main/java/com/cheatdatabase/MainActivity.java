@@ -138,22 +138,23 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
 
     private void init() {
         Reachability.registerReachability(this.getApplicationContext());
-        Mint.initAndStartSession(this, "b19b084a");
+        Mint.initAndStartSession(this, Konstanten.SPLUNK_MINT_API_KEY);
+
+        latoFontBold = Tools.getFont(getAssets(), Konstanten.FONT_BOLD);
 
         settings = getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
         editor = settings.edit();
 
         mToolbar = Tools.initToolbarBase(this, mToolbar);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.app_icon_fox);
+
         mAdView = Tools.initMoPubAdView(this, mAdView);
 
         Tools.initGA(MainActivity.this, tracker, SCREEN_LABEL, "Main Activity", "Cheat-Database Main Activity");
 
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.app_icon_fox);
         AppBrain.init(this);
 
         member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
-
-        latoFontBold = Tools.getFont(getAssets(), Konstanten.FONT_BOLD);
 
         // TODO FIXME - find out where this part was before and re-add it.
         FragmentManager frgManager = getFragmentManager();
@@ -165,6 +166,14 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
         super.onResume();
         // selectItem(0); // FIXME here maybe preserving fragment ID
         member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
+    }
+
+    @Override
+    protected void onDestroy() {
+        if (mAdView != null) {
+            mAdView.destroy();
+        }
+        super.onDestroy();
     }
 
     // http://developer.android.com/training/implementing-navigation/nav-drawer.html#Init
@@ -397,18 +406,11 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
                 fragment = new SystemListFragment();
                 args.putString(SystemListFragment.ITEM_NAME, dataList.get(position).getItemName());
                 args.putInt(SystemListFragment.IMAGE_RESOURCE_ID, dataList.get(position).getImgResID());
-                // actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
-                // actionBar.setListNavigationCallbacks(new
-                // GameSystemsAdapter(getActionBarThemedContextCompat(),
-                // allSystemsPlusEmpty), this);
                 mToolbar.setTitle(R.string.app_name);
                 isFragment = true;
                 break;
             case DRAWER_NEWS:
                 fragment = new NewsFragment();
-                // Remove System-Select Drop-Down
-//                actionBar.setListNavigationCallbacks(null, null);
-//                actionBar.setNavigationMode(0);
                 mToolbar.setTitle(R.string.news_title);
                 isFragment = true;
                 break;
@@ -416,9 +418,6 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
                 fragment = new FavoriteGamesListFragment();
                 args.putString(FavoriteGamesListFragment.ITEM_NAME, dataList.get(position).getItemName());
                 args.putInt(FavoriteGamesListFragment.IMAGE_RESOURCE_ID, dataList.get(position).getImgResID());
-                // Remove System-Select Drop-Down
-//                actionBar.setListNavigationCallbacks(null, null);
-//                actionBar.setNavigationMode(0);
                 mToolbar.setTitle(R.string.favorites);
                 isFragment = true;
                 break;
@@ -426,9 +425,6 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
                 fragment = new TopMembersFragment();
                 args.putString(TopMembersFragment.ITEM_NAME, dataList.get(position).getItemName());
                 args.putInt(TopMembersFragment.IMAGE_RESOURCE_ID, dataList.get(position).getImgResID());
-//                actionBar.setNavigationMode(0);
-//                // Remove System-Select Drop-Down
-//                actionBar.setListNavigationCallbacks(null, null);
                 mToolbar.setTitle(R.string.top_members_top_helping);
                 isFragment = true;
                 break;
@@ -436,9 +432,6 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
                 fragment = new SubmitCheatFragment();
                 args.putString(SubmitCheatFragment.ITEM_NAME, dataList.get(position).getItemName());
                 args.putInt(SubmitCheatFragment.IMAGE_RESOURCE_ID, dataList.get(position).getImgResID());
-//                actionBar.setNavigationMode(0);
-//                // Remove System-Select Drop-Down
-//                actionBar.setListNavigationCallbacks(null, null);
                 mToolbar.setTitle(R.string.submit_cheat_short);
                 isFragment = true;
                 break;
@@ -446,9 +439,6 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
                 fragment = new ContactFormFragment();
                 args.putString(ContactFormFragment.ITEM_NAME, dataList.get(position).getItemName());
                 args.putInt(ContactFormFragment.IMAGE_RESOURCE_ID, dataList.get(position).getImgResID());
-//                actionBar.setNavigationMode(0);
-//                // Remove System-Select Drop-Down
-//                actionBar.setListNavigationCallbacks(null, null);
                 mToolbar.setTitle(R.string.contactform_title);
                 isFragment = true;
                 break;

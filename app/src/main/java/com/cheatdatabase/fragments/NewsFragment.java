@@ -62,8 +62,6 @@ public class NewsFragment extends Fragment {
         welcomeTitle.setTypeface(latoFontBold);
         welcomeText = (TextView) rootView.findViewById(R.id.text_welcome_text);
         welcomeText.setTypeface(latoFontLight);
-        // mAdView = (MoPubView) rootView.findViewById(R.id.adview);
-        // Tools.getAds(mAdView, parentActivity);
 
         reloadView = (ImageView) rootView.findViewById(R.id.reload);
         reloadView.setVisibility(View.INVISIBLE);

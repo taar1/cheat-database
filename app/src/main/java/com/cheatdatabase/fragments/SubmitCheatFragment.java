@@ -8,9 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.cheatdatabase.R;
@@ -21,8 +19,6 @@ import com.splunk.mint.Mint;
 
 public class SubmitCheatFragment extends Fragment {
 
-    ImageView ivIcon;
-    TextView tvItemName;
     private Activity ca;
     private Typeface latoFontLight;
     private Typeface latoFontBold;
@@ -45,7 +41,7 @@ public class SubmitCheatFragment extends Fragment {
         init();
 
         // Update action bar menu items?
-        setHasOptionsMenu(true);
+//        setHasOptionsMenu(true);
     }
 
     private void init() {
@@ -55,7 +51,7 @@ public class SubmitCheatFragment extends Fragment {
         latoFontLight = Tools.getFont(ca.getAssets(), Konstanten.FONT_LIGHT);
         latoFontBold = Tools.getFont(ca.getAssets(), Konstanten.FONT_BOLD);
 
-        ca.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+//        ca.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
     }
 
     @Override

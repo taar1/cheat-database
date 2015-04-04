@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.SearchView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -27,23 +28,9 @@ import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Tools;
 import com.google.analytics.tracking.android.Tracker;
 import com.google.gson.Gson;
+import com.mopub.mobileads.MoPubView;
+import com.splunk.mint.Mint;
 
-/**
- * An activity representing a list of Favorites. This activity has different
- * presentations for handset and tablet-size devices. On handsets, the activity
- * presents a list of items, which when touched, lead to a
- * {@link FavoriteCheatDetailActivity} representing item details. On tablets,
- * the activity presents the list of items and item details side-by-side using
- * two vertical panes.
- * <p/>
- * The activity makes heavy use of fragments. The list of items is a
- * {@link FavoriteCheatListFragment} and the item details (if present) is a
- * {@link FavoriteCheatDetailFragment}.
- * <p/>
- * This activity also implements the required
- * {@link FavoriteCheatListFragment.ElementsListClickHandler} interface to
- * listen for item selections.
- */
 @SuppressLint("NewApi")
 public class FavoriteCheatListActivity extends ActionBarActivity implements FavoriteCheatListFragment.ElementsListClickHandler, RateCheatDialogListener {
 
@@ -64,24 +51,24 @@ public class FavoriteCheatListActivity extends ActionBarActivity implements Favo
 
     private ProgressDialog cheatProgressDialog = null;
 
-    // private MoPubView mAdView;
-
     private int lastPosition;
     private Game lastGameObj;
     private Cheat visibleCheat;
     private FavoritesDetailsFragment favoritesDetailsFragment;
     private FavoritesCheatForumFragment cheatForumFragment;
     private FavoritesCheatMetaFragment cheatMetaFragment;
+    private Toolbar mToolbar;
+    private MoPubView mAdView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_favorite_list);
 
+        handleIntent();
         init();
 
         cheatProgressDialog = ProgressDialog.show(FavoriteCheatListActivity.this, getString(R.string.please_wait) + "...", getString(R.string.retrieving_data) + "...", true);
-        handleIntent(getIntent());
 
         if (findViewById(R.id.favorite_detail_container) != null) {
             // The detail container view will be present only in the
@@ -99,50 +86,48 @@ public class FavoriteCheatListActivity extends ActionBarActivity implements Favo
 
         cheatProgressDialog.dismiss();
         // TODO: If exposing deep links into your app, handle intents here.
-
     }
 
     private void init() {
-        Tools.styleActionbar(this);
+        Mint.initAndStartSession(this, Konstanten.SPLUNK_MINT_API_KEY);
 
         settings = getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
+
+        mToolbar = Tools.initToolbarBase(this, mToolbar);
+        mAdView = Tools.initMoPubAdView(this, mAdView);
+
+        Tools.initGA(FavoriteCheatListActivity.this, tracker, SCREEN_LABEL, "Favorites Cheat List", gameObj.getGameName());
 
         if (member == null) {
             member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
         }
     }
 
-    private void handleIntent(final Intent intent) {
+    private void handleIntent() {
 
         new Thread(new Runnable() {
 
             @Override
             public void run() {
-
                 gameObj = (Game) getIntent().getSerializableExtra("gameObj");
 
-                Tools.initGA(FavoriteCheatListActivity.this, tracker, SCREEN_LABEL, "Favorites Cheat List", gameObj.getGameName());
                 runOnUiThread(new Runnable() {
 
                     @Override
                     public void run() {
-                        getActionBar().setTitle(gameObj.getGameName());
-                        getActionBar().setSubtitle(gameObj.getSystemName());
-
+                        getSupportActionBar().setTitle(gameObj.getGameName());
+                        getSupportActionBar().setSubtitle(gameObj.getSystemName());
                     }
 
                 });
-
             }
         }).start();
-
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // http://developer.android.com/design/patterns/navigation.html#up-vs-back
         switch (item.getItemId()) {
-            // Respond to the action bar's Up/Home button
             case android.R.id.home:
                 // Dominik: This is actually not needed because I am saving the
                 // selected Fragment ID in the local storage.
@@ -300,5 +285,13 @@ public class FavoriteCheatListActivity extends ActionBarActivity implements Favo
         cheatForumFragment.highlightRatingIcon(true);
 
         Toast.makeText(this, R.string.rating_inserted, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    protected void onDestroy() {
+        if (mAdView != null) {
+            mAdView.destroy();
+        }
+        super.onDestroy();
     }
 }

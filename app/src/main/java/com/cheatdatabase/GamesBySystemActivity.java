@@ -77,7 +77,6 @@ public class GamesBySystemActivity extends ActionBarListActivity implements Acti
         setContentView(R.layout.activity_gamelist);
 
         init();
-
         handleIntent(getIntent());
 
         reloadView = (ImageView) findViewById(R.id.reload);
@@ -100,26 +99,17 @@ public class GamesBySystemActivity extends ActionBarListActivity implements Acti
         }
 
         getListView().setOnItemClickListener(this);
-        // mAdView = (MoPubView) findViewById(R.id.adview);
-        // Tools.getAds(mAdView, this);
-
-        // APP FLOOD USAGE TESTING
-        // AppFlood.initialize(this, Konstanten.APPFLOOD_APP_KEY,
-        // Konstanten.APPFLOOD_SECRET_KEY, AppFlood.AD_ALL);
-        // AppFlood.showFullScreen(this);
-        // AppFlood.showInterstitial(this);
-        // AppFlood.showList(this, 1);
     }
 
     private void init() {
         Reachability.registerReachability(this.getApplicationContext());
-        Mint.initAndStartSession(this, "b19b084a");
+        Mint.initAndStartSession(this, Konstanten.SPLUNK_MINT_API_KEY);
 
         mToolbar = Tools.initToolbarBase(this, mToolbar);
         mAdView = Tools.initMoPubAdView(this, mAdView);
 
         latoFontLight = Tools.getFont(getAssets(), Konstanten.FONT_LIGHT);
-        latoFontRegular = Tools.getFont(getAssets(), "Lato-Regular.ttf");
+        latoFontRegular = Tools.getFont(getAssets(), Konstanten.FONT_REGULAR);
     }
 
     private void startGameListAdapter() {

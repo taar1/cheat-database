@@ -9,10 +9,11 @@ import android.content.SharedPreferences.Editor;
 import android.net.ConnectivityManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.SearchView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -41,6 +42,7 @@ import com.cheatdatabase.helpers.Webservice;
 import com.google.analytics.tracking.android.Tracker;
 import com.google.gson.Gson;
 import com.mopub.mobileads.MoPubView;
+import com.splunk.mint.Mint;
 import com.viewpagerindicator.UnderlinePageIndicator;
 
 import java.util.ArrayList;
@@ -51,7 +53,7 @@ import java.util.ArrayList;
  * @author Dominik Erbsland
  * @version 1.0
  */
-public class MemberCheatViewPageIndicator extends FragmentActivity implements ReportCheatDialogListener, RateCheatDialogListener {
+public class MemberCheatViewPageIndicator extends ActionBarActivity implements ReportCheatDialogListener, RateCheatDialogListener {
 
     private Intent intent;
 
@@ -89,20 +91,18 @@ public class MemberCheatViewPageIndicator extends FragmentActivity implements Re
     private String cheatShareBody;
 
     private ShareActionProvider mShare;
+    private Toolbar mToolbar;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Reachability.registerReachability(this.getApplicationContext());
-
-        LayoutInflater inflater = LayoutInflater.from(this);
         intent = getIntent();
 
+        LayoutInflater inflater = LayoutInflater.from(this);
         viewLayout = inflater.inflate(R.layout.activity_cheatview_pager, null);
         setContentView(viewLayout);
 
-        settings = getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
-        editor = settings.edit();
+        init();
 
         try {
             cheatObj = new Gson().fromJson(settings.getString(Konstanten.PREFERENCES_TEMP_CHEAT_ARRAY_OBJECT_VIEW, null), Cheat[].class);
@@ -120,21 +120,26 @@ public class MemberCheatViewPageIndicator extends FragmentActivity implements Re
             gameObj.setSystemId(visibleCheat.getSystemId());
             gameObj.setSystemName(visibleCheat.getSystemName());
 
-            member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
-
-            Tools.styleActionbar(this);
-            getActionBar().setDisplayHomeAsUpEnabled(true);
-            getActionBar().setTitle(visibleCheat.getGameName());
-            getActionBar().setSubtitle(visibleCheat.getSystemName());
+            getSupportActionBar().setTitle(visibleCheat.getGameName());
+            getSupportActionBar().setSubtitle(visibleCheat.getSystemName());
 
             Tools.initGA(this, tracker, SCREEN_LABEL, visibleCheat.getGameName() + " (" + visibleCheat.getSystemName() + ")", visibleCheat.getCheatTitle());
-            mAdView = (MoPubView) viewLayout.findViewById(R.id.adview);
-            Tools.getAds(mAdView, this);
             initialisePaging();
         } catch (Exception e) {
             Log.e(MemberCheatViewPageIndicator.class.getName(), e.getMessage());
         }
+    }
 
+    private void init() {
+        Reachability.registerReachability(this.getApplicationContext());
+        Mint.initAndStartSession(this, Konstanten.SPLUNK_MINT_API_KEY);
+        settings = getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
+        editor = settings.edit();
+
+        Tools.initToolbarBase(this, mToolbar);
+        mAdView = Tools.initMoPubAdView(this, mAdView);
+
+        member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
     }
 
     private void initialisePaging() {
@@ -306,6 +311,7 @@ public class MemberCheatViewPageIndicator extends FragmentActivity implements Re
                 return true;
             case R.id.action_forum:
                 Intent forumIntent = new Intent(MemberCheatViewPageIndicator.this, CheatForumActivity.class);
+                forumIntent.putExtra("gameObj", gameObj);
                 forumIntent.putExtra("cheatObj", visibleCheat);
                 startActivity(forumIntent);
                 return true;
