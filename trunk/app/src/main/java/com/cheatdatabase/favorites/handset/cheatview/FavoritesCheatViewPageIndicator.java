@@ -10,16 +10,18 @@ import android.net.ConnectivityManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Parcelable;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.SearchView;
+import android.support.v7.widget.ShareActionProvider;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ShareActionProvider;
 import android.widget.Toast;
 
 import com.cheatdatabase.CheatForumActivity;
@@ -43,6 +45,7 @@ import com.cheatdatabase.helpers.Webservice;
 import com.google.analytics.tracking.android.Tracker;
 import com.google.gson.Gson;
 import com.mopub.mobileads.MoPubView;
+import com.splunk.mint.Mint;
 import com.viewpagerindicator.UnderlinePageIndicator;
 
 import java.util.ArrayList;
@@ -53,7 +56,7 @@ import java.util.ArrayList;
  * @author Dominik Erbsland
  * @version 1.0
  */
-public class FavoritesCheatViewPageIndicator extends FragmentActivity implements ReportCheatDialogListener, RateCheatDialogListener, UndoBarController.UndoListener {
+public class FavoritesCheatViewPageIndicator extends ActionBarActivity implements ReportCheatDialogListener, RateCheatDialogListener, UndoBarController.UndoListener {
 
     // https://code.google.com/p/romannurik-code/source/browse/misc/undobar
     private UndoBarController mUndoBarController;
@@ -97,25 +100,18 @@ public class FavoritesCheatViewPageIndicator extends FragmentActivity implements
     private ShareActionProvider mShare;
 
     private CheatDatabaseAdapter db;
+    private Toolbar mToolbar;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Reachability.registerReachability(this.getApplicationContext());
-
-        LayoutInflater inflater = LayoutInflater.from(this);
         intent = getIntent();
 
+        LayoutInflater inflater = LayoutInflater.from(this);
         viewLayout = inflater.inflate(intent.getIntExtra("layoutResourceId", R.layout.activity_cheatview_pager), null);
         setContentView(viewLayout);
 
-        settings = getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
-        editor = settings.edit();
-
-        Tools.styleActionbar(this);
-
-        db = new CheatDatabaseAdapter(this);
-        db.open();
+        init();
 
         try {
             gameObj = (Game) intent.getSerializableExtra("gameObj");
@@ -126,22 +122,31 @@ public class FavoritesCheatViewPageIndicator extends FragmentActivity implements
             visibleCheat = cheatObj[pageSelected];
             setShareText(visibleCheat);
 
-            member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
-
-            getActionBar().setHomeButtonEnabled(true);
-            getActionBar().setDisplayHomeAsUpEnabled(true);
-            getActionBar().setTitle(gameObj.getGameName());
-            getActionBar().setSubtitle(gameObj.getSystemName());
+            getSupportActionBar().setTitle(gameObj.getGameName());
+            getSupportActionBar().setSubtitle(gameObj.getSystemName());
 
             Tools.initGA(FavoritesCheatViewPageIndicator.this, tracker, SCREEN_LABEL, visibleCheat.getGameName() + " (" + visibleCheat.getSystemName() + ")", visibleCheat.getCheatTitle());
-
-            Tools.initMoPubAdView(this, mAdView);
-
             initialisePaging();
         } catch (Exception e) {
             Log.e(FavoritesCheatViewPageIndicator.class.getName(), e.getMessage() + "");
         }
         mUndoBarController = new UndoBarController(viewLayout.findViewById(R.id.undobar), this);
+    }
+
+    private void init() {
+        Reachability.registerReachability(this.getApplicationContext());
+        Mint.initAndStartSession(this, Konstanten.SPLUNK_MINT_API_KEY);
+
+        settings = getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
+        editor = settings.edit();
+
+        db = new CheatDatabaseAdapter(this);
+        db.open();
+
+        Tools.initToolbarBase(this, mToolbar);
+        mAdView = Tools.initMoPubAdView(this, mAdView);
+
+        member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
     }
 
     private void initialisePaging() {
@@ -234,7 +239,7 @@ public class FavoritesCheatViewPageIndicator extends FragmentActivity implements
         MenuItem item = menu.findItem(R.id.action_share);
 
         // Sharing
-        mShare = (ShareActionProvider) item.getActionProvider();
+        mShare = (ShareActionProvider) MenuItemCompat.getActionProvider(item);
         setShareText(visibleCheat);
 
         // Search
@@ -267,7 +272,7 @@ public class FavoritesCheatViewPageIndicator extends FragmentActivity implements
         MenuItem item = menu.findItem(R.id.action_share);
 
         // Sharing
-        mShare = (ShareActionProvider) item.getActionProvider();
+        mShare = (ShareActionProvider) MenuItemCompat.getActionProvider(item);
         setShareText(visibleCheat);
 
         // Search
@@ -304,6 +309,7 @@ public class FavoritesCheatViewPageIndicator extends FragmentActivity implements
             case R.id.action_forum:
                 if (Reachability.reachability.isReachable) {
                     Intent forumIntent = new Intent(FavoritesCheatViewPageIndicator.this, CheatForumActivity.class);
+                    forumIntent.putExtra("gameObj", gameObj);
                     forumIntent.putExtra("cheatObj", visibleCheat);
                     startActivity(forumIntent);
                 } else {

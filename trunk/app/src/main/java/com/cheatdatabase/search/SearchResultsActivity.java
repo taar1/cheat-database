@@ -72,13 +72,8 @@ public class SearchResultsActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_search_result);
-        Reachability.registerReachability(this.getApplicationContext());
 
-        settings = getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
-
-        latoFontLight = Tools.getFont(getAssets(), Konstanten.FONT_LIGHT);
-        latoFontBold = Tools.getFont(getAssets(), Konstanten.FONT_BOLD);
+        init();
 
         somethingfoundLayout = (RelativeLayout) findViewById(R.id.somethingfound_layout);
         nothingFoundLayout = (LinearLayout) findViewById(R.id.nothingfound_layout);
@@ -89,19 +84,23 @@ public class SearchResultsActivity extends ActionBarActivity {
         nothingFoundTitle.setTypeface(latoFontBold);
         nothingFoundText.setTypeface(latoFontLight);
 
-//        Tools.styleActionbar(this);
-//        toolbar = (Toolbar) findViewById(R.id.toolbar);
-//        if (toolbar != null) {
-//            setSupportActionBar(toolbar);
-//        }
-//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        Tools.initToolbarBase(this, toolbar);
-
         listView = (ExpandableListView) findViewById(R.id.listView);
         adapter = new SearchresultExpandableListAdapter(SearchResultsActivity.this, groups);
         listView.setAdapter(adapter);
 
         handleIntent(getIntent());
+    }
+
+    private void init() {
+        setContentView(R.layout.activity_search_result);
+        Reachability.registerReachability(this.getApplicationContext());
+
+        latoFontLight = Tools.getFont(getAssets(), Konstanten.FONT_LIGHT);
+        latoFontBold = Tools.getFont(getAssets(), Konstanten.FONT_BOLD);
+
+        settings = getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
+
+        Tools.initToolbarBase(this, toolbar);
     }
 
     @Override

@@ -185,6 +185,9 @@ public class LoginActivity extends ActionBarActivity implements AlreadyLoggedInD
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar buttons
         switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
             case R.id.action_register:
                 Intent registerIntent = new Intent(LoginActivity.this, RegisterActivity.class);
                 startActivityForResult(registerIntent, Konstanten.REGISTER_ATTEMPT);

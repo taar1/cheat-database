@@ -61,7 +61,6 @@ public class RegisterActivity extends ActionBarActivity {
     private Editor editor;
 
     private Typeface latoFontBold;
-
     private Typeface latoFontLight;
 
     private Button registerButton;
@@ -78,10 +77,10 @@ public class RegisterActivity extends ActionBarActivity {
         mEmail = getIntent().getStringExtra(EXTRA_EMAIL);
         mEmailView = (EditText) findViewById(R.id.email);
         mEmailView.setText(mEmail);
-        mEmailView.setTypeface(latoFontBold);
+        mEmailView.setTypeface(latoFontLight);
 
         mUsernameView = (EditText) findViewById(R.id.username);
-        mUsernameView.setTypeface(latoFontBold);
+        mUsernameView.setTypeface(latoFontLight);
         mUsernameView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {

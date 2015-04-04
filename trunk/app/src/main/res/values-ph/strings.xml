@@ -3,7 +3,7 @@
 
     <!-- UNIQUE NEWS -->
     <string name="news_welcome">Latest version update</string>
-    <string name="news_title">Version</string>
+    <string name="news_title">News</string>
 
     <!-- VARIOUS -->
     <string name="app_name">Cheat-Database</string>

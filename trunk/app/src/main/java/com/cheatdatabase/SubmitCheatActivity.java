@@ -122,7 +122,6 @@ public class SubmitCheatActivity extends ActionBarActivity implements OnClickLis
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action buttons
         switch (item.getItemId()) {
             case android.R.id.home:
                 onBackPressed();
