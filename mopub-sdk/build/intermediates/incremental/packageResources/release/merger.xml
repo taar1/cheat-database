@@ -1,2 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<merger version="3"><dataSet config="main"><source path="C:\Users\Dominik\Workspaces\Android\Cheat-Database\mopub-sdk\res"/><source path="C:\Users\Dominik\Workspaces\Android\Cheat-Database\mopub-sdk\build\generated\res\rs\release"/><source path="C:\Users\Dominik\Workspaces\Android\Cheat-Database\mopub-sdk\build\generated\res\generated\release"/></dataSet><dataSet config="release"><source path="C:\Users\Dominik\Workspaces\Android\Cheat-Database\mopub-sdk\src\release\res"/></dataSet><mergedItems/></merger>

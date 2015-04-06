@@ -15,23 +15,21 @@
             android:id="@+id/gamename"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:gravity="start"
+            android:gravity="left"
             android:text="@string/placeholder"
-            android:textColor="#FFFFFF"
-            android:textSize="16sp"
-            android:textStyle="bold"></TextView>
+            android:textAppearance="@style/ListrowFirstLine" />
 
         <TextView
             android:id="@+id/cheattitle"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:gravity="start"
+            android:gravity="left"
             android:text="@string/placeholder"
-            android:textColor="#FFFFFF"
-            android:textSize="16sp"></TextView>
+            android:textAppearance="@style/ListrowSecondLine" />
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/flag_layout"
         android:layout_width="wrap_content"
         android:layout_height="fill_parent"
         android:layout_weight="1"
