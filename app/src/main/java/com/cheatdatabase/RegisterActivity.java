@@ -139,7 +139,12 @@ public class RegisterActivity extends ActionBarActivity {
 
         latoFontBold = Tools.getFont(getAssets(), Konstanten.FONT_BOLD);
         latoFontLight = Tools.getFont(getAssets(), Konstanten.FONT_LIGHT);
+    }
 
+    @Override
+    public void onPause() {
+        Reachability.unregister(getApplicationContext());
+        super.onPause();
     }
 
     /**

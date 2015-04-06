@@ -12,7 +12,6 @@ import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.format.DateFormat;
 import android.util.Log;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cheatdatabase.R;
@@ -293,6 +292,7 @@ public class Tools {
 
     /**
      * Converts game list string to a Game array
+     *
      * @param activity
      * @param gameListString
      * @return
@@ -445,29 +445,6 @@ public class Tools {
         return Typeface.createFromAsset(assetManager, fontName);
     }
 
-//    public static void getAds(MoPubView mAdView, final Activity activity) {
-//        if (mAdView == null) {
-//            mAdView = (MoPubView) activity.findViewById(R.id.adview);
-//        }
-//
-//        // FIXME fehler hier???
-//        try {
-//            String screen = activity.getString(R.string.screen_type);
-//            if (screen.equalsIgnoreCase("phone")) {
-//                mAdView.setAdUnitId(Konstanten.MOPUB_PHONE_UNIT_ID);
-//            } else {
-//                mAdView.setAdUnitId(Konstanten.MOPUB_TABLET_UNIT_ID);
-//            }
-//
-//            mAdView.setAutorefreshEnabled(true);
-//            mAdView.setTesting(false);
-//            mAdView.setKeywords("m_age:15,m_gender:m,m_marital:single");
-//            mAdView.loadAd();
-//        } catch (Exception e) {
-//            Log.i("ADVIEW LOAD", e.getMessage());
-//        }
-//    }
-
     public static MoPubView initMoPubAdView(final Activity activity, MoPubView mAdView) {
 
 //        mAdView = new MoPubView(activity);
@@ -486,7 +463,6 @@ public class Tools {
             mAdView.setKeywords("m_age:15,m_gender:m,m_marital:single");
             mAdView.loadAd();
         } catch (Exception e) {
-//			mAdView.setAdUnitId(Konstanten.MOPUB_PHONE_UNIT_ID);
             Log.e("ADVIEW LOAD", e.getMessage());
             e.printStackTrace();
         }
@@ -501,17 +477,6 @@ public class Tools {
         Toast.makeText(activity, R.string.logout_ok, Toast.LENGTH_LONG).show();
     }
 
-//    public static void styleActionbar(Activity a) {
-//        int titleId = a.getResources().getIdentifier("action_bar_title", "id", "android");
-//        TextView actionBarTitle = (TextView) a.findViewById(titleId);
-//        actionBarTitle.setTextColor(a.getResources().getColor(R.color.white));
-//        actionBarTitle.setTypeface(Tools.getFont(a.getAssets(), Konstanten.FONT_BOLD));
-//        int subtitleId = a.getResources().getIdentifier("action_bar_subtitle", "id", "android");
-//        TextView actionBarSubtitle = (TextView) a.findViewById(subtitleId);
-//        actionBarSubtitle.setTextColor(a.getResources().getColor(R.color.white));
-//        actionBarSubtitle.setTypeface(Tools.getFont(a.getAssets(), "Lato-Regular.ttf"));
-//    }
-
     public static Toolbar initToolbarBase(ActionBarActivity a, Toolbar toolbar) {
         toolbar = (Toolbar) a.findViewById(R.id.toolbar);
         if (toolbar != null) {
@@ -522,15 +487,4 @@ public class Tools {
 
         return toolbar;
     }
-
-    // public static boolean isOnline(Context context) {
-    // ConnectivityManager cm = (ConnectivityManager)
-    // context.getSystemService(Context.CONNECTIVITY_SERVICE);
-    // NetworkInfo netInfo = cm.getActiveNetworkInfo();
-    // // should check null because in air plane mode it will be null
-    // if (netInfo != null && netInfo.isConnected()) {
-    // return true;
-    // }
-    // return false;
-    // }
 }

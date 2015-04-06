@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/action_termsandconditions"
+        android:icon="@drawable/ic_paragraph"
+        android:title="@string/submit_cheat_consent_title"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/action_guidelines"
+        android:icon="@android:drawable/ic_menu_info_details"
+        android:title="@string/guidelines"
+        app:showAsAction="ifRoom|withText" />
+
+</menu><!-- From: file:/C:/Users/Dominik/Workspaces/Android/Cheat-Database/app/src/main/res/menu/submitcheat_menu.xml -->

@@ -1,0 +1,266 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/navy_blue_medium_dark"
+    android:minWidth="200dp"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/title_cheat_details"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/color_primary_light"
+        android:gravity="center"
+        android:padding="5dp"
+        android:text="@string/title_cheat_details"
+        android:textAppearance="@style/CheatTitleTablet" />
+
+    <ScrollView
+        android:id="@+id/scroll_view"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="100"
+        android:minHeight="100dp"
+        android:padding="5dp">
+
+        <LinearLayout
+            android:id="@+id/linearLayout2"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/submission_date_layout"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingBottom="4dp"
+                android:paddingLeft="8dp"
+                android:paddingTop="4dp">
+
+                <TextView
+                    android:id="@+id/submission_date_title"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/meta_submission_date"
+                    android:textAppearance="@style/NormalTextBold" />
+
+                <TextView
+                    android:id="@+id/submission_date_text"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/meta_unknown"
+                    android:textAppearance="@style/NormalText" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llBuffer1"
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:background="@color/gray"
+                android:orientation="vertical" />
+
+            <LinearLayout
+                android:id="@+id/llViewsLifetime"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingBottom="4dp"
+                android:paddingLeft="8dp"
+                android:paddingTop="4dp">
+
+                <TextView
+                    android:id="@+id/lifetime_views_title"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/meta_views_lifetime"
+                    android:textAppearance="@style/NormalTextBold" />
+
+                <TextView
+                    android:id="@+id/lifetime_views_text"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/meta_unknown"
+                    android:textAppearance="@style/NormalText" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llBuffer2"
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:background="@color/gray"
+                android:orientation="vertical"></LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llViewsToday"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingBottom="4dp"
+                android:paddingLeft="8dp"
+                android:paddingTop="4dp">
+
+                <TextView
+                    android:id="@+id/views_today_title"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/meta_views_today"
+                    android:textAppearance="@style/NormalTextBold" />
+
+                <TextView
+                    android:id="@+id/views_today_text"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/meta_unknown"
+                    android:textAppearance="@style/NormalText" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llBuffer3"
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:background="@color/gray"
+                android:orientation="vertical" />
+
+            <LinearLayout
+                android:id="@+id/llRating"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingBottom="4dp"
+                android:paddingLeft="8dp"
+                android:paddingTop="4dp">
+
+                <TextView
+                    android:id="@+id/tvAverageRatingTitle"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/meta_rating_average"
+                    android:textAppearance="@style/NormalTextBold" />
+
+                <TextView
+                    android:id="@+id/tvAverageRatingText"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/meta_unknown"
+                    android:textAppearance="@style/NormalText" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llBuffer4"
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:background="@color/gray"
+                android:orientation="vertical"></LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llSubmittedBy"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingBottom="4dp"
+                android:paddingLeft="8dp"
+                android:paddingTop="4dp">
+
+                <TextView
+                    android:id="@+id/tvSubmittedByTitle"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/meta_submitted_by"
+                    android:textAppearance="@style/NormalTextBold" />
+
+                <TextView
+                    android:id="@+id/tvSubmittedByText"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/meta_unknown"
+                    android:textAppearance="@style/NormalText" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llBuffer5"
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:background="@color/gray"
+                android:orientation="vertical" />
+
+            <LinearLayout
+                android:id="@+id/llCountSubmissions"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingBottom="4dp"
+                android:paddingLeft="8dp"
+                android:paddingTop="4dp">
+
+                <TextView
+                    android:id="@+id/tvTotalSubmissionsMemberTitle"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/meta_submission_total"
+                    android:textAppearance="@style/NormalTextBold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llCountSubmissions2"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingBottom="4dp"
+                android:paddingLeft="8dp">
+
+                <TextView
+                    android:id="@+id/tvTotalSubmissionsMemberText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="top|left"
+                    android:text="@string/meta_unknown"
+                    android:textAppearance="@style/NormalText" />
+
+                <TextView
+                    android:id="@+id/tvTotalSubmissionsShow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="top|right"
+                    android:paddingRight="10dp"
+                    android:text="@string/meta_show_all_cheats"
+                    android:textAppearance="@style/NormalTextBold"
+                    android:textColorHighlight="#FF0000" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llBuffer6"
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:background="@color/gray"
+                android:orientation="vertical"></LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llMemberHomepage"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingBottom="4dp"
+                android:paddingLeft="8dp"
+                android:paddingTop="4dp">
+
+                <TextView
+                    android:id="@+id/tvMemberHomepageTitle"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/meta_member_homepage"
+                    android:textAppearance="@style/NormalTextBold" />
+
+                <TextView
+                    android:id="@+id/tvMemberHomepageText"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/meta_unknown"
+                    android:textAppearance="@style/NormalText" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout><!-- From: file:/C:/Users/Dominik/Workspaces/Android/Cheat-Database/app/src/main/res/layout/layout_cheatview_meta_dialog.xml -->

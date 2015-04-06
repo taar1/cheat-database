@@ -57,11 +57,9 @@ public class MemberCheatListActivity extends ActionBarListActivity implements Ad
 
     private ProgressDialog mProgressDialog = null;
     private CheatAdapter memberCheatsAdapter;
-    // private Runnable viewOrders;
 
     private final int ADD_TO_FAVORITES = 0;
 
-    // Lokale Settings
     private Typeface latoFontLight;
     private CheatDatabaseAdapter db;
     private MoPubView mAdView;
@@ -69,8 +67,7 @@ public class MemberCheatListActivity extends ActionBarListActivity implements Ad
     private Editor editor;
     private ImageView reloadView;
 
-    private ViewGroup adViewContainer;
-    private Toolbar toolbar;
+    private Toolbar mToolbar;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -81,13 +78,9 @@ public class MemberCheatListActivity extends ActionBarListActivity implements Ad
 
         registerForContextMenu(getListView());
 
-        // Custom background
-        // LinearLayout ol = (LinearLayout) findViewById(R.id.outerLayout);
-        // ol.setBackgroundResource(R.drawable.bg_top_members);
-
         reloadView = (ImageView) findViewById(R.id.reload);
         if (Reachability.reachability.isReachable) {
-            getThemCheats();
+            getCheatList();
         } else {
             reloadView.setVisibility(View.VISIBLE);
             reloadView.setOnClickListener(new OnClickListener() {
@@ -95,7 +88,7 @@ public class MemberCheatListActivity extends ActionBarListActivity implements Ad
                 @Override
                 public void onClick(View v) {
                     if (Reachability.reachability.isReachable) {
-                        getThemCheats();
+                        getCheatList();
                     } else {
                         Toast.makeText(MemberCheatListActivity.this, R.string.no_internet, Toast.LENGTH_SHORT).show();
                     }
@@ -109,7 +102,7 @@ public class MemberCheatListActivity extends ActionBarListActivity implements Ad
 
     private void init() {
         Reachability.registerReachability(this.getApplicationContext());
-        Mint.initAndStartSession(this, "b19b084a");
+        Mint.initAndStartSession(this, Konstanten.SPLUNK_MINT_API_KEY);
 
         settings = getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
         editor = settings.edit();
@@ -119,17 +112,14 @@ public class MemberCheatListActivity extends ActionBarListActivity implements Ad
         memberToDisplayCheatsFrom = (Member) getIntent().getSerializableExtra("memberObj");
 
         mAdView = Tools.initMoPubAdView(this, mAdView);
-        Tools.initToolbarBase(this, toolbar);
-//        getActionBar().setTitle(getString(R.string.members_cheats_title, memberToDisplayCheatsFrom.getUsername()));
+        Tools.initToolbarBase(this, mToolbar);
+        getSupportActionBar().setTitle(getString(R.string.members_cheats_title, memberToDisplayCheatsFrom.getUsername()));
     }
 
-    private void getThemCheats() {
-        reloadView.setVisibility(View.GONE);
-        memberCheatsAdapter = new CheatAdapter(this, R.layout.layout_list);
-        setListAdapter(memberCheatsAdapter);
-        mProgressDialog = ProgressDialog.show(MemberCheatListActivity.this, getString(R.string.please_wait) + "...", getString(R.string.retrieving_data) + "...", true);
-
-        getCheats();
+    @Override
+    public void onPause() {
+        Reachability.unregister(getApplicationContext());
+        super.onPause();
     }
 
     @Override
@@ -174,6 +164,15 @@ public class MemberCheatListActivity extends ActionBarListActivity implements Ad
         }
 
         return super.onContextItemSelected(item);
+    }
+
+    private void getCheatList() {
+        reloadView.setVisibility(View.GONE);
+        memberCheatsAdapter = new CheatAdapter(this, R.layout.layout_list);
+        setListAdapter(memberCheatsAdapter);
+        mProgressDialog = ProgressDialog.show(MemberCheatListActivity.this, getString(R.string.please_wait) + "...", getString(R.string.retrieving_data) + "...", true);
+
+        getCheats();
     }
 
 //    @Override
@@ -272,6 +271,14 @@ public class MemberCheatListActivity extends ActionBarListActivity implements Ad
                 finish();
             }
         }).create().show();
+    }
+
+    @Override
+    protected void onDestroy() {
+        if (mAdView != null) {
+            mAdView.destroy();
+        }
+        super.onDestroy();
     }
 
     private class CheatAdapter extends ArrayAdapter<Cheat> {

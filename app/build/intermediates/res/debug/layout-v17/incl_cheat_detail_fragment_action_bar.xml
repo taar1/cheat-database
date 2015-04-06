@@ -1,0 +1,97 @@
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+        android:id="@+id/tab_bar"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/drawer_divier_bars_background"
+        android:gravity="end|center"
+        android:orientation="horizontal"
+        android:padding="8dp">
+
+        <ImageButton
+            android:id="@+id/btn_view_cheat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/drawer_divier_bars_background"
+            android:contentDescription="@string/goto_cheat"
+            android:paddingEnd="12dp"
+            android:paddingLeft="12dp"
+            android:paddingRight="12dp"
+            android:paddingStart="12dp"
+            android:src="@drawable/ic_action_view_as_list" />
+
+        <ImageButton
+            android:id="@+id/btn_meta_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/drawer_divier_bars_background"
+            android:contentDescription="@string/meta_info"
+            android:paddingEnd="12dp"
+            android:paddingLeft="12dp"
+            android:paddingRight="12dp"
+            android:paddingStart="12dp"
+            android:src="@android:drawable/ic_menu_info_details" />
+
+        <ImageButton
+            android:id="@+id/btn_forum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/drawer_divier_bars_background"
+            android:contentDescription="@string/forum_goto"
+            android:paddingEnd="12dp"
+            android:paddingLeft="12dp"
+            android:paddingRight="12dp"
+            android:paddingStart="12dp"
+            android:src="@drawable/ic_action_chat" />
+
+        <ImageButton
+            android:id="@+id/btn_report"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/drawer_divier_bars_background"
+            android:contentDescription="@string/report_cheat_title"
+            android:paddingEnd="12dp"
+            android:paddingLeft="12dp"
+            android:paddingRight="12dp"
+            android:paddingStart="12dp"
+            android:src="@drawable/ic_action_report" />
+
+        <ImageButton
+            android:id="@+id/btn_delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/drawer_divier_bars_background"
+            android:contentDescription="@string/remove_favorite"
+            android:paddingEnd="12dp"
+            android:paddingLeft="12dp"
+            android:paddingRight="12dp"
+            android:paddingStart="12dp"
+            android:src="@drawable/ic_action_remove" />
+
+        <ImageButton
+            android:id="@+id/btn_share"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/drawer_divier_bars_background"
+            android:contentDescription="@string/share_title"
+            android:paddingEnd="12dp"
+            android:paddingLeft="12dp"
+            android:paddingRight="12dp"
+            android:paddingStart="12dp"
+            android:src="@android:drawable/ic_menu_share" />
+
+        <ImageButton
+            android:id="@+id/btn_rate_cheat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/drawer_divier_bars_background"
+            android:contentDescription="@string/rate_cheat"
+            android:paddingEnd="12dp"
+            android:paddingLeft="12dp"
+            android:paddingRight="12dp"
+            android:paddingStart="12dp"
+            android:src="@drawable/ic_action_not_important" />
+    </LinearLayout>
+
+</merge><!-- From: file:/C:/Users/Dominik/Workspaces/Android/Cheat-Database/app/src/main/res/layout-v17/incl_cheat_detail_fragment_action_bar.xml -->

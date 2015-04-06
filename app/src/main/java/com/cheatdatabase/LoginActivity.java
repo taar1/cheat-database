@@ -78,11 +78,6 @@ public class LoginActivity extends ActionBarActivity implements AlreadyLoggedInD
         setContentView(R.layout.activity_login);
         Reachability.registerReachability(this.getApplicationContext());
 
-        //Tools.styleActionbar(this);
-//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-//        if (toolbar != null) {
-//            setSupportActionBar(toolbar);
-//        }
         Tools.initToolbarBase(this, toolbar);
 
         settings = getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
@@ -169,6 +164,12 @@ public class LoginActivity extends ActionBarActivity implements AlreadyLoggedInD
             mPasswordView.setEnabled(true);
             loginButton.setEnabled(true);
         }
+    }
+
+    @Override
+    public void onPause() {
+        Reachability.unregister(getApplicationContext());
+        super.onPause();
     }
 
     @Override

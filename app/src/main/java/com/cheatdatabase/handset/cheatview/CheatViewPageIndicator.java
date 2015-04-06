@@ -21,7 +21,6 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.cheatdatabase.CheatForumActivity;
@@ -47,8 +46,6 @@ import com.mopub.mobileads.MoPubView;
 import com.splunk.mint.Mint;
 import com.viewpagerindicator.UnderlinePageIndicator;
 
-import java.util.ArrayList;
-
 /**
  * Horizontal sliding gallery of cheats from a game.
  *
@@ -62,13 +59,9 @@ public class CheatViewPageIndicator extends ActionBarActivity implements ReportC
     private View viewLayout;
     private int pageSelected;
 
-    public ArrayList<String[]> al_images;
-
     private Game gameObj;
     private Cheat[] cheatObj;
     private Cheat visibleCheat;
-
-    private ViewGroup adViewContainer;
 
     private MoPubView mAdView;
 
@@ -78,7 +71,6 @@ public class CheatViewPageIndicator extends ActionBarActivity implements ReportC
     private Member member;
 
     public AlertDialog.Builder builder;
-    public AlertDialog alert;
 
     private CheatViewFragmentAdapter mAdapter;
     private ViewPager mPager;
@@ -143,6 +135,12 @@ public class CheatViewPageIndicator extends ActionBarActivity implements ReportC
         mAdView = Tools.initMoPubAdView(this, mAdView);
 
         member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
+    }
+
+    @Override
+    public void onPause() {
+        Reachability.unregister(getApplicationContext());
+        super.onPause();
     }
 
     private void initialisePaging() {
@@ -373,12 +371,6 @@ public class CheatViewPageIndicator extends ActionBarActivity implements ReportC
         super.onDestroy();
     }
 
-    public ConnectivityManager getConnectivityManager() {
-        if (cm == null) {
-            cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        }
-        return cm;
-    }
 
     public void showReportDialog() {
         if ((member == null) || (member.getMid() == 0)) {

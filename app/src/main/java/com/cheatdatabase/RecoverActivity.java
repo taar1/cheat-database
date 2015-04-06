@@ -117,6 +117,12 @@ public class RecoverActivity extends ActionBarActivity {
         latoFontLight = Tools.getFont(getAssets(), Konstanten.FONT_LIGHT);
     }
 
+    @Override
+    public void onPause() {
+        Reachability.unregister(getApplicationContext());
+        super.onPause();
+    }
+
     public void attemptRecover() {
         if (mAuthTask != null) {
             return;

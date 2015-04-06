@@ -162,6 +162,12 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
     }
 
     @Override
+    public void onPause() {
+        Reachability.unregister(getApplicationContext());
+        super.onPause();
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
         // selectItem(0); // FIXME here maybe preserving fragment ID
@@ -223,7 +229,6 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
             /** Called when a drawer has settled in a completely closed state. */
             @Override
             public void onDrawerClosed(View view) {
-                //getActionBar().setTitle(mTitle);
                 invalidateOptionsMenu();
                 syncState();
             }
@@ -231,8 +236,6 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
             /** Called when a drawer has settled in a completely open state. */
             @Override
             public void onDrawerOpened(View drawerView) {
-                //getActionBar().setTitle(mDrawerTitle);
-
                 // creates call to onPrepareOptionsMenu()
                 invalidateOptionsMenu();
                 syncState();
@@ -399,8 +402,6 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
         Bundle args = new Bundle();
         boolean isFragment = false;
 
-        //ActionBar actionBar = getActionBar();
-
         switch (position) {
             case DRAWER_MAIN:
                 fragment = new SystemListFragment();
@@ -479,7 +480,6 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
     @Override
     public void setTitle(CharSequence title) {
         mTitle = title;
-        //getActionBar().setTitle(mTitle);
 //		getSupportActionBar().setTitle(mTitle);
     }
 

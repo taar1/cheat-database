@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/add_fav"
+        android:icon="@drawable/ic_action_add_favorite"
+        android:orderInCategory="100"
+        android:title="@string/add_all_favorites"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/submit"
+        android:icon="@drawable/ic_action_upload"
+        android:orderInCategory="200"
+        android:title="@string/submit_cheat_long"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/search"
+        android:icon="@android:drawable/ic_menu_search"
+        android:orderInCategory="300"
+        android:title="@string/menu_fulltext_search_long"
+        app:showAsAction="never" />
+
+</menu><!-- From: file:/C:/Users/Dominik/Workspaces/Android/Cheat-Database/app/src/main/res/menu/gametitle_menu.xml -->

@@ -67,7 +67,6 @@ public class CheatForumActivity extends ActionBarActivity implements CheatListFr
 
     private TextView tvCheatTitle;
     private TextView tvEmpty;
-    private Intent intent;
     private Cheat cheatObj;
     private Game gameObj;
     private Button postButton;
@@ -101,7 +100,7 @@ public class CheatForumActivity extends ActionBarActivity implements CheatListFr
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cheat_forum);
 
-        intent = getIntent();
+        handleIntent(getIntent());
         init();
 
         tvCheatTitle = (TextView) findViewById(R.id.text_cheat_title);
@@ -161,23 +160,36 @@ public class CheatForumActivity extends ActionBarActivity implements CheatListFr
         settings = getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
         editor = settings.edit();
 
-        mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        mAdView = new MoPubView(this);
-        Tools.initMoPubAdView(this, mAdView);
-        Tools.initToolbarBase(this, mToolbar);
+        mAdView = Tools.initMoPubAdView(this, mAdView);
 
         latoFontLight = Tools.getFont(getAssets(), Konstanten.FONT_LIGHT);
         latoFontBold = Tools.getFont(getAssets(), Konstanten.FONT_BOLD);
 
-        cheatObj = (Cheat) intent.getSerializableExtra("cheatObj");
-        gameObj = (Game) intent.getSerializableExtra("gameObj");
-
         member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
 
+        Tools.initToolbarBase(this, mToolbar);
         getSupportActionBar().setTitle(cheatObj.getGameName());
         getSupportActionBar().setSubtitle(cheatObj.getSystemName());
+    }
 
-        Tools.initGA(this, tracker, SCREEN_LABEL, cheatObj.getGameName() + " (" + cheatObj.getSystemName() + ")", cheatObj.getCheatTitle());
+    private void handleIntent(final Intent intent) {
+
+        new Thread(new Runnable() {
+
+            @Override
+            public void run() {
+                cheatObj = (Cheat) intent.getSerializableExtra("cheatObj");
+                gameObj = (Game) intent.getSerializableExtra("gameObj");
+                Tools.initGA(CheatForumActivity.this, tracker, SCREEN_LABEL, cheatObj.getGameName() + " (" + cheatObj.getSystemName() + ")", cheatObj.getCheatTitle());
+            }
+        }).start();
+
+    }
+
+    @Override
+    protected void onPause() {
+        Reachability.unregister(getApplicationContext());
+        super.onPause();
     }
 
     /**
@@ -334,6 +346,14 @@ public class CheatForumActivity extends ActionBarActivity implements CheatListFr
     protected void onResume() {
         super.onResume();
         member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
+    }
+
+    @Override
+    protected void onDestroy() {
+        if (mAdView != null) {
+            mAdView.destroy();
+        }
+        super.onDestroy();
     }
 
     @Override

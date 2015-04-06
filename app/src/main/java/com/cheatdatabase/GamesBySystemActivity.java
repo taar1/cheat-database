@@ -56,7 +56,6 @@ public class GamesBySystemActivity extends ActionBarListActivity implements Acti
 
     private Game[] gamesFound;
 
-
     private Typeface latoFontLight;
     private Typeface latoFontRegular;
 
@@ -110,6 +109,12 @@ public class GamesBySystemActivity extends ActionBarListActivity implements Acti
 
         latoFontLight = Tools.getFont(getAssets(), Konstanten.FONT_LIGHT);
         latoFontRegular = Tools.getFont(getAssets(), Konstanten.FONT_REGULAR);
+    }
+
+    @Override
+    public void onPause() {
+        Reachability.unregister(getApplicationContext());
+        super.onPause();
     }
 
     private void startGameListAdapter() {
@@ -236,6 +241,14 @@ public class GamesBySystemActivity extends ActionBarListActivity implements Acti
                 finish();
             }
         }).create().show();
+    }
+
+    @Override
+    protected void onDestroy() {
+        if (mAdView != null) {
+            mAdView.destroy();
+        }
+        super.onDestroy();
     }
 
     public boolean onNavigationItemSelected(int itemPosition, long itemId) {

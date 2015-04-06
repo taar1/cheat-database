@@ -93,7 +93,7 @@ public class FavoriteCheatListActivity extends ActionBarActivity implements Favo
 
         settings = getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
 
-        mToolbar = Tools.initToolbarBase(this, mToolbar);
+        Tools.initToolbarBase(this, mToolbar);
         mAdView = Tools.initMoPubAdView(this, mAdView);
 
         Tools.initGA(FavoriteCheatListActivity.this, tracker, SCREEN_LABEL, "Favorites Cheat List", gameObj.getGameName());

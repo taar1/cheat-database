@@ -164,6 +164,12 @@ public class CheatListActivity extends ActionBarActivity implements CheatListFra
     }
 
     @Override
+    public void onPause() {
+        Reachability.unregister(getApplicationContext());
+        super.onPause();
+    }
+
+    @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         // schauen wie man status persistent halten kann von fragment
@@ -432,7 +438,6 @@ public class CheatListActivity extends ActionBarActivity implements CheatListFra
 
         // Sharing
         mShareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(item);
-//            ShareActionProvider mShare = (ShareActionProvider) item.getActionProvider();
         Intent shareIntent = new Intent(Intent.ACTION_SEND);
         shareIntent.setAction(Intent.ACTION_SEND);
         shareIntent.setType("text/plain");
