@@ -113,7 +113,7 @@ public class CheatListFragment extends ListFragment {
         super.onCreate(savedInstanceState);
 
         cheatListActivity = (CheatListActivity) getActivity();
-        latoFontRegular = Tools.getFont(getActivity().getAssets(), "Lato-Regular.ttf");
+        latoFontRegular = Tools.getFont(getActivity().getAssets(), Konstanten.FONT_REGULAR);
 
         settings = cheatListActivity.getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
         editor = settings.edit();
