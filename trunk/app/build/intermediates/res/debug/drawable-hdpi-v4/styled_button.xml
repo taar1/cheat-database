@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- <solid android:color="#DDFFFFFF" /> -->
+    <corners android:radius="5dp" />
+    <stroke
+        android:width="1dp"
+        android:color="#DD669999" />
+    <padding
+        android:left="6dp"
+        android:right="6dp" />
+    <gradient
+        android:angle="90"
+        android:endColor="#90EEEEEE"
+        android:startColor="#90CCCCCC" />
+</shape><!-- From: file:/C:/Users/Dominik/Workspaces/Android/Cheat-Database/app/src/main/res/drawable-hdpi/styled_button.xml -->

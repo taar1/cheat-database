@@ -1,0 +1,37 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg"
+    android:gravity="top"
+    android:orientation="vertical"
+    android:padding="10dp">
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingBottom="10sp"
+        android:text="@string/submit_cheat_instructions_activity_title"
+        android:textAppearance="@style/ActivityMainTitle" />
+
+    <TextView
+        android:id="@+id/subtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingBottom="30sp"
+        android:text="@string/submit_cheat_instructions_activity_subtitle"
+        android:textAppearance="@style/NormalText" />
+
+
+    <Button
+        android:id="@+id/search_button"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/bluedark01_btn_default_holo_dark"
+        android:text="@string/search_game"
+        android:textSize="20sp" />
+
+
+</LinearLayout><!-- From: file:/C:/Users/Dominik/Workspaces/Android/Cheat-Database/app/src/main/res/layout/activity_submit_cheat_game_selection.xml -->

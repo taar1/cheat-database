@@ -1,0 +1,10 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/action_close"
+        android:icon="@android:drawable/ic_menu_close_clear_cancel"
+        android:title="@string/close"
+        app:showAsAction="always|withText" />
+
+</menu><!-- From: file:/C:/Users/Dominik/Workspaces/Android/Cheat-Database/app/src/main/res/menu/close_menu.xml -->

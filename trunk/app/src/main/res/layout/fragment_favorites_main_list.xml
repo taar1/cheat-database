@@ -65,11 +65,11 @@
             android:textSize="24sp" />
     </LinearLayout>
 
-    <com.mopub.mobileads.MoPubView
-        android:id="@+id/adview"
-        android:layout_width="fill_parent"
-        android:layout_height="52dp"
-        android:layout_gravity="bottom"
-        android:background="@color/black" />
+    <!--<com.mopub.mobileads.MoPubView-->
+        <!--android:id="@+id/adview"-->
+        <!--android:layout_width="fill_parent"-->
+        <!--android:layout_height="52dp"-->
+        <!--android:layout_gravity="bottom"-->
+        <!--android:background="@color/black" />-->
 
 </LinearLayout>

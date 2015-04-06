@@ -81,6 +81,12 @@ public class TopMembersFragment extends ListFragment {
     }
 
     @Override
+    public void onPause() {
+        Reachability.unregister(ca.getApplicationContext());
+        super.onPause();
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_topmembers, container, false);
 
