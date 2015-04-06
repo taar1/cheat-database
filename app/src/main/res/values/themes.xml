@@ -136,12 +136,12 @@
         <item name="android:textSize">20sp</item>
     </style>
 
-    <style name="ListrowGameName">
+    <style name="ListrowFirstLine">
         <item name="android:textColor">#FFFFFF</item>
         <item name="android:textSize">16sp</item>
     </style>
 
-    <style name="ListrowGameCount">
+    <style name="ListrowSecondLine">
         <item name="android:textColor">#AAAAAA</item>
         <item name="android:textSize">16sp</item>
     </style>

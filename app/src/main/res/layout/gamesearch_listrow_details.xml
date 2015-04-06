@@ -15,7 +15,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
-        android:textAppearance="@style/ListrowGameName"
+        android:textAppearance="@style/ListrowFirstLine"
         android:textIsSelectable="false"></TextView>
 
     <TextView
@@ -23,7 +23,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
-        android:textAppearance="@style/ListrowGameCount"
+        android:textAppearance="@style/ListrowSecondLine"
         android:textIsSelectable="false"></TextView>
 
 </LinearLayout>

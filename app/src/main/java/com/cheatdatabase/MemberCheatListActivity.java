@@ -27,6 +27,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -310,21 +311,25 @@ public class MemberCheatListActivity extends ActionBarListActivity implements Ad
                     tvCheatTitle.setText(cheat.getCheatTitle());
                 }
 
-                // TODO die paddings so anpassen, dass die flags immer
-                // rechtsbuendig sind
-                ImageView screenshotFlag = (ImageView) v.findViewById(R.id.ivMap);
-                if (cheat.isScreenshots()) {
-                    screenshotFlag.setImageResource(R.drawable.flag_img);
+                if ((!cheat.isScreenshots()) && (cheat.getLanguageId() != Konstanten.GERMAN)) {
+                    LinearLayout flagLayout = (LinearLayout) v.findViewById(R.id.flag_layout);
+                    flagLayout.setVisibility(View.GONE);
                 } else {
-                    screenshotFlag.setVisibility(View.GONE);
+                    ImageView screenshotFlag = (ImageView) v.findViewById(R.id.ivMap);
+                    if (cheat.isScreenshots()) {
+                        screenshotFlag.setImageResource(R.drawable.flag_img);
+                    } else {
+                        screenshotFlag.setVisibility(View.GONE);
+                    }
+
+                    ImageView germanFlag = (ImageView) v.findViewById(R.id.ivFlag);
+                    if (cheat.getLanguageId() == Konstanten.GERMAN) {
+                        germanFlag.setImageResource(R.drawable.flag_german);
+                    } else {
+                        germanFlag.setVisibility(View.GONE);
+                    }
                 }
 
-                ImageView germanFlag = (ImageView) v.findViewById(R.id.ivFlag);
-                if (cheat.getLanguageId() == Konstanten.GERMAN) {
-                    germanFlag.setImageResource(R.drawable.flag_german);
-                } else {
-                    germanFlag.setVisibility(View.GONE);
-                }
             } catch (Exception e) {
                 Log.e("MemberCheatList.getView ERROR:", e.getMessage());
                 error(R.string.err_no_member_data);

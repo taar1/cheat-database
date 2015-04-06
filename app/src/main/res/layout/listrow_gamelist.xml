@@ -11,10 +11,9 @@
         android:layout_height="wrap_content"
         android:layout_gravity="start"
         android:paddingLeft="2dp"
-        android:paddingStart="2dp"
         android:singleLine="true"
         android:text="@string/placeholder"
-        android:textAppearance="@style/ListrowGameName" />
+        android:textAppearance="@style/ListrowFirstLine" />
 
     <TextView
         android:id="@+id/cheats_count"
@@ -23,9 +22,8 @@
         android:layout_gravity="start"
         android:layout_weight="90"
         android:paddingLeft="2dp"
-        android:paddingStart="2dp"
         android:singleLine="true"
         android:text="@string/placeholder"
-        android:textAppearance="@style/ListrowGameCount" />
+        android:textAppearance="@style/ListrowSecondLine" />
 
 </LinearLayout>
