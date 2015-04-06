@@ -1,9 +1,0 @@
-#==============================================
-# picasso-2.1.1.jar
-# http://square.github.io/picasso/
-#
-# Used to load images in the background and tie them to an ImageView. Used in TopMembersActivity.java 
-# -> Picasso.with(getApplicationContext()).load(Konstanten.WEBDIR_MEMBER_AVATAR + member.getMid()).into(avatarImageView);
-#============================================== 
-# 
-#  

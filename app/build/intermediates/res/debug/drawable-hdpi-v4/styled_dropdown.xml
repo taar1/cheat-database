@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<shape xmlns:android="http://schemas.android.com/apk/res/android">
-    <solid android:color="#90DDDDDD" />
-    <corners android:radius="2dp" />
-    <stroke
-        android:width="1dp"
-        android:color="#90AAAAAA" />
-    <padding android:left="5dp" />
-</shape><!-- From: file:/C:/Users/Dominik/Workspaces/Android/Cheat-Database/app/src/main/res/drawable-hdpi/styled_dropdown.xml -->
