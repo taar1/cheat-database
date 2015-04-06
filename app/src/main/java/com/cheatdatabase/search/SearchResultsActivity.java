@@ -104,6 +104,12 @@ public class SearchResultsActivity extends ActionBarActivity {
     }
 
     @Override
+    public void onPause() {
+        Reachability.unregister(getApplicationContext());
+        super.onPause();
+    }
+
+    @Override
     protected void onNewIntent(Intent intent) {
         handleIntent(intent);
     }

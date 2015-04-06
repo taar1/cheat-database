@@ -55,6 +55,12 @@ public class SubmitCheatFragment extends Fragment {
     }
 
     @Override
+    public void onPause() {
+        Reachability.unregister(ca.getApplicationContext());
+        super.onPause();
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.activity_submit_cheat_game_selection, container, false);
 

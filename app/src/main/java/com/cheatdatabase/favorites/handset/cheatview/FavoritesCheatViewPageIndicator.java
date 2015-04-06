@@ -149,6 +149,12 @@ public class FavoritesCheatViewPageIndicator extends ActionBarActivity implement
         member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
     }
 
+    @Override
+    public void onPause() {
+        Reachability.unregister(getApplicationContext());
+        super.onPause();
+    }
+
     private void initialisePaging() {
 
         String[] cheatTitles = new String[cheatObj.length];

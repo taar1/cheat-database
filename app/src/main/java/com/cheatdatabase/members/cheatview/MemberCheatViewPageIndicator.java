@@ -10,16 +10,17 @@ import android.net.ConnectivityManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.SearchView;
+import android.support.v7.widget.ShareActionProvider;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ShareActionProvider;
 import android.widget.Toast;
 
 import com.cheatdatabase.CheatForumActivity;
@@ -84,6 +85,7 @@ public class MemberCheatViewPageIndicator extends ActionBarActivity implements R
     private int activePage;
 
     private static final String SCREEN_LABEL = "Member CheatView PI Screen";
+    private static final String TAG = MemberCheatViewPageIndicator.class.getName();
 
     private ConnectivityManager cm;
 
@@ -126,20 +128,27 @@ public class MemberCheatViewPageIndicator extends ActionBarActivity implements R
             Tools.initGA(this, tracker, SCREEN_LABEL, visibleCheat.getGameName() + " (" + visibleCheat.getSystemName() + ")", visibleCheat.getCheatTitle());
             initialisePaging();
         } catch (Exception e) {
-            Log.e(MemberCheatViewPageIndicator.class.getName(), e.getMessage());
+            Log.e(TAG, e.getMessage());
         }
     }
 
     private void init() {
         Reachability.registerReachability(this.getApplicationContext());
         Mint.initAndStartSession(this, Konstanten.SPLUNK_MINT_API_KEY);
+
         settings = getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
         editor = settings.edit();
 
-        Tools.initToolbarBase(this, mToolbar);
         mAdView = Tools.initMoPubAdView(this, mAdView);
+        Tools.initToolbarBase(this, mToolbar);
 
         member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
+    }
+
+    @Override
+    public void onPause() {
+        Reachability.unregister(getApplicationContext());
+        super.onPause();
     }
 
     private void initialisePaging() {
@@ -183,9 +192,10 @@ public class MemberCheatViewPageIndicator extends ActionBarActivity implements R
                         gameObj.setSystemId(visibleCheat.getSystemId());
                         gameObj.setSystemName(visibleCheat.getSystemName());
 
-                        getActionBar().setTitle(visibleCheat.getGameName());
-                        getActionBar().setSubtitle(visibleCheat.getSystemName());
+                        getSupportActionBar().setTitle(visibleCheat.getGameName());
+                        getSupportActionBar().setSubtitle(visibleCheat.getSystemName());
                     } catch (Exception e) {
+                        Log.e(TAG, e.getMessage());
                         Toast.makeText(MemberCheatViewPageIndicator.this, R.string.err_somethings_wrong, Toast.LENGTH_SHORT).show();
                     }
                 }
@@ -242,7 +252,7 @@ public class MemberCheatViewPageIndicator extends ActionBarActivity implements R
         MenuItem item = menu.findItem(R.id.action_share);
 
         // Sharing
-        mShare = (ShareActionProvider) item.getActionProvider();
+        mShare = (ShareActionProvider) MenuItemCompat.getActionProvider(item);
         setShareText(visibleCheat);
 
         // Search
@@ -275,7 +285,7 @@ public class MemberCheatViewPageIndicator extends ActionBarActivity implements R
         MenuItem item = menu.findItem(R.id.action_share);
 
         // Sharing
-        mShare = (ShareActionProvider) item.getActionProvider();
+        mShare = (ShareActionProvider) MenuItemCompat.getActionProvider(item);
         setShareText(visibleCheat);
 
         // Search
@@ -353,13 +363,6 @@ public class MemberCheatViewPageIndicator extends ActionBarActivity implements R
             mAdView.destroy();
         }
         super.onDestroy();
-    }
-
-    public ConnectivityManager getConnectivityManager() {
-        if (cm == null) {
-            cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        }
-        return cm;
     }
 
     public void showReportDialog() {

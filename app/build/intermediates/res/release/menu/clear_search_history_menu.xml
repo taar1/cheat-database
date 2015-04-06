@@ -1,0 +1,10 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/action_clear_search_history"
+        android:orderInCategory="100"
+        android:title="@string/clear_search_history"
+        app:showAsAction="never" />
+
+</menu><!-- From: file:/C:/Users/Dominik/Workspaces/Android/Cheat-Database/app/src/main/res/menu/clear_search_history_menu.xml -->

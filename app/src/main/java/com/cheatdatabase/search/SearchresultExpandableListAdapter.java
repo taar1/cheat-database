@@ -34,10 +34,9 @@ public class SearchresultExpandableListAdapter extends BaseExpandableListAdapter
         activity = act;
         this.groups = groups;
         inflater = act.getLayoutInflater();
-        Reachability.registerReachability(activity.getApplicationContext());
 
         latoFontLight = Tools.getFont(act.getAssets(), Konstanten.FONT_LIGHT);
-        latoFontRegular = Tools.getFont(act.getAssets(), "Lato-Regular.ttf");
+        latoFontRegular = Tools.getFont(act.getAssets(), Konstanten.FONT_REGULAR);
         latoFontBold = Tools.getFont(act.getAssets(), Konstanten.FONT_BOLD);
     }
 

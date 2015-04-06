@@ -92,6 +92,12 @@ public class SubmitCheatActivity extends ActionBarActivity implements OnClickLis
         Tools.initGA(SubmitCheatActivity.this, tracker, SCREEN_LABEL, "Submit Cheat", "Cheat submission form");
     }
 
+    @Override
+    public void onPause() {
+        Reachability.unregister(getApplicationContext());
+        super.onPause();
+    }
+
     private void handleIntent(final Intent intent) {
 
         new Thread(new Runnable() {

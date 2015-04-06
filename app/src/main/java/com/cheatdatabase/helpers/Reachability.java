@@ -43,4 +43,11 @@ public class Reachability {
         reachability.isReceiving = true;
         return reachability.isReachable;
     }
+
+    public static void unregister(Context context) {
+        if (reachability.isReceiving) {
+            context.unregisterReceiver(reachability.receiver);
+            reachability.isReceiving = false;
+        }
+    }
 }
