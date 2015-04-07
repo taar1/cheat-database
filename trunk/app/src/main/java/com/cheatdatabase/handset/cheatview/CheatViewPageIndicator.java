@@ -115,7 +115,7 @@ public class CheatViewPageIndicator extends ActionBarActivity implements ReportC
         activePage = pageSelected;
         cheatObj = gameObj.getCheats();
         visibleCheat = cheatObj[pageSelected];
-        setShareText(visibleCheat);
+//        setShareText(visibleCheat);
 
         getSupportActionBar().setTitle(gameObj.getGameName());
         getSupportActionBar().setSubtitle(gameObj.getSystemName());
@@ -174,7 +174,7 @@ public class CheatViewPageIndicator extends ActionBarActivity implements ReportC
 
                     try {
                         visibleCheat = cheatObj[position];
-                        setShareText(visibleCheat);
+//                        setShareText(visibleCheat);
                         invalidateOptionsMenu();
                     } catch (Exception e) {
                         Toast.makeText(CheatViewPageIndicator.this, R.string.err_somethings_wrong, Toast.LENGTH_SHORT).show();
@@ -234,7 +234,7 @@ public class CheatViewPageIndicator extends ActionBarActivity implements ReportC
 
         // Sharing
         mShare = (ShareActionProvider) MenuItemCompat.getActionProvider(item);
-        setShareText(visibleCheat);
+//        setShareText(visibleCheat);
 
         // Search
         getMenuInflater().inflate(R.menu.search_menu, menu);
@@ -268,7 +268,7 @@ public class CheatViewPageIndicator extends ActionBarActivity implements ReportC
 
         // Sharing
         mShare = (ShareActionProvider) MenuItemCompat.getActionProvider(item);
-        setShareText(visibleCheat);
+//        setShareText(visibleCheat);
 
         // Search
         getMenuInflater().inflate(R.menu.search_menu, menu);
@@ -283,8 +283,7 @@ public class CheatViewPageIndicator extends ActionBarActivity implements ReportC
     // Call to update the share intent
     private void setShareIntent(Intent shareIntent) {
         if (mShare != null) {
-            // FIXME
-//            mShare.setShareIntent(shareIntent);
+            mShare.setShareIntent(shareIntent);
         }
     }
 
@@ -321,7 +320,6 @@ public class CheatViewPageIndicator extends ActionBarActivity implements ReportC
                 return true;
             case R.id.action_report:
                 showReportDialog();
-
                 // TODO FIXME bottom sheet fertigstellen
 //                new BottomSheet.Builder(this).title("title").darkTheme().sheet(R.menu.cheat_view_action_menu).listener(new DialogInterface.OnClickListener() {
 //                    @Override
@@ -350,6 +348,9 @@ public class CheatViewPageIndicator extends ActionBarActivity implements ReportC
                 member = null;
                 Tools.logout(CheatViewPageIndicator.this, editor);
                 invalidateOptionsMenu();
+                return true;
+            case R.id.action_share:
+                setShareIntent(Tools.setShareText(CheatViewPageIndicator.this, visibleCheat));
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -433,23 +434,6 @@ public class CheatViewPageIndicator extends ActionBarActivity implements ReportC
         }
     }
 
-    private void setShareText(Cheat visibleCheat) {
-        // FIXME gibt manchmal nullpointer hier
-        try {
-            cheatShareTitle = String.format(getString(R.string.share_email_subject), visibleCheat.getGameName());
-            cheatShareBody = visibleCheat.getGameName() + " (" + visibleCheat.getSystemName() + "): " + visibleCheat.getCheatTitle() + "\n";
-            cheatShareBody += Konstanten.BASE_URL + "display/switch.php?id=" + visibleCheat.getCheatId() + "\n\n";
-        } catch (Exception e) {
-            // FIXME
-        }
-
-        Intent shareIntent = new Intent(Intent.ACTION_SEND);
-        shareIntent.setAction(Intent.ACTION_SEND);
-        shareIntent.setType("text/plain");
-        shareIntent.putExtra(Intent.EXTRA_SUBJECT, cheatShareTitle);
-        shareIntent.putExtra(Intent.EXTRA_TEXT, cheatShareBody);
-        setShareIntent(shareIntent);
-    }
 
     public void setRating(int position, float rating) {
         cheatObj[position].setMemberRating(rating);

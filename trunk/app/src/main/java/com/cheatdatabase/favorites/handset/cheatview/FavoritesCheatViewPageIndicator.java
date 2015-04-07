@@ -48,8 +48,6 @@ import com.mopub.mobileads.MoPubView;
 import com.splunk.mint.Mint;
 import com.viewpagerindicator.UnderlinePageIndicator;
 
-import java.util.ArrayList;
-
 /**
  * Horizontal sliding gallery of cheats from a game.
  *
@@ -66,12 +64,9 @@ public class FavoritesCheatViewPageIndicator extends ActionBarActivity implement
     private View viewLayout;
     private int pageSelected;
 
-    public ArrayList<String[]> al_images;
-
     private Game gameObj;
     private Cheat[] cheatObj;
     private Cheat visibleCheat;
-
 
     private MoPubView mAdView;
 
@@ -93,9 +88,6 @@ public class FavoritesCheatViewPageIndicator extends ActionBarActivity implement
     private static final String SCREEN_LABEL = "CheatView PageIndicator Screen";
 
     private ConnectivityManager cm;
-
-    private String cheatShareTitle;
-    private String cheatShareBody;
 
     private ShareActionProvider mShare;
 
@@ -120,7 +112,6 @@ public class FavoritesCheatViewPageIndicator extends ActionBarActivity implement
             activePage = pageSelected;
             cheatObj = gameObj.getCheats();
             visibleCheat = cheatObj[pageSelected];
-            setShareText(visibleCheat);
 
             getSupportActionBar().setTitle(gameObj.getGameName());
             getSupportActionBar().setSubtitle(gameObj.getSystemName());
@@ -169,7 +160,6 @@ public class FavoritesCheatViewPageIndicator extends ActionBarActivity implement
             mPager.setAdapter(mAdapter);
 
             mIndicator = (UnderlinePageIndicator) viewLayout.findViewById(R.id.indicator);
-//			mIndicator.setSelectedColor(color.page_indicator);
             mIndicator.setViewPager(mPager);
             mIndicator.notifyDataSetChanged();
             mIndicator.setCurrentItem(pageSelected);
@@ -186,7 +176,6 @@ public class FavoritesCheatViewPageIndicator extends ActionBarActivity implement
 
                     try {
                         visibleCheat = cheatObj[position];
-                        setShareText(visibleCheat);
                         invalidateOptionsMenu();
                     } catch (Exception e) {
                         Toast.makeText(FavoritesCheatViewPageIndicator.this, R.string.err_somethings_wrong, Toast.LENGTH_SHORT).show();
@@ -246,7 +235,6 @@ public class FavoritesCheatViewPageIndicator extends ActionBarActivity implement
 
         // Sharing
         mShare = (ShareActionProvider) MenuItemCompat.getActionProvider(item);
-        setShareText(visibleCheat);
 
         // Search
         getMenuInflater().inflate(R.menu.search_menu, menu);
@@ -279,7 +267,6 @@ public class FavoritesCheatViewPageIndicator extends ActionBarActivity implement
 
         // Sharing
         mShare = (ShareActionProvider) MenuItemCompat.getActionProvider(item);
-        setShareText(visibleCheat);
 
         // Search
         getMenuInflater().inflate(R.menu.search_menu, menu);
@@ -346,6 +333,9 @@ public class FavoritesCheatViewPageIndicator extends ActionBarActivity implement
                 Tools.logout(FavoritesCheatViewPageIndicator.this, editor);
                 invalidateOptionsMenu();
                 return true;
+            case R.id.action_share:
+                setShareIntent(Tools.setShareText(FavoritesCheatViewPageIndicator.this, visibleCheat));
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -365,13 +355,6 @@ public class FavoritesCheatViewPageIndicator extends ActionBarActivity implement
             mAdView.destroy();
         }
         super.onDestroy();
-    }
-
-    public ConnectivityManager getConnectivityManager() {
-        if (cm == null) {
-            cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        }
-        return cm;
     }
 
     public void showReportDialog() {
@@ -433,19 +416,6 @@ public class FavoritesCheatViewPageIndicator extends ActionBarActivity implement
                 Toast.makeText(FavoritesCheatViewPageIndicator.this, R.string.no_internet, Toast.LENGTH_SHORT).show();
             }
         }
-    }
-
-    private void setShareText(Cheat visibleCheat) {
-        cheatShareTitle = String.format(getString(R.string.share_email_subject), visibleCheat.getGameName());
-        cheatShareBody = visibleCheat.getGameName() + " (" + visibleCheat.getSystemName() + "): " + visibleCheat.getCheatTitle() + "\n";
-        cheatShareBody += Konstanten.BASE_URL + "display/switch.php?id=" + visibleCheat.getCheatId() + "\n\n";
-
-        Intent shareIntent = new Intent(Intent.ACTION_SEND);
-        shareIntent.setAction(Intent.ACTION_SEND);
-        shareIntent.setType("text/plain");
-        shareIntent.putExtra(Intent.EXTRA_SUBJECT, cheatShareTitle);
-        shareIntent.putExtra(Intent.EXTRA_TEXT, cheatShareBody);
-        setShareIntent(shareIntent);
     }
 
     public void setRating(int position, float rating) {
