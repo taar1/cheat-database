@@ -2,6 +2,7 @@ package com.cheatdatabase.helpers;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences.Editor;
 import android.content.res.AssetManager;
 import android.content.res.Resources;
@@ -15,6 +16,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.cheatdatabase.R;
+import com.cheatdatabase.businessobjects.Cheat;
 import com.cheatdatabase.businessobjects.Game;
 import com.cheatdatabase.businessobjects.SystemPlatform;
 import com.google.analytics.tracking.android.Fields;
@@ -486,5 +488,18 @@ public class Tools {
         a.getSupportActionBar().setHomeButtonEnabled(true);
 
         return toolbar;
+    }
+
+    public static Intent setShareText(Activity act, Cheat visibleCheat) {
+        String cheatShareTitle = String.format(act.getString(R.string.share_email_subject), visibleCheat.getGameName());
+        String cheatShareBody = visibleCheat.getGameName() + " (" + visibleCheat.getSystemName() + "): " + visibleCheat.getCheatTitle() + "\n";
+        cheatShareBody += Konstanten.BASE_URL + "display/switch.php?id=" + visibleCheat.getCheatId() + "\n\n";
+
+        Intent shareIntent = new Intent(Intent.ACTION_SEND);
+        shareIntent.setAction(Intent.ACTION_SEND);
+        shareIntent.setType("text/plain");
+        shareIntent.putExtra(Intent.EXTRA_SUBJECT, cheatShareTitle);
+        shareIntent.putExtra(Intent.EXTRA_TEXT, cheatShareBody);
+        return shareIntent;
     }
 }
