@@ -61,8 +61,6 @@ public class MemberCheatViewPageIndicator extends ActionBarActivity implements R
     private View viewLayout;
     private int pageSelected;
 
-    public ArrayList<String[]> al_images;
-
     private Cheat[] cheatObj;
     private Cheat visibleCheat;
     private Game gameObj;
@@ -75,7 +73,6 @@ public class MemberCheatViewPageIndicator extends ActionBarActivity implements R
     private Member member;
 
     public AlertDialog.Builder builder;
-    public AlertDialog alert;
 
     private MemberCheatViewFragmentAdapter mAdapter;
     private ViewPager mPager;
@@ -86,11 +83,6 @@ public class MemberCheatViewPageIndicator extends ActionBarActivity implements R
 
     private static final String SCREEN_LABEL = "Member CheatView PI Screen";
     private static final String TAG = MemberCheatViewPageIndicator.class.getName();
-
-    private ConnectivityManager cm;
-
-    private String cheatShareTitle;
-    private String cheatShareBody;
 
     private ShareActionProvider mShare;
     private Toolbar mToolbar;
@@ -182,7 +174,7 @@ public class MemberCheatViewPageIndicator extends ActionBarActivity implements R
 
                     try {
                         visibleCheat = cheatObj[position];
-                        setShareText(visibleCheat);
+//                        setShareText(visibleCheat);
                         invalidateOptionsMenu();
 
                         gameObj = new Game();
@@ -253,7 +245,7 @@ public class MemberCheatViewPageIndicator extends ActionBarActivity implements R
 
         // Sharing
         mShare = (ShareActionProvider) MenuItemCompat.getActionProvider(item);
-        setShareText(visibleCheat);
+//        setShareText(visibleCheat);
 
         // Search
         getMenuInflater().inflate(R.menu.search_menu, menu);
@@ -286,7 +278,7 @@ public class MemberCheatViewPageIndicator extends ActionBarActivity implements R
 
         // Sharing
         mShare = (ShareActionProvider) MenuItemCompat.getActionProvider(item);
-        setShareText(visibleCheat);
+//        setShareText(visibleCheat);
 
         // Search
         getMenuInflater().inflate(R.menu.search_menu, menu);
@@ -344,6 +336,9 @@ public class MemberCheatViewPageIndicator extends ActionBarActivity implements R
                 member = null;
                 Tools.logout(MemberCheatViewPageIndicator.this, editor);
                 invalidateOptionsMenu();
+                return true;
+            case R.id.action_share:
+                setShareIntent(Tools.setShareText(MemberCheatViewPageIndicator.this, visibleCheat));
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -424,19 +419,6 @@ public class MemberCheatViewPageIndicator extends ActionBarActivity implements R
                 Toast.makeText(MemberCheatViewPageIndicator.this, R.string.no_internet, Toast.LENGTH_SHORT).show();
             }
         }
-    }
-
-    private void setShareText(Cheat visibleCheat) {
-        cheatShareTitle = String.format(getString(R.string.share_email_subject), visibleCheat.getGameName());
-        cheatShareBody = visibleCheat.getGameName() + " (" + visibleCheat.getSystemName() + "): " + visibleCheat.getCheatTitle() + "\n";
-        cheatShareBody += Konstanten.BASE_URL + "display/switch.php?id=" + visibleCheat.getCheatId() + "\n\n";
-
-        Intent shareIntent = new Intent(Intent.ACTION_SEND);
-        shareIntent.setAction(Intent.ACTION_SEND);
-        shareIntent.setType("text/plain");
-        shareIntent.putExtra(Intent.EXTRA_SUBJECT, cheatShareTitle);
-        shareIntent.putExtra(Intent.EXTRA_TEXT, cheatShareBody);
-        setShareIntent(shareIntent);
     }
 
     public void setRating(int position, float rating) {
