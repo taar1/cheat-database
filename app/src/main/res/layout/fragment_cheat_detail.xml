@@ -9,14 +9,6 @@
     android:orientation="vertical"
     tools:context=".CheatDetailTabletFragment">
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/color_primary_light"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
-
     <TextView
         android:id="@+id/text_cheat_title"
         android:layout_width="fill_parent"

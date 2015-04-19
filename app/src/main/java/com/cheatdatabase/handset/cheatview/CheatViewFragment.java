@@ -83,6 +83,7 @@ public class CheatViewFragment extends Fragment implements OnClickListener {
     public AlertDialog alert;
 
     private static final String KEY_CONTENT = "CheatViewFragment:Content";
+    private static final String TAG = CheatViewFragment.class.getSimpleName();
 
     public static CheatViewFragment newInstance(String content, Game game, int offset) {
 
@@ -266,7 +267,7 @@ public class CheatViewFragment extends Fragment implements OnClickListener {
                 fillSimpleContent();
             }
         } catch (Exception e) {
-            Log.e(CheatViewFragment.class.getName(), "Cheat " + cheatObj.getCheatId() + " contains(</td>) - Error creating table");
+            Log.e(TAG, "Cheat " + cheatObj.getCheatId() + " contains(</td>) - Error creating table");
             fillSimpleContent();
         }
     }
@@ -394,7 +395,7 @@ public class CheatViewFragment extends Fragment implements OnClickListener {
         Log.d("onClick", "onClick");
         Bundle arguments = new Bundle();
         arguments.putInt(CheatDetailTabletFragment.ARG_ITEM_ID, 1);
-        arguments.putString("cheatObj", new Gson().toJson(cheatObj));
+        arguments.putSerializable("cheatObj", cheatObj);
     }
 
     private class FetchCheatTextTask extends AsyncTask<Void, Void, Void> {

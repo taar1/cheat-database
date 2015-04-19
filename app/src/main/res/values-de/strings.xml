@@ -158,8 +158,6 @@
 - Schreibe kurze Sätze. Lange Sätze mit Kommas verbunden sind schwieriger zu verstehen.\n\n
 - Schreibe die Sätze nicht in der &#8220;ich&#8221;-Form wie zum Beispiel &#8220;es hat mir geholfen&#8221; oder &#8220;es hat mir 1000 Gold eingebracht&#8221;.</string>
     <string name="thanks">Thank you!</string>
-    <string name="pocketchange_rewards_ok">Cheat submission Pocket Change rewards have been added to your account. Check your new balance from the main screen of this app.</string>
-    <string name="pocketchange_rewards_nok">Due to abusing the cheat submission form in the past your account has been disabled for cheat submission Pocket Change rewards. Thanks for your understanding.</string>
     <string name="help">Hilfe</string>
     <string name="fill_everything">Bitte fülle alle Felder aus.</string>
     <string name="submit_cheat_consent_title">Einverständniserklärung</string>

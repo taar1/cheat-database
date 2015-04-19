@@ -395,7 +395,7 @@ public class FavoritesCheatViewFragment extends Fragment implements OnClickListe
         Log.d("onClick", "onClick");
         Bundle arguments = new Bundle();
         arguments.putInt(CheatDetailTabletFragment.ARG_ITEM_ID, 1);
-        arguments.putString("cheatObj", new Gson().toJson(cheatObj));
+        arguments.putSerializable("cheatObj", cheatObj);
     }
 
     private class FetchCheatTextTask extends AsyncTask<Void, Void, Void> {

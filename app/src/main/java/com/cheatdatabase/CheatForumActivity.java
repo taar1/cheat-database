@@ -61,7 +61,7 @@ import java.util.Calendar;
  * @author Dominik
  */
 @SuppressLint("CommitPrefEdits")
-public class CheatForumActivity extends ActionBarActivity implements CheatListFragment.Callbacks, ReportCheatDialogListener, RateCheatDialogListener {
+public class CheatForumActivity extends ActionBarActivity implements CheatListFragment.CheatListClickCallbacks, ReportCheatDialogListener, RateCheatDialogListener {
 
     private LinearLayout llForumMain;
 

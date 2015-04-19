@@ -13,6 +13,8 @@ import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.NavUtils;
 import android.text.Html;
@@ -49,10 +51,11 @@ import com.google.gson.Gson;
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.Serializable;
 import java.net.URL;
 import java.net.URLConnection;
 
-public class FavoritesDetailsFragment extends Fragment implements OnClickListener {
+public class FavoritesDetailsFragment extends Fragment implements OnClickListener, Serializable, Parcelable {
 
     private FavoriteCheatListActivity ca;
 
@@ -105,8 +108,8 @@ public class FavoritesDetailsFragment extends Fragment implements OnClickListene
         settings = ca.getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
         editor = settings.edit();
 
-        favoritesCheatForumFragment = new Gson().fromJson(getArguments().getString("favoritesCheatForumFragment"), FavoritesCheatForumFragment.class);
-        favoritesCheatMetaFragment = new Gson().fromJson(getArguments().getString("favoritesCheatMetaFragment"), FavoritesCheatMetaFragment.class);
+        favoritesCheatForumFragment = (FavoritesCheatForumFragment) getArguments().getSerializable("favoritesCheatForumFragment");
+        favoritesCheatMetaFragment = (FavoritesCheatMetaFragment) getArguments().getSerializable("favoritesCheatMetaFragment");
     }
 
     @Override
@@ -323,6 +326,16 @@ public class FavoritesDetailsFragment extends Fragment implements OnClickListene
 
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        // Parcelable
+    }
+
     private class FetchCheatRatingOnlineBackgroundTask extends AsyncTask<Void, Void, Void> {
 
         float cheatRating;
@@ -378,9 +391,9 @@ public class FavoritesDetailsFragment extends Fragment implements OnClickListene
                     URLConnection conn = aURL.openConnection();
                     conn.connect();
                     InputStream is = conn.getInputStream();
-					/* Buffered is always good for a performance plus. */
+                    /* Buffered is always good for a performance plus. */
                     BufferedInputStream bis = new BufferedInputStream(is);
-					/* Decode url-data to a bitmap. */
+                    /* Decode url-data to a bitmap. */
                     Bitmap bm = BitmapFactory.decodeStream(bis);
                     bis.close();
                     is.close();
@@ -479,18 +492,18 @@ public class FavoritesDetailsFragment extends Fragment implements OnClickListene
         Log.d("onClick", "onClick");
 
         if (favoritesCheatForumFragment == null) {
-            favoritesCheatForumFragment = new Gson().fromJson(getArguments().getString("favoritesCheatForumFragment"), FavoritesCheatForumFragment.class);
+            favoritesCheatForumFragment = (FavoritesCheatForumFragment) getArguments().getSerializable("favoritesCheatForumFragment");
         }
         if (favoritesCheatMetaFragment == null) {
-            favoritesCheatMetaFragment = new Gson().fromJson(getArguments().getString("favoritesCheatMetaFragment"), FavoritesCheatMetaFragment.class);
+            favoritesCheatMetaFragment = (FavoritesCheatMetaFragment) getArguments().getSerializable("favoritesCheatMetaFragment");
         }
 
         Bundle arguments = new Bundle();
         arguments.putInt(CheatDetailTabletFragment.ARG_ITEM_ID, 1);
         arguments.putSerializable("cheatObj", cheatObj);
-        arguments.putString("favoritesDetailsFragment", new Gson().toJson(FavoritesDetailsFragment.class));
-        arguments.putString("favoritesCheatForumFragment", new Gson().toJson(favoritesCheatForumFragment));
-        arguments.putString("favoritesCheatMetaFragment", new Gson().toJson(favoritesCheatMetaFragment));
+        arguments.putSerializable("favoritesDetailsFragment", this);
+        arguments.putSerializable("favoritesCheatForumFragment", favoritesCheatForumFragment);
+        arguments.putSerializable("favoritesCheatMetaFragment", favoritesCheatMetaFragment);
 
         if (v == btnViewCheat) {
             Log.d("onClick", "btnViewCheat");

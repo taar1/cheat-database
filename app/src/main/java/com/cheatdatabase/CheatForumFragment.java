@@ -7,6 +7,8 @@ import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.Gravity;
@@ -35,9 +37,10 @@ import com.cheatdatabase.helpers.Tools;
 import com.cheatdatabase.helpers.Webservice;
 import com.google.gson.Gson;
 
+import java.io.Serializable;
 import java.util.Calendar;
 
-public class CheatForumFragment extends Fragment implements OnClickListener {
+public class CheatForumFragment extends Fragment implements OnClickListener, Serializable, Parcelable {
 
     private LinearLayout llForumMain;
     private TextView tvEmpty;
@@ -47,12 +50,13 @@ public class CheatForumFragment extends Fragment implements OnClickListener {
     private EditText editText;
     private ScrollView sv;
 
-    private ImageButton btnRateCheat;
-    private ImageButton btnMetaInfo;
-    private ImageButton btnForum;
-    private ImageButton btnReport;
-    private ImageButton btnShare;
-    private ImageButton btnViewCheat;
+    private transient ImageButton btnRateCheat;
+    private transient ImageButton btnMetaInfo;
+    private transient ImageButton btnForum;
+    private transient ImageButton btnReport;
+    private transient ImageButton btnDelete;
+    private transient ImageButton btnShare;
+    private transient ImageButton btnViewCheat;
 
     private ForumPost[] forumThread;
 
@@ -69,7 +73,8 @@ public class CheatForumFragment extends Fragment implements OnClickListener {
 
     private CheatListActivity ca;
     private CheatDetailTabletFragment cheatDetailTabletFragment;
-    private CheatDetailMetaFragment cheatDetailMetaFragment;
+    private CheatDetailTabletMetaFragment cheatDetailTabletMetaFragment;
+    private CheatForumFragment cheatForumFragment;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -81,8 +86,9 @@ public class CheatForumFragment extends Fragment implements OnClickListener {
         latoFontBold = Tools.getFont(getActivity().getAssets(), Konstanten.FONT_BOLD);
 
         cheatObj = (Cheat) getArguments().getSerializable("cheatObj");
-        cheatDetailTabletFragment = new Gson().fromJson(getArguments().getString("cheatDetailTabletFragment"), CheatDetailTabletFragment.class);
-        cheatDetailMetaFragment = new Gson().fromJson(getArguments().getString("cheatDetailMetaFragment"), CheatDetailMetaFragment.class);
+        cheatDetailTabletFragment = (CheatDetailTabletFragment) getArguments().getSerializable("cheatDetailTabletFragment");
+        cheatDetailTabletMetaFragment = (CheatDetailTabletMetaFragment) getArguments().getSerializable("cheatDetailTabletMetaFragment");
+        cheatForumFragment = (CheatForumFragment) getArguments().getSerializable("cheatForumFragment");
 
         // Soft Keyboard
         imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -108,6 +114,8 @@ public class CheatForumFragment extends Fragment implements OnClickListener {
         btnForum = (ImageButton) rootView.findViewById(R.id.btn_forum);
         btnReport = (ImageButton) rootView.findViewById(R.id.btn_report);
         btnReport.setOnClickListener(this);
+        btnDelete = (ImageButton) rootView.findViewById(R.id.btn_delete);
+        btnDelete.setVisibility(View.GONE);
         btnShare = (ImageButton) rootView.findViewById(R.id.btn_share);
         btnShare.setOnClickListener(this);
         btnRateCheat = (ImageButton) rootView.findViewById(R.id.btn_rate_cheat);
@@ -159,6 +167,7 @@ public class CheatForumFragment extends Fragment implements OnClickListener {
                 btnRateCheat.setImageResource(R.drawable.ic_action_not_important);
             }
         } catch (NullPointerException e) {
+            Log.e(CheatForumFragment.class.getSimpleName(), e.getLocalizedMessage());
         }
     }
 
@@ -322,18 +331,18 @@ public class CheatForumFragment extends Fragment implements OnClickListener {
         Bundle arguments = new Bundle();
         arguments.putInt(CheatDetailTabletFragment.ARG_ITEM_ID, 1);
         arguments.putSerializable("cheatObj", cheatObj);
-        arguments.putString("cheatDetailTabletFragment", new Gson().toJson(cheatDetailTabletFragment));
-        arguments.putString("cheatForumFragment", new Gson().toJson(CheatForumFragment.class));
-        arguments.putString("cheatDetailMetaFragment", new Gson().toJson(cheatDetailMetaFragment));
+        arguments.putSerializable("cheatDetailTabletFragment", cheatDetailTabletFragment);
+        arguments.putSerializable("cheatForumFragment", cheatForumFragment);
+        arguments.putSerializable("cheatDetailTabletMetaFragment", cheatDetailTabletMetaFragment);
 
         if (v == btnViewCheat) {
             Log.d("onClick", "btnViewCheat");
-            cheatDetailTabletFragment.setArguments(arguments);
+            //cheatDetailTabletFragment.setArguments(arguments);
             getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.cheat_detail_container, cheatDetailTabletFragment).commit();
         } else if (v == btnMetaInfo) {
             Log.d("onClick", "btnMetaInfo");
-            cheatDetailMetaFragment.setArguments(arguments);
-            getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.cheat_detail_container, cheatDetailMetaFragment).commit();
+            cheatDetailTabletMetaFragment.setArguments(arguments);
+            getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.cheat_detail_container, cheatDetailTabletMetaFragment).commit();
         } else if (v == btnForum) {
             Log.d("onClick", "btnForum");
         } else if (v == btnReport) {
@@ -353,6 +362,16 @@ public class CheatForumFragment extends Fragment implements OnClickListener {
     public void onDestroy() {
         super.onDestroy();
         imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+
     }
 
     private class ForumPostTask extends AsyncTask<ForumPost, Void, Void> {
