@@ -10,6 +10,8 @@ import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.text.Html;
 import android.util.Log;
@@ -43,6 +45,7 @@ import com.google.gson.Gson;
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.Serializable;
 import java.net.URL;
 import java.net.URLConnection;
 
@@ -51,7 +54,9 @@ import java.net.URLConnection;
  * contained in a {@link CheatListActivity} in two-pane mode (on tablets) or a
  * {@link CheatViewPageIndicator} on handsets.
  */
-public class CheatDetailTabletFragment extends Fragment implements OnClickListener {
+public class CheatDetailTabletFragment extends Fragment implements OnClickListener, Serializable, Parcelable {
+
+    private static String TAG = CheatDetailTabletFragment.class.getSimpleName();
     /**
      * The fragment argument representing the item ID that this fragment
      * represents.
@@ -86,29 +91,33 @@ public class CheatDetailTabletFragment extends Fragment implements OnClickListen
 
     private TableLayout mainTable;
 
-    private ImageButton btnRateCheat;
-    private ImageButton btnMetaInfo;
-    private ImageButton btnForum;
-    private ImageButton btnReport;
-    private ImageButton btnDelete;
-    private ImageButton btnShare;
-    private ImageButton btnViewCheat;
+    private transient ImageButton btnRateCheat;
+    private transient ImageButton btnMetaInfo;
+    private transient ImageButton btnForum;
+    private transient ImageButton btnReport;
+    private transient ImageButton btnDelete;
+    private transient ImageButton btnShare;
+    private transient ImageButton btnViewCheat;
 
     private CheatListActivity ca;
     private CheatForumFragment cheatForumFragment;
-    private CheatDetailMetaFragment cheatDetailMetaFragment;
+    private CheatDetailTabletMetaFragment cheatDetailTabletMetaFragment;
+    private CheatDetailTabletFragment cheatDetailTabletFragment;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
      */
     public CheatDetailTabletFragment() {
+        // Class needs to be Parcelable. Otherwise it crashes on the tablet when trying to login from cheat detail view.
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ca = (CheatListActivity) getActivity();
+
+        Log.d(TAG, "CheatDetailTabletFragment onCreate");
 
         latoFontLight = Tools.getFont(ca.getAssets(), Konstanten.FONT_LIGHT);
         latoFontBold = Tools.getFont(ca.getAssets(), Konstanten.FONT_BOLD);
@@ -123,9 +132,9 @@ public class CheatDetailTabletFragment extends Fragment implements OnClickListen
 
             mItem = CheatContent.ITEM_MAP.get(getArguments().getInt(ARG_ITEM_ID));
             cheatObj = (Cheat) getArguments().getSerializable("cheatObj");
-
-            cheatForumFragment = new Gson().fromJson(getArguments().getString("cheatForumFragment"), CheatForumFragment.class);
-            cheatDetailMetaFragment = new Gson().fromJson(getArguments().getString("cheatDetailMetaFragment"), CheatDetailMetaFragment.class);
+            cheatDetailTabletFragment = (CheatDetailTabletFragment) getArguments().getSerializable("cheatDetailTabletFragment");
+            cheatForumFragment = (CheatForumFragment) getArguments().getSerializable("cheatForumFragment");
+            cheatDetailTabletMetaFragment = (CheatDetailTabletMetaFragment) getArguments().getSerializable("cheatDetailTabletMetaFragment");
         }
 
     }
@@ -225,7 +234,7 @@ public class CheatDetailTabletFragment extends Fragment implements OnClickListen
                 fillSimpleContent();
             }
         } catch (Exception e) {
-            Log.e(CheatDetailTabletFragment.class.getName(), "Cheat " + cheatObj.getCheatId() + " contains(</td>) - Error creating table");
+            Log.e(TAG, "Cheat " + cheatObj.getCheatId() + " contains(</td>) - Error creating table");
             fillSimpleContent();
         }
     }
@@ -352,6 +361,16 @@ public class CheatDetailTabletFragment extends Fragment implements OnClickListen
 
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+
+    }
+
     private class FetchCheatTextTask extends AsyncTask<Void, Void, Void> {
 
         String fullCheatText;
@@ -430,9 +449,9 @@ public class CheatDetailTabletFragment extends Fragment implements OnClickListen
                     URLConnection conn = aURL.openConnection();
                     conn.connect();
                     InputStream is = conn.getInputStream();
-					/* Buffered is always good for a performance plus. */
+                    /* Buffered is always good for a performance plus. */
                     BufferedInputStream bis = new BufferedInputStream(is);
-					/* Decode url-data to a bitmap. */
+                    /* Decode url-data to a bitmap. */
                     Bitmap bm = BitmapFactory.decodeStream(bis);
                     bis.close();
                     is.close();
@@ -455,7 +474,7 @@ public class CheatDetailTabletFragment extends Fragment implements OnClickListen
                 }
 
             } catch (IOException e) {
-                Log.e(CheatDetailTabletFragment.class.getName(), "Remtoe Image Exception", e);
+                Log.e(TAG, "Remote Image Exception: " + e.getMessage());
             }
 
             return null;
@@ -528,20 +547,23 @@ public class CheatDetailTabletFragment extends Fragment implements OnClickListen
 
     @Override
     public void onClick(View v) {
-        Log.d("onClick", "onClick");
         Bundle arguments = new Bundle();
         arguments.putInt(CheatDetailTabletFragment.ARG_ITEM_ID, 1);
         arguments.putSerializable("cheatObj", cheatObj);
-        arguments.putString("cheatDetailTabletFragment", new Gson().toJson(CheatDetailTabletFragment.class));
-        arguments.putString("cheatForumFragment", new Gson().toJson(cheatForumFragment));
-        arguments.putString("cheatDetailMetaFragment", new Gson().toJson(cheatDetailMetaFragment));
+        arguments.putSerializable("cheatDetailTabletFragment", cheatDetailTabletFragment);
+        arguments.putSerializable("cheatForumFragment", cheatForumFragment);
+        arguments.putSerializable("cheatDetailTabletMetaFragment", cheatDetailTabletMetaFragment);
+
+//        cheatDetailTabletFragment.setArguments(arguments);
+        cheatDetailTabletMetaFragment.setArguments(arguments);
+        cheatForumFragment.setArguments(arguments);
 
         if (v == btnViewCheat) {
             Log.d("onClick", "btnViewCheat");
         } else if (v == btnMetaInfo) {
             Log.d("onClick", "btnMetaInfo");
-            cheatDetailMetaFragment.setArguments(arguments);
-            ca.getSupportFragmentManager().beginTransaction().replace(R.id.cheat_detail_container, cheatDetailMetaFragment).commit();
+            cheatDetailTabletMetaFragment.setArguments(arguments);
+            ca.getSupportFragmentManager().beginTransaction().replace(R.id.cheat_detail_container, cheatDetailTabletMetaFragment).commit();
         } else if (v == btnForum) {
             Log.d("onClick", "btnForum");
             cheatForumFragment.setArguments(arguments);
@@ -566,6 +588,7 @@ public class CheatDetailTabletFragment extends Fragment implements OnClickListen
                 btnRateCheat.setImageResource(R.drawable.ic_action_not_important);
             }
         } catch (NullPointerException e) {
+            Log.e(CheatDetailTabletFragment.class.getSimpleName(), e.getLocalizedMessage());
         }
     }
 

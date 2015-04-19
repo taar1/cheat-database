@@ -16,6 +16,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.SearchRecentSuggestions;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -91,6 +92,9 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
 
     private static final String SCREEN_LABEL = "Main Activity";
     private Toolbar mToolbar;
+    private SearchManager searchManager;
+    private MenuItem searchItem;
+    private SearchView searchView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -251,6 +255,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
         }
     }
 
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // menu.clear();
@@ -264,10 +269,18 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
 
         // Search
         // Associate searchable configuration with the SearchView
-        getMenuInflater().inflate(R.menu.search_menu, menu);
-        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        try {
+            getMenuInflater().inflate(R.menu.search_menu, menu);
+            searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+//        SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
+//        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+
+            searchItem = menu.findItem(R.id.search);
+            searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+            searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        } catch (Exception e) {
+            Log.e("MainActivity", e.getLocalizedMessage());
+        }
 
         return super.onCreateOptionsMenu(menu);
     }
@@ -286,8 +299,8 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
         // Search
         // Associate searchable configuration with the SearchView
         getMenuInflater().inflate(R.menu.search_menu, menu);
-        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
+        searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        searchView = (SearchView) menu.findItem(R.id.search).getActionView();
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
 
         // If the nav drawer is open, hide action items related to the content

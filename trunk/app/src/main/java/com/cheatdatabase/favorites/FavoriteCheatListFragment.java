@@ -1,11 +1,8 @@
 package com.cheatdatabase.favorites;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -31,6 +28,7 @@ import com.cheatdatabase.helpers.Tools;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * A list fragment representing a list of Favorites. This fragment also supports
@@ -42,6 +40,8 @@ import java.util.ArrayList;
  * {@link com.cheatdatabase.favorites.FavoriteCheatListFragment.ElementsListClickHandler} interface.
  */
 public class FavoriteCheatListFragment extends ListFragment {
+
+    private static String TAG = FavoriteCheatListFragment.class.getSimpleName();
 
     /**
      * The serialization (saved instance state) Bundle key representing the
@@ -66,20 +66,11 @@ public class FavoriteCheatListFragment extends ListFragment {
 
     private SharedPreferences settings;
 
-    private Editor editor;
-
-    private Intent intent;
-
     private Game gameObj;
 
-    private ArrayList<Cheat> cheatsArray;
-
-    //	private CheatAdapter mAdapter;
     private ArrayList<Cheat> cheatsArrayList = new ArrayList<Cheat>();
 
     private Cheat[] cheats;
-
-    private ProgressDialog mProgressDialog;
 
     private Typeface latoFontRegular;
 
@@ -129,24 +120,6 @@ public class FavoriteCheatListFragment extends ListFragment {
         } else {
             new GetCheatsTask().execute(gameObj);
         }
-
-        // db = new CheatDatabaseAdapter(ca);
-        // db.open();
-
-        // intent = ca.getIntent();
-        // // Game Object without the Cheat contents
-        // gameObj = (Game) intent.getSerializableExtra("gameObj");
-        //
-        // ActionBar actionBar = ca.getActionBar();
-        // actionBar.setDisplayHomeAsUpEnabled(true);
-        // actionBar.setTitle(gameObj.getGameName());
-        // actionBar.setSubtitle(gameObj.getSystemName());
-
-
-        // setListAdapter(new
-        // ArrayAdapter<DummyContent.DummyItem>(getActivity(),
-        // android.R.layout.simple_list_item_activated_1, android.R.id.text1,
-        // DummyContent.ITEMS));
     }
 
     private void init() {
@@ -155,7 +128,6 @@ public class FavoriteCheatListFragment extends ListFragment {
 
         settings = ca.getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
 
-
         db = new CheatDatabaseAdapter(ca);
         db.open();
 
@@ -163,123 +135,6 @@ public class FavoriteCheatListFragment extends ListFragment {
             member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
         }
     }
-
-    // @Override
-    // public View onCreateView(LayoutInflater inflater, ViewGroup container,
-    // Bundle savedInstanceState) {
-    //
-    // View rootView = inflater.inflate(R.layout.activity_favorite_list,
-    // container, false);
-    //
-    // // ca = getActivity();
-    // // latoFontRegular = Tools.getFont(getActivity().getAssets(),
-    // // "Lato-Regular.ttf");
-    //
-    // // db = new CheatDatabaseAdapter(ca);
-    // // db.open();
-    //
-    // // settings = ca.getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
-    // // editor = settings.edit();
-    //
-    // // intent = ca.getIntent();
-    // // // Game Object without the Cheat contents
-    // // gameObj = (Game) intent.getSerializableExtra("gameObj");
-    // //
-    // // ActionBar actionBar = ca.getActionBar();
-    // // actionBar.setDisplayHomeAsUpEnabled(true);
-    // // actionBar.setTitle(gameObj.getGameName());
-    // // actionBar.setSubtitle(gameObj.getSystemName());
-    // //
-    //
-    // // db = new CheatDatabaseAdapter(ca);
-    // // db.open();
-    // // cheats = db.getAllFavoritedCheatsByGame(gameObj.getGameId());
-    //
-    // // populateList();
-    //
-    // return rootView;
-    // }
-
-    // @Override
-    // public void onActivityCreated(Bundle savedInstanceState) {
-    // super.onActivityCreated(savedInstanceState);
-    //
-    // // Bundle elements = this.getArguments();
-    // // // cheats = (Cheat[]) elements.getSerializable("cheats");
-    // // gameObj = (Game) elements.getSerializable("gameObj");
-    //
-    // // ActionBar actionBar = ca.getActionBar();
-    // // actionBar.setDisplayHomeAsUpEnabled(true);
-    // // actionBar.setTitle(gameObj.getGameName());
-    // // actionBar.setSubtitle(gameObj.getSystemName());
-    //
-    // populateList();
-    //
-    // }
-
-//	private void populateList() {
-//
-//		mProgressDialog = ProgressDialog.show(ca, getString(R.string.please_wait) + "...", getString(R.string.retrieving_data) + "...", true);
-//
-//		cheatsArray = new ArrayList<Cheat>();
-//		mAdapter = new CheatAdapter(ca, R.layout.cheatlist_item, cheatsArray);
-//		setListAdapter(mAdapter);
-//
-//		db = new CheatDatabaseAdapter(ca);
-//		db.open();
-//		cheats = db.getAllFavoritedCheatsByGame(gameObj.getGameId());
-//
-//		getViewContent();
-//	}
-//
-//	private void getViewContent() {
-//		if (cheats != null) {
-//			if (cheats.length <= 0) {
-//				ca.finish();
-//			}
-//			cheatsArray = new ArrayList<Cheat>();
-//
-//			for (int i = 0; i < cheats.length; i++) {
-//				Cheat cheat = cheats[i];
-//				cheatsArray.add(cheat);
-//			}
-//
-//			ca.runOnUiThread(returnRes);
-//		} else {
-//			new AlertDialog.Builder(ca).setMessage(R.string.favorite_no_cheats).show();
-//		}
-//
-//	}
-
-    // @Override
-    // public void onResume() {
-    // super.onResume();
-    // setListAdapter(mAdapter);
-    // getViewContent();
-    // mAdapter.notifyDataSetChanged();
-    // }
-
-//	private final Runnable returnRes = new Runnable() {
-//
-//		@Override
-//		public void run() {
-//			if (cheatsArray != null && cheatsArray.size() > 0) {
-//				mAdapter.notifyDataSetChanged();
-//				for (int i = 0; i < cheatsArray.size(); i++) {
-//					mAdapter.add(cheatsArray.get(i));
-//				}
-//				mProgressDialog.dismiss();
-//				mAdapter.notifyDataSetChanged();
-//			} else {
-//				new AlertDialog.Builder(ca).setIcon(R.drawable.ic_action_warning).setTitle(getString(R.string.err)).setMessage(R.string.err_data_not_accessible).setNeutralButton(R.string.ok, new DialogInterface.OnClickListener() {
-//					@Override
-//					public void onClick(DialogInterface dialog, int whichButton) {
-//						ca.finish();
-//					}
-//				}).create().show();
-//			}
-//		}
-//	};
 
     private class GetCheatsTask extends AsyncTask<Game, Void, Void> {
 
@@ -291,7 +146,6 @@ public class FavoriteCheatListFragment extends ListFragment {
             } else {
                 cheats = params[0].getCheats();
             }
-
 
             return null;
         }
@@ -312,9 +166,10 @@ public class FavoriteCheatListFragment extends ListFragment {
             cheatsArrayList = new ArrayList<Cheat>();
 
             if (cheats != null) {
-                for (int j = 0; j < cheats.length; j++) {
-                    cheatsArrayList.add(cheats[j]);
-                }
+//                for (int j = 0; j < cheats.length; j++) {
+//                    cheatsArrayList.add(cheats[j]);
+//                }
+                Collections.addAll(cheatsArrayList, cheats);
             } else {
                 Log.e("FavoriteCheatListActivity()", "db.getAllFavoritedCheatsByGame() == null");
             }
@@ -326,53 +181,6 @@ public class FavoriteCheatListFragment extends ListFragment {
         }
 
         return cheats;
-    }
-
-    private class CheatAdapter extends ArrayAdapter<Cheat> {
-
-        private final ArrayList<Cheat> arr_cheats;
-
-        public CheatAdapter(Context context, int textViewResourceId, ArrayList<Cheat> items) {
-            super(context, textViewResourceId, items);
-            this.arr_cheats = items;
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            View v = convertView;
-            if (v == null) {
-                LayoutInflater vi = (LayoutInflater) ca.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                v = vi.inflate(R.layout.cheatlist_item, null);
-            }
-
-            Cheat cheat = arr_cheats.get(position);
-            if (cheat != null) {
-                TextView tt = (TextView) v.findViewById(R.id.cheat_title);
-                tt.setText(cheat.getCheatTitle());
-                tt.setTypeface(latoFontRegular);
-
-                ImageView flag_new = (ImageView) v.findViewById(R.id.newaddition);
-                flag_new.setVisibility(View.GONE);
-
-                ImageView flag_screenshots = (ImageView) v.findViewById(R.id.screenshots);
-                if (cheat.hasScreenshotOnSd()) {
-                    flag_screenshots.setVisibility(View.VISIBLE);
-                    flag_screenshots.setImageResource(R.drawable.flag_img);
-                } else {
-                    flag_screenshots.setVisibility(View.GONE);
-                }
-
-                ImageView flag_german = (ImageView) v.findViewById(R.id.flag);
-                if (cheat.getLanguageId() == 2) { // 2 = Deutsch
-                    flag_german.setVisibility(View.VISIBLE);
-                    flag_german.setImageResource(R.drawable.flag_german);
-                } else {
-                    flag_german.setVisibility(View.GONE);
-                }
-
-            }
-            return v;
-        }
     }
 
     @Override
@@ -399,11 +207,10 @@ public class FavoriteCheatListFragment extends ListFragment {
 
     @Override
     public void onDetach() {
+        super.onDetach();
         // Reset the active callbacks interface to the dummy implementation.
         handler = sDummyCallbacks;
-        super.onDetach();
     }
-
 
     @Override
     public void onListItemClick(ListView listView, View view, int position, long id) {
@@ -444,4 +251,53 @@ public class FavoriteCheatListFragment extends ListFragment {
         mActivatedPosition = position;
     }
 
+    private class CheatAdapter extends ArrayAdapter<Cheat> {
+
+        private final ArrayList<Cheat> arr_cheats;
+
+        public CheatAdapter(Context context, int textViewResourceId, ArrayList<Cheat> items) {
+            super(context, textViewResourceId, items);
+            this.arr_cheats = items;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            View v = convertView;
+            if (v == null) {
+                LayoutInflater vi = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                v = vi.inflate(R.layout.cheatlist_item, null);
+            }
+
+            try {
+                Cheat cheat = arr_cheats.get(position);
+                if (cheat != null) {
+                    TextView tt = (TextView) v.findViewById(R.id.cheat_title);
+                    tt.setText(cheat.getCheatTitle());
+                    tt.setTypeface(latoFontRegular);
+
+                    ImageView flag_new = (ImageView) v.findViewById(R.id.newaddition);
+                    flag_new.setVisibility(View.GONE);
+
+                    ImageView flag_screenshots = (ImageView) v.findViewById(R.id.screenshots);
+                    if (cheat.hasScreenshotOnSd()) {
+                        flag_screenshots.setVisibility(View.VISIBLE);
+                        flag_screenshots.setImageResource(R.drawable.flag_img);
+                    } else {
+                        flag_screenshots.setVisibility(View.GONE);
+                    }
+
+                    ImageView flag_german = (ImageView) v.findViewById(R.id.flag);
+                    if (cheat.getLanguageId() == 2) { // 2 = Deutsch
+                        flag_german.setVisibility(View.VISIBLE);
+                        flag_german.setImageResource(R.drawable.flag_german);
+                    } else {
+                        flag_german.setVisibility(View.GONE);
+                    }
+                }
+            } catch (Exception e) {
+                Log.e(getClass().getSimpleName() + ".getView ERROR:", e.getMessage());
+            }
+            return v;
+        }
+    }
 }

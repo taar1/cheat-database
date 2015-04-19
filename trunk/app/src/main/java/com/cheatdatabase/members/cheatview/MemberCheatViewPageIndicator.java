@@ -101,7 +101,8 @@ public class MemberCheatViewPageIndicator extends ActionBarActivity implements R
         try {
             cheatObj = new Gson().fromJson(settings.getString(Konstanten.PREFERENCES_TEMP_CHEAT_ARRAY_OBJECT_VIEW, null), Cheat[].class);
             if (cheatObj == null) {
-                cheatObj = new Gson().fromJson(intent.getStringExtra("cheatsObj"), Cheat[].class);
+//                cheatObj = new Gson().fromJson(intent.getStringExtra("cheatsObj"), Cheat[].class);
+                cheatObj = (Cheat[]) intent.getSerializableExtra("cheatsObj");
             }
             pageSelected = intent.getIntExtra("selectedPage", 0);
             activePage = pageSelected;

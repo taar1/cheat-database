@@ -30,6 +30,7 @@ import com.google.analytics.tracking.android.Tracker;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * A list fragment representing a list of Cheats. This fragment also supports
@@ -37,10 +38,12 @@ import java.util.ArrayList;
  * selection. This helps indicate which item is currently being viewed in a
  * {@link CheatDetail%Fragment}.
  * <p/>
- * Activities containing this fragment MUST implement the {@link com.cheatdatabase.CheatListFragment.Callbacks}
+ * Activities containing this fragment MUST implement the {@link com.cheatdatabase.CheatListFragment.CheatListClickCallbacks}
  * interface.
  */
 public class CheatListFragment extends ListFragment {
+
+    private static String TAG = CheatListFragment.class.getSimpleName();
 
     /**
      * The serialization (saved instance state) Bundle key representing the
@@ -52,7 +55,7 @@ public class CheatListFragment extends ListFragment {
      * The fragment's current callback object, which is notified of list item
      * clicks.
      */
-    private Callbacks mCallbacks = sDummyCallbacks;
+    private CheatListClickCallbacks mCheatListClickCallbacks = sDummyCallbacks;
 
     /**
      * The current activated item position. Only used on tablets.
@@ -64,7 +67,7 @@ public class CheatListFragment extends ListFragment {
      * implement. This mechanism allows activities to be notified of item
      * selections.
      */
-    public interface Callbacks {
+    public interface CheatListClickCallbacks {
         /**
          * Callback for when an item has been selected.
          */
@@ -72,10 +75,10 @@ public class CheatListFragment extends ListFragment {
     }
 
     /**
-     * A dummy implementation of the {@link com.cheatdatabase.CheatListFragment.Callbacks} interface that does
+     * A dummy implementation of the {@link com.cheatdatabase.CheatListFragment.CheatListClickCallbacks} interface that does
      * nothing. Used only when this fragment is not attached to an activity.
      */
-    private static Callbacks sDummyCallbacks = new Callbacks() {
+    private static CheatListClickCallbacks sDummyCallbacks = new CheatListClickCallbacks() {
         @Override
         public void onItemSelected(int id) {
         }
@@ -117,16 +120,6 @@ public class CheatListFragment extends ListFragment {
 
         settings = cheatListActivity.getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
         editor = settings.edit();
-
-        // if (gameObj == null) {
-        // gameObj = (Game)
-        // cheatListActivity.getIntent().getSerializableExtra("gameObj");
-        // }
-        // if (gameObj == null) {
-        // gameObj = new
-        // Gson().fromJson(settings.getString(Konstanten.PREFERENCES_TEMP_GAME_OBJECT_VIEW,
-        // null), Game.class);
-        // }
 
         if (member == null) {
             member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
@@ -174,16 +167,17 @@ public class CheatListFragment extends ListFragment {
             cheatsArrayList = new ArrayList<Cheat>();
 
             if (cheats != null) {
-                for (int j = 0; j < cheats.length; j++) {
-                    cheatsArrayList.add(cheats[j]);
-                }
+//                for (int j = 0; j < cheats.length; j++) {
+//                    cheatsArrayList.add(cheats[j]);
+//                }
+                Collections.addAll(cheatsArrayList, cheats);
             } else {
                 Log.e("CheatListActivity()", "Webservice.getCheatList() == null");
             }
 
-            for (int i = 0; i < cheats.length; i++) {
-                Log.d("cheats", cheats[i].getCheatTitle());
-            }
+//            for (int i = 0; i < cheats.length; i++) {
+//                Log.d("cheats", cheats[i].getCheatTitle());
+//            }
 
             gameObj.setCheats(cheats);
 
@@ -213,29 +207,30 @@ public class CheatListFragment extends ListFragment {
         super.onAttach(activity);
 
         // Activities containing this fragment must implement its callbacks.
-        if (!(activity instanceof Callbacks)) {
+        if (!(activity instanceof CheatListClickCallbacks)) {
             throw new IllegalStateException("Activity must implement fragment's callbacks.");
         }
 
-        mCallbacks = (Callbacks) activity;
+        mCheatListClickCallbacks = (CheatListClickCallbacks) activity;
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-
         // Reset the active callbacks interface to the dummy implementation.
-        mCallbacks = sDummyCallbacks;
+        mCheatListClickCallbacks = sDummyCallbacks;
     }
 
     @Override
     public void onListItemClick(ListView listView, View view, int position, long id) {
         super.onListItemClick(listView, view, position, id);
 
+        Log.d(TAG, "onListItemClick: " + position);
+
         // Notify the active callbacks interface (the activity, if the
         // fragment is attached to one) that an item has been selected.
-        // mCallbacks.onItemSelected(DummyContent.ITEMS.get(position).id);
-        mCallbacks.onItemSelected(position);
+        // mCheatListClickCallbacks.onItemSelected(DummyContent.ITEMS.get(position).id);
+        mCheatListClickCallbacks.onItemSelected(position);
     }
 
     @Override
@@ -340,7 +335,7 @@ public class CheatListFragment extends ListFragment {
                     // modulo++;
                 }
             } catch (Exception e) {
-                Log.e(getClass().getName() + ".getView ERROR:", e.getMessage());
+                Log.e(getClass().getSimpleName() + ".getView ERROR:", e.getMessage());
             }
             return v;
         }

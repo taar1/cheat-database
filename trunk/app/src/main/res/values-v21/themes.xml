@@ -3,7 +3,7 @@
 
     <!-- MATERIAL DESIGN THEME FOR ANDROID LOLLIPOP -->
     <!-- http://antonioleiva.com/material-design-everywhere/ -->
-    <style name="Theme.Navyblue" parent="AppTheme.Base">
+    <style name="Theme.Navyblue" parent="AppThemeBase">
         <item name="android:windowContentTransitions">true</item>
         <item name="android:windowAllowEnterTransitionOverlap">true</item>
         <item name="android:windowAllowReturnTransitionOverlap">true</item>

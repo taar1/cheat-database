@@ -151,8 +151,6 @@
 - Evita las frases demasiado largas. Las frases cortas son más fáciles de entender. Intenta no usar \"despues\" para conectar frases.\n\n
 - Evita los \"Yo hice\" o \"me sirvió\" etc. en las frases. Usa la tercera persona para las instrucciones.</string>
     <string name="thanks">Gracias!</string>
-    <string name="pocketchange_rewards_ok">Se han añadido premios Pocket Change a tu cuenta por el envío de trucos. Consulta tu nuevo saldo en la pantalla principal de esta app.</string>
-    <string name="pocketchange_rewards_nok">Debido al abuso del envío de trucos, se ha bloqueado los premios Pocket Change en tu cuenta. Gracias por tu comprensión.</string>
     <string name="help">Ayuda</string>
     <string name="fill_everything">Por favor, rellena todos los campos.</string>
     <string name="submit_cheat_consent_title">Acuerdo</string>
