@@ -247,7 +247,8 @@ public class MemberCheatListActivity extends ActionBarListActivity implements Ad
                     cheats[i].setCheatText("");
                 }
             }
-            explicitIntent.putExtra("cheatsObj", new Gson().toJson(cheats));
+            // FIXME? serializable or GSON?
+            explicitIntent.putExtra("cheatsObj", cheats);
             explicitIntent.putExtra("selectedPage", position);
             startActivity(explicitIntent);
         } else {

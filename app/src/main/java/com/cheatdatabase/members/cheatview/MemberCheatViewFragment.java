@@ -82,10 +82,10 @@ public class MemberCheatViewFragment extends Fragment implements OnClickListener
         MemberCheatViewFragment fragment = new MemberCheatViewFragment();
 
         // übergebene Parameter ins Bundle Objekt eintragen
-        Bundle args = new Bundle();
-        args.putString("cheatsObj", new Gson().toJson(cheats));
-        args.putInt("offset", offset);
-        fragment.setArguments(args);
+        Bundle arguments = new Bundle();
+        arguments.putSerializable("cheatsObj", cheats);
+        arguments.putInt("offset", offset);
+        fragment.setArguments(arguments);
 
         StringBuilder builder = new StringBuilder();
         for (int i = 0; i < 20; i++) {
@@ -200,10 +200,10 @@ public class MemberCheatViewFragment extends Fragment implements OnClickListener
     }
 
     private void getFragmentRelevantData() {
-        Bundle bb = getArguments();
+        Bundle arguments = getArguments();
         try {
-            cheats = new Gson().fromJson(bb.getString("cheatsObj"), Cheat[].class);
-            offset = bb.getInt("offset");
+            cheats = (Cheat[]) arguments.getSerializable("cheatsObj");
+            offset = arguments.getInt("offset");
         } catch (Exception e) {
             offset = 0;
             // TODO message ausgeben, dass kein Game objekt besteht
@@ -361,7 +361,7 @@ public class MemberCheatViewFragment extends Fragment implements OnClickListener
         Log.d("onClick", "onClick");
         Bundle arguments = new Bundle();
         arguments.putInt(CheatDetailTabletFragment.ARG_ITEM_ID, 1);
-        arguments.putString("cheatObj", new Gson().toJson(cheatObj));
+        arguments.putSerializable("cheatObj", cheatObj);
     }
 
     private class FetchCheatTextTask extends AsyncTask<Void, Void, Void> {

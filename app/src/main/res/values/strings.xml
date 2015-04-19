@@ -63,6 +63,7 @@
     <!-- REPORT CHEAT -->
     <string name="report_cheat_title">Report Cheat</string>
     <string name="thanks_for_reporting">Thank you for your report. If we get enough (individual) reports we will consider removing this cheat from the database.</string>
+
     <!-- RATE CHEAT -->
     <string name="rate_cheat_plain">Rate</string>
     <string name="rate_cheat">Rate Cheat</string>
@@ -156,8 +157,6 @@
     <string name="submit_cheat_instructions_text"></string>
     <string name="submit_cheat_guidelines">Please read our little author guidelines on how to write easy-to-understand cheats.\n\n- Use capital letters for character or object names. Always use a capital letter after a full stop.\n\n- Try not to make long sentences. Short sentences are easier to understand. Try not to use &#8220;then&#8221; to connect sentences either.\n\n- Don\'t use the &#8220;I&#8221; form, i.e. &#8220;I did&#8221; or &#8220;it helped me&#8221; etc. Use the third person for instructions.</string>
     <string name="thanks">Thank you!</string>
-    <string name="pocketchange_rewards_ok">Cheat submission Pocket Change rewards have been added to your account. Check your new balance from the main screen of this app.</string>
-    <string name="pocketchange_rewards_nok">Due to abusing the cheat submission form in the past your account has been disabled for cheat submission Pocket Change rewards. Thanks for your understanding.</string>
     <string name="help">Help</string>
     <string name="fill_everything">Please fill out all fields.</string>
     <string name="submit_cheat_consent_title">Terms &amp; Conditions</string>

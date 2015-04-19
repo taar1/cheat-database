@@ -41,4 +41,11 @@
         android:layout_height="match_parent"
         android:layout_weight="3" />
 
+    <com.mopub.mobileads.MoPubView
+        android:id="@+id/adview"
+        android:layout_width="fill_parent"
+        android:layout_height="90dp"
+        android:layout_gravity="bottom"
+        android:layout_weight="1"
+        android:gravity="top" />
 </LinearLayout>

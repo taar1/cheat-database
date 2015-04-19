@@ -1,22 +1,12 @@
 <resources>
 
-    <style name="AppBaseTheme" parent="android:Theme.Light">
-        <!--
-            Theme customizations available in newer API levels can go in
-            res/values-vXX/styles.xml, while customizations related to
-            backward-compatibility can go here.
-        -->
-    </style>
-
     <!-- Application theme. -->
-    <style name="AppTheme" parent="AppTheme.Base">
+    <style name="AppThemeBase" parent="Theme.AppCompat">
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
-    </style>
-
-    <style name="AppTheme.Base" parent="Theme.AppCompat">
         <item name="colorAccent">@color/color_accent</item>
         <item name="android:windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
+        <item name="android:windowActionBar">false</item>
         <item name="android:textColorPrimary">#fff</item>
         <item name="colorControlNormal">#fff</item>
         <item name="colorControlHighlight">#3fff</item>

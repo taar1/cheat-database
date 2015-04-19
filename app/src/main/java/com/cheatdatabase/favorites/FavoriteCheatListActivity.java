@@ -34,7 +34,7 @@ import com.splunk.mint.Mint;
 @SuppressLint("NewApi")
 public class FavoriteCheatListActivity extends ActionBarActivity implements FavoriteCheatListFragment.ElementsListClickHandler, RateCheatDialogListener {
 
-    String tag = this.getClass().getSimpleName();
+    private final String TAG = this.getClass().getSimpleName();
 
     /**
      * Whether or not the activity is in two-pane mode, i.e. running on a tablet
@@ -55,8 +55,8 @@ public class FavoriteCheatListActivity extends ActionBarActivity implements Favo
     private Game lastGameObj;
     private Cheat visibleCheat;
     private FavoritesDetailsFragment favoritesDetailsFragment;
-    private FavoritesCheatForumFragment cheatForumFragment;
-    private FavoritesCheatMetaFragment cheatMetaFragment;
+    private FavoritesCheatForumFragment favoritesCheatForumFragment;
+    private FavoritesCheatMetaFragment favoritesCheatMetaFragment;
     private Toolbar mToolbar;
     private MoPubView mAdView;
 
@@ -93,10 +93,9 @@ public class FavoriteCheatListActivity extends ActionBarActivity implements Favo
 
         settings = getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
 
-        Tools.initToolbarBase(this, mToolbar);
+        mToolbar = Tools.initToolbarBase(this, mToolbar);
         mAdView = Tools.initMoPubAdView(this, mAdView);
 
-        Tools.initGA(FavoriteCheatListActivity.this, tracker, SCREEN_LABEL, "Favorites Cheat List", gameObj.getGameName());
 
         if (member == null) {
             member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
@@ -110,6 +109,8 @@ public class FavoriteCheatListActivity extends ActionBarActivity implements Favo
             @Override
             public void run() {
                 gameObj = (Game) getIntent().getSerializableExtra("gameObj");
+
+                Tools.initGA(FavoriteCheatListActivity.this, tracker, SCREEN_LABEL, "Favorites Cheat List", gameObj.getGameName());
 
                 runOnUiThread(new Runnable() {
 
@@ -159,22 +160,22 @@ public class FavoriteCheatListActivity extends ActionBarActivity implements Favo
         this.visibleCheat = gameObj.getCheats()[position];
 
         if (mTwoPane) {
-
-            Log.i(tag, "IS DUALPANE");
-            cheatForumFragment = new FavoritesCheatForumFragment();
-            cheatMetaFragment = new FavoritesCheatMetaFragment();
-
-            Bundle element = new Bundle();
-            element.putInt("position", position);
-            element.putSerializable("gameObj", gameObj);
-            element.putSerializable("cheatObj", visibleCheat);
-            element.putString("favoritesCheatForumFragment", new Gson().toJson(cheatForumFragment));
-            element.putString("favoritesCheatMetaFragment", new Gson().toJson(cheatMetaFragment));
+            Log.i(TAG, "Is Dual Pane");
 
             favoritesDetailsFragment = new FavoritesDetailsFragment();
-            favoritesDetailsFragment.setArguments(element);
-            cheatForumFragment.setArguments(element);
-            cheatMetaFragment.setArguments(element);
+            favoritesCheatForumFragment = new FavoritesCheatForumFragment();
+            favoritesCheatMetaFragment = new FavoritesCheatMetaFragment();
+
+            Bundle arguments = new Bundle();
+            arguments.putInt("position", position);
+            arguments.putSerializable("gameObj", gameObj);
+            arguments.putSerializable("cheatObj", visibleCheat);
+            arguments.putSerializable("favoritesDetailsFragment", favoritesDetailsFragment);
+            arguments.putSerializable("favoritesCheatForumFragment", favoritesCheatForumFragment);
+            arguments.putSerializable("favoritesCheatMetaFragment", favoritesCheatMetaFragment);
+            favoritesDetailsFragment.setArguments(arguments);
+            favoritesCheatForumFragment.setArguments(arguments);
+            favoritesCheatMetaFragment.setArguments(arguments);
 
             android.support.v4.app.FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             transaction.replace(R.id.favorite_detail_container, favoritesDetailsFragment);
@@ -198,7 +199,6 @@ public class FavoriteCheatListActivity extends ActionBarActivity implements Favo
             intent.putExtra("position", position);
             intent.putExtra("gameObj", gameObj);
             startActivity(intent);
-
         }
     }
 
@@ -253,12 +253,12 @@ public class FavoriteCheatListActivity extends ActionBarActivity implements Favo
         super.onSaveInstanceState(outState);
     }
 
-    @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        getIntent().putExtra("position", savedInstanceState.getInt("position"));
-        getIntent().putExtra("gameObj", savedInstanceState.getSerializable("gameObj"));
-        super.onRestoreInstanceState(savedInstanceState);
-    }
+//    @Override
+//    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+//        getIntent().putExtra("position", savedInstanceState.getInt("position"));
+//        getIntent().putExtra("gameObj", savedInstanceState.getSerializable("gameObj"));
+//        super.onRestoreInstanceState(savedInstanceState);
+//    }
 
     public void showRatingDialog() {
         if ((member == null) || (member.getMid() == 0)) {
@@ -281,8 +281,8 @@ public class FavoriteCheatListActivity extends ActionBarActivity implements Favo
 
         // FIXME make the star to highlighton all fragments
         favoritesDetailsFragment.highlightRatingIcon(true);
-        cheatMetaFragment.highlightRatingIcon(true);
-        cheatForumFragment.highlightRatingIcon(true);
+        favoritesCheatMetaFragment.highlightRatingIcon(true);
+        favoritesCheatForumFragment.highlightRatingIcon(true);
 
         Toast.makeText(this, R.string.rating_inserted, Toast.LENGTH_SHORT).show();
     }

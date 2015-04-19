@@ -4,9 +4,13 @@
     <!-- UNIQUE NEWS -->
     <string name="news_welcome">Nyt i denne version</string>
     <string name="news_title">News</string>
+    <string name="welcome">Welcome to Cheat-Database!</string>
+    <string name="news_text_static">Thanks so much for using Cheat-Database.</string>
 
     <!-- VARIOUS -->
     <string name="app_name">Cheat-Database</string>
+    <string name="app_label">Cheat-Database</string>
+    <string name="title_item_detail">Item Detail</string>
     <string name="ok">OK</string>
     <string name="showGameList">Spil-liste</string>
     <string name="showCheatList">Cheat-liste</string>
@@ -75,8 +79,10 @@
     <string name="email">E-mail</string>
     <string name="register_thanks">Tak for din registrering!</string>
     <string name="register">Registrering</string>
+    <string name="register_account">Register New Account</string>
     <string name="register_instead">Registrering</string>
     <string name="register_login">Registrering / Log ind</string>
+    <string name="login">Login</string>
 
     <!-- LOGIN MEMBER -->
     <string name="login_title">Log ind</string>
@@ -88,6 +94,7 @@
     <string name="logout">Log ud</string>
     <string name="logout_ok">Logout lykkedes.</string>
     <string name="login_forgot">Forgot login data</string>
+    <string name="login_forgot_password">Forgot password?</string>
     <string name="login_send_password">Send login data by email</string>
     <string name="login_sent_ok">Login data has been sent to you via email</string>
 
@@ -101,6 +108,8 @@
     <string name="err_other_problem">Der var et problem med oprettelsen af din brugerkonto. Prøv venligst igen senere. If the problem remains you can also register at www.cheat-database.com/register.</string>
     <string name="err_email_user_not_found">No user found with this email address.</string>
     <string name="err_data_not_accessible">Requested data could not be retrieved. Please try again a bit later.</string>
+    <string name="err_sd_not_accessible">SD card not accessible at the moment.</string>
+    <string name="err_saving_to_sd">Saving to SD card failed.</string>
     <string name="err_no_member_data">Error: No member data could be found.</string>
     <string name="err_somethings_wrong">Something just went wrong. Please try again.</string>
 
@@ -126,12 +135,14 @@
     <string name="favorite_adding">Adding favorites&#8230;</string>
 
     <!-- FORUM -->
+    <string name="forum">Forum</string>
     <string name="forum_goto">Til forummet</string>
     <string name="forum_goto_online">Til forummet (online)</string>
     <string name="forum_button_submit">Afsend</string>
     <string name="forum_submit_failed">Dit indlæg kunne ikke blive sendt. Prøv venligst igen senere.</string>
     <string name="forum_submit_ok">Indlægget er blevet sendt.</string>
     <string name="forum_yet_empty">Forummet til denne cheat er stadig tomt. Bliv den første der skriver noget. Tilføj cheaten til dine favoritter, på den måde er det nemt at finde forummet igen senere.</string>
+    <string name="forum_hint">Your message</string>
 
     <!-- SUBMIT CHEAT -->
     <string name="submit_cheat_short">Indsend cheat</string>
@@ -147,10 +158,15 @@
 - Use capital letters for character or object names. Always use a capital letter after a full stop.\n\n
 - Try not to make long sentences. Short sentences are easier to understand. Try not to use \"then\" to connect sentences either.\n\n
 - Don\'t use \"I did\" or \"it helped me\" etc. in sentences. Use the third person for instructions.</string>
+    <string name="thanks">Thank you!</string>
     <string name="help">Hjælp</string>
     <string name="fill_everything">Please fill out all fields.</string>
     <string name="submit_cheat_consent_title">Agreement</string>
     <string name="submit_cheat_consent_text">I hereby agree that my submission may be grammatically altered and corrected in order to meet the minimum quality levels required.</string>
+    <string name="submit_cheat_title">Cheat Submission</string>
+    <string name="submit_cheat_agree_terms_conditions">Agree with Terms &amp; Conditions</string>
+    <string name="guidelines">Guidelines</string>
+    <string name="submit_cheat_error_accept_conditions">Please accept the Terms &amp; Conditions by clicking the check box above the submit button.</string>
 
     <!-- CRASHREPORT -->
     <string name="crashreport_submit">Send fejlbeskrivelse</string>

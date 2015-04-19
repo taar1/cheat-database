@@ -5,11 +5,6 @@
     android:baselineAligned="false"
     android:orientation="vertical">
 
-    <include
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        layout="@layout/incl_cheat_detail_fragment_action_bar" />
-
     <TextView
         android:id="@+id/text_cheat_title"
         android:layout_width="fill_parent"
@@ -240,8 +235,7 @@
                         android:paddingEnd="10dp"
                         android:paddingRight="10dp"
                         android:text="@string/meta_show_all_cheats"
-                        android:textAppearance="@style/NormalText"
-                        android:textColorHighlight="#FF0000"></TextView>
+                        android:textAppearance="@style/NormalText"></TextView>
                 </LinearLayout>
 
                 <LinearLayout
@@ -277,6 +271,12 @@
                 </LinearLayout>
             </LinearLayout>
         </ScrollView>
+
     </LinearLayout>
+
+    <include
+        layout="@layout/incl_cheat_detail_fragment_action_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
 </LinearLayout>

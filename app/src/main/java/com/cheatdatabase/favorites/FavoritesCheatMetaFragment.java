@@ -7,6 +7,8 @@ import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -26,13 +28,13 @@ import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.helpers.Tools;
 import com.cheatdatabase.helpers.Webservice;
-import com.google.gson.Gson;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @SuppressLint("SimpleDateFormat")
-public class FavoritesCheatMetaFragment extends Fragment implements OnClickListener {
+public class FavoritesCheatMetaFragment extends Fragment implements OnClickListener, Serializable, Parcelable {
 
     public static final String ARG_ITEM_ID = "item_id";
 
@@ -88,10 +90,10 @@ public class FavoritesCheatMetaFragment extends Fragment implements OnClickListe
         ca = (FavoriteCheatListActivity) getActivity();
         Reachability.registerReachability(ca.getApplicationContext());
 
-        Bundle element = this.getArguments();
-        cheatObj = (Cheat) element.getSerializable("cheatObj");
-        favoritesDetailsFragment = new Gson().fromJson(element.getString("favoritesDetailsFragment"), FavoritesDetailsFragment.class);
-        favoritesCheatForumFragment = new Gson().fromJson(element.getString("favoritesCheatForumFragment"), FavoritesCheatForumFragment.class);
+        Bundle arguments = this.getArguments();
+        cheatObj = (Cheat) arguments.getSerializable("cheatObj");
+        favoritesDetailsFragment = (FavoritesDetailsFragment) arguments.getSerializable("favoritesDetailsFragment");
+        favoritesCheatForumFragment = (FavoritesCheatForumFragment) arguments.getSerializable("favoritesCheatForumFragment");
 
         latoFontLight = Tools.getFont(getActivity().getAssets(), Konstanten.FONT_LIGHT);
         latoFontBold = Tools.getFont(getActivity().getAssets(), Konstanten.FONT_BOLD);
@@ -189,6 +191,16 @@ public class FavoritesCheatMetaFragment extends Fragment implements OnClickListe
             }
         } catch (NullPointerException e) {
         }
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        // Parcelable
     }
 
     private class MetaDataLoaderTask extends AsyncTask<Cheat, Void, Void> {
@@ -295,9 +307,9 @@ public class FavoritesCheatMetaFragment extends Fragment implements OnClickListe
         Bundle arguments = new Bundle();
         arguments.putInt(CheatDetailTabletFragment.ARG_ITEM_ID, 1);
         arguments.putSerializable("cheatObj", cheatObj);
-        arguments.putString("favoritesDetailsFragment", new Gson().toJson(favoritesDetailsFragment));
-        arguments.putString("favoritesCheatForumFragment", new Gson().toJson(favoritesCheatForumFragment));
-        arguments.putString("favoritesCheatMetaFragment", new Gson().toJson(FavoritesCheatMetaFragment.class));
+        arguments.putSerializable("favoritesDetailsFragment", favoritesDetailsFragment);
+        arguments.putSerializable("favoritesCheatForumFragment", favoritesCheatForumFragment);
+        arguments.putSerializable("favoritesCheatMetaFragment", this);
 
         if (v == btnViewCheat) {
             Log.d("onClick", "btnViewCheat");

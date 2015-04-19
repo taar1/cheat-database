@@ -7,6 +7,8 @@ import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -24,14 +26,14 @@ import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.helpers.Tools;
 import com.cheatdatabase.helpers.Webservice;
-import com.google.gson.Gson;
 import com.splunk.mint.Mint;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @SuppressLint("SimpleDateFormat")
-public class CheatDetailMetaFragment extends Fragment implements OnClickListener {
+public class CheatDetailTabletMetaFragment extends Fragment implements OnClickListener, Serializable, Parcelable {
 
     public static final String ARG_ITEM_ID = "item_id";
 
@@ -54,12 +56,13 @@ public class CheatDetailMetaFragment extends Fragment implements OnClickListener
     private LinearLayout llMemberHomepage;
     private LinearLayout llRating;
 
-    private ImageButton btnRateCheat;
-    private ImageButton btnMetaInfo;
-    private ImageButton btnForum;
-    private ImageButton btnReport;
-    private ImageButton btnShare;
-    private ImageButton btnViewCheat;
+    private transient ImageButton btnRateCheat;
+    private transient ImageButton btnMetaInfo;
+    private transient ImageButton btnForum;
+    private transient ImageButton btnReport;
+    private transient ImageButton btnDelete;
+    private transient ImageButton btnShare;
+    private transient ImageButton btnViewCheat;
 
     private LinearLayout llBuffer4;
     private LinearLayout llBuffer5;
@@ -72,13 +75,13 @@ public class CheatDetailMetaFragment extends Fragment implements OnClickListener
 
     private CheatListActivity ca;
     private CheatDetailTabletFragment cheatDetailTabletFragment;
+    private CheatDetailTabletMetaFragment cheatDetailTabletMetaFragment;
     private CheatForumFragment cheatForumFragment;
 
     private Typeface latoFontLight;
-
     private Typeface latoFontBold;
 
-    public CheatDetailMetaFragment() {
+    public CheatDetailTabletMetaFragment() {
 
     }
 
@@ -89,11 +92,11 @@ public class CheatDetailMetaFragment extends Fragment implements OnClickListener
         ca = (CheatListActivity) getActivity();
         init();
 
-        Bundle element = this.getArguments();
-        cheatObj = (Cheat) element.getSerializable("cheatObj");
-        cheatDetailTabletFragment = new Gson().fromJson(element.getString("cheatDetailTabletFragment"), CheatDetailTabletFragment.class);
-        cheatForumFragment = new Gson().fromJson(element.getString("cheatForumFragment"), CheatForumFragment.class);
-
+        Bundle arguments = this.getArguments();
+        cheatObj = (Cheat) arguments.getSerializable("cheatObj");
+        cheatDetailTabletFragment = (CheatDetailTabletFragment) arguments.getSerializable("cheatDetailTabletFragment");
+        cheatDetailTabletMetaFragment = (CheatDetailTabletMetaFragment) arguments.getSerializable("cheatDetailTabletMetaFragment");
+        cheatForumFragment = (CheatForumFragment) arguments.getSerializable("cheatForumFragment");
     }
 
     private void init() {
@@ -161,6 +164,8 @@ public class CheatDetailMetaFragment extends Fragment implements OnClickListener
         btnForum.setOnClickListener(this);
         btnReport = (ImageButton) rootView.findViewById(R.id.btn_report);
         btnReport.setOnClickListener(this);
+        btnDelete = (ImageButton) rootView.findViewById(R.id.btn_delete);
+        btnDelete.setVisibility(View.GONE);
         btnShare = (ImageButton) rootView.findViewById(R.id.btn_share);
         btnShare.setOnClickListener(this);
         btnRateCheat = (ImageButton) rootView.findViewById(R.id.btn_rate_cheat);
@@ -197,7 +202,18 @@ public class CheatDetailMetaFragment extends Fragment implements OnClickListener
                 btnRateCheat.setImageResource(R.drawable.ic_action_not_important);
             }
         } catch (NullPointerException e) {
+            Log.e(CheatDetailTabletMetaFragment.class.getSimpleName(), e.getLocalizedMessage());
         }
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+
     }
 
     private class MetaDataLoaderTask extends AsyncTask<Cheat, Void, Void> {
@@ -275,7 +291,7 @@ public class CheatDetailMetaFragment extends Fragment implements OnClickListener
                     llMemberHomepage.setVisibility(View.VISIBLE);
                     tvMemberHomepageText = (TextView) rootView.findViewById(R.id.tvMemberHomepageText);
                     tvMemberHomepageText.setText(submittingMember.getWebsite());
-                    tvMemberHomepageText.setOnClickListener(CheatDetailMetaFragment.this);
+                    tvMemberHomepageText.setOnClickListener(CheatDetailTabletMetaFragment.this);
                 } else {
                     llMemberHomepage.setVisibility(View.GONE);
                     llBuffer6.setVisibility(View.INVISIBLE);
@@ -286,7 +302,7 @@ public class CheatDetailMetaFragment extends Fragment implements OnClickListener
                     tvAuthorText.setText(submittingMember.getUsername());
                     tvMemberHomepageTitle.setText(submittingMember.getUsername() + "'s " + getActivity().getString(R.string.meta_member_homepage));
                 }
-                tvAuthorText.setOnClickListener(CheatDetailMetaFragment.this);
+                tvAuthorText.setOnClickListener(CheatDetailTabletMetaFragment.this);
             }
 
             Date dateObj = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse(cheatObj.getCreatedDate());
@@ -304,13 +320,13 @@ public class CheatDetailMetaFragment extends Fragment implements OnClickListener
         Bundle arguments = new Bundle();
         arguments.putInt(CheatDetailTabletFragment.ARG_ITEM_ID, 1);
         arguments.putSerializable("cheatObj", cheatObj);
-        arguments.putString("cheatDetailTabletFragment", new Gson().toJson(cheatDetailTabletFragment));
-        arguments.putString("cheatForumFragment", new Gson().toJson(cheatForumFragment));
-        arguments.putString("cheatDetailMetaFragment", new Gson().toJson(CheatDetailMetaFragment.class));
+        arguments.putSerializable("cheatDetailTabletFragment", cheatDetailTabletFragment);
+        arguments.putSerializable("cheatForumFragment", cheatForumFragment);
+        arguments.putSerializable("cheatDetailTabletMetaFragment", cheatDetailTabletMetaFragment);
 
         if (v == btnViewCheat) {
             Log.d("onClick", "btnViewCheat");
-            cheatDetailTabletFragment.setArguments(arguments);
+            //cheatDetailTabletFragment.setArguments(arguments);
             getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.cheat_detail_container, cheatDetailTabletFragment).commit();
         } else if (v == btnMetaInfo) {
             Log.d("onClick", "btnMetaInfo");

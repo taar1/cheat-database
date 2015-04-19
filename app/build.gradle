@@ -12,7 +12,7 @@ android {
     defaultConfig {
         applicationId "com.cheatdatabase"
         minSdkVersion 14
-        targetSdkVersion 21
+        targetSdkVersion 22
         versionCode 13
         versionName "2.1.0"
         signingConfig signingConfigs.config
@@ -25,6 +25,11 @@ android {
     }
     productFlavors {
     }
+
+    lintOptions {
+        abortOnError false
+        disable 'MissingTranslation'
+    }
 }
 
 repositories {
@@ -33,6 +38,7 @@ repositories {
     }
 }
 
+
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile files('libs/appbrain-applift-sdk-v10.2.jar')
@@ -40,10 +46,10 @@ dependencies {
     compile files('libs/libGoogleAnalyticsServices.jar')
     compile files('libs/MMSDK.jar')
     compile project(':VPILibrary')
-    compile 'com.android.support:appcompat-v7:21.0.+'
+    compile 'com.android.support:appcompat-v7:22.0.+'
     compile 'com.android.support:recyclerview-v7:+'
     compile 'com.android.support:support-v13:21.0.0'
-    compile 'com.android.support:support-v4:21.0.+'
+    compile 'com.android.support:support-v4:22.0.+'
     compile 'com.google.code.gson:gson:2.3'
     compile 'com.squareup.picasso:picasso:2.3.2'
     compile 'com.google.android.gms:play-services:6.5.87'

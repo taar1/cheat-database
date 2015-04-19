@@ -14,6 +14,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.ShareActionProvider;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -54,9 +55,11 @@ import com.splunk.mint.Mint;
  * {@link "CheatDetailFragment"}.
  * <p/>
  * This activity also implements the required
- * {@link CheatListFragment.Callbacks} interface to listen for item selections.
+ * {@link com.cheatdatabase.CheatListFragment.CheatListClickCallbacks} interface to listen for item selections.
  */
-public class CheatListActivity extends ActionBarActivity implements CheatListFragment.Callbacks, ReportCheatDialogListener, RateCheatDialogListener {
+public class CheatListActivity extends ActionBarActivity implements CheatListFragment.CheatListClickCallbacks, ReportCheatDialogListener, RateCheatDialogListener {
+
+    private static String TAG = CheatListActivity.class.getSimpleName();
 
     /**
      * Whether or not the activity is in two-pane mode, i.e. running on a tablet
@@ -83,7 +86,7 @@ public class CheatListActivity extends ActionBarActivity implements CheatListFra
 
     private CheatDetailTabletFragment cheatDetailFragment;
     private CheatForumFragment cheatForumFragment;
-    private CheatDetailMetaFragment cheatDetailMetaFragment;
+    private CheatDetailTabletMetaFragment cheatDetailTabletMetaFragment;
 
     private ShareActionProvider mShareActionProvider;
 
@@ -289,9 +292,9 @@ public class CheatListActivity extends ActionBarActivity implements CheatListFra
         visibleCheat.setMemberRating(selectedRating);
         cheatDetailFragment.updateMemberCheatRating(selectedRating);
 
-        // FIXME make the star to highlighton all fragments
+        // FIXME make the star to highlight on all fragments
         cheatDetailFragment.highlightRatingIcon(true);
-        cheatDetailMetaFragment.highlightRatingIcon(true);
+        cheatDetailTabletMetaFragment.highlightRatingIcon(true);
         cheatForumFragment.highlightRatingIcon(true);
 
         Toast.makeText(this, R.string.rating_inserted, Toast.LENGTH_SHORT).show();
@@ -322,7 +325,7 @@ public class CheatListActivity extends ActionBarActivity implements CheatListFra
     }
 
     /**
-     * Callback method from {@link CheatListFragment.Callbacks} indicating that
+     * Callback method from {@link com.cheatdatabase.CheatListFragment.CheatListClickCallbacks} indicating that
      * the item with the given ID was selected.
      */
     @Override
@@ -331,32 +334,28 @@ public class CheatListActivity extends ActionBarActivity implements CheatListFra
         this.lastGameObj = gameObj;
         this.visibleCheat = gameObj.getCheats()[id];
 
+        Log.d(TAG, "onItemSelected: " + id);
+        Log.d(TAG, "mTwoPane: " + mTwoPane);
+        Log.d(TAG, "visibleCheat: " + visibleCheat.getCheatTitle());
+
         if (mTwoPane) {
+            Log.i(TAG, "Is Dual Pane");
 
-            // In two-pane mode, show the detail view in this activity by
-            // adding or replacing the detail fragment using a
-            // fragment transaction.
-            // Bundle arguments = new Bundle();
-            // arguments.putInt(YyyDetailFragment.ARG_ITEM_ID, id);
-            // YyyDetailFragment fragment = new YyyDetailFragment();
-            // fragment.setArguments(arguments);
-            // getSupportFragmentManager().beginTransaction().replace(R.id.cheat_detail_container,
-            // fragment).commit();
-
-            // visibleCheat = cheats[id];
-
+            cheatDetailFragment = new CheatDetailTabletFragment();
             cheatForumFragment = new CheatForumFragment();
-            cheatDetailMetaFragment = new CheatDetailMetaFragment();
+            cheatDetailTabletMetaFragment = new CheatDetailTabletMetaFragment();
 
             // VIEW FOR TABLETS
             Bundle arguments = new Bundle();
             arguments.putInt(CheatDetailTabletFragment.ARG_ITEM_ID, id);
             arguments.putSerializable("cheatObj", visibleCheat);
-            arguments.putString("cheatForumFragment", new Gson().toJson(cheatForumFragment));
-            arguments.putString("cheatDetailMetaFragment", new Gson().toJson(cheatDetailMetaFragment));
-
-            cheatDetailFragment = new CheatDetailTabletFragment();
+            arguments.putSerializable("cheatDetailTabletFragment", cheatDetailFragment);
+            arguments.putSerializable("cheatForumFragment", cheatForumFragment);
+            arguments.putSerializable("cheatDetailTabletMetaFragment", cheatDetailTabletMetaFragment);
             cheatDetailFragment.setArguments(arguments);
+            cheatForumFragment.setArguments(arguments);
+            cheatDetailTabletMetaFragment.setArguments(arguments);
+
             getSupportFragmentManager().beginTransaction().addToBackStack(null).replace(R.id.cheat_detail_container, cheatDetailFragment).commit();
 
         } else {

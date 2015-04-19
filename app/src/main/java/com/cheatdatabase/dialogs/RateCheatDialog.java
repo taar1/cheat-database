@@ -81,6 +81,7 @@ public class RateCheatDialog extends DialogFragment {
                 } catch (Exception e) {
                     Log.e(e);
                     Toast.makeText(getActivity(), R.string.no_internet, Toast.LENGTH_SHORT).show();
+                    throw e;
                 }
                 dismiss();
             }
