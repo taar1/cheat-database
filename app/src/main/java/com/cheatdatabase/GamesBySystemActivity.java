@@ -39,6 +39,7 @@ import com.mopub.mobileads.MoPubView;
 import com.splunk.mint.Mint;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class GamesBySystemActivity extends ActionBarListActivity implements ActionBar.OnNavigationListener, AdapterView.OnItemClickListener {
 
@@ -76,6 +77,7 @@ public class GamesBySystemActivity extends ActionBarListActivity implements Acti
         setContentView(R.layout.activity_gamelist);
 
         init();
+        systemObj = (SystemPlatform) getIntent().getSerializableExtra("systemObj");
         handleIntent(getIntent());
 
         reloadView = (ImageView) findViewById(R.id.reload);
@@ -101,7 +103,7 @@ public class GamesBySystemActivity extends ActionBarListActivity implements Acti
     }
 
     private void init() {
-        Reachability.registerReachability(this.getApplicationContext());
+        Reachability.registerReachability(this);
         Mint.initAndStartSession(this, Konstanten.SPLUNK_MINT_API_KEY);
 
         mToolbar = Tools.initToolbarBase(this, mToolbar);
@@ -113,7 +115,7 @@ public class GamesBySystemActivity extends ActionBarListActivity implements Acti
 
     @Override
     public void onPause() {
-        Reachability.unregister(getApplicationContext());
+        Reachability.unregister(this);
         super.onPause();
     }
 
@@ -122,7 +124,9 @@ public class GamesBySystemActivity extends ActionBarListActivity implements Acti
         gameListAdapter = new GameListAdapter(this, R.layout.activity_gamelist, gameArrayList);
         setListAdapter(gameListAdapter);
 
-        gameListProgressDialog = ProgressDialog.show(GamesBySystemActivity.this, getString(R.string.please_wait) + "...", getString(R.string.retrieving_data) + "...", true);
+        if (gameListProgressDialog == null) {
+            gameListProgressDialog = ProgressDialog.show(GamesBySystemActivity.this, getString(R.string.please_wait) + "...", getString(R.string.retrieving_data) + "...", true);
+        }
 
         new Thread(new Runnable() {
             @Override
@@ -152,33 +156,41 @@ public class GamesBySystemActivity extends ActionBarListActivity implements Acti
 
             @Override
             public void run() {
-                systemObj = (SystemPlatform) intent.getSerializableExtra("systemObj");
+                // FIXME sysetmObj hier holen oder schon vorher (oben nach init()) ???
+//                systemObj = (SystemPlatform) intent.getSerializableExtra("systemObj");
 
-                // int titleId =
-                // getResources().getIdentifier("action_bar_title", "id",
-                // "android");
-                // TextView yourTextView = (TextView) findViewById(titleId);
-                // yourTextView.setTextColor(getResources().getColor(R.color.white));
-                // yourTextView.setTypeface(Tools.getFont(getAssets(),
-                // Konstanten.FONT_BOLD));
-
-
-                setTitle(systemObj.getSystemName());
-
-                Tools.initGA(GamesBySystemActivity.this, tracker, SCREEN_LABEL, "Game List", systemObj.getSystemName());
+                try {
+                    setTitle(systemObj.getSystemName());
+                    Tools.initGA(GamesBySystemActivity.this, tracker, SCREEN_LABEL, "Game List", systemObj.getSystemName());
+                } catch (Exception e) {
+                    throw e;
+                }
             }
         }).start();
 
     }
 
     private void getGames() {
-        gamesFound = Webservice.getGameListBySystemId(systemObj.getSystemId());
-        gameArrayList = new ArrayList<Game>();
-        for (int i = 0; i < gamesFound.length; i++) {
-            gameArrayList.add(gamesFound[i]);
-        }
-        runOnUiThread(runFillListView);
+        Log.d("getGames", "getGames()");
 
+        // Notloesung... Schauen, wie man diesen Fall besser handlen kann.
+        if (systemObj == null) {
+            finish();
+        } else {
+            Log.d("getGames", "SYSTEM-ID: " + systemObj.getSystemId());
+
+            gamesFound = Webservice.getGameListBySystemId(systemObj.getSystemId());
+            while (gamesFound == null) {
+                gamesFound = Webservice.getGameListBySystemId(systemObj.getSystemId());
+            }
+            gameArrayList = new ArrayList<Game>();
+//            for (int i = 0; i < gamesFound.length; i++) {
+//                gameArrayList.add(gamesFound[i]);
+//                Log.d("getGames", gamesFound[i].getGameName());
+//            }
+            Collections.addAll(gameArrayList, gamesFound);
+            runOnUiThread(runFillListView);
+        }
     }
 
     private Runnable runFillListView = new Runnable() {
@@ -198,6 +210,7 @@ public class GamesBySystemActivity extends ActionBarListActivity implements Acti
                     error();
                 }
             } catch (Exception e) {
+                gameListProgressDialog.dismiss();
                 error();
             }
 
@@ -258,7 +271,6 @@ public class GamesBySystemActivity extends ActionBarListActivity implements Acti
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-        Log.d("CLICKED", "CLICKEEDDDDDD xxx");
         if (Reachability.reachability.isReachable) {
             Game tmpGame = new Game();
             tmpGame.setGameId(gamesFound[position].getGameId());

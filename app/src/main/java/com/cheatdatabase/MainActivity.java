@@ -141,7 +141,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
     }
 
     private void init() {
-        Reachability.registerReachability(this.getApplicationContext());
+        Reachability.registerReachability(this);
         Mint.initAndStartSession(this, Konstanten.SPLUNK_MINT_API_KEY);
 
         latoFontBold = Tools.getFont(getAssets(), Konstanten.FONT_BOLD);
@@ -167,7 +167,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
 
     @Override
     public void onPause() {
-        Reachability.unregister(getApplicationContext());
+        Reachability.unregister(this);
         super.onPause();
     }
 

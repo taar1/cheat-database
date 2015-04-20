@@ -109,9 +109,9 @@ public class RecoverActivity extends ActionBarActivity {
     }
 
     private void init() {
-        Reachability.registerReachability(this.getApplicationContext());
+        Reachability.registerReachability(this);
 
-        Tools.initToolbarBase(this, mToolbar);
+        mToolbar = Tools.initToolbarBase(this, mToolbar);
 
         latoFontBold = Tools.getFont(getAssets(), Konstanten.FONT_BOLD);
         latoFontLight = Tools.getFont(getAssets(), Konstanten.FONT_LIGHT);
@@ -119,7 +119,7 @@ public class RecoverActivity extends ActionBarActivity {
 
     @Override
     public void onPause() {
-        Reachability.unregister(getApplicationContext());
+        Reachability.unregister(this);
         super.onPause();
     }
 
