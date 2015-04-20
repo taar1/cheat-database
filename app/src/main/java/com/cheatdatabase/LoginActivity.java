@@ -76,7 +76,7 @@ public class LoginActivity extends ActionBarActivity implements AlreadyLoggedInD
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        Reachability.registerReachability(this.getApplicationContext());
+        Reachability.registerReachability(this);
 
         Tools.initToolbarBase(this, toolbar);
 
@@ -168,7 +168,7 @@ public class LoginActivity extends ActionBarActivity implements AlreadyLoggedInD
 
     @Override
     public void onPause() {
-        Reachability.unregister(getApplicationContext());
+        Reachability.unregister(this);
         super.onPause();
     }
 
