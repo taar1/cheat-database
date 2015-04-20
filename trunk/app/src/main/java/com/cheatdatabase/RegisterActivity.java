@@ -130,7 +130,7 @@ public class RegisterActivity extends ActionBarActivity {
     }
 
     private void init() {
-        Reachability.registerReachability(this.getApplicationContext());
+        Reachability.registerReachability(this);
 
         settings = getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
         editor = settings.edit();
@@ -143,7 +143,7 @@ public class RegisterActivity extends ActionBarActivity {
 
     @Override
     public void onPause() {
-        Reachability.unregister(getApplicationContext());
+        Reachability.unregister(this);
         super.onPause();
     }
 

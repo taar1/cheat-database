@@ -100,7 +100,10 @@ public class CheatForumActivity extends ActionBarActivity implements CheatListFr
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cheat_forum);
 
-        handleIntent(getIntent());
+//        handleIntent(getIntent());
+        cheatObj = (Cheat) getIntent().getSerializableExtra("cheatObj");
+        gameObj = (Game) getIntent().getSerializableExtra("gameObj");
+
         init();
 
         tvCheatTitle = (TextView) findViewById(R.id.text_cheat_title);
@@ -154,8 +157,10 @@ public class CheatForumActivity extends ActionBarActivity implements CheatListFr
     }
 
     private void init() {
-        Reachability.registerReachability(this.getApplicationContext());
+        Reachability.registerReachability(this);
         Mint.initAndStartSession(this, Konstanten.SPLUNK_MINT_API_KEY);
+
+        Tools.initGA(CheatForumActivity.this, tracker, SCREEN_LABEL, cheatObj.getGameName() + " (" + cheatObj.getSystemName() + ")", cheatObj.getCheatTitle());
 
         settings = getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
         editor = settings.edit();
@@ -167,7 +172,7 @@ public class CheatForumActivity extends ActionBarActivity implements CheatListFr
 
         member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
 
-        Tools.initToolbarBase(this, mToolbar);
+        mToolbar = Tools.initToolbarBase(this, mToolbar);
         getSupportActionBar().setTitle(cheatObj.getGameName());
         getSupportActionBar().setSubtitle(cheatObj.getSystemName());
     }
@@ -188,7 +193,7 @@ public class CheatForumActivity extends ActionBarActivity implements CheatListFr
 
     @Override
     protected void onPause() {
-        Reachability.unregister(getApplicationContext());
+        Reachability.unregister(this);
         super.onPause();
     }
 

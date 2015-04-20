@@ -93,7 +93,7 @@ public class SearchResultsActivity extends ActionBarActivity {
 
     private void init() {
         setContentView(R.layout.activity_search_result);
-        Reachability.registerReachability(this.getApplicationContext());
+        Reachability.registerReachability(this);
 
         latoFontLight = Tools.getFont(getAssets(), Konstanten.FONT_LIGHT);
         latoFontBold = Tools.getFont(getAssets(), Konstanten.FONT_BOLD);
@@ -105,7 +105,7 @@ public class SearchResultsActivity extends ActionBarActivity {
 
     @Override
     public void onPause() {
-        Reachability.unregister(getApplicationContext());
+        Reachability.unregister(this);
         super.onPause();
     }
 

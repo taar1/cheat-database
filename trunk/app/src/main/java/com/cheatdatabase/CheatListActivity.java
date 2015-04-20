@@ -152,7 +152,7 @@ public class CheatListActivity extends ActionBarActivity implements CheatListFra
     }
 
     private void init() {
-        Reachability.registerReachability(this.getApplicationContext());
+        Reachability.registerReachability(this);
         Mint.initAndStartSession(this, Konstanten.SPLUNK_MINT_API_KEY);
 
         settings = getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
@@ -168,7 +168,7 @@ public class CheatListActivity extends ActionBarActivity implements CheatListFra
 
     @Override
     public void onPause() {
-        Reachability.unregister(getApplicationContext());
+        Reachability.unregister(this);
         super.onPause();
     }
 

@@ -125,7 +125,7 @@ public class FavoritesCheatViewPageIndicator extends ActionBarActivity implement
     }
 
     private void init() {
-        Reachability.registerReachability(this.getApplicationContext());
+        Reachability.registerReachability(this);
         Mint.initAndStartSession(this, Konstanten.SPLUNK_MINT_API_KEY);
 
         settings = getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
@@ -134,7 +134,7 @@ public class FavoritesCheatViewPageIndicator extends ActionBarActivity implement
         db = new CheatDatabaseAdapter(this);
         db.open();
 
-        Tools.initToolbarBase(this, mToolbar);
+        mToolbar = Tools.initToolbarBase(this, mToolbar);
         mAdView = Tools.initMoPubAdView(this, mAdView);
 
         member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
@@ -142,7 +142,7 @@ public class FavoritesCheatViewPageIndicator extends ActionBarActivity implement
 
     @Override
     public void onPause() {
-        Reachability.unregister(getApplicationContext());
+        Reachability.unregister(this);
         super.onPause();
     }
 
