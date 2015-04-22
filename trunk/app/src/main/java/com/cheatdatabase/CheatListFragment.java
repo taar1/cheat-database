@@ -175,10 +175,6 @@ public class CheatListFragment extends ListFragment {
                 Log.e("CheatListActivity()", "Webservice.getCheatList() == null");
             }
 
-//            for (int i = 0; i < cheats.length; i++) {
-//                Log.d("cheats", cheats[i].getCheatTitle());
-//            }
-
             gameObj.setCheats(cheats);
 
             // Put game object to local storage for large games like Pokemon
