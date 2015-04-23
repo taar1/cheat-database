@@ -176,28 +176,6 @@ public class MemberCheatListActivity extends ActionBarListActivity implements Ad
         getCheats();
     }
 
-//    @Override
-//    protected void onListItemClick(ListView l, View v, int position, long id) {
-//        super.onListItemClick(l, v, position, id);
-//
-//        if (Reachability.reachability.isReachable) {
-//
-//            Intent explicitIntent = new Intent(MemberCheatListActivity.this, MemberCheatViewPageIndicator.class);
-//
-//            // Delete Walkthrough texts (otherwise runs into a timeout)
-//            for (int i = 0; i < cheats.length; i++) {
-//                if (cheats[i].isWalkthroughFormat()) {
-//                    cheats[i].setCheatText("");
-//                }
-//            }
-//            explicitIntent.putExtra("cheatsObj", new Gson().toJson(cheats));
-//            explicitIntent.putExtra("selectedPage", position);
-//            startActivity(explicitIntent);
-//        } else {
-//            Toast.makeText(MemberCheatListActivity.this, R.string.no_internet, Toast.LENGTH_SHORT).show();
-//        }
-//    }
-
     private void getCheats() {
 
         new Thread(new Runnable() {
@@ -241,14 +219,20 @@ public class MemberCheatListActivity extends ActionBarListActivity implements Ad
 
             Intent explicitIntent = new Intent(MemberCheatListActivity.this, MemberCheatViewPageIndicator.class);
 
-            // Delete Walkthrough texts (otherwise runs into a timeout)
-            for (int i = 0; i < cheats.length; i++) {
-                if (cheats[i].isWalkthroughFormat()) {
-                    cheats[i].setCheatText("");
+            if (cheats.length <= 100) {
+                // Delete Walkthrough texts (otherwise runs into a timeout)
+                for (int i = 0; i < cheats.length; i++) {
+                    if (cheats[i].isWalkthroughFormat()) {
+                        cheats[i].setCheatText("");
+                    }
                 }
+                explicitIntent.putExtra("cheatsObj", cheats);
+            } else {
+                // Save to SharedPreferences if array too big
+                editor.putString(Konstanten.PREFERENCES_TEMP_CHEAT_ARRAY_OBJECT_VIEW, new Gson().toJson(cheats));
+                editor.apply();
             }
-            // FIXME? serializable or GSON?
-            explicitIntent.putExtra("cheatsObj", cheats);
+
             explicitIntent.putExtra("selectedPage", position);
             startActivity(explicitIntent);
         } else {
