@@ -71,7 +71,7 @@ public class TopMembersFragment extends ListFragment {
         super.onCreate(savedInstanceState);
 
         ca = getActivity();
-        Reachability.registerReachability(ca.getApplicationContext());
+        Reachability.registerReachability(ca);
 
         latoFontLight = Tools.getFont(ca.getAssets(), Konstanten.FONT_LIGHT);
         latoFontBold = Tools.getFont(ca.getAssets(), Konstanten.FONT_BOLD);
@@ -82,7 +82,7 @@ public class TopMembersFragment extends ListFragment {
 
     @Override
     public void onPause() {
-        Reachability.unregister(ca.getApplicationContext());
+        Reachability.unregister(ca);
         super.onPause();
     }
 

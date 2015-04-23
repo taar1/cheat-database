@@ -100,7 +100,7 @@ public class CheatDetailTabletMetaFragment extends Fragment implements OnClickLi
     }
 
     private void init() {
-        Reachability.registerReachability(ca.getApplicationContext());
+        Reachability.registerReachability(ca);
         Mint.initAndStartSession(ca.getApplicationContext(), Konstanten.SPLUNK_MINT_API_KEY);
 
         latoFontLight = Tools.getFont(getActivity().getAssets(), Konstanten.FONT_LIGHT);
@@ -109,7 +109,7 @@ public class CheatDetailTabletMetaFragment extends Fragment implements OnClickLi
 
     @Override
     public void onPause() {
-        Reachability.unregister(ca.getApplicationContext());
+        Reachability.unregister(ca);
         super.onPause();
     }
 
