@@ -440,7 +440,7 @@ public class MemberCheatViewFragment extends Fragment implements OnClickListener
                     URLConnection conn = aURL.openConnection();
                     conn.connect();
                     InputStream is = conn.getInputStream();
-					/* Buffered is always good for a performance plus. */
+                    /* Buffered is always good for a performance plus. */
                     BufferedInputStream bis = new BufferedInputStream(is);
 					/* Decode url-data to a bitmap. */
                     Bitmap bm = BitmapFactory.decodeStream(bis);
@@ -536,86 +536,6 @@ public class MemberCheatViewFragment extends Fragment implements OnClickListener
         }
 
     }
-
-    // public void rateCheat() {
-    //
-    // if ((member != null) && (member.getMid() != 0)) {
-    // LayoutInflater inflater = getActivity().getLayoutInflater();
-    // View dialoglayout = inflater.inflate(R.layout.layout_rate_cheat, null);
-    //
-    // TextView rateCheatText = (TextView)
-    // dialoglayout.findViewById(R.id.rate_cheat_text);
-    // rateCheatText.setText(getActivity().getString(R.string.rate_cheat_title,
-    // cheatObj.getCheatTitle()));
-    //
-    // final RatingBar rb = (RatingBar)
-    // dialoglayout.findViewById(R.id.ratingbar);
-    // rb.setRating(cheatObj.getMemberRating() / 2);
-    //
-    // AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-    // builder.setTitle(R.string.rate_cheat);
-    // builder.setPositiveButton(R.string.rate_cheat_plain, new
-    // DialogInterface.OnClickListener() {
-    //
-    // @Override
-    // public void onClick(DialogInterface dialog, int which) {
-    // if (ca.getConnectivityManager().getActiveNetworkInfo() != null) {
-    //
-    // final int fixedRating = (int) (rb.getRating() * 2);
-    //
-    // new Thread(new Runnable() {
-    //
-    // @Override
-    // public void run() {
-    // final int status = Webservice.rateCheat(member.getMid(),
-    // cheatObj.getCheatId(), fixedRating);
-    // cheatObj.setMemberRating(fixedRating);
-    //
-    // getActivity().runOnUiThread(new Runnable() {
-    //
-    // @Override
-    // public void run() {
-    // // 1 = Insert, 2 = Update
-    // if (status == 2) {
-    // Toast.makeText(getActivity(), R.string.rating_updated,
-    // Toast.LENGTH_SHORT).show();
-    // } else {
-    // Toast.makeText(getActivity(), R.string.rating_inserted,
-    // Toast.LENGTH_SHORT).show();
-    // }
-    // highlightRatingIcon(true);
-    // }
-    // });
-    //
-    // }
-    // }).start();
-    //
-    // } else {
-    // Toast.makeText(getActivity(), R.string.no_internet,
-    // Toast.LENGTH_SHORT).show();
-    // }
-    // }
-    //
-    // });
-    // builder.setNegativeButton(R.string.cancel, new
-    // DialogInterface.OnClickListener() {
-    //
-    // @Override
-    // public void onClick(DialogInterface dialog, int which) {
-    // dialog.dismiss();
-    // }
-    //
-    // });
-    //
-    // builder.setView(dialoglayout);
-    // builder.create();
-    // builder.show();
-    // } else {
-    // Toast.makeText(getActivity(), R.string.error_login_to_rate,
-    // Toast.LENGTH_LONG).show();
-    // }
-    //
-    // }
 
     public void highlightRatingIcon(boolean highlight) {
         // rating icon highlighten...

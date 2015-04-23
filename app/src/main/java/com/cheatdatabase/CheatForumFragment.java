@@ -80,7 +80,7 @@ public class CheatForumFragment extends Fragment implements OnClickListener, Ser
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ca = (CheatListActivity) getActivity();
-        Reachability.registerReachability(ca.getApplicationContext());
+        Reachability.registerReachability(ca);
 
         latoFontLight = Tools.getFont(getActivity().getAssets(), Konstanten.FONT_LIGHT);
         latoFontBold = Tools.getFont(getActivity().getAssets(), Konstanten.FONT_BOLD);
@@ -99,7 +99,7 @@ public class CheatForumFragment extends Fragment implements OnClickListener, Ser
 
     @Override
     public void onPause() {
-        Reachability.unregister(ca.getApplicationContext());
+        Reachability.unregister(ca);
         super.onPause();
     }
 
