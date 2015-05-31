@@ -15,7 +15,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/color_primary_light"
-            android:theme="@style/Theme.Navyblue"/>
+            android:theme="@style/Theme.Navyblue" />
 
         <FrameLayout
             android:id="@+id/content_frame"

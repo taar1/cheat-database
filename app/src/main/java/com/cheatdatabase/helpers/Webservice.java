@@ -1256,15 +1256,14 @@ public class Webservice {
      *
      * @return SystemPlatform[]
      */
-    public static SystemPlatform[] countGamesAndCheatsBySystem() {
-        String topMembers = query(Konstanten.BASE_URL_ANDROID + "countGamesAndCheatsBySystem.php");
+    public static ArrayList<SystemPlatform> countGamesAndCheatsBySystem() {
+        String gamesAndCheatCounter = query(Konstanten.BASE_URL_ANDROID + "countGamesAndCheatsBySystem.php");
 
-        SystemPlatform[] systems = null;
+        ArrayList<SystemPlatform> systems = new ArrayList<SystemPlatform>();
 
         JSONArray jArray;
         try {
-            jArray = new JSONArray(topMembers);
-            systems = new SystemPlatform[jArray.length()];
+            jArray = new JSONArray(gamesAndCheatCounter);
 
             for (int i = 0; i < jArray.length(); i++) {
 
@@ -1276,11 +1275,11 @@ public class Webservice {
                 system.setGameCount(jsonObject.getInt("gamesCounter"));
                 system.setCheatCount(jsonObject.getInt("cheatsCounter"));
 
-                systems[i] = system;
+                systems.add(system);
             }
 
         } catch (JSONException e) {
-            Log.e("getMemberTop20", "JSON Parsing Error: " + e);
+            Log.e("countGamesAndCheatsBySystem", "JSON Parsing Error: " + e);
         }
 
         return systems;
