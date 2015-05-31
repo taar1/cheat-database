@@ -36,12 +36,14 @@ repositories {
     maven {
         url "https://mint.splunk.com/gradle/"
     }
+    maven {
+        url 'http://swisscodemonkeys.github.io/appbrain-sdk/maven'
+    }
 }
 
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile files('libs/appbrain-applift-sdk-v10.2.jar')
     compile files('libs/InMobi-4.5.1.jar')
     compile files('libs/libGoogleAnalyticsServices.jar')
     compile files('libs/MMSDK.jar')
@@ -56,4 +58,6 @@ dependencies {
     compile 'com.cocosw:bottomsheet:0.+@aar'
     compile 'com.splunk.mint:mint:4.1'
     compile project(':mopub-3.6-sdk')
+    compile 'com.appbrain:appbrain-applift-sdk:+'
+    compile 'de.greenrobot:eventbus:2.4.0'
 }

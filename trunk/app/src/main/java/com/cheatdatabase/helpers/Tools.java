@@ -388,15 +388,9 @@ public class Tools {
         return gsList;
     }
 
-    public static String[] getSystemNames(Activity activity) {
+    public static ArrayList<SystemPlatform> getSystemNamesFromXml(Activity activity) {
         ArrayList<SystemPlatform> al = getGameSystemsFromXml(activity);
-        String[] gameSystemNamesOnly = new String[al.size()];
-
-        for (int i = 0; i < al.size(); i++) {
-            gameSystemNamesOnly[i] = al.get(i).getSystemName();
-        }
-
-        return gameSystemNamesOnly;
+        return al;
     }
 
     public static SystemPlatform getSystemObjectByName(Activity activity, String systemName) {
