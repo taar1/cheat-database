@@ -25,17 +25,13 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.util.SparseArray;
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.appbrain.AppBrain;
@@ -61,9 +57,12 @@ import com.splunk.mint.Mint;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends ActionBarActivity implements ActionBar.OnNavigationListener {
+import de.greenrobot.event.EventBus;
 
-    private static Typeface latoFontBold;
+public class MainActivity extends ActionBarActivity implements ActionBar.OnNavigationListener {
+    private static EventBus eventBus;
+
+//    private static Typeface latoFontBold;
 
     private Tracker tracker;
 
@@ -96,6 +95,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
     private MenuItem searchItem;
     private SearchView searchView;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -111,40 +111,42 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
         createNavigationDrawer(savedInstanceState);
     }
 
-    /**
-     * Custom adapter dropdown menu with all the game systems.
-     *
-     * @author Dominik
-     */
-    public class GameSystemsAdapter extends ArrayAdapter<String> {
-        private final Context context;
-        private final String[] values;
 
-        public GameSystemsAdapter(Context context, String[] values) {
-            super(context, R.layout.gamesystem_dropdown_menu_item, values);
-            this.context = context;
-            this.values = values;
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
-            View rowView = inflater.inflate(R.layout.gamesystem_dropdown_menu_item, parent, false);
-
-            TextView textView = (TextView) rowView.findViewById(R.id.system_name);
-            textView.setTypeface(latoFontBold);
-            textView.setText(values[position]);
-
-            return rowView;
-        }
-    }
+//    /**
+//     * Custom adapter dropdown menu with all the game systems.
+//     *
+//     * @author Dominik
+//     */
+//    public class GameSystemsAdapter extends ArrayAdapter<String> {
+//        private final Context context;
+//        private final String[] values;
+//
+//        public GameSystemsAdapter(Context context, String[] values) {
+//            super(context, R.layout.gamesystem_list_item, values);
+//            this.context = context;
+//            this.values = values;
+//        }
+//
+//        @Override
+//        public View getView(int position, View convertView, ViewGroup parent) {
+//            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+//
+//            View rowView = inflater.inflate(R.layout.gamesystem_list_item, parent, false);
+//
+//            TextView textView = (TextView) rowView.findViewById(R.id.system_name);
+//            textView.setTypeface(latoFontBold);
+//            textView.setText(values[position]);
+//
+//            return rowView;
+//        }
+//    }
 
     private void init() {
         Reachability.registerReachability(this);
         Mint.initAndStartSession(this, Konstanten.SPLUNK_MINT_API_KEY);
+        eventBus = EventBus.builder().throwSubscriberException(BuildConfig.DEBUG).installDefaultEventBus();
 
-        latoFontBold = Tools.getFont(getAssets(), Konstanten.FONT_BOLD);
+//        latoFontBold = Tools.getFont(getAssets(), Konstanten.FONT_BOLD);
 
         settings = getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
         editor = settings.edit();
@@ -167,19 +169,20 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
 
     @Override
     public void onPause() {
-        Reachability.unregister(this);
         super.onPause();
+        Reachability.unregister(this);
     }
 
+
     @Override
-    protected void onResume() {
+    public void onResume() {
         super.onResume();
         // selectItem(0); // FIXME here maybe preserving fragment ID
         member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
     }
 
     @Override
-    protected void onDestroy() {
+    public void onDestroy() {
         if (mAdView != null) {
             mAdView.destroy();
         }
@@ -529,4 +532,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
         finish();
     }
 
+    public static EventBus getEventBus() {
+        return eventBus;
+    }
 }

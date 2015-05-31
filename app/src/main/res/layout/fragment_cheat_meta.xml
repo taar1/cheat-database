@@ -61,7 +61,7 @@
                     android:id="@+id/llBuffer1"
                     android:layout_width="fill_parent"
                     android:layout_height="1dp"
-                    android:background="@color/drawer_divier_bars_background"
+                    android:background="@color/drawer_divider_bars_background"
                     android:orientation="horizontal"></LinearLayout>
 
                 <LinearLayout
@@ -93,7 +93,7 @@
                     android:id="@+id/llBuffer2"
                     android:layout_width="fill_parent"
                     android:layout_height="1dp"
-                    android:background="@color/drawer_divier_bars_background"
+                    android:background="@color/drawer_divider_bars_background"
                     android:orientation="horizontal"></LinearLayout>
 
                 <LinearLayout
@@ -125,7 +125,7 @@
                     android:id="@+id/llBuffer3"
                     android:layout_width="fill_parent"
                     android:layout_height="1dp"
-                    android:background="@color/drawer_divier_bars_background"
+                    android:background="@color/drawer_divider_bars_background"
                     android:orientation="horizontal"></LinearLayout>
 
                 <LinearLayout
@@ -157,7 +157,7 @@
                     android:id="@+id/llBuffer4"
                     android:layout_width="fill_parent"
                     android:layout_height="1dp"
-                    android:background="@color/drawer_divier_bars_background"
+                    android:background="@color/drawer_divider_bars_background"
                     android:orientation="horizontal"></LinearLayout>
 
                 <LinearLayout
@@ -189,7 +189,7 @@
                     android:id="@+id/llBuffer5"
                     android:layout_width="fill_parent"
                     android:layout_height="1dp"
-                    android:background="@color/drawer_divier_bars_background"
+                    android:background="@color/drawer_divider_bars_background"
                     android:orientation="horizontal"></LinearLayout>
 
                 <LinearLayout
@@ -242,7 +242,7 @@
                     android:id="@+id/llBuffer6"
                     android:layout_width="fill_parent"
                     android:layout_height="1dp"
-                    android:background="@color/drawer_divier_bars_background"
+                    android:background="@color/drawer_divider_bars_background"
                     android:orientation="horizontal"></LinearLayout>
 
                 <LinearLayout
