@@ -10,7 +10,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.content.res.Configuration;
-import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -57,10 +56,9 @@ import com.splunk.mint.Mint;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.greenrobot.event.EventBus;
 
 public class MainActivity extends ActionBarActivity implements ActionBar.OnNavigationListener {
-    private static EventBus eventBus;
+
 
 //    private static Typeface latoFontBold;
 
@@ -111,42 +109,9 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
         createNavigationDrawer(savedInstanceState);
     }
 
-
-//    /**
-//     * Custom adapter dropdown menu with all the game systems.
-//     *
-//     * @author Dominik
-//     */
-//    public class GameSystemsAdapter extends ArrayAdapter<String> {
-//        private final Context context;
-//        private final String[] values;
-//
-//        public GameSystemsAdapter(Context context, String[] values) {
-//            super(context, R.layout.gamesystem_list_item, values);
-//            this.context = context;
-//            this.values = values;
-//        }
-//
-//        @Override
-//        public View getView(int position, View convertView, ViewGroup parent) {
-//            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-//
-//            View rowView = inflater.inflate(R.layout.gamesystem_list_item, parent, false);
-//
-//            TextView textView = (TextView) rowView.findViewById(R.id.system_name);
-//            textView.setTypeface(latoFontBold);
-//            textView.setText(values[position]);
-//
-//            return rowView;
-//        }
-//    }
-
     private void init() {
         Reachability.registerReachability(this);
         Mint.initAndStartSession(this, Konstanten.SPLUNK_MINT_API_KEY);
-        eventBus = EventBus.builder().throwSubscriberException(BuildConfig.DEBUG).installDefaultEventBus();
-
-//        latoFontBold = Tools.getFont(getAssets(), Konstanten.FONT_BOLD);
 
         settings = getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
         editor = settings.edit();
@@ -532,7 +497,4 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
         finish();
     }
 
-    public static EventBus getEventBus() {
-        return eventBus;
-    }
 }
