@@ -1,6 +1,7 @@
 package com.cheatdatabase.fragments;
 
 import android.app.Fragment;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -10,12 +11,15 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
-import com.cheatdatabase.MainActivity;
+import com.cheatdatabase.CheatDatabaseApplication;
+import com.cheatdatabase.GamesBySystemActivity;
 import com.cheatdatabase.R;
 import com.cheatdatabase.adapters.SystemsRecycleListViewAdapter;
 import com.cheatdatabase.businessobjects.SystemPlatform;
 import com.cheatdatabase.events.GamesAndCheatsCounterLoadedEventResult;
+import com.cheatdatabase.events.SystemListRecyclerViewClickEvent;
 import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Tools;
 import com.cheatdatabase.helpers.Webservice;
@@ -40,6 +44,7 @@ public class SystemListFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
+    private ArrayList<SystemPlatform> gameSystems;
 
     public SystemListFragment() {
     }
@@ -69,7 +74,7 @@ public class SystemListFragment extends Fragment {
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         // Load Systems from XML. Load counters in background service later on.
-        ArrayList<SystemPlatform> gameSystems = Tools.getGameSystemsFromXml(getActivity());
+        gameSystems = Tools.getGameSystemsFromXml(getActivity());
 
         // specify an adapter (see also next example)
         mAdapter = new SystemsRecycleListViewAdapter(gameSystems);
@@ -83,52 +88,37 @@ public class SystemListFragment extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
-        MainActivity.getEventBus().unregister(this);
+        CheatDatabaseApplication.getEventBus().unregister(this);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        MainActivity.getEventBus().register(this);
+        CheatDatabaseApplication.getEventBus().register(this);
     }
 
     public void onEvent(GamesAndCheatsCounterLoadedEventResult result) {
         if (result.isSucceeded()) {
             mAdapter = new SystemsRecycleListViewAdapter(result.getSystemPlatforms());
             mRecyclerView.setAdapter(mAdapter);
+        } else {
+            Toast.makeText(getActivity(), R.string.no_internet, Toast.LENGTH_LONG).show();
         }
     }
 
-
-//    @Override
-//    public void onListItemClick(ListView l, View v, int position, long id) {
-//        super.onListItemClick(l, v, position, id);
-//
-//        if (Reachability.reachability.isReachable) {
-//            Intent explicitIntent = new Intent(getActivity(), GamesBySystemActivity.class);
-//            explicitIntent.putExtra("systemObj", Tools.getSystemObjectByName(getActivity(), allSystemNames.get(position).getSystemName()));
-//            startActivity(explicitIntent);
-//        } else {
-//            Toast.makeText(getActivity(), R.string.no_internet, Toast.LENGTH_SHORT).show();
-//        }
-//    }
-
-
-    // TODO onListItemClick noch machen in der recycleview
-    // TODO onListItemClick noch machen in der recycleview
-    // TODO onListItemClick noch machen in der recycleview
-    // TODO onListItemClick noch machen in der recycleview
-    // TODO onListItemClick noch machen in der recycleview
-    // TODO onListItemClick noch machen in der recycleview
-    // TODO onListItemClick noch machen in der recycleview
-    // TODO onListItemClick noch machen in der recycleview
-    // TODO onListItemClick noch machen in der recycleview
-    // TODO onListItemClick noch machen in der recycleview
-    // TODO onListItemClick noch machen in der recycleview
-    // TODO onListItemClick noch machen in der recycleview
-
+    public void onEvent(SystemListRecyclerViewClickEvent result) {
+        if (result.isSucceeded()) {
+            Intent explicitIntent = new Intent(getActivity(), GamesBySystemActivity.class);
+            explicitIntent.putExtra("systemObj", result.getSystemPlatform());
+            startActivity(explicitIntent);
+        } else {
+            Toast.makeText(getActivity(), R.string.no_internet, Toast.LENGTH_SHORT).show();
+        }
+    }
 
     private class LoadGamesAndCheatsCounterBackgroundTask extends AsyncTask<Void, Void, Void> {
+
+        GamesAndCheatsCounterLoadedEventResult gamesAndCheatsCounterLoadedEventResult;
 
         @Override
         protected Void doInBackground(Void... params) {
@@ -140,15 +130,13 @@ public class SystemListFragment extends Fragment {
                 Log.e("LoadGamesAndCheatsCounterBackgroundTask", "Load game and cheats counters failed: " + e.getLocalizedMessage());
             }
 
-            GamesAndCheatsCounterLoadedEventResult gamesAndCheatsCounterLoadedEventResult;
-            if (systemGameandCheatCounterList == null) {
+            if ((systemGameandCheatCounterList == null) || systemGameandCheatCounterList.size() == 0) {
                 gamesAndCheatsCounterLoadedEventResult = new GamesAndCheatsCounterLoadedEventResult(new Exception());
             } else {
                 // Sorting
                 Collections.sort(systemGameandCheatCounterList, new Comparator<SystemPlatform>() {
                     @Override
                     public int compare(SystemPlatform system1, SystemPlatform system2) {
-
                         return system1.getSystemName().compareTo(system2.getSystemName());
                     }
                 });
@@ -157,10 +145,14 @@ public class SystemListFragment extends Fragment {
 
             }
 
-            MainActivity.getEventBus().post(gamesAndCheatsCounterLoadedEventResult);
             return null;
         }
 
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            CheatDatabaseApplication.getEventBus().post(gamesAndCheatsCounterLoadedEventResult);
+        }
     }
 
 }
