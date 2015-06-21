@@ -6,14 +6,14 @@ public class Konstanten {
     public final static int DEFAULT_TOTAL_CHEATS = 137000;
 
     // GOOGLE VALUES
-//    public static final String GOOGLE_PLAY_URL =
-//            "https://play.google.com/store/apps/details?id=com.cheatdatabase";
-//    public static final String URL_MORE_APPS =
-//            "https://play.google.com/store/apps/developer?id=E-Nature";
+    public static final String GOOGLE_PLAY_URL =
+            "https://play.google.com/store/apps/details?id=com.cheatdatabase";
+    public static final String URL_MORE_APPS =
+            "https://play.google.com/store/apps/developer?id=E-Nature";
 
     // AMAZON VALUES
-	public static final String GOOGLE_PLAY_URL = "http://www.amazon.com/gp/mas/dl/android?p=com.cheatdatabase";
-	public static final String URL_MORE_APPS = "http://www.amazon.com/gp/mas/dl/android?p=com.cheatdatabase&showAll=1";
+//	public static final String GOOGLE_PLAY_URL = "http://www.amazon.com/gp/mas/dl/android?p=com.cheatdatabase";
+//	public static final String URL_MORE_APPS = "http://www.amazon.com/gp/mas/dl/android?p=com.cheatdatabase&showAll=1";
 
     // URL Konstanten
     public final static String BASE_URL = "http://www.cheat-database.com/";

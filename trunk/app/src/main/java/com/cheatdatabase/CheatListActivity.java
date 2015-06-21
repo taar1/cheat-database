@@ -393,9 +393,10 @@ public class CheatListActivity extends ActionBarActivity implements CheatListFra
             case android.R.id.home:
                 editor.remove(Konstanten.PREFERENCES_TEMP_GAME_OBJECT_VIEW);
                 editor.commit();
-                Intent eIntent = new Intent(this, GamesBySystemActivity.class);
-                eIntent.putExtra("systemObj", Tools.getSystemObjectByName(CheatListActivity.this, gameObj.getSystemName()));
-                startActivity(eIntent);
+//                Intent eIntent = new Intent(this, GamesBySystemActivity.class);
+//                eIntent.putExtra("systemObj", Tools.getSystemObjectByName(CheatListActivity.this, gameObj.getSystemName()));
+//                startActivity(eIntent);
+                GamesBySystemActivity_.intent(this).systemObj(Tools.getSystemObjectByName(CheatListActivity.this, Tools.getSystemNameById(this, gameObj.getSystemId()))).start();
                 return true;
             case R.id.action_add_to_favorites:
                 Toast.makeText(CheatListActivity.this, R.string.favorite_adding, Toast.LENGTH_SHORT).show();

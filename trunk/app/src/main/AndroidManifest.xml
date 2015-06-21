@@ -44,7 +44,7 @@
             android:name=".search.SearchResultsActivity"
             android:label="@string/title_activity_search_result"
             android:logo="@drawable/app_icon_fox"
-            android:parentActivityName=".MainActivity">
+            android:parentActivityName=".MainActivity_">
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
@@ -59,7 +59,7 @@
         <activity
             android:name=".GamesBySystemActivity_"
             android:logo="@drawable/app_icon_fox"
-            android:parentActivityName=".MainActivity"
+            android:parentActivityName=".MainActivity_"
             android:screenOrientation="portrait">
             <meta-data
                 android:name="android.app.default_searchable"
@@ -73,11 +73,11 @@
             android:name=".CheatListActivity"
             android:label="@string/title_cheat_list"
             android:logo="@drawable/app_icon_fox"
-            android:parentActivityName=".GamesBySystemActivity"
+            android:parentActivityName=".GamesBySystemActivity_"
             android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.cheatdatabase.GamesBySystemActivity" />
+                android:value="com.cheatdatabase.GamesBySystemActivity_" />
             <meta-data
                 android:name="android.app.default_searchable"
                 android:value="com.cheatdatabase.search.SearchResultsActivity" />
@@ -115,7 +115,7 @@
         <activity
             android:name=".MemberCheatListActivity"
             android:logo="@drawable/app_icon_fox"
-            android:parentActivityName=".MainActivity">
+            android:parentActivityName=".MainActivity_">
             <meta-data
                 android:name="android.app.default_searchable"
                 android:value="com.cheatdatabase.search.SearchResultsActivity" />
@@ -146,11 +146,11 @@
             android:name=".favorites.FavoriteCheatListActivity"
             android:label="@string/title_favorite_list"
             android:logo="@drawable/app_icon_fox"
-            android:parentActivityName=".MainActivity"
+            android:parentActivityName=".MainActivity_"
             android:theme="@style/Theme.Navyblue">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.cheatdatabase.MainActivity" />
+                android:value="com.cheatdatabase.MainActivity_" />
             <meta-data
                 android:name="android.app.default_searchable"
                 android:value="com.cheatdatabase.search.SearchResultsActivity" />

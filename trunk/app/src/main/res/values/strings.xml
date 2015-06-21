@@ -301,4 +301,14 @@
     <string name="remove_favorite_areyousure">Remove this cheat from favorites?</string>
     <string name="confirm">Confirm</string>
 
+    <plurals name="set_cheats">
+        <item quantity="one">Cheat</item>
+        <item quantity="other">Cheats</item>
+    </plurals>
+
+    <plurals name="set_games">
+        <item quantity="one">Game</item>
+        <item quantity="other">Games</item>
+    </plurals>
+
 </resources>

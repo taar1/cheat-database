@@ -1,4 +1,4 @@
-package com.cheatdatabase.events;
+package com.cheatdatabase.taskresults;
 
 import com.cheatdatabase.businessobjects.SystemPlatform;
 
@@ -7,18 +7,18 @@ import java.util.ArrayList;
 /**
  * Created by Dominik on 31.05.2015.
  */
-public class GamesAndCheatsCounterLoadedEventResult {
+public class GamesAndCheatsCountTaskResult {
 
     private Exception mException;
     private boolean mSucceeded;
     private ArrayList<SystemPlatform> systemPlatforms;
 
-    public GamesAndCheatsCounterLoadedEventResult(ArrayList<SystemPlatform> systemPlatforms) {
+    public GamesAndCheatsCountTaskResult(ArrayList<SystemPlatform> systemPlatforms) {
         mSucceeded = true;
         this.systemPlatforms = systemPlatforms;
     }
 
-    public GamesAndCheatsCounterLoadedEventResult(Exception exception) {
+    public GamesAndCheatsCountTaskResult(Exception exception) {
         mSucceeded = false;
         mException = exception;
     }

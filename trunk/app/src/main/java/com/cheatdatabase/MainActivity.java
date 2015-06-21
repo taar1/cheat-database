@@ -22,7 +22,6 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.util.SparseArray;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -42,7 +41,6 @@ import com.cheatdatabase.fragments.SubmitCheatFragment;
 import com.cheatdatabase.fragments.SystemListFragment;
 import com.cheatdatabase.fragments.SystemListFragment_;
 import com.cheatdatabase.fragments.TopMembersFragment;
-import com.cheatdatabase.helpers.Group;
 import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.helpers.Tools;
@@ -55,6 +53,7 @@ import com.mopub.mobileads.MoPubView;
 import com.splunk.mint.Mint;
 
 import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 
@@ -64,55 +63,39 @@ import java.util.List;
 @EActivity(R.layout.activity_main)
 public class MainActivity extends ActionBarActivity implements ActionBar.OnNavigationListener {
 
-    private Tracker tracker;
-
     // Navigation Drawer
-//    private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
     private ActionBarDrawerToggle mDrawerToggle;
     private CharSequence mTitle;
     private CharSequence mDrawerTitle;
-    // private String[] mNavigationDrawerListEntries;
+
     List<DrawerItem> dataList;
     CustomDrawerAdapter mAdapter;
 
-    // more efficient than HashMap for mapping integers to objects
-    SparseArray<Group> groups = new SparseArray<Group>();
-
     private Member member;
-
-    // private String[] allSystems;
-    // private String[] allSystemsPlusEmpty;
 
     private SharedPreferences settings;
     private Editor editor;
 
-    private MoPubView mAdView;
-
-    private static final String SCREEN_LABEL = "Main Activity";
-    private Toolbar mToolbar;
     private SearchManager searchManager;
     private MenuItem searchItem;
     private SearchView searchView;
 
+    private Tracker tracker;
+
+    private static final String SCREEN_LABEL = "Main Activity";
+
+    @ViewById(R.id.adview)
+    MoPubView mAdView;
+
+    @ViewById(R.id.toolbar)
+    Toolbar mToolbar;
+
     @ViewById(R.id.drawer_layout)
     DrawerLayout mDrawerLayout;
 
-
-//    @Override
-//    protected void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_main);
-//        setTitle(R.string.app_name);
-//
-//        init();
-//
-//        DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-//        drawerLayout.setStatusBarBackgroundColor(getResources().getColor(R.color.page_indicator_background));
-//
-//        // Create Drawer
-//        createNavigationDrawer(savedInstanceState);
-//    }
+    @Bean
+    Tools tools;
 
     @AfterViews
     public void createView() {
@@ -124,12 +107,16 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
         settings = getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
         editor = settings.edit();
 
-        mToolbar = Tools.initToolbarBase(this, mToolbar);
+        if (mToolbar != null) {
+            setSupportActionBar(mToolbar);
+        }
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.app_icon_fox);
 
-        mAdView = Tools.initMoPubAdView(this, mAdView);
+        tools.loadAd(mAdView, getString(R.string.screen_type));
 
-        Tools.initGA(MainActivity.this, tracker, SCREEN_LABEL, "Main Activity", "Cheat-Database Main Activity");
+        tools.initGA(MainActivity.this, tracker, SCREEN_LABEL, "Main Activity", "Cheat-Database Main Activity");
 
         AppBrain.init(this);
 
@@ -139,20 +126,15 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
         FragmentManager frgManager = getFragmentManager();
         frgManager.beginTransaction().replace(R.id.content_frame, SystemListFragment_.builder().build()).commit();
 
-//        SystemListFragment fragment = SystemListFragment_.builder().build();
-
-
         // Create Drawer
         createNavigationDrawer();
     }
-
 
     @Override
     public void onPause() {
         super.onPause();
         Reachability.unregister(this);
     }
-
 
     @Override
     public void onResume() {
@@ -173,7 +155,6 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
     private void createNavigationDrawer() {
         mTitle = mDrawerTitle = getTitle();
 
-//        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerLayout.setStatusBarBackgroundColor(getResources().getColor(R.color.page_indicator_background));
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, mToolbar, R.string.drawer_open, R.string.drawer_close);
         mDrawerLayout.setDrawerListener(mDrawerToggle);
@@ -257,8 +238,6 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
         try {
             getMenuInflater().inflate(R.menu.search_menu, menu);
             searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-//        SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
-//        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
 
             searchItem = menu.findItem(R.id.search);
             searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
@@ -312,26 +291,14 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
 
     @Override
     public boolean onNavigationItemSelected(int position, long id) {
-
-        // SELECTION OF SYSTEM IN DROPDOWN MENU
-        // if (position > 0) {
-        // // List all Games from selected System
-        // Intent explicitIntent = new Intent(this,
-        // GamesBySystemActivity.class);
-        // explicitIntent.putExtra("systemObj",
-        // Tools.getSystemObjectByName(this, allSystems[position - 1]));
-        // startActivity(explicitIntent);
-        // } else {
         Fragment fragment = new SystemListFragment();
-        //getSupportActionBar().setTitle(R.string.app_name);
 
         FragmentManager frgManager = getFragmentManager();
-        frgManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
+        frgManager.beginTransaction().replace(R.id.content_frame, SystemListFragment_.builder().build()).commit();
 
         mDrawerList.setItemChecked(position, true);
         setTitle(dataList.get(position).getItemName());
         mDrawerLayout.closeDrawer(mDrawerList);
-        // }
 
         return true;
     }
@@ -376,7 +343,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
                 return true;
             case R.id.action_logout:
                 member = null;
-                Tools.logout(MainActivity.this, settings.edit());
+                tools.logout(MainActivity.this, settings.edit());
                 invalidateOptionsMenu();
                 return true;
             default:
@@ -402,11 +369,10 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
 
         switch (position) {
             case DRAWER_MAIN:
-                fragment = new SystemListFragment();
-                args.putString(SystemListFragment.ITEM_NAME, dataList.get(position).getItemName());
-                args.putInt(SystemListFragment.IMAGE_RESOURCE_ID, dataList.get(position).getImgResID());
+                FragmentManager frgManager = getFragmentManager();
+                frgManager.beginTransaction().replace(R.id.content_frame, SystemListFragment_.builder().build()).commit();
                 mToolbar.setTitle(R.string.app_name);
-                isFragment = true;
+                isFragment = false;
                 break;
             case DRAWER_NEWS:
                 fragment = new NewsFragment();
@@ -468,10 +434,11 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
             FragmentManager frgManager = getFragmentManager();
             frgManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
 
-            mDrawerList.setItemChecked(position, true);
-            setTitle(dataList.get(position).getItemName());
-            mDrawerLayout.closeDrawer(mDrawerList);
         }
+
+        mDrawerList.setItemChecked(position, true);
+        setTitle(dataList.get(position).getItemName());
+        mDrawerLayout.closeDrawer(mDrawerList);
 
     }
 
