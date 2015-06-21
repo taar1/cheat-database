@@ -443,6 +443,7 @@ public class Tools {
         return Typeface.createFromAsset(assetManager, fontName);
     }
 
+
     public static MoPubView initMoPubAdView(final Activity activity, MoPubView mAdView) {
 
 //        mAdView = new MoPubView(activity);
@@ -466,6 +467,25 @@ public class Tools {
         }
 
         return mAdView;
+    }
+
+    public static void loadAd(MoPubView mAdView, String screenType) {
+
+        try {
+            if (screenType.equalsIgnoreCase("phone")) {
+                mAdView.setAdUnitId(Konstanten.MOPUB_PHONE_UNIT_ID);
+            } else {
+                mAdView.setAdUnitId(Konstanten.MOPUB_TABLET_UNIT_ID);
+            }
+
+            mAdView.setAutorefreshEnabled(true);
+            mAdView.setTesting(false);
+            mAdView.setKeywords("m_age:15,m_gender:m,m_marital:single");
+            mAdView.loadAd();
+        } catch (Exception e) {
+            Log.e("ADVIEW LOAD", e.getMessage());
+            e.printStackTrace();
+        }
     }
 
     public static void logout(Activity activity, Editor editor) {
