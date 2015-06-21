@@ -7,4 +7,6 @@
     <dimen name="activity_searchresult_horizontal_margin">4dp</dimen>
     <dimen name="activity_searchresult_vertical_margin">4dp</dimen>
 
+    <dimen name="card_insets">0dp</dimen>
+    <dimen name="fab_size">56dp</dimen>
 </resources>

@@ -66,5 +66,6 @@ dependencies {
     compile 'com.appbrain:appbrain-applift-sdk:+'
     compile 'de.greenrobot:eventbus:2.4.0'
     compile 'org.androidannotations:androidannotations:3.3.1'
+    compile 'com.github.navasmdc:MaterialDesign:1.5@aar'
     compile project(':mopub-3.6-sdk')
 }
