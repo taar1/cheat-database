@@ -24,6 +24,7 @@ import com.google.analytics.tracking.android.GoogleAnalytics;
 import com.google.analytics.tracking.android.Tracker;
 import com.mopub.mobileads.MoPubView;
 
+import org.androidannotations.annotations.EBean;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -47,6 +48,7 @@ import java.util.regex.Pattern;
  *
  * @version 1.0
  */
+@EBean
 public class Tools {
 
     public static boolean isEmailValid(String email) {

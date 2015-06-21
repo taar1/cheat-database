@@ -9,7 +9,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.graphics.Typeface;
-import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
@@ -38,14 +37,28 @@ import com.google.analytics.tracking.android.Tracker;
 import com.mopub.mobileads.MoPubView;
 import com.splunk.mint.Mint;
 
+import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.Bean;
+import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.Extra;
+import org.androidannotations.annotations.ViewById;
+
 import java.util.ArrayList;
 import java.util.Collections;
 
+@EActivity(R.layout.activity_gamelist)
 public class GamesBySystemActivity extends ActionBarListActivity implements ActionBar.OnNavigationListener, AdapterView.OnItemClickListener {
 
-    SparseArray<Group> groups = new SparseArray<Group>();
-
+    @Extra
     protected SystemPlatform systemObj;
+
+    @ViewById(R.id.reload)
+    ImageView reloadView;
+
+    @Bean
+    Tools tools;
+
+    SparseArray<Group> groups = new SparseArray<Group>();
 
     private Tracker tracker;
 
@@ -60,8 +73,6 @@ public class GamesBySystemActivity extends ActionBarListActivity implements Acti
     private Typeface latoFontLight;
     private Typeface latoFontRegular;
 
-    private ImageView reloadView;
-
     private SharedPreferences settings;
     private Editor editor;
 
@@ -71,16 +82,44 @@ public class GamesBySystemActivity extends ActionBarListActivity implements Acti
 
     private static final String SCREEN_LABEL = "Game List By System ID Screen";
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_gamelist);
+//    @Override
+//    protected void onCreate(Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
+//        setContentView(R.layout.activity_gamelist);
+//
+//        init();
+//        systemObj = (SystemPlatform) getIntent().getSerializableExtra("systemObj");
+//        handleIntent(getIntent());
+//
+//        reloadView = (ImageView) findViewById(R.id.reload);
+//        if (Reachability.reachability.isReachable) {
+//            startGameListAdapter();
+//        } else {
+//            reloadView.setVisibility(View.VISIBLE);
+//            reloadView.setOnClickListener(new OnClickListener() {
+//
+//                @Override
+//                public void onClick(View v) {
+//                    if (Reachability.reachability.isReachable) {
+//                        startGameListAdapter();
+//                    } else {
+//                        Toast.makeText(GamesBySystemActivity.this, R.string.no_internet, Toast.LENGTH_SHORT).show();
+//                    }
+//                }
+//            });
+//            Toast.makeText(this, R.string.no_internet, Toast.LENGTH_SHORT).show();
+//        }
+//
+//        getListView().setOnItemClickListener(this);
+//    }
 
+    @AfterViews
+    public void createView() {
         init();
         systemObj = (SystemPlatform) getIntent().getSerializableExtra("systemObj");
         handleIntent(getIntent());
 
-        reloadView = (ImageView) findViewById(R.id.reload);
+//        reloadView = (ImageView) findViewById(R.id.reload);
         if (Reachability.reachability.isReachable) {
             startGameListAdapter();
         } else {
@@ -106,11 +145,11 @@ public class GamesBySystemActivity extends ActionBarListActivity implements Acti
         Reachability.registerReachability(this);
         Mint.initAndStartSession(this, Konstanten.SPLUNK_MINT_API_KEY);
 
-        mToolbar = Tools.initToolbarBase(this, mToolbar);
-        mAdView = Tools.initMoPubAdView(this, mAdView);
+        mToolbar = tools.initToolbarBase(this, mToolbar);
+        mAdView = tools.initMoPubAdView(this, mAdView);
 
-        latoFontLight = Tools.getFont(getAssets(), Konstanten.FONT_LIGHT);
-        latoFontRegular = Tools.getFont(getAssets(), Konstanten.FONT_REGULAR);
+        latoFontLight = tools.getFont(getAssets(), Konstanten.FONT_LIGHT);
+        latoFontRegular = tools.getFont(getAssets(), Konstanten.FONT_REGULAR);
     }
 
     @Override
@@ -161,7 +200,7 @@ public class GamesBySystemActivity extends ActionBarListActivity implements Acti
 
                 try {
                     setTitle(systemObj.getSystemName());
-                    Tools.initGA(GamesBySystemActivity.this, tracker, SCREEN_LABEL, "Game List", systemObj.getSystemName());
+                    tools.initGA(GamesBySystemActivity.this, tracker, SCREEN_LABEL, "Game List", systemObj.getSystemName());
                 } catch (Exception e) {
                     throw e;
                 }
