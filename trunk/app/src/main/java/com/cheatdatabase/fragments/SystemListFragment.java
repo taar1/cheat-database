@@ -1,20 +1,15 @@
 package com.cheatdatabase.fragments;
 
 import android.app.Fragment;
-import android.content.Intent;
 import android.graphics.Typeface;
-import android.os.AsyncTask;
-import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.cheatdatabase.CheatDatabaseApplication;
-import com.cheatdatabase.GamesBySystemActivity;
+import com.cheatdatabase.GamesBySystemActivity_;
 import com.cheatdatabase.R;
 import com.cheatdatabase.adapters.SystemsRecycleListViewAdapter;
 import com.cheatdatabase.businessobjects.SystemPlatform;
@@ -25,11 +20,20 @@ import com.cheatdatabase.helpers.Tools;
 import com.cheatdatabase.helpers.Webservice;
 import com.google.analytics.tracking.android.Tracker;
 
+import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.Background;
+import org.androidannotations.annotations.EFragment;
+import org.androidannotations.annotations.UiThread;
+import org.androidannotations.annotations.ViewById;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
+@EFragment(R.layout.fragment_systemlist)
 public class SystemListFragment extends Fragment {
+
+    private final String TAG = SystemListFragment.class.getSimpleName();
 
     private Typeface latoFontBold;
     private Typeface latoFontLight;
@@ -41,17 +45,22 @@ public class SystemListFragment extends Fragment {
     private static final String SCREEN_LABEL = SystemListFragment.class.getName();
     private static final String GA_TITLE = "SystemListFragment";
 
-    private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private ArrayList<SystemPlatform> gameSystems;
+//    private SwipeRefreshLayout mSwipeRefreshLayout;
+
+    @ViewById(R.id.my_recycler_view)
+    RecyclerView mRecyclerView;
+
+    @ViewById(R.id.swipe_refresh_layout)
+    SwipeRefreshLayout mSwipeRefreshLayout;
 
     public SystemListFragment() {
     }
 
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    @AfterViews
+    public void onCreateView() {
 
         latoFontLight = Tools.getFont(getActivity().getAssets(), Konstanten.FONT_LIGHT);
         latoFontBold = Tools.getFont(getActivity().getAssets(), Konstanten.FONT_BOLD);
@@ -61,9 +70,17 @@ public class SystemListFragment extends Fragment {
 
         Tools.initGA(getActivity(), tracker, SCREEN_LABEL, GA_TITLE, "");
 
-        View rootView = inflater.inflate(R.layout.fragment_systemlist, container, false);
+//        View rootView = inflater.inflate(R.layout.fragment_systemlist, container, false);
 
-        mRecyclerView = (RecyclerView) rootView.findViewById(R.id.my_recycler_view);
+//        mRecyclerView = (RecyclerView) rootView.findViewById(R.id.my_recycler_view);
+//        mSwipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipe_refresh_layout);
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+//                new LoadGamesAndCheatsCounterBackgroundTask().execute();
+                loadGamesAndCheatsCounterBackground();
+            }
+        });
 
         // use this setting to improve performance if you know that changes
         // in content do not change the layout size of the RecyclerView
@@ -80,9 +97,10 @@ public class SystemListFragment extends Fragment {
         mAdapter = new SystemsRecycleListViewAdapter(gameSystems);
         mRecyclerView.setAdapter(mAdapter);
 
-        new LoadGamesAndCheatsCounterBackgroundTask().execute();
+//        new LoadGamesAndCheatsCounterBackgroundTask().execute();
+        loadGamesAndCheatsCounterBackground();
 
-        return rootView;
+//        return rootView;
     }
 
     @Override
@@ -108,51 +126,95 @@ public class SystemListFragment extends Fragment {
 
     public void onEvent(SystemListRecyclerViewClickEvent result) {
         if (result.isSucceeded()) {
-            Intent explicitIntent = new Intent(getActivity(), GamesBySystemActivity.class);
-            explicitIntent.putExtra("systemObj", result.getSystemPlatform());
-            startActivity(explicitIntent);
+//            Intent explicitIntent = new Intent(getActivity(), GamesBySystemActivity.class);
+//            explicitIntent.putExtra("systemObj", result.getSystemPlatform());
+//            startActivity(explicitIntent);
+
+            GamesBySystemActivity_.intent(getActivity()).systemObj(result.getSystemPlatform()).start();
         } else {
             Toast.makeText(getActivity(), R.string.no_internet, Toast.LENGTH_SHORT).show();
         }
     }
 
-    private class LoadGamesAndCheatsCounterBackgroundTask extends AsyncTask<Void, Void, Void> {
+//    private class LoadGamesAndCheatsCounterBackgroundTask extends AsyncTask<Void, Void, Void> {
+//
+//        GamesAndCheatsCounterLoadedEventResult gamesAndCheatsCounterLoadedEventResult;
+//
+//        @Override
+//        protected Void doInBackground(Void... params) {
+//
+//            mSwipeRefreshLayout.setRefreshing(true);
+//
+//            ArrayList<SystemPlatform> systemGameandCheatCounterList = null;
+//            try {
+//                systemGameandCheatCounterList = Webservice.countGamesAndCheatsBySystem();
+//            } catch (Exception e) {
+//                Log.e("LoadGamesAndCheatsCounterBackgroundTask", "Load game and cheats counters failed: " + e.getLocalizedMessage());
+//            }
+//
+//            if ((systemGameandCheatCounterList == null) || systemGameandCheatCounterList.size() == 0) {
+//                gamesAndCheatsCounterLoadedEventResult = new GamesAndCheatsCounterLoadedEventResult(new Exception());
+//            } else {
+//                // Sorting
+//                Collections.sort(systemGameandCheatCounterList, new Comparator<SystemPlatform>() {
+//                    @Override
+//                    public int compare(SystemPlatform system1, SystemPlatform system2) {
+//                        return system1.getSystemName().compareTo(system2.getSystemName());
+//                    }
+//                });
+//
+//                gamesAndCheatsCounterLoadedEventResult = new GamesAndCheatsCounterLoadedEventResult(systemGameandCheatCounterList);
+//
+//            }
+//
+//            return null;
+//        }
+//
+//        @Override
+//        protected void onPostExecute(Void aVoid) {
+//            mSwipeRefreshLayout.setRefreshing(false);
+//
+//            super.onPostExecute(aVoid);
+//            CheatDatabaseApplication.getEventBus().post(gamesAndCheatsCounterLoadedEventResult);
+//        }
+//    }
 
-        GamesAndCheatsCounterLoadedEventResult gamesAndCheatsCounterLoadedEventResult;
+    GamesAndCheatsCounterLoadedEventResult gamesAndCheatsCounterLoadedEventResult;
 
-        @Override
-        protected Void doInBackground(Void... params) {
+    @Background
+    void loadGamesAndCheatsCounterBackground() {
+        mSwipeRefreshLayout.setRefreshing(true);
 
-            ArrayList<SystemPlatform> systemGameandCheatCounterList = null;
-            try {
-                systemGameandCheatCounterList = Webservice.countGamesAndCheatsBySystem();
-            } catch (Exception e) {
-                Log.e("LoadGamesAndCheatsCounterBackgroundTask", "Load game and cheats counters failed: " + e.getLocalizedMessage());
-            }
-
-            if ((systemGameandCheatCounterList == null) || systemGameandCheatCounterList.size() == 0) {
-                gamesAndCheatsCounterLoadedEventResult = new GamesAndCheatsCounterLoadedEventResult(new Exception());
-            } else {
-                // Sorting
-                Collections.sort(systemGameandCheatCounterList, new Comparator<SystemPlatform>() {
-                    @Override
-                    public int compare(SystemPlatform system1, SystemPlatform system2) {
-                        return system1.getSystemName().compareTo(system2.getSystemName());
-                    }
-                });
-
-                gamesAndCheatsCounterLoadedEventResult = new GamesAndCheatsCounterLoadedEventResult(systemGameandCheatCounterList);
-
-            }
-
-            return null;
+        ArrayList<SystemPlatform> systemGameandCheatCounterList = null;
+        try {
+            systemGameandCheatCounterList = Webservice.countGamesAndCheatsBySystem();
+        } catch (Exception e) {
+            Log.e(TAG, "Load game and cheats counters failed: " + e.getLocalizedMessage());
         }
 
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
-            CheatDatabaseApplication.getEventBus().post(gamesAndCheatsCounterLoadedEventResult);
+        if ((systemGameandCheatCounterList == null) || systemGameandCheatCounterList.size() == 0) {
+            gamesAndCheatsCounterLoadedEventResult = new GamesAndCheatsCounterLoadedEventResult(new Exception());
+        } else {
+            // Sorting
+            Collections.sort(systemGameandCheatCounterList, new Comparator<SystemPlatform>() {
+                @Override
+                public int compare(SystemPlatform system1, SystemPlatform system2) {
+                    return system1.getSystemName().compareTo(system2.getSystemName());
+                }
+            });
+
+            gamesAndCheatsCounterLoadedEventResult = new GamesAndCheatsCounterLoadedEventResult(systemGameandCheatCounterList);
+
         }
+
+        loadGamesAndCheatsCounterBackgroundFinished();
     }
+
+    @UiThread
+    void loadGamesAndCheatsCounterBackgroundFinished() {
+        mSwipeRefreshLayout.setRefreshing(false);
+        CheatDatabaseApplication.getEventBus().post(gamesAndCheatsCounterLoadedEventResult);
+    }
+
 
 }
