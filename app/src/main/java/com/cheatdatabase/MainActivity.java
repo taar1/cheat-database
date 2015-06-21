@@ -40,6 +40,7 @@ import com.cheatdatabase.fragments.FavoriteGamesListFragment;
 import com.cheatdatabase.fragments.NewsFragment;
 import com.cheatdatabase.fragments.SubmitCheatFragment;
 import com.cheatdatabase.fragments.SystemListFragment;
+import com.cheatdatabase.fragments.SystemListFragment_;
 import com.cheatdatabase.fragments.TopMembersFragment;
 import com.cheatdatabase.helpers.Group;
 import com.cheatdatabase.helpers.Konstanten;
@@ -53,19 +54,20 @@ import com.google.gson.Gson;
 import com.mopub.mobileads.MoPubView;
 import com.splunk.mint.Mint;
 
+import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.ViewById;
+
 import java.util.ArrayList;
 import java.util.List;
 
-
+@EActivity(R.layout.activity_main)
 public class MainActivity extends ActionBarActivity implements ActionBar.OnNavigationListener {
-
-
-//    private static Typeface latoFontBold;
 
     private Tracker tracker;
 
     // Navigation Drawer
-    private DrawerLayout mDrawerLayout;
+//    private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
     private ActionBarDrawerToggle mDrawerToggle;
     private CharSequence mTitle;
@@ -93,23 +95,29 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
     private MenuItem searchItem;
     private SearchView searchView;
 
+    @ViewById(R.id.drawer_layout)
+    DrawerLayout mDrawerLayout;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+
+//    @Override
+//    protected void onCreate(Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
+//        setContentView(R.layout.activity_main);
+//        setTitle(R.string.app_name);
+//
+//        init();
+//
+//        DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+//        drawerLayout.setStatusBarBackgroundColor(getResources().getColor(R.color.page_indicator_background));
+//
+//        // Create Drawer
+//        createNavigationDrawer(savedInstanceState);
+//    }
+
+    @AfterViews
+    public void createView() {
         setTitle(R.string.app_name);
 
-        init();
-
-        DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawerLayout.setStatusBarBackgroundColor(getResources().getColor(R.color.page_indicator_background));
-
-        // Create Drawer
-        createNavigationDrawer(savedInstanceState);
-    }
-
-    private void init() {
         Reachability.registerReachability(this);
         Mint.initAndStartSession(this, Konstanten.SPLUNK_MINT_API_KEY);
 
@@ -129,8 +137,15 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
 
         // TODO FIXME - find out where this part was before and re-add it.
         FragmentManager frgManager = getFragmentManager();
-        frgManager.beginTransaction().replace(R.id.content_frame, new SystemListFragment()).commit();
+        frgManager.beginTransaction().replace(R.id.content_frame, SystemListFragment_.builder().build()).commit();
+
+//        SystemListFragment fragment = SystemListFragment_.builder().build();
+
+
+        // Create Drawer
+        createNavigationDrawer();
     }
+
 
     @Override
     public void onPause() {
@@ -155,10 +170,11 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
     }
 
     // http://developer.android.com/training/implementing-navigation/nav-drawer.html#Init
-    private void createNavigationDrawer(Bundle savedInstanceState) {
+    private void createNavigationDrawer() {
         mTitle = mDrawerTitle = getTitle();
 
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+//        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mDrawerLayout.setStatusBarBackgroundColor(getResources().getColor(R.color.page_indicator_background));
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, mToolbar, R.string.drawer_open, R.string.drawer_close);
         mDrawerLayout.setDrawerListener(mDrawerToggle);
         getSupportActionBar().setHomeButtonEnabled(true);
@@ -217,10 +233,11 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
         // Set the drawer toggle as the DrawerListener
         mDrawerLayout.setDrawerListener(mDrawerToggle);
 
-        if (savedInstanceState == null) {
-            int position = settings.getInt(Konstanten.PREFERENCES_SELECTED_DRAWER_FRAGMENT_ID, 99);
-            selectItem(position);
-        }
+//        if (savedInstanceState == null) {
+//         (if used method parameter is needed: createNavigationDrawer(Bundle savedInstanceState))
+//            int position = settings.getInt(Konstanten.PREFERENCES_SELECTED_DRAWER_FRAGMENT_ID, 99);
+//            selectItem(position);
+//        }
     }
 
 
