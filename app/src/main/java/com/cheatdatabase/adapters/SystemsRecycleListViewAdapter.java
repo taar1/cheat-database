@@ -1,7 +1,9 @@
 package com.cheatdatabase.adapters;
 
+import android.content.Context;
 import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,15 +18,27 @@ import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.helpers.Tools;
 
+import org.androidannotations.annotations.EBean;
+import org.androidannotations.annotations.RootContext;
+
 import java.util.ArrayList;
 
+@EBean
 public class SystemsRecycleListViewAdapter extends RecyclerView.Adapter<SystemsRecycleListViewAdapter.ViewHolder> {
+
+    private static final String TAG = SystemsRecycleListViewAdapter.class.getSimpleName();
+
     private ArrayList<SystemPlatform> mSystemObjects;
     private Typeface latoFontBold;
     private Typeface latoFontLight;
     private SystemPlatform systemObj;
 
-    private static final String TAG = SystemsRecycleListViewAdapter.class.getSimpleName();
+    @RootContext
+    Context mContext;
+
+    public void init(ArrayList<SystemPlatform> systemPlatforms) {
+        mSystemObjects = systemPlatforms;
+    }
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
@@ -58,10 +72,10 @@ public class SystemsRecycleListViewAdapter extends RecyclerView.Adapter<SystemsR
         public void onSystemClick(SystemsRecycleListViewAdapter.ViewHolder caller);
     }
 
-    // Provide a suitable constructor (depends on the kind of dataset)
-    public SystemsRecycleListViewAdapter(ArrayList<SystemPlatform> systemObjects) {
-        mSystemObjects = systemObjects;
-    }
+//    // Provide a suitable constructor (depends on the kind of dataset)
+//    public SystemsRecycleListViewAdapter(ArrayList<SystemPlatform> systemObjects) {
+//        mSystemObjects = systemObjects;
+//    }
 
     // Create new views (invoked by the layout manager)
     @Override
@@ -109,7 +123,7 @@ public class SystemsRecycleListViewAdapter extends RecyclerView.Adapter<SystemsR
                 holder.mSubtitle.setVisibility(View.GONE);
             }
         } catch (Exception e) {
-            // Do nothing
+            Log.e(TAG, e.getLocalizedMessage());
         }
 
     }

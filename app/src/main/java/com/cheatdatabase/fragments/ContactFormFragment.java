@@ -3,22 +3,17 @@ package com.cheatdatabase.fragments;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
-import android.app.Activity;
 import android.app.Fragment;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
-import android.os.AsyncTask;
 import android.os.Build;
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.text.util.Linkify;
 import android.view.KeyEvent;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -31,7 +26,45 @@ import com.cheatdatabase.helpers.Tools;
 import com.cheatdatabase.helpers.Webservice;
 import com.google.gson.Gson;
 
+import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.Background;
+import org.androidannotations.annotations.EFragment;
+import org.androidannotations.annotations.FragmentArg;
+import org.androidannotations.annotations.UiThread;
+import org.androidannotations.annotations.ViewById;
+
+@EFragment(R.layout.fragment_contact_form)
 public class ContactFormFragment extends Fragment {
+
+    @ViewById(R.id.email)
+    EditText mEmailView;
+
+    @ViewById(R.id.form_message)
+    EditText mMessageView;
+
+    @ViewById(R.id.emailaddress)
+    TextView mEmailaddressView;
+
+    @ViewById(R.id.send_status_message)
+    TextView mLoginStatusMessageView;
+
+    @ViewById(R.id.thankyou_text)
+    TextView mThankyouText;
+
+    @ViewById(R.id.contact_form)
+    View mContactFormView;
+
+    @ViewById(R.id.send_status)
+    View mContactStatusView;
+
+    @ViewById(R.id.thankyou)
+    View mThankyouView;
+
+    @FragmentArg(ITEM_NAME)
+    String itemName;
+
+    @FragmentArg(IMAGE_RESOURCE_ID)
+    int imageResourceId;
 
     public static final String IMAGE_RESOURCE_ID = "iconResourceID";
     public static final String ITEM_NAME = "itemName";
@@ -41,73 +74,40 @@ public class ContactFormFragment extends Fragment {
      */
     public static final String EXTRA_EMAIL = "com.example.android.authenticatordemo.extra.EMAIL";
 
-    /**
-     * Keep track of the login task to ensure we can cancel it if requested.
-     */
-    private SendFormTask mContactTask = null;
-
     // Values for email and password at the time of the login attempt.
     private String mEmail;
     private String mMessage;
-
-    // UI references.
-    private EditText mEmailView;
-    private EditText mMessageView;
-    private TextView mEmailaddressView;
-    private View mContactFormView;
-    private View mContactStatusView;
-    private View mThankyouView;
-    private TextView mLoginStatusMessageView;
-    private TextView mThankyouText;
 
     private Member member;
     private SharedPreferences settings;
 
     private boolean isFormSent = false;
-    private Activity ca;
     private Typeface latoFontLight;
-    private View rootView;
 
     public ContactFormFragment() {
 
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    @AfterViews
+    public void onCreateView() {
+        Reachability.registerReachability(getActivity());
 
-        ca = getActivity();
-        Reachability.registerReachability(ca.getApplicationContext());
-
-        settings = ca.getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
+        settings = getActivity().getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
         member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
 
-        latoFontLight = Tools.getFont(ca.getAssets(), Konstanten.FONT_LIGHT);
+        latoFontLight = Tools.getFont(getActivity().getAssets(), Konstanten.FONT_LIGHT);
 
         // Update action bar menu items?
         setHasOptionsMenu(true);
-    }
-
-    @Override
-    public void onPause() {
-        Reachability.unregister(ca.getApplicationContext());
-        super.onPause();
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        rootView = inflater.inflate(R.layout.fragment_contact_form, container, false);
 
         // Set up the login form.
-        mEmail = ca.getIntent().getStringExtra(EXTRA_EMAIL);
-        mEmailView = (EditText) rootView.findViewById(R.id.email);
+        mEmail = getActivity().getIntent().getStringExtra(EXTRA_EMAIL);
+
         mEmailView.setText(mEmail);
-        mEmailView.setTypeface(latoFontLight);
         if ((member != null) && member.getEmail() != null) {
             mEmailView.setText(member.getEmail());
         }
 
-        mMessageView = (EditText) rootView.findViewById(R.id.form_message);
         mMessageView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
@@ -118,21 +118,19 @@ public class ContactFormFragment extends Fragment {
                 return false;
             }
         });
-        mMessageView.setTypeface(latoFontLight);
-
-        mEmailaddressView = (TextView) rootView.findViewById(R.id.emailaddress);
-        mEmailaddressView.setTypeface(latoFontLight);
         Linkify.addLinks(mEmailaddressView, Linkify.ALL);
 
-        mContactFormView = rootView.findViewById(R.id.contact_form);
-        mContactStatusView = rootView.findViewById(R.id.send_status);
-        mThankyouView = rootView.findViewById(R.id.thankyou);
-        mThankyouText = (TextView) rootView.findViewById(R.id.thankyou_text);
+        mEmailView.setTypeface(latoFontLight);
+        mMessageView.setTypeface(latoFontLight);
+        mEmailaddressView.setTypeface(latoFontLight);
         mThankyouText.setTypeface(latoFontLight);
-        mLoginStatusMessageView = (TextView) rootView.findViewById(R.id.send_status_message);
         mLoginStatusMessageView.setTypeface(latoFontLight);
+    }
 
-        return rootView;
+    @Override
+    public void onPause() {
+        Reachability.unregister(getActivity());
+        super.onPause();
     }
 
     /**
@@ -141,9 +139,9 @@ public class ContactFormFragment extends Fragment {
      * actual login attempt is made.
      */
     public void attemptSendForm() {
-        if (mContactTask != null) {
-            return;
-        }
+//        if (mContactTask != null) {
+//            return;
+//        }
 
         // Reset errors.
         mEmailView.setError(null);
@@ -187,8 +185,9 @@ public class ContactFormFragment extends Fragment {
             // perform the user login attempt.
             mLoginStatusMessageView.setText(R.string.sending_message_progress);
             showProgress(true, 1);
-            mContactTask = new SendFormTask();
-            mContactTask.execute((Void) null);
+//            mContactTask = new SendFormTask();
+//            mContactTask.execute((Void) null);
+            sendForm();
         }
     }
 
@@ -201,8 +200,7 @@ public class ContactFormFragment extends Fragment {
         if ((step == 1) || (step == 2)) {
             // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which
             // allow for very easy animations. If available, use these APIs to
-            // fade-in
-            // the progress spinner.
+            // fade-in the progress spinner.
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
                 int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
 
@@ -274,7 +272,7 @@ public class ContactFormFragment extends Fragment {
 
     private void selectMenu(Menu menu) {
         if (!isFormSent) {
-            ca.getMenuInflater().inflate(R.menu.contactform_send_menu, menu);
+            getActivity().getMenuInflater().inflate(R.menu.contactform_send_menu, menu);
         } else {
             // change actionbar menu how when contact form is sent?
         }
@@ -293,32 +291,22 @@ public class ContactFormFragment extends Fragment {
         return false;
     }
 
-    public class SendFormTask extends AsyncTask<Void, Void, Void> {
+    @Background
+    public void sendForm() {
+        Webservice.submitContactForm(mEmailView.getText().toString().trim(), mMessageView.getText().toString().trim());
+        updateView();
+    }
 
-        @Override
-        protected Void doInBackground(Void... params) {
-            Webservice.submitContactForm(mEmailView.getText().toString().trim(), mMessageView.getText().toString().trim());
-            return null;
-        }
+    @UiThread
+    public void updateView() {
+//        mContactTask = null;
+        showProgress(false, 3);
 
-        @Override
-        protected void onPostExecute(Void result) {
-            mContactTask = null;
-            showProgress(false, 3);
+        isFormSent = true;
 
-            isFormSent = true;
-
-            mThankyouView.setVisibility(View.VISIBLE);
-            if (Build.VERSION.SDK_INT >= 11) {
-                ca.invalidateOptionsMenu();
-            }
-
-        }
-
-        @Override
-        protected void onCancelled() {
-            mContactTask = null;
-            showProgress(false, 2);
+        mThankyouView.setVisibility(View.VISIBLE);
+        if (Build.VERSION.SDK_INT >= 11) {
+            getActivity().invalidateOptionsMenu();
         }
     }
 
