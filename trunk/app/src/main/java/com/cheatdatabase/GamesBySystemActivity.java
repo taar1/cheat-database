@@ -48,20 +48,12 @@ public class GamesBySystemActivity extends ActionBarActivity implements ActionBa
 
     private Tracker tracker;
 
-//    private ProgressDialog gameListProgressDialog = null;
-//    private GameListAdapter gameListAdapter;
-//    private Game[] gamesFound;
-
     private ArrayList<Game> gameArrayList = new ArrayList<>();
 
     private Typeface latoFontLight;
     private Typeface latoFontRegular;
     private static final String TAG = GamesBySystemActivity.class.getSimpleName();
     private static final String SCREEN_LABEL = "Game List By System ID Screen";
-
-    //    private RecyclerView.Adapter mAdapter;
-//    private RecyclerView.LayoutManager mLayoutManager;
-//    private ArrayList<Game> gameList;
 
     @Extra
     SystemPlatform systemObj;
@@ -93,10 +85,7 @@ public class GamesBySystemActivity extends ActionBarActivity implements ActionBa
     @AfterViews
     public void createView() {
         init();
-//        mProgressView.setVisibility(View.VISIBLE);
-
         mSwipeRefreshLayout.setRefreshing(true);
-
 
         setTitle(systemObj.getSystemName());
         tools.initGA(GamesBySystemActivity.this, tracker, SCREEN_LABEL, "Game List", systemObj.getSystemName());
@@ -107,7 +96,6 @@ public class GamesBySystemActivity extends ActionBarActivity implements ActionBa
                 getGames();
             }
         });
-
 
         // use this setting to improve performance if you know that changes
         // in content do not change the layout size of the RecyclerView
@@ -122,15 +110,6 @@ public class GamesBySystemActivity extends ActionBarActivity implements ActionBa
             mRecyclerView.showLoading();
             getGames();
         }
-
-        // use a linear layout manager
-//        mLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-
-//        mAdapter = new GamesBySystemRecycleListViewAdapter(getApplicationContext(), gameList);
-//        mGamesBySystemRecycleListViewAdapter.init(gameList);
-//        mRecyclerView.setAdapter(mGamesBySystemRecycleListViewAdapter);
-
-//        getListView().setOnItemClickListener(this);
     }
 
     private void init() {
@@ -149,23 +128,6 @@ public class GamesBySystemActivity extends ActionBarActivity implements ActionBa
         latoFontRegular = tools.getFont(getAssets(), Konstanten.FONT_REGULAR);
     }
 
-
-//    private void startGameListAdapter() {
-//        gameListAdapter = new GameListAdapter(this, R.layout.activity_gamelist, gameArrayList);
-//        setListAdapter(gameListAdapter);
-//
-//        if (gameListProgressDialog == null) {
-//            gameListProgressDialog = ProgressDialog.show(GamesBySystemActivity.this, getString(R.string.please_wait) + "...", getString(R.string.retrieving_data) + "...", true);
-//        }
-//
-//        new Thread(new Runnable() {
-//            @Override
-//            public void run() {
-//                getGames();
-//            }
-//        }).start();
-//    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Search
@@ -179,26 +141,6 @@ public class GamesBySystemActivity extends ActionBarActivity implements ActionBa
 
         return super.onCreateOptionsMenu(menu);
     }
-
-//    private void handleIntent(final Intent intent) {
-//
-//        new Thread(new Runnable() {
-//
-//            @Override
-//            public void run() {
-//                // FIXME sysetmObj hier holen oder schon vorher (oben nach init()) ???
-////                systemObj = (SystemPlatform) intent.getSerializableExtra("systemObj");
-//
-//                try {
-//                    setTitle(systemObj.getSystemName());
-//                    tools.initGA(GamesBySystemActivity.this, tracker, SCREEN_LABEL, "Game List", systemObj.getSystemName());
-//                } catch (Exception e) {
-//                    throw e;
-//                }
-//            }
-//        }).start();
-//
-//    }
 
     @Background
     public void getGames() {
@@ -218,13 +160,6 @@ public class GamesBySystemActivity extends ActionBarActivity implements ActionBa
     public void fillListWithGames() {
         try {
             if (gameArrayList != null && gameArrayList.size() > 0) {
-//                gameListAdapter.notifyDataSetChanged();
-//                for (int i = 0; i < gamesFound.length; i++) {
-//                    gameListAdapter.add(gamesFound[i]);
-//                }
-//                gameListProgressDialog.dismiss();
-//                gameListAdapter.notifyDataSetChanged();
-
                 mGamesBySystemRecycleListViewAdapter.init(gameArrayList);
                 mRecyclerView.setAdapter(mGamesBySystemRecycleListViewAdapter);
 
@@ -233,68 +168,13 @@ public class GamesBySystemActivity extends ActionBarActivity implements ActionBa
                 error();
             }
         } catch (Exception e) {
-//            gameListProgressDialog.dismiss();
             error();
         }
 
         mSwipeRefreshLayout.setRefreshing(false);
-//        mProgressView.setVisibility(View.GONE);
         mRecyclerView.hideLoading();
     }
 
-
-//    private Runnable runFillListView = new Runnable() {
-//
-//        @Override
-//        public void run() {
-//
-//            try {
-//                if (gameArrayList != null && gameArrayList.size() > 0) {
-//                    gameListAdapter.notifyDataSetChanged();
-//                    for (int i = 0; i < gamesFound.length; i++) {
-//                        gameListAdapter.add(gamesFound[i]);
-//                    }
-//                    gameListProgressDialog.dismiss();
-//                    gameListAdapter.notifyDataSetChanged();
-//                } else {
-//                    error();
-//                }
-//            } catch (Exception e) {
-//                gameListProgressDialog.dismiss();
-//                error();
-//            }
-//
-//            // FIXME wenn keine internetverbindung muss der Fehler
-//            // abgefangen werden...
-//            // gameListProgressDialog =
-//            // ProgressDialog.show(GamesBySystemActivity.this,
-//            // getString(R.string.please_wait) + "...",
-//            // getString(R.string.retrieving_data) + "...", true);
-//        }
-//
-//    };
-//
-//	@Override
-//	protected void onListItemClick(ListView l, View v, int position, long id) {
-//		super.onListItemClick(l, v, position, id);
-//
-//        Log.d("CLICKED", "CLICKEEDDDDDD");
-//        if (Reachability.reachability.isReachable) {
-//            Game tmpGame = new Game();
-//            tmpGame.setGameId(gamesFound[position].getGameId());
-//            tmpGame.setGameName(gamesFound[position].getGameName());
-//            tmpGame.setSystemName(systemObj.getSystemName());
-//            tmpGame.setSystemId(systemObj.getSystemId());
-//
-//            Log.d("CLICKED", "CLICKEEDDDDDD 2");
-//
-//			Intent explicitIntent = new Intent(this, CheatListActivity.class);
-//			explicitIntent.putExtra("gameObj", tmpGame);
-//			startActivity(explicitIntent);
-//		} else {
-//			Toast.makeText(this, R.string.no_internet, Toast.LENGTH_SHORT).show();
-//		}
-//	}
 
     private void error() {
         Log.e("error()", "caught error: " + getPackageName() + "/" + getTitle());
@@ -341,64 +221,5 @@ public class GamesBySystemActivity extends ActionBarActivity implements ActionBa
     public boolean onNavigationItemSelected(int itemPosition, long itemId) {
         return false;
     }
-
-//    @Override
-//    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//
-//        if (Reachability.reachability.isReachable) {
-//            Game tmpGame = new Game();
-//            tmpGame.setGameId(gamesFound[position].getGameId());
-//            tmpGame.setGameName(gamesFound[position].getGameName());
-//            tmpGame.setSystemName(systemObj.getSystemName());
-//            tmpGame.setSystemId(systemObj.getSystemId());
-//
-//            Intent explicitIntent = new Intent(this, CheatListActivity.class);
-//            explicitIntent.putExtra("gameObj", tmpGame);
-//            startActivity(explicitIntent);
-//        } else {
-//            Toast.makeText(this, R.string.no_internet, Toast.LENGTH_SHORT).show();
-//        }
-//    }
-
-
-//    private class GameListAdapter extends ArrayAdapter<Game> {
-//
-//        private ArrayList<Game> gameArrayList;
-//
-//        public GameListAdapter(Context context, int textViewResourceId, ArrayList<Game> gameArrayList) {
-//            super(context, textViewResourceId, gameArrayList);
-//            this.gameArrayList = gameArrayList;
-//        }
-//
-//        @Override
-//        public View getView(int position, View convertView, ViewGroup parent) {
-//            View v = convertView;
-//            if (v == null) {
-//                LayoutInflater vi = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-//                v = vi.inflate(R.layout.listrow_gamelist, null);
-//            }
-//
-//            Game singleGame = gameArrayList.get(position);
-//
-//            if (singleGame != null) {
-//                TextView tt = (TextView) v.findViewById(R.id.cheat_title);
-//                tt.setTypeface(latoFontRegular);
-//                TextView bt = (TextView) v.findViewById(R.id.cheats_count);
-//                bt.setTypeface(latoFontLight);
-//                if (tt != null) {
-//                    tt.setText(singleGame.getGameName());
-//                }
-//                if (bt != null) {
-//                    if (singleGame.getCheatsCount() == 1) {
-//                        bt.setText(singleGame.getCheatsCount() + " Cheat");
-//                    } else {
-//                        bt.setText(singleGame.getCheatsCount() + " Cheats");
-//                    }
-//                }
-//            }
-//            return v;
-//        }
-//    }
-
 
 }

@@ -292,5 +292,15 @@
     <string name="remove_favorite_neutral_ok">Favorit gelöscht.</string>
     <string name="remove_favorite_areyousure">Cheat von den Favoriten entfernen?</string>
     <string name="confirm">Bestätigen</string>
+    <string name="action_register_short">Registrieren</string>
+    <string name="action_forgot_password">Passwort wiederherstellen</string>
+    <string name="action_forgot_password_short">Wiederherstellen</string>
+    <string name="action_register_long">Neuen Account registrieren</string>
+    <string name="action_sign_in_register"><b>Anmelden</b></string>
+    <string name="action_sign_in_short">Anmelden</string>
+    <string name="app_label">Cheat-Database</string>
+    <string name="login_progress_signing_in">Logge ein...</string>
+    <string name="forum" translatable="false">Forum</string>
+    <string name="rate_us">Bewerte Cheat-Database</string>
 
 </resources>

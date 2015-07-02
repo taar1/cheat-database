@@ -11,10 +11,11 @@ import com.cheatdatabase.GamesBySystemActivity_;
 import com.cheatdatabase.R;
 import com.cheatdatabase.adapters.SystemsRecycleListViewAdapter;
 import com.cheatdatabase.businessobjects.SystemPlatform;
-import com.cheatdatabase.taskresults.GamesAndCheatsCountTaskResult;
 import com.cheatdatabase.events.SystemListRecyclerViewClickEvent;
 import com.cheatdatabase.helpers.Tools;
+import com.cheatdatabase.taskresults.GamesAndCheatsCountTaskResult;
 import com.cheatdatabase.tasks.GamesAndCheatsCountTask;
+import com.cheatdatabase.widgets.DividerDecoration;
 import com.google.analytics.tracking.android.Tracker;
 
 import org.androidannotations.annotations.AfterViews;
@@ -30,9 +31,9 @@ public class SystemListFragment extends Fragment {
     private final String TAG = SystemListFragment.class.getSimpleName();
 
     private Tracker tracker;
-    private RecyclerView.Adapter mAdapter;
+    //    private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
-    private ArrayList<SystemPlatform> gameSystems;
+//    private ArrayList<SystemPlatform> gameSystems;
 
     @ViewById(R.id.my_recycler_view)
     RecyclerView mRecyclerView;
@@ -46,11 +47,14 @@ public class SystemListFragment extends Fragment {
     @Bean
     GamesAndCheatsCountTask gamesAndCheatsCountTask;
 
+    @Bean
+    SystemsRecycleListViewAdapter mSystemsRecycleListViewAdapter;
+
     @AfterViews
     public void onCreateView() {
 
         // Load Systems from XML. Load counters in background service later on.
-        gameSystems = tools.getGameSystemsFromXml(getActivity());
+//        gameSystems = tools.getGameSystemsFromXml(getActivity());
 
         tools.initGA(getActivity(), tracker, TAG, TAG, "");
 
@@ -69,11 +73,16 @@ public class SystemListFragment extends Fragment {
         mLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        mAdapter = new SystemsRecycleListViewAdapter(gameSystems);
-        mRecyclerView.setAdapter(mAdapter);
+        initAdapter(tools.getGameSystemsFromXml(getActivity()));
 
         mSwipeRefreshLayout.setRefreshing(true);
         gamesAndCheatsCountTask.loadGamesAndCheatsCounterBackground();
+    }
+
+    private void initAdapter(ArrayList<SystemPlatform> gameSystems) {
+        mSystemsRecycleListViewAdapter.init(gameSystems);
+        mRecyclerView.setAdapter(mSystemsRecycleListViewAdapter);
+        mSystemsRecycleListViewAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -91,8 +100,9 @@ public class SystemListFragment extends Fragment {
     public void onEvent(GamesAndCheatsCountTaskResult result) {
         mSwipeRefreshLayout.setRefreshing(false);
         if (result.isSucceeded()) {
-            mAdapter = new SystemsRecycleListViewAdapter(result.getSystemPlatforms());
-            mRecyclerView.setAdapter(mAdapter);
+//            mAdapter = new SystemsRecycleListViewAdapter(result.getSystemPlatforms());
+//            mRecyclerView.setAdapter(mAdapter);
+            initAdapter(result.getSystemPlatforms());
         } else {
             Toast.makeText(getActivity(), R.string.no_internet, Toast.LENGTH_LONG).show();
         }

@@ -6,9 +6,13 @@ import java.io.Serializable;
 
 public class SystemPlatform implements Serializable {
 
-    private int systemId, gameCount, cheatCount;
-    private String systemName, dateLocallyAdded;
+    private int systemId;
+    private int gameCount;
+    private int cheatCount;
+    private String systemName;
+    private String dateLocallyAdded;
     private Game[] games;
+    private long lastModTimeStamp;
 
     public SystemPlatform(int systemId, String systemName, String dateLocallyAdded) {
         super();
@@ -23,16 +27,16 @@ public class SystemPlatform implements Serializable {
         this.systemName = systemName;
     }
 
+    public SystemPlatform() {
+
+    }
+
     public int getCheatCount() {
         return cheatCount;
     }
 
     public void setCheatCount(int cheatCount) {
         this.cheatCount = cheatCount;
-    }
-
-    public SystemPlatform() {
-
     }
 
     /**
@@ -62,20 +66,20 @@ public class SystemPlatform implements Serializable {
         return dateLocallyAdded;
     }
 
-    public int getSystemId() {
-        return systemId;
-    }
-
-    public String getSystemName() {
-        return systemName;
-    }
-
     public void setDateLocallyAdded(String dateLocallyAdded) {
         this.dateLocallyAdded = dateLocallyAdded;
     }
 
+    public int getSystemId() {
+        return systemId;
+    }
+
     public void setSystemId(int systemId) {
         this.systemId = systemId;
+    }
+
+    public String getSystemName() {
+        return systemName;
     }
 
     public void setSystemName(String systemName) {
@@ -90,4 +94,11 @@ public class SystemPlatform implements Serializable {
         this.gameCount = gameCount;
     }
 
+    public long getLastModTimeStamp() {
+        return lastModTimeStamp;
+    }
+
+    public void setLastModTimeStamp(long lastModTimeStamp) {
+        this.lastModTimeStamp = lastModTimeStamp;
+    }
 }
