@@ -28,7 +28,6 @@ public class GamesBySystemRecycleListViewAdapter extends RecyclerView.Adapter<Ga
     private static final String TAG = GamesBySystemRecycleListViewAdapter.class.getSimpleName();
 
     private ArrayList<Game> mGames;
-
     private Typeface latoFontBold;
     private Typeface latoFontLight;
     private Game gameObj;

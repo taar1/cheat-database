@@ -34,11 +34,10 @@ import android.widget.Toast;
 
 import com.appbrain.AppBrain;
 import com.cheatdatabase.businessobjects.Member;
-import com.cheatdatabase.fragments.ContactFormFragment;
+import com.cheatdatabase.fragments.ContactFormFragment_;
 import com.cheatdatabase.fragments.FavoriteGamesListFragment;
-import com.cheatdatabase.fragments.NewsFragment;
+import com.cheatdatabase.fragments.NewsFragment_;
 import com.cheatdatabase.fragments.SubmitCheatFragment;
-import com.cheatdatabase.fragments.SystemListFragment;
 import com.cheatdatabase.fragments.SystemListFragment_;
 import com.cheatdatabase.fragments.TopMembersFragment;
 import com.cheatdatabase.helpers.Konstanten;
@@ -96,6 +95,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
 
     @Bean
     Tools tools;
+
 
     @AfterViews
     public void createView() {
@@ -291,7 +291,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
 
     @Override
     public boolean onNavigationItemSelected(int position, long id) {
-        Fragment fragment = new SystemListFragment();
+//        Fragment fragment = new SystemListFragment();
 
         FragmentManager frgManager = getFragmentManager();
         frgManager.beginTransaction().replace(R.id.content_frame, SystemListFragment_.builder().build()).commit();
@@ -367,17 +367,18 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
         Bundle args = new Bundle();
         boolean isFragment = false;
 
+        FragmentManager annotationFragmentManager = getFragmentManager();
         switch (position) {
             case DRAWER_MAIN:
-                FragmentManager frgManager = getFragmentManager();
-                frgManager.beginTransaction().replace(R.id.content_frame, SystemListFragment_.builder().build()).commit();
+                annotationFragmentManager.beginTransaction().replace(R.id.content_frame, SystemListFragment_.builder().build()).commit();
                 mToolbar.setTitle(R.string.app_name);
                 isFragment = false;
                 break;
             case DRAWER_NEWS:
-                fragment = new NewsFragment();
+                annotationFragmentManager.beginTransaction().replace(R.id.content_frame, NewsFragment_.builder().build()).commit();
+//                fragment = new NewsFragment();
                 mToolbar.setTitle(R.string.news_title);
-                isFragment = true;
+                isFragment = false;
                 break;
             case DRAWER_FAVORITES:
                 fragment = new FavoriteGamesListFragment();
@@ -401,11 +402,17 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
                 isFragment = true;
                 break;
             case DRAWER_CONTACT:
-                fragment = new ContactFormFragment();
-                args.putString(ContactFormFragment.ITEM_NAME, dataList.get(position).getItemName());
-                args.putInt(ContactFormFragment.IMAGE_RESOURCE_ID, dataList.get(position).getImgResID());
+//                fragment = new ContactFormFragment();
+//                args.putString(ContactFormFragment.ITEM_NAME, dataList.get(position).getItemName());
+//                args.putInt(ContactFormFragment.IMAGE_RESOURCE_ID, dataList.get(position).getImgResID());
+
+                annotationFragmentManager.beginTransaction().replace(R.id.content_frame,
+                        ContactFormFragment_.builder()
+                                .itemName(dataList.get(position).getItemName())
+                                .imageResourceId(dataList.get(position).getImgResID()).build()).commit();
+
                 mToolbar.setTitle(R.string.contactform_title);
-                isFragment = true;
+                isFragment = false;
                 break;
             case DRAWER_MORE_APPS:
                 Uri uri = Uri.parse(Konstanten.URL_MORE_APPS);

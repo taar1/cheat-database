@@ -224,5 +224,6 @@
     <string name="share_email_subject">I just found this cheat for %s</string>
     <string name="share_email_body">I just found this cheat on Cheat-Database for Android. Click the link below to check it out:</string>
     <string name="share_download_cheatdatabase">Download Cheat-Database for Android here:</string>
+    <string name="game_search_results_title"></string>
 
 </resources>

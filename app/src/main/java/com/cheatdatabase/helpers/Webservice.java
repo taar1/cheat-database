@@ -1274,6 +1274,7 @@ public class Webservice {
                 system.setSystemName(jsonObject.getString("systemName"));
                 system.setGameCount(jsonObject.getInt("gamesCounter"));
                 system.setCheatCount(jsonObject.getInt("cheatsCounter"));
+                system.setLastModTimeStamp(System.currentTimeMillis());
 
                 systems.add(system);
             }
