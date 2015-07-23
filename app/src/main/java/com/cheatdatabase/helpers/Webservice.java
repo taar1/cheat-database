@@ -1372,7 +1372,7 @@ public class Webservice {
      * @param systemId
      * @return Game[]
      */
-    public static Game[] getGameListBySystemId(int systemId) {
+    public static Game[] getGameListBySystemId(int systemId, String systemName) {
 
         String[] param1 = {"systemId", String.valueOf(systemId)};
 
@@ -1380,6 +1380,8 @@ public class Webservice {
         al.add(param1);
 
         String responseString = getDataAsStringFromServer(Konstanten.BASE_URL_ANDROID + "getGamesBySystemId.php", al);
+
+
 
         Game[] games = null;
         JSONArray jArray = null;
@@ -1401,6 +1403,7 @@ public class Webservice {
                 game.setGameName(gameName.replaceAll("\\\\", ""));
                 game.setCheatsCount(cheatCount);
                 game.setSystemId(systemId);
+                game.setSystemName(systemName);
 
                 games[i] = game;
             }

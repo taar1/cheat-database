@@ -300,7 +300,6 @@
     <string name="action_sign_in_short">Anmelden</string>
     <string name="app_label">Cheat-Database</string>
     <string name="login_progress_signing_in">Logge ein...</string>
-    <string name="forum" translatable="false">Forum</string>
     <string name="rate_us">Bewerte Cheat-Database</string>
 
 </resources>
