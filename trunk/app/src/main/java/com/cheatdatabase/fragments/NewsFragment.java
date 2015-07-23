@@ -14,6 +14,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.cheatdatabase.MainActivity;
 import com.cheatdatabase.R;
 import com.cheatdatabase.businessobjects.WelcomeMessage;
 import com.cheatdatabase.helpers.Konstanten;
@@ -24,6 +25,7 @@ import com.cheatdatabase.helpers.Webservice;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Background;
 import org.androidannotations.annotations.EFragment;
+import org.androidannotations.annotations.FragmentArg;
 import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
 
@@ -45,15 +47,12 @@ public class NewsFragment extends Fragment {
     @ViewById(R.id.text_welcome_text)
     TextView welcomeText;
 
-//    @Click(R.id.reload)
-//    public void clickReload() {
-//        reloadView.setVisibility(View.INVISIBLE);
-//        progressBar.setVisibility(View.VISIBLE);
-//
-//        getWelcomeMessage();
-//    }
+    @FragmentArg(MainActivity.DRAWER_ITEM_ID)
+    int mDrawerId;
 
-    //    public WelcomeMessage wm;
+    @FragmentArg(MainActivity.DRAWER_ITEM_NAME)
+    String mDrawerName;
+
     private Typeface latoFontBold;
     private Typeface latoFontLight;
     private Activity parentActivity;
@@ -63,9 +62,8 @@ public class NewsFragment extends Fragment {
 
     @AfterViews
     public void onCreateView() {
-        Reachability.registerReachability(getActivity());
-
         parentActivity = getActivity();
+        Reachability.registerReachability(parentActivity);
 
         latoFontBold = Tools.getFont(parentActivity.getAssets(), Konstanten.FONT_BOLD);
         latoFontLight = Tools.getFont(parentActivity.getAssets(), Konstanten.FONT_LIGHT);

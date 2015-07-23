@@ -1,9 +1,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/outerLayout"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical"
-    tools:context=".TopMembersActivity">
+    android:orientation="vertical">
 
     <ImageView
         android:id="@+id/reload"
@@ -19,8 +18,6 @@
         android:id="@id/android:list"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:background="@drawable/bg"
-        android:cacheColorHint="#00000000"
         android:fadingEdge="vertical"
         android:fastScrollEnabled="true"
         android:paddingTop="10dp"

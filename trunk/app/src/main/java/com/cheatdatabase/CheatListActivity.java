@@ -508,6 +508,8 @@ public class CheatListActivity extends ActionBarActivity implements CheatListFra
         }
     }
 
+
+
     private class AddCheatsToFavoritesTask extends AsyncTask<Game, Void, Void> {
 
         int returnValueCode;
@@ -527,6 +529,7 @@ public class CheatListActivity extends ActionBarActivity implements CheatListFra
                 }
                 dbAdapter.close();
             } catch (Exception e) {
+                Log.e(TAG, e.getLocalizedMessage());
                 returnValueCode = R.string.favorite_error;
             }
             return null;

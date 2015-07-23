@@ -145,10 +145,15 @@ public class GamesBySystemActivity extends ActionBarActivity implements ActionBa
     @Background
     public void getGames() {
         Log.d(TAG, "getGames() System ID: " + systemObj.getSystemId());
+        Log.d(TAG, "getGames() System NAME: " + systemObj.getSystemName());
 
-        Game[] gamesFound = Webservice.getGameListBySystemId(systemObj.getSystemId());
+        Game[] gamesFound = Webservice.getGameListBySystemId(systemObj.getSystemId(), systemObj.getSystemName());
         while (gamesFound == null) {
-            gamesFound = Webservice.getGameListBySystemId(systemObj.getSystemId());
+            gamesFound = Webservice.getGameListBySystemId(systemObj.getSystemId(), systemObj.getSystemName());
+        }
+
+        for(Game game : gamesFound) {
+            Log.d(TAG, "GAME: " + game.getGameName() + " / " + game.getSystemName());
         }
 
         Collections.addAll(gameArrayList, gamesFound);

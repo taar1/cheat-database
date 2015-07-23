@@ -136,7 +136,7 @@
     <string name="favorite_adding">Adding favorites&#8230;&#8230;&#8230;</string>
 
     <!-- FORUM -->
-    <string name="forum">Forum</string>
+    <string name="forum" translatable="false">Forum</string>
     <string name="forum_goto">Go to forum</string>
     <string name="forum_goto_online">Go to forum (online)</string>
     <string name="forum_button_submit">Post</string>

@@ -54,22 +54,7 @@
             android:paddingBottom="30sp"
             android:text="@string/error_nothing_found_text"
             android:textAppearance="@style/NormalText" />
-
-        <Button
-            android:id="@+id/search_button"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_gravity="center"
-            android:background="@drawable/btn_cab_done_navyblue"
-            android:text="@string/search_game"
-            android:textSize="24sp" />
+        
     </LinearLayout>
-
-    <!--<com.mopub.mobileads.MoPubView-->
-        <!--android:id="@+id/adview"-->
-        <!--android:layout_width="fill_parent"-->
-        <!--android:layout_height="52dp"-->
-        <!--android:layout_gravity="bottom"-->
-        <!--android:background="@color/black" />-->
 
 </LinearLayout>

@@ -8,6 +8,7 @@ import android.widget.Toast;
 
 import com.cheatdatabase.CheatDatabaseApplication;
 import com.cheatdatabase.GamesBySystemActivity_;
+import com.cheatdatabase.MainActivity;
 import com.cheatdatabase.R;
 import com.cheatdatabase.adapters.SystemsRecycleListViewAdapter;
 import com.cheatdatabase.businessobjects.SystemPlatform;
@@ -15,12 +16,12 @@ import com.cheatdatabase.events.SystemListRecyclerViewClickEvent;
 import com.cheatdatabase.helpers.Tools;
 import com.cheatdatabase.taskresults.GamesAndCheatsCountTaskResult;
 import com.cheatdatabase.tasks.GamesAndCheatsCountTask;
-import com.cheatdatabase.widgets.DividerDecoration;
 import com.google.analytics.tracking.android.Tracker;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EFragment;
+import org.androidannotations.annotations.FragmentArg;
 import org.androidannotations.annotations.ViewById;
 
 import java.util.ArrayList;
@@ -40,6 +41,12 @@ public class SystemListFragment extends Fragment {
 
     @ViewById(R.id.swipe_refresh_layout)
     SwipeRefreshLayout mSwipeRefreshLayout;
+
+    @FragmentArg(MainActivity.DRAWER_ITEM_ID)
+    int mDrawerId;
+
+    @FragmentArg(MainActivity.DRAWER_ITEM_NAME)
+    String mDrawerName;
 
     @Bean
     Tools tools;
