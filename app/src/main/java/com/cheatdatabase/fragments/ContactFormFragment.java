@@ -18,6 +18,7 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.cheatdatabase.MainActivity;
 import com.cheatdatabase.R;
 import com.cheatdatabase.businessobjects.Member;
 import com.cheatdatabase.helpers.Konstanten;
@@ -60,14 +61,11 @@ public class ContactFormFragment extends Fragment {
     @ViewById(R.id.thankyou)
     View mThankyouView;
 
-    @FragmentArg(ITEM_NAME)
-    String itemName;
+    @FragmentArg(MainActivity.DRAWER_ITEM_ID)
+    int mDrawerId;
 
-    @FragmentArg(IMAGE_RESOURCE_ID)
-    int imageResourceId;
-
-    public static final String IMAGE_RESOURCE_ID = "iconResourceID";
-    public static final String ITEM_NAME = "itemName";
+    @FragmentArg(MainActivity.DRAWER_ITEM_NAME)
+    String mDrawerName;
 
     /**
      * The default email to populate the email field with.

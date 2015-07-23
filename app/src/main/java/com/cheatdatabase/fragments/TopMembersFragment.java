@@ -9,7 +9,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.net.Uri;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -21,10 +20,12 @@ import android.view.ViewGroup;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.cheatdatabase.MainActivity;
 import com.cheatdatabase.MemberCheatListActivity;
 import com.cheatdatabase.R;
 import com.cheatdatabase.businessobjects.Member;
@@ -35,12 +36,26 @@ import com.cheatdatabase.helpers.Webservice;
 import com.google.analytics.tracking.android.Tracker;
 import com.squareup.picasso.Picasso;
 
+import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.Background;
+import org.androidannotations.annotations.Bean;
+import org.androidannotations.annotations.EFragment;
+import org.androidannotations.annotations.FragmentArg;
+import org.androidannotations.annotations.UiThread;
+import org.androidannotations.annotations.ViewById;
+
 /**
  * Show Top 20 helping members in a list.
  *
  * @author Dominik
  */
+@EFragment(R.layout.fragment_topmembers)
 public class TopMembersFragment extends ListFragment {
+
+    @ViewById(R.id.reload)
+    ImageView reloadView;
+
+    private static final String TAG = TopMembersFragment.class.getSimpleName();
 
     private Member[] members;
     private Member selectedMember;
@@ -55,73 +70,123 @@ public class TopMembersFragment extends ListFragment {
 
     private Typeface latoFontBold;
     private Typeface latoFontLight;
+    private Activity parentActivity;
+//    private View rootView;
 
-    private View rootView;
-    private ImageView reloadView;
-    private Activity ca;
+    @Bean
+    Tools tools;
 
     private static final String SCREEN_LABEL = TopMembersFragment.class.getName();
     private static final String GA_TITLE = "Top Members ListView";
 
-    public static final String IMAGE_RESOURCE_ID = "iconResourceID";
-    public static final String ITEM_NAME = "itemName";
+//    public static final String IMAGE_RESOURCE_ID = "iconResourceID";
+//    public static final String ITEM_NAME = "itemName";
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    @FragmentArg(MainActivity.DRAWER_ITEM_ID)
+    int mDrawerId;
 
-        ca = getActivity();
-        Reachability.registerReachability(ca);
+    @FragmentArg(MainActivity.DRAWER_ITEM_NAME)
+    String mDrawerName;
 
-        latoFontLight = Tools.getFont(ca.getAssets(), Konstanten.FONT_LIGHT);
-        latoFontBold = Tools.getFont(ca.getAssets(), Konstanten.FONT_BOLD);
+    @AfterViews
+    public void onCreateView() {
+        parentActivity = getActivity();
+        Reachability.registerReachability(parentActivity);
+
+        latoFontLight = tools.getFont(parentActivity.getAssets(), Konstanten.FONT_LIGHT);
+        latoFontBold = tools.getFont(parentActivity.getAssets(), Konstanten.FONT_BOLD);
 
         // Update action bar menu items?
         setHasOptionsMenu(true);
-    }
 
-    @Override
-    public void onPause() {
-        Reachability.unregister(ca);
-        super.onPause();
-    }
+        if (reloadView != null) {
+            reloadView.setVisibility(View.GONE);
+        }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        rootView = inflater.inflate(R.layout.fragment_topmembers, container, false);
-
-        reloadView = (ImageView) rootView.findViewById(R.id.reload);
         if (Reachability.reachability.isReachable) {
             startTopMembersAdapter();
         } else {
-            reloadView.setVisibility(View.VISIBLE);
-            reloadView.setOnClickListener(new OnClickListener() {
+            if (reloadView != null) {
+                reloadView.setOnClickListener(new OnClickListener() {
 
-                @Override
-                public void onClick(View v) {
-                    if (Reachability.reachability.isReachable) {
-                        reloadView.setVisibility(View.GONE);
-                        startTopMembersAdapter();
-                    } else {
-                        Toast.makeText(ca, R.string.no_internet, Toast.LENGTH_SHORT).show();
+                    @Override
+                    public void onClick(View v) {
+                        if (Reachability.reachability.isReachable) {
+                            reloadView.setVisibility(View.INVISIBLE);
+                            startTopMembersAdapter();
+                        } else {
+                            Toast.makeText(parentActivity, R.string.no_internet, Toast.LENGTH_SHORT).show();
+                        }
                     }
-                }
-            });
-            Toast.makeText(ca, R.string.no_internet, Toast.LENGTH_SHORT).show();
+                });
+
+            }
+
+            Toast.makeText(parentActivity, R.string.no_internet, Toast.LENGTH_SHORT).show();
         }
 
-        Tools.initGA(ca, tracker, SCREEN_LABEL, GA_TITLE, "");
-
-        return rootView;
+        tools.initGA(parentActivity, tracker, SCREEN_LABEL, GA_TITLE, "");
     }
 
-    private void startTopMembersAdapter() {
-        reloadView.setVisibility(View.GONE);
-        topMembersAdapter = new TopMembersAdapter(ca, R.layout.fragment_topmembers);
-        setListAdapter(topMembersAdapter);
-        mProgressDialog = ProgressDialog.show(ca, getString(R.string.please_wait) + "...", getString(R.string.retrieving_data) + "...", true);
+//    @Override
+//    public void onCreate(Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
+//
+//        parentActivity = getActivity();
+//        Reachability.registerReachability(parentActivity);
+//
+//        latoFontLight = Tools.getFont(parentActivity.getAssets(), Konstanten.FONT_LIGHT);
+//        latoFontBold = Tools.getFont(parentActivity.getAssets(), Konstanten.FONT_BOLD);
+//
+//        // Update action bar menu items?
+//        setHasOptionsMenu(true);
+//    }
 
-        getMembers();
+    @Override
+    public void onPause() {
+        Reachability.unregister(parentActivity);
+        super.onPause();
+    }
+
+//    @Override
+//    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+//        rootView = inflater.inflate(R.layout.fragment_topmembers, container, false);
+//
+//        reloadView = (ImageView) rootView.findViewById(R.id.reload);
+//        if (Reachability.reachability.isReachable) {
+//            startTopMembersAdapter();
+//        } else {
+//            reloadView.setVisibility(View.VISIBLE);
+//            reloadView.setOnClickListener(new OnClickListener() {
+//
+//                @Override
+//                public void onClick(View v) {
+//                    if (Reachability.reachability.isReachable) {
+//                        reloadView.setVisibility(View.GONE);
+//                        startTopMembersAdapter();
+//                    } else {
+//                        Toast.makeText(parentActivity, R.string.no_internet, Toast.LENGTH_SHORT).show();
+//                    }
+//                }
+//            });
+//            Toast.makeText(parentActivity, R.string.no_internet, Toast.LENGTH_SHORT).show();
+//        }
+//
+//        Tools.initGA(parentActivity, tracker, SCREEN_LABEL, GA_TITLE, "");
+//
+//        return rootView;
+//    }
+
+    private void startTopMembersAdapter() {
+        if (reloadView != null) {
+            reloadView.setVisibility(View.GONE);
+        }
+        topMembersAdapter = new TopMembersAdapter(parentActivity, R.layout.fragment_topmembers);
+        setListAdapter(topMembersAdapter);
+        mProgressDialog = ProgressDialog.show(parentActivity, getString(R.string.please_wait) + "...", getString(R.string.retrieving_data) + "...", true);
+
+//        getMembers();
+        getMembersInBackground();
     }
 
     @Override
@@ -143,7 +208,7 @@ public class TopMembersFragment extends ListFragment {
                     intent.setData(Uri.parse(selectedMember.getWebsite()));
                     startActivity(intent);
                 } else {
-                    Toast.makeText(ca, String.format(getString(R.string.top_members_no_website, selectedMember.getUsername())), Toast.LENGTH_LONG).show();
+                    Toast.makeText(parentActivity, String.format(getString(R.string.top_members_no_website, selectedMember.getUsername())), Toast.LENGTH_LONG).show();
                 }
 
                 return true;
@@ -157,50 +222,76 @@ public class TopMembersFragment extends ListFragment {
         super.onListItemClick(l, v, position, id);
 
         if (Reachability.reachability.isReachable) {
-            Intent explicitIntent = new Intent(ca, MemberCheatListActivity.class);
+            Intent explicitIntent = new Intent(parentActivity, MemberCheatListActivity.class);
             explicitIntent.putExtra("memberObj", members[position]);
             startActivity(explicitIntent);
         } else {
-            Toast.makeText(ca, R.string.no_internet, Toast.LENGTH_SHORT).show();
+            Toast.makeText(parentActivity, R.string.no_internet, Toast.LENGTH_SHORT).show();
         }
     }
 
-    private void getMembers() {
+//    private void getMembers() {
+//
+//        new Thread(new Runnable() {
+//
+//            @Override
+//            public void run() {
+//                try {
+//                    members = Webservice.getMemberTop20();
+//
+//                    parentActivity.runOnUiThread(new Runnable() {
+//
+//                        @Override
+//                        public void run() {
+//                            if (members != null && members.length > 0) {
+//                                topMembersAdapter.notifyDataSetChanged();
+//                                for (int i = 0; i < members.length; i++) {
+//                                    topMembersAdapter.add(members[i]);
+//                                }
+//                                mProgressDialog.dismiss();
+//                                topMembersAdapter.notifyDataSetChanged();
+//                            } else {
+//                                error(R.string.err_data_not_accessible);
+//                            }
+//                        }
+//                    });
+//                } catch (Exception e) {
+//                    Log.e("TopMembersActivity:getMembers()", "Webservice.getMemberTop20() == null");
+//                    error(R.string.err_no_member_data);
+//                }
+//            }
+//        }).start();
+//
+//    }
 
-        new Thread(new Runnable() {
-
-            @Override
-            public void run() {
-                try {
-                    members = Webservice.getMemberTop20();
-
-                    ca.runOnUiThread(new Runnable() {
-
-                        @Override
-                        public void run() {
-                            if (members != null && members.length > 0) {
-                                topMembersAdapter.notifyDataSetChanged();
-                                for (int i = 0; i < members.length; i++) {
-                                    topMembersAdapter.add(members[i]);
-                                }
-                                mProgressDialog.dismiss();
-                                topMembersAdapter.notifyDataSetChanged();
-                            } else {
-                                error(R.string.err_data_not_accessible);
-                            }
-                        }
-                    });
-                } catch (Exception e) {
-                    Log.e("TopMembersActivity:getMembers()", "Webservice.getMemberTop20() == null");
-                    error(R.string.err_no_member_data);
-                }
-            }
-        }).start();
-
+    @Background(serial = "getMemberTop20")
+    public void getMembersInBackground() {
+        try {
+            members = Webservice.getMemberTop20();
+            notifyAdapter();
+        } catch (Exception e) {
+            Log.e(TAG, e.getLocalizedMessage());
+            error(R.string.err_no_member_data);
+        }
     }
 
+    @UiThread
+    public void notifyAdapter() {
+        if (members != null && members.length > 0) {
+            topMembersAdapter.notifyDataSetChanged();
+            for (int i = 0; i < members.length; i++) {
+                topMembersAdapter.add(members[i]);
+            }
+            mProgressDialog.dismiss();
+            topMembersAdapter.notifyDataSetChanged();
+        } else {
+            error(R.string.err_data_not_accessible);
+        }
+    }
+
+
     private void error(int msg) {
-        new AlertDialog.Builder(ca).setIcon(R.drawable.ic_action_warning).setTitle(getString(R.string.err)).setMessage(msg).setNeutralButton(R.string.ok, new DialogInterface.OnClickListener() {
+        new AlertDialog.Builder(parentActivity).setIcon(R.drawable.ic_action_warning).setTitle(getString(R.string.err)).setMessage(msg).setNeutralButton(R.string.ok, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int whichButton) {
                 // finish();
@@ -233,9 +324,13 @@ public class TopMembersFragment extends ListFragment {
         public View getView(int position, View convertView, ViewGroup parent) {
 
             View cView = convertView;
-            LayoutInflater vi = (LayoutInflater) ca.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            LayoutInflater vi = (LayoutInflater) parentActivity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             cView = vi.inflate(R.layout.topmembers_list_item, null);
             cView.setDrawingCacheEnabled(true);
+            cView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 320));
+
+//            LinearLayout ol = (LinearLayout) parentActivity.findViewById(R.id.outerLayout);
+//            ol.setBackgroundResource(R.drawable.bg);
 
 			/*
              * Dies ist bereis ein Loop der durch die ArrayList geht!
@@ -253,7 +348,7 @@ public class TopMembersFragment extends ListFragment {
 
                 });
 
-                Picasso.with(ca.getApplicationContext()).load(Konstanten.WEBDIR_MEMBER_AVATAR + member.getMid()).placeholder(R.drawable.avatar).into(avatarImageView);
+                Picasso.with(parentActivity.getApplicationContext()).load(Konstanten.WEBDIR_MEMBER_AVATAR + member.getMid()).placeholder(R.drawable.avatar).into(avatarImageView);
 
                 TextView tvNumeration = (TextView) cView.findViewById(R.id.numeration);
                 tvNumeration.setText(String.valueOf(position + 1));
@@ -291,7 +386,7 @@ public class TopMembersFragment extends ListFragment {
                 tvWebsite.setTypeface(latoFontLight);
                 tvWebsite.setDrawingCacheEnabled(false);
             } catch (Exception e) {
-                Log.e("TopMembers.getView ERROR:", "on position: " + position + ": " + e.getMessage());
+                Log.e(TAG, "on position: " + position + ": " + e.getMessage());
                 error(R.string.err_no_member_data);
             }
             return cView;

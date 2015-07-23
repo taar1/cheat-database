@@ -35,11 +35,11 @@ import android.widget.Toast;
 import com.appbrain.AppBrain;
 import com.cheatdatabase.businessobjects.Member;
 import com.cheatdatabase.fragments.ContactFormFragment_;
-import com.cheatdatabase.fragments.FavoriteGamesListFragment;
+import com.cheatdatabase.fragments.FavoriteGamesListFragment_;
 import com.cheatdatabase.fragments.NewsFragment_;
-import com.cheatdatabase.fragments.SubmitCheatFragment;
+import com.cheatdatabase.fragments.SubmitCheatFragment_;
 import com.cheatdatabase.fragments.SystemListFragment_;
-import com.cheatdatabase.fragments.TopMembersFragment;
+import com.cheatdatabase.fragments.TopMembersFragment_;
 import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.helpers.Tools;
@@ -54,6 +54,7 @@ import com.splunk.mint.Mint;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.InstanceState;
 import org.androidannotations.annotations.ViewById;
 
 import java.util.ArrayList;
@@ -61,6 +62,9 @@ import java.util.List;
 
 @EActivity(R.layout.activity_main)
 public class MainActivity extends ActionBarActivity implements ActionBar.OnNavigationListener {
+
+    public static final String DRAWER_ITEM_ID = "drawerId";
+    public static final String DRAWER_ITEM_NAME = "drawerName";
 
     // Navigation Drawer
     private ListView mDrawerList;
@@ -96,6 +100,8 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
     @Bean
     Tools tools;
 
+    @InstanceState
+    int mFragmentId;
 
     @AfterViews
     public void createView() {
@@ -115,7 +121,6 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.app_icon_fox);
 
         tools.loadAd(mAdView, getString(R.string.screen_type));
-
         tools.initGA(MainActivity.this, tracker, SCREEN_LABEL, "Main Activity", "Cheat-Database Main Activity");
 
         AppBrain.init(this);
@@ -127,8 +132,28 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
         frgManager.beginTransaction().replace(R.id.content_frame, SystemListFragment_.builder().build()).commit();
 
         // Create Drawer
+        // TODO
+        // TODO
+        // TODO
+        // TODO
+        // TODO hier noch savedInstance speichern/holen (die ID vom drawerr item beim anklicken)
+        // damit das zuletzt aktive fragment wieder angezeigt wird, wenn man auf "back" klickt.
         createNavigationDrawer();
     }
+
+//    @Override
+//    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
+//        // Saving the currently active fragment ID to the Bundle object
+//        outState.putInt(Konstanten.PREFERENCES_SELECTED_DRAWER_FRAGMENT_ID, mFragmentId);
+//        super.onSaveInstanceState(outState, outPersistentState);
+//    }
+//
+//    @Override
+//    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+//        super.onRestoreInstanceState(savedInstanceState);
+//        mFragmentId = savedInstanceState.getInt(Konstanten.PREFERENCES_SELECTED_DRAWER_FRAGMENT_ID);
+//        createNavigationDrawer(savedInstanceState);
+//    }
 
     @Override
     public void onPause() {
@@ -139,7 +164,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
     @Override
     public void onResume() {
         super.onResume();
-        // selectItem(0); // FIXME here maybe preserving fragment ID
+        selectItem(1);
         member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
     }
 
@@ -215,10 +240,15 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
         mDrawerLayout.setDrawerListener(mDrawerToggle);
 
 //        if (savedInstanceState == null) {
-//         (if used method parameter is needed: createNavigationDrawer(Bundle savedInstanceState))
-//            int position = settings.getInt(Konstanten.PREFERENCES_SELECTED_DRAWER_FRAGMENT_ID, 99);
+////         (if used method parameter is needed: createNavigationDrawer(Bundle savedInstanceState))
+//            int position = settings.getInt(Konstanten.PREFERENCES_SELECTED_DRAWER_FRAGMENT_ID, 0);
 //            selectItem(position);
+//        } else {
+//            selectItem(savedInstanceState.getInt(Konstanten.PREFERENCES_SELECTED_DRAWER_FRAGMENT_ID));
 //        }
+
+        // TODO SAVEDINSTANCE SPEICHERN GEHT NOCH NICHT (https://github.com/excilys/androidannotations/wiki/Save-instance-state)
+        selectItem(mFragmentId);
     }
 
 
@@ -367,51 +397,32 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
         Bundle args = new Bundle();
         boolean isFragment = false;
 
+        setMainTitle(position);
+
         FragmentManager annotationFragmentManager = getFragmentManager();
         switch (position) {
             case DRAWER_MAIN:
-                annotationFragmentManager.beginTransaction().replace(R.id.content_frame, SystemListFragment_.builder().build()).commit();
-                mToolbar.setTitle(R.string.app_name);
+                annotationFragmentManager.beginTransaction().replace(R.id.content_frame, SystemListFragment_.builder().mDrawerId(position).mDrawerName(dataList.get(position).getItemName()).build()).commit();
                 isFragment = false;
                 break;
             case DRAWER_NEWS:
-                annotationFragmentManager.beginTransaction().replace(R.id.content_frame, NewsFragment_.builder().build()).commit();
-//                fragment = new NewsFragment();
-                mToolbar.setTitle(R.string.news_title);
+                annotationFragmentManager.beginTransaction().replace(R.id.content_frame, NewsFragment_.builder().mDrawerId(position).mDrawerName(dataList.get(position).getItemName()).build()).commit();
                 isFragment = false;
                 break;
             case DRAWER_FAVORITES:
-                fragment = new FavoriteGamesListFragment();
-                args.putString(FavoriteGamesListFragment.ITEM_NAME, dataList.get(position).getItemName());
-                args.putInt(FavoriteGamesListFragment.IMAGE_RESOURCE_ID, dataList.get(position).getImgResID());
-                mToolbar.setTitle(R.string.favorites);
-                isFragment = true;
+                annotationFragmentManager.beginTransaction().replace(R.id.content_frame, FavoriteGamesListFragment_.builder().mDrawerId(position).mDrawerName(dataList.get(position).getItemName()).build()).commit();
+                isFragment = false;
                 break;
             case DRAWER_TOP_MEMBERS:
-                fragment = new TopMembersFragment();
-                args.putString(TopMembersFragment.ITEM_NAME, dataList.get(position).getItemName());
-                args.putInt(TopMembersFragment.IMAGE_RESOURCE_ID, dataList.get(position).getImgResID());
-                mToolbar.setTitle(R.string.top_members_top_helping);
-                isFragment = true;
+                annotationFragmentManager.beginTransaction().replace(R.id.content_frame, TopMembersFragment_.builder().mDrawerId(position).mDrawerName(dataList.get(position).getItemName()).build()).commit();
+                isFragment = false;
                 break;
             case DRAWER_SUBMIT_CHEAT:
-                fragment = new SubmitCheatFragment();
-                args.putString(SubmitCheatFragment.ITEM_NAME, dataList.get(position).getItemName());
-                args.putInt(SubmitCheatFragment.IMAGE_RESOURCE_ID, dataList.get(position).getImgResID());
-                mToolbar.setTitle(R.string.submit_cheat_short);
-                isFragment = true;
+                annotationFragmentManager.beginTransaction().replace(R.id.content_frame, SubmitCheatFragment_.builder().mDrawerId(position).mDrawerName(dataList.get(position).getItemName()).build()).commit();
+                isFragment = false;
                 break;
             case DRAWER_CONTACT:
-//                fragment = new ContactFormFragment();
-//                args.putString(ContactFormFragment.ITEM_NAME, dataList.get(position).getItemName());
-//                args.putInt(ContactFormFragment.IMAGE_RESOURCE_ID, dataList.get(position).getImgResID());
-
-                annotationFragmentManager.beginTransaction().replace(R.id.content_frame,
-                        ContactFormFragment_.builder()
-                                .itemName(dataList.get(position).getItemName())
-                                .imageResourceId(dataList.get(position).getImgResID()).build()).commit();
-
-                mToolbar.setTitle(R.string.contactform_title);
+                annotationFragmentManager.beginTransaction().replace(R.id.content_frame, ContactFormFragment_.builder().mDrawerId(position).mDrawerName(dataList.get(position).getItemName()).build()).commit();
                 isFragment = false;
                 break;
             case DRAWER_MORE_APPS:
@@ -436,6 +447,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
                 break;
         }
 
+
         if (isFragment) {
             fragment.setArguments(args);
             FragmentManager frgManager = getFragmentManager();
@@ -447,6 +459,32 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
         setTitle(dataList.get(position).getItemName());
         mDrawerLayout.closeDrawer(mDrawerList);
 
+    }
+
+    private void setMainTitle(int position) {
+        switch (position) {
+            case DRAWER_MAIN:
+                mToolbar.setTitle(R.string.app_name);
+                break;
+            case DRAWER_NEWS:
+                mToolbar.setTitle(R.string.news_title);
+                break;
+            case DRAWER_FAVORITES:
+                mToolbar.setTitle(R.string.favorites);
+                break;
+            case DRAWER_TOP_MEMBERS:
+                mToolbar.setTitle(R.string.top_members_top_helping);
+                break;
+            case DRAWER_SUBMIT_CHEAT:
+                mToolbar.setTitle(R.string.submit_cheat_short);
+                break;
+            case DRAWER_CONTACT:
+                mToolbar.setTitle(R.string.contactform_title);
+                break;
+            default:
+                mToolbar.setTitle(R.string.app_name);
+                break;
+        }
     }
 
     @Override
@@ -473,6 +511,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             Log.i("DRAWER", position + "");
+            mFragmentId = position;
             editor.putInt(Konstanten.PREFERENCES_SELECTED_DRAWER_FRAGMENT_ID, position);
             editor.commit();
             selectItem(position);

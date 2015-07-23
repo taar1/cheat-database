@@ -3,17 +3,14 @@ package com.cheatdatabase.fragments;
 import android.app.Activity;
 import android.app.Fragment;
 import android.graphics.Typeface;
-import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.util.SparseArray;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ExpandableListView;
 import android.widget.ExpandableListView.ExpandableListContextMenuInfo;
 import android.widget.LinearLayout;
@@ -21,6 +18,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.cheatdatabase.MainActivity;
 import com.cheatdatabase.R;
 import com.cheatdatabase.businessobjects.Game;
 import com.cheatdatabase.businessobjects.SystemPlatform;
@@ -31,12 +29,19 @@ import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Tools;
 import com.google.analytics.tracking.android.Tracker;
 
+import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.EFragment;
+import org.androidannotations.annotations.FragmentArg;
+import org.androidannotations.annotations.UiThread;
+import org.androidannotations.annotations.ViewById;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+@EFragment(R.layout.fragment_favorites_main_list)
 public class FavoriteGamesListFragment extends Fragment {
 
     SparseArray<Group> groups = new SparseArray<Group>();
@@ -45,7 +50,6 @@ public class FavoriteGamesListFragment extends Fragment {
 
     private Tracker tracker;
 
-    private ExpandableListView listView;
     private FavoritesExpandableListAdapter adapter;
 
     protected final int STEP_ONE_COMPLETE = 1;
@@ -58,28 +62,33 @@ public class FavoriteGamesListFragment extends Fragment {
 
     private Activity parentActivity;
 
-    private RelativeLayout somethingfoundLayout;
-    private LinearLayout nothingFoundLayout;
+    @ViewById(R.id.listView)
+    ExpandableListView listView;
 
-    private TextView nothingFoundTitle;
-    private TextView nothingFoundText;
+    @ViewById(R.id.somethingfound_layout)
+    RelativeLayout somethingfoundLayout;
+
+    @ViewById(R.id.nothingfound_layout)
+    LinearLayout nothingFoundLayout;
+
+    @ViewById(R.id.nothingfound_title)
+    TextView nothingFoundTitle;
+
+    @ViewById(R.id.nothingfound_text)
+    TextView nothingFoundText;
+
+    @FragmentArg(MainActivity.DRAWER_ITEM_ID)
+    int mDrawerId;
+
+    @FragmentArg(MainActivity.DRAWER_ITEM_NAME)
+    String mDrawerName;
 
     private static final String SCREEN_LABEL = "Favorites Main Screen";
 
-    public static final String IMAGE_RESOURCE_ID = "iconResourceID";
-    public static final String ITEM_NAME = "itemName";
-
     private final int REMOVE_FROM_FAVORITES = 1;
 
-    private View rootView;
-
-    public FavoriteGamesListFragment() {
-
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    @AfterViews
+    public void onCreateView() {
         parentActivity = getActivity();
 
         latoFontLight = Tools.getFont(parentActivity.getAssets(), Konstanten.FONT_LIGHT);
@@ -95,30 +104,58 @@ public class FavoriteGamesListFragment extends Fragment {
 
         // Update action bar menu items?
         setHasOptionsMenu(true);
-    }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        rootView = inflater.inflate(R.layout.fragment_favorites_main_list, container, false);
-
-        somethingfoundLayout = (RelativeLayout) rootView.findViewById(R.id.somethingfound_layout);
-        nothingFoundLayout = (LinearLayout) rootView.findViewById(R.id.nothingfound_layout);
-
-        nothingFoundTitle = (TextView) rootView.findViewById(R.id.nothingfound_title);
         nothingFoundTitle.setTypeface(latoFontBold);
-        nothingFoundText = (TextView) rootView.findViewById(R.id.nothingfound_text);
         nothingFoundText.setTypeface(latoFontLight);
-
-        listView = (ExpandableListView) rootView.findViewById(R.id.listView);
 
         listView.setAdapter(adapter);
         getViewContent();
 
         registerForContextMenu(listView);
-        registerForContextMenu(rootView);
-
-        return rootView;
     }
+
+//    @Override
+//    public void onCreate(Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
+//        parentActivity = getActivity();
+//
+//        latoFontLight = Tools.getFont(parentActivity.getAssets(), Konstanten.FONT_LIGHT);
+//        latoFontBold = Tools.getFont(parentActivity.getAssets(), Konstanten.FONT_BOLD);
+//
+//        db = new CheatDatabaseAdapter(parentActivity);
+//        db.open();
+//
+//        Tools.initGA(parentActivity, tracker, SCREEN_LABEL, "Favorites", "User favorites");
+//        adapter = new FavoritesExpandableListAdapter(parentActivity, groups);
+//
+//        // TODO FIXME CONTEXT MENU DOES NOT WORK YET
+//
+//        // Update action bar menu items?
+//        setHasOptionsMenu(true);
+//    }
+//
+//    @Override
+//    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+//        rootView = inflater.inflate(R.layout.fragment_favorites_main_list, container, false);
+//
+//        somethingfoundLayout = (RelativeLayout) rootView.findViewById(R.id.somethingfound_layout);
+//        nothingFoundLayout = (LinearLayout) rootView.findViewById(R.id.nothingfound_layout);
+//
+//        nothingFoundTitle = (TextView) rootView.findViewById(R.id.nothingfound_title);
+//        nothingFoundTitle.setTypeface(latoFontBold);
+//        nothingFoundText = (TextView) rootView.findViewById(R.id.nothingfound_text);
+//        nothingFoundText.setTypeface(latoFontLight);
+//
+//        listView = (ExpandableListView) rootView.findViewById(R.id.listView);
+//
+//        listView.setAdapter(adapter);
+//        getViewContent();
+//
+//        registerForContextMenu(listView);
+//        registerForContextMenu(rootView);
+//
+//        return rootView;
+//    }
 
     private void getViewContent() {
 
@@ -142,10 +179,11 @@ public class FavoriteGamesListFragment extends Fragment {
 
         // If nothing found then display a message.
         if (gamesFound == null) {
-            nothingFoundText.setText(R.string.favorite_empty);
-
-            somethingfoundLayout.setVisibility(View.GONE);
-            nothingFoundLayout.setVisibility(View.VISIBLE);
+//            nothingFoundText.setText(R.string.favorite_empty);
+//
+//            somethingfoundLayout.setVisibility(View.GONE);
+//            nothingFoundLayout.setVisibility(View.VISIBLE);
+            changeView();
         } else {
             if ((gamesFound != null) && (gamesFound.length > 0)) {
                 Set<String> systems = new HashSet<String>();
@@ -179,6 +217,13 @@ public class FavoriteGamesListFragment extends Fragment {
             }
         }
 
+    }
+
+    @UiThread
+    public void changeView() {
+        nothingFoundText.setText(R.string.favorite_empty);
+        somethingfoundLayout.setVisibility(View.GONE);
+        nothingFoundLayout.setVisibility(View.VISIBLE);
     }
 
     private Handler handler = new Handler() {
@@ -248,7 +293,6 @@ public class FavoriteGamesListFragment extends Fragment {
 
             // TODO liste neu laden
             gamesFound = db.getAllFavoritedGames();
-
         } else {
             Toast.makeText(parentActivity, R.string.remove_favorites_nok, Toast.LENGTH_SHORT).show();
         }
