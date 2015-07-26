@@ -2,25 +2,20 @@
     android:id="@+id/outerLayout"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    android:background="@drawable/bg"
     android:orientation="vertical">
 
-    <ImageView
-        android:id="@+id/reload"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:gravity="top"
-        android:paddingTop="10dp"
-        android:src="@drawable/reload"
-        android:visibility="invisible" />
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_refresh_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <ListView
-        android:id="@id/android:list"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:fadingEdge="vertical"
-        android:fastScrollEnabled="true"
-        android:paddingTop="10dp"
-        android:scrollbars="vertical"></ListView>
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/my_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="vertical" />
+
+    </android.support.v4.widget.SwipeRefreshLayout>
 
 </LinearLayout>
