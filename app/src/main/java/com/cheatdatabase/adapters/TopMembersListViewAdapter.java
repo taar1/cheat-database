@@ -178,7 +178,7 @@ public class TopMembersListViewAdapter extends RecyclerView.Adapter<TopMembersLi
         return vh;
     }
 
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(ViewHolder holder, final int position) {
         memberObj = mMemberObjects.get(position);
 
         holder.tvNumeration.setTypeface(latoFontBold);
@@ -189,7 +189,7 @@ public class TopMembersListViewAdapter extends RecyclerView.Adapter<TopMembersLi
         holder.tvMemberName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showMemberCheatList(memberObj);
+                showMemberCheatList(mMemberObjects.get(position));
             }
         });
 
@@ -198,7 +198,7 @@ public class TopMembersListViewAdapter extends RecyclerView.Adapter<TopMembersLi
         holder.tvCheatCount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showMemberCheatList(memberObj);
+                showMemberCheatList(mMemberObjects.get(position));
             }
         });
 
@@ -231,7 +231,7 @@ public class TopMembersListViewAdapter extends RecyclerView.Adapter<TopMembersLi
 
             @Override
             public void onClick(View v) {
-                openWebsite(memberObj.getWebsite());
+                showMemberCheatList(mMemberObjects.get(position));
             }
 
         });
