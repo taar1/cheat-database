@@ -333,6 +333,7 @@ public class MemberCheatListActivity extends ActionBarListActivity implements Ad
                 // Dominik: This is actually not needed because I am saving the
                 // selected Fragment ID in the local storage.
                 Intent upIntent = NavUtils.getParentActivityIntent(this);
+//                upIntent.putExtra("mFragmentId", 2); (test only)
                 if (NavUtils.shouldUpRecreateTask(this, upIntent)) {
                     // This activity is NOT part of this app's task, so create a new
                     // task when navigating up, with a synthesized back stack.
