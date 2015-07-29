@@ -263,94 +263,94 @@ public class TopMembersFragment extends Fragment {
      *
      * @author Dominik
      */
-    private class TopMembersAdapter extends ArrayAdapter<Member> {
-
-        public TopMembersAdapter(Context context, int textViewResourceId) {
-            super(context, textViewResourceId);
-        }
-
-        private void openWebsite(String url) {
-            // TODO member per email informieren, dass jemand seine homepage
-            // geoeffnet hat.
-            if ((url != null) && (url.length() > 4)) {
-                Intent intent = new Intent(Intent.ACTION_VIEW);
-                intent.setData(Uri.parse(url));
-                startActivity(intent);
-            }
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-
-            View cView = convertView;
-            LayoutInflater vi = (LayoutInflater) parentActivity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            cView = vi.inflate(R.layout.topmembers_list_item, null);
-            cView.setDrawingCacheEnabled(true);
-            cView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 320));
-
-//            LinearLayout ol = (LinearLayout) parentActivity.findViewById(R.id.outerLayout);
-//            ol.setBackgroundResource(R.drawable.bg);
-
-			/*
-             * Dies ist bereis ein Loop der durch die ArrayList geht!
-			 */
-            try {
-                final Member member = members[position];
-
-                ImageView avatarImageView = (ImageView) cView.findViewById(R.id.avatar);
-                avatarImageView.setOnClickListener(new OnClickListener() {
-
-                    @Override
-                    public void onClick(View v) {
-                        openWebsite(member.getWebsite());
-                    }
-
-                });
-
-                Picasso.with(parentActivity.getApplicationContext()).load(Konstanten.WEBDIR_MEMBER_AVATAR + member.getMid()).placeholder(R.drawable.avatar).into(avatarImageView);
-
-                TextView tvNumeration = (TextView) cView.findViewById(R.id.numeration);
-                tvNumeration.setText(String.valueOf(position + 1));
-                tvNumeration.setTypeface(latoFontBold);
-
-                TextView tvMemberName = (TextView) cView.findViewById(R.id.membername);
-                tvMemberName.setText(member.getUsername().toUpperCase());
-                tvMemberName.setTypeface(latoFontBold);
-
-                TextView tvCheatCount = (TextView) cView.findViewById(R.id.cheatcount);
-                tvCheatCount.setText(getString(R.string.top_members_cheats_count) + ": " + String.valueOf(member.getCheatSubmissionCount()));
-                tvCheatCount.setTypeface(latoFontLight);
-
-                TextView tvHiMessage = (TextView) cView.findViewById(R.id.hi_message);
-                if (member.getGreeting().length() > 1) {
-                    tvHiMessage.setText("\"" + member.getGreeting().replaceAll("\\\\", "").trim() + "\"");
-                } else {
-                    tvHiMessage.setVisibility(View.GONE);
-                }
-                tvHiMessage.setTypeface(latoFontLight);
-
-                TextView tvWebsite = (TextView) cView.findViewById(R.id.website);
-                if (member.getWebsite().length() > 1) {
-                    tvWebsite.setText(member.getWebsite());
-                } else {
-                    tvWebsite.setVisibility(View.GONE);
-                }
-                tvWebsite.setOnClickListener(new OnClickListener() {
-
-                    @Override
-                    public void onClick(View v) {
-                        openWebsite(member.getWebsite());
-                    }
-                });
-                tvWebsite.setTypeface(latoFontLight);
-                tvWebsite.setDrawingCacheEnabled(false);
-            } catch (Exception e) {
-                Log.e(TAG, "on position: " + position + ": " + e.getMessage());
-                error(R.string.err_no_member_data);
-            }
-            return cView;
-        }
-
-    }
+//    private class TopMembersAdapter extends ArrayAdapter<Member> {
+//
+//        public TopMembersAdapter(Context context, int textViewResourceId) {
+//            super(context, textViewResourceId);
+//        }
+//
+//        private void openWebsite(String url) {
+//            // TODO member per email informieren, dass jemand seine homepage
+//            // geoeffnet hat.
+//            if ((url != null) && (url.length() > 4)) {
+//                Intent intent = new Intent(Intent.ACTION_VIEW);
+//                intent.setData(Uri.parse(url));
+//                startActivity(intent);
+//            }
+//        }
+//
+//        @Override
+//        public View getView(int position, View convertView, ViewGroup parent) {
+//
+//            View cView = convertView;
+//            LayoutInflater vi = (LayoutInflater) parentActivity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+//            cView = vi.inflate(R.layout.topmembers_list_item, null);
+//            cView.setDrawingCacheEnabled(true);
+//            cView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 320));
+//
+////            LinearLayout ol = (LinearLayout) parentActivity.findViewById(R.id.outerLayout);
+////            ol.setBackgroundResource(R.drawable.bg);
+//
+//			/*
+//             * Dies ist bereis ein Loop der durch die ArrayList geht!
+//			 */
+//            try {
+//                final Member member = members[position];
+//
+//                ImageView avatarImageView = (ImageView) cView.findViewById(R.id.avatar);
+//                avatarImageView.setOnClickListener(new OnClickListener() {
+//
+//                    @Override
+//                    public void onClick(View v) {
+//                        openWebsite(member.getWebsite());
+//                    }
+//
+//                });
+//
+//                Picasso.with(parentActivity.getApplicationContext()).load(Konstanten.WEBDIR_MEMBER_AVATAR + member.getMid()).placeholder(R.drawable.avatar).into(avatarImageView);
+//
+//                TextView tvNumeration = (TextView) cView.findViewById(R.id.numeration);
+//                tvNumeration.setText(String.valueOf(position + 1));
+//                tvNumeration.setTypeface(latoFontBold);
+//
+//                TextView tvMemberName = (TextView) cView.findViewById(R.id.membername);
+//                tvMemberName.setText(member.getUsername().toUpperCase());
+//                tvMemberName.setTypeface(latoFontBold);
+//
+//                TextView tvCheatCount = (TextView) cView.findViewById(R.id.cheatcount);
+//                tvCheatCount.setText(getString(R.string.top_members_cheats_count) + ": " + String.valueOf(member.getCheatSubmissionCount()));
+//                tvCheatCount.setTypeface(latoFontLight);
+//
+//                TextView tvHiMessage = (TextView) cView.findViewById(R.id.hi_message);
+//                if (member.getGreeting().length() > 1) {
+//                    tvHiMessage.setText("\"" + member.getGreeting().replaceAll("\\\\", "").trim() + "\"");
+//                } else {
+//                    tvHiMessage.setVisibility(View.GONE);
+//                }
+//                tvHiMessage.setTypeface(latoFontLight);
+//
+//                TextView tvWebsite = (TextView) cView.findViewById(R.id.website);
+//                if (member.getWebsite().length() > 1) {
+//                    tvWebsite.setText(member.getWebsite());
+//                } else {
+//                    tvWebsite.setVisibility(View.GONE);
+//                }
+//                tvWebsite.setOnClickListener(new OnClickListener() {
+//
+//                    @Override
+//                    public void onClick(View v) {
+//                        openWebsite(member.getWebsite());
+//                    }
+//                });
+//                tvWebsite.setTypeface(latoFontLight);
+//                tvWebsite.setDrawingCacheEnabled(false);
+//            } catch (Exception e) {
+//                Log.e(TAG, "on position: " + position + ": " + e.getMessage());
+//                error(R.string.err_no_member_data);
+//            }
+//            return cView;
+//        }
+//
+//    }
 
 }

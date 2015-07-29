@@ -13,6 +13,7 @@ import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.provider.SearchRecentSuggestions;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.MenuItemCompat;
@@ -63,6 +64,8 @@ import java.util.List;
 @EActivity(R.layout.activity_main)
 public class MainActivity extends ActionBarActivity implements ActionBar.OnNavigationListener {
 
+    private static final String TAG = MainActivity.class.getSimpleName();
+
     public static final String DRAWER_ITEM_ID = "drawerId";
     public static final String DRAWER_ITEM_NAME = "drawerName";
 
@@ -100,7 +103,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
     @Bean
     Tools tools;
 
-    @InstanceState
+//    @InstanceState
     int mFragmentId;
 
     @AfterViews
@@ -131,6 +134,8 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
         FragmentManager frgManager = getFragmentManager();
         frgManager.beginTransaction().replace(R.id.content_frame, SystemListFragment_.builder().build()).commit();
 
+
+        Log.d(TAG, "mFragmentId: " + mFragmentId);
         // Create Drawer
         // TODO
         // TODO
@@ -147,13 +152,28 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
 //        outState.putInt(Konstanten.PREFERENCES_SELECTED_DRAWER_FRAGMENT_ID, mFragmentId);
 //        super.onSaveInstanceState(outState, outPersistentState);
 //    }
-//
-//    @Override
-//    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-//        super.onRestoreInstanceState(savedInstanceState);
-//        mFragmentId = savedInstanceState.getInt(Konstanten.PREFERENCES_SELECTED_DRAWER_FRAGMENT_ID);
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        mFragmentId = savedInstanceState.getInt(Konstanten.PREFERENCES_SELECTED_DRAWER_FRAGMENT_ID);
 //        createNavigationDrawer(savedInstanceState);
-//    }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        // Save the user's current game state
+//        savedInstanceState.putInt("hhh", 3333);
+        savedInstanceState.putInt(Konstanten.PREFERENCES_SELECTED_DRAWER_FRAGMENT_ID, mFragmentId);
+
+        // Always call the superclass so it can save the view hierarchy state
+        super.onSaveInstanceState(savedInstanceState);
+    }
+
+    @Override
+    public void onRestoreInstanceState(Bundle savedInstanceState, PersistableBundle persistentState) {
+        super.onRestoreInstanceState(savedInstanceState, persistentState);
+    }
 
     @Override
     public void onPause() {
@@ -164,7 +184,8 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
     @Override
     public void onResume() {
         super.onResume();
-        selectItem(1);
+        Log.d(TAG, "ON RESUME");
+//        selectItem(settings.getInt(Konstanten.PREFERENCES_SELECTED_DRAWER_FRAGMENT_ID, 1));
         member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
     }
 
@@ -173,6 +194,11 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
         if (mAdView != null) {
             mAdView.destroy();
         }
+        // TODO  loesung finden wie man das gespeicherte fragment ID wieder auf 1 setzen kann
+        // TODO ohne, dass das schon geschieht, wenn man von MainActivity weg geht
+        Log.d(TAG, "ON DESTROY");
+//        editor.putInt(Konstanten.PREFERENCES_SELECTED_DRAWER_FRAGMENT_ID, 1);
+//        editor.commit();
         super.onDestroy();
     }
 
@@ -512,8 +538,8 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             Log.i("DRAWER", position + "");
             mFragmentId = position;
-            editor.putInt(Konstanten.PREFERENCES_SELECTED_DRAWER_FRAGMENT_ID, position);
-            editor.commit();
+//            editor.putInt(Konstanten.PREFERENCES_SELECTED_DRAWER_FRAGMENT_ID, position);
+//            editor.commit();
             selectItem(position);
         }
     }
@@ -521,8 +547,8 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        editor.putInt(Konstanten.PREFERENCES_SELECTED_DRAWER_FRAGMENT_ID, 0);
-        editor.commit();
+//        editor.putInt(Konstanten.PREFERENCES_SELECTED_DRAWER_FRAGMENT_ID, 0);
+//        editor.commit();
         AppBrain.getAds().maybeShowInterstitial(this);
         finish();
     }
