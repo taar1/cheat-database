@@ -24,6 +24,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.cheatdatabase.CheatForumActivity;
+import com.cheatdatabase.GamesBySystemActivity_;
 import com.cheatdatabase.LoginActivity;
 import com.cheatdatabase.R;
 import com.cheatdatabase.SubmitCheatActivity;
@@ -292,6 +293,8 @@ public class CheatViewPageIndicator extends ActionBarActivity implements ReportC
         switch (item.getItemId()) {
             case android.R.id.home:
                 finish();
+                // TODO FIXME anstatt finish() richtig zu CheatList zurueck gehen. via annotations...
+
                 return true;
             case R.id.action_submit_cheat:
                 Intent explicitIntent = new Intent(CheatViewPageIndicator.this, SubmitCheatActivity.class);
