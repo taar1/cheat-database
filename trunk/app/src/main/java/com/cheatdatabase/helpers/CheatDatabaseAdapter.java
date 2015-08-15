@@ -78,11 +78,11 @@ public class CheatDatabaseAdapter {
     // " text not null, " + KEY_PASSWORD + " text not null, " + KEY_EMAIL +
     // " text not null, " + KEY_ONLINEMEMBERID + " integer);";
 
-    private static final String DATABASE_CREATE_FAVORITES = "create table " + DATABASE_TABLE_FAVORITES + " (" + FAV_GAME_ID + " integer not null, " + FAV_GAMENAME + " text not null, " + FAV_CHEAT_ID + " integer not null unique, " + FAV_CHEAT_TITLE + " text not null, " + FAV_CHEAT_TEXT
+    private static final String DATABASE_CREATE_FAVORITES = "create table if not exists " + DATABASE_TABLE_FAVORITES + " (" + FAV_GAME_ID + " integer not null, " + FAV_GAMENAME + " text not null, " + FAV_CHEAT_ID + " integer not null unique, " + FAV_CHEAT_TITLE + " text not null, " + FAV_CHEAT_TEXT
             + " integer not null, " + FAV_SYSTEM_ID + " integer not null, " + FAV_SYSTEM_NAME + " text not null, " + FAV_LANGUAGE_ID + " integer, " + FAV_WALKTHROUGH_FORMAT + " integer, " + FAV_MEMBER_ID + " integer);";
     private static final String DATABASE_CREATE_SEARCHHISTORY = "create table " + DATABASE_TABLE_SEARCHHISTORY + " (" + KEY_ROWID + " integer primary key autoincrement, " + KEY_SEARCHHISTORY_QUERY + " text not null, " + KEY_SEARCHHISTORY_SEARCHTIME + " text not null);";
     // New Table from 30.06.2015
-    private static final String DATABASE_CREATE_SYSTEMS = "create table " + DATABASE_TABLE_SYSTEMS + " (" + SYS_SYSTEM_ID + " integer primary key, " + SYS_SYSTEM_NAME + " text not null, " + SYS_SYSTEM_GAMECOUNT + " integer not null, " + SYS_SYSTEM_CHEATCOUNT + " integer not null, " + SYS_SYSTEM_LASTMOD + " text not null);";
+    private static final String DATABASE_CREATE_SYSTEMS = "create table if not exists " + DATABASE_TABLE_SYSTEMS + " (" + SYS_SYSTEM_ID + " integer primary key, " + SYS_SYSTEM_NAME + " text not null, " + SYS_SYSTEM_GAMECOUNT + " integer not null, " + SYS_SYSTEM_CHEATCOUNT + " integer not null, " + SYS_SYSTEM_LASTMOD + " text not null);";
     private final Context mCtx;
     private DatabaseHelper mDbHelper;
     private SQLiteDatabase mDb;
@@ -565,11 +565,12 @@ public class CheatDatabaseAdapter {
         @Override
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
             Log.w(TAG, "Upgrading database from version " + oldVersion + " to " + newVersion + ", which will destroy all old data");
-            // db.execSQL("DROP TABLE IF EXISTS " + DATABASE_TABLE_MEMBERS);
-//            db.execSQL("DROP TABLE IF EXISTS " + DATABASE_TABLE_FAVORITES);
-            db.execSQL("DROP TABLE IF EXISTS " + DATABASE_CREATE_SEARCHHISTORY);
-            db.execSQL(DATABASE_CREATE_FAVORITES);
+            db.execSQL("DROP TABLE IF EXISTS " + DATABASE_TABLE_SEARCHHISTORY);
             db.execSQL(DATABASE_CREATE_SEARCHHISTORY);
+
+//            db.execSQL("DROP TABLE IF EXISTS " + DATABASE_TABLE_FAVORITES);
+//            db.execSQL("DROP TABLE IF EXISTS " + DATABASE_TABLE_SYSTEMS);
+            db.execSQL(DATABASE_CREATE_FAVORITES);
             db.execSQL(DATABASE_CREATE_SYSTEMS);
             // onCreate(db);
         }

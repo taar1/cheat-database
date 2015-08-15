@@ -4,7 +4,7 @@
     android:background="@drawable/bg"
     android:gravity="top"
     android:orientation="vertical"
-    android:padding="14dp">
+    android:padding="10dp">
 
     <TextView
         android:id="@+id/title"
@@ -18,7 +18,7 @@
         android:id="@+id/subtitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingBottom="30sp"
+        android:paddingBottom="20sp"
         android:text="@string/submit_cheat_instructions_activity_subtitle"
         android:textAppearance="@style/NormalText" />
 
@@ -28,7 +28,7 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_gravity="center"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
         android:background="@drawable/bluedark01_btn_default_holo_dark"
         android:text="@string/search_game"
         android:layout_marginLeft="10dp"

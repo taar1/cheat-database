@@ -13,7 +13,6 @@ import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.provider.SearchRecentSuggestions;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.MenuItemCompat;
@@ -55,7 +54,7 @@ import com.splunk.mint.Mint;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EActivity;
-import org.androidannotations.annotations.InstanceState;
+import org.androidannotations.annotations.Extra;
 import org.androidannotations.annotations.ViewById;
 
 import java.util.ArrayList;
@@ -103,8 +102,10 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
     @Bean
     Tools tools;
 
-//    @InstanceState
+    //    @InstanceState
+    @Extra
     int mFragmentId;
+
 
     @AfterViews
     public void createView() {
@@ -128,14 +129,17 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
 
         AppBrain.init(this);
 
-        member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
+//        member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
 
         // TODO FIXME - find out where this part was before and re-add it.
         FragmentManager frgManager = getFragmentManager();
         frgManager.beginTransaction().replace(R.id.content_frame, SystemListFragment_.builder().build()).commit();
 
 
-        Log.d(TAG, "mFragmentId: " + mFragmentId);
+        Log.d(TAG, "XXXX mFragmentId: " + mFragmentId);
+//        Log.d(TAG, "XXXX teeeeest: " + teeeeest);
+//        teeeeest = "JJJ";
+
         // Create Drawer
         // TODO
         // TODO
@@ -153,27 +157,27 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
 //        super.onSaveInstanceState(outState, outPersistentState);
 //    }
 
-    @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-        mFragmentId = savedInstanceState.getInt(Konstanten.PREFERENCES_SELECTED_DRAWER_FRAGMENT_ID);
-//        createNavigationDrawer(savedInstanceState);
-    }
-
-    @Override
-    public void onSaveInstanceState(Bundle savedInstanceState) {
-        // Save the user's current game state
-//        savedInstanceState.putInt("hhh", 3333);
-        savedInstanceState.putInt(Konstanten.PREFERENCES_SELECTED_DRAWER_FRAGMENT_ID, mFragmentId);
-
-        // Always call the superclass so it can save the view hierarchy state
-        super.onSaveInstanceState(savedInstanceState);
-    }
-
-    @Override
-    public void onRestoreInstanceState(Bundle savedInstanceState, PersistableBundle persistentState) {
-        super.onRestoreInstanceState(savedInstanceState, persistentState);
-    }
+//    @Override
+//    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+//        super.onRestoreInstanceState(savedInstanceState);
+//        mFragmentId = savedInstanceState.getInt(Konstanten.PREFERENCES_SELECTED_DRAWER_FRAGMENT_ID);
+////        createNavigationDrawer(savedInstanceState);
+//    }
+//
+//    @Override
+//    public void onSaveInstanceState(Bundle savedInstanceState) {
+//        // Save the user's current game state
+////        savedInstanceState.putInt("hhh", 3333);
+//        savedInstanceState.putInt(Konstanten.PREFERENCES_SELECTED_DRAWER_FRAGMENT_ID, mFragmentId);
+//
+//        // Always call the superclass so it can save the view hierarchy state
+//        super.onSaveInstanceState(savedInstanceState);
+//    }
+//
+//    @Override
+//    public void onRestoreInstanceState(Bundle savedInstanceState, PersistableBundle persistentState) {
+//        super.onRestoreInstanceState(savedInstanceState, persistentState);
+//    }
 
     @Override
     public void onPause() {

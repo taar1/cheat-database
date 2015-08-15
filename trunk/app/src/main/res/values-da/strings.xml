@@ -135,7 +135,6 @@
     <string name="favorite_adding">Adding favorites&#8230;</string>
 
     <!-- FORUM -->
-    <string name="forum">Forum</string>
     <string name="forum_goto">Til forummet</string>
     <string name="forum_goto_online">Til forummet (online)</string>
     <string name="forum_button_submit">Afsend</string>
