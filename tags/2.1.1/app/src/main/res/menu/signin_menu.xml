@@ -1,0 +1,11 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/action_login"
+        android:icon="@drawable/ic_action_login"
+        android:orderInCategory="1000"
+        android:title="@string/login"
+        app:showAsAction="never" />
+
+</menu>

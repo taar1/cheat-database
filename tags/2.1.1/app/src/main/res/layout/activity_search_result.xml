@@ -1,0 +1,83 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/bg"
+    android:orientation="vertical"
+    tools:context=".SearchResultsActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/color_primary_light"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <RelativeLayout
+        android:id="@+id/somethingfound_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/standard_background"
+        android:paddingBottom="@dimen/activity_searchresult_vertical_margin"
+        android:paddingEnd="@dimen/activity_searchresult_horizontal_margin"
+        android:paddingLeft="@dimen/activity_searchresult_horizontal_margin"
+        android:paddingRight="@dimen/activity_searchresult_horizontal_margin"
+        android:paddingStart="@dimen/activity_searchresult_horizontal_margin"
+        android:paddingTop="@dimen/activity_searchresult_vertical_margin"
+        tools:context="com.cheatdatabase.search.SearchResultsActivity">
+
+        <ImageView
+            android:id="@+id/reload"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp"
+            android:src="@drawable/reload"
+            android:visibility="invisible" />
+
+        <ExpandableListView
+            android:id="@+id/listView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"></ExpandableListView>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/nothingfound_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="top"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingEnd="@dimen/activity_horizontal_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingStart="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/nothingfound_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="10sp"
+            android:text="@string/error_nothing_found_title"
+            android:textAppearance="@style/ActivityMainTitle" />
+
+        <TextView
+            android:id="@+id/nothingfound_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="30sp"
+            android:text="@string/error_nothing_found_text"
+            android:textAppearance="@style/NormalText" />
+
+        <Button
+            android:id="@+id/search_button"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:background="@drawable/btn_cab_done_navyblue"
+            android:text="@string/search_game"
+            android:textSize="24sp" />
+    </LinearLayout>
+
+</LinearLayout>

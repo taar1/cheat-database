@@ -1,0 +1,71 @@
+apply plugin: 'com.android.application'
+apply plugin: 'com.neenbedankt.android-apt'
+
+android {
+    signingConfigs {
+        config {
+            storeFile file('C:/Users/Dominik/Downloads/enature.keystore')
+            storePassword 'Ocarina2000.'
+        }
+    }
+    compileSdkVersion 21
+    buildToolsVersion "21.1.2"
+    defaultConfig {
+        applicationId "com.cheatdatabase"
+        minSdkVersion 14
+        targetSdkVersion 22
+        versionCode 15
+        versionName "2.1.1"
+        signingConfig signingConfigs.config
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    productFlavors {
+    }
+
+    lintOptions {
+        abortOnError false
+        disable 'MissingTranslation'
+    }
+}
+
+repositories {
+    maven {
+        url "https://mint.splunk.com/gradle/"
+    }
+    maven {
+        url 'http://swisscodemonkeys.github.io/appbrain-sdk/maven'
+    }
+}
+
+apt {
+    arguments {
+        androidManifestFile variant.outputs[0].processResources.manifestFile
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile files('libs/InMobi-4.5.1.jar')
+    compile files('libs/libGoogleAnalyticsServices.jar')
+    compile files('libs/MMSDK.jar')
+    compile project(':VPILibrary')
+    compile 'com.android.support:appcompat-v7:22.0.+'
+    compile 'com.android.support:recyclerview-v7:+'
+    compile 'com.android.support:support-v13:21.0.0'
+    compile 'com.android.support:support-v4:22.0.+'
+    compile 'com.google.code.gson:gson:2.3'
+    compile 'com.squareup.picasso:picasso:2.3.2'
+    compile 'com.google.android.gms:play-services:6.5.87'
+    compile 'com.cocosw:bottomsheet:0.+@aar'
+    compile 'com.splunk.mint:mint:4.1'
+    compile 'com.appbrain:appbrain-applift-sdk:+'
+    compile 'de.greenrobot:eventbus:2.4.0'
+    compile 'org.androidannotations:androidannotations:3.3.1'
+    compile 'com.github.navasmdc:MaterialDesign:1.5@aar'
+    compile project(':mopub-3.6-sdk')
+}

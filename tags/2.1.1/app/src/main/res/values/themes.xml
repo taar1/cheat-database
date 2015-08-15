@@ -1,0 +1,234 @@
+<resources>
+
+    <!-- Application theme. -->
+    <style name="AppThemeBase" parent="Theme.AppCompat">
+        <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+        <item name="colorAccent">@color/color_accent</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+        <item name="android:windowActionBar">false</item>
+        <item name="android:textColorPrimary">#fff</item>
+        <item name="colorControlNormal">#fff</item>
+        <item name="colorControlHighlight">#3fff</item>
+    </style>
+
+    <style name="GameTitle">
+        <item name="android:textColor">#EEFFFFFF</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="CheatTitlePhone">
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textSize">22sp</item>
+    </style>
+
+    <style name="CheatTitleTablet">
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textSize">24sp</item>
+    </style>
+
+    <style name="NormalTextBold">
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="NormalText">
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="WalkthroughText">
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:typeface">monospace</item>
+    </style>
+
+    <style name="GrayButtonText">
+        <item name="android:textColor">#000000</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="FulltextSearchGameTitle">
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="FulltextSearchCheatTitle">
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="ActivityMainTitle">
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textSize">26sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="WelcomeTextDate">
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="TopMemberName">
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="TopMemberCheatCount">
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="TopMemberFreetext">
+        <item name="android:textColor">#CCCCCC</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="TopMemberHomepage">
+        <item name="android:textColor">#DDDDDD</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="WelcomePopupTitle">
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textSize">32sp</item>
+    </style>
+
+    <style name="WelcomePopupText">
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="LoginFormContainer">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:padding">16dp</item>
+    </style>
+
+    <style name="ContactFormContainer">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">fill_parent</item>
+        <item name="android:padding">16dp</item>
+    </style>
+
+    <style name="SearchResultListrowGroup">
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="ListrowFirstLine">
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="ListrowSecondLine">
+        <item name="android:textColor">#AAAAAA</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="GeneralTitle">
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">22sp</item>
+    </style>
+
+    <style name="GeneralSubTitle">
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="GeneralText">
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="DrawerText">
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <!-- Style for items in a list -->
+    <style name="ListItemTablet">
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <!-- Style for items in a list -->
+    <style name="ListItemPhone">
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <!-- Style for items in a list -->
+    <style name="ListSubItemPhone">
+        <item name="android:textColor">#AAAAAA</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="ListSubItemPhoneMedium">
+        <item name="android:textColor">#AAAAAA</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="StandardBackground">
+        <item name="android:background">#003131</item>
+    </style>
+
+    <style name="UndoBar">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">48dp</item>
+        <item name="android:layout_gravity">bottom</item>
+        <item name="android:layout_marginLeft">8dp</item>
+        <item name="android:layout_marginRight">8dp</item>
+        <item name="android:layout_marginBottom">16dp</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:background">@drawable/undobar</item>
+        <item name="android:clickable">true</item>
+        <item name="android:showDividers">middle</item>
+        <item name="android:divider">@drawable/undobar_divider</item>
+        <item name="android:dividerPadding">10dp</item>
+    </style>
+
+    <style name="UndoBarMessage">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginLeft">16dp</item>
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:layout_marginRight">16dp</item>
+        <item name="android:textAppearance">?android:textAppearanceMedium</item>
+        <item name="android:textColor">#fff</item>
+    </style>
+
+    <style name="UndoBarButton">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:paddingLeft">16dp</item>
+        <item name="android:paddingRight">16dp</item>
+        <item name="android:background">@drawable/undobar_button</item>
+        <item name="android:drawableLeft">@drawable/ic_undobar_undo</item>
+        <item name="android:drawablePadding">12dp</item>
+        <item name="android:textAppearance">?android:textAppearanceSmall</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">#fff</item>
+        <item name="android:text">@string/undo</item>
+    </style>
+
+</resources>

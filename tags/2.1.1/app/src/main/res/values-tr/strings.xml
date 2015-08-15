@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<resources>
+
+    <!-- UNIQUE NEWS -->
+    <string name="news_welcome">New in this version</string>
+    <string name="news_title">News</string>
+
+    <!-- VARIOUS -->
+    <string name="app_name">İpucu-Veritabanı 2</string>
+    <string name="ok">OK</string>
+    <string name="showGameList">Oyun Listesi</string>
+    <string name="showCheatList">Hile Listesi</string>
+    <string name="search_results">Arama Sonuçları</string>
+    <string name="no_cheats_title">İpucu Bulunamadı</string>
+    <string name="no_cheats_text">Veritabanımızda bu oyun için henüz ipucu bulunmamaktadır. Lütfen daha sonra tekrar deneyin.</string>
+    <string name="please_wait">Lütfen bekleyin…</string>
+    <string name="retrieving_data">Veriye ulaşılıyor</string>
+    <string name="cheat">İpucu</string>
+    <string name="cheats">İpuçları</string>
+    <string name="game">game</string>
+    <string name="games">games</string>
+    <string name="no_internet">No Internet connection available. Try again a bit later.</string>
+    <string name="search_hint">Search a game</string>
+    <string name="splash_screen">Loading Cheat-Database&#8230;</string>
+    <string name="members_cheats_title">%s\'s Cheats</string>
+    <string name="placeholder">Placeholder</string>
+
+    <!-- ADS TEXT -->
+    <string name="lead_bolt_text">Our App recommendations ></string>
+
+    <!-- MAIN SCREEN -->
+    <string name="enterGame">Oyun adını girin:</string>
+    <string name="enter_game_hint">Oyun adını</string>
+    <string name="game_platform">Sistem</string>
+    <string name="button_searchCheats">İpucu arama</string>
+    <string name="cancel">İptal</string>
+    <string name="clearForm">Temizle</string>
+    <string name="error_nothing_found_title">Sonuç bulunamadı!</string>
+    <string name="error_nothing_found_text">Girdiğiniz kritere uygun bir oyun bulunamadı. Lütfen daha kısa kelimelerle tekrar deneyin.</string>
+    <string name="button_closeNothingFoundPopup">Sorguyu daraltın</string>
+    <string name="cheat_counter_headline">%s üzerinde ipucu mevcut ve giderek artıyor!</string>
+    <string name="total_cheats_unknown">Hundreds of thousands of cheats!</string>
+    <string name="new_cheats_title">Bu oyunlar için yeni ipuçları:</string>
+    <string name="advanced_search">advanced / full text search</string>
+    <string name="favorites">Favorilerim</string>
+    <string name="goto_main_screen">Ana Sayfa</string>
+    <string name="goto_cheat">İpucu oluştur</string>
+    <string name="goto_cheat_list">İpucunu gözden geçir</string>
+    <string name="menu_fulltext_search_short">Full text search</string>
+    <string name="menu_fulltext_search_long">Full text search in listed cheats</string>
+    <string name="menu_server_status">Server status</string>
+    <string name="menu_more_apps">More Apps from us</string>
+    <string name="menu_pocketchange">Pocket Change Balance</string>
+    <string name="report_cheat_title">İpucunu rapor et</string>
+    <string name="thanks_for_reporting">Teşekkürler. Sorun incelenecektir.</string>
+
+    <!-- RATING -->
+    <string name="rate_cheat_plain">Oyla</string>
+    <string name="rate_cheat">İpucunu oyla</string>
+    <string name="rate_cheat_here">İlgili ipucunu şimdi burada oyla</string>
+    <string name="rating_your">Your cheat rating:</string>
+    <string name="rating_inserted">Thank you! Your rating has been registered.</string>
+    <string name="rating_updated">Thank you! Your rating has been updated.</string>
+    <string name="rating_processing">Your rating is being processed&#8230;</string>
+    <string name="register_title">Kayıt Ol</string>
+    <string name="username">Kullanıcı adı</string>
+    <string name="password">Şifre</string>
+    <string name="email">E-Mail</string>
+    <string name="register_thanks">Kayıt olduğunuz için teşekkürler!</string>
+    <string name="register">Kayıt</string>
+    <string name="register_instead">Kayıt Bölümü</string>
+    <string name="register_login">Kayıt / Giriş</string>
+    <string name="login_title">Giriş Yap</string>
+    <string name="login_instead">Giriş Bölümü</string>
+    <string name="username_email">Kullanıcı Adı ya da E-Mail</string>
+    <string name="login_failed">Giriş Başarılı Olamadı. Yanlış Kullanıcı Adı/Şifre Kombinasyonu. Kullanıcı Adı/Şifrenizi geri almak için lütfen www.cheat-database.com adresini ziyaret edin.</string>
+    <string name="member_banned">Hesabınız bloke oldu.</string>
+    <string name="login_ok">Giriş Başarılı.</string>
+    <string name="logout">Çıkış</string>
+    <string name="logout_ok">Çıkış Başarılı.</string>
+    <string name="login_forgot">Forgot login data</string>
+    <string name="login_send_password">Send login data by email</string>
+    <string name="login_sent_ok">Login data has been sent to you via email</string>
+
+    <!-- ERROR MESSAGES -->
+    <string name="err">Error</string>
+    <string name="err_username_length">Kullanıcı adı en az 6 karakterden oluşmalıdır.</string>
+    <string name="err_username_used">Bu kullanıcı adı şu anda kullanımda.</string>
+    <string name="err_email_invalid">Email geçerli değil.</string>
+    <string name="err_email_used">Bu email adresi zaten kullanılıyor.</string>
+    <string name="err_password_length">Şifre en az 6 karakterden oluşmalıdır.</string>
+    <string name="err_other_problem">Kullanıcı hesabını oluştururken bir hata meydana geldi. Lütfen daha sonra tekrar deneyin. If the problem remains you can also register at www.cheat-database.com/register.</string>
+    <string name="err_email_user_not_found">No user found with this email address.</string>
+    <string name="err_data_not_accessible">Requested data could not be retrieved. Please try again a bit later.</string>
+    <string name="err_no_member_data">Error: No member data could be found.</string>
+    <string name="err_somethings_wrong">Something just went wrong. Please try again.</string>
+    <string name="my_favorites">Favorilerim</string>
+    <string name="add_favorite">Favorilerime ekle</string>
+    <string name="add_favorite_ok">İpucu, Favorilerime başarıyla eklendi.</string>
+    <string name="remove_favorite">Favorilerimden çıkart</string>
+    <string name="remove_favorite_ok">%s İpucu, Favorilerimden başarılı bir şekilde çıkartıldı.</string>
+    <string name="remove_favorite_nok">İpucunu Favori Listesinden silerken hata!</string>
+    <string name="remove_favorites_ok">Game successfully removed from your favorites.</string>
+    <string name="remove_favorites_nok">Error removing game from your favorites.</string>
+    <string name="goto_favorites">Favorilerime Git</string>
+    <string name="favorite_deleted">İpucu Favorilerimden silindi.</string>
+    <string name="favorite_error">İpucu zaten Favori Listesinde kayıtlı.</string>
+    <string name="favorite_empty">Henüz bir Favori Listeniz yok. Bu kısma ulaşmadan önce Favori listenize birkaç ipucu eklemelisiniz.</string>
+    <string name="favorite_no_cheats">Favori listenizde bu oyun için henüz bir ipucu mevcut değil.</string>
+    <string name="favorites_welcome_text">Bu bölüm, favori ipuçlarınızın görüleceği alan
+		olacaktır. Favorilerinize bir ipucu eklemek için ilgili ipucunun
+		üzerinde iken \"Menu\" tuşuna basın ve \"Favorilerime Ekle\"
+		seçeneğini seçin. Favorilerinizden bir ipucunu silmek için ise oyun
+		menüsünden \"Favori Listemden Çıkart\" seçeneğini seçin..</string>
+    <string name="add_favorites_ok">Cheats successfully added to your favorites.</string>
+    <string name="add_favorites_error">Some or all cheats are already in your favorites. The new ones have been added.</string>
+    <string name="add_one_favorite">Add cheat to favorites</string>
+    <string name="add_all_favorites">Add all cheats to favorites</string>
+    <string name="favorite_adding">Adding favorites&#8230;</string>
+    <string name="forum_goto">Foruma Git</string>
+    <string name="forum_goto_online">Foruma Git (online)</string>
+    <string name="forum_button_submit">Postala</string>
+    <string name="forum_submit_failed">Talebiniz yerine getirilemedi. Lütfen daha sonra tekrar deneyin.</string>
+    <string name="forum_submit_ok">Talep yerine getirildi.</string>
+    <string name="forum_yet_empty">Bu ipucu için forum henüz boş. İlk yazan siz olun. Öneri: Bu ipucunu favorilerinize eklerseniz, bu alana daha kolay erişebilirsiniz.</string>
+    <string name="submit_cheat_short">İpucu’nu gönder</string>
+    <string name="submit_cheat_long">Bu oyun için bir ipucu gönder</string>
+    <string name="submit_cheat_your_title">İpucu içeriği</string>
+    <string name="submit_cheat_your_body">İpucunuz</string>
+    <string name="submit_cheat_review">İpucunu gözden geçir</string>
+    <string name="cheat_submit_ok">Gönderiniz için çok teşekkürler! İpucunuzu gözden
+		geçirip, veritabanına ekleyip eklememe konusunda sizi mail yoluyla
+		haberdar edeceğiz. Ayrıca; Gönderdiğiniz ipuçlarını
+		www.cheat-database.com sitesi üzerinden silebilir ya da
+		düzenleyebilirsiniz.</string>
+    <string name="cheat_submit_nok">İpucu eklenirken bir hata meydana geldi. Lütfen
+		daha sonra tekrar deneyin.</string>
+    <string name="submit_cheat_instructions_title">İpuçlarını gönderme konusunda bilgi</string>
+    <string name="submit_cheat_instructions_text">Gönderdiğiniz tüm ipuçları, sizin
+		ipucu-veritabanınızda kaydedilecektir. İpucu, bizim tarafımızca
+		onaylanıp kabul edildiğinde siz de mail yoluyla
+		bilgilendirileceksiniz.\n\nGönderdiğiniz ipuçlarında herhangi bir
+		değişiklik yapmak istediğinizde, bilgisayarınızı kullanarak
+		www.cheat-database.com adresine kendi hesap bilgilerinizle giriş
+		yapmalısınız. Burada ipuçlarınıza ekran görüntüsü ekleyebilir,
+		bilgilerini düzenleyebilir veya silebilirsiniz.</string>
+    <string name="help">Yardım</string>
+    <string name="fill_everything">Please fill out all fields.</string>
+    <string name="submit_cheat_consent_title">Agreement</string>
+
+    <!-- CRASHREPORT -->
+    <string name="crashreport_submit">Submit bug report</string>
+    <string name="crashreport_your_device">Your device model</string>
+    <string name="crashreport_when_crashed">When did the application crash?</string>
+    <string name="crashreport_missing_devicemodel">Please enter the model of your phone.</string>
+    <string name="crashreport_missing_email">Please enter your email address so we can contact you if we need further information about the crash.</string>
+    <string name="crashreport_missing_crashreport">Please provide us with a detailed description of where you clicked just before the app crashed.</string>
+    <string name="crashreport_thanks">Thank you for your crash report! If we need any further information about the crash we may contact you by email.</string>
+
+    <!-- FULL-TEXT SEARCH -->
+    <string name="fulltext_search_title">Full-text search</string>
+    <string name="fulltext_search_titles_also">Search in cheat titles also</string>
+    <string name="fulltext_search_systems">Choose systems</string>
+    <string name="fulltext_search_listed_cheats">Search through listed cheats</string>
+    <string name="fulltext_search_all_cheats">Search through all cheats</string>
+    <string name="fulltext_search_results">Full-text search results</string>
+    <string name="fulltext_search_cheats">Search cheats</string>
+    <string name="fulltext_search_keywords">Keywords</string>
+    <string name="fulltext_search_error_nosystem_selected">Please pick at least one system</string>
+
+    <!-- CONTEXT MENU -->
+    <string name="context_menu_title">Context Menu</string>
+    <string name="context_menu_copied">Cheat copied to clipboard.</string>
+
+    <!-- NOTIFICATIONS -->
+    <string name="notify_rotate_device">Rotate your device if the cheat is not being displayed properly.</string>
+    <string name="fullscreen_mode_exit">Double tap to exit full screen mode</string>
+
+    <!-- CHEAT META -->
+    <string name="meta_info">Meta Info</string>
+    <string name="meta_unknown">Unknown</string>
+    <string name="meta_submission_date">Date of submission</string>
+    <string name="meta_submitted_by">Submitted by</string>
+    <string name="meta_submission_total">Total submitted cheats by member</string>
+    <string name="meta_views_lifetime">Lifetime views</string>
+    <string name="meta_views_today">Views today</string>
+    <string name="meta_show_all_cheats">Show all cheats</string>
+    <string name="meta_rating_average">Average cheat rating by members</string>
+    <string name="meta_return">Return to cheat</string>
+    <string name="meta_average_rating1">%s out of 10</string>
+    <string name="meta_average_rating2">based on %s votes</string>
+    <string name="meta_member_homepage">website</string>
+    <string name="meta_info_retrieved">Cheat meta info retrieved. Swipe left to view.</string>
+
+    <!-- TOP MEMBERS -->
+    <string name="top_members_title">Members Top 20</string>
+    <string name="top_members_visit_website">Visit %s\'s website</string>
+    <string name="top_members_no_website">Member %s has no website</string>
+    <string name="top_members_cheats_count"># of cheats</string>
+
+    <!-- SHARE CHEAT -->
+    <string name="share_title">Share cheat</string>
+    <string name="share_error_no_client">There are no email clients installed.</string>
+    <string name="share_email_subject">I just found this cheat for %s</string>
+    <string name="share_email_body">I just found this cheat on Cheat-Database for Android. Click the link below to check it out:</string>
+    <string name="share_download_cheatdatabase">Download Cheat-Database for Android here:</string>
+
+</resources>

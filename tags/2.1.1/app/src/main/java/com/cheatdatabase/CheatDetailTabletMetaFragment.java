@@ -1,0 +1,359 @@
+package com.cheatdatabase;
+
+import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.content.Intent;
+import android.graphics.Typeface;
+import android.net.Uri;
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.os.Parcel;
+import android.os.Parcelable;
+import android.support.v4.app.Fragment;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import com.cheatdatabase.businessobjects.Cheat;
+import com.cheatdatabase.businessobjects.Member;
+import com.cheatdatabase.helpers.Helper;
+import com.cheatdatabase.helpers.Konstanten;
+import com.cheatdatabase.helpers.Reachability;
+import com.cheatdatabase.helpers.Tools;
+import com.cheatdatabase.helpers.Webservice;
+import com.splunk.mint.Mint;
+
+import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+@SuppressLint("SimpleDateFormat")
+public class CheatDetailTabletMetaFragment extends Fragment implements OnClickListener, Serializable, Parcelable {
+
+    public static final String ARG_ITEM_ID = "item_id";
+
+    private Cheat cheatObj;
+    private Member submittingMember;
+
+    private TextView textCheatTitle;
+    private TextView tvAverageRatingText;
+    private TextView tvTotalViewsText;
+    private TextView tvSubmissionDateText;
+    private TextView tvAuthorText;
+    private TextView tvViewsTodayText;
+    private TextView tvTotalSubmissionCountMemberText;
+    private TextView tvTotalSubmissionShowAll;
+    private TextView tvMemberHomepageTitle;
+    private TextView tvMemberHomepageText;
+    private LinearLayout llSubmittedBy;
+    private LinearLayout llCountSubmissions;
+    private LinearLayout llCountSubmissions2;
+    private LinearLayout llMemberHomepage;
+    private LinearLayout llRating;
+
+    private transient ImageButton btnRateCheat;
+    private transient ImageButton btnMetaInfo;
+    private transient ImageButton btnForum;
+    private transient ImageButton btnReport;
+    private transient ImageButton btnDelete;
+    private transient ImageButton btnShare;
+    private transient ImageButton btnViewCheat;
+
+    private LinearLayout llBuffer4;
+    private LinearLayout llBuffer5;
+    private LinearLayout llBuffer6;
+
+    private View rootView;
+
+    public AlertDialog.Builder builder;
+    public AlertDialog alert;
+
+    private CheatListActivity ca;
+    private CheatDetailTabletFragment cheatDetailTabletFragment;
+    private CheatDetailTabletMetaFragment cheatDetailTabletMetaFragment;
+    private CheatForumFragment cheatForumFragment;
+
+    private Typeface latoFontLight;
+    private Typeface latoFontBold;
+
+    public CheatDetailTabletMetaFragment() {
+
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        ca = (CheatListActivity) getActivity();
+        init();
+
+        Bundle arguments = this.getArguments();
+        cheatObj = (Cheat) arguments.getSerializable("cheatObj");
+        cheatDetailTabletFragment = (CheatDetailTabletFragment) arguments.getSerializable("cheatDetailTabletFragment");
+        cheatDetailTabletMetaFragment = (CheatDetailTabletMetaFragment) arguments.getSerializable("cheatDetailTabletMetaFragment");
+        cheatForumFragment = (CheatForumFragment) arguments.getSerializable("cheatForumFragment");
+    }
+
+    private void init() {
+        Reachability.registerReachability(ca);
+        Mint.initAndStartSession(ca.getApplicationContext(), Konstanten.SPLUNK_MINT_API_KEY);
+
+        latoFontLight = Tools.getFont(getActivity().getAssets(), Konstanten.FONT_LIGHT);
+        latoFontBold = Tools.getFont(getActivity().getAssets(), Konstanten.FONT_BOLD);
+    }
+
+    @Override
+    public void onPause() {
+        Reachability.unregister(ca);
+        super.onPause();
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        rootView = inflater.inflate(R.layout.fragment_cheat_meta, container, false);
+
+        textCheatTitle = (TextView) rootView.findViewById(R.id.text_cheat_title);
+        textCheatTitle.setVisibility(View.VISIBLE);
+        textCheatTitle.setTypeface(latoFontBold);
+        textCheatTitle.setText(cheatObj.getCheatTitle());
+
+        tvAverageRatingText = (TextView) rootView.findViewById(R.id.tvAverageRatingText);
+        tvAverageRatingText.setTypeface(latoFontLight);
+
+        tvTotalViewsText = (TextView) rootView.findViewById(R.id.lifetime_views_text);
+        tvTotalViewsText.setTypeface(latoFontLight);
+        tvTotalViewsText.setOnClickListener(this);
+
+        tvViewsTodayText = (TextView) rootView.findViewById(R.id.views_today_text);
+        tvViewsTodayText.setTypeface(latoFontLight);
+        tvViewsTodayText.setOnClickListener(this);
+
+        tvTotalSubmissionCountMemberText = (TextView) rootView.findViewById(R.id.tvTotalSubmissionsMemberText);
+        tvTotalSubmissionCountMemberText.setTypeface(latoFontLight);
+        tvTotalSubmissionCountMemberText.setOnClickListener(this);
+
+        tvTotalSubmissionShowAll = (TextView) rootView.findViewById(R.id.tvTotalSubmissionsShow);
+        tvTotalSubmissionShowAll.setTypeface(latoFontLight);
+        tvTotalSubmissionShowAll.setOnClickListener(this);
+
+        tvSubmissionDateText = (TextView) rootView.findViewById(R.id.submission_date_text);
+        tvSubmissionDateText.setTypeface(latoFontLight);
+        tvSubmissionDateText.setOnClickListener(this);
+
+        llRating = (LinearLayout) rootView.findViewById(R.id.llRating);
+        llRating.setVisibility(View.GONE);
+        llSubmittedBy = (LinearLayout) rootView.findViewById(R.id.llSubmittedBy);
+        llSubmittedBy.setVisibility(View.GONE);
+        llCountSubmissions = (LinearLayout) rootView.findViewById(R.id.llCountSubmissions);
+        llCountSubmissions.setVisibility(View.GONE);
+        llCountSubmissions2 = (LinearLayout) rootView.findViewById(R.id.llCountSubmissions2);
+        llCountSubmissions2.setVisibility(View.GONE);
+        llMemberHomepage = (LinearLayout) rootView.findViewById(R.id.llMemberHomepage);
+        llMemberHomepage.setVisibility(View.GONE);
+
+        btnViewCheat = (ImageButton) rootView.findViewById(R.id.btn_view_cheat);
+        btnViewCheat.setOnClickListener(this);
+        btnMetaInfo = (ImageButton) rootView.findViewById(R.id.btn_meta_info);
+        btnMetaInfo.setOnClickListener(this);
+        btnForum = (ImageButton) rootView.findViewById(R.id.btn_forum);
+        btnForum.setOnClickListener(this);
+        btnReport = (ImageButton) rootView.findViewById(R.id.btn_report);
+        btnReport.setOnClickListener(this);
+        btnDelete = (ImageButton) rootView.findViewById(R.id.btn_delete);
+        btnDelete.setVisibility(View.GONE);
+        btnShare = (ImageButton) rootView.findViewById(R.id.btn_share);
+        btnShare.setOnClickListener(this);
+        btnRateCheat = (ImageButton) rootView.findViewById(R.id.btn_rate_cheat);
+        btnRateCheat.setOnClickListener(this);
+        if (cheatObj.getMemberRating() > 0) {
+            highlightRatingIcon(true);
+        }
+
+        llBuffer4 = (LinearLayout) rootView.findViewById(R.id.llBuffer4);
+        llBuffer4.setVisibility(View.GONE);
+        llBuffer5 = (LinearLayout) rootView.findViewById(R.id.llBuffer5);
+        llBuffer5.setVisibility(View.GONE);
+        llBuffer6 = (LinearLayout) rootView.findViewById(R.id.llBuffer6);
+        llBuffer6.setVisibility(View.GONE);
+
+        try {
+            if (cheatObj.getViewsTotal() == 0) {
+                new MetaDataLoaderTask().execute(cheatObj);
+            } else {
+                fillWithContent();
+            }
+        } catch (NullPointerException e) {
+            new MetaDataLoaderTask().execute(cheatObj);
+        }
+
+        return rootView;
+    }
+
+    public void highlightRatingIcon(boolean highlight) {
+        try {
+            if (highlight) {
+                btnRateCheat.setImageResource(R.drawable.ic_action_star);
+            } else {
+                btnRateCheat.setImageResource(R.drawable.ic_action_not_important);
+            }
+        } catch (NullPointerException e) {
+            Log.e(CheatDetailTabletMetaFragment.class.getSimpleName(), e.getLocalizedMessage());
+        }
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+
+    }
+
+    private class MetaDataLoaderTask extends AsyncTask<Cheat, Void, Void> {
+
+        @Override
+        protected Void doInBackground(Cheat... tmpCheat) {
+            Cheat metaCheat;
+            try {
+                metaCheat = Webservice.getCheatMetaById(tmpCheat[0].getCheatId());
+                cheatObj.setViewsTotal(metaCheat.getViewsTotal());
+                cheatObj.setViewsToday(metaCheat.getViewsToday());
+                cheatObj.setAuthorName(metaCheat.getAuthor());
+                cheatObj.setCreated(metaCheat.getCreatedDate());
+                cheatObj.setRatingAverage(metaCheat.getRatingAverage());
+                cheatObj.setVotes(metaCheat.getVotes());
+                cheatObj.setMember(metaCheat.getSubmittingMember());
+
+                submittingMember = cheatObj.getSubmittingMember();
+            } catch (Exception e) {
+                Log.e("MetaDataLoader EXCEPTION", e.getMessage() + "");
+            } finally {
+                metaCheat = null;
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+            fillWithContent();
+        }
+    }
+
+    private void fillWithContent() {
+        try {
+
+            if (cheatObj.getVotes() > 0) {
+                llRating.setVisibility(View.VISIBLE);
+                llBuffer4.setVisibility(View.VISIBLE);
+
+                String averageRatingText = String.format(getActivity().getString(R.string.meta_average_rating1, Math.round(cheatObj.getRatingAverage())));
+                averageRatingText += " " + String.format(getActivity().getString(R.string.meta_average_rating2, String.valueOf(cheatObj.getVotes())));
+                tvAverageRatingText.setText(averageRatingText);
+            }
+
+            tvTotalViewsText.setText(String.valueOf(cheatObj.getViewsTotal()));
+            tvViewsTodayText.setText(String.valueOf(cheatObj.getViewsToday()));
+
+            if ((submittingMember != null) && (submittingMember.getCheatSubmissionCount() > 0)) {
+                tvTotalSubmissionCountMemberText.setText(String.valueOf(submittingMember.getCheatSubmissionCount()));
+                tvTotalSubmissionShowAll.setText(" [" + ca.getString(R.string.meta_show_all_cheats) + "]");
+            } else {
+                llCountSubmissions.setVisibility(View.GONE);
+                llCountSubmissions2.setVisibility(View.GONE);
+                llBuffer6.setVisibility(View.GONE);
+            }
+
+			/*
+             * Bei Member-ID 1 werden Teile ausgeblendet
+			 */
+            if ((submittingMember == null) || (submittingMember.getMid() <= 1)) {
+                llSubmittedBy.setVisibility(View.GONE);
+                llCountSubmissions.setVisibility(View.GONE);
+                llCountSubmissions2.setVisibility(View.GONE);
+                llMemberHomepage.setVisibility(View.GONE);
+                llBuffer5.setVisibility(View.GONE);
+                llBuffer6.setVisibility(View.GONE);
+            } else {
+                llSubmittedBy.setVisibility(View.VISIBLE);
+                llCountSubmissions.setVisibility(View.VISIBLE);
+                llCountSubmissions2.setVisibility(View.VISIBLE);
+                llBuffer5.setVisibility(View.VISIBLE);
+                llBuffer6.setVisibility(View.VISIBLE);
+
+                if (submittingMember.getWebsite().length() > 3) {
+                    llMemberHomepage.setVisibility(View.VISIBLE);
+                    tvMemberHomepageText = (TextView) rootView.findViewById(R.id.tvMemberHomepageText);
+                    tvMemberHomepageText.setText(submittingMember.getWebsite());
+                    tvMemberHomepageText.setOnClickListener(CheatDetailTabletMetaFragment.this);
+                } else {
+                    llMemberHomepage.setVisibility(View.GONE);
+                    llBuffer6.setVisibility(View.INVISIBLE);
+                }
+                tvAuthorText = (TextView) rootView.findViewById(R.id.tvSubmittedByText);
+                tvMemberHomepageTitle = (TextView) rootView.findViewById(R.id.tvMemberHomepageTitle);
+                if (submittingMember.getUsername().length() > 1) {
+                    tvAuthorText.setText(submittingMember.getUsername());
+                    tvMemberHomepageTitle.setText(submittingMember.getUsername() + "'s " + getActivity().getString(R.string.meta_member_homepage));
+                }
+                tvAuthorText.setOnClickListener(CheatDetailTabletMetaFragment.this);
+            }
+
+            Date dateObj = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse(cheatObj.getCreatedDate());
+
+            java.text.DateFormat dateFormat = android.text.format.DateFormat.getDateFormat(getActivity().getApplicationContext());
+            String newDateStr = dateFormat.format(dateObj);
+            tvSubmissionDateText.setText(newDateStr);
+        } catch (Exception e) {
+            Log.e("MetaDataLoader onPostExecute EXCEPTION", e.getMessage() + "");
+        }
+    }
+
+    @Override
+    public void onClick(View v) {
+        Bundle arguments = new Bundle();
+        arguments.putInt(CheatDetailTabletFragment.ARG_ITEM_ID, 1);
+        arguments.putSerializable("cheatObj", cheatObj);
+        arguments.putSerializable("cheatDetailTabletFragment", cheatDetailTabletFragment);
+        arguments.putSerializable("cheatForumFragment", cheatForumFragment);
+        arguments.putSerializable("cheatDetailTabletMetaFragment", cheatDetailTabletMetaFragment);
+
+        if (v == btnViewCheat) {
+            Log.d("onClick", "btnViewCheat");
+            //cheatDetailTabletFragment.setArguments(arguments);
+            getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.cheat_detail_container, cheatDetailTabletFragment).commit();
+        } else if (v == btnMetaInfo) {
+            Log.d("onClick", "btnMetaInfo");
+            // do nothing
+        } else if (v == btnForum) {
+            Log.d("onClick", "btnForum");
+            cheatForumFragment.setArguments(arguments);
+            getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.cheat_detail_container, cheatForumFragment).commit();
+        } else if (v == btnReport) {
+            Log.d("onClick", "btnReport");
+            ca.showReportDialog();
+        } else if (v == btnShare) {
+            Log.d("onClick", "btnShare");
+            Helper.shareCheat(cheatObj, ca);
+        } else if (v == btnRateCheat) {
+            Log.d("onClick", "btnRateCheat");
+            ca.showRatingDialog();
+        } else if (v == tvTotalSubmissionShowAll) {
+            Intent explicitIntent = new Intent(ca, MemberCheatListActivity.class);
+            explicitIntent.putExtra("memberObj", submittingMember);
+            ca.startActivity(explicitIntent);
+        } else if (v == tvMemberHomepageText) {
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            intent.setData(Uri.parse(submittingMember.getWebsite()));
+            ca.startActivity(intent);
+        }
+
+    }
+
+}

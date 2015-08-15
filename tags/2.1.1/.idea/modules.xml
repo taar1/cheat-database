@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/Cheat-Database.iml" filepath="$PROJECT_DIR$/Cheat-Database.iml" />
+      <module fileurl="file://$PROJECT_DIR$/NiceButtons2/NiceButtons2.iml" filepath="$PROJECT_DIR$/NiceButtons2/NiceButtons2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/VPILibrary/VPILibrary.iml" filepath="$PROJECT_DIR$/VPILibrary/VPILibrary.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/mopub-3.6-sdk/mopub-3.6-sdk.iml" filepath="$PROJECT_DIR$/mopub-3.6-sdk/mopub-3.6-sdk.iml" />
+    </modules>
+  </component>
+</project>
+
