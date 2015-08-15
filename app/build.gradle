@@ -14,8 +14,8 @@ android {
         applicationId "com.cheatdatabase"
         minSdkVersion 14
         targetSdkVersion 22
-        versionCode 13
-        versionName "2.1.0"
+        versionCode 15
+        versionName "2.1.1"
         signingConfig signingConfigs.config
     }
     buildTypes {

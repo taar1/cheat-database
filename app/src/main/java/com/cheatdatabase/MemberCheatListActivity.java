@@ -33,6 +33,7 @@ import android.widget.Toast;
 
 import com.cheatdatabase.businessobjects.Cheat;
 import com.cheatdatabase.businessobjects.Member;
+import com.cheatdatabase.fragments.TopMembersFragment_;
 import com.cheatdatabase.helpers.ActionBarListActivity;
 import com.cheatdatabase.helpers.CheatDatabaseAdapter;
 import com.cheatdatabase.helpers.Konstanten;
@@ -330,20 +331,26 @@ public class MemberCheatListActivity extends ActionBarListActivity implements Ad
         switch (item.getItemId()) {
             // Respond to the action bar's Up/Home button
             case android.R.id.home:
-                // Dominik: This is actually not needed because I am saving the
-                // selected Fragment ID in the local storage.
-                Intent upIntent = NavUtils.getParentActivityIntent(this);
-//                upIntent.putExtra("mFragmentId", 2); (test only)
-                if (NavUtils.shouldUpRecreateTask(this, upIntent)) {
-                    // This activity is NOT part of this app's task, so create a new
-                    // task when navigating up, with a synthesized back stack.
-                    // Add all of this activity's parents to the back stack
-                    TaskStackBuilder.create(this).addNextIntentWithParentStack(upIntent).startActivities();
-                } else {
-                    // This activity is part of this app's task, so simply
-                    // navigate up to the logical parent activity.
-                    NavUtils.navigateUpTo(this, upIntent);
-                }
+//                // Dominik: This is actually not needed because I am saving the
+//                // selected Fragment ID in the local storage.
+//                Intent upIntent = NavUtils.getParentActivityIntent(this);
+////                upIntent.putExtra("fragmentId", MainActivity.DRAWER_TOP_MEMBERS);
+////                upIntent.putExtra("mFragmentId", 2); (test only)
+//                if (NavUtils.shouldUpRecreateTask(this, upIntent)) {
+//                    // This activity is NOT part of this app's task, so create a new
+//                    // task when navigating up, with a synthesized back stack.
+//                    // Add all of this activity's parents to the back stack
+//                    TaskStackBuilder.create(this).addNextIntentWithParentStack(upIntent).startActivities();
+//                } else {
+//                    // This activity is part of this app's task, so simply
+//                    // navigate up to the logical parent activity.
+////                    NavUtils.navigateUpTo(this, upIntent);
+////                    NavUtils.navigateUpFromSameTask(this);
+//
+//                    onBackPressed();
+//                }
+
+                MainActivity_.intent(this).mFragmentId(MainActivity.DRAWER_TOP_MEMBERS).start();
                 return true;
         }
         return super.onOptionsItemSelected(item);
