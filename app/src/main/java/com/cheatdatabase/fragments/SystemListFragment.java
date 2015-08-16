@@ -17,6 +17,7 @@ import com.cheatdatabase.helpers.Tools;
 import com.cheatdatabase.taskresults.GamesAndCheatsCountTaskResult;
 import com.cheatdatabase.tasks.GamesAndCheatsCountTask;
 import com.google.analytics.tracking.android.Tracker;
+import com.google.android.gms.analytics.HitBuilders;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Bean;
@@ -62,8 +63,7 @@ public class SystemListFragment extends Fragment {
 
         // Load Systems from XML. Load counters in background service later on.
 //        gameSystems = tools.getGameSystemsFromXml(getActivity());
-
-        tools.initGA(getActivity(), tracker, TAG, TAG, "");
+//        tools.initGA(getActivity(), tracker, TAG, TAG, "");
 
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -117,6 +117,7 @@ public class SystemListFragment extends Fragment {
 
     public void onEvent(SystemListRecyclerViewClickEvent result) {
         if (result.isSucceeded()) {
+            CheatDatabaseApplication.tracker().send(new HitBuilders.EventBuilder("ui", "select_system").setLabel(result.getSystemPlatform().getSystemName()).build());
             GamesBySystemActivity_.intent(getActivity()).systemObj(result.getSystemPlatform()).start();
         } else {
             Toast.makeText(getActivity(), R.string.no_internet, Toast.LENGTH_SHORT).show();

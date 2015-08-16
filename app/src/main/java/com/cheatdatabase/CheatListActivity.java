@@ -38,6 +38,7 @@ import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.helpers.Tools;
 import com.cheatdatabase.helpers.Webservice;
 import com.google.analytics.tracking.android.Tracker;
+import com.google.android.gms.analytics.HitBuilders;
 import com.google.gson.Gson;
 import com.mopub.mobileads.MoPubView;
 import com.splunk.mint.Mint;
@@ -338,6 +339,8 @@ public class CheatListActivity extends ActionBarActivity implements CheatListFra
         Log.d(TAG, "mTwoPane: " + mTwoPane);
         Log.d(TAG, "visibleCheat: " + visibleCheat.getCheatTitle());
 
+        CheatDatabaseApplication.tracker().send(new HitBuilders.EventBuilder("ui", "select_cheat").setLabel(this.visibleCheat.getGameName() + ": " + this.visibleCheat.getCheatTitle()).build());
+
         if (mTwoPane) {
             Log.i(TAG, "Is Dual Pane");
 
@@ -393,9 +396,6 @@ public class CheatListActivity extends ActionBarActivity implements CheatListFra
             case android.R.id.home:
                 editor.remove(Konstanten.PREFERENCES_TEMP_GAME_OBJECT_VIEW);
                 editor.commit();
-//                Intent eIntent = new Intent(this, GamesBySystemActivity.class);
-//                eIntent.putExtra("systemObj", Tools.getSystemObjectByName(CheatListActivity.this, gameObj.getSystemName()));
-//                startActivity(eIntent);
                 GamesBySystemActivity_.intent(this).systemObj(Tools.getSystemObjectByName(CheatListActivity.this, Tools.getSystemNameById(this, gameObj.getSystemId()))).start();
                 return true;
             case R.id.action_add_to_favorites:
@@ -507,7 +507,6 @@ public class CheatListActivity extends ActionBarActivity implements CheatListFra
             }
         }
     }
-
 
 
     private class AddCheatsToFavoritesTask extends AsyncTask<Game, Void, Void> {

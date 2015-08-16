@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
-import android.net.ConnectivityManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
@@ -45,8 +44,6 @@ import com.google.gson.Gson;
 import com.mopub.mobileads.MoPubView;
 import com.splunk.mint.Mint;
 import com.viewpagerindicator.UnderlinePageIndicator;
-
-import java.util.ArrayList;
 
 /**
  * Horizontal sliding through cheats submitted by member.

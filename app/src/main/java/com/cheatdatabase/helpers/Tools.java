@@ -479,7 +479,7 @@ public class Tools {
             }
 
             mAdView.setAutorefreshEnabled(true);
-            mAdView.setTesting(false);
+            mAdView.setTesting(true);
             mAdView.setKeywords("m_age:15,m_gender:m,m_marital:single");
             mAdView.loadAd();
         } catch (Exception e) {

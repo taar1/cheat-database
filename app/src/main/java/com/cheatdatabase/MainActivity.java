@@ -40,13 +40,14 @@ import com.cheatdatabase.fragments.NewsFragment_;
 import com.cheatdatabase.fragments.SubmitCheatFragment_;
 import com.cheatdatabase.fragments.SystemListFragment_;
 import com.cheatdatabase.fragments.TopMembersFragment_;
+import com.cheatdatabase.helpers.DistinctValues;
 import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.helpers.Tools;
 import com.cheatdatabase.navigationdrawer.CustomDrawerAdapter;
 import com.cheatdatabase.navigationdrawer.DrawerItem;
 import com.cheatdatabase.search.SearchSuggestionProvider;
-import com.google.analytics.tracking.android.Tracker;
+import com.google.android.gms.analytics.HitBuilders;
 import com.google.gson.Gson;
 import com.mopub.mobileads.MoPubView;
 import com.splunk.mint.Mint;
@@ -86,7 +87,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
     private MenuItem searchItem;
     private SearchView searchView;
 
-    private Tracker tracker;
+//    private Tracker tracker;
 
     private static final String SCREEN_LABEL = "Main Activity";
 
@@ -125,7 +126,10 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.app_icon_fox);
 
         tools.loadAd(mAdView, getString(R.string.screen_type));
-        tools.initGA(MainActivity.this, tracker, SCREEN_LABEL, "Main Activity", "Cheat-Database Main Activity");
+//        tools.initGA(MainActivity.this, tracker, SCREEN_LABEL, "Main Activity", "Cheat-Database Main Activity");
+
+        // Log setting open event with category="ui", action="open", and label="settings"
+        CheatDatabaseApplication.tracker().send(new HitBuilders.EventBuilder("ui", "loaded").setLabel("activity").build());
 
         AppBrain.init(this);
 
@@ -137,8 +141,6 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
 
 
         Log.d(TAG, "XXXX mFragmentId: " + mFragmentId);
-//        Log.d(TAG, "XXXX teeeeest: " + teeeeest);
-//        teeeeest = "JJJ";
 
         // Create Drawer
         // TODO
@@ -239,8 +241,8 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
         dataList.add(new DrawerItem(getString(R.string.top_members_title), R.drawable.ic_topmembers));
         dataList.add(new DrawerItem(getString(R.string.submit_cheat_title), R.drawable.ic_submit));
         dataList.add(new DrawerItem(getString(R.string.menu_more_apps), R.drawable.ic_otherapps));
-        dataList.add(new DrawerItem(getString(R.string.contactform_title), R.drawable.ic_contact));
         dataList.add(new DrawerItem(getString(R.string.rate_us), R.drawable.ic_rate));
+        dataList.add(new DrawerItem(getString(R.string.contactform_title), R.drawable.ic_contact));
 
         mAdapter = new CustomDrawerAdapter(this, R.layout.custom_drawer_item, dataList);
         mDrawerList.setAdapter(mAdapter);
@@ -278,6 +280,9 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
 //        }
 
         // TODO SAVEDINSTANCE SPEICHERN GEHT NOCH NICHT (https://github.com/excilys/androidannotations/wiki/Save-instance-state)
+        if (mFragmentId > 7) {
+            mFragmentId = 0;
+        }
         selectItem(mFragmentId);
     }
 
@@ -418,8 +423,8 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
     public static final int DRAWER_TOP_MEMBERS = 4;
     public static final int DRAWER_SUBMIT_CHEAT = 5;
     public static final int DRAWER_MORE_APPS = 6;
-    public static final int DRAWER_CONTACT = 7;
-    public static final int DRAWER_RATE_APP = 8;
+    public static final int DRAWER_RATE_APP = 7;
+    public static final int DRAWER_CONTACT = 8;
 
     // update the main content by replacing fragments
     private void selectItem(int position) {
@@ -429,34 +434,45 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
 
         setMainTitle(position);
 
+
         FragmentManager annotationFragmentManager = getFragmentManager();
         switch (position) {
             case DRAWER_MAIN:
+                // Log setting open event with category="ui", action="open", and label="settings"
+                CheatDatabaseApplication.tracker().send(new HitBuilders.EventBuilder("ui", "open").setLabel("main").build());
                 annotationFragmentManager.beginTransaction().replace(R.id.content_frame, SystemListFragment_.builder().mDrawerId(position).mDrawerName(dataList.get(position).getItemName()).build()).commit();
                 isFragment = false;
                 break;
             case DRAWER_NEWS:
+                CheatDatabaseApplication.tracker().send(new HitBuilders.EventBuilder("ui", "open").setLabel("news").build());
                 annotationFragmentManager.beginTransaction().replace(R.id.content_frame, NewsFragment_.builder().mDrawerId(position).mDrawerName(dataList.get(position).getItemName()).build()).commit();
                 isFragment = false;
                 break;
             case DRAWER_FAVORITES:
+                CheatDatabaseApplication.tracker().send(new HitBuilders.EventBuilder("ui", "open").setLabel("favorites").build());
                 annotationFragmentManager.beginTransaction().replace(R.id.content_frame, FavoriteGamesListFragment_.builder().mDrawerId(position).mDrawerName(dataList.get(position).getItemName()).build()).commit();
                 isFragment = false;
                 break;
             case DRAWER_TOP_MEMBERS:
+                CheatDatabaseApplication.tracker().send(new HitBuilders.EventBuilder("ui", "open").setLabel("top_members").build());
                 annotationFragmentManager.beginTransaction().replace(R.id.content_frame, TopMembersFragment_.builder().mDrawerId(position).mDrawerName(dataList.get(position).getItemName()).build()).commit();
                 isFragment = false;
                 break;
             case DRAWER_SUBMIT_CHEAT:
+                CheatDatabaseApplication.tracker().send(new HitBuilders.EventBuilder("ui", "open").setLabel("submit_cheat").build());
                 annotationFragmentManager.beginTransaction().replace(R.id.content_frame, SubmitCheatFragment_.builder().mDrawerId(position).mDrawerName(dataList.get(position).getItemName()).build()).commit();
                 isFragment = false;
                 break;
             case DRAWER_CONTACT:
+                // If position = 8 -> out of bounds error. no idea why... it works like this here.
+                position = 7;
+                CheatDatabaseApplication.tracker().send(new HitBuilders.EventBuilder("ui", "open").setLabel("contact").build());
                 annotationFragmentManager.beginTransaction().replace(R.id.content_frame, ContactFormFragment_.builder().mDrawerId(position).mDrawerName(dataList.get(position).getItemName()).build()).commit();
                 isFragment = false;
                 break;
             case DRAWER_MORE_APPS:
-                Uri uri = Uri.parse(Konstanten.URL_MORE_APPS);
+                CheatDatabaseApplication.tracker().send(new HitBuilders.EventBuilder("ui", "open").setLabel("more_apps").build());
+                Uri uri = Uri.parse(DistinctValues.URL_MORE_APPS);
                 Intent intentMoreApps = new Intent(Intent.ACTION_VIEW, uri);
                 if (intentMoreApps.resolveActivity(getPackageManager()) != null) {
                     startActivity(intentMoreApps);
@@ -465,7 +481,8 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
                 }
                 break;
             case DRAWER_RATE_APP:
-                Uri appUri = Uri.parse(Konstanten.GOOGLE_PLAY_URL);
+                CheatDatabaseApplication.tracker().send(new HitBuilders.EventBuilder("ui", "open").setLabel("rate_app").build());
+                Uri appUri = Uri.parse(DistinctValues.GOOGLE_PLAY_URL);
                 Intent intentRateApp = new Intent(Intent.ACTION_VIEW, appUri);
                 if (intentRateApp.resolveActivity(getPackageManager()) != null) {
                     startActivity(intentRateApp);
@@ -477,7 +494,6 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
                 break;
         }
 
-
         if (isFragment) {
             fragment.setArguments(args);
             FragmentManager frgManager = getFragmentManager();
@@ -488,7 +504,6 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
         mDrawerList.setItemChecked(position, true);
         setTitle(dataList.get(position).getItemName());
         mDrawerLayout.closeDrawer(mDrawerList);
-
     }
 
     private void setMainTitle(int position) {
