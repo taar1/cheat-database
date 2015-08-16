@@ -29,6 +29,7 @@ import com.cheatdatabase.widgets.DividerDecoration;
 import com.cheatdatabase.widgets.EmptyRecyclerView;
 import com.gc.materialdesign.views.ProgressBarCircularIndeterminate;
 import com.google.analytics.tracking.android.Tracker;
+import com.google.android.gms.analytics.HitBuilders;
 import com.mopub.mobileads.MoPubView;
 import com.splunk.mint.Mint;
 
@@ -88,7 +89,7 @@ public class GamesBySystemActivity extends ActionBarActivity implements ActionBa
         mSwipeRefreshLayout.setRefreshing(true);
 
         setTitle(systemObj.getSystemName());
-        tools.initGA(GamesBySystemActivity.this, tracker, SCREEN_LABEL, "Game List", systemObj.getSystemName());
+//        tools.initGA(GamesBySystemActivity.this, tracker, SCREEN_LABEL, "Game List", systemObj.getSystemName());
 
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -215,6 +216,7 @@ public class GamesBySystemActivity extends ActionBarActivity implements ActionBa
 
     public void onEvent(GameListRecyclerViewClickEvent result) {
         if (result.isSucceeded()) {
+            CheatDatabaseApplication.tracker().send(new HitBuilders.EventBuilder("ui", "select_game").setLabel(result.getGame().getGameName()).build());
             Intent explicitIntent = new Intent(this, CheatListActivity.class);
             explicitIntent.putExtra("gameObj", result.getGame());
             startActivity(explicitIntent);

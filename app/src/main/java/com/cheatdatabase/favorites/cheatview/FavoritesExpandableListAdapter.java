@@ -36,7 +36,7 @@ public class FavoritesExpandableListAdapter extends BaseExpandableListAdapter {
         inflater = act.getLayoutInflater();
 
         latoFontLight = Tools.getFont(act.getAssets(), Konstanten.FONT_LIGHT);
-        latoFontRegular = Tools.getFont(act.getAssets(), "Lato-Regular.ttf");
+        latoFontRegular = Tools.getFont(act.getAssets(), Konstanten.FONT_REGULAR);
         latoFontBold = Tools.getFont(act.getAssets(), Konstanten.FONT_BOLD);
     }
 

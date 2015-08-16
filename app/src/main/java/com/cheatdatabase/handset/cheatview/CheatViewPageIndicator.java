@@ -24,7 +24,6 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.cheatdatabase.CheatForumActivity;
-import com.cheatdatabase.GamesBySystemActivity_;
 import com.cheatdatabase.LoginActivity;
 import com.cheatdatabase.R;
 import com.cheatdatabase.SubmitCheatActivity;

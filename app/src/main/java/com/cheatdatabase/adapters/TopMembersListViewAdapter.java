@@ -12,12 +12,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.cheatdatabase.CheatDatabaseApplication;
 import com.cheatdatabase.MemberCheatListActivity;
 import com.cheatdatabase.R;
 import com.cheatdatabase.businessobjects.Member;
 import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.helpers.Tools;
+import com.google.android.gms.analytics.HitBuilders;
 import com.squareup.picasso.Picasso;
 
 import org.androidannotations.annotations.EBean;
@@ -47,11 +49,6 @@ public class TopMembersListViewAdapter extends RecyclerView.Adapter<TopMembersLi
     // you provide access to all the views for a data item in a view holder
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        //        public TextView mSystemName;
-//        public TextView mSubtitle;
-//        public LinearLayout mLinearLayout;
-//        public IMyViewHolderClicks mListener;
-
         TextView tvNumeration;
         TextView tvMemberName;
         TextView tvCheatCount;
@@ -61,45 +58,14 @@ public class TopMembersListViewAdapter extends RecyclerView.Adapter<TopMembersLi
 
         public ViewHolder(View v) {
             super(v);
-//            mListener = listener;
-
-//            mLinearLayout = (LinearLayout) v.findViewById(R.id.ll);
-//            mSystemName = (TextView) v.findViewById(R.id.system_name);
-//            mSubtitle = (TextView) v.findViewById(R.id.subtitle);
 
             tvNumeration = (TextView) v.findViewById(R.id.numeration);
-
             tvMemberName = (TextView) v.findViewById(R.id.membername);
-//            tvMemberName.setOnClickListener(this);
-
             tvCheatCount = (TextView) v.findViewById(R.id.cheatcount);
-//            tvCheatCount.setOnClickListener(this);
-
             tvHiMessage = (TextView) v.findViewById(R.id.hi_message);
-
             tvWebsite = (TextView) v.findViewById(R.id.website);
-//            tvWebsite.setOnClickListener(this);
-
             avatarImageView = (ImageView) v.findViewById(R.id.avatar);
-//            avatarImageView.setOnClickListener(this);
-
         }
-
-//        @Override
-//        public void onClick(View v) {
-//            if (v == tvMemberName) {
-//                mListener.onShowCheatsClick(this);
-//            } else if (v == tvCheatCount) {
-//                mListener.onShowCheatsClick(this);
-//            } else if (v == tvWebsite) {
-//                mListener.onWebsiteClick(this, (String) tvWebsite.getText());
-//            } else if (v == avatarImageView) {
-////                mListener.onAvatarClick(this);
-//                mListener.onWebsiteClick(this, (String) tvWebsite.getText());
-//            }
-//
-//        }
-
     }
 
     private void openWebsite(String url) {
@@ -112,6 +78,8 @@ public class TopMembersListViewAdapter extends RecyclerView.Adapter<TopMembersLi
     }
 
     private void showMemberCheatList(Member member) {
+        CheatDatabaseApplication.tracker().send(new HitBuilders.EventBuilder("ui", "show_member").setLabel(member.getUsername()).build());
+
         if (Reachability.reachability.isReachable) {
             Intent explicitIntent = new Intent(mContext, MemberCheatListActivity.class);
             explicitIntent.putExtra("memberObj", member);
@@ -120,15 +88,6 @@ public class TopMembersListViewAdapter extends RecyclerView.Adapter<TopMembersLi
             Toast.makeText(mContext, R.string.no_internet, Toast.LENGTH_SHORT).show();
         }
     }
-
-//    public static interface IMyViewHolderClicks {
-//
-//        public void onShowCheatsClick(TopMembersListViewAdapter.ViewHolder caller, Member member);
-//
-////        public void onAvatarClick(TopMembersListViewAdapter.ViewHolder caller);
-//
-//        public void onWebsiteClick(TopMembersListViewAdapter.ViewHolder caller, String url);
-//    }
 
 
     // Create new views (invoked by the layout manager)
@@ -142,36 +101,6 @@ public class TopMembersListViewAdapter extends RecyclerView.Adapter<TopMembersLi
         final View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.topmembers_list_item, parent, false);
         v.setDrawingCacheEnabled(true);
 
-//        ViewHolder vhx = new ViewHolder(v, new TopMembersListViewAdapter.IMyViewHolderClicks() {
-//
-//            @Override
-//            public void onShowCheatsClick(ViewHolder caller, Member member) {
-//                if (Reachability.reachability.isReachable) {
-//                    Intent explicitIntent = new Intent(mContext, MemberCheatListActivity.class);
-//                    explicitIntent.putExtra("memberObj", member);
-//                    mContext.startActivity(explicitIntent);
-//                } else {
-//                    Toast.makeText(mContext, R.string.no_internet, Toast.LENGTH_SHORT).show();
-//                }
-//            }
-//
-////            @Override
-////            public void onAvatarClick(TopMembersListViewAdapter.ViewHolder caller) {
-////
-////                // TODO make proper onclick action
-////                if (Reachability.reachability.isReachable) {
-//////                    CheatDatabaseApplication.getEventBus().post(new SystemListRecyclerViewClickEvent(mMemberObjects.get(caller.getAdapterPosition())));
-////                } else {
-//////                    CheatDatabaseApplication.getEventBus().post(new SystemListRecyclerViewClickEvent(new Exception()));
-////                }
-////            }
-//
-//
-//            @Override
-//            public void onWebsiteClick(ViewHolder caller, String url) {
-//                openWebsite(url);
-//            }
-//        });
 
         ViewHolder vh = new ViewHolder(v);
 
@@ -212,6 +141,7 @@ public class TopMembersListViewAdapter extends RecyclerView.Adapter<TopMembersLi
 
             @Override
             public void onClick(View v) {
+                CheatDatabaseApplication.tracker().send(new HitBuilders.EventBuilder("ui", "show_member_website").setLabel(memberObj.getUsername()).build());
                 openWebsite(memberObj.getWebsite());
             }
         });

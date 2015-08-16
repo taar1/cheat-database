@@ -1,7 +1,7 @@
 <component name="libraryTable">
-  <library name="MMSDK">
+  <library name="InMobi-4.5.5">
     <CLASSES>
-      <root url="jar://$PROJECT_DIR$/app/libs/MMSDK.jar!/" />
+      <root url="jar://$PROJECT_DIR$/app/libs/InMobi-4.5.5.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />
