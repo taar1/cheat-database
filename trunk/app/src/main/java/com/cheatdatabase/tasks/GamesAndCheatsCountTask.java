@@ -5,7 +5,6 @@ import android.util.Log;
 import com.cheatdatabase.CheatDatabaseApplication;
 import com.cheatdatabase.businessobjects.SystemPlatform;
 import com.cheatdatabase.helpers.CheatDatabaseAdapter;
-import com.cheatdatabase.helpers.SystemAndGameCountPrefs_;
 import com.cheatdatabase.helpers.Webservice;
 import com.cheatdatabase.taskresults.GamesAndCheatsCountTaskResult;
 import com.google.gson.Gson;
@@ -14,7 +13,6 @@ import org.androidannotations.annotations.Background;
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EBean;
 import org.androidannotations.annotations.UiThread;
-import org.androidannotations.annotations.sharedpreferences.Pref;
 
 import java.util.ArrayList;
 import java.util.Collections;

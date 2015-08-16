@@ -310,5 +310,6 @@
         <item quantity="one">Game</item>
         <item quantity="other">Games</item>
     </plurals>
+    <string name="title_activity_second">SecondActivity</string>
 
 </resources>
