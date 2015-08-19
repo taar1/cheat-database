@@ -16,7 +16,6 @@ import com.cheatdatabase.events.SystemListRecyclerViewClickEvent;
 import com.cheatdatabase.helpers.Tools;
 import com.cheatdatabase.taskresults.GamesAndCheatsCountTaskResult;
 import com.cheatdatabase.tasks.GamesAndCheatsCountTask;
-import com.google.analytics.tracking.android.Tracker;
 import com.google.android.gms.analytics.HitBuilders;
 
 import org.androidannotations.annotations.AfterViews;
@@ -32,8 +31,7 @@ public class SystemListFragment extends Fragment {
 
     private final String TAG = SystemListFragment.class.getSimpleName();
 
-    private Tracker tracker;
-    //    private RecyclerView.Adapter mAdapter;
+        //    private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
 //    private ArrayList<SystemPlatform> gameSystems;
 
@@ -60,10 +58,6 @@ public class SystemListFragment extends Fragment {
 
     @AfterViews
     public void onCreateView() {
-
-        // Load Systems from XML. Load counters in background service later on.
-//        gameSystems = tools.getGameSystemsFromXml(getActivity());
-//        tools.initGA(getActivity(), tracker, TAG, TAG, "");
 
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -117,7 +111,7 @@ public class SystemListFragment extends Fragment {
 
     public void onEvent(SystemListRecyclerViewClickEvent result) {
         if (result.isSucceeded()) {
-            CheatDatabaseApplication.tracker().send(new HitBuilders.EventBuilder("ui", "select_system").setLabel(result.getSystemPlatform().getSystemName()).build());
+            CheatDatabaseApplication.tracker().send(new HitBuilders.EventBuilder("ui", "click").setLabel(result.getSystemPlatform().getSystemName()).build());
             GamesBySystemActivity_.intent(getActivity()).systemObj(result.getSystemPlatform()).start();
         } else {
             Toast.makeText(getActivity(), R.string.no_internet, Toast.LENGTH_SHORT).show();

@@ -17,6 +17,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.cheatdatabase.CheatDatabaseApplication;
 import com.cheatdatabase.R;
 import com.cheatdatabase.businessobjects.Cheat;
 import com.cheatdatabase.businessobjects.Game;
@@ -26,7 +27,7 @@ import com.cheatdatabase.dialogs.RateCheatDialog.RateCheatDialogListener;
 import com.cheatdatabase.favorites.handset.cheatview.FavoritesCheatViewPageIndicator;
 import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Tools;
-import com.google.analytics.tracking.android.Tracker;
+import com.google.android.gms.analytics.HitBuilders;
 import com.google.gson.Gson;
 import com.mopub.mobileads.MoPubView;
 import com.splunk.mint.Mint;
@@ -41,9 +42,6 @@ public class FavoriteCheatListActivity extends ActionBarActivity implements Favo
      * device.
      */
     private boolean mTwoPane;
-
-    private static final String SCREEN_LABEL = "Favorite Cheat List By Game ID Screen";
-    protected Tracker tracker;
 
     private SharedPreferences settings;
     private Member member;
@@ -110,7 +108,7 @@ public class FavoriteCheatListActivity extends ActionBarActivity implements Favo
             public void run() {
                 gameObj = (Game) getIntent().getSerializableExtra("gameObj");
 
-                Tools.initGA(FavoriteCheatListActivity.this, tracker, SCREEN_LABEL, "Favorites Cheat List", gameObj.getGameName());
+                CheatDatabaseApplication.tracker().send(new HitBuilders.EventBuilder("ui", "Favorites Cheat List").setLabel("activity").build());
 
                 runOnUiThread(new Runnable() {
 

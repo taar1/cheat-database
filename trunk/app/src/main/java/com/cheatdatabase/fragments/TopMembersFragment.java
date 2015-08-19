@@ -26,7 +26,6 @@ import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.helpers.Tools;
 import com.cheatdatabase.helpers.Webservice;
-import com.google.analytics.tracking.android.Tracker;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Background;
@@ -53,7 +52,6 @@ public class TopMembersFragment extends Fragment {
 
     private final int VISIT_WEBSITE = 0;
 
-    private Tracker tracker;
     public String[] myRemoteImages;
 
     private RecyclerView.LayoutManager mLayoutManager;

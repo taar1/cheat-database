@@ -28,7 +28,6 @@ import com.cheatdatabase.helpers.Webservice;
 import com.cheatdatabase.widgets.DividerDecoration;
 import com.cheatdatabase.widgets.EmptyRecyclerView;
 import com.gc.materialdesign.views.ProgressBarCircularIndeterminate;
-import com.google.analytics.tracking.android.Tracker;
 import com.google.android.gms.analytics.HitBuilders;
 import com.mopub.mobileads.MoPubView;
 import com.splunk.mint.Mint;
@@ -46,8 +45,6 @@ import java.util.Collections;
 
 @EActivity(R.layout.activity_gamelist)
 public class GamesBySystemActivity extends ActionBarActivity implements ActionBar.OnNavigationListener {
-
-    private Tracker tracker;
 
     private ArrayList<Game> gameArrayList = new ArrayList<>();
 
@@ -89,7 +86,7 @@ public class GamesBySystemActivity extends ActionBarActivity implements ActionBa
         mSwipeRefreshLayout.setRefreshing(true);
 
         setTitle(systemObj.getSystemName());
-//        tools.initGA(GamesBySystemActivity.this, tracker, SCREEN_LABEL, "Game List", systemObj.getSystemName());
+        CheatDatabaseApplication.tracker().send(new HitBuilders.EventBuilder("ui", "loaded").setLabel("GamesBySystemActivity").build());
 
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -153,7 +150,7 @@ public class GamesBySystemActivity extends ActionBarActivity implements ActionBa
             gamesFound = Webservice.getGameListBySystemId(systemObj.getSystemId(), systemObj.getSystemName());
         }
 
-        for(Game game : gamesFound) {
+        for (Game game : gamesFound) {
             Log.d(TAG, "GAME: " + game.getGameName() + " / " + game.getSystemName());
         }
 
@@ -216,7 +213,7 @@ public class GamesBySystemActivity extends ActionBarActivity implements ActionBa
 
     public void onEvent(GameListRecyclerViewClickEvent result) {
         if (result.isSucceeded()) {
-            CheatDatabaseApplication.tracker().send(new HitBuilders.EventBuilder("ui", "select_game").setLabel(result.getGame().getGameName()).build());
+            CheatDatabaseApplication.tracker().send(new HitBuilders.EventBuilder("ui", "click").setLabel(result.getGame().getGameName()).build());
             Intent explicitIntent = new Intent(this, CheatListActivity.class);
             explicitIntent.putExtra("gameObj", result.getGame());
             startActivity(explicitIntent);

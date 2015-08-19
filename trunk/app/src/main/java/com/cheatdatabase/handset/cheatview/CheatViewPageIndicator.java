@@ -23,6 +23,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.cheatdatabase.CheatDatabaseApplication;
 import com.cheatdatabase.CheatForumActivity;
 import com.cheatdatabase.LoginActivity;
 import com.cheatdatabase.R;
@@ -40,7 +41,7 @@ import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.helpers.Tools;
 import com.cheatdatabase.helpers.Webservice;
-import com.google.analytics.tracking.android.Tracker;
+import com.google.android.gms.analytics.HitBuilders;
 import com.google.gson.Gson;
 import com.mopub.mobileads.MoPubView;
 import com.splunk.mint.Mint;
@@ -75,7 +76,6 @@ public class CheatViewPageIndicator extends ActionBarActivity implements ReportC
     private CheatViewFragmentAdapter mAdapter;
     private ViewPager mPager;
     private UnderlinePageIndicator mIndicator;
-    private Tracker tracker;
 
     private int activePage;
 
@@ -120,7 +120,8 @@ public class CheatViewPageIndicator extends ActionBarActivity implements ReportC
         getSupportActionBar().setTitle(gameObj.getGameName());
         getSupportActionBar().setSubtitle(gameObj.getSystemName());
 
-        Tools.initGA(CheatViewPageIndicator.this, tracker, SCREEN_LABEL, visibleCheat.getGameName() + " (" + visibleCheat.getSystemName() + ")", visibleCheat.getCheatTitle());
+        CheatDatabaseApplication.tracker().send(new HitBuilders.EventBuilder("ui", visibleCheat.getGameName() + " (" + visibleCheat.getSystemName() + ")").setLabel("activity").build());
+
         initialisePaging();
     }
 

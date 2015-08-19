@@ -22,6 +22,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.cheatdatabase.CheatDatabaseApplication;
 import com.cheatdatabase.CheatForumActivity;
 import com.cheatdatabase.LoginActivity;
 import com.cheatdatabase.R;
@@ -39,7 +40,7 @@ import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.helpers.Tools;
 import com.cheatdatabase.helpers.Webservice;
-import com.google.analytics.tracking.android.Tracker;
+import com.google.android.gms.analytics.HitBuilders;
 import com.google.gson.Gson;
 import com.mopub.mobileads.MoPubView;
 import com.splunk.mint.Mint;
@@ -74,11 +75,9 @@ public class MemberCheatViewPageIndicator extends ActionBarActivity implements R
     private MemberCheatViewFragmentAdapter mAdapter;
     private ViewPager mPager;
     private UnderlinePageIndicator mIndicator;
-    private Tracker tracker;
 
     private int activePage;
 
-    private static final String SCREEN_LABEL = "Member CheatView PI Screen";
     private static final String TAG = MemberCheatViewPageIndicator.class.getName();
 
     private ShareActionProvider mShare;
@@ -115,7 +114,8 @@ public class MemberCheatViewPageIndicator extends ActionBarActivity implements R
             getSupportActionBar().setTitle(visibleCheat.getGameName());
             getSupportActionBar().setSubtitle(visibleCheat.getSystemName());
 
-            Tools.initGA(this, tracker, SCREEN_LABEL, visibleCheat.getGameName() + " (" + visibleCheat.getSystemName() + ")", visibleCheat.getCheatTitle());
+            CheatDatabaseApplication.tracker().send(new HitBuilders.EventBuilder("ui", "loaded").setLabel("MemberCheatViewPageIndicator").build());
+
             initialisePaging();
         } catch (Exception e) {
             Log.e(TAG, e.getMessage());

@@ -18,6 +18,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.cheatdatabase.CheatDatabaseApplication;
 import com.cheatdatabase.MainActivity;
 import com.cheatdatabase.R;
 import com.cheatdatabase.businessobjects.Game;
@@ -27,7 +28,7 @@ import com.cheatdatabase.helpers.CheatDatabaseAdapter;
 import com.cheatdatabase.helpers.Group;
 import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Tools;
-import com.google.analytics.tracking.android.Tracker;
+import com.google.android.gms.analytics.HitBuilders;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EFragment;
@@ -47,8 +48,6 @@ public class FavoriteGamesListFragment extends Fragment {
     SparseArray<Group> groups = new SparseArray<Group>();
 
     protected SystemPlatform systemObj;
-
-    private Tracker tracker;
 
     private FavoritesExpandableListAdapter adapter;
 
@@ -97,7 +96,7 @@ public class FavoriteGamesListFragment extends Fragment {
         db = new CheatDatabaseAdapter(parentActivity);
         db.open();
 
-        Tools.initGA(parentActivity, tracker, SCREEN_LABEL, "Favorites", "User favorites");
+        CheatDatabaseApplication.tracker().send(new HitBuilders.EventBuilder("ui", "User Favorites").setLabel("activity").build());
         adapter = new FavoritesExpandableListAdapter(parentActivity, groups);
 
         // TODO FIXME CONTEXT MENU DOES NOT WORK YET
@@ -113,49 +112,6 @@ public class FavoriteGamesListFragment extends Fragment {
 
         registerForContextMenu(listView);
     }
-
-//    @Override
-//    public void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        parentActivity = getActivity();
-//
-//        latoFontLight = Tools.getFont(parentActivity.getAssets(), Konstanten.FONT_LIGHT);
-//        latoFontBold = Tools.getFont(parentActivity.getAssets(), Konstanten.FONT_BOLD);
-//
-//        db = new CheatDatabaseAdapter(parentActivity);
-//        db.open();
-//
-//        Tools.initGA(parentActivity, tracker, SCREEN_LABEL, "Favorites", "User favorites");
-//        adapter = new FavoritesExpandableListAdapter(parentActivity, groups);
-//
-//        // TODO FIXME CONTEXT MENU DOES NOT WORK YET
-//
-//        // Update action bar menu items?
-//        setHasOptionsMenu(true);
-//    }
-//
-//    @Override
-//    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-//        rootView = inflater.inflate(R.layout.fragment_favorites_main_list, container, false);
-//
-//        somethingfoundLayout = (RelativeLayout) rootView.findViewById(R.id.somethingfound_layout);
-//        nothingFoundLayout = (LinearLayout) rootView.findViewById(R.id.nothingfound_layout);
-//
-//        nothingFoundTitle = (TextView) rootView.findViewById(R.id.nothingfound_title);
-//        nothingFoundTitle.setTypeface(latoFontBold);
-//        nothingFoundText = (TextView) rootView.findViewById(R.id.nothingfound_text);
-//        nothingFoundText.setTypeface(latoFontLight);
-//
-//        listView = (ExpandableListView) rootView.findViewById(R.id.listView);
-//
-//        listView.setAdapter(adapter);
-//        getViewContent();
-//
-//        registerForContextMenu(listView);
-//        registerForContextMenu(rootView);
-//
-//        return rootView;
-//    }
 
     private void getViewContent() {
 
