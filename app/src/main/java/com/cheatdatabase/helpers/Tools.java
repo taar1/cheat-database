@@ -19,9 +19,6 @@ import com.cheatdatabase.R;
 import com.cheatdatabase.businessobjects.Cheat;
 import com.cheatdatabase.businessobjects.Game;
 import com.cheatdatabase.businessobjects.SystemPlatform;
-import com.google.analytics.tracking.android.Fields;
-import com.google.analytics.tracking.android.GoogleAnalytics;
-import com.google.analytics.tracking.android.Tracker;
 import com.mopub.mobileads.MoPubView;
 
 import org.androidannotations.annotations.EBean;
@@ -39,7 +36,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -406,17 +402,17 @@ public class Tools {
         return null;
     }
 
-    public static void initGA(Activity activity, Tracker tracker, String screenLabel, String title, String description) {
-        tracker = GoogleAnalytics.getInstance(activity).getTracker(Konstanten.GOOGLE_ANALYTICS_ID);
-        HashMap<String, String> hitParameters = new HashMap<String, String>();
-        hitParameters.put(Fields.HIT_TYPE, "appview");
-        hitParameters.put(Fields.APP_VERSION, Konstanten.CURRENT_VERSION);
-        hitParameters.put(Fields.SCREEN_NAME, screenLabel);
-        hitParameters.put(Fields.DESCRIPTION, description);
-        hitParameters.put(Fields.TITLE, title);
-
-        tracker.send(hitParameters);
-    }
+//    public static void initGA(Activity activity, Tracker tracker, String screenLabel, String title, String description) {
+//        tracker = GoogleAnalytics.getInstance(activity).getTracker(Konstanten.GOOGLE_ANALYTICS_ID);
+//        HashMap<String, String> hitParameters = new HashMap<String, String>();
+//        hitParameters.put(Fields.HIT_TYPE, "appview");
+//        hitParameters.put(Fields.APP_VERSION, Konstanten.CURRENT_VERSION);
+//        hitParameters.put(Fields.SCREEN_NAME, screenLabel);
+//        hitParameters.put(Fields.DESCRIPTION, description);
+//        hitParameters.put(Fields.TITLE, title);
+//
+//        tracker.send(hitParameters);
+//    }
 
     /**
      * Convert unconverted Date to user's set Locale date format.

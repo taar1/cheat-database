@@ -26,7 +26,6 @@ import com.cheatdatabase.businessobjects.Member;
 import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Tools;
 import com.cheatdatabase.helpers.Webservice;
-import com.google.analytics.tracking.android.Tracker;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -89,8 +88,6 @@ public class CheatListFragment extends ListFragment {
     private ArrayList<Cheat> cheatsArrayList = new ArrayList<Cheat>();
 
     private Cheat[] cheats;
-
-    protected Tracker tracker;
 
     private CheatAdapter cheatAdapter;
 

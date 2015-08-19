@@ -54,7 +54,8 @@ public class Konstanten {
     public final static int REFRESH_INTERVAL_NEWCHEATS = 10; // In Tagen
 
     // Position in systems.xml file
-    public final static String GOOGLE_ANALYTICS_ID = "UA-6697147-6";
+//    public final static String GOOGLE_ANALYTICS_ID = "UA-6697147-6";
+    public final static String GOOGLE_ANALYTICS_ID = "UA-6697147-2"; // scheinbar neu?
     public final static int TABLE_ROW_MINIMUM_WIDTH = 300;
     public final static int CHEAT_DAY_AGE_SHOW_NEWADDITION_ICON = 10;
 
