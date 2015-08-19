@@ -112,24 +112,24 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" exported="" name="InMobi-4.5.5" level="project" />
     <orderEntry type="library" exported="" name="mopub-volley-1.1.0" level="project" />
-    <orderEntry type="library" exported="" name="play-services-6.5.87" level="project" />
+    <orderEntry type="library" exported="" name="play-services-base-7.5.0" level="project" />
+    <orderEntry type="library" exported="" name="play-services-analytics-7.5.0" level="project" />
     <orderEntry type="library" exported="" name="MMSDK-5.3.0" level="project" />
     <orderEntry type="library" exported="" name="eventbus-2.4.0" level="project" />
+    <orderEntry type="library" exported="" name="recyclerview-v7-22.2.1" level="project" />
     <orderEntry type="library" exported="" name="androidannotations-3.3.2" level="project" />
     <orderEntry type="library" exported="" name="appcompat-v7-22.0.0" level="project" />
-    <orderEntry type="library" exported="" name="support-annotations-22.1.1" level="project" />
+    <orderEntry type="library" exported="" name="support-annotations-22.2.1" level="project" />
     <orderEntry type="library" exported="" name="picasso-2.3.2" level="project" />
     <orderEntry type="library" exported="" name="mint-4.1" level="project" />
     <orderEntry type="library" exported="" name="MaterialDesign-1.5" level="project" />
     <orderEntry type="library" exported="" name="codemodel-2.6" level="project" />
     <orderEntry type="library" exported="" name="mopub-sdk-3.10.0" level="project" />
+    <orderEntry type="library" exported="" name="support-v4-22.2.1" level="project" />
     <orderEntry type="library" exported="" name="androidannotations-api-3.3.2" level="project" />
     <orderEntry type="library" exported="" name="appbrain-applift-sdk-11.02" level="project" />
-    <orderEntry type="library" exported="" name="libGoogleAnalyticsServices" level="project" />
-    <orderEntry type="library" exported="" name="bottomsheet-0.9" level="project" />
-    <orderEntry type="library" exported="" name="recyclerview-v7-22.1.1" level="project" />
-    <orderEntry type="library" exported="" name="support-v4-22.1.1" level="project" />
     <orderEntry type="library" exported="" name="gson-2.3" level="project" />
+    <orderEntry type="library" exported="" name="play-services-ads-7.5.0" level="project" />
     <orderEntry type="module" module-name="VPILibrary" exported="" />
   </component>
 </module>

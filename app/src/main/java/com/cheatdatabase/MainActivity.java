@@ -87,10 +87,6 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
     private MenuItem searchItem;
     private SearchView searchView;
 
-//    private Tracker tracker;
-
-    private static final String SCREEN_LABEL = "Main Activity";
-
     @ViewById(R.id.adview)
     MoPubView mAdView;
 
@@ -126,10 +122,9 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.app_icon_fox);
 
         tools.loadAd(mAdView, getString(R.string.screen_type));
-//        tools.initGA(MainActivity.this, tracker, SCREEN_LABEL, "Main Activity", "Cheat-Database Main Activity");
 
         // Log setting open event with category="ui", action="open", and label="settings"
-        CheatDatabaseApplication.tracker().send(new HitBuilders.EventBuilder("ui", "loaded").setLabel("activity").build());
+        CheatDatabaseApplication.tracker().send(new HitBuilders.EventBuilder("ui", "MainActivity").setLabel("activity").build());
 
         AppBrain.init(this);
 

@@ -37,7 +37,6 @@ import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.helpers.Tools;
 import com.cheatdatabase.helpers.Webservice;
-import com.google.analytics.tracking.android.Tracker;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.gson.Gson;
 import com.mopub.mobileads.MoPubView;
@@ -69,7 +68,6 @@ public class CheatListActivity extends ActionBarActivity implements CheatListFra
     private boolean mTwoPane;
 
     private static final String SCREEN_LABEL = "Cheat List By Game ID Screen";
-    protected Tracker tracker;
 
     private SharedPreferences settings;
     private Editor editor;
@@ -194,7 +192,8 @@ public class CheatListActivity extends ActionBarActivity implements CheatListFra
                 // }
                 gameObj = (Game) intent.getSerializableExtra("gameObj");
 
-                Tools.initGA(CheatListActivity.this, tracker, SCREEN_LABEL, "Cheat List", gameObj.getGameName());
+                CheatDatabaseApplication.tracker().send(new HitBuilders.EventBuilder("ui", "Cheat List").setLabel("activity").build());
+
                 getSupportActionBar().setTitle(gameObj.getGameName());
                 getSupportActionBar().setSubtitle(gameObj.getSystemName());
                 runOnUiThread(new Runnable() {

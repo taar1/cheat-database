@@ -48,7 +48,7 @@ import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.helpers.Tools;
 import com.cheatdatabase.helpers.Webservice;
-import com.google.analytics.tracking.android.Tracker;
+import com.google.android.gms.analytics.HitBuilders;
 import com.google.gson.Gson;
 import com.mopub.mobileads.MoPubView;
 import com.splunk.mint.Mint;
@@ -87,7 +87,6 @@ public class CheatForumActivity extends ActionBarActivity implements CheatListFr
     private Typeface latoFontBold;
     private Typeface latoFontLight;
 
-    private Tracker tracker;
 
     private ImageView reloadView;
 
@@ -160,7 +159,7 @@ public class CheatForumActivity extends ActionBarActivity implements CheatListFr
         Reachability.registerReachability(this);
         Mint.initAndStartSession(this, Konstanten.SPLUNK_MINT_API_KEY);
 
-        Tools.initGA(CheatForumActivity.this, tracker, SCREEN_LABEL, cheatObj.getGameName() + " (" + cheatObj.getSystemName() + ")", cheatObj.getCheatTitle());
+        CheatDatabaseApplication.tracker().send(new HitBuilders.EventBuilder("ui", cheatObj.getGameName() + " (" + cheatObj.getSystemName() + ")").setLabel("activity").build());
 
         settings = getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
         editor = settings.edit();
@@ -185,7 +184,8 @@ public class CheatForumActivity extends ActionBarActivity implements CheatListFr
             public void run() {
                 cheatObj = (Cheat) intent.getSerializableExtra("cheatObj");
                 gameObj = (Game) intent.getSerializableExtra("gameObj");
-                Tools.initGA(CheatForumActivity.this, tracker, SCREEN_LABEL, cheatObj.getGameName() + " (" + cheatObj.getSystemName() + ")", cheatObj.getCheatTitle());
+                
+                CheatDatabaseApplication.tracker().send(new HitBuilders.EventBuilder("ui", cheatObj.getGameName() + " (" + cheatObj.getSystemName() + ")").setLabel("activity").build());
             }
         }).start();
 

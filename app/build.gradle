@@ -26,18 +26,8 @@ android {
     }
     productFlavors {
         amazonFlavor {
-            applicationId 'com.cheatdatabase'
-            signingConfig signingConfigs.config
-            targetSdkVersion 22
-            versionCode 15
-            versionName '2.1.1'
         }
         googlePlayFlavor {
-            applicationId 'com.cheatdatabase'
-            signingConfig signingConfigs.config
-            targetSdkVersion 22
-            versionCode 15
-            versionName '2.1.1'
         }
     }
 
@@ -55,6 +45,7 @@ repositories {
         url 'http://swisscodemonkeys.github.io/appbrain-sdk/maven'
     }
     jcenter()
+    mavenCentral()
 }
 
 apt {
@@ -64,17 +55,15 @@ apt {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
     compile files('libs/InMobi-4.5.5.jar')
-    compile files('libs/libGoogleAnalyticsServices.jar')
     compile files('libs/MMSDK-5.3.0.jar')
     compile project(':VPILibrary')
     compile 'com.android.support:appcompat-v7:22.0.0'
     compile 'com.android.support:recyclerview-v7:+'
     compile 'com.google.code.gson:gson:2.3'
     compile 'com.squareup.picasso:picasso:2.3.2'
-    compile 'com.google.android.gms:play-services:6.5.87'
-    compile 'com.cocosw:bottomsheet:0.+@aar'
+    compile 'com.google.android.gms:play-services-analytics:7.5.0'
+    compile 'com.google.android.gms:play-services-ads:7.5.0'
     compile 'com.splunk.mint:mint:4.1'
     compile 'com.appbrain:appbrain-applift-sdk:+'
     compile 'de.greenrobot:eventbus:2.4.0'

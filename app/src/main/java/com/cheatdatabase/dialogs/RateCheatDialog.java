@@ -18,7 +18,6 @@ import com.cheatdatabase.businessobjects.Member;
 import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Tools;
 import com.cheatdatabase.helpers.Webservice;
-import com.google.analytics.tracking.android.Log;
 import com.google.gson.Gson;
 
 /**
@@ -79,7 +78,6 @@ public class RateCheatDialog extends DialogFragment {
                     RateCheatDialogListener activity = (RateCheatDialogListener) getActivity();
                     activity.onFinishRateCheatDialog(fixedRating);
                 } catch (Exception e) {
-                    Log.e(e);
                     Toast.makeText(getActivity(), R.string.no_internet, Toast.LENGTH_SHORT).show();
                     throw e;
                 }

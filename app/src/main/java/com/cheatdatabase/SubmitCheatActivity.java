@@ -25,7 +25,7 @@ import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.helpers.Tools;
 import com.cheatdatabase.helpers.Webservice;
-import com.google.analytics.tracking.android.Tracker;
+import com.google.android.gms.analytics.HitBuilders;
 import com.google.gson.Gson;
 import com.splunk.mint.Mint;
 
@@ -50,8 +50,6 @@ public class SubmitCheatActivity extends ActionBarActivity implements OnClickLis
     private Typeface latoFontBold;
     private Typeface latoFontLight;
 
-    private static final String SCREEN_LABEL = "Submit Cheat Screen";
-    protected Tracker tracker;
     private Toolbar mToolbar;
 
     @Override
@@ -89,7 +87,7 @@ public class SubmitCheatActivity extends ActionBarActivity implements OnClickLis
         latoFontLight = Tools.getFont(getAssets(), Konstanten.FONT_LIGHT);
         latoFontBold = Tools.getFont(getAssets(), Konstanten.FONT_BOLD);
 
-        Tools.initGA(SubmitCheatActivity.this, tracker, SCREEN_LABEL, "Submit Cheat", "Cheat submission form");
+        CheatDatabaseApplication.tracker().send(new HitBuilders.EventBuilder("ui", "Submit Cheat Form").setLabel("activity").build());
     }
 
     @Override
