@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.cheatdatabase" >
+    package="com.cheatdatabase">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -10,6 +10,12 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="com.android.browser.permission.READ_HISTORY_BOOKMARKS" />
+    <uses-permission android:name="com.android.browser.permission.WRITE_HISTORY_BOOKMARKS" />
+    <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT" />
+    <uses-permission android:name="com.android.launcher.permission.UNINSTALL_SHORTCUT" />
+
     <application
         android:name=".CheatDatabaseApplication"
         android:allowBackup="true"
@@ -18,7 +24,7 @@
         android:label="@string/app_name"
         android:launchMode="singleTop"
         android:logo="@drawable/logo_full_centered"
-        android:theme="@style/Theme.Navyblue" >
+        android:theme="@style/Theme.Navyblue">
         <provider
             android:name=".search.SearchSuggestionProvider"
             android:authorities="com.cheatdatabase.search.SearchSuggestionProvider" />
@@ -29,7 +35,7 @@
 
         <activity
             android:name=".MainActivity_"
-            android:label="@string/title_activity_main" >
+            android:label="@string/title_activity_main">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -44,7 +50,7 @@
             android:name=".search.SearchResultsActivity"
             android:label="@string/title_activity_search_result"
             android:logo="@drawable/app_icon_fox"
-            android:parentActivityName=".MainActivity_" >
+            android:parentActivityName=".MainActivity_">
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
@@ -60,7 +66,7 @@
             android:name=".GamesBySystemActivity_"
             android:logo="@drawable/app_icon_fox"
             android:parentActivityName=".MainActivity_"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.app.default_searchable"
                 android:value="com.cheatdatabase.search.SearchResultsActivity" />
@@ -74,7 +80,7 @@
             android:label="@string/title_cheat_list"
             android:logo="@drawable/app_icon_fox"
             android:parentActivityName=".GamesBySystemActivity_"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.cheatdatabase.GamesBySystemActivity_" />
@@ -104,7 +110,7 @@
             android:logo="@drawable/app_icon_fox"
             android:parentActivityName=".handset.cheatview.CheatViewPageIndicator"
             android:uiOptions="splitActionBarWhenNarrow"
-            android:windowSoftInputMode="adjustResize|stateHidden" >
+            android:windowSoftInputMode="adjustResize|stateHidden">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.cheatdatabase.handset.cheatview.CheatViewPageIndicator" />
@@ -115,7 +121,7 @@
         <activity
             android:name=".MemberCheatListActivity"
             android:logo="@drawable/app_icon_fox"
-            android:parentActivityName=".MainActivity_" >
+            android:parentActivityName=".MainActivity_">
             <meta-data
                 android:name="android.app.default_searchable"
                 android:value="com.cheatdatabase.search.SearchResultsActivity" />
@@ -124,7 +130,7 @@
             android:name=".members.cheatview.MemberCheatViewPageIndicator"
             android:logo="@drawable/app_icon_fox"
             android:parentActivityName=".MemberCheatListActivity"
-            android:uiOptions="splitActionBarWhenNarrow" >
+            android:uiOptions="splitActionBarWhenNarrow">
             <meta-data
                 android:name="android.app.default_searchable"
                 android:value="com.cheatdatabase.search.SearchResultsActivity" />
@@ -134,7 +140,7 @@
             android:label="@string/title_cheat_detail"
             android:logo="@drawable/app_icon_fox"
             android:parentActivityName=".CheatListActivity"
-            android:uiOptions="splitActionBarWhenNarrow" >
+            android:uiOptions="splitActionBarWhenNarrow">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".CheatListActivity" />
@@ -147,7 +153,7 @@
             android:label="@string/title_favorite_list"
             android:logo="@drawable/app_icon_fox"
             android:parentActivityName=".MainActivity_"
-            android:theme="@style/Theme.Navyblue" >
+            android:theme="@style/Theme.Navyblue">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.cheatdatabase.MainActivity_" />
@@ -160,7 +166,7 @@
             android:label="@string/title_cheat_detail"
             android:logo="@drawable/app_icon_fox"
             android:theme="@style/Theme.Navyblue"
-            android:uiOptions="splitActionBarWhenNarrow" >
+            android:uiOptions="splitActionBarWhenNarrow">
             <meta-data
                 android:name="android.app.default_searchable"
                 android:value="com.cheatdatabase.search.SearchResultsActivity" />
@@ -198,7 +204,7 @@
 
         <receiver
             android:name="com.appbrain.ReferrerReceiver"
-            android:exported="true" >
+            android:exported="true">
             <intent-filter>
                 <action android:name="com.android.vending.INSTALL_REFERRER" />
             </intent-filter>
@@ -214,7 +220,7 @@
         <!-- Enable background dispatching to improve delivery on non-Google Play devices -->
         <receiver
             android:name="com.google.android.gms.analytics.AnalyticsReceiver"
-            android:enabled="true" >
+            android:enabled="true">
             <intent-filter>
                 <action android:name="com.google.android.gms.analytics.ANALYTICS_DISPATCH" />
             </intent-filter>
@@ -229,7 +235,7 @@
         <receiver
             android:name="com.google.android.gms.analytics.CampaignTrackingReceiver"
             android:enabled="true"
-            android:exported="true" >
+            android:exported="true">
             <intent-filter>
                 <action android:name="com.android.vending.INSTALL_REFERRER" />
             </intent-filter>
@@ -239,6 +245,29 @@
             android:name="com.google.android.gms.analytics.CampaignTrackingService"
             android:enabled="true" />
 
+        <!-- PRESAGE LIBRARY (OGURY ADS) -->
+        <meta-data
+            android:name="presage_key"
+            android:value="264890" />
+        <service android:name="io.presage.services.PresageServiceImp" />
+        <activity
+            android:name="io.presage.activities.PresageActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
+            android:hardwareAccelerated="true"
+            android:label="@string/app_name"
+            android:theme="@style/Presage.Theme.Transparent">
+            <intent-filter>
+                <action android:name="io.presage.intent.action.LAUNCH_WEBVIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <receiver android:name="io.presage.receivers.BootReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.DATE_CHANGED" />
+                <action android:name="io.presage.receivers.BootReceiver.RESTART_SERVICE" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

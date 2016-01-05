@@ -216,10 +216,10 @@ public class SearchResultsActivity extends ActionBarActivity {
             });
         } else {
             if ((gamesFound != null) && (gamesFound.length > 0)) {
-                Set<String> systems = new HashSet<String>();
+                Set<String> systems = new HashSet<>();
+
                 // Get system names
-                for (int i = 0; i < gamesFound.length; i++) {
-                    Game game = gamesFound[i];
+                for (Game game : gamesFound) {
                     systems.add(game.getSystemName());
                 }
 

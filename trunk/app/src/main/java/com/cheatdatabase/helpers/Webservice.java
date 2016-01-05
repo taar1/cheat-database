@@ -1072,7 +1072,7 @@ public class Webservice {
                     }
                 }
                 /*
-				 * Dem Game-Object die korrekte Anzahl Cheat-Objekten zuweisen
+                 * Dem Game-Object die korrekte Anzahl Cheat-Objekten zuweisen
 				 */
                 tmpGame.createCheatCollection(matchingCheats.size());
 
@@ -1382,7 +1382,6 @@ public class Webservice {
         String responseString = getDataAsStringFromServer(Konstanten.BASE_URL_ANDROID + "getGamesBySystemId.php", al);
 
 
-
         Game[] games = null;
         JSONArray jArray = null;
 
@@ -1452,7 +1451,7 @@ public class Webservice {
                 return true;
             }
         } catch (Exception e) {
-            Log.d("ERROR", e.getMessage());
+            Log.e("ERROR", e.getMessage());
             e.getStackTrace();
             return false;
         }

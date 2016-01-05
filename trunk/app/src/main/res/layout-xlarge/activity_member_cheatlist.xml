@@ -28,6 +28,7 @@
         android:layout_height="fill_parent"
         android:cacheColorHint="#00000000"
         android:fadingEdge="vertical"
+        android:fastScrollAlwaysVisible="true"
         android:fastScrollEnabled="true"
         android:scrollbars="vertical"></ListView>
 

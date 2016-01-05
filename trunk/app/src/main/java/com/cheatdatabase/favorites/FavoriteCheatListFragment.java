@@ -171,7 +171,7 @@ public class FavoriteCheatListFragment extends ListFragment {
 //                }
                 Collections.addAll(cheatsArrayList, cheats);
             } else {
-                Log.e("FavoriteCheatListActivity()", "db.getAllFavoritedCheatsByGame() == null");
+                Log.e(TAG, "db.getAllFavoritedCheatsByGame() == null");
             }
 
             gameObj.setCheats(cheats);

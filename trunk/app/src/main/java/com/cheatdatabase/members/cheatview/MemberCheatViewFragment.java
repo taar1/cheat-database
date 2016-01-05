@@ -61,7 +61,7 @@ public class MemberCheatViewFragment extends Fragment implements OnClickListener
     private int biggestHeight;
 
     private Cheat cheatObj;
-    private Cheat[] cheats;
+    private ArrayList<Cheat> cheats;
     // private Game game;
     private int offset;
     public ArrayList<String[]> al_images;
@@ -77,13 +77,13 @@ public class MemberCheatViewFragment extends Fragment implements OnClickListener
 
     private static final String KEY_CONTENT = "MemberCheatViewFragment:Content";
 
-    public static MemberCheatViewFragment newInstance(String content, Cheat[] cheats, int offset) {
+    public static MemberCheatViewFragment newInstance(String content, ArrayList<Cheat> cheats, int offset) {
 
         MemberCheatViewFragment fragment = new MemberCheatViewFragment();
 
         // übergebene Parameter ins Bundle Objekt eintragen
         Bundle arguments = new Bundle();
-        arguments.putSerializable("cheatsObj", cheats);
+        arguments.putSerializable("cheatObj", cheats);
         arguments.putInt("offset", offset);
         fragment.setArguments(arguments);
 
@@ -135,7 +135,7 @@ public class MemberCheatViewFragment extends Fragment implements OnClickListener
 
             member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
 
-            cheatObj = cheats[offset];
+            cheatObj = cheats.get(offset);
             new FetchCheatRatingOnlineBackgroundTask().execute();
 
             mainTable = (TableLayout) ll.findViewById(R.id.tblCheatListMain);
@@ -184,6 +184,7 @@ public class MemberCheatViewFragment extends Fragment implements OnClickListener
             if ((cheatObj.getCheatText() == null) || (cheatObj.getCheatText().length() < 10)) {
                 // if ((isFromSearchResults == true) || (cheat.getCheatText() ==
                 // null) || (cheat.getCheatText().length() < 10)) {
+                progressBar.setVisibility(View.VISIBLE);
                 new FetchCheatTextTask().execute();
             } else {
                 progressBar.setVisibility(View.GONE);
@@ -202,7 +203,7 @@ public class MemberCheatViewFragment extends Fragment implements OnClickListener
     private void getFragmentRelevantData() {
         Bundle arguments = getArguments();
         try {
-            cheats = (Cheat[]) arguments.getSerializable("cheatsObj");
+            cheats = (ArrayList<Cheat>) arguments.getSerializable("cheatObj");
             offset = arguments.getInt("offset");
         } catch (Exception e) {
             offset = 0;
@@ -370,7 +371,6 @@ public class MemberCheatViewFragment extends Fragment implements OnClickListener
 
         @Override
         protected Void doInBackground(Void... params) {
-            progressBar.setVisibility(View.VISIBLE);
             fullCheatText = Webservice.getCheatById(cheatObj.getCheatId());
 
             return null;
@@ -379,6 +379,7 @@ public class MemberCheatViewFragment extends Fragment implements OnClickListener
         @Override
         protected void onPostExecute(Void result) {
             super.onPostExecute(result);
+
             if (fullCheatText.substring(0, 1).equalsIgnoreCase("2")) {
                 cheatObj.setWalkthroughFormat(true);
             }
@@ -414,10 +415,11 @@ public class MemberCheatViewFragment extends Fragment implements OnClickListener
         }
     }
 
-    private class LoadScreenshotsInBackgroundTask extends AsyncTask<Void, Void, Void> {
+    private class LoadScreenshotsInBackgroundTask extends AsyncTask<Void, Void, Bitmap[]> {
+        Bitmap bms[];
 
         @Override
-        protected Void doInBackground(Void... params) {
+        protected Bitmap[] doInBackground(Void... params) {
             try {
                 Screenshot[] screens = cheatObj.getScreens();
 
@@ -429,7 +431,7 @@ public class MemberCheatViewFragment extends Fragment implements OnClickListener
                     myRemoteImages[i] = Konstanten.SCREENSHOT_ROOT_WEBDIR + "image.php?width=150&image=/cheatpics/" + filename;
                 }
 
-                Bitmap bms[] = new Bitmap[imageViews.length];
+                bms = new Bitmap[imageViews.length];
                 for (int i = 0; i < imageViews.length; i++) {
 
 					/*
@@ -442,7 +444,7 @@ public class MemberCheatViewFragment extends Fragment implements OnClickListener
                     InputStream is = conn.getInputStream();
                     /* Buffered is always good for a performance plus. */
                     BufferedInputStream bis = new BufferedInputStream(is);
-					/* Decode url-data to a bitmap. */
+                    /* Decode url-data to a bitmap. */
                     Bitmap bm = BitmapFactory.decodeStream(bis);
                     bis.close();
                     is.close();
@@ -455,26 +457,28 @@ public class MemberCheatViewFragment extends Fragment implements OnClickListener
 
                 }
 
-				/*
-				 * Apply the Bitmap to the ImageView that will be returned.
-				 */
-                for (int i = 0; i < imageViews.length; i++) {
-                    imageViews[i] = new ImageView(ca);
-                    imageViews[i].setScaleType(ImageView.ScaleType.MATRIX);
-                    imageViews[i].setLayoutParams(new Gallery.LayoutParams(300, biggestHeight));
-                    imageViews[i].setImageBitmap(bms[i]);
-                }
 
             } catch (IOException e) {
                 Log.e(MemberCheatViewFragment.class.getName(), "Remtoe Image Exception", e);
             }
 
-            return null;
+            return bms;
         }
 
         @Override
-        protected void onPostExecute(Void result) {
-            super.onPostExecute(result);
+        protected void onPostExecute(Bitmap[] bms) {
+            super.onPostExecute(bms);
+
+            /*
+             * Apply the Bitmap to the ImageView that will be returned.
+             */
+            for (int i = 0; i < imageViews.length; i++) {
+                imageViews[i] = new ImageView(ca);
+                imageViews[i].setScaleType(ImageView.ScaleType.MATRIX);
+                imageViews[i].setLayoutParams(new Gallery.LayoutParams(300, biggestHeight));
+                imageViews[i].setImageBitmap(bms[i]);
+            }
+
             progressBar.setVisibility(View.GONE);
             if (cheatObj.getScreens().length <= 1) {
                 tvGalleryInfo.setVisibility(View.GONE);
@@ -531,7 +535,7 @@ public class MemberCheatViewFragment extends Fragment implements OnClickListener
          * 'offset' to the center.
          */
         public float getScale(boolean focused, int offset) {
-			/* Formula: 1 / (2 ^ offset) */
+            /* Formula: 1 / (2 ^ offset) */
             return Math.max(0, 1.0f / (float) Math.pow(2, Math.abs(offset)));
         }
 

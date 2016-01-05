@@ -46,6 +46,9 @@ import com.mopub.mobileads.MoPubView;
 import com.splunk.mint.Mint;
 import com.viewpagerindicator.UnderlinePageIndicator;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 /**
  * Horizontal sliding through cheats submitted by member.
  *
@@ -59,7 +62,7 @@ public class MemberCheatViewPageIndicator extends ActionBarActivity implements R
     private View viewLayout;
     private int pageSelected;
 
-    private Cheat[] cheatObj;
+    private ArrayList<Cheat> cheatObj;
     private Cheat visibleCheat;
     private Game gameObj;
 
@@ -95,15 +98,17 @@ public class MemberCheatViewPageIndicator extends ActionBarActivity implements R
         init();
 
         try {
-            cheatObj = new Gson().fromJson(settings.getString(Konstanten.PREFERENCES_TEMP_CHEAT_ARRAY_OBJECT_VIEW, null), Cheat[].class);
+            Cheat[] cheatObjX = new Gson().fromJson(settings.getString(Konstanten.PREFERENCES_TEMP_CHEAT_ARRAY_OBJECT_VIEW, null), Cheat[].class);
+
+            cheatObj = new ArrayList<Cheat>(Arrays.asList(cheatObjX));
+
             if (cheatObj == null) {
-//                cheatObj = new Gson().fromJson(intent.getStringExtra("cheatsObj"), Cheat[].class);
-                cheatObj = (Cheat[]) intent.getSerializableExtra("cheatsObj");
+                cheatObj = (ArrayList<Cheat>) intent.getSerializableExtra("cheatObj");
             }
             pageSelected = intent.getIntExtra("selectedPage", 0);
             activePage = pageSelected;
 
-            visibleCheat = cheatObj[pageSelected];
+            visibleCheat = cheatObj.get(pageSelected);
             gameObj = new Game();
             gameObj.setCheat(visibleCheat);
             gameObj.setGameId(visibleCheat.getGameId());
@@ -143,9 +148,9 @@ public class MemberCheatViewPageIndicator extends ActionBarActivity implements R
 
     private void initialisePaging() {
 
-        String[] cheatTitles = new String[cheatObj.length];
-        for (int i = 0; i < cheatObj.length; i++) {
-            cheatTitles[i] = cheatObj[i].getCheatTitle();
+        String[] cheatTitles = new String[cheatObj.size()];
+        for (int i = 0; i < cheatObj.size(); i++) {
+            cheatTitles[i] = cheatObj.get(i).getCheatTitle();
         }
 
         try {
@@ -171,7 +176,7 @@ public class MemberCheatViewPageIndicator extends ActionBarActivity implements R
                     activePage = position;
 
                     try {
-                        visibleCheat = cheatObj[position];
+                        visibleCheat = cheatObj.get(position);
 //                        setShareText(visibleCheat);
                         invalidateOptionsMenu();
 
@@ -391,7 +396,7 @@ public class MemberCheatViewPageIndicator extends ActionBarActivity implements R
     @Override
     public void onFinishRateCheatDialog(int selectedRating) {
         visibleCheat.setMemberRating(selectedRating);
-        cheatObj[activePage].setMemberRating(selectedRating);
+        cheatObj.get(activePage).setMemberRating(selectedRating);
         invalidateOptionsMenu();
         Toast.makeText(this, R.string.rating_inserted, Toast.LENGTH_SHORT).show();
     }
@@ -420,7 +425,7 @@ public class MemberCheatViewPageIndicator extends ActionBarActivity implements R
     }
 
     public void setRating(int position, float rating) {
-        cheatObj[position].setMemberRating(rating);
+        cheatObj.get(position).setMemberRating(rating);
         invalidateOptionsMenu();
     }
 }

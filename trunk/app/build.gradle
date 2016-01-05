@@ -4,18 +4,18 @@ apply plugin: 'com.neenbedankt.android-apt'
 android {
     signingConfigs {
         config {
-            storeFile file('C:/Users/Dominik/Downloads/enature.keystore')
+            storeFile file('C:/Users/taar1/Development/Android/enature.keystore')
             storePassword 'Ocarina2000.'
         }
     }
     compileSdkVersion 21
-    buildToolsVersion "21.1.2"
+    buildToolsVersion '22.0.1'
     defaultConfig {
         applicationId "com.cheatdatabase"
         minSdkVersion 14
-        targetSdkVersion 22
-        versionCode 15
-        versionName "2.1.1"
+        targetSdkVersion 23
+        versionCode 17
+        versionName "2.1.2"
         signingConfig signingConfigs.config
     }
     buildTypes {
@@ -55,21 +55,22 @@ apt {
 }
 
 dependencies {
-    compile files('libs/InMobi-4.5.5.jar')
+    compile files('libs/InMobi-5.1.1.jar')
     compile files('libs/MMSDK-5.3.0.jar')
     compile project(':VPILibrary')
+    compile('com.mopub:mopub-sdk:3.10.0@aar') {
+        transitive = true
+    }
     compile 'com.android.support:appcompat-v7:22.0.0'
-    compile 'com.android.support:recyclerview-v7:+'
+    compile 'com.android.support:recyclerview-v7:22.1.1'
     compile 'com.google.code.gson:gson:2.3'
     compile 'com.squareup.picasso:picasso:2.3.2'
-    compile 'com.google.android.gms:play-services-analytics:7.5.0'
-    compile 'com.google.android.gms:play-services-ads:7.5.0'
+    compile 'com.google.android.gms:play-services-analytics:8.4.0'
+    compile 'com.google.android.gms:play-services-ads:8.4.0'
     compile 'com.splunk.mint:mint:4.1'
     compile 'com.appbrain:appbrain-applift-sdk:+'
     compile 'de.greenrobot:eventbus:2.4.0'
     compile 'org.androidannotations:androidannotations:3.3.2'
     compile 'com.github.navasmdc:MaterialDesign:1.5@aar'
-    compile('com.mopub:mopub-sdk:3.10.0@aar') {
-        transitive = true
-    }
+    compile files('libs/presage-lib-1.7.2-manual.jar')
 }
