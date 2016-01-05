@@ -7,8 +7,6 @@ import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Parcel;
-import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -34,7 +32,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @SuppressLint("SimpleDateFormat")
-public class FavoritesCheatMetaFragment extends Fragment implements OnClickListener, Serializable, Parcelable {
+public class FavoritesCheatMetaFragment extends Fragment implements OnClickListener, Serializable {
 
     public static final String ARG_ITEM_ID = "item_id";
 
@@ -193,16 +191,6 @@ public class FavoritesCheatMetaFragment extends Fragment implements OnClickListe
         }
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        // Parcelable
-    }
-
     private class MetaDataLoaderTask extends AsyncTask<Cheat, Void, Void> {
 
         @Override
@@ -220,7 +208,7 @@ public class FavoritesCheatMetaFragment extends Fragment implements OnClickListe
 
                 submittingMember = cheatObj.getSubmittingMember();
             } catch (Exception e) {
-                Log.e("MetaDataLoader EXCEPTION", e.getMessage() + "");
+                Log.e("Exception", e.getMessage());
             } finally {
                 metaCheat = null;
             }
@@ -240,8 +228,8 @@ public class FavoritesCheatMetaFragment extends Fragment implements OnClickListe
                 llRating.setVisibility(View.VISIBLE);
                 llBuffer4.setVisibility(View.VISIBLE);
 
-                String averageRatingText = String.format(getActivity().getString(R.string.meta_average_rating1, Math.round(cheatObj.getRatingAverage())));
-                averageRatingText += " " + String.format(getActivity().getString(R.string.meta_average_rating2, String.valueOf(cheatObj.getVotes())));
+                String averageRatingText = getActivity().getString(R.string.meta_average_rating1, Math.round(cheatObj.getRatingAverage()));
+                averageRatingText += " " + getActivity().getString(R.string.meta_average_rating2, String.valueOf(cheatObj.getVotes()));
                 tvAverageRatingText.setText(averageRatingText);
             }
 
@@ -298,7 +286,7 @@ public class FavoritesCheatMetaFragment extends Fragment implements OnClickListe
             String newDateStr = dateFormat.format(dateObj);
             tvSubmissionDateText.setText(newDateStr);
         } catch (Exception e) {
-            Log.e("MetaDataLoader onPostExecute EXCEPTION", e.getMessage() + "");
+            Log.e("Exception", e.getMessage());
         }
     }
 

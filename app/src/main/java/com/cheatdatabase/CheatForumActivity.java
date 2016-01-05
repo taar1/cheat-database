@@ -99,7 +99,6 @@ public class CheatForumActivity extends ActionBarActivity implements CheatListFr
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cheat_forum);
 
-//        handleIntent(getIntent());
         cheatObj = (Cheat) getIntent().getSerializableExtra("cheatObj");
         gameObj = (Game) getIntent().getSerializableExtra("gameObj");
 
@@ -184,7 +183,7 @@ public class CheatForumActivity extends ActionBarActivity implements CheatListFr
             public void run() {
                 cheatObj = (Cheat) intent.getSerializableExtra("cheatObj");
                 gameObj = (Game) intent.getSerializableExtra("gameObj");
-                
+
                 CheatDatabaseApplication.tracker().send(new HitBuilders.EventBuilder("ui", cheatObj.getGameName() + " (" + cheatObj.getSystemName() + ")").setLabel("activity").build());
             }
         }).start();

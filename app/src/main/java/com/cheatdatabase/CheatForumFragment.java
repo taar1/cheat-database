@@ -7,8 +7,6 @@ import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.os.Parcel;
-import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.Gravity;
@@ -40,7 +38,8 @@ import com.google.gson.Gson;
 import java.io.Serializable;
 import java.util.Calendar;
 
-public class CheatForumFragment extends Fragment implements OnClickListener, Serializable, Parcelable {
+
+public class CheatForumFragment extends Fragment implements OnClickListener, Serializable {
 
     private LinearLayout llForumMain;
     private TextView tvEmpty;
@@ -364,16 +363,6 @@ public class CheatForumFragment extends Fragment implements OnClickListener, Ser
         imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-
-    }
-
     private class ForumPostTask extends AsyncTask<ForumPost, Void, Void> {
 
         @Override
@@ -409,7 +398,7 @@ public class CheatForumFragment extends Fragment implements OnClickListener, Ser
                     forumThread = Webservice.getForum(cheatObj.getCheatId());
                 }
             } catch (Exception e) {
-                Log.e("CheatForum: BackgroundTask", e.getMessage());
+                Log.e("GetForumPostsTask ERR", e.getLocalizedMessage());
             }
 
             return null;
