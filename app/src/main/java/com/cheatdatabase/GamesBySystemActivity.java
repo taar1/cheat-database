@@ -85,6 +85,7 @@ public class GamesBySystemActivity extends ActionBarActivity implements ActionBa
         init();
         mSwipeRefreshLayout.setRefreshing(true);
 
+
         setTitle(systemObj.getSystemName());
         CheatDatabaseApplication.tracker().send(new HitBuilders.EventBuilder("ui", "loaded").setLabel("GamesBySystemActivity").build());
 

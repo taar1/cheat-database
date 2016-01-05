@@ -52,14 +52,19 @@ public class SearchresultExpandableListAdapter extends BaseExpandableListAdapter
 
     @Override
     public View getChildView(int groupPosition, final int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
-        final Game children = (Game) getChild(groupPosition, childPosition);
+        final Game gameObj = (Game) getChild(groupPosition, childPosition);
+
+        if (gameObj == null) {
+            activity.finish();
+        }
+
         TextView textGameTitle = null;
         TextView textCheatCounter = null;
         if (convertView == null) {
             convertView = inflater.inflate(R.layout.gamesearch_listrow_details, null);
         }
         textGameTitle = (TextView) convertView.findViewById(R.id.text_game_name);
-        textGameTitle.setText(children.getGameName());
+        textGameTitle.setText(gameObj.getGameName());
         textGameTitle.setTypeface(latoFontRegular);
 
         // TODO gleich machen wie bei gamesbystem mit: "10 Cheats" (nicht:
@@ -67,13 +72,14 @@ public class SearchresultExpandableListAdapter extends BaseExpandableListAdapter
         textCheatCounter = (TextView) convertView.findViewById(R.id.text_cheat_counter);
         textCheatCounter.setText(R.string.cheats_count);
         textCheatCounter.setTypeface(latoFontLight);
-        textCheatCounter.append(" " + children.getCheatsCount());
+        textCheatCounter.append(" " + gameObj.getCheatsCount());
         convertView.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (Reachability.reachability.isReachable) {
                     Intent explicitIntent = new Intent(activity, CheatListActivity.class);
-                    explicitIntent.putExtra("gameObj", children);
+                    explicitIntent.putExtra("gameObj", gameObj);
+
                     activity.startActivity(explicitIntent);
                 } else {
                     Toast.makeText(activity, R.string.no_internet, Toast.LENGTH_SHORT).show();

@@ -202,7 +202,7 @@ public class MemberCheatListActivity extends ActionBarListActivity implements Ad
                         }
                     });
                 } catch (Exception e) {
-                    Log.e("MemberCheatList:getCheats()", "Webservice.getCheatList() == null");
+                    Log.e("ERROR", "Webservice.getCheatList() == null");
                     error(R.string.err_no_member_data);
                 }
 
@@ -224,7 +224,7 @@ public class MemberCheatListActivity extends ActionBarListActivity implements Ad
                         cheats[i].setCheatText("");
                     }
                 }
-                explicitIntent.putExtra("cheatsObj", cheats);
+                explicitIntent.putExtra("cheatObj", cheats);
             } else {
                 // Save to SharedPreferences if array too big
                 editor.putString(Konstanten.PREFERENCES_TEMP_CHEAT_ARRAY_OBJECT_VIEW, new Gson().toJson(cheats));

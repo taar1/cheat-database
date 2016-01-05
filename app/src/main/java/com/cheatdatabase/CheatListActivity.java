@@ -184,26 +184,12 @@ public class CheatListActivity extends ActionBarActivity implements CheatListFra
 
             @Override
             public void run() {
-                // gameObj = new
-                // Gson().fromJson(settings.getString(Konstanten.PREFERENCES_TEMP_GAME_OBJECT_VIEW,
-                // null), Game.class);
-                // if (gameObj == null) {
-                // gameObj = (Game) intent.getSerializableExtra("gameObj");
-                // }
                 gameObj = (Game) intent.getSerializableExtra("gameObj");
 
                 CheatDatabaseApplication.tracker().send(new HitBuilders.EventBuilder("ui", "Cheat List").setLabel("activity").build());
 
                 getSupportActionBar().setTitle(gameObj.getGameName());
                 getSupportActionBar().setSubtitle(gameObj.getSystemName());
-                runOnUiThread(new Runnable() {
-
-                    @Override
-                    public void run() {
-                    }
-
-                });
-
             }
         }).start();
 

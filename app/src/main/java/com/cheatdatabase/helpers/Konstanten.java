@@ -2,8 +2,8 @@ package com.cheatdatabase.helpers;
 
 public class Konstanten {
 
-    public final static String CURRENT_VERSION = "2.1.1";
-    public final static int DEFAULT_TOTAL_CHEATS = 144700;
+    public final static String CURRENT_VERSION = "2.1.2";
+    public final static int DEFAULT_TOTAL_CHEATS = 150000;
 
     // URL Konstanten
     public final static String BASE_URL = "http://www.cheat-database.com/";
@@ -75,6 +75,7 @@ public class Konstanten {
     public final static String MDOTM_API_KEY = "ee6de4fe5b8fde6a06f161973f712ded";
     public final static String AMAZON_API_KEY = "cf2064f5f51249ecbd6b86f6c86d382a";
     public final static String SPLUNK_MINT_API_KEY = "b19b084a";
+    public final static String OGURY_API_KEY = "264890";
 
     // SD CARD SETTINGS
     public final static String APP_PATH_SD_CARD = "/Android/data/com.cheatdatabase/files/";

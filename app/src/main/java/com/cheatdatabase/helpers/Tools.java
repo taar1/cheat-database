@@ -426,13 +426,13 @@ public class Tools {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         try {
             cal.setTime(sdf.parse(unformatedDate));
+            Date date = cal.getTime();
+            java.text.DateFormat dateFormat = DateFormat.getDateFormat(context);
+            return dateFormat.format(date);
         } catch (ParseException e) {
-            e.printStackTrace();
+            Log.e("Error", e.getLocalizedMessage());
         }
-
-        Date date = cal.getTime();
-        java.text.DateFormat dateFormat = DateFormat.getDateFormat(context);
-        return dateFormat.format(date);
+        return unformatedDate;
     }
 
     public static Typeface getFont(AssetManager assetManager, String fontName) {

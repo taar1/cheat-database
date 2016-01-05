@@ -22,7 +22,9 @@
         <ExpandableListView
             android:id="@+id/listView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"></ExpandableListView>
+            android:layout_height="wrap_content"
+            android:fastScrollAlwaysVisible="true"
+            android:fastScrollEnabled="true"></ExpandableListView>
     </RelativeLayout>
 
     <LinearLayout
@@ -54,7 +56,7 @@
             android:paddingBottom="30sp"
             android:text="@string/error_nothing_found_text"
             android:textAppearance="@style/NormalText" />
-        
+
     </LinearLayout>
 
 </LinearLayout>

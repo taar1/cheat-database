@@ -61,6 +61,9 @@ import org.androidannotations.annotations.ViewById;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.presage.Presage;
+import io.presage.utils.IADHandler;
+
 @EActivity(R.layout.activity_main)
 public class MainActivity extends ActionBarActivity implements ActionBar.OnNavigationListener {
 
@@ -128,23 +131,22 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
 
         AppBrain.init(this);
 
-//        member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
-
         // TODO FIXME - find out where this part was before and re-add it.
         FragmentManager frgManager = getFragmentManager();
         frgManager.beginTransaction().replace(R.id.content_frame, SystemListFragment_.builder().build()).commit();
 
 
-        Log.d(TAG, "XXXX mFragmentId: " + mFragmentId);
+        Log.d(TAG, "mFragmentId: " + mFragmentId);
 
         // Create Drawer
-        // TODO
-        // TODO
-        // TODO
         // TODO
         // TODO hier noch savedInstance speichern/holen (die ID vom drawerr item beim anklicken)
         // damit das zuletzt aktive fragment wieder angezeigt wird, wenn man auf "back" klickt.
         createNavigationDrawer();
+
+        // PRESAGE ADS (http://admin.ogury.co/docs/library_android?api_key=264890)
+        Presage.getInstance().setContext(this.getBaseContext());
+        Presage.getInstance().start();
     }
 
 //    @Override
@@ -188,6 +190,28 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
         Log.d(TAG, "ON RESUME");
 //        selectItem(settings.getInt(Konstanten.PREFERENCES_SELECTED_DRAWER_FRAGMENT_ID, 1));
         member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
+
+        // OGURY ADS START
+        Presage.getInstance().adToServe("interstitial", new IADHandler() {
+
+            @Override
+            public void onAdNotFound() {
+                Log.i("PRESAGE", "ad not found");
+                // can probably be deleted
+                tools.loadAd(mAdView, getString(R.string.screen_type));
+            }
+
+            @Override
+            public void onAdFound() {
+                Log.i("PRESAGE", "ad found");
+            }
+
+            @Override
+            public void onAdClosed() {
+                Log.i("PRESAGE", "ad closed");
+            }
+        });
+        // OGURY ADS END
     }
 
     @Override

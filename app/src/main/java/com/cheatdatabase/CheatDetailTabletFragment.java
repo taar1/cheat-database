@@ -48,6 +48,7 @@ import java.io.InputStream;
 import java.io.Serializable;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.ArrayList;
 
 /**
  * A fragment representing a single Cheat detail screen. This fragment is either
@@ -83,7 +84,7 @@ public class CheatDetailTabletFragment extends Fragment implements OnClickListen
 
     private ProgressBar progressBar;
 
-    private ImageView[] imageViews;
+    private ArrayList<ImageView> imageViews;
 
     private Cheat cheatObj;
 
@@ -111,6 +112,23 @@ public class CheatDetailTabletFragment extends Fragment implements OnClickListen
     public CheatDetailTabletFragment() {
         // Class needs to be Parcelable. Otherwise it crashes on the tablet when trying to login from cheat detail view.
     }
+
+    protected CheatDetailTabletFragment(Parcel in) {
+        biggestHeight = in.readInt();
+        cheatDetailTabletFragment = in.readParcelable(CheatDetailTabletFragment.class.getClassLoader());
+    }
+
+    public static final Creator<CheatDetailTabletFragment> CREATOR = new Creator<CheatDetailTabletFragment>() {
+        @Override
+        public CheatDetailTabletFragment createFromParcel(Parcel in) {
+            return new CheatDetailTabletFragment(in);
+        }
+
+        @Override
+        public CheatDetailTabletFragment[] newArray(int size) {
+            return new CheatDetailTabletFragment[size];
+        }
+    };
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -197,7 +215,7 @@ public class CheatDetailTabletFragment extends Fragment implements OnClickListen
          */
         if (cheatObj.isScreenshots() == true) {
             biggestHeight = 100; // init value
-            imageViews = new ImageView[cheatObj.getScreens().length];
+            imageViews = new ArrayList<>();
             progressBar.setVisibility(View.VISIBLE);
 
             new LoadScreenshotsInBackgroundTask().execute();
@@ -368,8 +386,10 @@ public class CheatDetailTabletFragment extends Fragment implements OnClickListen
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-
+        dest.writeInt(biggestHeight);
+        dest.writeParcelable(cheatDetailTabletFragment, flags);
     }
+
 
     private class FetchCheatTextTask extends AsyncTask<Void, Void, Void> {
 
@@ -423,10 +443,11 @@ public class CheatDetailTabletFragment extends Fragment implements OnClickListen
         }
     }
 
-    private class LoadScreenshotsInBackgroundTask extends AsyncTask<Void, Void, Void> {
+    private class LoadScreenshotsInBackgroundTask extends AsyncTask<Void, Void, Bitmap[]> {
+        Bitmap bms[];
 
         @Override
-        protected Void doInBackground(Void... params) {
+        protected Bitmap[] doInBackground(Void... params) {
             try {
                 Screenshot[] screens = cheatObj.getScreens();
 
@@ -438,8 +459,8 @@ public class CheatDetailTabletFragment extends Fragment implements OnClickListen
                     myRemoteImages[i] = Konstanten.SCREENSHOT_ROOT_WEBDIR + "image.php?width=150&image=/cheatpics/" + filename;
                 }
 
-                Bitmap bms[] = new Bitmap[imageViews.length];
-                for (int i = 0; i < imageViews.length; i++) {
+                bms = new Bitmap[cheatObj.getScreens().length];
+                for (int i = 0; i < cheatObj.getScreens().length; i++) {
 
 					/*
                      * Open a new URL and get the InputStream to load data from
@@ -463,32 +484,39 @@ public class CheatDetailTabletFragment extends Fragment implements OnClickListen
                     }
                 }
 
-				/*
-				 * Apply the Bitmap to the ImageView that will be returned.
-				 */
-                for (int i = 0; i < imageViews.length; i++) {
-                    imageViews[i] = new ImageView(ca);
-                    imageViews[i].setScaleType(ImageView.ScaleType.MATRIX);
-                    imageViews[i].setLayoutParams(new Gallery.LayoutParams(300, biggestHeight));
-                    imageViews[i].setImageBitmap(bms[i]);
-                }
 
             } catch (IOException e) {
                 Log.e(TAG, "Remote Image Exception: " + e.getMessage());
             }
 
-            return null;
+            return bms;
         }
 
         @Override
-        protected void onPostExecute(Void result) {
-            super.onPostExecute(result);
+        protected void onPostExecute(Bitmap[] bms) {
+            super.onPostExecute(bms);
+
+            /*
+             * Apply the Bitmap to the ImageView that will be returned.
+             */
+            for (int i = 0; i < imageViews.size(); i++) {
+
+                ImageView tmpImg = new ImageView(ca);
+                tmpImg.setScaleType(ImageView.ScaleType.MATRIX);
+                tmpImg.setLayoutParams(new Gallery.LayoutParams(300, biggestHeight));
+                tmpImg.setImageBitmap(bms[i]);
+
+                imageViews.add(tmpImg);
+            }
+
+
             progressBar.setVisibility(View.GONE);
             if (cheatObj.getScreens().length <= 1) {
                 tvGalleryInfo.setVisibility(View.GONE);
             } else {
                 tvGalleryInfo.setVisibility(View.VISIBLE);
             }
+
             buildGallery();
         }
     }
@@ -511,7 +539,7 @@ public class CheatDetailTabletFragment extends Fragment implements OnClickListen
 
         @Override
         public int getCount() {
-            return imageViews.length;
+            return imageViews.size();
             // return cheat.getScreens().length;
         }
 
@@ -531,7 +559,7 @@ public class CheatDetailTabletFragment extends Fragment implements OnClickListen
          */
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            return imageViews[position];
+            return imageViews.get(position);
         }
 
         /**
@@ -539,7 +567,7 @@ public class CheatDetailTabletFragment extends Fragment implements OnClickListen
          * 'offset' to the center.
          */
         public float getScale(boolean focused, int offset) {
-			/* Formula: 1 / (2 ^ offset) */
+            /* Formula: 1 / (2 ^ offset) */
             return Math.max(0, 1.0f / (float) Math.pow(2, Math.abs(offset)));
         }
 
@@ -588,7 +616,7 @@ public class CheatDetailTabletFragment extends Fragment implements OnClickListen
                 btnRateCheat.setImageResource(R.drawable.ic_action_not_important);
             }
         } catch (NullPointerException e) {
-            Log.e(CheatDetailTabletFragment.class.getSimpleName(), e.getLocalizedMessage());
+            Log.e(TAG, e.getLocalizedMessage());
         }
     }
 

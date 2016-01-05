@@ -12,9 +12,8 @@ import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
-import android.os.Parcel;
-import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.NavUtils;
 import android.text.Html;
@@ -55,7 +54,7 @@ import java.io.Serializable;
 import java.net.URL;
 import java.net.URLConnection;
 
-public class FavoritesDetailsFragment extends Fragment implements OnClickListener, Serializable, Parcelable {
+public class FavoritesDetailsFragment extends Fragment implements OnClickListener, Serializable {
 
     private FavoriteCheatListActivity ca;
 
@@ -326,16 +325,6 @@ public class FavoritesDetailsFragment extends Fragment implements OnClickListene
 
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        // Parcelable
-    }
-
     private class FetchCheatRatingOnlineBackgroundTask extends AsyncTask<Void, Void, Void> {
 
         float cheatRating;
@@ -365,10 +354,11 @@ public class FavoritesDetailsFragment extends Fragment implements OnClickListene
         }
     }
 
-    private class LoadScreenshotsInBackgroundTask extends AsyncTask<Void, Void, Void> {
+    private class LoadScreenshotsInBackgroundTask extends AsyncTask<Void, Void, Bitmap[]> {
+        Bitmap bms[];
 
         @Override
-        protected Void doInBackground(Void... params) {
+        protected Bitmap[] doInBackground(Void... params) {
             try {
                 Screenshot[] screens = cheatObj.getScreens();
 
@@ -380,7 +370,7 @@ public class FavoritesDetailsFragment extends Fragment implements OnClickListene
                     myRemoteImages[i] = Konstanten.SCREENSHOT_ROOT_WEBDIR + "image.php?width=150&image=/cheatpics/" + filename;
                 }
 
-                Bitmap bms[] = new Bitmap[imageViews.length];
+                bms = new Bitmap[imageViews.length];
                 for (int i = 0; i < imageViews.length; i++) {
 
 					/*
@@ -405,26 +395,28 @@ public class FavoritesDetailsFragment extends Fragment implements OnClickListene
                     }
                 }
 
-				/*
-				 * Apply the Bitmap to the ImageView that will be returned.
-				 */
-                for (int i = 0; i < imageViews.length; i++) {
-                    imageViews[i] = new ImageView(ca);
-                    imageViews[i].setScaleType(ImageView.ScaleType.MATRIX);
-                    imageViews[i].setLayoutParams(new Gallery.LayoutParams(300, biggestHeight));
-                    imageViews[i].setImageBitmap(bms[i]);
-                }
 
             } catch (IOException e) {
                 Log.e(CheatDetailTabletFragment.class.getName(), "Remtoe Image Exception", e);
             }
 
-            return null;
+            return bms;
         }
 
         @Override
-        protected void onPostExecute(Void result) {
-            super.onPostExecute(result);
+        protected void onPostExecute(Bitmap[] bms) {
+            super.onPostExecute(bms);
+
+            /*
+             * Apply the Bitmap to the ImageView that will be returned.
+             */
+            for (int i = 0; i < imageViews.length; i++) {
+                imageViews[i] = new ImageView(ca);
+                imageViews[i].setScaleType(ImageView.ScaleType.MATRIX);
+                imageViews[i].setLayoutParams(new Gallery.LayoutParams(300, biggestHeight));
+                imageViews[i].setImageBitmap(bms[i]);
+            }
+
             progressBar.setVisibility(View.GONE);
             if (cheatObj.getScreens().length <= 1) {
                 tvGalleryInfo.setVisibility(View.GONE);
@@ -481,7 +473,7 @@ public class FavoritesDetailsFragment extends Fragment implements OnClickListene
          * 'offset' to the center.
          */
         public float getScale(boolean focused, int offset) {
-			/* Formula: 1 / (2 ^ offset) */
+            /* Formula: 1 / (2 ^ offset) */
             return Math.max(0, 1.0f / (float) Math.pow(2, Math.abs(offset)));
         }
 
@@ -523,7 +515,7 @@ public class FavoritesDetailsFragment extends Fragment implements OnClickListene
 
                 @Override
                 public void onClick(DialogInterface dialog, int whichButton) {
-					/* User clicked OK */
+                    /* User clicked OK */
 
                     db = new CheatDatabaseAdapter(ca);
                     db.open();
@@ -531,7 +523,9 @@ public class FavoritesDetailsFragment extends Fragment implements OnClickListene
 
                     Intent upIntent = NavUtils.getParentActivityIntent(ca);
                     if (NavUtils.shouldUpRecreateTask(ca, upIntent)) {
-                        TaskStackBuilder.create(ca).addNextIntentWithParentStack(upIntent).startActivities();
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                            TaskStackBuilder.create(ca).addNextIntentWithParentStack(upIntent).startActivities();
+                        }
                     } else {
                         NavUtils.navigateUpTo(ca, upIntent);
                     }

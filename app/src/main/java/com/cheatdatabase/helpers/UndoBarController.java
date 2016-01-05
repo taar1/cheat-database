@@ -54,7 +54,6 @@ public class UndoBarController {
         mBarView.findViewById(R.id.undobar_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.i("UNDO", "10");
                 // TODO DO UNDO
                 hideUndoBar(false);
                 mUndoListener.onUndo(mUndoToken);
@@ -83,21 +82,16 @@ public class UndoBarController {
 
     public void hideUndoBar(boolean immediate) {
         mHideHandler.removeCallbacks(mHideRunnable);
-        Log.i("UNDO", "1");
         if (immediate) {
-            Log.i("UNDO", "2");
             mBarView.setVisibility(View.GONE);
             mBarView.setAlpha(0);
             mUndoMessage = null;
             mUndoToken = null;
-
         } else {
-            Log.i("UNDO", "3");
             mBarAnimator.cancel();
             mBarAnimator.alpha(0).setDuration(mBarView.getResources().getInteger(android.R.integer.config_shortAnimTime)).setListener(new AnimatorListenerAdapter() {
                 @Override
                 public void onAnimationEnd(Animator animation) {
-                    Log.i("UNDO", "8");
                     mBarView.setVisibility(View.GONE);
                     mUndoMessage = null;
                     mUndoToken = null;
@@ -107,7 +101,6 @@ public class UndoBarController {
     }
 
     public void onSaveInstanceState(Bundle outState) {
-        Log.i("UNDO", "7");
         outState.putCharSequence("undo_message", mUndoMessage);
         outState.putParcelable("undo_token", mUndoToken);
     }
@@ -117,9 +110,7 @@ public class UndoBarController {
             mUndoMessage = savedInstanceState.getCharSequence("undo_message");
             mUndoToken = savedInstanceState.getParcelable("undo_token");
 
-            Log.i("UNDO", "4");
             if (mUndoToken != null || !TextUtils.isEmpty(mUndoMessage)) {
-                Log.i("UNDO", "5");
                 showUndoBar(true, mUndoMessage, mUndoToken);
             }
         }
@@ -128,7 +119,6 @@ public class UndoBarController {
     private Runnable mHideRunnable = new Runnable() {
         @Override
         public void run() {
-            Log.i("UNDO", "6");
             hideUndoBar(false);
         }
     };

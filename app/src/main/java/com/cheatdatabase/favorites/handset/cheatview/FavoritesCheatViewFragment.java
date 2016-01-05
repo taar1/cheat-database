@@ -452,10 +452,11 @@ public class FavoritesCheatViewFragment extends Fragment implements OnClickListe
         }
     }
 
-    private class LoadScreenshotsInBackgroundTask extends AsyncTask<Void, Void, Void> {
+    private class LoadScreenshotsInBackgroundTask extends AsyncTask<Void, Void, Bitmap[]> {
+        Bitmap bms[];
 
         @Override
-        protected Void doInBackground(Void... params) {
+        protected Bitmap[] doInBackground(Void... params) {
             try {
                 Screenshot[] screens = cheatObj.getScreens();
 
@@ -467,7 +468,7 @@ public class FavoritesCheatViewFragment extends Fragment implements OnClickListe
                     myRemoteImages[i] = Konstanten.SCREENSHOT_ROOT_WEBDIR + "image.php?width=150&image=/cheatpics/" + filename;
                 }
 
-                Bitmap bms[] = new Bitmap[imageViews.length];
+                bms = new Bitmap[imageViews.length];
                 for (int i = 0; i < imageViews.length; i++) {
 
 					/*
@@ -478,9 +479,9 @@ public class FavoritesCheatViewFragment extends Fragment implements OnClickListe
                     URLConnection conn = aURL.openConnection();
                     conn.connect();
                     InputStream is = conn.getInputStream();
-					/* Buffered is always good for a performance plus. */
+                    /* Buffered is always good for a performance plus. */
                     BufferedInputStream bis = new BufferedInputStream(is);
-					/* Decode url-data to a bitmap. */
+                    /* Decode url-data to a bitmap. */
                     Bitmap bm = BitmapFactory.decodeStream(bis);
                     bis.close();
                     is.close();
@@ -492,26 +493,28 @@ public class FavoritesCheatViewFragment extends Fragment implements OnClickListe
                     }
                 }
 
-				/*
-				 * Apply the Bitmap to the ImageView that will be returned.
-				 */
-                for (int i = 0; i < imageViews.length; i++) {
-                    imageViews[i] = new ImageView(ca);
-                    imageViews[i].setScaleType(ImageView.ScaleType.MATRIX);
-                    imageViews[i].setLayoutParams(new Gallery.LayoutParams(300, biggestHeight));
-                    imageViews[i].setImageBitmap(bms[i]);
-                }
 
             } catch (IOException e) {
                 Log.e(FavoritesCheatViewFragment.class.getName(), "Remtoe Image Exception", e);
             }
 
-            return null;
+            return bms;
         }
 
         @Override
-        protected void onPostExecute(Void result) {
-            super.onPostExecute(result);
+        protected void onPostExecute(Bitmap[] bms) {
+            super.onPostExecute(bms);
+
+            /*
+             * Apply the Bitmap to the ImageView that will be returned.
+             */
+            for (int i = 0; i < imageViews.length; i++) {
+                imageViews[i] = new ImageView(ca);
+                imageViews[i].setScaleType(ImageView.ScaleType.MATRIX);
+                imageViews[i].setLayoutParams(new Gallery.LayoutParams(300, biggestHeight));
+                imageViews[i].setImageBitmap(bms[i]);
+            }
+
             progressBar.setVisibility(View.GONE);
             if (cheatObj.getScreens().length <= 1) {
                 tvGalleryInfo.setVisibility(View.GONE);
@@ -568,7 +571,7 @@ public class FavoritesCheatViewFragment extends Fragment implements OnClickListe
          * 'offset' to the center.
          */
         public float getScale(boolean focused, int offset) {
-			/* Formula: 1 / (2 ^ offset) */
+            /* Formula: 1 / (2 ^ offset) */
             return Math.max(0, 1.0f / (float) Math.pow(2, Math.abs(offset)));
         }
 
