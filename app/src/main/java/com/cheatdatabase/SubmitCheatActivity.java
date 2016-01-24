@@ -6,7 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -35,7 +35,7 @@ import com.splunk.mint.Mint;
  *
  * @author erbsland
  */
-public class SubmitCheatActivity extends ActionBarActivity implements OnClickListener {
+public class SubmitCheatActivity extends AppCompatActivity implements OnClickListener {
 
     private TextView textCheatTitle;
     private EditText cheatTitle;

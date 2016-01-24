@@ -14,40 +14,30 @@ import com.cheatdatabase.businessobjects.SystemPlatform;
 import com.cheatdatabase.businessobjects.WelcomeMessage;
 import com.google.gson.Gson;
 
-import org.apache.http.Header;
-import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
-import org.apache.http.StatusLine;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.client.methods.HttpUriRequest;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.ByteArrayOutputStream;
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
-import java.util.zip.GZIPInputStream;
 
 /**
- * From:
- * http://www.anddev.org/getting_data_from_the_web_urlconnection_via_http-t351
- * .html
- *
- * @author erbsland
+ * REST Calls class.
  */
 public class Webservice {
+
+    private static final String TAG = Webservice.class.getSimpleName();
 
     /**
      * Holt eine Liste von Games von einem System anhand des übergebenen
@@ -58,32 +48,32 @@ public class Webservice {
      * @return
      */
     public static String searchGamesAsString(String searchString, int systemId) {
-
-        String[] query = {"q", searchString};
-        String[] system = {"s", String.valueOf(systemId)};
-        String[] version = {"v", Konstanten.CURRENT_VERSION};
-
-        ArrayList<String[]> al = new ArrayList<String[]>();
-        al.add(query);
-        al.add(system);
-        al.add(version);
-
-        return getDataAsStringFromServer(Konstanten.BASE_URL_ANDROID + "searchGames.php", al);
+        String ret = null;
+        try {
+            String urlParameters = "q=" + URLEncoder.encode(searchString.trim(), "UTF-8") + "&s=" + URLEncoder.encode(String.valueOf(systemId), "UTF-8") + "&v=" + URLEncoder.encode(Konstanten.CURRENT_VERSION, "UTF-8");
+            ret = excutePost(Konstanten.BASE_URL_ANDROID + "searchGames.php", urlParameters);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return ret;
     }
 
-    /*
-     * Searches for games
+    /**
+     * Search for Games and return a JSON String.
+     *
+     * @param searchString
+     * @return
      */
     public static String searchGamesAsString(String searchString) {
+        String ret = null;
+        try {
+            String urlParameters = "q=" + URLEncoder.encode(searchString.trim(), "UTF-8") + "&v=" + URLEncoder.encode(Konstanten.CURRENT_VERSION, "UTF-8");
+            ret = excutePost(Konstanten.BASE_URL_ANDROID + "searchGames.php", urlParameters);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
 
-        String[] query = {"q", searchString};
-        String[] version = {"v", Konstanten.CURRENT_VERSION};
-
-        ArrayList<String[]> al = new ArrayList<String[]>();
-        al.add(query);
-        al.add(version);
-
-        return getDataAsStringFromServer(Konstanten.BASE_URL_ANDROID + "searchGames.php", al);
+        return ret;
     }
 
     /**
@@ -93,24 +83,24 @@ public class Webservice {
      * @return
      */
     public static int sendLoginData(String email) {
-
         int responseCode = R.string.err_email_invalid;
 
         if (Tools.isEmailValid(email) == true) {
-            String[] arr_email = {"email", email};
+            String urlParameters = null;
+            try {
+                urlParameters = "email=" + URLEncoder.encode(email, "UTF-8");
+                String response = excutePost(Konstanten.BASE_URL_ANDROID + "sendLoginData.php", urlParameters);
 
-            ArrayList<String[]> al = new ArrayList<String[]>();
-            al.add(arr_email);
-
-            String response = getDataAsStringFromServer(Konstanten.BASE_URL_ANDROID + "sendLoginData.php", al);
-
-            if (response.equalsIgnoreCase("ok")) {
-                responseCode = R.string.login_sent_ok;
-            } else if (response.equalsIgnoreCase("no_user_found")) {
-                responseCode = R.string.err_email_user_not_found;
-            } else {
-                // invalid_email
-                responseCode = R.string.err_email_invalid;
+                if (response.equalsIgnoreCase("ok")) {
+                    responseCode = R.string.login_sent_ok;
+                } else if (response.equalsIgnoreCase("no_user_found")) {
+                    responseCode = R.string.err_email_user_not_found;
+                } else {
+                    // invalid_email
+                    responseCode = R.string.err_email_invalid;
+                }
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
             }
 
         } else {
@@ -127,15 +117,15 @@ public class Webservice {
      * @return
      */
     public static String universalGameSearch(String searchString) {
+        String ret = null;
+        try {
+            String urlParameters = "q=" + URLEncoder.encode(searchString.trim(), "UTF-8") + "&v=" + URLEncoder.encode(Konstanten.CURRENT_VERSION, "UTF-8");
+            ret = excutePost(Konstanten.BASE_URL_ANDROID + "universalGameSearch.php", urlParameters);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
 
-        String[] query = {"q", searchString};
-        String[] version = {"v", Konstanten.CURRENT_VERSION};
-
-        ArrayList<String[]> al = new ArrayList<String[]>();
-        al.add(query);
-        al.add(version);
-
-        return getDataAsStringFromServer(Konstanten.BASE_URL_ANDROID + "universalGameSearch.php", al);
+        return ret;
     }
 
     /**
@@ -147,20 +137,15 @@ public class Webservice {
      * @return
      */
     public static String getCheatListAsString(int gameId, int memberId) {
-
-        String[] param2 = {"memberId", "0"};
-        if (memberId > 0) {
-            param2[1] = String.valueOf(memberId);
-        }
-        String[] param1 = {"gameId", String.valueOf(gameId)};
-
-        ArrayList<String[]> al = new ArrayList<String[]>();
-        al.add(param1);
-        if (param2 != null) {
-            al.add(param2);
+        String ret = null;
+        try {
+            String urlParameters = "memberId=" + URLEncoder.encode(String.valueOf(memberId), "UTF-8") + "&gameId=" + URLEncoder.encode(String.valueOf(gameId), "UTF-8");
+            ret = excutePost(Konstanten.BASE_URL_ANDROID + "getCheatsAndRatingByGameId.php", urlParameters);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
         }
 
-        return getDataAsStringFromServer(Konstanten.BASE_URL_ANDROID + "getCheatsAndRatingByGameId.php", al);
+        return ret;
     }
 
     /**
@@ -171,15 +156,15 @@ public class Webservice {
      * @return
      */
     public static String getCheatTitleListAsString(int gameId) {
+        String ret = null;
+        try {
+            String urlParameters = "gameId=" + URLEncoder.encode(String.valueOf(gameId), "UTF-8") + "&loadContent=" + URLEncoder.encode("1", "UTF-8");
+            ret = excutePost(Konstanten.BASE_URL_ANDROID + "getCheatTitlesByGameId.php", urlParameters);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
 
-        String[] param = {"gameId", String.valueOf(gameId)};
-        String[] loadContent = {"loadContent", "1"};
-
-        ArrayList<String[]> al = new ArrayList<String[]>();
-        al.add(param);
-        al.add(loadContent);
-
-        return getDataAsStringFromServer(Konstanten.BASE_URL_ANDROID + "getCheatTitlesByGameId.php", al);
+        return ret;
     }
 
     /**
@@ -198,14 +183,8 @@ public class Webservice {
 
         try {
             if (Tools.isEmailValid(email) == true) {
-                String[] param1 = {"username", username};
-                String[] param2 = {"email", email};
-
-                ArrayList<String[]> al = new ArrayList<String[]>();
-                al.add(param1);
-                al.add(param2);
-
-                String responseString = getDataAsStringFromServer(Konstanten.BASE_URL_ANDROID + "register.php", al);
+                String urlParameters = "username=" + URLEncoder.encode(username, "UTF-8") + "&email=" + URLEncoder.encode(email, "UTF-8");
+                String responseString = excutePost(Konstanten.BASE_URL_ANDROID + "register.php", urlParameters);
 
                 if (responseString.length() > 1) {
                     JSONObject jsonObject = null;
@@ -235,11 +214,9 @@ public class Webservice {
                 // Email invalid
                 member.setErrorCode(1);
             }
-        } catch (JSONException e) {
-            Log.e("register", "JSON Parsing Error: " + e.getMessage());
-            member.setErrorCode(4);
-        } catch (Exception ee) {
-            Log.e("register", "General exception: " + ee.getMessage());
+        } catch (JSONException | UnsupportedEncodingException e) {
+            Log.e(TAG, "JSONException | UnsupportedEncodingException: " + e.getMessage());
+            e.printStackTrace();
             member.setErrorCode(4);
         }
 
@@ -256,29 +233,19 @@ public class Webservice {
      */
     public static Member login(String username, String password) {
 
+        String responseString = null;
+        Member member = null;
         String password_md5 = password.trim();
+
         try {
             // MD5 Hash vom Passwort generieren
             password_md5 = AeSimpleMD5.MD5(password);
-        } catch (NoSuchAlgorithmException e1) {
-            e1.printStackTrace();
-        } catch (UnsupportedEncodingException e1) {
+            String urlParameters = "username=" + URLEncoder.encode(username, "UTF-8") +
+                    "&password=" + URLEncoder.encode(password_md5, "UTF-8");
+            responseString = excutePost(Konstanten.BASE_URL_ANDROID + "login_md5.php", urlParameters);
+        } catch (NoSuchAlgorithmException | UnsupportedEncodingException e1) {
             e1.printStackTrace();
         }
-        String[] param1 = {"username", username};
-        String[] param2 = {"password", password_md5};
-
-        ArrayList<String[]> al = new ArrayList<String[]>();
-        al.add(param1);
-        al.add(param2);
-
-        String responseString = null;
-        try {
-            responseString = getDataAsStringFromServer(Konstanten.BASE_URL_ANDROID + "login_md5.php", al);
-        } catch (Exception e) {
-            Log.e("getDataAsStringFromServer failed", e.getLocalizedMessage());
-        }
-        Member member = null;
 
         // 0 = Fehler beim Login
         if (responseString != null) {
@@ -310,10 +277,8 @@ public class Webservice {
                     Log.e("login", "JSON Parsing Error: " + e);
                 }
             }
-
         } else {
             Log.d("responseString is NULL", "0");
-
         }
 
         return member;
@@ -330,18 +295,18 @@ public class Webservice {
      * PocketChange
      */
     public static int insertCheat(int memberId, int gameId, String cheatTitle, String cheatText) {
-        String[] param1 = {"memberId", String.valueOf(memberId)};
-        String[] param2 = {"gameId", String.valueOf(gameId)};
-        String[] param3 = {"cheatTitle", cheatTitle};
-        String[] param4 = {"cheatText", cheatText};
+        int ret = 0;
+        try {
+            String urlParameters = "memberId=" + URLEncoder.encode(String.valueOf(memberId), "UTF-8") +
+                    "&gameId=" + URLEncoder.encode(String.valueOf(gameId), "UTF-8") +
+                    "&cheatTitle=" + URLEncoder.encode(cheatTitle, "UTF-8") +
+                    "&cheatText=" + URLEncoder.encode(cheatText, "UTF-8");
+            ret = Integer.parseInt(excutePost(Konstanten.BASE_URL_ANDROID + "submitCheat.php", urlParameters));
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
 
-        ArrayList<String[]> al = new ArrayList<String[]>();
-        al.add(param1);
-        al.add(param2);
-        al.add(param3);
-        al.add(param4);
-
-        return Integer.parseInt(getDataAsStringFromServer(Konstanten.BASE_URL_ANDROID + "submitCheat.php", al));
+        return ret;
     }
 
     /**
@@ -353,17 +318,14 @@ public class Webservice {
      * @param forumPost
      */
     public static void insertForum(int cheatId, int memberId, String password, String forumPost) {
-        SendHTTPPostData send = new SendHTTPPostData();
-        Map<String, String> vars = new HashMap<String, String>();
-        vars.put("cid", String.valueOf(cheatId));
-        vars.put("mid", String.valueOf(memberId));
-        vars.put("pw", password);
-        vars.put("forumpost", forumPost);
-
-        send.parametrosHttp(Konstanten.BASE_URL_ANDROID + "insertForum.php", vars);
-        send.go();
+        String urlParameters = null;
+        try {
+            urlParameters = "mid=" + URLEncoder.encode(String.valueOf(memberId), "UTF-8") + "&cid=" + URLEncoder.encode(String.valueOf(cheatId), "UTF-8") + "&password=" + URLEncoder.encode(password, "UTF-8") + "&forumpost=" + URLEncoder.encode(forumPost, "UTF-8");
+            excutePost(Konstanten.BASE_URL_ANDROID + "insertForum.php", urlParameters);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
     }
-
 
     /**
      * Bewertet einen Cheat. Wenn noch kein Benutzerkonto eingerichtet wurde,
@@ -377,17 +339,15 @@ public class Webservice {
      * @return 1 = INSERT, 2 = UPDATE
      */
     public static int rateCheat(int memberId, int cheatId, int rating) {
+        int ret = 0;
+        try {
+            String urlParameters = "mid=" + URLEncoder.encode(String.valueOf(memberId), "UTF-8") + "&cheatId=" + URLEncoder.encode(String.valueOf(cheatId), "UTF-8") + "&rating=" + URLEncoder.encode(String.valueOf(rating), "UTF-8");
+            ret = Integer.parseInt(excutePost(Konstanten.BASE_URL_ANDROID + "rateCheatWithoutPw.php", urlParameters));
+        } catch (UnsupportedEncodingException e) {
+            Log.e(TAG, e.getLocalizedMessage());
+        }
 
-        String[] param1 = {"mid", String.valueOf(memberId)};
-        String[] param3 = {"cheatId", String.valueOf(cheatId)};
-        String[] param4 = {"rating", String.valueOf(rating)};
-
-        ArrayList<String[]> al = new ArrayList<String[]>();
-        al.add(param1);
-        al.add(param3);
-        al.add(param4);
-
-        return Integer.parseInt(getDataAsStringFromServer(Konstanten.BASE_URL_ANDROID + "rateCheatWithoutPw.php", al));
+        return ret;
     }
 
     /**
@@ -398,16 +358,16 @@ public class Webservice {
      * @return int (1-10)
      */
     public static float getCheatRatingByMemberId(int memberId, int cheatId) {
+        float ret = 0;
+        try {
+            String urlParameters = "cheatId=" + URLEncoder.encode(String.valueOf(cheatId), "UTF-8") + "&memberId=" + URLEncoder.encode(String.valueOf(memberId), "UTF-8");
+            // Return Value 1-10
+            ret = Float.parseFloat(excutePost(Konstanten.BASE_URL_ANDROID + "getRatingByMemberId.php", urlParameters));
+        } catch (UnsupportedEncodingException e) {
+            Log.e(TAG, e.getLocalizedMessage());
+        }
 
-        String[] param1 = {"memberId", String.valueOf(memberId)};
-        String[] param2 = {"cheatId", String.valueOf(cheatId)};
-
-        ArrayList<String[]> al = new ArrayList<String[]>();
-        al.add(param1);
-        al.add(param2);
-
-        // Value 1-10
-        return Float.parseFloat(getDataAsStringFromServer(Konstanten.BASE_URL_ANDROID + "getRatingByMemberId.php", al));
+        return ret;
     }
 
     /**
@@ -417,17 +377,13 @@ public class Webservice {
      * @return Array(String[Filename, Filegrüsse])
      */
     public static ArrayList<String[]> getImageListByCheatId(int cheatId) {
-
-        String[] param = {"cheatId", String.valueOf(cheatId)};
-        ArrayList<String[]> alx = new ArrayList<String[]>();
-        alx.add(param);
-
-        String responseString = getDataAsStringFromServer(Konstanten.BASE_URL_ANDROID + "getImagesByCheatId.php", alx);
-
         JSONArray jsonArray = null;
         ArrayList<String[]> al = null;
 
         try {
+            String urlParameters = "cheatId=" + URLEncoder.encode(String.valueOf(cheatId), "UTF-8");
+            String responseString = excutePost(Konstanten.BASE_URL_ANDROID + "getImagesByCheatId.php", urlParameters);
+
             jsonArray = new JSONArray(responseString);
             al = new ArrayList<String[]>(jsonArray.length());
 
@@ -443,57 +399,13 @@ public class Webservice {
                 al.add(screenshot);
             }
 
-        } catch (JSONException e) {
-            Log.e("getImageListByCheatId", "JSON Parsing Error: " + e);
+        } catch (JSONException | UnsupportedEncodingException e) {
+            Log.e(TAG, "JSONException | UnsupportedEncodingException: " + e.getLocalizedMessage());
         }
 
         return al;
     }
 
-    /**
-     * Holt drei der 20 neusten Cheats zufüllig aus der Datenbank und liefert
-     * sie als Cheat-Array zurück.
-     *
-     * @return
-     */
-    // public static Cheat[] getNewCheats() {
-    // int ANZAHL = 3;
-    // String newCheats =
-    // query(Konstanten.BASE_URL_ANDROID + "getNewCheats.php");
-    //
-    // Cheat[] cheats = new Cheat[ANZAHL];
-    //
-    // JSONArray jArray;
-    // try {
-    //
-    // jArray = new JSONArray(newCheats);
-    //
-    // for (int i = 0; i < ANZAHL; i++) {
-    //
-    // JSONObject jsonObject = jArray.getJSONObject(i);
-    //
-    // int gameIdValue = jsonObject.getInt("gid");
-    // int cheatIdValue = jsonObject.getInt("cid");
-    // String gameNameValue = jsonObject.getString("name");
-    // String titleValue = jsonObject.getString("title");
-    // String systemValue = jsonObject.getString("system");
-    //
-    // Cheat tmpCheat = new Cheat();
-    // tmpCheat.setGameId(gameIdValue);
-    // tmpCheat.setCheatId(cheatIdValue);
-    // tmpCheat.setGameName(gameNameValue);
-    // tmpCheat.setCheatTitle(titleValue);
-    // tmpCheat.setSystemName(systemValue);
-    //
-    // cheats[i] = tmpCheat;
-    // }
-    //
-    // } catch (JSONException e) {
-    // Log.e("getNewCheats", "JSON Parsing Error: " + e);
-    // }
-    //
-    // return cheats;
-    // }
 
     /**
      * Holt drei der 20 neusten Cheats zufüllig aus der Datenbank und liefert
@@ -503,7 +415,7 @@ public class Webservice {
      */
     public static Cheat[] getInitialInformation() {
         int ANZAHL = 3;
-        String newCheats = query(Konstanten.BASE_URL_ANDROID + "getNewAndTotalCheats.php");
+        String newCheats = executeGet(Konstanten.BASE_URL_ANDROID + "getNewAndTotalCheats.php");
 
         Cheat[] cheats = new Cheat[ANZAHL];
 
@@ -533,14 +445,14 @@ public class Webservice {
             }
 
         } catch (JSONException e) {
-            Log.e("getNewCheats", "JSON Parsing Error: " + e);
+            Log.e(TAG, "JSONException: " + e.getLocalizedMessage());
         }
 
         return cheats;
     }
 
     public static String serverStatus() {
-        return query("http://www.e-nature.ch/android/serverstatus");
+        return executeGet("http://www.e-nature.ch/android/serverstatus");
     }
 
     /**
@@ -548,7 +460,7 @@ public class Webservice {
      * Totale Anzahl Cheats - 3 neuste Cheats - Anzahl Games pro System
      */
     public static void getInitialData(SharedPreferences settings) {
-        String newCheats = query(Konstanten.BASE_URL_ANDROID + "getInitialData.php");
+        String newCheats = executeGet(Konstanten.BASE_URL_ANDROID + "getInitialData.php");
 
         Gson gson = new Gson();
         Cheat[] cheats;
@@ -612,52 +524,8 @@ public class Webservice {
 
             editor.commit();
         } catch (JSONException e) {
-            Log.e("getInitialData", "JSON Parsing Error: " + e);
+            Log.e(TAG, "JSONException: " + e.getLocalizedMessage());
         }
-    }
-
-    /**
-     * Aufrufen einer parameterlosen URL mit GZIP-Kompression
-     */
-    private static String query(String parameterlessUrl) {
-        String responseString;
-
-        HttpUriRequest request = null;
-        HttpClient httpClient = null;
-        HttpResponse response = null;
-
-        try {
-            request = new HttpGet(parameterlessUrl);
-            request.addHeader("Accept-Encoding", "gzip");
-
-            httpClient = new DefaultHttpClient();
-            response = httpClient.execute(request);
-
-            // GZIP Daten entpacken
-            ByteArrayOutputStream streamBuilder = new ByteArrayOutputStream();
-
-            InputStream instream = response.getEntity().getContent();
-            Header contentEncoding = response.getFirstHeader("Content-Encoding");
-            if (contentEncoding != null && contentEncoding.getValue().equalsIgnoreCase("gzip")) {
-                instream = new GZIPInputStream(instream);
-            }
-            int bytesRead;
-            byte[] tempBuffer = new byte[8192 * 2];
-
-            while ((bytesRead = instream.read(tempBuffer)) != -1) {
-                streamBuilder.write(tempBuffer, 0, bytesRead);
-            }
-
-            responseString = streamBuilder.toString();
-
-        } catch (Exception e) {
-            // URL Incorrect
-            responseString = e.getMessage();
-            Log.e("getDataFromServer ERROR", e.getMessage());
-        }
-
-        return responseString;
-
     }
 
     /**
@@ -743,7 +611,7 @@ public class Webservice {
             }
 
         } catch (JSONException e) {
-            Log.e("getCheatTitleList", "JSON Parsing Error: " + e);
+            Log.e(TAG, "JSONException: " + e.getLocalizedMessage());
         }
 
         return cheats;
@@ -818,7 +686,7 @@ public class Webservice {
             }
 
         } catch (JSONException e) {
-            Log.e("getCheatTitleList", "JSON Parsing Error: " + e);
+            Log.e(TAG, "JSONException: " + e.getLocalizedMessage());
         }
 
         return cheats;
@@ -834,13 +702,10 @@ public class Webservice {
 
         Cheat cheat = new Cheat();
 
-        String[] param = {"cheatId", String.valueOf(cheatId)};
-        ArrayList<String[]> al = new ArrayList<String[]>();
-        al.add(param);
-
-        String metaArray = getDataAsStringFromServer(Konstanten.BASE_URL_ANDROID + "getCheatMetaById.php", al);
-
         try {
+            String urlParameters = "cheatId=" + URLEncoder.encode(String.valueOf(cheatId), "UTF-8");
+            String metaArray = excutePost(Konstanten.BASE_URL_ANDROID + "getCheatMetaById.php", urlParameters);
+
             JSONObject jsonObject = new JSONObject(metaArray);
 
             int counterTotal = jsonObject.optInt("counterTotal", 1);
@@ -871,8 +736,8 @@ public class Webservice {
 
             cheat.setMember(member);
 
-        } catch (JSONException e) {
-            Log.e("getCheatMetaById", "JSON Parsing Error: " + e);
+        } catch (JSONException | UnsupportedEncodingException e) {
+            Log.e(TAG, "JSONException | UnsupportedEncodingException: " + e.getLocalizedMessage());
         }
 
         return cheat;
@@ -886,18 +751,12 @@ public class Webservice {
      * @return
      */
     public static Cheat[] getCheatsByGameId(int gameId, String gameName) {
-
-        String[] param = {"gameId", String.valueOf(gameId)};
-
-        ArrayList<String[]> al = new ArrayList<String[]>();
-        al.add(param);
-
-        String cheatsString = getDataAsStringFromServer(Konstanten.BASE_URL_ANDROID + "getCheatsByGameId.php", al);
-
         Cheat[] cheats = null;
         JSONArray jArray = null;
 
         try {
+            String urlParameters = "gameId=" + URLEncoder.encode(String.valueOf(gameId), "UTF-8");
+            String cheatsString = excutePost(Konstanten.BASE_URL_ANDROID + "getCheatsByGameId.php", urlParameters);
 
             jArray = new JSONArray(cheatsString);
             cheats = new Cheat[jArray.length()];
@@ -942,8 +801,8 @@ public class Webservice {
                 cheats[i] = cheat;
             }
 
-        } catch (JSONException e) {
-            Log.e("getCheatTitleList", "JSON Parsing Error: " + e);
+        } catch (JSONException | UnsupportedEncodingException e) {
+            Log.e(TAG, "JSONException | UnsupportedEncodingException: " + e.getLocalizedMessage());
         }
 
         return cheats;
@@ -956,12 +815,6 @@ public class Webservice {
      * @return SystemPlatform[]> Game[]> Cheat[]
      */
     public static SystemPlatform[] getCheatsByMemberIdNested(int memberId) {
-        String[] param = {"memberId", String.valueOf(memberId)};
-
-        ArrayList<String[]> al = new ArrayList<String[]>();
-        al.add(param);
-        String cheatsString = getDataAsStringFromServer(Konstanten.BASE_URL_ANDROID + "getCheatsByMemberId.php", al);
-
         SystemPlatform[] systems = null;
         Game[] games = null;
         Cheat[] cheats = null;
@@ -973,6 +826,9 @@ public class Webservice {
         Map<Integer, String> gamesHashMap = new HashMap<Integer, String>();
 
         try {
+            String urlParameters = "memberId=" + URLEncoder.encode(String.valueOf(memberId), "UTF-8");
+            String cheatsString = excutePost(Konstanten.BASE_URL_ANDROID + "getCheatsByMemberId.php", urlParameters);
+
             jArray = new JSONArray(cheatsString);
             cheats = new Cheat[jArray.length()];
 
@@ -1077,7 +933,7 @@ public class Webservice {
                 tmpGame.createCheatCollection(matchingCheats.size());
 
 				/*
-				 * Die passenden Cheats dem Game-Objekt hinzufügen
+                 * Die passenden Cheats dem Game-Objekt hinzufügen
 				 */
                 for (int i = 0; i < matchingCheats.size(); i++) {
                     tmpGame.addCheat(matchingCheats.get(i));
@@ -1087,7 +943,7 @@ public class Webservice {
             }
 
 			/*
-			 * Die Games zum globalen Game-Array-Objekt hinzufügen
+             * Die Games zum globalen Game-Array-Objekt hinzufügen
 			 */
             games = new Game[temporaryInnerGameList.size()];
             for (int n = 0; n < temporaryInnerGameList.size(); n++) {
@@ -1095,7 +951,7 @@ public class Webservice {
             }
 
 			/*
-			 * Die passenden Games dem System[]-Objekt hinzufügen.
+             * Die passenden Games dem System[]-Objekt hinzufügen.
 			 */
             for (int j2 = 0; j2 < systems.length; j2++) {
                 SystemPlatform ss = systems[j2];
@@ -1111,14 +967,14 @@ public class Webservice {
                 systems[j2].createGameCollection(matchingGames.size());
 
 				/*
-				 * Die passenden Game-Objekte dem System-Objekt hinzufügen
+                 * Die passenden Game-Objekte dem System-Objekt hinzufügen
 				 */
                 for (int i = 0; i < matchingGames.size(); i++) {
                     systems[j2].addGame(matchingGames.get(i));
                 }
             }
-        } catch (JSONException e) {
-            Log.e("getCheatsByMemberIdNested", "JSON Parsing Error: " + e);
+        } catch (JSONException | UnsupportedEncodingException e) {
+            Log.e(TAG, "JSONException | UnsupportedEncodingException: " + e.getLocalizedMessage());
         }
 
         return systems;
@@ -1131,17 +987,13 @@ public class Webservice {
      * @return Cheat[]
      */
     public static Cheat[] getCheatsByMemberId(int memberId) {
-        String[] param = {"memberId", String.valueOf(memberId)};
-
-        ArrayList<String[]> al = new ArrayList<String[]>();
-        al.add(param);
-        String cheatsString = getDataAsStringFromServer(Konstanten.BASE_URL_ANDROID + "getCheatsByMemberId.php", al);
-
         Cheat[] cheats = null;
-
         JSONArray jArray = null;
 
         try {
+            String urlParameters = "memberId=" + URLEncoder.encode(String.valueOf(memberId), "UTF-8");
+            String cheatsString = excutePost(Konstanten.BASE_URL_ANDROID + "getCheatsByMemberId.php", urlParameters);
+
             jArray = new JSONArray(cheatsString);
             cheats = new Cheat[jArray.length()];
 
@@ -1164,7 +1016,7 @@ public class Webservice {
                 Cheat cheat = new Cheat();
 
 				/*
-				 * Screenshot-Informationen auslesen
+                 * Screenshot-Informationen auslesen
 				 */
                 JSONArray screenshots = jsonObject.getJSONArray("screenshots");
                 Screenshot[] screens = new Screenshot[screenshots.length()];
@@ -1200,8 +1052,8 @@ public class Webservice {
                 cheats[i] = cheat;
             }
 
-        } catch (JSONException e) {
-            Log.e("getCheatsByMemberId", "JSON Parsing Error: " + e);
+        } catch (JSONException | UnsupportedEncodingException e) {
+            Log.e(TAG, "JSONException | UnsupportedEncodingException: " + e.getLocalizedMessage());
         }
 
         return cheats;
@@ -1213,7 +1065,7 @@ public class Webservice {
      * @return
      */
     public static Member[] getMemberTop20() {
-        String topMembers = query(Konstanten.BASE_URL_ANDROID + "getMemberTop20.php");
+        String topMembers = executeGet(Konstanten.BASE_URL_ANDROID + "getMemberTop20.php");
 
         Member[] members = null;
 
@@ -1245,7 +1097,7 @@ public class Webservice {
             }
 
         } catch (JSONException e) {
-            Log.e("getMemberTop20", "JSON Parsing Error: " + e);
+            Log.e(TAG, "JSONException: " + e.getLocalizedMessage());
         }
 
         return members;
@@ -1257,7 +1109,7 @@ public class Webservice {
      * @return SystemPlatform[]
      */
     public static ArrayList<SystemPlatform> countGamesAndCheatsBySystem() {
-        String gamesAndCheatCounter = query(Konstanten.BASE_URL_ANDROID + "countGamesAndCheatsBySystem.php");
+        String gamesAndCheatCounter = executeGet(Konstanten.BASE_URL_ANDROID + "countGamesAndCheatsBySystem.php");
 
         ArrayList<SystemPlatform> systems = new ArrayList<SystemPlatform>();
 
@@ -1280,28 +1132,30 @@ public class Webservice {
             }
 
         } catch (JSONException e) {
-            Log.e("countGamesAndCheatsBySystem", "JSON Parsing Error: " + e);
+            Log.e(TAG, "JSONException: " + e.getLocalizedMessage());
         }
 
         return systems;
     }
 
     public static WelcomeMessage getWelcomeMessage() {
-        String url = query(Konstanten.BASE_URL_ANDROID + "getWelcomeMessage.php");
-        WelcomeMessage welcomeMessage = new WelcomeMessage();
+        WelcomeMessage welcomeMessage = null;
+
+        String url = executeGet(Konstanten.BASE_URL_ANDROID + "getWelcomeMessage.php");
 
         try {
             JSONObject jsonObject = new JSONObject(url);
+            Log.i(TAG, "WelcomeMessage: " + jsonObject.toString());
 
+            welcomeMessage = new WelcomeMessage();
             welcomeMessage.setId(jsonObject.getInt("id"));
             welcomeMessage.setTitle(jsonObject.getString("title"));
             welcomeMessage.setTitle_de(jsonObject.getString("title_de"));
             welcomeMessage.setWelcomeMessage(jsonObject.getString("welcomemessage"));
             welcomeMessage.setWelcomeMessage_de(jsonObject.getString("welcomemessage_de"));
             welcomeMessage.setCreated(jsonObject.getString("created"));
-
         } catch (JSONException e) {
-            Log.e("getWelcomeMessage", "JSON Parsing Error: " + e);
+            e.printStackTrace();
         }
 
         return welcomeMessage;
@@ -1314,18 +1168,12 @@ public class Webservice {
      * @return
      */
     public static ForumPost[] getForum(int cheatId) {
-
-        String[] param = {"cheatId", String.valueOf(cheatId)};
-
-        ArrayList<String[]> al = new ArrayList<String[]>();
-        al.add(param);
-
-        String forumString = getDataAsStringFromServer(Konstanten.BASE_URL_ANDROID + "getForum.php", al);
-
         ForumPost[] thread = null;
         JSONArray jArray = null;
 
         try {
+            String urlParameters = "cheatId=" + URLEncoder.encode(String.valueOf(cheatId), "UTF-8");
+            String forumString = excutePost(Konstanten.BASE_URL_ANDROID + "getForum.php", urlParameters);
 
             jArray = new JSONArray(forumString);
             thread = new ForumPost[jArray.length()];
@@ -1358,8 +1206,8 @@ public class Webservice {
                 thread[i] = forum;
             }
 
-        } catch (JSONException e) {
-            Log.e("getForum", "JSON Parsing Error: " + e);
+        } catch (JSONException | UnsupportedEncodingException e) {
+            Log.e(TAG, "getGameListBySystemId | UnsupportedEncodingException: " + e);
         }
 
         return thread;
@@ -1373,19 +1221,13 @@ public class Webservice {
      * @return Game[]
      */
     public static Game[] getGameListBySystemId(int systemId, String systemName) {
-
-        String[] param1 = {"systemId", String.valueOf(systemId)};
-
-        ArrayList<String[]> al = new ArrayList<String[]>();
-        al.add(param1);
-
-        String responseString = getDataAsStringFromServer(Konstanten.BASE_URL_ANDROID + "getGamesBySystemId.php", al);
-
-
         Game[] games = null;
         JSONArray jArray = null;
 
         try {
+            String urlParameters = "systemId=" + URLEncoder.encode(String.valueOf(systemId), "UTF-8");
+            String responseString = excutePost(Konstanten.BASE_URL_ANDROID + "getGamesBySystemId.php", urlParameters);
+
             jArray = new JSONArray(responseString);
             games = new Game[jArray.length()];
 
@@ -1407,8 +1249,8 @@ public class Webservice {
                 games[i] = game;
             }
 
-        } catch (JSONException e) {
-            Log.e("getGameListBySystemId", "JSON Parsing Error: " + e);
+        } catch (JSONException | UnsupportedEncodingException e) {
+            Log.e(TAG, "getGameListBySystemId | UnsupportedEncodingException: " + e);
         }
 
         return games;
@@ -1421,12 +1263,15 @@ public class Webservice {
      * @return
      */
     public static String getCheatById(int cheatId) {
-        String[] param1 = {"cheatId", String.valueOf(cheatId)};
-
-        ArrayList<String[]> al = new ArrayList<String[]>();
-        al.add(param1);
-
-        return getDataAsStringFromServer(Konstanten.BASE_URL_ANDROID + "getCheatById.php", al);
+        String urlParameters = null;
+        String returnString = null;
+        try {
+            urlParameters = "cheatId=" + URLEncoder.encode(String.valueOf(cheatId), "UTF-8");
+            returnString = excutePost(Konstanten.BASE_URL_ANDROID + "getCheatById.php", urlParameters);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return returnString;
     }
 
     /**
@@ -1436,13 +1281,9 @@ public class Webservice {
      * @return true/false
      */
     public static boolean hasMemberPermissions(Member member) {
-        String[] param1 = {"username", member.getUsername()};
-
-        ArrayList<String[]> al = new ArrayList<String[]>();
-        al.add(param1);
-
         try {
-            JSONObject retValObj = new JSONObject(getDataAsStringFromServer(Konstanten.BASE_URL_ANDROID + "checkMemberNew.php", al));
+            String urlParameters = "username=" + URLEncoder.encode(member.getUsername(), "UTF-8");
+            JSONObject retValObj = new JSONObject(excutePost(Konstanten.BASE_URL_ANDROID + "checkMemberNew.php", urlParameters));
 
             if (retValObj.getInt("allow") == 0) {
                 return false;
@@ -1457,7 +1298,6 @@ public class Webservice {
         }
     }
 
-
     /**
      * Gets a cheat by cheat ID and highlights
      *
@@ -1466,76 +1306,15 @@ public class Webservice {
      * @return
      */
     public static String getCheatByIdHighlighted(int cheatId, String highlights) {
-        String[] param1 = {"cheatId", String.valueOf(cheatId)};
-        String[] param2 = {"highlights", highlights.trim()};
-
-        ArrayList<String[]> al = new ArrayList<String[]>();
-        al.add(param1);
-        al.add(param2);
-
-        return getDataAsStringFromServer(Konstanten.BASE_URL_ANDROID + "getCheatTextByCheatIdHighlighted.php", al);
-    }
-
-    /**
-     * Holt Daten vom Webserver GZIP komprimiert und entpackt diese bei der
-     * Ausgabe.
-     *
-     * @param postURL  URL der aufzurufenden Website
-     * @param alParams ArrayList mit String[]-Arrays (0 = Parameter-Name, 1 =
-     *                 Parameter-Wert)
-     * @return
-     */
-    private static String getDataAsStringFromServer(String postURL, ArrayList<String[]> alParams) {
-
-        String responseString = null;
-        HttpClient client = null;
-        HttpPost post = null;
-        HttpResponse responsePOST = null;
-
+        String returnString = null;
         try {
-            client = new DefaultHttpClient();
-
-            post = new HttpPost(postURL);
-            post.addHeader("Accept-Encoding", "gzip");
-
-            List<NameValuePair> params = new ArrayList<NameValuePair>(2);
-            for (int i = 0; i < alParams.size(); i++) {
-                String[] param = alParams.get(i);
-                params.add(new BasicNameValuePair(param[0], param[1]));
-            }
-            UrlEncodedFormEntity ent = new UrlEncodedFormEntity(params);
-            post.setEntity(ent);
-            responsePOST = client.execute(post);
-            StatusLine status = responsePOST.getStatusLine();
-            int statusCode = status.getStatusCode(); // 404 = not found
-
-            Log.i("getDataAsStringFromServer", "statusCode: " + statusCode);
-            if (statusCode == Konstanten.HTTP_FILE_NOT_FOUND) {
-                return String.valueOf(statusCode);
-            }
-
-            // GZIP Daten entpacken
-            ByteArrayOutputStream streamBuilder = new ByteArrayOutputStream();
-
-            InputStream instream = responsePOST.getEntity().getContent();
-            Header contentEncoding = responsePOST.getFirstHeader("Content-Encoding");
-            if (contentEncoding != null && contentEncoding.getValue().equalsIgnoreCase("gzip")) {
-                instream = new GZIPInputStream(instream);
-            }
-            int bytesRead;
-            byte[] tempBuffer = new byte[8192 * 2];
-
-            while ((bytesRead = instream.read(tempBuffer)) != -1) {
-                streamBuilder.write(tempBuffer, 0, bytesRead);
-            }
-
-            responseString = streamBuilder.toString();
-
-        } catch (Exception e) {
-            Log.e("getDataFromServer ERROR", "" + e.getMessage());
+            String urlParameters = "cheatId=" + URLEncoder.encode(String.valueOf(cheatId), "UTF-8") + "&highlights=" + URLEncoder.encode(highlights.trim(), "UTF-8");
+            returnString = excutePost(Konstanten.BASE_URL_ANDROID + "getCheatTextByCheatIdHighlighted.php", urlParameters);
+        } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
-        return responseString;
+
+        return returnString;
     }
 
     /**
@@ -1546,14 +1325,12 @@ public class Webservice {
      * @param reason
      */
     public static void reportCheat(int cheatId, int memberId, String reason) {
-        SendHTTPPostData send = new SendHTTPPostData();
-        Map<String, String> vars = new HashMap<String, String>();
-        vars.put("cheatId", String.valueOf(cheatId));
-        vars.put("memberId", String.valueOf(memberId));
-        vars.put("reason", reason);
-
-        send.parametrosHttp(Konstanten.BASE_URL_ANDROID + "reportCheat.php", vars);
-        send.go();
+        try {
+            String urlParameters = "cheatId=" + URLEncoder.encode(String.valueOf(cheatId), "UTF-8") + "&memberId=" + URLEncoder.encode(String.valueOf(memberId), "UTF-8") + "&reason=" + URLEncoder.encode(reason, "UTF-8");
+            excutePost(Konstanten.BASE_URL_ANDROID + "reportCheat.php", urlParameters);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -1563,13 +1340,12 @@ public class Webservice {
      * @param message
      */
     public static void submitContactForm(String email, String message) {
-        SendHTTPPostData send = new SendHTTPPostData();
-        Map<String, String> vars = new HashMap<String, String>();
-        vars.put("email", email.trim());
-        vars.put("message", message.trim());
-
-        send.parametrosHttp(Konstanten.BASE_URL_ANDROID + "submitMessage.php", vars);
-        send.go();
+        try {
+            String urlParameters = "email=" + URLEncoder.encode(email.trim(), "UTF-8") + "&message=" + URLEncoder.encode(message.trim(), "UTF-8");
+            excutePost(Konstanten.BASE_URL_ANDROID + "submitMessage.php", urlParameters);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -1588,21 +1364,18 @@ public class Webservice {
     }
 
     public static String fulltextSearchToJSONString(String query, String cheatIds, String gameIds, String systemIds, int searchInTitlesToo) {
-
-        String[] param1 = {"query", query};
-        String[] param2 = {"cheatIds", cheatIds};
-        String[] param3 = {"gameIds", gameIds};
-        String[] param4 = {"systemIds", systemIds};
-        String[] param5 = {"searchInTitlesToo", String.valueOf(searchInTitlesToo)};
-
-        ArrayList<String[]> al = new ArrayList<String[]>();
-        al.add(param1);
-        al.add(param2);
-        al.add(param3);
-        al.add(param4);
-        al.add(param5);
-
-        return getDataAsStringFromServer(Konstanten.BASE_URL_ANDROID + "searchFulltext.php", al);
+        String ret = null;
+        try {
+            String urlParameters = "executeGet=" + URLEncoder.encode(query, "UTF-8") +
+                    "&cheatIds=" + URLEncoder.encode(cheatIds, "UTF-8") +
+                    "&gameIds=" + URLEncoder.encode(gameIds, "UTF-8") +
+                    "&systemIds=" + URLEncoder.encode(systemIds, "UTF-8") +
+                    "&searchInTitlesToo=" + URLEncoder.encode(String.valueOf(searchInTitlesToo), "UTF-8");
+            ret = excutePost(Konstanten.BASE_URL_ANDROID + "searchFulltext.php", urlParameters);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return ret;
     }
 
     /**
@@ -1646,10 +1419,152 @@ public class Webservice {
             }
 
         } catch (JSONException e) {
-            Log.e("fulltextSearch", "JSON Parsing Error: " + e);
+            Log.e(TAG, "JSONException: " + e.getLocalizedMessage());
         }
 
         return cheats;
     }
+
+    /**
+     * Aufrufen einer parameterlosen URL mit GZIP-Kompression
+     */
+    private static String executeGet(String targetURL) {
+        URL url;
+        HttpURLConnection connection = null;
+        try {
+            //Create connection
+            url = new URL(targetURL);
+            connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("GET");
+            connection.setUseCaches(false);
+            connection.setDoInput(true);
+            connection.setDoOutput(true);
+            connection.connect();
+
+            int responseCode = connection.getResponseCode();
+            Log.d(TAG, "The response is: " + responseCode);
+
+            //Get Response
+            InputStream is = connection.getInputStream();
+            BufferedReader rd = new BufferedReader(new InputStreamReader(is));
+            String line;
+            StringBuffer response = new StringBuffer();
+            while ((line = rd.readLine()) != null) {
+                response.append(line);
+                response.append('\r');
+            }
+            rd.close();
+            return response.toString();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        } finally {
+            if (connection != null) {
+                connection.disconnect();
+            }
+        }
+
+//        HttpUriRequest request = null;
+//        HttpClient httpClient = null;
+//        HttpResponse response = null;
+//
+//        try {
+//            request = new HttpGet(parameterlessUrl);
+//            request.addHeader("Accept-Encoding", "gzip");
+//
+//            httpClient = new DefaultHttpClient();
+//            response = httpClient.execute(request);
+//
+//            // GZIP Daten entpacken
+//            ByteArrayOutputStream streamBuilder = new ByteArrayOutputStream();
+//
+//            InputStream instream = response.getEntity().getContent();
+//            Header contentEncoding = response.getFirstHeader("Content-Encoding");
+//            if (contentEncoding != null && contentEncoding.getValue().equalsIgnoreCase("gzip")) {
+//                instream = new GZIPInputStream(instream);
+//            }
+//            int bytesRead;
+//            byte[] tempBuffer = new byte[8192 * 2];
+//
+//            while ((bytesRead = instream.read(tempBuffer)) != -1) {
+//                streamBuilder.write(tempBuffer, 0, bytesRead);
+//            }
+//
+//            responseString = streamBuilder.toString();
+//
+//        } catch (Exception e) {
+//            // URL Incorrect
+//            responseString = e.getMessage();
+//            Log.e("getDataFromServer ERROR", e.getMessage());
+//        }
+//
+//        return responseString;
+    }
+
+    /**
+     * Do a REST Call - HTTP POST.
+     *
+     * @param targetURL
+     * @param urlParameters FORMAT: urlParameters = "fName=" + URLEncoder.encode("???", "UTF-8") + "&lName=" + URLEncoder.encode("???", "UTF-8")
+     * @return
+     */
+    public static String excutePost(String targetURL, String urlParameters) {
+
+        // PARAMETER FORMAT
+        // String urlParameters = "fName=" + URLEncoder.encode("???", "UTF-8") + "&lName=" + URLEncoder.encode("???", "UTF-8");
+
+        URL url;
+        HttpURLConnection connection = null;
+        try {
+            //Create connection
+            url = new URL(targetURL);
+            connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("POST");
+            connection.setRequestProperty("Content-Type",
+                    "application/x-www-form-urlencoded");
+
+            connection.setRequestProperty("Content-Length", "" +
+                    Integer.toString(urlParameters.getBytes().length));
+            connection.setRequestProperty("Content-Language", "en-US");
+
+            connection.setUseCaches(false);
+            connection.setDoInput(true);
+            connection.setDoOutput(true);
+
+            //Send request
+            DataOutputStream wr = new DataOutputStream(
+                    connection.getOutputStream());
+            wr.writeBytes(urlParameters);
+            wr.flush();
+            wr.close();
+
+            //Get Response
+            InputStream is = connection.getInputStream();
+            BufferedReader rd = new BufferedReader(new InputStreamReader(is));
+            String line;
+            StringBuffer response = new StringBuffer();
+            while ((line = rd.readLine()) != null) {
+                response.append(line);
+                response.append('\r');
+            }
+            rd.close();
+
+            // Remove last \r
+            String responseString = response.toString();
+            responseString = responseString.substring(0, responseString.length() - 1);
+
+            return responseString;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        } finally {
+            if (connection != null) {
+                connection.disconnect();
+            }
+        }
+    }
+
 
 }

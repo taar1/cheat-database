@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!-- MATERIAL DESIGN THEME FOR ANDROID LOLLIPOP -->
+    <!-- MATERIAL DESIGN THEME FOR ANDROID 5 LOLLIPOP -->
     <!-- http://antonioleiva.com/material-design-everywhere/ -->
     <style name="Theme.Navyblue" parent="AppThemeBase">
         <item name="android:windowContentTransitions">true</item>

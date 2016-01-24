@@ -3,6 +3,7 @@ package com.cheatdatabase.dialogs;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.graphics.Typeface;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
@@ -13,9 +14,15 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.cheatdatabase.CheatDatabaseApplication;
 import com.cheatdatabase.R;
+import com.cheatdatabase.businessobjects.Cheat;
+import com.cheatdatabase.businessobjects.Member;
+import com.cheatdatabase.events.CheatReportingFinishedEvent;
 import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Tools;
+import com.cheatdatabase.helpers.Webservice;
+import com.google.gson.Gson;
 
 /**
  * Dialog displaying a list of reasons to report a particular cheat.
@@ -25,10 +32,8 @@ import com.cheatdatabase.helpers.Tools;
 public class ReportCheatDialog extends DialogFragment {
 
     int selectedItem = 0;
-
-    public interface ReportCheatDialogListener {
-        void onFinishReportDialog(int selectedReason);
-    }
+    private Cheat cheatObj;
+    private Member member;
 
     public ReportCheatDialog() {
 
@@ -37,6 +42,9 @@ public class ReportCheatDialog extends DialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         Typeface latoFontBold = Tools.getFont(getActivity().getAssets(), Konstanten.FONT_BOLD);
+
+        cheatObj = (Cheat) getArguments().getSerializable("cheatObj");
+        member = new Gson().fromJson(getActivity().getSharedPreferences(Konstanten.PREFERENCES_FILE, 0).getString(Konstanten.MEMBER_OBJECT, null), Member.class);
 
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View dialogLayout = inflater.inflate(R.layout.layout_report_cheat, null);
@@ -74,8 +82,8 @@ public class ReportCheatDialog extends DialogFragment {
         reportButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ReportCheatDialogListener activity = (ReportCheatDialogListener) getActivity();
-                activity.onFinishReportDialog(selectedItem);
+                String[] reasons = getResources().getStringArray(R.array.report_reasons);
+                new ReportCheatTask().execute(reasons[selectedItem]);
                 dismiss();
             }
         });
@@ -84,8 +92,25 @@ public class ReportCheatDialog extends DialogFragment {
         builder.setView(dialogLayout);
 
         return builder.create();
+    }
 
+    private class ReportCheatTask extends AsyncTask<String, Boolean, Boolean> {
 
+        @Override
+        protected Boolean doInBackground(String... reason) {
+
+            try {
+                Webservice.reportCheat(cheatObj.getCheatId(), member.getMid(), reason[0]);
+                return true;
+            } catch (Exception e) {
+                return false;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(Boolean success) {
+            CheatDatabaseApplication.getEventBus().post(new CheatReportingFinishedEvent(success));
+        }
     }
 
 }

@@ -1,17 +1,17 @@
 package com.cheatdatabase.helpers;
 
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.HeaderViewListAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
 /**
- * ActionBarActivity ListActivity
+ * AppCompatActivity ListActivity
  * Alternative without using an additional class: http://stackoverflow.com/questions/22439719/listview-without-extending-listactivity
  * Created by Dominik on 01.01.2015.
  */
-public abstract class ActionBarListActivity extends ActionBarActivity {
+public abstract class ActionBarListActivity extends AppCompatActivity {
 
     private ListView mListView;
 

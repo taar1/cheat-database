@@ -66,7 +66,7 @@ public class AdAlertReporter {
     }
 
     public void send() {
-        mEmailIntent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, mEmailAttachments);
+        mEmailIntent.putSerializableArrayListExtra(Intent.EXTRA_STREAM, mEmailAttachments);
 
         Intent chooserIntent = Intent.createChooser(mEmailIntent, "Send Email...");
         chooserIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

@@ -1,7 +1,6 @@
 package com.cheatdatabase.search;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.graphics.Typeface;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
@@ -13,7 +12,7 @@ import android.widget.CheckedTextView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.cheatdatabase.CheatListActivity;
+import com.cheatdatabase.CheatListActivity_;
 import com.cheatdatabase.R;
 import com.cheatdatabase.businessobjects.Game;
 import com.cheatdatabase.helpers.Group;
@@ -77,10 +76,11 @@ public class SearchresultExpandableListAdapter extends BaseExpandableListAdapter
             @Override
             public void onClick(View v) {
                 if (Reachability.reachability.isReachable) {
-                    Intent explicitIntent = new Intent(activity, CheatListActivity.class);
-                    explicitIntent.putExtra("gameObj", gameObj);
+//                    Intent explicitIntent = new Intent(activity, CheatListActivity.class);
+//                    explicitIntent.putExtra("gameObj", gameObj);
+//                    activity.startActivity(explicitIntent);
 
-                    activity.startActivity(explicitIntent);
+                    CheatListActivity_.intent(activity).gameObj(gameObj).start();
                 } else {
                     Toast.makeText(activity, R.string.no_internet, Toast.LENGTH_SHORT).show();
                 }

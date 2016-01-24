@@ -1,37 +1,42 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="@drawable/bg"
     android:orientation="vertical">
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/color_primary_light"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <include layout="@layout/toolbar" />
 
-    <ImageView
-        android:id="@+id/reload"
+    <!-- List item layout: cheatlist_item.xml -->
+    <TextView
+        android:id="@+id/item_list_empty_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:gravity="top"
-        android:paddingTop="10dp"
-        android:src="@drawable/reload"
-        android:visibility="invisible" />
+        android:text="@string/placeholder"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:visibility="gone" />
 
-    <!-- List item layout: cheatlist_item.xml -->
+    <com.gc.materialdesign.views.ProgressBarCircularIndeterminate
+        android:id="@+id/items_list_load_progress"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_gravity="center"
+        android:background="@color/white" />
 
-    <fragment
-        android:id="@+id/cheat_list"
-        android:name="com.cheatdatabase.CheatListFragment"
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_refresh_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="100"
-        tools:context=".CheatListActivity"
-        tools:layout="@android:layout/list_content" />
+        android:layout_height="match_parent"
+        android:layout_weight="100">
+
+        <com.cheatdatabase.widgets.EmptyRecyclerView
+            android:id="@+id/my_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="vertical" />
+
+    </android.support.v4.widget.SwipeRefreshLayout>
 
     <com.mopub.mobileads.MoPubView
         android:id="@+id/adview"
@@ -41,4 +46,5 @@
         android:layout_weight="1"
         android:background="@color/black"
         android:gravity="top" />
+
 </LinearLayout>

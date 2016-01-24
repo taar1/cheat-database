@@ -10,8 +10,6 @@ import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Parcel;
-import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.text.Html;
 import android.util.Log;
@@ -55,7 +53,7 @@ import java.util.ArrayList;
  * contained in a {@link CheatListActivity} in two-pane mode (on tablets) or a
  * {@link CheatViewPageIndicator} on handsets.
  */
-public class CheatDetailTabletFragment extends Fragment implements OnClickListener, Serializable, Parcelable {
+public class CheatDetailTabletFragment extends Fragment implements OnClickListener, Serializable {
 
     private static String TAG = CheatDetailTabletFragment.class.getSimpleName();
     /**
@@ -112,23 +110,6 @@ public class CheatDetailTabletFragment extends Fragment implements OnClickListen
     public CheatDetailTabletFragment() {
         // Class needs to be Parcelable. Otherwise it crashes on the tablet when trying to login from cheat detail view.
     }
-
-    protected CheatDetailTabletFragment(Parcel in) {
-        biggestHeight = in.readInt();
-        cheatDetailTabletFragment = in.readParcelable(CheatDetailTabletFragment.class.getClassLoader());
-    }
-
-    public static final Creator<CheatDetailTabletFragment> CREATOR = new Creator<CheatDetailTabletFragment>() {
-        @Override
-        public CheatDetailTabletFragment createFromParcel(Parcel in) {
-            return new CheatDetailTabletFragment(in);
-        }
-
-        @Override
-        public CheatDetailTabletFragment[] newArray(int size) {
-            return new CheatDetailTabletFragment[size];
-        }
-    };
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -378,18 +359,6 @@ public class CheatDetailTabletFragment extends Fragment implements OnClickListen
         });
 
     }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(biggestHeight);
-        dest.writeParcelable(cheatDetailTabletFragment, flags);
-    }
-
 
     private class FetchCheatTextTask extends AsyncTask<Void, Void, Void> {
 
