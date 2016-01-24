@@ -87,7 +87,7 @@ public class FavoriteGamesListFragment extends Fragment {
     private final int REMOVE_FROM_FAVORITES = 1;
 
     @AfterViews
-    public void onCreateView() {
+    public void createView() {
         parentActivity = getActivity();
 
         latoFontLight = Tools.getFont(parentActivity.getAssets(), Konstanten.FONT_LIGHT);

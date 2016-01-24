@@ -9,7 +9,7 @@ import android.content.res.Resources;
 import android.content.res.XmlResourceParser;
 import android.graphics.Typeface;
 import android.os.Environment;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.format.DateFormat;
 import android.util.Log;
@@ -491,7 +491,7 @@ public class Tools {
         Toast.makeText(activity, R.string.logout_ok, Toast.LENGTH_LONG).show();
     }
 
-    public static Toolbar initToolbarBase(ActionBarActivity a, Toolbar toolbar) {
+    public static Toolbar initToolbarBase(AppCompatActivity a, Toolbar toolbar) {
         toolbar = (Toolbar) a.findViewById(R.id.toolbar);
         if (toolbar != null) {
             a.setSupportActionBar(toolbar);

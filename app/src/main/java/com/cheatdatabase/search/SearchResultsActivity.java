@@ -10,7 +10,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.SearchRecentSuggestions;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -42,7 +42,7 @@ import java.util.Locale;
 import java.util.Set;
 
 @SuppressLint("NewApi")
-public class SearchResultsActivity extends ActionBarActivity {
+public class SearchResultsActivity extends AppCompatActivity {
 
     SparseArray<Group> groups = new SparseArray<Group>();
 

@@ -17,8 +17,8 @@ import android.provider.SearchRecentSuggestions;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -65,7 +65,7 @@ import io.presage.Presage;
 import io.presage.utils.IADHandler;
 
 @EActivity(R.layout.activity_main)
-public class MainActivity extends ActionBarActivity implements ActionBar.OnNavigationListener {
+public class MainActivity extends AppCompatActivity implements ActionBar.OnNavigationListener {
 
     private static final String TAG = MainActivity.class.getSimpleName();
 
@@ -422,7 +422,9 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
                 Toast.makeText(MainActivity.this, R.string.search_history_cleared, Toast.LENGTH_LONG).show();
                 return true;
             case R.id.action_login:
-                Intent loginIntent = new Intent(MainActivity.this, LoginActivity.class);
+//                LoginActivity_.intent(this).startForResult(Konstanten.LOGIN_REGISTER_OK_RETURN_CODE);
+
+                Intent loginIntent = new Intent(MainActivity.this, LoginActivity_.class);
                 startActivityForResult(loginIntent, Konstanten.LOGIN_REGISTER_OK_RETURN_CODE);
                 return true;
             case R.id.action_logout:

@@ -179,7 +179,7 @@ public class AdAlertReporterTest {
         subject.send();
 
         emailIntent = subject.getEmailIntent();
-        ArrayList<Uri> attachments = emailIntent.getParcelableArrayListExtra(Intent.EXTRA_STREAM);
+        ArrayList<Uri> attachments = emailIntent.getSerializableArrayListExtra(Intent.EXTRA_STREAM);
 
         assertThat(attachments.size()).isEqualTo(3);
         assertThat(attachments).contains(Uri.fromFile(new File("filesDir/mp_adalert_screenshot.png")));

@@ -8,7 +8,7 @@ import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.KeyEvent;
@@ -28,7 +28,7 @@ import com.cheatdatabase.helpers.Webservice;
  * Activity which displays a login screen to the user, offering registration as
  * well.
  */
-public class RecoverActivity extends ActionBarActivity {
+public class RecoverActivity extends AppCompatActivity {
 
     /**
      * The default email to populate the email field with.
