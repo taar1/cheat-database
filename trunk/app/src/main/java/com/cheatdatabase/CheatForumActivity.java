@@ -1,6 +1,5 @@
 package com.cheatdatabase;
 
-import android.annotation.SuppressLint;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
@@ -13,7 +12,7 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.MenuItemCompat;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.ShareActionProvider;
 import android.support.v7.widget.Toolbar;
@@ -40,9 +39,9 @@ import com.cheatdatabase.businessobjects.Game;
 import com.cheatdatabase.businessobjects.Member;
 import com.cheatdatabase.dialogs.CheatMetaDialog;
 import com.cheatdatabase.dialogs.RateCheatDialog;
-import com.cheatdatabase.dialogs.RateCheatDialog.RateCheatDialogListener;
 import com.cheatdatabase.dialogs.ReportCheatDialog;
-import com.cheatdatabase.dialogs.ReportCheatDialog.ReportCheatDialogListener;
+import com.cheatdatabase.events.CheatRatingFinishedEvent;
+import com.cheatdatabase.events.CheatReportingFinishedEvent;
 import com.cheatdatabase.helpers.Helper;
 import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Reachability;
@@ -53,26 +52,28 @@ import com.google.gson.Gson;
 import com.mopub.mobileads.MoPubView;
 import com.splunk.mint.Mint;
 
+import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.Background;
+import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.Extra;
+import org.androidannotations.annotations.UiThread;
+import org.androidannotations.annotations.ViewById;
+
 import java.util.Calendar;
 
 /**
  * Displaying the forum of one cheat.
- *
- * @author Dominik
  */
-@SuppressLint("CommitPrefEdits")
-public class CheatForumActivity extends ActionBarActivity implements CheatListFragment.CheatListClickCallbacks, ReportCheatDialogListener, RateCheatDialogListener {
+@EActivity(R.layout.activity_cheat_forum)
+public class CheatForumActivity extends AppCompatActivity implements CheatListFragment.CheatListClickCallbacks {
 
-    private LinearLayout llForumMain;
+    private static String TAG = CheatForumActivity.class.getSimpleName();
 
-    private TextView tvCheatTitle;
-    private TextView tvEmpty;
-    private Cheat cheatObj;
-    private Game gameObj;
-    private Button postButton;
-    private EditText editText;
+    @Extra
+    Cheat cheatObj;
 
-    private ScrollView sv;
+    @Extra
+    Game gameObj;
 
     private ForumPost[] forumThread;
 
@@ -87,40 +88,46 @@ public class CheatForumActivity extends ActionBarActivity implements CheatListFr
     private Typeface latoFontBold;
     private Typeface latoFontLight;
 
-
-    private ImageView reloadView;
-
-    private static final String SCREEN_LABEL = "Cheat Forum Activity";
     private Toolbar mToolbar;
     private ShareActionProvider mShare;
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_cheat_forum);
+    @ViewById(R.id.llForumMain)
+    LinearLayout llForumMain;
 
+    @ViewById(R.id.text_cheat_title)
+    TextView tvCheatTitle;
+
+    @ViewById(R.id.tvEmpty)
+    TextView tvEmpty;
+
+    @ViewById(R.id.sv)
+    ScrollView sv;
+
+    @ViewById(R.id.reload)
+    ImageView reloadView;
+
+    @ViewById(R.id.etEnterForumPost)
+    EditText editText;
+
+    @ViewById(R.id.btnSubmitPost)
+    Button postButton;
+
+    @AfterViews
+    public void onCreateView() {
         cheatObj = (Cheat) getIntent().getSerializableExtra("cheatObj");
         gameObj = (Game) getIntent().getSerializableExtra("gameObj");
 
         init();
 
-        tvCheatTitle = (TextView) findViewById(R.id.text_cheat_title);
         tvCheatTitle.setText(cheatObj.getCheatTitle() + " (" + getString(R.string.forum) + ")");
         tvCheatTitle.setTypeface(latoFontBold);
 
-        llForumMain = (LinearLayout) findViewById(R.id.llForumMain);
-
-        tvEmpty = (TextView) findViewById(R.id.tvEmpty);
         tvEmpty.setTypeface(latoFontLight);
 
-        editText = (EditText) findViewById(R.id.etEnterForumPost);
-        postButton = (Button) findViewById(R.id.btnSubmitPost);
-        sv = (ScrollView) findViewById(R.id.sv);
-
-        reloadView = (ImageView) findViewById(R.id.reload);
         if (Reachability.reachability.isReachable) {
             reloadView.setVisibility(View.GONE);
-            new GetForumBackgroundTask().execute();
+            //new GetForumBackgroundTask().execute();
+            loadForumAsync();
         } else {
             reloadView.setVisibility(View.VISIBLE);
             reloadView.setOnClickListener(new OnClickListener() {
@@ -128,7 +135,8 @@ public class CheatForumActivity extends ActionBarActivity implements CheatListFr
                 @Override
                 public void onClick(View v) {
                     if (Reachability.reachability.isReachable) {
-                        new GetForumBackgroundTask().execute();
+                        //new GetForumBackgroundTask().execute();
+                        loadForumAsync();
                     } else {
                         Toast.makeText(CheatForumActivity.this, R.string.no_internet, Toast.LENGTH_SHORT).show();
                     }
@@ -190,33 +198,27 @@ public class CheatForumActivity extends ActionBarActivity implements CheatListFr
 
     }
 
-    @Override
-    protected void onPause() {
-        Reachability.unregister(this);
-        super.onPause();
-    }
-
     /**
      * Fill table with parsed ForumPosts.
      */
-    private void fillViewWithThread() {
-        reloadView.setVisibility(View.GONE);
-
-        llForumMain.removeAllViews();
-        if (forumThread.length > 0) {
-            tvEmpty.setVisibility(View.GONE);
-        } else {
-            tvEmpty.setVisibility(View.VISIBLE);
-        }
-
-        for (int i = 0; i < forumThread.length; i++) {
-            ForumPost tempFP = forumThread[i];
-
-            LinearLayout tl = createForumPosts(tempFP);
-            llForumMain.addView(tl, new TableLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
-        }
-
-    }
+//    private void fillViewWithThread() {
+//        reloadView.setVisibility(View.GONE);
+//
+//        llForumMain.removeAllViews();
+//        if (forumThread.length > 0) {
+//            tvEmpty.setVisibility(View.GONE);
+//        } else {
+//            tvEmpty.setVisibility(View.VISIBLE);
+//        }
+//
+//        for (int i = 0; i < forumThread.length; i++) {
+//            ForumPost tempFP = forumThread[i];
+//
+//            LinearLayout tl = createForumPosts(tempFP);
+//            llForumMain.addView(tl, new TableLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+//        }
+//
+//    }
 
     /**
      * Submits the forum post and scrolls down to the bottom of the list.
@@ -347,8 +349,17 @@ public class CheatForumActivity extends ActionBarActivity implements CheatListFr
     }
 
     @Override
+    protected void onPause() {
+        super.onPause();
+        Reachability.unregister(this);
+        CheatDatabaseApplication.getEventBus().unregister(this);
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
+        Reachability.registerReachability(this);
+        CheatDatabaseApplication.getEventBus().register(this);
         member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
     }
 
@@ -389,11 +400,9 @@ public class CheatForumActivity extends ActionBarActivity implements CheatListFr
     }
 
     private void setShareText(Cheat visibleCheat) {
-
         String cheatShareTitle = String.format(getString(R.string.share_email_subject), visibleCheat.getGameName());
         String cheatShareBody = visibleCheat.getGameName() + " (" + visibleCheat.getSystemName() + "): " + visibleCheat.getCheatTitle() + "\n";
         cheatShareBody += Konstanten.BASE_URL + "display/switch.php?id=" + visibleCheat.getCheatId() + "\n\n";
-
 
         Intent shareIntent = new Intent(Intent.ACTION_SEND);
         shareIntent.setAction(Intent.ACTION_SEND);
@@ -442,7 +451,7 @@ public class CheatForumActivity extends ActionBarActivity implements CheatListFr
                 startActivity(explicitIntent);
                 return true;
             case R.id.action_login:
-                Intent loginIntent = new Intent(this, LoginActivity.class);
+                Intent loginIntent = new Intent(this, LoginActivity_.class);
                 startActivityForResult(loginIntent, Konstanten.LOGIN_REGISTER_OK_RETURN_CODE);
                 return true;
             case R.id.action_logout:
@@ -479,16 +488,22 @@ public class CheatForumActivity extends ActionBarActivity implements CheatListFr
         if ((member == null) || (member.getMid() == 0)) {
             Toast.makeText(this, R.string.error_login_required, Toast.LENGTH_LONG).show();
         } else {
+            Bundle args = new Bundle();
+            args.putSerializable("cheatObj", cheatObj);
+
             FragmentManager fm = getSupportFragmentManager();
             ReportCheatDialog reportCheatDialog = new ReportCheatDialog();
+            reportCheatDialog.setArguments(args);
             reportCheatDialog.show(fm, "fragment_report_cheat");
         }
     }
 
-    @Override
-    public void onFinishReportDialog(int selectedReason) {
-        String[] reasons = getResources().getStringArray(R.array.report_reasons);
-        new ReportCheatTask().execute(reasons[selectedReason]);
+    public void onEvent(CheatReportingFinishedEvent result) {
+        if (result.isSucceeded()) {
+            Toast.makeText(this, R.string.thanks_for_reporting, Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(this, R.string.no_internet, Toast.LENGTH_SHORT).show();
+        }
     }
 
     public void showRatingDialog() {
@@ -505,43 +520,11 @@ public class CheatForumActivity extends ActionBarActivity implements CheatListFr
         }
     }
 
-    @Override
-    public void onFinishRateCheatDialog(int selectedRating) {
-        cheatObj.setMemberRating(selectedRating);
+    public void onEvent(CheatRatingFinishedEvent result) {
+        Log.d(TAG, "BBBBB3 OnEvent result: " + result.getRating());
+        cheatObj.setMemberRating(result.getRating());
         // highlightRatingIcon(true);
         Toast.makeText(this, R.string.rating_inserted, Toast.LENGTH_SHORT).show();
-    }
-
-    // public void highlightRatingIcon(boolean highlight) {
-    // if (highlight) {
-    // btnRateCheat.setImageResource(R.drawable.ic_action_star);
-    // } else {
-    // btnRateCheat.setImageResource(R.drawable.ic_action_not_important);
-    // }
-    // }
-
-    private class ReportCheatTask extends AsyncTask<String, Boolean, Boolean> {
-
-        @Override
-        protected Boolean doInBackground(String... reason) {
-
-            try {
-                Webservice.reportCheat(cheatObj.getCheatId(), member.getMid(), reason[0]);
-                return true;
-            } catch (Exception e) {
-                return false;
-            }
-        }
-
-        @Override
-        protected void onPostExecute(Boolean success) {
-            if (success) {
-                Toast.makeText(CheatForumActivity.this, R.string.thanks_for_reporting, Toast.LENGTH_LONG).show();
-            } else {
-                Toast.makeText(CheatForumActivity.this, R.string.no_internet, Toast.LENGTH_SHORT).show();
-            }
-        }
-
     }
 
     private class ForumPostTask extends AsyncTask<ForumPost, Void, Void> {
@@ -570,18 +553,29 @@ public class CheatForumActivity extends ActionBarActivity implements CheatListFr
 
     }
 
-    private class GetForumBackgroundTask extends AsyncTask<Void, Void, Void> {
+    @Background
+    public void loadForumAsync() {
+        forumThread = Webservice.getForum(cheatObj.getCheatId());
 
-        @Override
-        protected Void doInBackground(Void... params) {
-            forumThread = Webservice.getForum(cheatObj.getCheatId());
-            return null;
-        }
+        forumLoaded();
+    }
 
-        @Override
-        protected void onPostExecute(Void result) {
-            super.onPostExecute(result);
-            fillViewWithThread();
+    @UiThread
+    public void forumLoaded() {
+        reloadView.setVisibility(View.GONE);
+
+        llForumMain.removeAllViews();
+        if (forumThread.length > 0) {
+            tvEmpty.setVisibility(View.GONE);
+
+            for (int i = 0; i < forumThread.length; i++) {
+                ForumPost tempFP = forumThread[i];
+
+                LinearLayout tl = createForumPosts(tempFP);
+                llForumMain.addView(tl, new TableLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+            }
+        } else {
+            tvEmpty.setVisibility(View.VISIBLE);
         }
 
     }
@@ -590,6 +584,5 @@ public class CheatForumActivity extends ActionBarActivity implements CheatListFr
     public void onItemSelected(int position) {
         // TODO Auto-generated method stub
     }
-
 
 }

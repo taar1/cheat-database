@@ -6,12 +6,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.ShareActionProvider;
 import android.support.v7.widget.Toolbar;
@@ -23,7 +22,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.cheatdatabase.CheatDatabaseApplication;
-import com.cheatdatabase.CheatForumActivity;
+import com.cheatdatabase.CheatForumActivity_;
 import com.cheatdatabase.LoginActivity;
 import com.cheatdatabase.R;
 import com.cheatdatabase.SubmitCheatActivity;
@@ -32,14 +31,13 @@ import com.cheatdatabase.businessobjects.Game;
 import com.cheatdatabase.businessobjects.Member;
 import com.cheatdatabase.dialogs.CheatMetaDialog;
 import com.cheatdatabase.dialogs.RateCheatDialog;
-import com.cheatdatabase.dialogs.RateCheatDialog.RateCheatDialogListener;
 import com.cheatdatabase.dialogs.ReportCheatDialog;
-import com.cheatdatabase.dialogs.ReportCheatDialog.ReportCheatDialogListener;
+import com.cheatdatabase.events.CheatRatingFinishedEvent;
+import com.cheatdatabase.events.CheatReportingFinishedEvent;
 import com.cheatdatabase.helpers.Helper;
 import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.helpers.Tools;
-import com.cheatdatabase.helpers.Webservice;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.gson.Gson;
 import com.mopub.mobileads.MoPubView;
@@ -55,7 +53,9 @@ import java.util.Arrays;
  * @author Dominik Erbsland
  * @version 1.0
  */
-public class MemberCheatViewPageIndicator extends ActionBarActivity implements ReportCheatDialogListener, RateCheatDialogListener {
+public class MemberCheatViewPageIndicator extends AppCompatActivity {
+
+    private static final String TAG = MemberCheatViewPageIndicator.class.getName();
 
     private Intent intent;
 
@@ -81,7 +81,6 @@ public class MemberCheatViewPageIndicator extends ActionBarActivity implements R
 
     private int activePage;
 
-    private static final String TAG = MemberCheatViewPageIndicator.class.getName();
 
     private ShareActionProvider mShare;
     private Toolbar mToolbar;
@@ -128,7 +127,6 @@ public class MemberCheatViewPageIndicator extends ActionBarActivity implements R
     }
 
     private void init() {
-        Reachability.registerReachability(this);
         Mint.initAndStartSession(this, Konstanten.SPLUNK_MINT_API_KEY);
 
         settings = getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
@@ -141,9 +139,27 @@ public class MemberCheatViewPageIndicator extends ActionBarActivity implements R
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        Reachability.registerReachability(this);
+        CheatDatabaseApplication.getEventBus().register(this);
+        member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
+        invalidateOptionsMenu();
+    }
+
+    @Override
     public void onPause() {
-        Reachability.unregister(this);
         super.onPause();
+        Reachability.unregister(this);
+        CheatDatabaseApplication.getEventBus().unregister(this);
+    }
+
+    @Override
+    protected void onDestroy() {
+        if (mAdView != null) {
+            mAdView.destroy();
+        }
+        super.onDestroy();
     }
 
     private void initialisePaging() {
@@ -315,10 +331,7 @@ public class MemberCheatViewPageIndicator extends ActionBarActivity implements R
                 showRatingDialog();
                 return true;
             case R.id.action_forum:
-                Intent forumIntent = new Intent(MemberCheatViewPageIndicator.this, CheatForumActivity.class);
-                forumIntent.putExtra("gameObj", gameObj);
-                forumIntent.putExtra("cheatObj", visibleCheat);
-                startActivity(forumIntent);
+                CheatForumActivity_.intent(this).gameObj(gameObj).cheatObj(visibleCheat).start();
                 return true;
             case R.id.action_add_to_favorites:
                 Toast.makeText(MemberCheatViewPageIndicator.this, R.string.favorite_adding, Toast.LENGTH_SHORT).show();
@@ -348,35 +361,33 @@ public class MemberCheatViewPageIndicator extends ActionBarActivity implements R
         }
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
-        invalidateOptionsMenu();
-    }
-
-    @Override
-    protected void onDestroy() {
-        if (mAdView != null) {
-            mAdView.destroy();
-        }
-        super.onDestroy();
-    }
 
     public void showReportDialog() {
         if ((member == null) || (member.getMid() == 0)) {
             Toast.makeText(MemberCheatViewPageIndicator.this, R.string.error_login_required, Toast.LENGTH_SHORT).show();
         } else {
+            Bundle args = new Bundle();
+            args.putSerializable("cheatObj", visibleCheat);
+
             FragmentManager fm = getSupportFragmentManager();
             ReportCheatDialog reportCheatDialog = new ReportCheatDialog();
+            reportCheatDialog.setArguments(args);
             reportCheatDialog.show(fm, "fragment_report_cheat");
         }
     }
 
-    @Override
-    public void onFinishReportDialog(int selectedReason) {
-        String[] reasons = getResources().getStringArray(R.array.report_reasons);
-        new ReportCheatTask().execute(reasons[selectedReason]);
+//    @Override
+//    public void onFinishReportDialog(int selectedReason) {
+//        String[] reasons = getResources().getStringArray(R.array.report_reasons);
+//        new ReportCheatTask().execute(reasons[selectedReason]);
+//    }
+
+    public void onEvent(CheatReportingFinishedEvent result) {
+        if (result.isSucceeded()) {
+            Toast.makeText(this, R.string.thanks_for_reporting, Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(this, R.string.no_internet, Toast.LENGTH_SHORT).show();
+        }
     }
 
     public void showRatingDialog() {
@@ -393,36 +404,43 @@ public class MemberCheatViewPageIndicator extends ActionBarActivity implements R
         }
     }
 
-    @Override
-    public void onFinishRateCheatDialog(int selectedRating) {
-        visibleCheat.setMemberRating(selectedRating);
-        cheatObj.get(activePage).setMemberRating(selectedRating);
+//    @Override
+//    public void onFinishRateCheatDialog(int selectedRating) {
+//        visibleCheat.setMemberRating(selectedRating);
+//        cheatObj.get(activePage).setMemberRating(selectedRating);
+//        invalidateOptionsMenu();
+//        Toast.makeText(this, R.string.rating_inserted, Toast.LENGTH_SHORT).show();
+//    }
+
+    public void onEvent(CheatRatingFinishedEvent result) {
+        visibleCheat.setMemberRating(result.getRating());
+        cheatObj.get(activePage).setMemberRating(result.getRating());
         invalidateOptionsMenu();
         Toast.makeText(this, R.string.rating_inserted, Toast.LENGTH_SHORT).show();
     }
 
-    private class ReportCheatTask extends AsyncTask<String, Boolean, Boolean> {
-
-        @Override
-        protected Boolean doInBackground(String... reason) {
-
-            try {
-                Webservice.reportCheat(visibleCheat.getCheatId(), member.getMid(), reason[0]);
-                return true;
-            } catch (Exception e) {
-                return false;
-            }
-        }
-
-        @Override
-        protected void onPostExecute(Boolean success) {
-            if (success) {
-                Toast.makeText(MemberCheatViewPageIndicator.this, R.string.thanks_for_reporting, Toast.LENGTH_LONG).show();
-            } else {
-                Toast.makeText(MemberCheatViewPageIndicator.this, R.string.no_internet, Toast.LENGTH_SHORT).show();
-            }
-        }
-    }
+//    private class ReportCheatTask extends AsyncTask<String, Boolean, Boolean> {
+//
+//        @Override
+//        protected Boolean doInBackground(String... reason) {
+//
+//            try {
+//                Webservice.reportCheat(visibleCheat.getCheatId(), member.getMid(), reason[0]);
+//                return true;
+//            } catch (Exception e) {
+//                return false;
+//            }
+//        }
+//
+//        @Override
+//        protected void onPostExecute(Boolean success) {
+//            if (success) {
+//                Toast.makeText(MemberCheatViewPageIndicator.this, R.string.thanks_for_reporting, Toast.LENGTH_LONG).show();
+//            } else {
+//                Toast.makeText(MemberCheatViewPageIndicator.this, R.string.no_internet, Toast.LENGTH_SHORT).show();
+//            }
+//        }
+//    }
 
     public void setRating(int position, float rating) {
         cheatObj.get(position).setMemberRating(rating);

@@ -31,9 +31,7 @@ public class SystemListFragment extends Fragment {
 
     private final String TAG = SystemListFragment.class.getSimpleName();
 
-        //    private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
-//    private ArrayList<SystemPlatform> gameSystems;
 
     @ViewById(R.id.my_recycler_view)
     RecyclerView mRecyclerView;

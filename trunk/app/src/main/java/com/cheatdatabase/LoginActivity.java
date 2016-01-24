@@ -7,11 +7,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.graphics.Typeface;
-import android.os.AsyncTask;
 import android.os.Build;
-import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
@@ -34,11 +32,23 @@ import com.cheatdatabase.helpers.Tools;
 import com.cheatdatabase.helpers.Webservice;
 import com.google.gson.Gson;
 
+import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.Background;
+import org.androidannotations.annotations.Click;
+import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.OnActivityResult;
+import org.androidannotations.annotations.UiThread;
+import org.androidannotations.annotations.ViewById;
+
 /**
  * Activity which displays a login screen to the user, offering registration as
  * well.
  */
-public class LoginActivity extends ActionBarActivity implements AlreadyLoggedInDialogListener {
+
+@EActivity(R.layout.activity_login)
+public class LoginActivity extends AppCompatActivity implements AlreadyLoggedInDialogListener {
+
+    public static final String TAG = LoginActivity.class.getSimpleName();
 
     /**
      * The default email to populate the email field with.
@@ -48,21 +58,35 @@ public class LoginActivity extends ActionBarActivity implements AlreadyLoggedInD
     /**
      * Keep track of the login task to ensure we can cancel it if requested.
      */
-    private UserLoginTask mAuthTask = null;
+//    private UserLoginTask mAuthTask = null;
 
     // Values for email and password at the time of the login attempt.
     private String mEmail;
     private String mPassword;
 
-    // UI references.
-    private EditText mEmailView;
-    private EditText mPasswordView;
-    private View mLoginFormView;
-    private View mLoginStatusView;
-    private TextView mLoginStatusMessageView;
-    private TextView mForgotPassword;
-    private Button loginButton;
-    private Button cancelButton;
+    @ViewById(R.id.email)
+    EditText mEmailView;
+
+    @ViewById(R.id.password)
+    EditText mPasswordView;
+
+    @ViewById(R.id.login_form)
+    View mLoginFormView;
+
+    @ViewById(R.id.send_status)
+    View mLoginStatusView;
+
+    @ViewById(R.id.send_status_message)
+    TextView mLoginStatusMessageView;
+
+    @ViewById(R.id.txt_send_login)
+    TextView mForgotPassword;
+
+    @ViewById(R.id.login_button)
+    Button loginButton;
+
+    @ViewById(R.id.cancel_button)
+    Button cancelButton;
 
     private Member member;
     private SharedPreferences settings;
@@ -72,10 +96,8 @@ public class LoginActivity extends ActionBarActivity implements AlreadyLoggedInD
     private Typeface latoFontLight;
     private Toolbar toolbar;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+    @AfterViews
+    protected void onCreateView() {
         Reachability.registerReachability(this);
 
         Tools.initToolbarBase(this, toolbar);
@@ -90,15 +112,12 @@ public class LoginActivity extends ActionBarActivity implements AlreadyLoggedInD
 
         // Set up the login form.
         mEmail = getIntent().getStringExtra(EXTRA_EMAIL);
-        mEmailView = (EditText) findViewById(R.id.email);
-        mEmailView.setTypeface(latoFontLight);
+
         mEmailView.setText(mEmail);
         if ((member != null) && member.getEmail() != null) {
             mEmailView.setText(member.getEmail());
         }
 
-        mPasswordView = (EditText) findViewById(R.id.password);
-        mPasswordView.setTypeface(latoFontLight);
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
@@ -114,42 +133,12 @@ public class LoginActivity extends ActionBarActivity implements AlreadyLoggedInD
             }
         });
 
-        mLoginFormView = findViewById(R.id.login_form);
-        mLoginStatusView = findViewById(R.id.send_status);
-        mLoginStatusMessageView = (TextView) findViewById(R.id.send_status_message);
+        mEmailView.setTypeface(latoFontLight);
+        mPasswordView.setTypeface(latoFontLight);
         mLoginStatusMessageView.setTypeface(latoFontLight);
-
-        loginButton = (Button) findViewById(R.id.login_button);
         loginButton.setTypeface(latoFontBold);
-        loginButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (Reachability.reachability.isReachable) {
-                    attemptLogin();
-                } else {
-                    Toast.makeText(LoginActivity.this, R.string.no_internet, Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-
-        cancelButton = (Button) findViewById(R.id.cancel_button);
         cancelButton.setTypeface(latoFontBold);
-        cancelButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
-
-        mForgotPassword = (TextView) findViewById(R.id.txt_send_login);
         mForgotPassword.setTypeface(latoFontLight);
-        mForgotPassword.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent recoverIntent = new Intent(LoginActivity.this, RecoverActivity.class);
-                startActivityForResult(recoverIntent, Konstanten.RECOVER_PASSWORD_ATTEMPT);
-            }
-        });
 
         // If already logged in, show a popup.
         if ((member != null) && (member.getEmail().length() > 0)) {
@@ -164,6 +153,26 @@ public class LoginActivity extends ActionBarActivity implements AlreadyLoggedInD
             mPasswordView.setEnabled(true);
             loginButton.setEnabled(true);
         }
+    }
+
+    @Click(R.id.txt_send_login)
+    void forgotPasswordClicked() {
+        Intent recoverIntent = new Intent(LoginActivity.this, RecoverActivity.class);
+        startActivityForResult(recoverIntent, Konstanten.RECOVER_PASSWORD_ATTEMPT);
+    }
+
+    @Click(R.id.login_button)
+    void loginButtonClicked() {
+        if (Reachability.reachability.isReachable) {
+            attemptLogin();
+        } else {
+            Toast.makeText(LoginActivity.this, R.string.no_internet, Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Click(R.id.cancel_button)
+    void cancelButtonClicked() {
+        finish();
     }
 
     @Override
@@ -213,9 +222,9 @@ public class LoginActivity extends ActionBarActivity implements AlreadyLoggedInD
      * errors are presented and no actual login attempt is made.
      */
     public void attemptLogin() {
-        if (mAuthTask != null) {
-            return;
-        }
+//        if (mAuthTask != null) {
+//            return;
+//        }
 
         // Reset errors.
         mEmailView.setError(null);
@@ -259,8 +268,9 @@ public class LoginActivity extends ActionBarActivity implements AlreadyLoggedInD
             // perform the user login attempt.
             mLoginStatusMessageView.setText(R.string.login_progress_signing_in);
             showProgress(true);
-            mAuthTask = new UserLoginTask();
-            mAuthTask.execute((Void) null);
+//            mAuthTask = new UserLoginTask();
+//            mAuthTask.execute((Void) null);
+            loginBackgroundTask();
         }
     }
 
@@ -298,48 +308,93 @@ public class LoginActivity extends ActionBarActivity implements AlreadyLoggedInD
         }
     }
 
-    /**
-     * Represents an asynchronous login/registration task used to authenticate
-     * the user.
-     */
-    public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
+//    /**
+//     * Represents an asynchronous login/registration task used to authenticate
+//     * the user.
+//     */
+//    public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
+//
+//        @Override
+//        protected Boolean doInBackground(Void... params) {
+//
+//            // FIXME
+//            // FIXME
+//            // FIXME (background task mit annotations machen)
+//            // FIXME
+//            // FIXME
+//            // FIXME crasht beim login...
+//            member = Webservice.login(mEmailView.getText().toString().trim(), mPasswordView.getText().toString().trim());
+//            if (member != null) {
+//                if (member.getErrorCode() == 0) {
+//                    member.writeMemberData(member, settings);
+//                    return true;
+//                } else {
+//                    return false;
+//                }
+//            } else {
+//                return false;
+//            }
+//        }
+//
+//        @Override
+//        protected void onPostExecute(final Boolean success) {
+//            mAuthTask = null;
+//            showProgress(false);
+//
+//            if (success) {
+//                // REGISTER_SUCCESS_RETURN_CODE = Register success
+//                Intent returnIntent = new Intent();
+//                returnIntent.putExtra("result", Konstanten.LOGIN_SUCCESS_RETURN_CODE);
+//                setResult(RESULT_OK, returnIntent);
+//                finish();
+//            } else {
+//                errorStuff();
+//            }
+//        }
+//
+//        @Override
+//        protected void onCancelled() {
+//            mAuthTask = null;
+//            showProgress(false);
+//        }
+//    }
 
-        @Override
-        protected Boolean doInBackground(Void... params) {
+    @Background
+    public void loginBackgroundTask() {
 
-            member = Webservice.login(mEmailView.getText().toString().trim(), mPasswordView.getText().toString().trim());
-            if (member != null) {
-                if (member.getErrorCode() == 0) {
-                    member.writeMemberData(member, settings);
-                    return true;
-                } else {
-                    return false;
-                }
+        boolean loginResult = false;
+        // FIXME
+        // FIXME
+        // FIXME
+        // FIXME crasht beim login...
+        member = Webservice.login(mEmailView.getText().toString().trim(), mPasswordView.getText().toString().trim());
+        if (member != null) {
+            if (member.getErrorCode() == 0) {
+                member.writeMemberData(member, settings);
+                loginResult = true;
             } else {
-                return false;
+                loginResult = false;
             }
+        } else {
+            loginResult = false;
         }
 
-        @Override
-        protected void onPostExecute(final Boolean success) {
-            mAuthTask = null;
-            showProgress(false);
+        afterLogin(loginResult);
+    }
 
-            if (success) {
-                // REGISTER_SUCCESS_RETURN_CODE = Register success
-                Intent returnIntent = new Intent();
-                returnIntent.putExtra("result", Konstanten.LOGIN_SUCCESS_RETURN_CODE);
-                setResult(RESULT_OK, returnIntent);
-                finish();
-            } else {
-                errorStuff();
-            }
-        }
+    @UiThread
+    public void afterLogin(boolean loginResult) {
+//        mAuthTask = null;
+        showProgress(false);
 
-        @Override
-        protected void onCancelled() {
-            mAuthTask = null;
-            showProgress(false);
+        if (loginResult) {
+            // REGISTER_SUCCESS_RETURN_CODE = Register success
+            Intent returnIntent = new Intent();
+            returnIntent.putExtra("result", Konstanten.LOGIN_SUCCESS_RETURN_CODE);
+            setResult(Konstanten.LOGIN_SUCCESS_RETURN_CODE, returnIntent);
+            finish();
+        } else {
+            errorStuff();
         }
     }
 
@@ -368,28 +423,44 @@ public class LoginActivity extends ActionBarActivity implements AlreadyLoggedInD
 
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
+//    @Override
+//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//
+//        Log.d("requestCode", requestCode + "");
+//        Log.d("resultCode", resultCode + "");
+//
+//        // User registered an account. Therefore the login activity has to be
+//        // closed and the user returns to the previous screen.
+//        if (resultCode == RESULT_OK) {
+//            int intentReturnCode = data.getIntExtra("result", Konstanten.LOGIN_REGISTER_FAIL_RETURN_CODE);
+//
+//            if (intentReturnCode == Konstanten.REGISTER_SUCCESS_RETURN_CODE) {
+//                Intent returnIntent = new Intent();
+//                returnIntent.putExtra("result", Konstanten.REGISTER_SUCCESS_RETURN_CODE);
+//                setResult(RESULT_OK, returnIntent);
+//                finish();
+//            } else if (intentReturnCode == Konstanten.RECOVER_PASSWORD_SUCCESS_RETURN_CODE) {
+//                Toast.makeText(LoginActivity.this, R.string.recover_login_success, Toast.LENGTH_LONG).show();
+//            }
+//        }
+//    }
 
-        Log.d("requestCode", requestCode + "");
-        Log.d("resultCode", resultCode + "");
+    @OnActivityResult(Konstanten.LOGIN_SUCCESS_RETURN_CODE)
+    void onResult(Intent data) {
+        Log.d(TAG, "ONRESULT AAAAAAAAAA");
+        int intentReturnCode = data.getIntExtra("result", Konstanten.LOGIN_REGISTER_FAIL_RETURN_CODE);
 
-        // User registered an account. Therefore the login activity has to be
-        // closed and the user returns to the previous screen.
-        if (resultCode == RESULT_OK) {
-            int intentReturnCode = data.getIntExtra("result", Konstanten.LOGIN_REGISTER_FAIL_RETURN_CODE);
-
-            if (intentReturnCode == Konstanten.REGISTER_SUCCESS_RETURN_CODE) {
-                Intent returnIntent = new Intent();
-                returnIntent.putExtra("result", Konstanten.REGISTER_SUCCESS_RETURN_CODE);
-                setResult(RESULT_OK, returnIntent);
-                finish();
-            } else if (intentReturnCode == Konstanten.RECOVER_PASSWORD_SUCCESS_RETURN_CODE) {
-                Toast.makeText(LoginActivity.this, R.string.recover_login_success, Toast.LENGTH_LONG).show();
-            }
+        if (intentReturnCode == Konstanten.REGISTER_SUCCESS_RETURN_CODE) {
+            Intent returnIntent = new Intent();
+            returnIntent.putExtra("result", Konstanten.REGISTER_SUCCESS_RETURN_CODE);
+            setResult(RESULT_OK, returnIntent);
+            finish();
+        } else if (intentReturnCode == Konstanten.RECOVER_PASSWORD_SUCCESS_RETURN_CODE) {
+            Toast.makeText(LoginActivity.this, R.string.recover_login_success, Toast.LENGTH_LONG).show();
         }
     }
+
 
     @Override
     public void onFinishDialog(boolean signOutNow) {

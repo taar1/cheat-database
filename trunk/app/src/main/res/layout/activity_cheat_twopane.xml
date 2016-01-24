@@ -6,22 +6,7 @@
     android:orientation="vertical"
     android:weightSum="10">
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/color_primary_light"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
-
-    <ImageView
-        android:id="@+id/reload"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:gravity="top"
-        android:paddingTop="10dp"
-        android:src="@drawable/reload"
-        android:visibility="invisible" />
+    <include layout="@layout/toolbar" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -36,24 +21,36 @@
         android:weightSum="3"
         tools:context="com.cheatdatabase.CheatListActivity">
 
-        <!--
-    This layout is a two-pane layout for the Cheats
-    master/detail flow. See res/values-large/refs.xml and
-    res/values-sw600dp/refs.xml for an example of layout aliases
-    that replace the single-pane version of the layout with
-    this two-pane version.
+        <TextView
+            android:id="@+id/item_list_empty_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/placeholder"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:visibility="gone" />
 
-    For more on layout aliases, see:
-    developer.android.com/training/multiscreen/screensizes.html#TaskUseAliasFilters
-        -->
+        <com.gc.materialdesign.views.ProgressBarCircularIndeterminate
+            android:id="@+id/items_list_load_progress"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_gravity="center"
+            android:background="@color/white" />
 
-        <fragment
-            android:id="@+id/cheat_list"
-            android:name="com.cheatdatabase.CheatListFragment"
-            android:layout_width="0dp"
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/swipe_refresh_layout"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            tools:layout="@android:layout/list_content" />
+            android:layout_weight="100">
+
+            <com.cheatdatabase.widgets.EmptyRecyclerView
+                android:id="@+id/my_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scrollbars="vertical" />
+
+        </android.support.v4.widget.SwipeRefreshLayout>
 
         <FrameLayout
             android:id="@+id/cheat_detail_container"
@@ -71,3 +68,14 @@
         android:gravity="top" />
 
 </LinearLayout>
+
+
+
+
+
+
+
+
+
+
+

@@ -4,11 +4,9 @@ import android.app.AlertDialog;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.graphics.Typeface;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
@@ -44,14 +42,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 @EActivity(R.layout.activity_gamelist)
-public class GamesBySystemActivity extends ActionBarActivity implements ActionBar.OnNavigationListener {
+public class GamesBySystemActivity extends AppCompatActivity {
 
-    private ArrayList<Game> gameArrayList = new ArrayList<>();
+    private static final String TAG = GamesBySystemActivity.class.getSimpleName();
+    private ArrayList<Game> gameArrayList;
 
     private Typeface latoFontLight;
     private Typeface latoFontRegular;
-    private static final String TAG = GamesBySystemActivity.class.getSimpleName();
-    private static final String SCREEN_LABEL = "Game List By System ID Screen";
 
     @Extra
     SystemPlatform systemObj;
@@ -85,7 +82,6 @@ public class GamesBySystemActivity extends ActionBarActivity implements ActionBa
         init();
         mSwipeRefreshLayout.setRefreshing(true);
 
-
         setTitle(systemObj.getSystemName());
         CheatDatabaseApplication.tracker().send(new HitBuilders.EventBuilder("ui", "loaded").setLabel("GamesBySystemActivity").build());
 
@@ -112,7 +108,6 @@ public class GamesBySystemActivity extends ActionBarActivity implements ActionBa
     }
 
     private void init() {
-
         Mint.initAndStartSession(this, Konstanten.SPLUNK_MINT_API_KEY);
 
         tools.loadAd(mAdView, getString(R.string.screen_type));
@@ -143,20 +138,15 @@ public class GamesBySystemActivity extends ActionBarActivity implements ActionBa
 
     @Background
     public void getGames() {
-        Log.d(TAG, "getGames() System ID: " + systemObj.getSystemId());
-        Log.d(TAG, "getGames() System NAME: " + systemObj.getSystemName());
+        Log.d(TAG, "getGames() System ID/NAME: " + systemObj.getSystemId() + "/" + systemObj.getSystemName());
 
+        gameArrayList = new ArrayList<>();
         Game[] gamesFound = Webservice.getGameListBySystemId(systemObj.getSystemId(), systemObj.getSystemName());
         while (gamesFound == null) {
             gamesFound = Webservice.getGameListBySystemId(systemObj.getSystemId(), systemObj.getSystemName());
         }
 
-        for (Game game : gamesFound) {
-            Log.d(TAG, "GAME: " + game.getGameName() + " / " + game.getSystemName());
-        }
-
         Collections.addAll(gameArrayList, gamesFound);
-//        runOnUiThread(runFillListView);
         fillListWithGames();
     }
 
@@ -179,9 +169,8 @@ public class GamesBySystemActivity extends ActionBarActivity implements ActionBa
         mRecyclerView.hideLoading();
     }
 
-
     private void error() {
-        Log.e("error()", "caught error: " + getPackageName() + "/" + getTitle());
+        Log.e(TAG, "caught error: " + getPackageName() + "/" + getTitle());
         new AlertDialog.Builder(GamesBySystemActivity.this).setIcon(R.drawable.ic_action_warning).setTitle(getString(R.string.err)).setMessage(R.string.err_data_not_accessible).setNeutralButton(R.string.ok, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int whichButton) {
@@ -191,11 +180,10 @@ public class GamesBySystemActivity extends ActionBarActivity implements ActionBa
     }
 
     @Override
-    protected void onDestroy() {
-        if (mAdView != null) {
-            mAdView.destroy();
-        }
-        super.onDestroy();
+    public void onResume() {
+        super.onResume();
+        Reachability.registerReachability(this);
+        CheatDatabaseApplication.getEventBus().register(this);
     }
 
     @Override
@@ -206,25 +194,22 @@ public class GamesBySystemActivity extends ActionBarActivity implements ActionBa
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        Reachability.registerReachability(this);
-        CheatDatabaseApplication.getEventBus().register(this);
+    protected void onDestroy() {
+        if (mAdView != null) {
+            mAdView.destroy();
+        }
+        super.onDestroy();
     }
 
     public void onEvent(GameListRecyclerViewClickEvent result) {
         if (result.isSucceeded()) {
             CheatDatabaseApplication.tracker().send(new HitBuilders.EventBuilder("ui", "click").setLabel(result.getGame().getGameName()).build());
-            Intent explicitIntent = new Intent(this, CheatListActivity.class);
-            explicitIntent.putExtra("gameObj", result.getGame());
-            startActivity(explicitIntent);
+
+            CheatListActivity_.intent(this).gameObj(result.getGame()).start();
         } else {
             Toast.makeText(this, R.string.no_internet, Toast.LENGTH_SHORT).show();
         }
     }
 
-    public boolean onNavigationItemSelected(int itemPosition, long itemId) {
-        return false;
-    }
 
 }

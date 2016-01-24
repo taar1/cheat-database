@@ -9,7 +9,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -23,7 +23,7 @@ import com.cheatdatabase.businessobjects.Cheat;
 import com.cheatdatabase.businessobjects.Game;
 import com.cheatdatabase.businessobjects.Member;
 import com.cheatdatabase.dialogs.RateCheatDialog;
-import com.cheatdatabase.dialogs.RateCheatDialog.RateCheatDialogListener;
+import com.cheatdatabase.events.CheatRatingFinishedEvent;
 import com.cheatdatabase.favorites.handset.cheatview.FavoritesCheatViewPageIndicator;
 import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Tools;
@@ -33,7 +33,7 @@ import com.mopub.mobileads.MoPubView;
 import com.splunk.mint.Mint;
 
 @SuppressLint("NewApi")
-public class FavoriteCheatListActivity extends ActionBarActivity implements FavoriteCheatListFragment.ElementsListClickHandler, RateCheatDialogListener {
+public class FavoriteCheatListActivity extends AppCompatActivity implements FavoriteCheatListFragment.ElementsListClickHandler {
 
     private final String TAG = this.getClass().getSimpleName();
 
@@ -272,10 +272,22 @@ public class FavoriteCheatListActivity extends ActionBarActivity implements Favo
         }
     }
 
-    @Override
-    public void onFinishRateCheatDialog(int selectedRating) {
-        visibleCheat.setMemberRating(selectedRating);
-        favoritesDetailsFragment.updateMemberCheatRating(selectedRating);
+//    @Override
+//    public void onFinishRateCheatDialog(int selectedRating) {
+//        visibleCheat.setMemberRating(selectedRating);
+//        favoritesDetailsFragment.updateMemberCheatRating(selectedRating);
+//
+//        // FIXME make the star to highlighton all fragments
+//        favoritesDetailsFragment.highlightRatingIcon(true);
+//        favoritesCheatMetaFragment.highlightRatingIcon(true);
+//        favoritesCheatForumFragment.highlightRatingIcon(true);
+//
+//        Toast.makeText(this, R.string.rating_inserted, Toast.LENGTH_SHORT).show();
+//    }
+
+    public void onEvent(CheatRatingFinishedEvent result) {
+        visibleCheat.setMemberRating(result.getRating());
+        favoritesDetailsFragment.updateMemberCheatRating(result.getRating());
 
         // FIXME make the star to highlighton all fragments
         favoritesDetailsFragment.highlightRatingIcon(true);
@@ -283,6 +295,18 @@ public class FavoriteCheatListActivity extends ActionBarActivity implements Favo
         favoritesCheatForumFragment.highlightRatingIcon(true);
 
         Toast.makeText(this, R.string.rating_inserted, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        CheatDatabaseApplication.getEventBus().register(this);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        CheatDatabaseApplication.getEventBus().unregister(this);
     }
 
     @Override
