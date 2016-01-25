@@ -57,21 +57,6 @@ import org.androidannotations.annotations.ViewById;
 import java.util.ArrayList;
 import java.util.Collections;
 
-/**
- * An activity representing a list of Cheats. This activity has different
- * presentations for handset and tablet-size devices. On handsets, the activity
- * presents a list of items, which when touched, lead to a
- * {@link "CheatDetailActivity"} representing item details. On tablets, the
- * activity presents the list of items and item details side-by-side using two
- * vertical panes.
- * <p/>
- * The activity makes heavy use of fragments. The list of items is a
- * {@link CheatListFragment} and the item details (if present) is a
- * {@link "CheatDetailFragment"}.
- * <p/>
- * This activity also implements the required
- * {@link com.cheatdatabase.CheatListFragment.CheatListClickCallbacks} interface to listen for item selections.
- */
 @EActivity(R.layout.activity_cheat_list)
 public class CheatListActivity extends AppCompatActivity {
 
@@ -104,14 +89,6 @@ public class CheatListActivity extends AppCompatActivity {
     @ViewById(R.id.items_list_load_progress)
     ProgressBarCircularIndeterminate mProgressView;
 
-    /**
-     * Whether or not the activity is in two-pane mode, i.e. running on a tablet
-     * device.
-     */
-    private boolean mTwoPane;
-
-    private static final String SCREEN_LABEL = "Cheat List By Game ID Screen";
-
     private SharedPreferences settings;
     private Editor editor;
     private Member member;
@@ -122,12 +99,11 @@ public class CheatListActivity extends AppCompatActivity {
     private Game lastGameObj;
     private Cheat visibleCheat;
 
-    private CheatDetailTabletFragment cheatDetailFragment;
-    private CheatForumFragment cheatForumFragment;
-    private CheatDetailTabletMetaFragment cheatDetailTabletMetaFragment;
+//    private CheatDetailTabletFragment cheatDetailFragment;
+//    private CheatForumFragment cheatForumFragment;
+//    private CheatDetailTabletMetaFragment cheatDetailTabletMetaFragment;
 
     private ShareActionProvider mShareActionProvider;
-
 
     public ShareActionProvider getmShareActionProvider() {
         return mShareActionProvider;
@@ -142,7 +118,6 @@ public class CheatListActivity extends AppCompatActivity {
         getSupportActionBar().setTitle(gameObj.getGameName());
         getSupportActionBar().setSubtitle(gameObj.getSystemName());
 
-        CheatDatabaseApplication.tracker().send(new HitBuilders.EventBuilder("ui", "loaded").setLabel(TAG).build());
 
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -165,36 +140,13 @@ public class CheatListActivity extends AppCompatActivity {
             mRecyclerView.showLoading();
             getCheats();
         } else {
-            Toast.makeText(CheatListActivity.this, R.string.no_internet, Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.no_internet, Toast.LENGTH_SHORT).show();
         }
-
-
-//        if (findViewById(R.id.cheat_detail_container) != null) {
-//            // The detail container view will be present only in the
-//            // large-screen layouts (res/values-large and
-//            // res/values-sw600dp). If this view is present, then the
-//            // activity should be in two-pane mode.
-//            mTwoPane = true;
-//
-//            // In two-pane mode, list items should be given the
-//            // 'activated' state when touched.
-//            //((CheatListFragment) getSupportFragmentManager().findFragmentById(R.id.cheat_list)).setActivateOnItemClick(true);
-//
-//            // cheatListFragment scheint nicht gebraucht zu werden hier?!
-//            // Bundle args = new Bundle();
-//            // args.putSerializable("gameObj", gameObj)
-//            // cheatListFragment = ((CheatListFragment)
-//            // getSupportFragmentManager().findFragmentById(R.id.cheat_list));
-//            // cheatListFragment.setActivateOnItemClick(true);
-//            // cheatListFragment.setArguments(args);
-//        }
-
     }
 
     private void init() {
-        Reachability.registerReachability(this);
+        CheatDatabaseApplication.tracker().send(new HitBuilders.EventBuilder("ui", "Cheat List").setLabel(TAG).build());
         Mint.initAndStartSession(this, Konstanten.SPLUNK_MINT_API_KEY);
-        CheatDatabaseApplication.tracker().send(new HitBuilders.EventBuilder("ui", "Cheat List").setLabel("activity").build());
 
         tools.loadAd(mAdView, getString(R.string.screen_type));
 
@@ -227,11 +179,11 @@ public class CheatListActivity extends AppCompatActivity {
         gameObj.setCheats(cheats);
 
         Collections.addAll(cheatsArrayList, cheats);
-        fillListWithGames();
+        fillListWithCheats();
     }
 
     @UiThread
-    public void fillListWithGames() {
+    public void fillListWithCheats() {
         try {
             if (cheatsArrayList != null && cheatsArrayList.size() > 0) {
                 cheatRecycleListViewAdapter.init(cheatsArrayList);
@@ -303,12 +255,6 @@ public class CheatListActivity extends AppCompatActivity {
         }
     }
 
-//    @Override
-//    public void onFinishReportDialog(int selectedReason) {
-//        String[] reasons = getResources().getStringArray(R.array.report_reasons);
-//        reportCheatInBackground(reasons[selectedReason]);
-//    }
-
     public void onEvent(CheatReportingFinishedEvent result) {
         if (result.isSucceeded()) {
             Toast.makeText(this, R.string.thanks_for_reporting, Toast.LENGTH_LONG).show();
@@ -331,118 +277,17 @@ public class CheatListActivity extends AppCompatActivity {
         }
     }
 
-//    @Override
-//    public void onFinishRateCheatDialog(int selectedRating) {
-//        visibleCheat.setMemberRating(selectedRating);
-//        cheatDetailFragment.updateMemberCheatRating(selectedRating);
+    public void onEvent(CheatRatingFinishedEvent result) {
+        visibleCheat.setMemberRating(result.getRating());
+//        cheatDetailFragment.updateMemberCheatRating(result.getRating());
 //
 //        // FIXME make the star to highlight on all fragments
 //        cheatDetailFragment.highlightRatingIcon(true);
 //        cheatDetailTabletMetaFragment.highlightRatingIcon(true);
 //        cheatForumFragment.highlightRatingIcon(true);
-//
-//        Toast.makeText(this, R.string.rating_inserted, Toast.LENGTH_SHORT).show();
-//    }
-
-    public void onEvent(CheatRatingFinishedEvent result) {
-//        if (mTwoPane) {
-        visibleCheat.setMemberRating(result.getRating());
-        cheatDetailFragment.updateMemberCheatRating(result.getRating());
-
-        // FIXME make the star to highlight on all fragments
-        cheatDetailFragment.highlightRatingIcon(true);
-        cheatDetailTabletMetaFragment.highlightRatingIcon(true);
-        cheatForumFragment.highlightRatingIcon(true);
 
         Toast.makeText(this, R.string.rating_inserted, Toast.LENGTH_SHORT).show();
-//        }
     }
-
-//    @Background
-//    void reportCheatInBackground(String reason) {
-//        boolean isSuccess = false;
-//
-//        try {
-//            Webservice.reportCheat(visibleCheat.getCheatId(), member.getMid(), reason);
-//            isSuccess = true;
-//        } catch (Exception e) {
-//            isSuccess = false;
-//        }
-//        reportCheatFinished(isSuccess);
-//    }
-//
-//    @UiThread
-//    void reportCheatFinished(boolean isSuccess) {
-//        if (isSuccess) {
-//            Toast.makeText(CheatListActivity.this, R.string.thanks_for_reporting, Toast.LENGTH_LONG).show();
-//        } else {
-//            Toast.makeText(CheatListActivity.this, R.string.no_internet, Toast.LENGTH_SHORT).show();
-//        }
-//    }
-
-//    /**
-//     * Callback method from {@link com.cheatdatabase.CheatListFragment.CheatListClickCallbacks} indicating that
-//     * the item with the given ID was selected.
-//     */
-//    @Override
-//    public void onItemSelected(int id) {
-//        this.lastPosition = id;
-//        this.lastGameObj = this.gameObj;
-//        this.visibleCheat = gameObj.getCheats()[id];
-//
-//        Log.d(TAG, "onItemSelected: " + id);
-//        Log.d(TAG, "mTwoPane: " + mTwoPane);
-//        Log.d(TAG, "visibleCheat: " + visibleCheat.getCheatTitle());
-//
-//        CheatDatabaseApplication.tracker().send(new HitBuilders.EventBuilder("ui", "select_cheat").setLabel(this.visibleCheat.getGameName() + ": " + this.visibleCheat.getCheatTitle()).build());
-//
-//        if (mTwoPane) {
-//            Log.i(TAG, "Is Dual Pane");
-//
-//            cheatDetailFragment = new CheatDetailTabletFragment();
-//            cheatForumFragment = new CheatForumFragment();
-//            cheatDetailTabletMetaFragment = new CheatDetailTabletMetaFragment();
-//
-//            // VIEW FOR TABLETS
-//            Bundle arguments = new Bundle();
-//            arguments.putInt(CheatDetailTabletFragment.ARG_ITEM_ID, id);
-//            arguments.putSerializable("cheatObj", visibleCheat);
-//            arguments.putSerializable("cheatDetailTabletFragment", cheatDetailFragment);
-//            arguments.putSerializable("cheatForumFragment", cheatForumFragment);
-//            arguments.putSerializable("cheatDetailTabletMetaFragment", cheatDetailTabletMetaFragment);
-//            cheatDetailFragment.setArguments(arguments);
-//            cheatForumFragment.setArguments(arguments);
-//            cheatDetailTabletMetaFragment.setArguments(arguments);
-//
-//            getSupportFragmentManager().beginTransaction().addToBackStack(null).replace(R.id.cheat_detail_container, cheatDetailFragment).commit();
-//
-//        } else {
-//            // In single-pane mode, simply start the detail activity
-//            // for the selected item ID.
-//            // Intent detailIntent = new Intent(this, YyyDetailActivity.class);
-//            // detailIntent.putExtra(YyyDetailFragment.ARG_ITEM_ID, id);
-//            // startActivity(detailIntent);
-//
-//            // editor.putString(Konstanten.PREFERENCES_TEMP_GAME_OBJECT_VIEW,
-//            // new Gson().toJson(gameObj));
-//            editor.putInt(Konstanten.PREFERENCES_PAGE_SELECTED, id);
-//            editor.commit();
-//
-//            if (Reachability.reachability.isReachable) {
-//                // Using local Preferences to pass data for large game objects
-//                // (instead of intent) such as Pokemon
-//                Intent explicitIntent = new Intent(CheatListActivity.this, CheatViewPageIndicator.class);
-//                // explicitIntent.putExtra("gameObj", gameObj);
-//                explicitIntent.putExtra("selectedPage", id);
-//                explicitIntent.putExtra("layoutResourceId", R.layout.activity_cheatview_pager);
-//                // explicitIntent.putExtra("pageIndicatorColor",
-//                // R.color.page_indicator);
-//                startActivity(explicitIntent);
-//            } else {
-//                Toast.makeText(CheatListActivity.this, R.string.no_internet, Toast.LENGTH_SHORT).show();
-//            }
-//        }
-//    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -609,35 +454,6 @@ public class CheatListActivity extends AppCompatActivity {
 
             CheatDatabaseApplication.tracker().send(new HitBuilders.EventBuilder("ui", "select_cheat").setLabel(result.getCheat().getGameName() + ": " + result.getCheat().getCheatTitle()).build());
 
-//            if (mTwoPane) {
-//                Log.i(TAG, "Is Dual Pane");
-//
-//                cheatDetailFragment = new CheatDetailTabletFragment();
-//                cheatForumFragment = new CheatForumFragment();
-//                cheatDetailTabletMetaFragment = new CheatDetailTabletMetaFragment();
-//
-//                // VIEW FOR TABLETS
-//                Bundle arguments = new Bundle();
-//                arguments.putInt(CheatDetailTabletFragment.ARG_ITEM_ID, result.getPosition());
-//                arguments.putSerializable("cheatObj", result.getCheat());
-//                arguments.putSerializable("cheatDetailTabletFragment", cheatDetailFragment);
-//                arguments.putSerializable("cheatForumFragment", cheatForumFragment);
-//                arguments.putSerializable("cheatDetailTabletMetaFragment", cheatDetailTabletMetaFragment);
-//                cheatDetailFragment.setArguments(arguments);
-//                cheatForumFragment.setArguments(arguments);
-//                cheatDetailTabletMetaFragment.setArguments(arguments);
-//
-//                getSupportFragmentManager().beginTransaction().addToBackStack(null).replace(R.id.cheat_detail_container, cheatDetailFragment).commit();
-//
-//            } else {
-            // In single-pane mode, simply start the detail activity
-            // for the selected item ID.
-            // Intent detailIntent = new Intent(this, YyyDetailActivity.class);
-            // detailIntent.putExtra(YyyDetailFragment.ARG_ITEM_ID, id);
-            // startActivity(detailIntent);
-
-            // editor.putString(Konstanten.PREFERENCES_TEMP_GAME_OBJECT_VIEW,
-            // new Gson().toJson(gameObj));
             editor.putInt(Konstanten.PREFERENCES_PAGE_SELECTED, result.getPosition());
             editor.commit();
 
@@ -648,15 +464,10 @@ public class CheatListActivity extends AppCompatActivity {
                 explicitIntent.putExtra("gameObj", gameObj);
                 explicitIntent.putExtra("selectedPage", result.getPosition());
                 explicitIntent.putExtra("layoutResourceId", R.layout.activity_cheatview_pager);
-                // explicitIntent.putExtra("pageIndicatorColor",
-                // R.color.page_indicator);
                 startActivity(explicitIntent);
             } else {
-                Toast.makeText(CheatListActivity.this, R.string.no_internet, Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.no_internet, Toast.LENGTH_SHORT).show();
             }
-//            }
-
-
         } else {
             Toast.makeText(this, R.string.no_internet, Toast.LENGTH_SHORT).show();
         }
