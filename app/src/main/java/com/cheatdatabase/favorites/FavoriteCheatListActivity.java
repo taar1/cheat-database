@@ -1,128 +1,163 @@
 package com.cheatdatabase.favorites;
 
-import android.annotation.SuppressLint;
-import android.app.ProgressDialog;
+import android.app.AlertDialog;
 import android.app.SearchManager;
 import android.app.TaskStackBuilder;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.NavUtils;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cheatdatabase.CheatDatabaseApplication;
 import com.cheatdatabase.R;
+import com.cheatdatabase.adapters.CheatRecycleListViewAdapter;
 import com.cheatdatabase.businessobjects.Cheat;
 import com.cheatdatabase.businessobjects.Game;
 import com.cheatdatabase.businessobjects.Member;
 import com.cheatdatabase.dialogs.RateCheatDialog;
+import com.cheatdatabase.events.CheatListRecyclerViewClickEvent;
 import com.cheatdatabase.events.CheatRatingFinishedEvent;
 import com.cheatdatabase.favorites.handset.cheatview.FavoritesCheatViewPageIndicator;
+import com.cheatdatabase.helpers.CheatDatabaseAdapter;
 import com.cheatdatabase.helpers.Konstanten;
+import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.helpers.Tools;
+import com.cheatdatabase.widgets.DividerDecoration;
+import com.cheatdatabase.widgets.EmptyRecyclerView;
+import com.gc.materialdesign.views.ProgressBarCircularIndeterminate;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.gson.Gson;
 import com.mopub.mobileads.MoPubView;
 import com.splunk.mint.Mint;
 
-@SuppressLint("NewApi")
-public class FavoriteCheatListActivity extends AppCompatActivity implements FavoriteCheatListFragment.ElementsListClickHandler {
+import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.Background;
+import org.androidannotations.annotations.Bean;
+import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.Extra;
+import org.androidannotations.annotations.UiThread;
+import org.androidannotations.annotations.ViewById;
+
+import java.util.ArrayList;
+import java.util.Collections;
+
+@EActivity(R.layout.activity_cheat_list)
+public class FavoriteCheatListActivity extends AppCompatActivity {
 
     private final String TAG = this.getClass().getSimpleName();
 
-    /**
-     * Whether or not the activity is in two-pane mode, i.e. running on a tablet
-     * device.
-     */
-    private boolean mTwoPane;
+    @Extra
+    Game gameObj;
+
+    @ViewById(R.id.my_recycler_view)
+    EmptyRecyclerView mRecyclerView;
+
+    @ViewById(R.id.swipe_refresh_layout)
+    SwipeRefreshLayout mSwipeRefreshLayout;
+
+    @Bean
+    Tools tools;
+
+    @ViewById(R.id.adview)
+    MoPubView mAdView;
+
+    @ViewById(R.id.toolbar)
+    Toolbar mToolbar;
+
+    @Bean
+    CheatRecycleListViewAdapter cheatRecycleListViewAdapter;
+
+    @ViewById(R.id.item_list_empty_view)
+    TextView mEmptyView;
+
+    @ViewById(R.id.items_list_load_progress)
+    ProgressBarCircularIndeterminate mProgressView;
 
     private SharedPreferences settings;
+    private SharedPreferences.Editor editor;
     private Member member;
-    private Game gameObj;
-
-    private ProgressDialog cheatProgressDialog = null;
 
     private int lastPosition;
     private Game lastGameObj;
     private Cheat visibleCheat;
-    private FavoritesDetailsFragment favoritesDetailsFragment;
-    private FavoritesCheatForumFragment favoritesCheatForumFragment;
-    private FavoritesCheatMetaFragment favoritesCheatMetaFragment;
-    private Toolbar mToolbar;
-    private MoPubView mAdView;
+    //    private FavoritesDetailsFragment favoritesDetailsFragment;
+//    private FavoritesCheatForumFragment favoritesCheatForumFragment;
+//    private FavoritesCheatMetaFragment favoritesCheatMetaFragment;
+    private CheatDatabaseAdapter db;
+    private ArrayList<Cheat> cheatsArrayList;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_favorite_list);
-
-        handleIntent();
+    @AfterViews
+    public void createView() {
         init();
+        mSwipeRefreshLayout.setRefreshing(true);
 
-        cheatProgressDialog = ProgressDialog.show(FavoriteCheatListActivity.this, getString(R.string.please_wait) + "...", getString(R.string.retrieving_data) + "...", true);
+        setTitle(gameObj.getGameName());
+        getSupportActionBar().setTitle(gameObj.getGameName());
+        getSupportActionBar().setSubtitle(gameObj.getSystemName());
 
-        if (findViewById(R.id.favorite_detail_container) != null) {
-            // The detail container view will be present only in the
-            // large-screen layouts (res/values-large and
-            // res/values-sw600dp). If this view is present, then the
-            // activity should be in two-pane mode.
-            mTwoPane = true;
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                mRecyclerView.showLoading();
+                getCheats();
+            }
+        });
 
-            // In two-pane mode, list items should be given the
-            // 'activated' state when touched.
-            FavoriteCheatListFragment ff = ((FavoriteCheatListFragment) getSupportFragmentManager().findFragmentById(R.id.favorite_list));
-            // ff.setArguments(bundle);
-            ff.setActivateOnItemClick(true);
+
+        // use this setting to improve performance if you know that changes
+        // in content do not change the layout size of the RecyclerView
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        mRecyclerView.addItemDecoration(new DividerDecoration(this));
+        mRecyclerView.getItemAnimator().setRemoveDuration(50);
+        mRecyclerView.setEmptyView(mEmptyView);
+        mRecyclerView.setLoadingView(mProgressView);
+        mRecyclerView.setHasFixedSize(true);
+
+        if (Reachability.reachability.isReachable) {
+            mRecyclerView.showLoading();
+            getCheats();
+        } else {
+            Toast.makeText(this, R.string.no_internet, Toast.LENGTH_SHORT).show();
         }
 
-        cheatProgressDialog.dismiss();
-        // TODO: If exposing deep links into your app, handle intents here.
     }
 
     private void init() {
+        CheatDatabaseApplication.tracker().send(new HitBuilders.EventBuilder("ui", "Favorites Cheat List").setLabel(TAG).build());
+
         Mint.initAndStartSession(this, Konstanten.SPLUNK_MINT_API_KEY);
 
+        tools.loadAd(mAdView, getString(R.string.screen_type));
+
+        if (mToolbar != null) {
+            setSupportActionBar(mToolbar);
+        }
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+
         settings = getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
+        editor = settings.edit();
 
-        mToolbar = Tools.initToolbarBase(this, mToolbar);
-        mAdView = Tools.initMoPubAdView(this, mAdView);
-
+        db = new CheatDatabaseAdapter(this);
+        db.open();
 
         if (member == null) {
             member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
         }
     }
-
-    private void handleIntent() {
-
-        new Thread(new Runnable() {
-
-            @Override
-            public void run() {
-                gameObj = (Game) getIntent().getSerializableExtra("gameObj");
-
-                CheatDatabaseApplication.tracker().send(new HitBuilders.EventBuilder("ui", "Favorites Cheat List").setLabel("activity").build());
-
-                runOnUiThread(new Runnable() {
-
-                    @Override
-                    public void run() {
-                        getSupportActionBar().setTitle(gameObj.getGameName());
-                        getSupportActionBar().setSubtitle(gameObj.getSystemName());
-                    }
-
-                });
-            }
-        }).start();
-    }
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -146,59 +181,60 @@ public class FavoriteCheatListActivity extends AppCompatActivity implements Favo
         return super.onOptionsItemSelected(item);
     }
 
-    /**
-     * Callback method from
-     * {@link FavoriteCheatListFragment.ElementsListClickHandler} indicating
-     * that the item with the given ID was selected.
-     */
-    @Override
-    public void onItemSelected(int position) {
-        this.lastPosition = position;
-        this.lastGameObj = gameObj;
-        this.visibleCheat = gameObj.getCheats()[position];
+//    /**
+//     * Callback method from
+//     * {@link FavoriteCheatListFragment.ElementsListClickHandler} indicating
+//     * that the item with the given ID was selected.
+//     */
+//    @Override
+//    public void onItemSelected(int position) {
+//        this.lastPosition = position;
+//        this.lastGameObj = gameObj;
+//        this.visibleCheat = gameObj.getCheats()[position];
+//
+//        if (mTwoPane) {
+//            Log.i(TAG, "Is Dual Pane");
+//
+//            favoritesDetailsFragment = new FavoritesDetailsFragment();
+//            favoritesCheatForumFragment = new FavoritesCheatForumFragment();
+//            favoritesCheatMetaFragment = new FavoritesCheatMetaFragment();
+//
+//            Bundle arguments = new Bundle();
+//            arguments.putInt("position", position);
+//            arguments.putSerializable("gameObj", gameObj);
+//            arguments.putSerializable("cheatObj", visibleCheat);
+//            arguments.putSerializable("favoritesDetailsFragment", favoritesDetailsFragment);
+//            arguments.putSerializable("favoritesCheatForumFragment", favoritesCheatForumFragment);
+//            arguments.putSerializable("favoritesCheatMetaFragment", favoritesCheatMetaFragment);
+//            favoritesDetailsFragment.setArguments(arguments);
+//            favoritesCheatForumFragment.setArguments(arguments);
+//            favoritesCheatMetaFragment.setArguments(arguments);
+//
+//            android.support.v4.app.FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+//            transaction.replace(R.id.favorite_detail_container, favoritesDetailsFragment);
+//            transaction.addToBackStack(null);
+//            transaction.commit();
+//
+//        } else {
+//            // In single-pane mode, simply start the detail activity
+//            // for the selected item ID.
+//            // Intent detailIntent = new Intent(this,
+//            // FavoriteCheatDetailActivity.class);
+//            // detailIntent.putExtra(FavoriteCheatDetailFragment.ARG_ITEM_ID,
+//            // id);
+//            // detailIntent.putExtra("gameObj", gameObj);
+//            // detailIntent.putExtra("position", id);
+//            // // detailIntent.putExtra("bundle", bundle);
+//            // startActivity(detailIntent);
+//
+//            Intent intent = new Intent(this, FavoritesCheatViewPageIndicator.class);
+//            intent.putExtra("layoutResourceId", R.layout.activity_cheatview_pager);
+//            intent.putExtra("position", position);
+//            intent.putExtra("gameObj", gameObj);
+//            startActivity(intent);
+//        }
+//    }
 
-        if (mTwoPane) {
-            Log.i(TAG, "Is Dual Pane");
-
-            favoritesDetailsFragment = new FavoritesDetailsFragment();
-            favoritesCheatForumFragment = new FavoritesCheatForumFragment();
-            favoritesCheatMetaFragment = new FavoritesCheatMetaFragment();
-
-            Bundle arguments = new Bundle();
-            arguments.putInt("position", position);
-            arguments.putSerializable("gameObj", gameObj);
-            arguments.putSerializable("cheatObj", visibleCheat);
-            arguments.putSerializable("favoritesDetailsFragment", favoritesDetailsFragment);
-            arguments.putSerializable("favoritesCheatForumFragment", favoritesCheatForumFragment);
-            arguments.putSerializable("favoritesCheatMetaFragment", favoritesCheatMetaFragment);
-            favoritesDetailsFragment.setArguments(arguments);
-            favoritesCheatForumFragment.setArguments(arguments);
-            favoritesCheatMetaFragment.setArguments(arguments);
-
-            android.support.v4.app.FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            transaction.replace(R.id.favorite_detail_container, favoritesDetailsFragment);
-            transaction.addToBackStack(null);
-            transaction.commit();
-
-        } else {
-            // In single-pane mode, simply start the detail activity
-            // for the selected item ID.
-            // Intent detailIntent = new Intent(this,
-            // FavoriteCheatDetailActivity.class);
-            // detailIntent.putExtra(FavoriteCheatDetailFragment.ARG_ITEM_ID,
-            // id);
-            // detailIntent.putExtra("gameObj", gameObj);
-            // detailIntent.putExtra("position", id);
-            // // detailIntent.putExtra("bundle", bundle);
-            // startActivity(detailIntent);
-
-            Intent intent = new Intent(this, FavoritesCheatViewPageIndicator.class);
-            intent.putExtra("layoutResourceId", R.layout.activity_cheatview_pager);
-            intent.putExtra("position", position);
-            intent.putExtra("gameObj", gameObj);
-            startActivity(intent);
-        }
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -265,7 +301,7 @@ public class FavoriteCheatListActivity extends AppCompatActivity implements Favo
             Bundle args = new Bundle();
             args.putSerializable("cheatObj", visibleCheat);
 
-            android.support.v4.app.FragmentManager fm = getSupportFragmentManager();
+            FragmentManager fm = getSupportFragmentManager();
             RateCheatDialog ratingCheatDialog = new RateCheatDialog();
             ratingCheatDialog.setArguments(args);
             ratingCheatDialog.show(fm, "fragment_rating_cheat");
@@ -287,12 +323,12 @@ public class FavoriteCheatListActivity extends AppCompatActivity implements Favo
 
     public void onEvent(CheatRatingFinishedEvent result) {
         visibleCheat.setMemberRating(result.getRating());
-        favoritesDetailsFragment.updateMemberCheatRating(result.getRating());
-
-        // FIXME make the star to highlighton all fragments
-        favoritesDetailsFragment.highlightRatingIcon(true);
-        favoritesCheatMetaFragment.highlightRatingIcon(true);
-        favoritesCheatForumFragment.highlightRatingIcon(true);
+//        favoritesDetailsFragment.updateMemberCheatRating(result.getRating());
+//
+//        // FIXME make the star to highlighton all fragments
+//        favoritesDetailsFragment.highlightRatingIcon(true);
+//        favoritesCheatMetaFragment.highlightRatingIcon(true);
+//        favoritesCheatForumFragment.highlightRatingIcon(true);
 
         Toast.makeText(this, R.string.rating_inserted, Toast.LENGTH_SHORT).show();
     }
@@ -300,12 +336,15 @@ public class FavoriteCheatListActivity extends AppCompatActivity implements Favo
     @Override
     public void onResume() {
         super.onResume();
+        Reachability.registerReachability(this);
         CheatDatabaseApplication.getEventBus().register(this);
+
     }
 
     @Override
     public void onPause() {
         super.onPause();
+        Reachability.unregister(this);
         CheatDatabaseApplication.getEventBus().unregister(this);
     }
 
@@ -316,4 +355,92 @@ public class FavoriteCheatListActivity extends AppCompatActivity implements Favo
         }
         super.onDestroy();
     }
+
+    public void onEvent(CheatListRecyclerViewClickEvent result) {
+        if (result.isSucceeded()) {
+            CheatDatabaseApplication.tracker().send(new HitBuilders.EventBuilder("ui", "click").setLabel(result.getCheat().getCheatTitle()).build());
+
+            this.visibleCheat = result.getCheat();
+            this.lastGameObj = result.getCheat().getGame();
+
+            CheatDatabaseApplication.tracker().send(new HitBuilders.EventBuilder("ui", "select_cheat").setLabel(result.getCheat().getGameName() + ": " + result.getCheat().getCheatTitle()).build());
+
+            // editor.putString(Konstanten.PREFERENCES_TEMP_GAME_OBJECT_VIEW,
+            // new Gson().toJson(gameObj));
+            editor.putInt(Konstanten.PREFERENCES_PAGE_SELECTED, result.getPosition());
+            editor.commit();
+
+            if (Reachability.reachability.isReachable) {
+                // Using local Preferences to pass data for large game objects
+                // (instead of intent) such as Pokemon
+
+                Intent explicitIntent = new Intent(this, FavoritesCheatViewPageIndicator.class);
+                explicitIntent.putExtra("gameObj", gameObj);
+                explicitIntent.putExtra("position", result.getPosition());
+                explicitIntent.putExtra("layoutResourceId", R.layout.activity_cheatview_pager);
+                startActivity(explicitIntent);
+            } else {
+                Toast.makeText(this, R.string.no_internet, Toast.LENGTH_SHORT).show();
+            }
+
+        } else {
+            Toast.makeText(this, R.string.no_internet, Toast.LENGTH_SHORT).show();
+        }
+    }
+
+
+    @Background
+    void getCheats() {
+        cheatsArrayList = new ArrayList<>();
+
+        if (gameObj != null) {
+            if (gameObj.getCheats() == null) {
+                Collections.addAll(cheatsArrayList, db.getAllFavoritedCheatsByGame(gameObj.getGameId()));
+            } else {
+                Collections.addAll(cheatsArrayList, gameObj.getCheats());
+            }
+
+            Cheat[] cheats = new Cheat[cheatsArrayList.size()];
+            for (int i = 0; i < cheatsArrayList.size(); i++) {
+                cheats[i] = cheatsArrayList.get(i);
+            }
+
+            gameObj.setCheats(cheats);
+
+            fillListWithCheats();
+        } else {
+            error();
+        }
+    }
+
+    @UiThread
+    public void fillListWithCheats() {
+        try {
+            if (cheatsArrayList != null && cheatsArrayList.size() > 0) {
+                cheatRecycleListViewAdapter.init(cheatsArrayList);
+                mRecyclerView.setAdapter(cheatRecycleListViewAdapter);
+
+                cheatRecycleListViewAdapter.notifyDataSetChanged();
+            } else {
+                error();
+            }
+        } catch (Exception e) {
+            error();
+        }
+
+        mSwipeRefreshLayout.setRefreshing(false);
+        mRecyclerView.hideLoading();
+    }
+
+    private void error() {
+        Log.e(TAG, "caught error: " + getPackageName() + "/" + getTitle());
+        new AlertDialog.Builder(this).setIcon(R.drawable.ic_action_warning).setTitle(getString(R.string.err)).setMessage(R.string.err_data_not_accessible).setNeutralButton(R.string.ok, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int whichButton) {
+                finish();
+            }
+        }).create().show();
+    }
+
+
 }

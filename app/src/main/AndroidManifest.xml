@@ -148,7 +148,7 @@
                 android:value="com.cheatdatabase.search.SearchResultsActivity" />
         </activity>
         <activity
-            android:name=".favorites.FavoriteCheatListActivity"
+            android:name=".favorites.FavoriteCheatListActivity_"
             android:label="@string/title_favorite_list"
             android:logo="@drawable/app_icon_fox"
             android:parentActivityName=".MainActivity_"
