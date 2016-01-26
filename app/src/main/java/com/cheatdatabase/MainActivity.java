@@ -106,7 +106,6 @@ public class MainActivity extends AppCompatActivity implements ActionBar.OnNavig
     @Extra
     int mFragmentId;
 
-
     @AfterViews
     public void createView() {
         setTitle(R.string.app_name);
@@ -454,7 +453,6 @@ public class MainActivity extends AppCompatActivity implements ActionBar.OnNavig
         boolean isFragment = false;
 
         setMainTitle(position);
-
 
         FragmentManager annotationFragmentManager = getFragmentManager();
         switch (position) {
