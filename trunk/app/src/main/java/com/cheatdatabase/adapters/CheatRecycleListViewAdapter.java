@@ -101,8 +101,8 @@ public class CheatRecycleListViewAdapter extends RecyclerView.Adapter<CheatRecyc
             public void onCheatClick(CheatRecycleListViewAdapter.ViewHolder caller) {
                 if (Reachability.reachability.isReachable) {
 
-                    Log.d(TAG, "XXXXX caller.getAdapterPosition(): " + caller.getAdapterPosition());
-                    Log.d(TAG, "XXXXX Cheat Title: " + mCheats.get(caller.getAdapterPosition()).getCheatTitle());
+                    Log.d(TAG, "caller.getAdapterPosition(): " + caller.getAdapterPosition());
+                    Log.d(TAG, "Cheat Title: " + mCheats.get(caller.getAdapterPosition()).getCheatTitle());
 
                     CheatDatabaseApplication.getEventBus().post(new CheatListRecyclerViewClickEvent(mCheats.get(caller.getAdapterPosition()), caller.getAdapterPosition()));
                 } else {
