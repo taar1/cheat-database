@@ -32,13 +32,5 @@
         android:fastScrollEnabled="true"
         android:scrollbars="vertical"></ListView>
 
-    <com.mopub.mobileads.MoPubView
-        android:id="@+id/adview"
-        android:layout_width="fill_parent"
-        android:layout_height="50dp"
-        android:layout_gravity="bottom"
-        android:layout_weight="1"
-        android:background="@color/black"
-        android:gravity="top" />
-
+    <include layout="@layout/adview" />
 </LinearLayout>
