@@ -71,7 +71,7 @@
         </activity>
         <activity android:name=".helpers.Helper" />
         <activity
-            android:name=".SubmitCheatActivity"
+            android:name=".SubmitCheatActivity_"
             android:logo="@drawable/app_icon_fox" />
         <activity
             android:name=".CheatListActivity_"
@@ -91,7 +91,7 @@
             android:logo="@drawable/app_icon_fox"
             android:windowSoftInputMode="adjustResize|stateVisible" />
         <activity
-            android:name=".RecoverActivity"
+            android:name=".RecoverActivity_"
             android:label="@string/title_activity_recover"
             android:logo="@drawable/app_icon_fox"
             android:parentActivityName=".LoginActivity_"

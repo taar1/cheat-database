@@ -11,7 +11,7 @@ import java.util.ArrayList;
 public class ForumHandler extends DefaultHandler {
 
     private ForumPost singleForumPost = new ForumPost();
-    private ArrayList<ForumPost> forumPosts = new ArrayList<ForumPost>();
+    private ArrayList<ForumPost> forumPosts = new ArrayList<>();
 
     // ===========================================================
     // Getter & Setter
@@ -31,7 +31,7 @@ public class ForumHandler extends DefaultHandler {
     @Override
     public void startDocument() throws SAXException {
         this.singleForumPost = new ForumPost();
-        this.forumPosts = new ArrayList<ForumPost>();
+        this.forumPosts = new ArrayList<>();
     }
 
     @Override

@@ -45,7 +45,7 @@ import java.util.Set;
 @EFragment(R.layout.fragment_favorites_main_list)
 public class FavoriteGamesListFragment extends Fragment {
 
-    SparseArray<Group> groups = new SparseArray<Group>();
+    SparseArray<Group> groups = new SparseArray<>();
 
     protected SystemPlatform systemObj;
 
@@ -142,15 +142,14 @@ public class FavoriteGamesListFragment extends Fragment {
             changeView();
         } else {
             if ((gamesFound != null) && (gamesFound.length > 0)) {
-                Set<String> systems = new HashSet<String>();
+                Set<String> systems = new HashSet<>();
                 // Get system names
-                for (int i = 0; i < gamesFound.length; i++) {
-                    Game game = gamesFound[i];
+                for (Game game : gamesFound) {
                     systems.add(game.getSystemName());
                 }
 
                 // Sort system names
-                List<String> systemsSorted = new ArrayList<String>(systems);
+                List<String> systemsSorted = new ArrayList<>(systems);
                 Collections.sort(systemsSorted);
 
                 // Go through systems
@@ -161,8 +160,7 @@ public class FavoriteGamesListFragment extends Fragment {
                     Group group = new Group(systemsSorted.get(i) + "");
 
                     // Fill each group with the game names
-                    for (int l = 0; l < gamesFound.length; l++) {
-                        Game game = gamesFound[l];
+                    for (Game game : gamesFound) {
                         if (game.getSystemName().equalsIgnoreCase(systemsSorted.get(i))) {
                             group.children.add(game.getGameName());
                             group.gameChildren.add(game);
@@ -244,7 +242,7 @@ public class FavoriteGamesListFragment extends Fragment {
      * Deletes a game from the local favorites database table.
      */
     private void removeFavorite() {
-        if (db.deleteFavorites(selectedGame) == true) {
+        if (db.deleteFavorites(selectedGame)) {
             Toast.makeText(parentActivity, getString(R.string.remove_favorites_ok, "'" + selectedGame.getGameName() + "'"), Toast.LENGTH_SHORT).show();
 
             // TODO liste neu laden

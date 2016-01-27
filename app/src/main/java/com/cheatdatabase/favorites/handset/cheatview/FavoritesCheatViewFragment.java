@@ -31,7 +31,6 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.cheatdatabase.CheatDetailTabletFragment;
 import com.cheatdatabase.R;
 import com.cheatdatabase.businessobjects.Cheat;
 import com.cheatdatabase.businessobjects.Game;
@@ -83,6 +82,7 @@ public class FavoritesCheatViewFragment extends Fragment implements OnClickListe
     public AlertDialog alert;
 
     private static final String KEY_CONTENT = "CheatViewFragment:Content";
+    private static final String TAG = FavoritesCheatViewFragment.class.getSimpleName();
 
     public static FavoritesCheatViewFragment newInstance(String content, Game game, int offset) {
 
@@ -204,7 +204,7 @@ public class FavoritesCheatViewFragment extends Fragment implements OnClickListe
         /**
          * Get thumbnails if there are screenshots.
          */
-        if (cheatObj.isScreenshots() == true) {
+        if (cheatObj.isScreenshots()) {
             biggestHeight = 100; // init value
             imageViews = new ImageView[cheatObj.getScreens().length];
             progressBar.setVisibility(View.VISIBLE);
@@ -240,6 +240,7 @@ public class FavoritesCheatViewFragment extends Fragment implements OnClickListe
         } catch (Exception e) {
             offset = 0;
             // TODO message ausgeben, dass kein Game objekt besteht
+            Log.e("Error", e.getLocalizedMessage());
         }
     }
 
@@ -267,7 +268,7 @@ public class FavoritesCheatViewFragment extends Fragment implements OnClickListe
                 fillSimpleContent();
             }
         } catch (Exception e) {
-            Log.e(FavoritesCheatViewFragment.class.getName(), "Cheat " + cheatObj.getCheatId() + " contains(</td>) - Error creating table");
+            Log.e(TAG, "Cheat " + cheatObj.getCheatId() + " contains(</td>) - Error creating table");
             fillSimpleContent();
         }
     }
@@ -394,7 +395,7 @@ public class FavoritesCheatViewFragment extends Fragment implements OnClickListe
     public void onClick(View v) {
         Log.d("onClick", "onClick");
         Bundle arguments = new Bundle();
-        arguments.putInt(CheatDetailTabletFragment.ARG_ITEM_ID, 1);
+        arguments.putInt("CHANGEME", 1);
         arguments.putSerializable("cheatObj", cheatObj);
     }
 
@@ -495,7 +496,7 @@ public class FavoritesCheatViewFragment extends Fragment implements OnClickListe
 
 
             } catch (IOException e) {
-                Log.e(FavoritesCheatViewFragment.class.getName(), "Remtoe Image Exception", e);
+                Log.e(TAG, "Remtoe Image Exception", e);
             }
 
             return bms;

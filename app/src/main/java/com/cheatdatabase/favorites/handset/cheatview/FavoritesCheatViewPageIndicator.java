@@ -27,7 +27,7 @@ import com.cheatdatabase.CheatDatabaseApplication;
 import com.cheatdatabase.CheatForumActivity_;
 import com.cheatdatabase.LoginActivity;
 import com.cheatdatabase.R;
-import com.cheatdatabase.SubmitCheatActivity;
+import com.cheatdatabase.SubmitCheatActivity_;
 import com.cheatdatabase.businessobjects.Cheat;
 import com.cheatdatabase.businessobjects.Game;
 import com.cheatdatabase.businessobjects.Member;
@@ -54,6 +54,8 @@ import com.viewpagerindicator.UnderlinePageIndicator;
  * @version 1.0
  */
 public class FavoritesCheatViewPageIndicator extends AppCompatActivity implements UndoBarController.UndoListener {
+
+    private final String TAG = FavoritesCheatViewPageIndicator.class.getSimpleName();
 
     // https://code.google.com/p/romannurik-code/source/browse/misc/undobar
     private UndoBarController mUndoBarController;
@@ -185,7 +187,7 @@ public class FavoritesCheatViewPageIndicator extends AppCompatActivity implement
             });
 
         } catch (Exception e2) {
-            Log.e("initialisePaging() ERROR: ", getPackageName() + "/" + getTitle() + "... " + e2.getMessage());
+            Log.e(TAG, "ERROR: " + getPackageName() + "/" + getTitle() + "... " + e2.getMessage());
         }
     }
 
@@ -285,7 +287,7 @@ public class FavoritesCheatViewPageIndicator extends AppCompatActivity implement
                 finish();
                 return true;
             case R.id.action_submit_cheat:
-                Intent explicitIntent = new Intent(FavoritesCheatViewPageIndicator.this, SubmitCheatActivity.class);
+                Intent explicitIntent = new Intent(FavoritesCheatViewPageIndicator.this, SubmitCheatActivity_.class);
                 explicitIntent.putExtra("gameObj", gameObj);
                 startActivity(explicitIntent);
                 return true;

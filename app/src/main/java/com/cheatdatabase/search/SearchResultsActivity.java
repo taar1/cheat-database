@@ -44,7 +44,7 @@ import java.util.Set;
 @SuppressLint("NewApi")
 public class SearchResultsActivity extends AppCompatActivity {
 
-    SparseArray<Group> groups = new SparseArray<Group>();
+    SparseArray<Group> groups = new SparseArray<>();
 
     private LinearLayout nothingFoundLayout;
     private RelativeLayout somethingfoundLayout;
@@ -224,7 +224,7 @@ public class SearchResultsActivity extends AppCompatActivity {
                 }
 
                 // Sort system names
-                List<String> systemsSorted = new ArrayList<String>(systems);
+                List<String> systemsSorted = new ArrayList<>(systems);
                 Collections.sort(systemsSorted);
 
                 // Go through systems

@@ -93,9 +93,7 @@ public class FavoriteCheatListActivity extends AppCompatActivity {
     private int lastPosition;
     private Game lastGameObj;
     private Cheat visibleCheat;
-    //    private FavoritesDetailsFragment favoritesDetailsFragment;
-//    private FavoritesCheatForumFragment favoritesCheatForumFragment;
-//    private FavoritesCheatMetaFragment favoritesCheatMetaFragment;
+
     private CheatDatabaseAdapter db;
     private ArrayList<Cheat> cheatsArrayList;
 
@@ -180,61 +178,6 @@ public class FavoriteCheatListActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
-//    /**
-//     * Callback method from
-//     * {@link FavoriteCheatListFragment.ElementsListClickHandler} indicating
-//     * that the item with the given ID was selected.
-//     */
-//    @Override
-//    public void onItemSelected(int position) {
-//        this.lastPosition = position;
-//        this.lastGameObj = gameObj;
-//        this.visibleCheat = gameObj.getCheats()[position];
-//
-//        if (mTwoPane) {
-//            Log.i(TAG, "Is Dual Pane");
-//
-//            favoritesDetailsFragment = new FavoritesDetailsFragment();
-//            favoritesCheatForumFragment = new FavoritesCheatForumFragment();
-//            favoritesCheatMetaFragment = new FavoritesCheatMetaFragment();
-//
-//            Bundle arguments = new Bundle();
-//            arguments.putInt("position", position);
-//            arguments.putSerializable("gameObj", gameObj);
-//            arguments.putSerializable("cheatObj", visibleCheat);
-//            arguments.putSerializable("favoritesDetailsFragment", favoritesDetailsFragment);
-//            arguments.putSerializable("favoritesCheatForumFragment", favoritesCheatForumFragment);
-//            arguments.putSerializable("favoritesCheatMetaFragment", favoritesCheatMetaFragment);
-//            favoritesDetailsFragment.setArguments(arguments);
-//            favoritesCheatForumFragment.setArguments(arguments);
-//            favoritesCheatMetaFragment.setArguments(arguments);
-//
-//            android.support.v4.app.FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-//            transaction.replace(R.id.favorite_detail_container, favoritesDetailsFragment);
-//            transaction.addToBackStack(null);
-//            transaction.commit();
-//
-//        } else {
-//            // In single-pane mode, simply start the detail activity
-//            // for the selected item ID.
-//            // Intent detailIntent = new Intent(this,
-//            // FavoriteCheatDetailActivity.class);
-//            // detailIntent.putExtra(FavoriteCheatDetailFragment.ARG_ITEM_ID,
-//            // id);
-//            // detailIntent.putExtra("gameObj", gameObj);
-//            // detailIntent.putExtra("position", id);
-//            // // detailIntent.putExtra("bundle", bundle);
-//            // startActivity(detailIntent);
-//
-//            Intent intent = new Intent(this, FavoritesCheatViewPageIndicator.class);
-//            intent.putExtra("layoutResourceId", R.layout.activity_cheatview_pager);
-//            intent.putExtra("position", position);
-//            intent.putExtra("gameObj", gameObj);
-//            startActivity(intent);
-//        }
-//    }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

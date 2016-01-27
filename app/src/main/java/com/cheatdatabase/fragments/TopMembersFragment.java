@@ -36,6 +36,7 @@ import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * Show Top 20 helping members in a list.
@@ -135,7 +136,7 @@ public class TopMembersFragment extends Fragment {
         AdapterContextMenuInfo info = (AdapterContextMenuInfo) menuInfo;
         selectedMember = members[Integer.parseInt(String.valueOf(info.id))];
         menu.setHeaderTitle(R.string.context_menu_title);
-        menu.add(0, VISIT_WEBSITE, 1, String.format(getString(R.string.top_members_visit_website, selectedMember.getUsername())));
+        menu.add(0, VISIT_WEBSITE, 1, getString(R.string.top_members_visit_website, selectedMember.getUsername()));
     }
 
     @Override
@@ -147,7 +148,7 @@ public class TopMembersFragment extends Fragment {
                     intent.setData(Uri.parse(selectedMember.getWebsite()));
                     startActivity(intent);
                 } else {
-                    Toast.makeText(parentActivity, String.format(getString(R.string.top_members_no_website, selectedMember.getUsername())), Toast.LENGTH_LONG).show();
+                    Toast.makeText(parentActivity, getString(R.string.top_members_no_website, selectedMember.getUsername()), Toast.LENGTH_LONG).show();
                 }
 
                 return true;
@@ -172,9 +173,7 @@ public class TopMembersFragment extends Fragment {
         if (members != null && members.length > 0) {
 
             ArrayList<Member> memberList = new ArrayList<>();
-            for (Member member : members) {
-                memberList.add(member);
-            }
+            Collections.addAll(memberList, members);
 
             initAdapter(memberList);
         } else {

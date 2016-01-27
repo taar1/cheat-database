@@ -6,6 +6,8 @@ import java.io.Serializable;
 
 public class SystemPlatform implements Serializable {
 
+    private final String TAG = SystemPlatform.class.getSimpleName();
+
     private int systemId;
     private int gameCount;
     private int cheatCount;
@@ -57,7 +59,7 @@ public class SystemPlatform implements Serializable {
             }
             return true;
         } catch (Exception e) {
-            Log.e("SystemPlatform:addGame()", e.getMessage());
+            Log.e(TAG, "SystemPlatform:addGame(): " + e.getMessage());
             return false;
         }
     }

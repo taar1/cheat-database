@@ -16,12 +16,12 @@ public class CheatContent {
     /**
      * An array of sample (dummy) items.
      */
-    public static List<CheatItem> ITEMS = new ArrayList<CheatItem>();
+    public static List<CheatItem> ITEMS = new ArrayList<>();
 
     /**
      * A map of sample (dummy) items, by ID.
      */
-    public static Map<Integer, CheatItem> ITEM_MAP = new HashMap<Integer, CheatItem>();
+    public static Map<Integer, CheatItem> ITEM_MAP = new HashMap<>();
 
     static {
         addItem(new CheatItem(9876, "3ds Xl And Wii U Easter Eggs", 10));
