@@ -85,7 +85,7 @@ public class Webservice {
     public static int sendLoginData(String email) {
         int responseCode = R.string.err_email_invalid;
 
-        if (Tools.isEmailValid(email) == true) {
+        if (Tools.isEmailValid(email)) {
             String urlParameters = null;
             try {
                 urlParameters = "email=" + URLEncoder.encode(email, "UTF-8");
@@ -182,7 +182,7 @@ public class Webservice {
         Member member = new Member();
 
         try {
-            if (Tools.isEmailValid(email) == true) {
+            if (Tools.isEmailValid(email)) {
                 String urlParameters = "username=" + URLEncoder.encode(username, "UTF-8") + "&email=" + URLEncoder.encode(email, "UTF-8");
                 String responseString = excutePost(Konstanten.BASE_URL_ANDROID + "register.php", urlParameters);
 
@@ -385,7 +385,7 @@ public class Webservice {
             String responseString = excutePost(Konstanten.BASE_URL_ANDROID + "getImagesByCheatId.php", urlParameters);
 
             jsonArray = new JSONArray(responseString);
-            al = new ArrayList<String[]>(jsonArray.length());
+            al = new ArrayList<>(jsonArray.length());
 
             for (int i = 0; i < jsonArray.length(); i++) {
 
@@ -818,12 +818,12 @@ public class Webservice {
         SystemPlatform[] systems = null;
         Game[] games = null;
         Cheat[] cheats = null;
-        ArrayList<Game> temporaryGameList = new ArrayList<Game>();
+        ArrayList<Game> temporaryGameList = new ArrayList<>();
 
         JSONArray jArray = null;
 
-        Map<Integer, String> systemsHashMap = new HashMap<Integer, String>();
-        Map<Integer, String> gamesHashMap = new HashMap<Integer, String>();
+        Map<Integer, String> systemsHashMap = new HashMap<>();
+        Map<Integer, String> gamesHashMap = new HashMap<>();
 
         try {
             String urlParameters = "memberId=" + URLEncoder.encode(String.valueOf(memberId), "UTF-8");
@@ -848,8 +848,8 @@ public class Webservice {
                 String system = jsonObject.getString("system");
                 int systemId = jsonObject.getInt("system_id");
 
-                systemsHashMap.put(Integer.valueOf(systemId), system);
-                gamesHashMap.put(Integer.valueOf(gameId), gameName);
+                systemsHashMap.put(systemId, system);
+                gamesHashMap.put(gameId, gameName);
 
                 // Games in ArrayList speichern, damit man spüter die
                 // System-ID und System-Name wieder rauskriegt
@@ -885,11 +885,11 @@ public class Webservice {
             }
 
             Iterator<Map.Entry<Integer, String>> it1 = systemsHashMap.entrySet().iterator();
-            ArrayList<SystemPlatform> temporarySystemList = new ArrayList<SystemPlatform>();
+            ArrayList<SystemPlatform> temporarySystemList = new ArrayList<>();
             while (it1.hasNext()) {
                 Map.Entry<Integer, String> pairs1 = it1.next();
                 int tmpSystemId = Integer.valueOf(pairs1.getKey().toString());
-                String tmpSystemName = pairs1.getValue().toString();
+                String tmpSystemName = pairs1.getValue();
 
                 SystemPlatform tempSys = new SystemPlatform(tmpSystemId, tmpSystemName);
                 temporarySystemList.add(tempSys);
@@ -900,11 +900,11 @@ public class Webservice {
             }
 
             Iterator<Map.Entry<Integer, String>> it2 = gamesHashMap.entrySet().iterator();
-            ArrayList<Game> temporaryInnerGameList = new ArrayList<Game>();
+            ArrayList<Game> temporaryInnerGameList = new ArrayList<>();
             while (it2.hasNext()) {
                 Map.Entry<Integer, String> pairs2 = it2.next();
                 int tmpGameId = Integer.valueOf(pairs2.getKey().toString());
-                String tmpGameName = pairs2.getValue().toString();
+                String tmpGameName = pairs2.getValue();
                 Game tmpGame = new Game();
                 tmpGame.setGameId(tmpGameId);
                 tmpGame.setGameName(tmpGameName);
@@ -920,13 +920,13 @@ public class Webservice {
                     }
                 }
 
-                ArrayList<Cheat> matchingCheats = new ArrayList<Cheat>();
-                for (int k = 0; k < cheats.length; k++) {
-                    Cheat cc = cheats[k];
-                    if (cc.getGameId() == tmpGame.getGameId()) {
-                        matchingCheats.add(cc);
+                ArrayList<Cheat> matchingCheats = new ArrayList<>();
+                for (Cheat cheat : cheats) {
+                    if (cheat.getGameId() == tmpGame.getGameId()) {
+                        matchingCheats.add(cheat);
                     }
                 }
+
                 /*
                  * Dem Game-Object die korrekte Anzahl Cheat-Objekten zuweisen
 				 */
@@ -956,12 +956,11 @@ public class Webservice {
             for (int j2 = 0; j2 < systems.length; j2++) {
                 SystemPlatform ss = systems[j2];
 
-                ArrayList<Game> matchingGames = new ArrayList<Game>();
-                for (int k2 = 0; k2 < games.length; k2++) {
-                    Game ggg = games[k2];
+                ArrayList<Game> matchingGames = new ArrayList<>();
 
-                    if (ss.getSystemId() == ggg.getSystemId()) {
-                        matchingGames.add(ggg);
+                for (Game game : games) {
+                    if (ss.getSystemId() == game.getSystemId()) {
+                        matchingGames.add(game);
                     }
                 }
                 systems[j2].createGameCollection(matchingGames.size());
@@ -969,10 +968,11 @@ public class Webservice {
 				/*
                  * Die passenden Game-Objekte dem System-Objekt hinzufügen
 				 */
-                for (int i = 0; i < matchingGames.size(); i++) {
-                    systems[j2].addGame(matchingGames.get(i));
+                for (Game game : matchingGames) {
+                    systems[j2].addGame(game);
                 }
             }
+
         } catch (JSONException | UnsupportedEncodingException e) {
             Log.e(TAG, "JSONException | UnsupportedEncodingException: " + e.getLocalizedMessage());
         }
@@ -1111,7 +1111,7 @@ public class Webservice {
     public static ArrayList<SystemPlatform> countGamesAndCheatsBySystem() {
         String gamesAndCheatCounter = executeGet(Konstanten.BASE_URL_ANDROID + "countGamesAndCheatsBySystem.php");
 
-        ArrayList<SystemPlatform> systems = new ArrayList<SystemPlatform>();
+        ArrayList<SystemPlatform> systems = new ArrayList<>();
 
         JSONArray jArray;
         try {
@@ -1448,7 +1448,7 @@ public class Webservice {
             InputStream is = connection.getInputStream();
             BufferedReader rd = new BufferedReader(new InputStreamReader(is));
             String line;
-            StringBuffer response = new StringBuffer();
+            StringBuilder response = new StringBuilder();
             while ((line = rd.readLine()) != null) {
                 response.append(line);
                 response.append('\r');
@@ -1543,7 +1543,7 @@ public class Webservice {
             InputStream is = connection.getInputStream();
             BufferedReader rd = new BufferedReader(new InputStreamReader(is));
             String line;
-            StringBuffer response = new StringBuffer();
+            StringBuilder response = new StringBuilder();
             while ((line = rd.readLine()) != null) {
                 response.append(line);
                 response.append('\r');

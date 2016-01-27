@@ -99,8 +99,8 @@ public class Tools {
         int newMonth = Integer.parseInt(newerDateSplit[1]);
         int newDay = Integer.parseInt(newerDateSplit[2]);
 
-        Date d1 = new GregorianCalendar(oldYear, oldMonth, oldDay, 00, 00).getTime();
-        Date d2 = new GregorianCalendar(newYear, newMonth, newDay, 00, 00).getTime();
+        Date d1 = new GregorianCalendar(oldYear, oldMonth, oldDay, 0, 0).getTime();
+        Date d2 = new GregorianCalendar(newYear, newMonth, newDay, 0, 0).getTime();
 
         // Get msec from each, and subtract.
         long diff = d2.getTime() - d1.getTime();
@@ -186,9 +186,7 @@ public class Tools {
                 }
                 xrp.next();
             }
-        } catch (XmlPullParserException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+        } catch (XmlPullParserException | IOException e) {
             e.printStackTrace();
         }
         return finalSystemname;
@@ -341,7 +339,7 @@ public class Tools {
      */
     public static ArrayList<SystemPlatform> getGameSystemsFromXml(Activity activity) {
 
-        ArrayList<SystemPlatform> al = new ArrayList<SystemPlatform>();
+        ArrayList<SystemPlatform> al = new ArrayList<>();
 
         try {
             XmlResourceParser xrp = activity.getResources().getXml(R.xml.systems);
@@ -365,9 +363,7 @@ public class Tools {
                 }
                 xrp.next();
             }
-        } catch (XmlPullParserException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+        } catch (XmlPullParserException | IOException e) {
             e.printStackTrace();
         }
 

@@ -5,9 +5,7 @@ import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.content.Intent;
 import android.graphics.Typeface;
-import android.os.AsyncTask;
 import android.os.Build;
-import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
@@ -24,10 +22,19 @@ import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.helpers.Tools;
 import com.cheatdatabase.helpers.Webservice;
 
+import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.Background;
+import org.androidannotations.annotations.Bean;
+import org.androidannotations.annotations.Click;
+import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.UiThread;
+import org.androidannotations.annotations.ViewById;
+
 /**
  * Activity which displays a login screen to the user, offering registration as
  * well.
  */
+@EActivity(R.layout.activity_recover)
 public class RecoverActivity extends AppCompatActivity {
 
     /**
@@ -35,21 +42,30 @@ public class RecoverActivity extends AppCompatActivity {
      */
     public static final String EXTRA_EMAIL = "com.example.android.authenticatordemo.extra.EMAIL";
 
-    /**
-     * Keep track of the login task to ensure we can cancel it if requested.
-     */
-    private RecoverTask mAuthTask = null;
-
-    // Values for email and password at the time of the login attempt.
-
     // UI references.
-    private EditText mEmailView;
+    @ViewById(R.id.email)
+    EditText mEmailView;
 
-    private View mLoginFormView;
-    private View mLoginStatusView;
-    private TextView mLoginStatusMessageView;
-    private TextView mResponseMessageView;
-    private Button recoverButton;
+    @ViewById(R.id.login_form)
+    View mLoginFormView;
+
+    @ViewById(R.id.send_status)
+    View mLoginStatusView;
+
+    @ViewById(R.id.send_status_message)
+    TextView mLoginStatusMessageView;
+
+    @ViewById(R.id.recover_return_message)
+    TextView mResponseMessageView;
+
+    @ViewById(R.id.recover_button)
+    Button recoverButton;
+
+    @ViewById(R.id.toolbar)
+    Toolbar mToolbar;
+
+    @Bean
+    Tools tools;
 
     private String mEmail;
 
@@ -57,17 +73,12 @@ public class RecoverActivity extends AppCompatActivity {
 
     private Typeface latoFontBold;
     private Typeface latoFontLight;
-    private Toolbar mToolbar;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_recover);
-
+    @AfterViews
+    public void onCreate() {
         init();
 
         mEmail = getIntent().getStringExtra(EXTRA_EMAIL);
-        mEmailView = (EditText) findViewById(R.id.email);
         mEmailView.setText(mEmail);
 
         mEmailView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -85,36 +96,30 @@ public class RecoverActivity extends AppCompatActivity {
                 return false;
             }
         });
+    }
 
-        mLoginFormView = findViewById(R.id.login_form);
-        mLoginStatusView = findViewById(R.id.send_status);
-        mLoginStatusMessageView = (TextView) findViewById(R.id.send_status_message);
-        mLoginStatusMessageView.setTypeface(latoFontLight);
-        mResponseMessageView = (TextView) findViewById(R.id.recover_return_message);
-        mResponseMessageView.setTypeface(latoFontBold);
-
-        recoverButton = (Button) findViewById(R.id.recover_button);
-        recoverButton.setTypeface(latoFontBold);
-        recoverButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (Reachability.reachability.isReachable) {
-                    attemptRecover();
-                } else {
-                    Toast.makeText(RecoverActivity.this, R.string.no_internet, Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-
+    @Click(R.id.recover_button)
+    void recoverButtonClicked() {
+        if (Reachability.reachability.isReachable) {
+            attemptRecover();
+        } else {
+            Toast.makeText(RecoverActivity.this, R.string.no_internet, Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void init() {
-        Reachability.registerReachability(this);
+        if (mToolbar != null) {
+            setSupportActionBar(mToolbar);
+        }
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
 
-        mToolbar = Tools.initToolbarBase(this, mToolbar);
+        latoFontBold = tools.getFont(getAssets(), Konstanten.FONT_BOLD);
+        latoFontLight = tools.getFont(getAssets(), Konstanten.FONT_LIGHT);
 
-        latoFontBold = Tools.getFont(getAssets(), Konstanten.FONT_BOLD);
-        latoFontLight = Tools.getFont(getAssets(), Konstanten.FONT_LIGHT);
+        mLoginStatusMessageView.setTypeface(latoFontLight);
+        mResponseMessageView.setTypeface(latoFontBold);
+        recoverButton.setTypeface(latoFontBold);
     }
 
     @Override
@@ -123,11 +128,14 @@ public class RecoverActivity extends AppCompatActivity {
         super.onPause();
     }
 
-    public void attemptRecover() {
-        if (mAuthTask != null) {
-            return;
-        }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Reachability.registerReachability(this);
+    }
 
+
+    public void attemptRecover() {
         // Reset errors.
         mEmailView.setError(null);
 
@@ -157,8 +165,7 @@ public class RecoverActivity extends AppCompatActivity {
             // perform the user login attempt.
             mLoginStatusMessageView.setText(R.string.recover_login);
             showProgress(true);
-            mAuthTask = new RecoverTask();
-            mAuthTask.execute((Void) null);
+            recoverTask(mEmailView.getText().toString().trim());
         }
     }
 
@@ -196,62 +203,37 @@ public class RecoverActivity extends AppCompatActivity {
         }
     }
 
-    /**
-     * Represents an asynchronous recovering task used to recover the login data
-     * and sending it by email.
-     */
-    public class RecoverTask extends AsyncTask<Void, Void, Boolean> {
-
-        @Override
-        protected Boolean doInBackground(Void... params) {
-
-            successMessage = Webservice.sendLoginData(mEmailView.getText().toString().trim());
-            if (successMessage == R.string.err_email_invalid) {
-                return false;
-            } else {
-                return true;
-            }
+    @Background
+    void recoverTask(String email) {
+        boolean success = false;
+        successMessage = Webservice.sendLoginData(email);
+        if (successMessage == R.string.err_email_invalid) {
+            success = false;
+        } else {
+            success = true;
         }
 
-        @Override
-        protected void onPostExecute(final Boolean success) {
-            mAuthTask = null;
-            showProgress(false);
+        afterRecover(success, successMessage);
+    }
 
-            if (success) {
-                mResponseMessageView.setText(getString(successMessage));
-                mResponseMessageView.setVisibility(View.VISIBLE);
+    @UiThread
+    void afterRecover(boolean success, int successMessage) {
+        showProgress(false);
 
-                if (successMessage != R.string.err_email_user_not_found) {
-                    Intent returnIntent = new Intent();
-                    returnIntent.putExtra("result", Konstanten.RECOVER_PASSWORD_SUCCESS_RETURN_CODE);
-                    setResult(RESULT_OK, returnIntent);
-                    finish();
-                    // recoverButton.setText(R.string.ok);
-                    // recoverButton.setOnClickListener(new OnClickListener() {
-                    //
-                    // @Override
-                    // public void onClick(View v) {
-                    // Intent returnIntent = new Intent();
-                    // returnIntent.putExtra("result",
-                    // Konstanten.RECOVER_PASSWORD_SUCCESS_RETURN_CODE);
-                    // setResult(RESULT_OK, returnIntent);
-                    // finish();
-                    // }
-                    //
-                    // });
-                }
+        if (success) {
+            mResponseMessageView.setText(getString(successMessage));
+            mResponseMessageView.setVisibility(View.VISIBLE);
 
-            } else {
-                mEmailView.setError(getString(successMessage));
-                mEmailView.requestFocus();
+            if (successMessage != R.string.err_email_user_not_found) {
+                Intent returnIntent = new Intent();
+                returnIntent.putExtra("result", Konstanten.RECOVER_PASSWORD_SUCCESS_RETURN_CODE);
+                setResult(RESULT_OK, returnIntent);
+                finish();
             }
-        }
 
-        @Override
-        protected void onCancelled() {
-            mAuthTask = null;
-            showProgress(false);
+        } else {
+            mEmailView.setError(getString(successMessage));
+            mEmailView.requestFocus();
         }
     }
 

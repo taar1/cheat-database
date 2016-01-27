@@ -67,8 +67,8 @@ public class GamesBySystemRecycleListViewAdapter extends RecyclerView.Adapter<Ga
 
     }
 
-    public static interface IMyViewHolderClicks {
-        public void onGameClick(GamesBySystemRecycleListViewAdapter.ViewHolder caller);
+    public interface IMyViewHolderClicks {
+        void onGameClick(GamesBySystemRecycleListViewAdapter.ViewHolder caller);
     }
 
     // Create new views (invoked by the layout manager)

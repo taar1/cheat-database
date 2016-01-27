@@ -96,12 +96,7 @@ public class CheatListActivity extends AppCompatActivity {
     private ArrayList<Cheat> cheatsArrayList;
 
     private int lastPosition;
-    private Game lastGameObj;
     private Cheat visibleCheat;
-
-//    private CheatDetailTabletFragment cheatDetailFragment;
-//    private CheatForumFragment cheatForumFragment;
-//    private CheatDetailTabletMetaFragment cheatDetailTabletMetaFragment;
 
     private ShareActionProvider mShareActionProvider;
 
@@ -304,7 +299,7 @@ public class CheatListActivity extends AppCompatActivity {
                 addCheatsToFavoritesTask(gameObj);
                 return true;
             case R.id.action_submit_cheat:
-                Intent explicitIntent = new Intent(CheatListActivity.this, SubmitCheatActivity.class);
+                Intent explicitIntent = new Intent(CheatListActivity.this, SubmitCheatActivity_.class);
                 explicitIntent.putExtra("gameObj", gameObj);
                 startActivity(explicitIntent);
                 return true;
@@ -401,7 +396,7 @@ public class CheatListActivity extends AppCompatActivity {
                 invalidateOptionsMenu();
                 if ((member != null) && intentReturnCode == Konstanten.REGISTER_SUCCESS_RETURN_CODE) {
                     Toast.makeText(CheatListActivity.this, R.string.register_thanks, Toast.LENGTH_LONG).show();
-                } else if ((member != null) && intentReturnCode == Konstanten.REGISTER_SUCCESS_RETURN_CODE) {
+                } else if ((member != null) && intentReturnCode == Konstanten.LOGIN_SUCCESS_RETURN_CODE) {
                     Toast.makeText(CheatListActivity.this, R.string.login_ok, Toast.LENGTH_LONG).show();
                 }
             }
@@ -450,7 +445,7 @@ public class CheatListActivity extends AppCompatActivity {
             CheatDatabaseApplication.tracker().send(new HitBuilders.EventBuilder("ui", "click").setLabel(result.getCheat().getCheatTitle()).build());
 
             this.visibleCheat = result.getCheat();
-            this.lastGameObj = result.getCheat().getGame();
+            Game lastGameObj = result.getCheat().getGame();
 
             CheatDatabaseApplication.tracker().send(new HitBuilders.EventBuilder("ui", "select_cheat").setLabel(result.getCheat().getGameName() + ": " + result.getCheat().getCheatTitle()).build());
 

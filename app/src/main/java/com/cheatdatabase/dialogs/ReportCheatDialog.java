@@ -54,7 +54,7 @@ public class ReportCheatDialog extends DialogFragment {
 
         final ListView lv = (ListView) dialogLayout.findViewById(R.id.listView);
         String[] reportReasons = getResources().getStringArray(R.array.report_reasons);
-        lv.setAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, reportReasons));
+        lv.setAdapter(new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, reportReasons));
         lv.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

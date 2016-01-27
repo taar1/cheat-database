@@ -446,7 +446,7 @@ public class CheatForumActivity extends AppCompatActivity implements CheatListFr
                 showReportDialog();
                 return true;
             case R.id.action_submit_cheat:
-                Intent explicitIntent = new Intent(this, SubmitCheatActivity.class);
+                Intent explicitIntent = new Intent(this, SubmitCheatActivity_.class);
                 explicitIntent.putExtra("gameObj", gameObj);
                 startActivity(explicitIntent);
                 return true;
@@ -568,9 +568,7 @@ public class CheatForumActivity extends AppCompatActivity implements CheatListFr
         if (forumThread.length > 0) {
             tvEmpty.setVisibility(View.GONE);
 
-            for (int i = 0; i < forumThread.length; i++) {
-                ForumPost tempFP = forumThread[i];
-
+            for (ForumPost tempFP : forumThread) {
                 LinearLayout tl = createForumPosts(tempFP);
                 llForumMain.addView(tl, new TableLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
             }

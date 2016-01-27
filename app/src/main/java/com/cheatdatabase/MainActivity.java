@@ -102,7 +102,6 @@ public class MainActivity extends AppCompatActivity implements ActionBar.OnNavig
     @Bean
     Tools tools;
 
-    //    @InstanceState
     @Extra
     int mFragmentId;
 

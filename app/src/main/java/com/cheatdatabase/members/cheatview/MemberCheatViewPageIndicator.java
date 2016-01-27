@@ -25,7 +25,7 @@ import com.cheatdatabase.CheatDatabaseApplication;
 import com.cheatdatabase.CheatForumActivity_;
 import com.cheatdatabase.LoginActivity;
 import com.cheatdatabase.R;
-import com.cheatdatabase.SubmitCheatActivity;
+import com.cheatdatabase.SubmitCheatActivity_;
 import com.cheatdatabase.businessobjects.Cheat;
 import com.cheatdatabase.businessobjects.Game;
 import com.cheatdatabase.businessobjects.Member;
@@ -55,7 +55,7 @@ import java.util.Arrays;
  */
 public class MemberCheatViewPageIndicator extends AppCompatActivity {
 
-    private static final String TAG = MemberCheatViewPageIndicator.class.getName();
+    private final String TAG = MemberCheatViewPageIndicator.class.getName();
 
     private Intent intent;
 
@@ -81,7 +81,6 @@ public class MemberCheatViewPageIndicator extends AppCompatActivity {
 
     private int activePage;
 
-
     private ShareActionProvider mShare;
     private Toolbar mToolbar;
 
@@ -99,7 +98,7 @@ public class MemberCheatViewPageIndicator extends AppCompatActivity {
         try {
             Cheat[] cheatObjX = new Gson().fromJson(settings.getString(Konstanten.PREFERENCES_TEMP_CHEAT_ARRAY_OBJECT_VIEW, null), Cheat[].class);
 
-            cheatObj = new ArrayList<Cheat>(Arrays.asList(cheatObjX));
+            cheatObj = new ArrayList<>(Arrays.asList(cheatObjX));
 
             if (cheatObj == null) {
                 cheatObj = (ArrayList<Cheat>) intent.getSerializableExtra("cheatObj");
@@ -221,7 +220,7 @@ public class MemberCheatViewPageIndicator extends AppCompatActivity {
             });
 
         } catch (Exception e2) {
-            Log.e("initialisePaging() ERROR: ", getPackageName() + "/" + getTitle() + "... " + e2.getMessage());
+            Log.e(TAG, "ERROR: " + getPackageName() + "/" + getTitle() + "... " + e2.getMessage());
         }
     }
 
@@ -323,7 +322,7 @@ public class MemberCheatViewPageIndicator extends AppCompatActivity {
                 onBackPressed();
                 return true;
             case R.id.action_submit_cheat:
-                Intent explicitIntent = new Intent(MemberCheatViewPageIndicator.this, SubmitCheatActivity.class);
+                Intent explicitIntent = new Intent(MemberCheatViewPageIndicator.this, SubmitCheatActivity_.class);
                 explicitIntent.putExtra("gameObj", gameObj);
                 startActivity(explicitIntent);
                 return true;

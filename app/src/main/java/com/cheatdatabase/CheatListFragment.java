@@ -70,7 +70,7 @@ public class CheatListFragment extends ListFragment {
         /**
          * Callback for when an item has been selected.
          */
-        public void onItemSelected(int position);
+        void onItemSelected(int position);
     }
 
     /**
@@ -85,7 +85,7 @@ public class CheatListFragment extends ListFragment {
 
     public Game gameObj;
 
-    private ArrayList<Cheat> cheatsArrayList = new ArrayList<Cheat>();
+    private ArrayList<Cheat> cheatsArrayList = new ArrayList<>();
 
     private Cheat[] cheats;
 
@@ -161,7 +161,7 @@ public class CheatListFragment extends ListFragment {
             } else {
                 cheats = Webservice.getCheatList(gameObj, member.getMid());
             }
-            cheatsArrayList = new ArrayList<Cheat>();
+            cheatsArrayList = new ArrayList<>();
 
             if (cheats != null) {
 //                for (int j = 0; j < cheats.length; j++) {
@@ -269,7 +269,7 @@ public class CheatListFragment extends ListFragment {
             View v = convertView;
             if (v == null) {
                 LayoutInflater vi = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                v = vi.inflate(R.layout.cheatlist_item, null);
+                v = vi.inflate(R.layout.cheatlist_item, parent);
             }
 
             try {

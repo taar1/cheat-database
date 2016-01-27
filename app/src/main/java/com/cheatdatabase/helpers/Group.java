@@ -18,8 +18,8 @@ public class Group {
         this.game = game;
     }
 
-    public final List<String> children = new ArrayList<String>();
-    public final List<Game> gameChildren = new ArrayList<Game>();
+    public final List<String> children = new ArrayList<>();
+    public final List<Game> gameChildren = new ArrayList<>();
 
     public Group(String string) {
         this.string = string;

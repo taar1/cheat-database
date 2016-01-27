@@ -1,111 +1,111 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <system
-        sysId="33"
-        name="Android" />
+        name="Android"
+        sysId="33" />
     <system
-        sysId="31"
-        name="C64" />
+        name="C64"
+        sysId="31" />
     <system
-        sysId="11"
-        name="Dream Cast" />
+        name="Dream Cast"
+        sysId="11" />
     <system
-        sysId="1"
-        name="Game Boy" />
+        name="Game Boy"
+        sysId="1" />
     <system
-        sysId="2"
-        name="Game Boy Advance" />
+        name="Game Boy Advance"
+        sysId="2" />
     <system
-        sysId="18"
-        name="Game Gear" />
+        name="Game Gear"
+        sysId="18" />
     <system
-        sysId="6"
-        name="GameCube" />
+        name="GameCube"
+        sysId="6" />
     <system
-        sysId="30"
-        name="iOS" />
+        name="iOS"
+        sysId="30" />
     <system
-        sysId="22"
-        name="Jaguar" />
+        name="Jaguar"
+        sysId="22" />
     <system
-        sysId="15"
-        name="Lynx" />
+        name="Lynx"
+        sysId="15" />
     <system
-        sysId="32"
-        name="Macintosh" />
+        name="Macintosh"
+        sysId="32" />
     <system
-        sysId="12"
-        name="Master System" />
+        name="Master System"
+        sysId="12" />
     <system
-        sysId="13"
-        name="Mega Drive / Sega Genesis" />
+        name="Mega Drive / Sega Genesis"
+        sysId="13" />
     <system
-        sysId="23"
-        name="N-Gage" />
+        name="N-Gage"
+        sysId="23" />
     <system
-        sysId="3"
-        name="NES" />
+        name="NES"
+        sysId="3" />
     <system
-        sysId="19"
-        name="Neo Geo" />
+        name="Neo Geo"
+        sysId="19" />
     <system
-        sysId="21"
-        name="Neo Geo Pocket" />
+        name="Neo Geo Pocket"
+        sysId="21" />
     <system
-        sysId="5"
-        name="Nintendo 64" />
+        name="Nintendo 64"
+        sysId="5" />
     <system
-        sysId="25"
-        name="Nintendo DS" />
+        name="Nintendo DS"
+        sysId="25" />
     <system
-        sysId="34"
-        name="Nintendo 3DS" />
+        name="Nintendo 3DS"
+        sysId="34" />
     <system
-        sysId="16"
-        name="PC" />
+        name="PC"
+        sysId="16" />
     <system
-        sysId="8"
-        name="PlayStation 1" />
+        name="PlayStation 1"
+        sysId="8" />
     <system
-        sysId="9"
-        name="PlayStation 2" />
+        name="PlayStation 2"
+        sysId="9" />
     <system
-        sysId="29"
-        name="PlayStation 3" />
+        name="PlayStation 3"
+        sysId="29" />
     <system
-        sysId="37"
-        name="PlayStation 4" />
+        name="PlayStation 4"
+        sysId="37" />
     <system
-        sysId="26"
-        name="PlayStation Portable" />
+        name="PlayStation Portable"
+        sysId="26" />
     <system
-        sysId="35"
-        name="PlayStation Vita" />
+        name="PlayStation Vita"
+        sysId="35" />
     <system
-        sysId="17"
-        name="Sega Saturn" />
+        name="Sega Saturn"
+        sysId="17" />
     <system
-        sysId="4"
-        name="SNES" />
+        name="SNES"
+        sysId="4" />
     <system
-        sysId="20"
-        name="Virtual Boy" />
+        name="Virtual Boy"
+        sysId="20" />
     <system
-        sysId="28"
-        name="Wii" />
+        name="Wii"
+        sysId="28" />
     <system
-        sysId="36"
-        name="Wii U" />
+        name="Wii U"
+        sysId="36" />
     <system
-        sysId="10"
-        name="Wonderswan" />
+        name="Wonderswan"
+        sysId="10" />
     <system
-        sysId="7"
-        name="Xbox" />
+        name="Xbox"
+        sysId="7" />
     <system
-        sysId="27"
-        name="Xbox 360" />
+        name="Xbox 360"
+        sysId="27" />
     <system
-        sysId="38"
-        name="Xbox One" />
+        name="Xbox One"
+        sysId="38" />
 </resources>

@@ -127,7 +127,7 @@ public class CheatDatabaseAdapter {
         if (cheat == null) {
             return 0;
         } else {
-            if (cheat.isScreenshots() == true) {
+            if (cheat.isScreenshots()) {
                 saveScreenshotsToSdCard(cheat);
             }
 
@@ -141,7 +141,7 @@ public class CheatDatabaseAdapter {
             initialValues.put(FAV_SYSTEM_ID, cheat.getSystemId());
             initialValues.put(FAV_SYSTEM_NAME, cheat.getSystemName());
             int walkthroughFormat = 0;
-            if (cheat.isWalkthroughFormat() == true) {
+            if (cheat.isWalkthroughFormat()) {
                 walkthroughFormat = 1;
             }
             initialValues.put(FAV_WALKTHROUGH_FORMAT, walkthroughFormat);
@@ -166,7 +166,7 @@ public class CheatDatabaseAdapter {
         for (int i = 0; i < cheats.length; i++) {
             Cheat cheat = cheats[i];
 
-            if (cheat.isScreenshots() == true) {
+            if (cheat.isScreenshots()) {
                 saveScreenshotsToSdCard(cheat);
             }
 
@@ -180,7 +180,7 @@ public class CheatDatabaseAdapter {
             initialValues.put(FAV_SYSTEM_ID, cheat.getSystemId());
             initialValues.put(FAV_SYSTEM_NAME, cheat.getSystemName());
             int walkthroughFormat = 0;
-            if (cheat.isWalkthroughFormat() == true) {
+            if (cheat.isWalkthroughFormat()) {
                 walkthroughFormat = 1;
             }
             initialValues.put(FAV_WALKTHROUGH_FORMAT, walkthroughFormat);
@@ -218,7 +218,7 @@ public class CheatDatabaseAdapter {
         for (int i = 0; i < cheats.length; i++) {
             Cheat cheat = cheats[i];
 
-            if (cheat.isScreenshots() == true) {
+            if (cheat.isScreenshots()) {
                 saveScreenshotsToSdCard(cheat);
             }
 
@@ -232,7 +232,7 @@ public class CheatDatabaseAdapter {
             initialValues.put(FAV_SYSTEM_ID, game.getSystemId());
             initialValues.put(FAV_SYSTEM_NAME, game.getSystemName());
             int walkthroughFormat = 0;
-            if (cheat.isWalkthroughFormat() == true) {
+            if (cheat.isWalkthroughFormat()) {
                 walkthroughFormat = 1;
             }
             initialValues.put(FAV_WALKTHROUGH_FORMAT, walkthroughFormat);
@@ -270,25 +270,23 @@ public class CheatDatabaseAdapter {
             Game[] favGames = new Game[countRows];
 
             if (cur.moveToFirst()) {
-                if (cur != null) {
-                    if (cur.isFirst()) {
-                        int i = 0;
-                        do {
-                            int gameId = cur.getInt(cur.getColumnIndex(FAV_GAME_ID));
-                            String gameName = cur.getString(cur.getColumnIndex(FAV_GAMENAME));
-                            int systemId = cur.getInt(cur.getColumnIndex(FAV_SYSTEM_ID));
-                            String systemName = cur.getString(cur.getColumnIndex(FAV_SYSTEM_NAME));
-                            int numberOfFavoritedCheats = countFavoritedCheats(gameId);
+                if (cur.isFirst()) {
+                    int i = 0;
+                    do {
+                        int gameId = cur.getInt(cur.getColumnIndex(FAV_GAME_ID));
+                        String gameName = cur.getString(cur.getColumnIndex(FAV_GAMENAME));
+                        int systemId = cur.getInt(cur.getColumnIndex(FAV_SYSTEM_ID));
+                        String systemName = cur.getString(cur.getColumnIndex(FAV_SYSTEM_NAME));
+                        int numberOfFavoritedCheats = countFavoritedCheats(gameId);
 
-                            Game tempGame = new Game(gameId, gameName, systemId, systemName);
-                            tempGame.setCheatsCount(numberOfFavoritedCheats);
+                        Game tempGame = new Game(gameId, gameName, systemId, systemName);
+                        tempGame.setCheatsCount(numberOfFavoritedCheats);
 
-                            favGames[i] = tempGame;
-                            i++;
-                        } while (cur.moveToNext());
-
-                    }
+                        favGames[i] = tempGame;
+                        i++;
+                    } while (cur.moveToNext());
                 }
+
                 cur.close();
                 return favGames;
             }
@@ -304,30 +302,28 @@ public class CheatDatabaseAdapter {
         ArrayList<SystemPlatform> systems = null;
 
         if (cur.moveToFirst()) {
-            if (cur != null) {
-                if (cur.isFirst()) {
-                    systems = new ArrayList<>();
-                    int i = 0;
-                    do {
-                        int systemId = cur.getInt(cur.getColumnIndex(SYS_SYSTEM_ID));
-                        String systemName = cur.getString(cur.getColumnIndex(SYS_SYSTEM_NAME));
-                        int gameCount = cur.getInt(cur.getColumnIndex(SYS_SYSTEM_GAMECOUNT));
-                        int cheatCount = cur.getInt(cur.getColumnIndex(SYS_SYSTEM_CHEATCOUNT));
-                        String lastMod = cur.getString(cur.getColumnIndex(SYS_SYSTEM_LASTMOD));
+            if (cur.isFirst()) {
+                systems = new ArrayList<>();
+                int i = 0;
+                do {
+                    int systemId = cur.getInt(cur.getColumnIndex(SYS_SYSTEM_ID));
+                    String systemName = cur.getString(cur.getColumnIndex(SYS_SYSTEM_NAME));
+                    int gameCount = cur.getInt(cur.getColumnIndex(SYS_SYSTEM_GAMECOUNT));
+                    int cheatCount = cur.getInt(cur.getColumnIndex(SYS_SYSTEM_CHEATCOUNT));
+                    String lastMod = cur.getString(cur.getColumnIndex(SYS_SYSTEM_LASTMOD));
 
-                        SystemPlatform sysPla = new SystemPlatform();
-                        sysPla.setSystemId(systemId);
-                        sysPla.setSystemName(systemName);
-                        sysPla.setGameCount(gameCount);
-                        sysPla.setCheatCount(cheatCount);
-                        sysPla.setLastModTimeStamp(Long.parseLong(lastMod));
+                    SystemPlatform sysPla = new SystemPlatform();
+                    sysPla.setSystemId(systemId);
+                    sysPla.setSystemName(systemName);
+                    sysPla.setGameCount(gameCount);
+                    sysPla.setCheatCount(cheatCount);
+                    sysPla.setLastModTimeStamp(Long.parseLong(lastMod));
 
-                        systems.add(sysPla);
-                        i++;
-                    } while (cur.moveToNext());
-
-                }
+                    systems.add(sysPla);
+                    i++;
+                } while (cur.moveToNext());
             }
+
             cur.close();
             return systems;
         }
@@ -443,29 +439,27 @@ public class CheatDatabaseAdapter {
             Cursor cur = mDb.query(DATABASE_TABLE_FAVORITES, new String[]{FAV_GAME_ID, FAV_GAMENAME, FAV_CHEAT_ID, FAV_CHEAT_TITLE, FAV_CHEAT_TEXT, FAV_LANGUAGE_ID, FAV_SYSTEM_ID, FAV_SYSTEM_NAME, FAV_WALKTHROUGH_FORMAT}, FAV_GAME_ID + "=" + gameId, null, FAV_CHEAT_ID, null, FAV_CHEAT_TITLE);
 
             if (cur.moveToFirst()) {
-                if (cur != null) {
-                    if (cur.isFirst()) {
-                        int i = 0;
-                        do {
-                            String gameName = cur.getString(cur.getColumnIndex(FAV_GAMENAME));
-                            int cheatId = cur.getInt(cur.getColumnIndex(FAV_CHEAT_ID));
-                            String cheatTitle = cur.getString(cur.getColumnIndex(FAV_CHEAT_TITLE));
-                            String cheatText = cur.getString(cur.getColumnIndex(FAV_CHEAT_TEXT));
-                            int languageId = cur.getInt(cur.getColumnIndex(FAV_LANGUAGE_ID));
-                            int systemId = cur.getInt(cur.getColumnIndex(FAV_SYSTEM_ID));
-                            String systemName = cur.getString(cur.getColumnIndex(FAV_SYSTEM_NAME));
-                            int walkthrough = cur.getInt(cur.getColumnIndex(FAV_WALKTHROUGH_FORMAT));
-                            boolean walkthroughFormat = false;
-                            if (walkthrough == 1) {
-                                walkthroughFormat = true;
-                            }
+                if (cur.isFirst()) {
+                    int i = 0;
+                    do {
+                        String gameName = cur.getString(cur.getColumnIndex(FAV_GAMENAME));
+                        int cheatId = cur.getInt(cur.getColumnIndex(FAV_CHEAT_ID));
+                        String cheatTitle = cur.getString(cur.getColumnIndex(FAV_CHEAT_TITLE));
+                        String cheatText = cur.getString(cur.getColumnIndex(FAV_CHEAT_TEXT));
+                        int languageId = cur.getInt(cur.getColumnIndex(FAV_LANGUAGE_ID));
+                        int systemId = cur.getInt(cur.getColumnIndex(FAV_SYSTEM_ID));
+                        String systemName = cur.getString(cur.getColumnIndex(FAV_SYSTEM_NAME));
+                        int walkthrough = cur.getInt(cur.getColumnIndex(FAV_WALKTHROUGH_FORMAT));
+                        boolean walkthroughFormat = false;
+                        if (walkthrough == 1) {
+                            walkthroughFormat = true;
+                        }
 
-                            favCheats[i] = new Cheat(gameId, gameName, cheatId, cheatTitle, cheatText, languageId, systemId, systemName, walkthroughFormat);
-                            i++;
-                        } while (cur.moveToNext());
-
-                    }
+                        favCheats[i] = new Cheat(gameId, gameName, cheatId, cheatTitle, cheatText, languageId, systemId, systemName, walkthroughFormat);
+                        i++;
+                    } while (cur.moveToNext());
                 }
+
                 cur.close();
                 return favCheats;
             }
@@ -526,22 +520,20 @@ public class CheatDatabaseAdapter {
         Cursor cur = mDb.query(DATABASE_CREATE_SEARCHHISTORY, new String[]{KEY_ROWID, KEY_SEARCHHISTORY_QUERY, KEY_SEARCHHISTORY_SEARCHTIME}, null, null, null, null, KEY_ROWID + " DESC", historyLength + "");
 
         if (cur.moveToFirst()) {
-            if (cur != null) {
-                if (cur.isFirst()) {
-                    int i = 0;
-                    do {
-                        String searchQuery = cur.getString(cur.getColumnIndex(KEY_SEARCHHISTORY_QUERY));
-                        // String searchTime =
-                        // cur.getString(cur.getColumnIndex(KEY_SEARCHHISTORY_SEARCHTIME));
-                        // String rowId =
-                        // cur.getString(cur.getColumnIndex(KEY_ROWID));
+            if (cur.isFirst()) {
+                int i = 0;
+                do {
+                    String searchQuery = cur.getString(cur.getColumnIndex(KEY_SEARCHHISTORY_QUERY));
+                    // String searchTime =
+                    // cur.getString(cur.getColumnIndex(KEY_SEARCHHISTORY_SEARCHTIME));
+                    // String rowId =
+                    // cur.getString(cur.getColumnIndex(KEY_ROWID));
 
-                        searchHistory[i] = searchQuery;
-                        i++;
-                    } while (cur.moveToNext());
-
-                }
+                    searchHistory[i] = searchQuery;
+                    i++;
+                } while (cur.moveToNext());
             }
+
             cur.close();
         }
         return searchHistory;

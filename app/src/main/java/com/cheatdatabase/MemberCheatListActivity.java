@@ -50,6 +50,8 @@ import com.splunk.mint.Mint;
 @SuppressLint("NewApi")
 public class MemberCheatListActivity extends ActionBarListActivity implements AdapterView.OnItemClickListener {
 
+    private final String TAG = MemberCheatListActivity.class.getSimpleName();
+
     private Cheat[] cheats;
     private Cheat selectedCheat;
     private Member memberToDisplayCheatsFrom;
@@ -191,9 +193,8 @@ public class MemberCheatListActivity extends ActionBarListActivity implements Ad
                         public void run() {
                             if (cheats != null && cheats.length > 0) {
                                 memberCheatsAdapter.notifyDataSetChanged();
-                                for (int i = 0; i < cheats.length; i++) {
-                                    memberCheatsAdapter.add(cheats[i]);
-                                }
+
+                                memberCheatsAdapter.addAll(cheats);
                                 mProgressDialog.dismiss();
                                 memberCheatsAdapter.notifyDataSetChanged();
                             } else {
@@ -314,7 +315,7 @@ public class MemberCheatListActivity extends ActionBarListActivity implements Ad
                 }
 
             } catch (Exception e) {
-                Log.e("MemberCheatList.getView ERROR:", e.getMessage());
+                Log.e(TAG, "MemberCheatList.getView ERROR: " + e.getMessage());
                 error(R.string.err_no_member_data);
             }
 

@@ -136,7 +136,7 @@ public class Cheat extends Game implements Serializable {
     /**
      * Schaut, ob auf der SD Karte Screenshots zu dem Cheat existieren.
      *
-     * @return
+     * @return boolean
      */
     public boolean hasScreenshotOnSd() {
         if (Tools.isSdReadable()) {
