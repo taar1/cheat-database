@@ -31,7 +31,6 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
-import com.cheatdatabase.CheatDetailTabletFragment;
 import com.cheatdatabase.R;
 import com.cheatdatabase.businessobjects.Cheat;
 import com.cheatdatabase.businessobjects.Member;
@@ -163,7 +162,7 @@ public class MemberCheatViewFragment extends Fragment implements OnClickListener
             /**
              * Get thumbnails if there are screenshots.
              */
-            if (cheatObj.isScreenshots() == true) {
+            if (cheatObj.isScreenshots()) {
                 biggestHeight = 100; // init value
                 imageViews = new ImageView[cheatObj.getScreens().length];
                 progressBar.setVisibility(View.VISIBLE);
@@ -361,7 +360,7 @@ public class MemberCheatViewFragment extends Fragment implements OnClickListener
     public void onClick(View v) {
         Log.d("onClick", "onClick");
         Bundle arguments = new Bundle();
-        arguments.putInt(CheatDetailTabletFragment.ARG_ITEM_ID, 1);
+        arguments.putInt("CHANGEME", 1);
         arguments.putSerializable("cheatObj", cheatObj);
     }
 

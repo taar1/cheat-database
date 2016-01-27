@@ -16,18 +16,19 @@ public class DummyContent {
     /**
      * An array of sample (dummy) items.
      */
-    public static List<DummyItem> ITEMS = new ArrayList<DummyItem>();
+    public static List<DummyItem> ITEMS;
 
     /**
      * A map of sample (dummy) items, by ID.
      */
-    public static Map<String, DummyItem> ITEM_MAP = new HashMap<String, DummyItem>();
+    public static Map<String, DummyItem> ITEM_MAP = new HashMap<>();
 
     static {
         // Add 3 sample items.
         addItem(new DummyItem("1", "Item 1b"));
         addItem(new DummyItem("2", "Item 2"));
         addItem(new DummyItem("3", "Item 3"));
+        ITEMS = new ArrayList<>();
     }
 
     private static void addItem(DummyItem item) {

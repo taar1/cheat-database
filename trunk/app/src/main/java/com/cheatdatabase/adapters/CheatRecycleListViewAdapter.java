@@ -81,8 +81,8 @@ public class CheatRecycleListViewAdapter extends RecyclerView.Adapter<CheatRecyc
 
     }
 
-    public static interface IMyViewHolderClicks {
-        public void onCheatClick(CheatRecycleListViewAdapter.ViewHolder caller);
+    public interface IMyViewHolderClicks {
+        void onCheatClick(CheatRecycleListViewAdapter.ViewHolder caller);
     }
 
     // Create new views (invoked by the layout manager)

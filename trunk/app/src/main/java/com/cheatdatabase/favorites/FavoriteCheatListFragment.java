@@ -68,7 +68,7 @@ public class FavoriteCheatListFragment extends ListFragment {
 
     private Game gameObj;
 
-    private ArrayList<Cheat> cheatsArrayList = new ArrayList<Cheat>();
+    private ArrayList<Cheat> cheatsArrayList = new ArrayList<>();
 
     private Cheat[] cheats;
 
@@ -87,7 +87,7 @@ public class FavoriteCheatListFragment extends ListFragment {
         /**
          * Callback for when an item has been selected.
          */
-        public void onItemSelected(int id);
+        void onItemSelected(int id);
     }
 
     /**
@@ -163,7 +163,7 @@ public class FavoriteCheatListFragment extends ListFragment {
 
         try {
             cheats = db.getAllFavoritedCheatsByGame(gameObj.getGameId());
-            cheatsArrayList = new ArrayList<Cheat>();
+            cheatsArrayList = new ArrayList<>();
 
             if (cheats != null) {
 //                for (int j = 0; j < cheats.length; j++) {

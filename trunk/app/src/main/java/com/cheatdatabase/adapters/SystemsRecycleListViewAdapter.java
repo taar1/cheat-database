@@ -68,8 +68,8 @@ public class SystemsRecycleListViewAdapter extends RecyclerView.Adapter<SystemsR
 
     }
 
-    public static interface IMyViewHolderClicks {
-        public void onSystemClick(SystemsRecycleListViewAdapter.ViewHolder caller);
+    public interface IMyViewHolderClicks {
+        void onSystemClick(SystemsRecycleListViewAdapter.ViewHolder caller);
     }
 
 //    // Provide a suitable constructor (depends on the kind of dataset)

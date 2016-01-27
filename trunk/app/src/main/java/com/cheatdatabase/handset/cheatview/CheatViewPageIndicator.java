@@ -26,7 +26,7 @@ import com.cheatdatabase.CheatDatabaseApplication;
 import com.cheatdatabase.CheatForumActivity_;
 import com.cheatdatabase.LoginActivity_;
 import com.cheatdatabase.R;
-import com.cheatdatabase.SubmitCheatActivity;
+import com.cheatdatabase.SubmitCheatActivity_;
 import com.cheatdatabase.businessobjects.Cheat;
 import com.cheatdatabase.businessobjects.Game;
 import com.cheatdatabase.businessobjects.Member;
@@ -290,7 +290,7 @@ public class CheatViewPageIndicator extends AppCompatActivity {
 
                 return true;
             case R.id.action_submit_cheat:
-                Intent explicitIntent = new Intent(CheatViewPageIndicator.this, SubmitCheatActivity.class);
+                Intent explicitIntent = new Intent(CheatViewPageIndicator.this, SubmitCheatActivity_.class);
                 explicitIntent.putExtra("gameObj", gameObj);
                 startActivity(explicitIntent);
                 return true;
