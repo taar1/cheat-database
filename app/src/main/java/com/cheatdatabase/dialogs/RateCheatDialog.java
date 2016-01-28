@@ -24,12 +24,9 @@ import com.cheatdatabase.helpers.Tools;
 import com.cheatdatabase.helpers.Webservice;
 import com.google.gson.Gson;
 
-import org.androidannotations.annotations.EBean;
-
 /**
  * Cheat rating dialog.
  */
-@EBean
 public class RateCheatDialog extends DialogFragment {
 
     private static final String TAG = RateCheatDialog.class.getSimpleName();
@@ -43,7 +40,6 @@ public class RateCheatDialog extends DialogFragment {
 //    }
 
     public RateCheatDialog() {
-
     }
 
     @Override

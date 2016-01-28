@@ -7,9 +7,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.graphics.Typeface;
-import android.os.AsyncTask;
 import android.os.Build;
-import android.os.Bundle;
+import android.support.annotation.UiThread;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
@@ -28,10 +27,18 @@ import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.helpers.Tools;
 import com.cheatdatabase.helpers.Webservice;
 
+import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.Background;
+import org.androidannotations.annotations.Bean;
+import org.androidannotations.annotations.Click;
+import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.ViewById;
+
 /**
  * Activity which displays a login screen to the user, offering registration as
  * well.
  */
+@EActivity(R.layout.activity_register)
 public class RegisterActivity extends AppCompatActivity {
 
     /**
@@ -39,48 +46,46 @@ public class RegisterActivity extends AppCompatActivity {
      */
     public static final String EXTRA_EMAIL = "com.example.android.authenticatordemo.extra.EMAIL";
 
-    /**
-     * Keep track of the login task to ensure we can cancel it if requested.
-     */
-    private UserRegisterTask mAuthTask = null;
-
     // Values for email and password at the time of the login attempt.
     private String mEmail;
     private String mUsername;
 
-    // UI references.
-    private EditText mEmailView;
-    private EditText mUsernameView;
-    private View mLoginFormView;
-    private View mLoginStatusView;
-    private TextView mLoginStatusMessageView;
+    @ViewById(R.id.email)
+    EditText mEmailView;
+
+    @ViewById(R.id.username)
+    EditText mUsernameView;
+
+    @ViewById(R.id.login_form)
+    View mLoginFormView;
+
+    @ViewById(R.id.send_status)
+    View mLoginStatusView;
+
+    @ViewById(R.id.send_status_message)
+    TextView mLoginStatusMessageView;
+
+    @ViewById(R.id.register_button)
+    Button registerButton;
+
+    @ViewById(R.id.toolbar)
+    Toolbar mToolbar;
+
+    @Bean
+    Tools tools;
 
     private Member member;
     private SharedPreferences settings;
-
     private Editor editor;
 
-    private Typeface latoFontBold;
-    private Typeface latoFontLight;
-
-    private Button registerButton;
-    private Toolbar toolbar;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register);
-
+    @AfterViews
+    void onCreate() {
         init();
 
         // Set up the login form.
         mEmail = getIntent().getStringExtra(EXTRA_EMAIL);
-        mEmailView = (EditText) findViewById(R.id.email);
         mEmailView.setText(mEmail);
-        mEmailView.setTypeface(latoFontLight);
 
-        mUsernameView = (EditText) findViewById(R.id.username);
-        mUsernameView.setTypeface(latoFontLight);
         mUsernameView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
@@ -109,36 +114,36 @@ public class RegisterActivity extends AppCompatActivity {
 
         });
 
-        mLoginFormView = findViewById(R.id.login_form);
-        mLoginStatusView = findViewById(R.id.send_status);
-        mLoginStatusMessageView = (TextView) findViewById(R.id.send_status_message);
-        mLoginStatusMessageView.setTypeface(latoFontLight);
-
-        registerButton = (Button) findViewById(R.id.register_button);
-        registerButton.setTypeface(latoFontBold);
-        registerButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (Reachability.reachability.isReachable) {
-                    attemptRegister();
-                } else {
-                    Toast.makeText(RegisterActivity.this, R.string.no_internet, Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
 
     }
 
+    @Click(R.id.register_button)
+    void registerButtonClicked() {
+        if (Reachability.reachability.isReachable) {
+            attemptRegister();
+        } else {
+            Toast.makeText(RegisterActivity.this, R.string.no_internet, Toast.LENGTH_SHORT).show();
+        }
+    }
+
     private void init() {
-        Reachability.registerReachability(this);
+
+        if (mToolbar != null) {
+            setSupportActionBar(mToolbar);
+        }
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+
+        Typeface latoFontBold = tools.getFont(getAssets(), Konstanten.FONT_BOLD);
+        Typeface latoFontLight = tools.getFont(getAssets(), Konstanten.FONT_LIGHT);
+
+        mEmailView.setTypeface(latoFontLight);
+        mUsernameView.setTypeface(latoFontLight);
+        mLoginStatusMessageView.setTypeface(latoFontLight);
+        registerButton.setTypeface(latoFontBold);
 
         settings = getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
         editor = settings.edit();
-
-        Tools.initToolbarBase(this, toolbar);
-
-        latoFontBold = Tools.getFont(getAssets(), Konstanten.FONT_BOLD);
-        latoFontLight = Tools.getFont(getAssets(), Konstanten.FONT_LIGHT);
     }
 
     @Override
@@ -147,16 +152,18 @@ public class RegisterActivity extends AppCompatActivity {
         super.onPause();
     }
 
+    @Override
+    protected void onResume() {
+        Reachability.registerReachability(this);
+        super.onResume();
+    }
+
     /**
      * Attempts to sign in or register the account specified by the login form.
      * If there are form errors (invalid email, missing fields, etc.), the
      * errors are presented and no actual login attempt is made.
      */
     public void attemptRegister() {
-        if (mAuthTask != null) {
-            return;
-        }
-
         // Reset errors.
         mEmailView.setError(null);
         mUsernameView.setError(null);
@@ -204,8 +211,8 @@ public class RegisterActivity extends AppCompatActivity {
             // perform the user login attempt.
             mLoginStatusMessageView.setText(R.string.register_progress_registering);
             showProgress(true);
-            mAuthTask = new UserRegisterTask();
-            mAuthTask.execute((Void) null);
+
+            registerTask(mUsernameView.getText().toString().trim(), mEmailView.getText().toString().trim());
         }
     }
 
@@ -247,41 +254,33 @@ public class RegisterActivity extends AppCompatActivity {
      * Represents an asynchronous registration task used to authenticate the
      * user.
      */
-    public class UserRegisterTask extends AsyncTask<Void, Void, Boolean> {
+    @Background
+    void registerTask(String username, String email) {
+        boolean success = false;
+        member = Webservice.register(username, email);
+        if (member.getErrorCode() == 0) {
+            member.writeMemberData(member, settings);
 
-        @Override
-        protected Boolean doInBackground(Void... params) {
-
-            member = Webservice.register(mUsernameView.getText().toString().trim(), mEmailView.getText().toString().trim());
-            if (member.getErrorCode() == 0) {
-                member.writeMemberData(member, settings);
-
-                return true;
-            } else {
-                return false;
-            }
+            success = true;
+        } else {
+            success = false;
         }
 
-        @Override
-        protected void onPostExecute(final Boolean success) {
-            mAuthTask = null;
-            showProgress(false);
+        registerTaskFinished(success);
+    }
 
-            if (success) {
-                // REGISTER_SUCCESS_RETURN_CODE = Register success
-                Intent returnIntent = new Intent();
-                returnIntent.putExtra("result", Konstanten.REGISTER_SUCCESS_RETURN_CODE);
-                setResult(RESULT_OK, returnIntent);
-                finish();
-            } else {
-                errorStuff();
-            }
-        }
+    @UiThread
+    void registerTaskFinished(boolean success) {
+        showProgress(false);
 
-        @Override
-        protected void onCancelled() {
-            mAuthTask = null;
-            showProgress(false);
+        if (success) {
+            // REGISTER_SUCCESS_RETURN_CODE = Register success
+            Intent returnIntent = new Intent();
+            returnIntent.putExtra("result", Konstanten.REGISTER_SUCCESS_RETURN_CODE);
+            setResult(RESULT_OK, returnIntent);
+            finish();
+        } else {
+            errorStuff();
         }
     }
 
@@ -304,7 +303,6 @@ public class RegisterActivity extends AppCompatActivity {
                     Toast.makeText(RegisterActivity.this, R.string.err_other_problem, Toast.LENGTH_LONG).show();
             }
         }
-
     }
 
 }

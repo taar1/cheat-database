@@ -8,7 +8,6 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Build;
@@ -56,6 +55,7 @@ import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.Extra;
+import org.androidannotations.annotations.OnActivityResult;
 import org.androidannotations.annotations.ViewById;
 
 import java.util.ArrayList;
@@ -68,27 +68,6 @@ import io.presage.utils.IADHandler;
 public class MainActivity extends AppCompatActivity implements ActionBar.OnNavigationListener {
 
     private static final String TAG = MainActivity.class.getSimpleName();
-
-    public static final String DRAWER_ITEM_ID = "drawerId";
-    public static final String DRAWER_ITEM_NAME = "drawerName";
-
-    // Navigation Drawer
-    private ListView mDrawerList;
-    private ActionBarDrawerToggle mDrawerToggle;
-    private CharSequence mTitle;
-    private CharSequence mDrawerTitle;
-
-    List<DrawerItem> dataList;
-    CustomDrawerAdapter mAdapter;
-
-    private Member member;
-
-    private SharedPreferences settings;
-    private Editor editor;
-
-    private SearchManager searchManager;
-    private MenuItem searchItem;
-    private SearchView searchView;
 
     @ViewById(R.id.adview)
     MoPubView mAdView;
@@ -105,6 +84,23 @@ public class MainActivity extends AppCompatActivity implements ActionBar.OnNavig
     @Extra
     int mFragmentId;
 
+    public static final String DRAWER_ITEM_ID = "drawerId";
+    public static final String DRAWER_ITEM_NAME = "drawerName";
+
+    // Navigation Drawer
+    private ListView mDrawerList;
+    private ActionBarDrawerToggle mDrawerToggle;
+
+    List<DrawerItem> dataList;
+    CustomDrawerAdapter mAdapter;
+
+    private Member member;
+
+    private SharedPreferences settings;
+
+    private SearchManager searchManager;
+    private SearchView searchView;
+
     @AfterViews
     public void createView() {
         setTitle(R.string.app_name);
@@ -113,7 +109,6 @@ public class MainActivity extends AppCompatActivity implements ActionBar.OnNavig
         Mint.initAndStartSession(this, Konstanten.SPLUNK_MINT_API_KEY);
 
         settings = getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
-        editor = settings.edit();
 
         if (mToolbar != null) {
             setSupportActionBar(mToolbar);
@@ -132,9 +127,6 @@ public class MainActivity extends AppCompatActivity implements ActionBar.OnNavig
         // TODO FIXME - find out where this part was before and re-add it.
         FragmentManager frgManager = getFragmentManager();
         frgManager.beginTransaction().replace(R.id.content_frame, SystemListFragment_.builder().build()).commit();
-
-
-        Log.d(TAG, "mFragmentId: " + mFragmentId);
 
         // Create Drawer
         // TODO
@@ -227,8 +219,6 @@ public class MainActivity extends AppCompatActivity implements ActionBar.OnNavig
 
     // http://developer.android.com/training/implementing-navigation/nav-drawer.html#Init
     private void createNavigationDrawer() {
-        mTitle = mDrawerTitle = getTitle();
-
         mDrawerLayout.setStatusBarBackgroundColor(getResources().getColor(R.color.page_indicator_background));
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, mToolbar, R.string.drawer_open, R.string.drawer_close);
         mDrawerLayout.setDrawerListener(mDrawerToggle);
@@ -321,7 +311,7 @@ public class MainActivity extends AppCompatActivity implements ActionBar.OnNavig
             getMenuInflater().inflate(R.menu.search_menu, menu);
             searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
 
-            searchItem = menu.findItem(R.id.search);
+            MenuItem searchItem = menu.findItem(R.id.search);
             searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
             searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
         } catch (Exception e) {
@@ -373,8 +363,6 @@ public class MainActivity extends AppCompatActivity implements ActionBar.OnNavig
 
     @Override
     public boolean onNavigationItemSelected(int position, long id) {
-//        Fragment fragment = new SystemListFragment();
-
         FragmentManager frgManager = getFragmentManager();
         frgManager.beginTransaction().replace(R.id.content_frame, SystemListFragment_.builder().build()).commit();
 
@@ -385,23 +373,35 @@ public class MainActivity extends AppCompatActivity implements ActionBar.OnNavig
         return true;
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
+//    @Override
+//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//
+//        if (resultCode == RESULT_OK) {
+//            // Return result code. Login success, Register success etc.
+//            int intentReturnCode = data.getIntExtra("result", Konstanten.LOGIN_REGISTER_FAIL_RETURN_CODE);
+//
+//            if (intentReturnCode == Konstanten.LOGIN_SUCCESS_RETURN_CODE) {
+//                member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
+//                Toast.makeText(MainActivity.this, R.string.login_ok, Toast.LENGTH_LONG).show();
+//            } else if (intentReturnCode == Konstanten.REGISTER_SUCCESS_RETURN_CODE) {
+//                member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
+//                Toast.makeText(MainActivity.this, R.string.register_thanks, Toast.LENGTH_LONG).show();
+//            }
+//            invalidateOptionsMenu();
+//        }
+//    }
 
-        if (resultCode == RESULT_OK) {
-            // Return result code. Login success, Register success etc.
-            int intentReturnCode = data.getIntExtra("result", Konstanten.LOGIN_REGISTER_FAIL_RETURN_CODE);
+    @OnActivityResult(Konstanten.LOGIN_SUCCESS_RETURN_CODE)
+    void onResult(int resultCode, Intent data) {
+        member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
+        Toast.makeText(MainActivity.this, R.string.login_ok, Toast.LENGTH_LONG).show();
+    }
 
-            if (intentReturnCode == Konstanten.LOGIN_SUCCESS_RETURN_CODE) {
-                member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
-                Toast.makeText(MainActivity.this, R.string.login_ok, Toast.LENGTH_LONG).show();
-            } else if (intentReturnCode == Konstanten.REGISTER_SUCCESS_RETURN_CODE) {
-                member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
-                Toast.makeText(MainActivity.this, R.string.register_thanks, Toast.LENGTH_LONG).show();
-            }
-            invalidateOptionsMenu();
-        }
+    @OnActivityResult(Konstanten.REGISTER_SUCCESS_RETURN_CODE)
+    void onResult(int resultCode) {
+        member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
+        Toast.makeText(MainActivity.this, R.string.register_thanks, Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -551,19 +551,6 @@ public class MainActivity extends AppCompatActivity implements ActionBar.OnNavig
     }
 
     @Override
-    public void setTitle(CharSequence title) {
-        mTitle = title;
-//		getSupportActionBar().setTitle(mTitle);
-    }
-
-    @Override
-    protected void onPostCreate(Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
-        // Sync the toggle state after onRestoreInstanceState has occurred.
-//		mDrawerToggle.syncState();
-    }
-
-    @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         // Pass any configuration change to the drawer toggls
@@ -575,8 +562,6 @@ public class MainActivity extends AppCompatActivity implements ActionBar.OnNavig
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             Log.i("DRAWER", position + "");
             mFragmentId = position;
-//            editor.putInt(Konstanten.PREFERENCES_SELECTED_DRAWER_FRAGMENT_ID, position);
-//            editor.commit();
             selectItem(position);
         }
     }
@@ -584,8 +569,6 @@ public class MainActivity extends AppCompatActivity implements ActionBar.OnNavig
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-//        editor.putInt(Konstanten.PREFERENCES_SELECTED_DRAWER_FRAGMENT_ID, 0);
-//        editor.commit();
         AppBrain.getAds().maybeShowInterstitial(this);
         finish();
     }

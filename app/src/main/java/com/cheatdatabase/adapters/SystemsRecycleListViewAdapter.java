@@ -88,9 +88,9 @@ public class SystemsRecycleListViewAdapter extends RecyclerView.Adapter<SystemsR
         final View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.systemlist_item, parent, false);
         v.setDrawingCacheEnabled(true);
 
-        ViewHolder vh = new ViewHolder(v, new SystemsRecycleListViewAdapter.IMyViewHolderClicks() {
+        return new ViewHolder(v, new IMyViewHolderClicks() {
             @Override
-            public void onSystemClick(SystemsRecycleListViewAdapter.ViewHolder caller) {
+            public void onSystemClick(ViewHolder caller) {
 
                 if (Reachability.reachability.isReachable) {
                     CheatDatabaseApplication.getEventBus().post(new SystemListRecyclerViewClickEvent(mSystemObjects.get(caller.getAdapterPosition())));
@@ -99,9 +99,6 @@ public class SystemsRecycleListViewAdapter extends RecyclerView.Adapter<SystemsR
                 }
             }
         });
-
-
-        return vh;
     }
 
     // Replace the contents of a view (invoked by the layout manager)

@@ -12,7 +12,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -45,7 +44,6 @@ import org.androidannotations.annotations.ViewById;
  * Activity which displays a login screen to the user, offering registration as
  * well.
  */
-
 @EActivity(R.layout.activity_login)
 public class LoginActivity extends AppCompatActivity implements AlreadyLoggedInDialogListener {
 
@@ -55,11 +53,6 @@ public class LoginActivity extends AppCompatActivity implements AlreadyLoggedInD
      * The default email to populate the email field with.
      */
     public static final String EXTRA_EMAIL = "com.example.android.authenticatordemo.extra.EMAIL";
-
-    /**
-     * Keep track of the login task to ensure we can cancel it if requested.
-     */
-//    private UserLoginTask mAuthTask = null;
 
     // Values for email and password at the time of the login attempt.
     private String mEmail;
@@ -98,10 +91,6 @@ public class LoginActivity extends AppCompatActivity implements AlreadyLoggedInD
     private Member member;
     private SharedPreferences settings;
     private Editor editor;
-
-    private Typeface latoFontBold;
-    private Typeface latoFontLight;
-
 
     @AfterViews
     protected void onCreateView() {
@@ -158,8 +147,8 @@ public class LoginActivity extends AppCompatActivity implements AlreadyLoggedInD
 
         member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
 
-        latoFontBold = tools.getFont(getAssets(), Konstanten.FONT_BOLD);
-        latoFontLight = tools.getFont(getAssets(), Konstanten.FONT_LIGHT);
+        Typeface latoFontBold = tools.getFont(getAssets(), Konstanten.FONT_BOLD);
+        Typeface latoFontLight = tools.getFont(getAssets(), Konstanten.FONT_LIGHT);
 
         mEmailView.setTypeface(latoFontLight);
         mPasswordView.setTypeface(latoFontLight);
@@ -191,8 +180,8 @@ public class LoginActivity extends AppCompatActivity implements AlreadyLoggedInD
 
     @Override
     public void onPause() {
-        Reachability.unregister(this);
         super.onPause();
+        Reachability.unregister(this);
     }
 
     @Override
@@ -219,7 +208,7 @@ public class LoginActivity extends AppCompatActivity implements AlreadyLoggedInD
                 onBackPressed();
                 return true;
             case R.id.action_register:
-                Intent registerIntent = new Intent(LoginActivity.this, RegisterActivity.class);
+                Intent registerIntent = new Intent(LoginActivity.this, RegisterActivity_.class);
                 startActivityForResult(registerIntent, Konstanten.REGISTER_ATTEMPT);
                 return true;
             case R.id.action_forgot_password:
@@ -408,7 +397,6 @@ public class LoginActivity extends AppCompatActivity implements AlreadyLoggedInD
 
     @OnActivityResult(Konstanten.LOGIN_SUCCESS_RETURN_CODE)
     void onResult(Intent data) {
-        Log.d(TAG, "ONRESULT AAAAAAAAAA");
         int intentReturnCode = data.getIntExtra("result", Konstanten.LOGIN_REGISTER_FAIL_RETURN_CODE);
 
         if (intentReturnCode == Konstanten.REGISTER_SUCCESS_RETURN_CODE) {

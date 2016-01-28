@@ -189,6 +189,7 @@ public class CheatListActivity extends AppCompatActivity {
                 error();
             }
         } catch (Exception e) {
+//            Log.e(TAG, e.getLocalizedMessage());
             error();
         }
 
@@ -197,7 +198,7 @@ public class CheatListActivity extends AppCompatActivity {
     }
 
     private void error() {
-        Log.e(TAG, "caught error: " + getPackageName() + "/" + getTitle());
+        Log.e(TAG, "Error: " + getPackageName() + "/" + getTitle());
         new AlertDialog.Builder(CheatListActivity.this).setIcon(R.drawable.ic_action_warning).setTitle(getString(R.string.err)).setMessage(R.string.err_data_not_accessible).setNeutralButton(R.string.ok, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int whichButton) {
@@ -231,10 +232,8 @@ public class CheatListActivity extends AppCompatActivity {
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        // schauen wie man status persistent halten kann von fragment
         outState.putSerializable("gameObj", gameObj);
     }
-
 
     public void showReportDialog() {
         if ((member == null) || (member.getMid() == 0)) {
@@ -274,13 +273,6 @@ public class CheatListActivity extends AppCompatActivity {
 
     public void onEvent(CheatRatingFinishedEvent result) {
         visibleCheat.setMemberRating(result.getRating());
-//        cheatDetailFragment.updateMemberCheatRating(result.getRating());
-//
-//        // FIXME make the star to highlight on all fragments
-//        cheatDetailFragment.highlightRatingIcon(true);
-//        cheatDetailTabletMetaFragment.highlightRatingIcon(true);
-//        cheatForumFragment.highlightRatingIcon(true);
-
         Toast.makeText(this, R.string.rating_inserted, Toast.LENGTH_SHORT).show();
     }
 
@@ -291,7 +283,7 @@ public class CheatListActivity extends AppCompatActivity {
             case android.R.id.home:
                 editor.remove(Konstanten.PREFERENCES_TEMP_GAME_OBJECT_VIEW);
                 editor.commit();
-                GamesBySystemActivity_.intent(this).systemObj(Tools.getSystemObjectByName(CheatListActivity.this, Tools.getSystemNameById(this, gameObj.getSystemId()))).start();
+                GamesBySystemActivity_.intent(this).systemObj(tools.getSystemObjectByName(CheatListActivity.this, tools.getSystemNameById(this, gameObj.getSystemId()))).start();
                 return true;
             case R.id.action_add_to_favorites:
                 Toast.makeText(CheatListActivity.this, R.string.favorite_adding, Toast.LENGTH_SHORT).show();
@@ -309,7 +301,7 @@ public class CheatListActivity extends AppCompatActivity {
                 return true;
             case R.id.action_logout:
                 member = null;
-                Tools.logout(CheatListActivity.this, editor);
+                tools.logout(CheatListActivity.this, editor);
                 invalidateOptionsMenu();
                 return true;
             default:

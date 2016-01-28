@@ -97,7 +97,7 @@
             android:parentActivityName=".LoginActivity_"
             android:windowSoftInputMode="adjustResize|stateVisible" />
         <activity
-            android:name=".RegisterActivity"
+            android:name=".RegisterActivity_"
             android:label="@string/title_activity_register"
             android:logo="@drawable/app_icon_fox"
             android:parentActivityName=".LoginActivity_"
@@ -116,7 +116,7 @@
                 android:value="com.cheatdatabase.search.SearchResultsActivity" />
         </activity>
         <activity
-            android:name=".MemberCheatListActivity"
+            android:name=".MemberCheatListActivity_"
             android:logo="@drawable/app_icon_fox"
             android:parentActivityName=".MainActivity_">
             <meta-data

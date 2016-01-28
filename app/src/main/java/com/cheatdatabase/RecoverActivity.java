@@ -69,10 +69,7 @@ public class RecoverActivity extends AppCompatActivity {
 
     private String mEmail;
 
-    public int successMessage;
-
-    private Typeface latoFontBold;
-    private Typeface latoFontLight;
+    private int successMessage;
 
     @AfterViews
     public void onCreate() {
@@ -114,8 +111,8 @@ public class RecoverActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
-        latoFontBold = tools.getFont(getAssets(), Konstanten.FONT_BOLD);
-        latoFontLight = tools.getFont(getAssets(), Konstanten.FONT_LIGHT);
+        Typeface latoFontBold = tools.getFont(getAssets(), Konstanten.FONT_BOLD);
+        Typeface latoFontLight = tools.getFont(getAssets(), Konstanten.FONT_LIGHT);
 
         mLoginStatusMessageView.setTypeface(latoFontLight);
         mResponseMessageView.setTypeface(latoFontBold);
@@ -205,14 +202,9 @@ public class RecoverActivity extends AppCompatActivity {
 
     @Background
     void recoverTask(String email) {
-        boolean success = false;
         successMessage = Webservice.sendLoginData(email);
-        if (successMessage == R.string.err_email_invalid) {
-            success = false;
-        } else {
-            success = true;
-        }
 
+        boolean success = successMessage != R.string.err_email_invalid;
         afterRecover(success, successMessage);
     }
 

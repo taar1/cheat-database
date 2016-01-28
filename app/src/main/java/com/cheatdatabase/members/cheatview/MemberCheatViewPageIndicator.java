@@ -44,6 +44,9 @@ import com.mopub.mobileads.MoPubView;
 import com.splunk.mint.Mint;
 import com.viewpagerindicator.UnderlinePageIndicator;
 
+import org.androidannotations.annotations.Bean;
+import org.androidannotations.annotations.EBean;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -53,9 +56,13 @@ import java.util.Arrays;
  * @author Dominik Erbsland
  * @version 1.0
  */
+@EBean
 public class MemberCheatViewPageIndicator extends AppCompatActivity {
 
     private final String TAG = MemberCheatViewPageIndicator.class.getName();
+
+    @Bean
+    Tools tools;
 
     private Intent intent;
 
@@ -349,11 +356,11 @@ public class MemberCheatViewPageIndicator extends AppCompatActivity {
                 return true;
             case R.id.action_logout:
                 member = null;
-                Tools.logout(MemberCheatViewPageIndicator.this, editor);
+                tools.logout(MemberCheatViewPageIndicator.this, editor);
                 invalidateOptionsMenu();
                 return true;
             case R.id.action_share:
-                setShareIntent(Tools.setShareText(MemberCheatViewPageIndicator.this, visibleCheat));
+                setShareIntent(tools.setShareText(MemberCheatViewPageIndicator.this, visibleCheat));
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

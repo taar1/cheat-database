@@ -96,9 +96,9 @@ public class CheatRecycleListViewAdapter extends RecyclerView.Adapter<CheatRecyc
         final View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.cheatlist_item, parent, false);
         v.setDrawingCacheEnabled(true);
 
-        ViewHolder vh = new ViewHolder(v, new CheatRecycleListViewAdapter.IMyViewHolderClicks() {
+        return new ViewHolder(v, new IMyViewHolderClicks() {
             @Override
-            public void onCheatClick(CheatRecycleListViewAdapter.ViewHolder caller) {
+            public void onCheatClick(ViewHolder caller) {
                 if (Reachability.reachability.isReachable) {
 
                     Log.d(TAG, "caller.getAdapterPosition(): " + caller.getAdapterPosition());
@@ -110,8 +110,6 @@ public class CheatRecycleListViewAdapter extends RecyclerView.Adapter<CheatRecyc
                 }
             }
         });
-
-        return vh;
     }
 
     // Replace the contents of a view (invoked by the layout manager)
