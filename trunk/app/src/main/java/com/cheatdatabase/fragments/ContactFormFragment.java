@@ -74,13 +74,8 @@ public class ContactFormFragment extends Fragment {
 
     // Values for email and password at the time of the login attempt.
     private String mEmail;
-    private String mMessage;
-
-    private Member member;
-    private SharedPreferences settings;
 
     private boolean isFormSent = false;
-    private Typeface latoFontLight;
 
     public ContactFormFragment() {
 
@@ -90,10 +85,10 @@ public class ContactFormFragment extends Fragment {
     public void onCreateView() {
         Reachability.registerReachability(getActivity());
 
-        settings = getActivity().getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
-        member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
+        SharedPreferences settings = getActivity().getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
+        Member member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
 
-        latoFontLight = Tools.getFont(getActivity().getAssets(), Konstanten.FONT_LIGHT);
+        Typeface latoFontLight = Tools.getFont(getActivity().getAssets(), Konstanten.FONT_LIGHT);
 
         // Update action bar menu items?
         setHasOptionsMenu(true);
@@ -147,7 +142,7 @@ public class ContactFormFragment extends Fragment {
 
         // Store values at the time of the login attempt.
         mEmail = mEmailView.getText().toString();
-        mMessage = mMessageView.getText().toString();
+        String mMessage = mMessageView.getText().toString();
 
         boolean cancel = false;
         View focusView = null;

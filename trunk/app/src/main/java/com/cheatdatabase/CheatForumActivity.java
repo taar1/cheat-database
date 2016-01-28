@@ -4,7 +4,6 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
@@ -54,6 +53,7 @@ import com.splunk.mint.Mint;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Background;
+import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.Extra;
 import org.androidannotations.annotations.UiThread;
@@ -75,21 +75,11 @@ public class CheatForumActivity extends AppCompatActivity implements CheatListFr
     @Extra
     Game gameObj;
 
-    private ForumPost[] forumThread;
+    @Bean
+    Tools tools;
 
-    private SharedPreferences settings;
-    private Editor editor;
-
-    private Member member;
-
-    private ViewGroup adViewContainer;
-    private MoPubView mAdView;
-
-    private Typeface latoFontBold;
-    private Typeface latoFontLight;
-
-    private Toolbar mToolbar;
-    private ShareActionProvider mShare;
+    @ViewById(R.id.toolbar)
+    Toolbar mToolbar;
 
     @ViewById(R.id.llForumMain)
     LinearLayout llForumMain;
@@ -111,6 +101,20 @@ public class CheatForumActivity extends AppCompatActivity implements CheatListFr
 
     @ViewById(R.id.btnSubmitPost)
     Button postButton;
+
+    private ForumPost[] forumThread;
+
+    private SharedPreferences settings;
+
+    private Member member;
+
+    private ViewGroup adViewContainer;
+    private MoPubView mAdView;
+
+    private Typeface latoFontBold;
+    private Typeface latoFontLight;
+
+    private ShareActionProvider mShare;
 
     @AfterViews
     public void onCreateView() {
@@ -169,16 +173,17 @@ public class CheatForumActivity extends AppCompatActivity implements CheatListFr
         CheatDatabaseApplication.tracker().send(new HitBuilders.EventBuilder("ui", cheatObj.getGameName() + " (" + cheatObj.getSystemName() + ")").setLabel("activity").build());
 
         settings = getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
-        editor = settings.edit();
 
         mAdView = Tools.initMoPubAdView(this, mAdView);
 
-        latoFontLight = Tools.getFont(getAssets(), Konstanten.FONT_LIGHT);
-        latoFontBold = Tools.getFont(getAssets(), Konstanten.FONT_BOLD);
+        latoFontLight = tools.getFont(getAssets(), Konstanten.FONT_LIGHT);
+        latoFontBold = tools.getFont(getAssets(), Konstanten.FONT_BOLD);
 
         member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
 
-        mToolbar = Tools.initToolbarBase(this, mToolbar);
+        if (mToolbar != null) {
+            setSupportActionBar(mToolbar);
+        }
         getSupportActionBar().setTitle(cheatObj.getGameName());
         getSupportActionBar().setSubtitle(cheatObj.getSystemName());
     }
@@ -456,7 +461,7 @@ public class CheatForumActivity extends AppCompatActivity implements CheatListFr
                 return true;
             case R.id.action_logout:
                 member = null;
-                Tools.logout(CheatForumActivity.this, settings.edit());
+                tools.logout(CheatForumActivity.this, settings.edit());
                 invalidateOptionsMenu();
                 return true;
             default:

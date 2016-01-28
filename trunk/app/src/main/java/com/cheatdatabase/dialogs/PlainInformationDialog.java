@@ -20,7 +20,6 @@ public class PlainInformationDialog extends Dialog {
     private TextView mTitle;
     private TextView mText;
 
-
     public PlainInformationDialog(Context context) {
         super(context);
 

@@ -147,8 +147,7 @@ public class CheatDatabaseAdapter {
             initialValues.put(FAV_WALKTHROUGH_FORMAT, walkthroughFormat);
 
             long retVal = mDb.insert(DATABASE_TABLE_FAVORITES, null, initialValues);
-            int retValInt = Integer.parseInt(String.valueOf(retVal));
-            return retValInt;
+            return Integer.parseInt(String.valueOf(retVal));
         }
     }
 
@@ -392,13 +391,11 @@ public class CheatDatabaseAdapter {
     }
 
     public int countFavoritedGames() {
-        int countRows = countRows(DATABASE_TABLE_FAVORITES, FAV_GAME_ID, null, FAV_GAME_ID);
-        return countRows;
+        return countRows(DATABASE_TABLE_FAVORITES, FAV_GAME_ID, null, FAV_GAME_ID);
     }
 
     public int countFavoritedCheats(int gameId) {
-        int countRows = countRows(DATABASE_TABLE_FAVORITES, FAV_GAME_ID, String.valueOf(gameId), FAV_CHEAT_ID);
-        return countRows;
+        return countRows(DATABASE_TABLE_FAVORITES, FAV_GAME_ID, String.valueOf(gameId), FAV_CHEAT_ID);
     }
 
     /**
@@ -503,8 +500,7 @@ public class CheatDatabaseAdapter {
         initialValues.put(KEY_SEARCHHISTORY_SEARCHTIME, currentTimestamp.toString());
 
         long retVal = mDb.insert(DATABASE_TABLE_SEARCHHISTORY, null, initialValues);
-        int retValInt = Integer.parseInt(String.valueOf(retVal));
-        return retValInt;
+        return Integer.parseInt(String.valueOf(retVal));
     }
 
     /**

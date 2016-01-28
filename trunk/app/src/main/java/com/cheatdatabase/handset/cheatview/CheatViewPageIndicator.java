@@ -45,15 +45,22 @@ import com.mopub.mobileads.MoPubView;
 import com.splunk.mint.Mint;
 import com.viewpagerindicator.UnderlinePageIndicator;
 
+import org.androidannotations.annotations.Bean;
+import org.androidannotations.annotations.EBean;
+
 /**
  * Horizontal sliding gallery of cheats from a game.
  *
  * @author Dominik Erbsland
  * @version 1.0
  */
+@EBean
 public class CheatViewPageIndicator extends AppCompatActivity {
 
     private static final String TAG = CheatViewPageIndicator.class.getSimpleName();
+
+    @Bean
+    Tools tools;
 
     private Intent intent;
 
@@ -131,8 +138,8 @@ public class CheatViewPageIndicator extends AppCompatActivity {
         settings = getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
         editor = settings.edit();
 
-        mToolbar = Tools.initToolbarBase(this, mToolbar);
-        mAdView = Tools.initMoPubAdView(this, mAdView);
+        mToolbar = tools.initToolbarBase(this, mToolbar);
+        mAdView = tools.initMoPubAdView(this, mAdView);
 
         member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
     }
@@ -343,11 +350,11 @@ public class CheatViewPageIndicator extends AppCompatActivity {
                 return true;
             case R.id.action_logout:
                 member = null;
-                Tools.logout(CheatViewPageIndicator.this, editor);
+                tools.logout(CheatViewPageIndicator.this, editor);
                 invalidateOptionsMenu();
                 return true;
             case R.id.action_share:
-                setShareIntent(Tools.setShareText(CheatViewPageIndicator.this, visibleCheat));
+                setShareIntent(tools.setShareText(CheatViewPageIndicator.this, visibleCheat));
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

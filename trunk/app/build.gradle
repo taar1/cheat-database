@@ -12,7 +12,7 @@ android {
     buildToolsVersion '23.0.1'
     defaultConfig {
         applicationId "com.cheatdatabase"
-        minSdkVersion 14
+        minSdkVersion 16
         targetSdkVersion 23
         versionCode 18
         versionName "2.1.2"
@@ -20,7 +20,7 @@ android {
     }
     buildTypes {
         release {
-            minifyEnabled true
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }

@@ -28,6 +28,9 @@ import com.cheatdatabase.helpers.Tools;
 import com.cheatdatabase.helpers.Webservice;
 import com.google.gson.Gson;
 
+import org.androidannotations.annotations.Bean;
+import org.androidannotations.annotations.EBean;
+
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -40,6 +43,7 @@ import java.util.Collections;
  * Activities containing this fragment MUST implement the {@link com.cheatdatabase.CheatListFragment.CheatListClickCallbacks}
  * interface.
  */
+@EBean
 public class CheatListFragment extends ListFragment {
 
     private static String TAG = CheatListFragment.class.getSimpleName();
@@ -96,10 +100,12 @@ public class CheatListFragment extends ListFragment {
     private CheatListActivity cheatListActivity;
 
     private SharedPreferences settings;
+    private Editor editor;
 
     private Member member;
 
-    private Editor editor;
+    @Bean
+    Tools tools;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -113,7 +119,7 @@ public class CheatListFragment extends ListFragment {
         super.onCreate(savedInstanceState);
 
         cheatListActivity = (CheatListActivity) getActivity();
-        latoFontRegular = Tools.getFont(getActivity().getAssets(), Konstanten.FONT_REGULAR);
+        latoFontRegular = tools.getFont(getActivity().getAssets(), Konstanten.FONT_REGULAR);
 
         settings = cheatListActivity.getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
         editor = settings.edit();

@@ -13,7 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cheatdatabase.CheatDatabaseApplication;
-import com.cheatdatabase.MemberCheatListActivity;
+import com.cheatdatabase.MemberCheatListActivity_;
 import com.cheatdatabase.R;
 import com.cheatdatabase.businessobjects.Member;
 import com.cheatdatabase.helpers.Konstanten;
@@ -81,7 +81,7 @@ public class TopMembersListViewAdapter extends RecyclerView.Adapter<TopMembersLi
         CheatDatabaseApplication.tracker().send(new HitBuilders.EventBuilder("ui", "show_member").setLabel(member.getUsername()).build());
 
         if (Reachability.reachability.isReachable) {
-            Intent explicitIntent = new Intent(mContext, MemberCheatListActivity.class);
+            Intent explicitIntent = new Intent(mContext, MemberCheatListActivity_.class);
             explicitIntent.putExtra("memberObj", member);
             mContext.startActivity(explicitIntent);
         } else {
@@ -101,10 +101,7 @@ public class TopMembersListViewAdapter extends RecyclerView.Adapter<TopMembersLi
         final View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.topmembers_list_item, parent, false);
         v.setDrawingCacheEnabled(true);
 
-
-        ViewHolder vh = new ViewHolder(v);
-
-        return vh;
+        return new ViewHolder(v);
     }
 
     public void onBindViewHolder(ViewHolder holder, final int position) {
