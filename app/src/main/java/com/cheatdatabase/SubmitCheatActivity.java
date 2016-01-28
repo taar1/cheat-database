@@ -27,6 +27,7 @@ import com.google.gson.Gson;
 import com.splunk.mint.Mint;
 
 import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.Extra;
@@ -57,13 +58,16 @@ public class SubmitCheatActivity extends AppCompatActivity {
     @ViewById(R.id.send_button)
     Button sendButton;
 
-    Member member;
-
     @Extra
     Game gameObj;
 
     @ViewById(R.id.toolbar)
     Toolbar mToolbar;
+
+    @Bean
+    Tools tools;
+
+    Member member;
 
     private SharedPreferences settings;
     private Typeface latoFontBold;
@@ -138,8 +142,8 @@ public class SubmitCheatActivity extends AppCompatActivity {
 
         settings = getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
 
-        latoFontLight = Tools.getFont(getAssets(), Konstanten.FONT_LIGHT);
-        latoFontBold = Tools.getFont(getAssets(), Konstanten.FONT_BOLD);
+        latoFontLight = tools.getFont(getAssets(), Konstanten.FONT_LIGHT);
+        latoFontBold = tools.getFont(getAssets(), Konstanten.FONT_BOLD);
 
         textCheatTitle.setTypeface(latoFontBold);
         cheatTitle.setTypeface(latoFontLight);
@@ -150,31 +154,9 @@ public class SubmitCheatActivity extends AppCompatActivity {
 
     @Override
     public void onPause() {
-        Reachability.unregister(this);
         super.onPause();
+        Reachability.unregister(this);
     }
-
-//    private void handleIntent(final Intent intent) {
-//
-//        new Thread(new Runnable() {
-//
-//            @Override
-//            public void run() {
-//                gameObj = (Game) intent.getSerializableExtra("gameObj");
-//
-//                runOnUiThread(new Runnable() {
-//
-//                    @Override
-//                    public void run() {
-//                        getSupportActionBar().setTitle(gameObj.getGameName());
-//                        getSupportActionBar().setSubtitle(gameObj.getSystemName());
-//
-//                    }
-//                });
-//            }
-//        }).start();
-//
-//    }
 
     @Override
     protected void onResume() {
@@ -204,7 +186,7 @@ public class SubmitCheatActivity extends AppCompatActivity {
                 return true;
             case R.id.action_logout:
                 member = null;
-                Tools.logout(SubmitCheatActivity.this, settings.edit());
+                tools.logout(SubmitCheatActivity.this, settings.edit());
                 changeSubmitButtonText();
                 invalidateOptionsMenu();
                 return true;

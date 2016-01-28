@@ -68,10 +68,9 @@ public class Tools {
 
         // Initialize reg ex for email.
         String expression = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";
-        CharSequence inputStr = email;
         // Make the comparison case-insensitive.
         Pattern pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE);
-        Matcher matcher = pattern.matcher(inputStr);
+        Matcher matcher = pattern.matcher(email);
         if (matcher.matches()) {
             isValid = true;
         }
@@ -104,9 +103,8 @@ public class Tools {
 
         // Get msec from each, and subtract.
         long diff = d2.getTime() - d1.getTime();
-        long dayDifference = (diff / (1000 * 60 * 60 * 24));
 
-        return dayDifference;
+        return (diff / (1000 * 60 * 60 * 24));
     }
 
     /**
@@ -180,9 +178,7 @@ public class Tools {
                         }
                     }
                 } else if (xrp.getEventType() == XmlPullParser.END_TAG) {
-                    ;
                 } else if (xrp.getEventType() == XmlPullParser.TEXT) {
-                    ;
                 }
                 xrp.next();
             }
@@ -337,7 +333,7 @@ public class Tools {
      * @param activity
      * @return
      */
-    public static ArrayList<SystemPlatform> getGameSystemsFromXml(Activity activity) {
+    public ArrayList<SystemPlatform> getGameSystemsFromXml(Activity activity) {
 
         ArrayList<SystemPlatform> al = new ArrayList<>();
 
@@ -357,9 +353,7 @@ public class Tools {
                         al.add(gs);
                     }
                 } else if (xrp.getEventType() == XmlPullParser.END_TAG) {
-                    ;
                 } else if (xrp.getEventType() == XmlPullParser.TEXT) {
-                    ;
                 }
                 xrp.next();
             }
@@ -371,7 +365,7 @@ public class Tools {
 
     }
 
-    public static SystemPlatform[] getSystems(Activity activity) {
+    public SystemPlatform[] getSystems(Activity activity) {
         ArrayList<SystemPlatform> al = getGameSystemsFromXml(activity);
         SystemPlatform[] gsList = new SystemPlatform[al.size()];
 
@@ -382,12 +376,11 @@ public class Tools {
         return gsList;
     }
 
-    public static ArrayList<SystemPlatform> getSystemNamesFromXml(Activity activity) {
-        ArrayList<SystemPlatform> al = getGameSystemsFromXml(activity);
-        return al;
+    public ArrayList<SystemPlatform> getSystemNamesFromXml(Activity activity) {
+        return getGameSystemsFromXml(activity);
     }
 
-    public static SystemPlatform getSystemObjectByName(Activity activity, String systemName) {
+    public SystemPlatform getSystemObjectByName(Activity activity, String systemName) {
         ArrayList<SystemPlatform> al = getGameSystemsFromXml(activity);
         for (int i = 0; i < al.size(); i++) {
             SystemPlatform sys = al.get(i);
@@ -461,7 +454,7 @@ public class Tools {
         return mAdView;
     }
 
-    public static void loadAd(MoPubView mAdView, String screenType) {
+    public void loadAd(MoPubView mAdView, String screenType) {
 
         try {
             if (screenType.equalsIgnoreCase("phone")) {
@@ -480,7 +473,7 @@ public class Tools {
         }
     }
 
-    public static void logout(Activity activity, Editor editor) {
+    public void logout(Activity activity, Editor editor) {
         editor.remove(Konstanten.MEMBER_OBJECT);
         editor.commit();
 

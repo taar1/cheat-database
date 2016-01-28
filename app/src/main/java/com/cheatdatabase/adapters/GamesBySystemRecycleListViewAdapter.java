@@ -82,9 +82,9 @@ public class GamesBySystemRecycleListViewAdapter extends RecyclerView.Adapter<Ga
         final View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.listrow_gamelist, parent, false);
         v.setDrawingCacheEnabled(true);
 
-        ViewHolder vh = new ViewHolder(v, new GamesBySystemRecycleListViewAdapter.IMyViewHolderClicks() {
+        return new ViewHolder(v, new IMyViewHolderClicks() {
             @Override
-            public void onGameClick(GamesBySystemRecycleListViewAdapter.ViewHolder caller) {
+            public void onGameClick(ViewHolder caller) {
 
                 if (Reachability.reachability.isReachable) {
                     CheatDatabaseApplication.getEventBus().post(new GameListRecyclerViewClickEvent(mGames.get(caller.getAdapterPosition())));
@@ -93,8 +93,6 @@ public class GamesBySystemRecycleListViewAdapter extends RecyclerView.Adapter<Ga
                 }
             }
         });
-
-        return vh;
     }
 
     // Replace the contents of a view (invoked by the layout manager)

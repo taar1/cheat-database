@@ -47,12 +47,16 @@ import com.mopub.mobileads.MoPubView;
 import com.splunk.mint.Mint;
 import com.viewpagerindicator.UnderlinePageIndicator;
 
+import org.androidannotations.annotations.Bean;
+import org.androidannotations.annotations.EBean;
+
 /**
  * Horizontal sliding gallery of cheats from a game.
  *
  * @author Dominik Erbsland
  * @version 1.0
  */
+@EBean
 public class FavoritesCheatViewPageIndicator extends AppCompatActivity implements UndoBarController.UndoListener {
 
     private final String TAG = FavoritesCheatViewPageIndicator.class.getSimpleName();
@@ -94,6 +98,9 @@ public class FavoritesCheatViewPageIndicator extends AppCompatActivity implement
     private CheatDatabaseAdapter db;
     private Toolbar mToolbar;
 
+    @Bean
+    Tools tools;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -134,8 +141,8 @@ public class FavoritesCheatViewPageIndicator extends AppCompatActivity implement
         db = new CheatDatabaseAdapter(this);
         db.open();
 
-        mToolbar = Tools.initToolbarBase(this, mToolbar);
-        mAdView = Tools.initMoPubAdView(this, mAdView);
+        mToolbar = tools.initToolbarBase(this, mToolbar);
+        mAdView = tools.initMoPubAdView(this, mAdView);
 
         member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
     }
@@ -327,11 +334,11 @@ public class FavoritesCheatViewPageIndicator extends AppCompatActivity implement
                 return true;
             case R.id.action_logout:
                 member = null;
-                Tools.logout(FavoritesCheatViewPageIndicator.this, editor);
+                tools.logout(FavoritesCheatViewPageIndicator.this, editor);
                 invalidateOptionsMenu();
                 return true;
             case R.id.action_share:
-                setShareIntent(Tools.setShareText(FavoritesCheatViewPageIndicator.this, visibleCheat));
+                setShareIntent(tools.setShareText(FavoritesCheatViewPageIndicator.this, visibleCheat));
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

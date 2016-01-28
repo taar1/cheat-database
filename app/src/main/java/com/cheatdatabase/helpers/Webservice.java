@@ -1285,12 +1285,7 @@ public class Webservice {
             String urlParameters = "username=" + URLEncoder.encode(member.getUsername(), "UTF-8");
             JSONObject retValObj = new JSONObject(excutePost(Konstanten.BASE_URL_ANDROID + "checkMemberNew.php", urlParameters));
 
-            if (retValObj.getInt("allow") == 0) {
-                return false;
-            } else {
-                // allow = 1
-                return true;
-            }
+            return retValObj.getInt("allow") != 0;
         } catch (Exception e) {
             Log.e("ERROR", e.getMessage());
             e.getStackTrace();

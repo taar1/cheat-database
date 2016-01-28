@@ -54,9 +54,6 @@ public class FavoriteGamesListFragment extends Fragment {
     protected final int STEP_ONE_COMPLETE = 1;
     private Game[] gamesFound;
 
-    private Typeface latoFontLight;
-    private Typeface latoFontBold;
-
     private CheatDatabaseAdapter db;
 
     private Activity parentActivity;
@@ -90,8 +87,8 @@ public class FavoriteGamesListFragment extends Fragment {
     public void createView() {
         parentActivity = getActivity();
 
-        latoFontLight = Tools.getFont(parentActivity.getAssets(), Konstanten.FONT_LIGHT);
-        latoFontBold = Tools.getFont(parentActivity.getAssets(), Konstanten.FONT_BOLD);
+        Typeface latoFontLight = Tools.getFont(parentActivity.getAssets(), Konstanten.FONT_LIGHT);
+        Typeface latoFontBold = Tools.getFont(parentActivity.getAssets(), Konstanten.FONT_BOLD);
 
         db = new CheatDatabaseAdapter(parentActivity);
         db.open();

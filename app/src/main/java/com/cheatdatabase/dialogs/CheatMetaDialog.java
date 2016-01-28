@@ -13,7 +13,7 @@ import android.view.Window;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.cheatdatabase.MemberCheatListActivity;
+import com.cheatdatabase.MemberCheatListActivity_;
 import com.cheatdatabase.R;
 import com.cheatdatabase.businessobjects.Cheat;
 import com.cheatdatabase.businessobjects.Member;
@@ -42,7 +42,6 @@ public class CheatMetaDialog extends Dialog implements OnClickListener {
     private TextView tvAverageRatingTitle;
     private TextView tvSubmittedByTitle;
     private TextView tvTotalSubmissionsMemberTitle;
-
 
     private TextView tvAverageRatingText;
     private TextView tvTotalViewsText;
@@ -248,7 +247,7 @@ public class CheatMetaDialog extends Dialog implements OnClickListener {
     @Override
     public void onClick(View v) {
         if (v == tvTotalSubmissionShowAll) {
-            Intent explicitIntent = new Intent(context, MemberCheatListActivity.class);
+            Intent explicitIntent = new Intent(context, MemberCheatListActivity_.class);
             explicitIntent.putExtra("memberObj", member);
             context.startActivity(explicitIntent);
         } else if (v == tvMemberHomepageText) {

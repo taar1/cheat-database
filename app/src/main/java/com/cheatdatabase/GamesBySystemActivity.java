@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.graphics.Typeface;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -46,9 +45,6 @@ public class GamesBySystemActivity extends AppCompatActivity {
 
     private static final String TAG = GamesBySystemActivity.class.getSimpleName();
     private ArrayList<Game> gameArrayList;
-
-    private Typeface latoFontLight;
-    private Typeface latoFontRegular;
 
     @Extra
     SystemPlatform systemObj;
@@ -117,9 +113,6 @@ public class GamesBySystemActivity extends AppCompatActivity {
         }
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
-
-        latoFontLight = tools.getFont(getAssets(), Konstanten.FONT_LIGHT);
-        latoFontRegular = tools.getFont(getAssets(), Konstanten.FONT_REGULAR);
     }
 
     @Override
