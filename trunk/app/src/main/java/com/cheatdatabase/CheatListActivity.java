@@ -9,7 +9,6 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -100,10 +99,6 @@ public class CheatListActivity extends AppCompatActivity {
 
     private ShareActionProvider mShareActionProvider;
 
-    public ShareActionProvider getmShareActionProvider() {
-        return mShareActionProvider;
-    }
-
     @AfterViews
     public void createView() {
         init();
@@ -112,7 +107,6 @@ public class CheatListActivity extends AppCompatActivity {
         setTitle(gameObj.getGameName());
         getSupportActionBar().setTitle(gameObj.getGameName());
         getSupportActionBar().setSubtitle(gameObj.getSystemName());
-
 
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -319,29 +313,29 @@ public class CheatListActivity extends AppCompatActivity {
             getMenuInflater().inflate(R.menu.signin_menu, menu);
         }
 
-        getMenuInflater().inflate(R.menu.handset_cheatview_rating_off_menu, menu);
-
-        // Locate MenuItem with ShareActionProvider
-        MenuItem item = menu.findItem(R.id.action_share);
-
-        // Sharing
-        mShareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(item);
-        Intent shareIntent = new Intent(Intent.ACTION_SEND);
-        shareIntent.setAction(Intent.ACTION_SEND);
-        shareIntent.setType("text/plain");
-        try {
-            String result = String.format(getString(R.string.share_email_subject), visibleCheat.getGameName());
-            shareIntent.putExtra(Intent.EXTRA_SUBJECT, result);
-            String fullBody = visibleCheat.getGameName() + " (" + visibleCheat.getSystemName() + "): " + visibleCheat.getCheatTitle() + "\n";
-            fullBody += Konstanten.BASE_URL + "display/switch.php?id=" + visibleCheat.getCheatId() + "\n\n";
-            shareIntent.putExtra(Intent.EXTRA_TEXT, fullBody);
-        } catch (Exception ee) {
-            // TODO bei einem wipe muss der visibleCheat hier geupdated werden
-            // TODO icon unten rechts wird vom share icon überdeckt...
-            shareIntent.putExtra(Intent.EXTRA_SUBJECT, "EMPTY SUBJECT");
-            shareIntent.putExtra(Intent.EXTRA_TEXT, "EMPTY BODY");
-        }
-        mShareActionProvider.setShareIntent(shareIntent);
+//        getMenuInflater().inflate(R.menu.handset_cheatview_rating_off_menu, menu);
+//
+//        // Locate MenuItem with ShareActionProvider
+//        MenuItem item = menu.findItem(R.id.action_share);
+//
+//        // Sharing
+//        mShareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(item);
+//        Intent shareIntent = new Intent(Intent.ACTION_SEND);
+//        shareIntent.setAction(Intent.ACTION_SEND);
+//        shareIntent.setType("text/plain");
+//        try {
+//            String result = String.format(getString(R.string.share_email_subject), visibleCheat.getGameName());
+//            shareIntent.putExtra(Intent.EXTRA_SUBJECT, result);
+//            String fullBody = visibleCheat.getGameName() + " (" + visibleCheat.getSystemName() + "): " + visibleCheat.getCheatTitle() + "\n";
+//            fullBody += Konstanten.BASE_URL + "display/switch.php?id=" + visibleCheat.getCheatId() + "\n\n";
+//            shareIntent.putExtra(Intent.EXTRA_TEXT, fullBody);
+//        } catch (Exception ee) {
+//            // TODO bei einem wipe muss der visibleCheat hier geupdated werden
+//            // TODO icon unten rechts wird vom share icon überdeckt...
+//            shareIntent.putExtra(Intent.EXTRA_SUBJECT, "EMPTY SUBJECT");
+//            shareIntent.putExtra(Intent.EXTRA_TEXT, "EMPTY BODY");
+//        }
+//        mShareActionProvider.setShareIntent(shareIntent);
 
         // Search
         getMenuInflater().inflate(R.menu.search_menu, menu);
