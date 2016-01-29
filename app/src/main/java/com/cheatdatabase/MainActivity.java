@@ -88,7 +88,9 @@ public class MainActivity extends AppCompatActivity implements ActionBar.OnNavig
     public static final String DRAWER_ITEM_NAME = "drawerName";
 
     // Navigation Drawer
+    //@ViewById(R.id.left_drawer)
     private ListView mDrawerList;
+
     private ActionBarDrawerToggle mDrawerToggle;
 
     List<DrawerItem> dataList;
@@ -97,6 +99,7 @@ public class MainActivity extends AppCompatActivity implements ActionBar.OnNavig
     private Member member;
 
     private SharedPreferences settings;
+    private SharedPreferences.Editor editor;
 
     private SearchManager searchManager;
     private SearchView searchView;
@@ -105,10 +108,10 @@ public class MainActivity extends AppCompatActivity implements ActionBar.OnNavig
     public void createView() {
         setTitle(R.string.app_name);
 
-        Reachability.registerReachability(this);
         Mint.initAndStartSession(this, Konstanten.SPLUNK_MINT_API_KEY);
 
         settings = getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
+        editor = settings.edit();
 
         if (mToolbar != null) {
             setSupportActionBar(mToolbar);
@@ -129,8 +132,6 @@ public class MainActivity extends AppCompatActivity implements ActionBar.OnNavig
         frgManager.beginTransaction().replace(R.id.content_frame, SystemListFragment_.builder().build()).commit();
 
         // Create Drawer
-        // TODO
-        // TODO hier noch savedInstance speichern/holen (die ID vom drawerr item beim anklicken)
         // damit das zuletzt aktive fragment wieder angezeigt wird, wenn man auf "back" klickt.
         createNavigationDrawer();
 
@@ -145,11 +146,17 @@ public class MainActivity extends AppCompatActivity implements ActionBar.OnNavig
 //        outState.putInt(Konstanten.PREFERENCES_SELECTED_DRAWER_FRAGMENT_ID, mFragmentId);
 //        super.onSaveInstanceState(outState, outPersistentState);
 //    }
-
+//
+////    @Override
+////    public void onSaveInstanceState(Bundle outState) {
+////        super.onSaveInstanceState(outState);
+////        outState.putSerializable("mFragmentId", memberObj);
+////    }
+//
 //    @Override
 //    protected void onRestoreInstanceState(Bundle savedInstanceState) {
 //        super.onRestoreInstanceState(savedInstanceState);
-//        mFragmentId = savedInstanceState.getInt(Konstanten.PREFERENCES_SELECTED_DRAWER_FRAGMENT_ID);
+//        mFragmentIdx = savedInstanceState.getInt(Konstanten.PREFERENCES_SELECTED_DRAWER_FRAGMENT_ID);
 ////        createNavigationDrawer(savedInstanceState);
 //    }
 //
@@ -169,6 +176,15 @@ public class MainActivity extends AppCompatActivity implements ActionBar.OnNavig
 //    }
 
     @Override
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putInt("mFragmentId", mFragmentId);
+        editor.putInt(Konstanten.PREFERENCES_SELECTED_DRAWER_FRAGMENT_ID, mFragmentId);
+        editor.apply();
+        super.onSaveInstanceState(outState);
+    }
+
+
+    @Override
     public void onPause() {
         super.onPause();
         Reachability.unregister(this);
@@ -177,8 +193,8 @@ public class MainActivity extends AppCompatActivity implements ActionBar.OnNavig
     @Override
     public void onResume() {
         super.onResume();
-        Log.d(TAG, "ON RESUME");
-//        selectItem(settings.getInt(Konstanten.PREFERENCES_SELECTED_DRAWER_FRAGMENT_ID, 1));
+        Reachability.registerReachability(this);
+        //selectItem(settings.getInt(Konstanten.PREFERENCES_SELECTED_DRAWER_FRAGMENT_ID, 1));
         member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
 
         // OGURY ADS START
@@ -209,11 +225,8 @@ public class MainActivity extends AppCompatActivity implements ActionBar.OnNavig
         if (mAdView != null) {
             mAdView.destroy();
         }
-        // TODO  loesung finden wie man das gespeicherte fragment ID wieder auf 1 setzen kann
-        // TODO ohne, dass das schon geschieht, wenn man von MainActivity weg geht
-        Log.d(TAG, "ON DESTROY");
-//        editor.putInt(Konstanten.PREFERENCES_SELECTED_DRAWER_FRAGMENT_ID, 1);
-//        editor.commit();
+        editor.putInt(Konstanten.PREFERENCES_SELECTED_DRAWER_FRAGMENT_ID, 0);
+        editor.apply();
         super.onDestroy();
     }
 
@@ -222,7 +235,6 @@ public class MainActivity extends AppCompatActivity implements ActionBar.OnNavig
         mDrawerLayout.setStatusBarBackgroundColor(getResources().getColor(R.color.page_indicator_background));
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, mToolbar, R.string.drawer_open, R.string.drawer_close);
         mDrawerLayout.setDrawerListener(mDrawerToggle);
-        getSupportActionBar().setHomeButtonEnabled(true);
         mDrawerToggle.syncState();
 
         LinearLayout drawerHeaderLayout = new LinearLayout(this);
@@ -278,21 +290,14 @@ public class MainActivity extends AppCompatActivity implements ActionBar.OnNavig
         // Set the drawer toggle as the DrawerListener
         mDrawerLayout.setDrawerListener(mDrawerToggle);
 
-//        if (savedInstanceState == null) {
-////         (if used method parameter is needed: createNavigationDrawer(Bundle savedInstanceState))
-//            int position = settings.getInt(Konstanten.PREFERENCES_SELECTED_DRAWER_FRAGMENT_ID, 0);
-//            selectItem(position);
-//        } else {
-//            selectItem(savedInstanceState.getInt(Konstanten.PREFERENCES_SELECTED_DRAWER_FRAGMENT_ID));
-//        }
-
-        // TODO SAVEDINSTANCE SPEICHERN GEHT NOCH NICHT (https://github.com/excilys/androidannotations/wiki/Save-instance-state)
-        if (mFragmentId > 7) {
-            mFragmentId = 0;
+        int savedFragmentId = settings.getInt(Konstanten.PREFERENCES_SELECTED_DRAWER_FRAGMENT_ID, 0);
+        editor.putInt(Konstanten.PREFERENCES_SELECTED_DRAWER_FRAGMENT_ID, 0);
+        editor.apply();
+        if (savedFragmentId > 7) {
+            savedFragmentId = 0;
         }
-        selectItem(mFragmentId);
+        selectItem(savedFragmentId);
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -372,25 +377,6 @@ public class MainActivity extends AppCompatActivity implements ActionBar.OnNavig
 
         return true;
     }
-
-//    @Override
-//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//
-//        if (resultCode == RESULT_OK) {
-//            // Return result code. Login success, Register success etc.
-//            int intentReturnCode = data.getIntExtra("result", Konstanten.LOGIN_REGISTER_FAIL_RETURN_CODE);
-//
-//            if (intentReturnCode == Konstanten.LOGIN_SUCCESS_RETURN_CODE) {
-//                member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
-//                Toast.makeText(MainActivity.this, R.string.login_ok, Toast.LENGTH_LONG).show();
-//            } else if (intentReturnCode == Konstanten.REGISTER_SUCCESS_RETURN_CODE) {
-//                member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
-//                Toast.makeText(MainActivity.this, R.string.register_thanks, Toast.LENGTH_LONG).show();
-//            }
-//            invalidateOptionsMenu();
-//        }
-//    }
 
     @OnActivityResult(Konstanten.LOGIN_SUCCESS_RETURN_CODE)
     void onResult(int resultCode, Intent data) {
@@ -519,8 +505,12 @@ public class MainActivity extends AppCompatActivity implements ActionBar.OnNavig
 
         }
 
-        mDrawerList.setItemChecked(position, true);
-        setTitle(dataList.get(position).getItemName());
+        int positionFixed = position - 1;
+        if (position - 1 < 0) {
+            positionFixed = 0;
+        }
+        mDrawerList.setItemChecked(positionFixed, true);
+        setTitle(dataList.get(positionFixed).getItemName());
         mDrawerLayout.closeDrawer(mDrawerList);
     }
 
