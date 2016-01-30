@@ -5,7 +5,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -87,7 +86,7 @@ public class MemberCheatListActivity extends AppCompatActivity {
 
     private ArrayList<Cheat> cheatsArrayList;
 
-    private Typeface latoFontLight;
+//    private Typeface latoFontLight;
     private Editor editor;
     private Cheat[] cheats;
 
@@ -108,7 +107,7 @@ public class MemberCheatListActivity extends AppCompatActivity {
         // in content do not change the layout size of the RecyclerView
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         mRecyclerView.addItemDecoration(new DividerDecoration(this));
-        mRecyclerView.getItemAnimator().setRemoveDuration(50); 
+        mRecyclerView.getItemAnimator().setRemoveDuration(50);
         mRecyclerView.setEmptyView(mEmptyView);
         mRecyclerView.setLoadingView(mProgressView);
         mRecyclerView.setHasFixedSize(true);
@@ -137,8 +136,7 @@ public class MemberCheatListActivity extends AppCompatActivity {
         SharedPreferences settings = getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
         editor = settings.edit();
 
-        latoFontLight = tools.getFont(getAssets(), Konstanten.FONT_LIGHT);
-
+//        latoFontLight = tools.getFont(getAssets(), Konstanten.FONT_LIGHT);
         //memberObj = (Member) getIntent().getSerializableExtra("memberObj");
     }
 

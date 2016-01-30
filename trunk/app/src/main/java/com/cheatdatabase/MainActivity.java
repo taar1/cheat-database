@@ -67,8 +67,6 @@ import io.presage.utils.IADHandler;
 @EActivity(R.layout.activity_main)
 public class MainActivity extends AppCompatActivity implements ActionBar.OnNavigationListener {
 
-    private static final String TAG = MainActivity.class.getSimpleName();
-
     @ViewById(R.id.adview)
     MoPubView mAdView;
 
@@ -88,7 +86,6 @@ public class MainActivity extends AppCompatActivity implements ActionBar.OnNavig
     public static final String DRAWER_ITEM_NAME = "drawerName";
 
     // Navigation Drawer
-    //@ViewById(R.id.left_drawer)
     private ListView mDrawerList;
 
     private ActionBarDrawerToggle mDrawerToggle;
@@ -122,7 +119,6 @@ public class MainActivity extends AppCompatActivity implements ActionBar.OnNavig
 
         tools.loadAd(mAdView, getString(R.string.screen_type));
 
-        // Log setting open event with category="ui", action="open", and label="settings"
         CheatDatabaseApplication.tracker().send(new HitBuilders.EventBuilder("ui", "MainActivity").setLabel("activity").build());
 
         AppBrain.init(this);
@@ -140,41 +136,6 @@ public class MainActivity extends AppCompatActivity implements ActionBar.OnNavig
         Presage.getInstance().start();
     }
 
-//    @Override
-//    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
-//        // Saving the currently active fragment ID to the Bundle object
-//        outState.putInt(Konstanten.PREFERENCES_SELECTED_DRAWER_FRAGMENT_ID, mFragmentId);
-//        super.onSaveInstanceState(outState, outPersistentState);
-//    }
-//
-////    @Override
-////    public void onSaveInstanceState(Bundle outState) {
-////        super.onSaveInstanceState(outState);
-////        outState.putSerializable("mFragmentId", memberObj);
-////    }
-//
-//    @Override
-//    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-//        super.onRestoreInstanceState(savedInstanceState);
-//        mFragmentIdx = savedInstanceState.getInt(Konstanten.PREFERENCES_SELECTED_DRAWER_FRAGMENT_ID);
-////        createNavigationDrawer(savedInstanceState);
-//    }
-//
-//    @Override
-//    public void onSaveInstanceState(Bundle savedInstanceState) {
-//        // Save the user's current game state
-////        savedInstanceState.putInt("hhh", 3333);
-//        savedInstanceState.putInt(Konstanten.PREFERENCES_SELECTED_DRAWER_FRAGMENT_ID, mFragmentId);
-//
-//        // Always call the superclass so it can save the view hierarchy state
-//        super.onSaveInstanceState(savedInstanceState);
-//    }
-//
-//    @Override
-//    public void onRestoreInstanceState(Bundle savedInstanceState, PersistableBundle persistentState) {
-//        super.onRestoreInstanceState(savedInstanceState, persistentState);
-//    }
-
     @Override
     public void onSaveInstanceState(Bundle outState) {
         outState.putInt("mFragmentId", mFragmentId);
@@ -182,7 +143,6 @@ public class MainActivity extends AppCompatActivity implements ActionBar.OnNavig
         editor.apply();
         super.onSaveInstanceState(outState);
     }
-
 
     @Override
     public void onPause() {
@@ -194,7 +154,6 @@ public class MainActivity extends AppCompatActivity implements ActionBar.OnNavig
     public void onResume() {
         super.onResume();
         Reachability.registerReachability(this);
-        //selectItem(settings.getInt(Konstanten.PREFERENCES_SELECTED_DRAWER_FRAGMENT_ID, 1));
         member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
 
         // OGURY ADS START
