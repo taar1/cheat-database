@@ -296,14 +296,13 @@ public class CheatDatabaseAdapter {
 
     public ArrayList<SystemPlatform> getAllSystemsAndCount() {
 
-        Cursor cur = mDb.query(DATABASE_TABLE_SYSTEMS, new String[]{SYS_SYSTEM_ID, SYS_SYSTEM_NAME, SYS_SYSTEM_GAMECOUNT, SYS_SYSTEM_CHEATCOUNT, SYS_SYSTEM_LASTMOD}, null, null, null, null, SYS_SYSTEM_NAME);
+        Cursor cur = mDb.query(DATABASE_TABLE_SYSTEMS, new String[]{SYS_SYSTEM_ID, SYS_SYSTEM_NAME, SYS_SYSTEM_GAMECOUNT, SYS_SYSTEM_CHEATCOUNT, SYS_SYSTEM_LASTMOD}, null, null, null, null, SYS_SYSTEM_NAME + " COLLATE NOCASE ASC;");
 
         ArrayList<SystemPlatform> systems = null;
 
         if (cur.moveToFirst()) {
             if (cur.isFirst()) {
                 systems = new ArrayList<>();
-                int i = 0;
                 do {
                     int systemId = cur.getInt(cur.getColumnIndex(SYS_SYSTEM_ID));
                     String systemName = cur.getString(cur.getColumnIndex(SYS_SYSTEM_NAME));
@@ -318,10 +317,13 @@ public class CheatDatabaseAdapter {
                     sysPla.setCheatCount(cheatCount);
                     sysPla.setLastModTimeStamp(Long.parseLong(lastMod));
 
+                    Log.d(TAG, "DDD: " + sysPla.getSystemName());
+
                     systems.add(sysPla);
-                    i++;
                 } while (cur.moveToNext());
             }
+
+
 
             cur.close();
             return systems;

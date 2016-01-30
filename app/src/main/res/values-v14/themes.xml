@@ -7,7 +7,7 @@
     -->
     <style name="Theme.Navyblue" parent="Theme.AppCompat">
         <!-- API 14 theme customizations can go here. -->
-        <item name="android:windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
     </style>
 
