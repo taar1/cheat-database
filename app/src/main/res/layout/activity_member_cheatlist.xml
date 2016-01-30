@@ -6,7 +6,7 @@
 
     <include layout="@layout/toolbar" />
 
-    <!-- List item layout: cheatlist_item.xml -->
+    <!-- List item layout: member_cheatlist_item.xml -->
     <TextView
         android:id="@+id/item_list_empty_view"
         android:layout_width="wrap_content"
