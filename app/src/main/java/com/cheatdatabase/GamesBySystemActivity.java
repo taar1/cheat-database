@@ -36,6 +36,8 @@ import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.Extra;
 import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -176,14 +178,19 @@ public class GamesBySystemActivity extends AppCompatActivity {
     public void onResume() {
         super.onResume();
         Reachability.registerReachability(this);
-        CheatDatabaseApplication.getEventBus().register(this);
     }
 
     @Override
-    public void onPause() {
-        super.onPause();
+    protected void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    protected void onStop() {
+        EventBus.getDefault().unregister(this);
         Reachability.unregister(this);
-        CheatDatabaseApplication.getEventBus().unregister(this);
+        super.onStop();
     }
 
     @Override
@@ -194,6 +201,7 @@ public class GamesBySystemActivity extends AppCompatActivity {
         super.onDestroy();
     }
 
+    @Subscribe
     public void onEvent(GameListRecyclerViewClickEvent result) {
         if (result.isSucceeded()) {
             CheatDatabaseApplication.tracker().send(new HitBuilders.EventBuilder("ui", "click").setLabel(result.getGame().getGameName()).build());

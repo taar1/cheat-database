@@ -47,6 +47,8 @@ import com.viewpagerindicator.UnderlinePageIndicator;
 
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EBean;
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 /**
  * Horizontal sliding gallery of cheats from a game.
@@ -367,14 +369,19 @@ public class CheatViewPageIndicator extends AppCompatActivity {
         member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
         invalidateOptionsMenu();
         Reachability.registerReachability(this);
-        CheatDatabaseApplication.getEventBus().register(this);
     }
 
     @Override
-    public void onPause() {
-        super.onPause();
+    protected void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    protected void onStop() {
+        EventBus.getDefault().unregister(this);
         Reachability.unregister(this);
-        CheatDatabaseApplication.getEventBus().unregister(this);
+        super.onStop();
     }
 
     @Override
@@ -399,6 +406,7 @@ public class CheatViewPageIndicator extends AppCompatActivity {
         }
     }
 
+    @Subscribe
     public void onEvent(CheatReportingFinishedEvent result) {
         if (result.isSucceeded()) {
             Toast.makeText(this, R.string.thanks_for_reporting, Toast.LENGTH_LONG).show();
@@ -421,6 +429,7 @@ public class CheatViewPageIndicator extends AppCompatActivity {
         }
     }
 
+    @Subscribe
     public void onEvent(CheatRatingFinishedEvent result) {
         visibleCheat.setMemberRating(result.getRating());
         cheatObj[activePage].setMemberRating(result.getRating());

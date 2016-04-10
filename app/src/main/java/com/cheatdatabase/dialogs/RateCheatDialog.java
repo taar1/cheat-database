@@ -14,7 +14,6 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.cheatdatabase.CheatDatabaseApplication;
 import com.cheatdatabase.R;
 import com.cheatdatabase.businessobjects.Cheat;
 import com.cheatdatabase.businessobjects.Member;
@@ -23,6 +22,8 @@ import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Tools;
 import com.cheatdatabase.helpers.Webservice;
 import com.google.gson.Gson;
+
+import org.greenrobot.eventbus.EventBus;
 
 /**
  * Cheat rating dialog.
@@ -108,7 +109,7 @@ public class RateCheatDialog extends DialogFragment {
 
         @Override
         protected void onPostExecute(Integer rating) {
-            CheatDatabaseApplication.getEventBus().post(new CheatRatingFinishedEvent(cheatObj, rating));
+            EventBus.getDefault().post(new CheatRatingFinishedEvent(cheatObj, rating));
         }
     }
 
