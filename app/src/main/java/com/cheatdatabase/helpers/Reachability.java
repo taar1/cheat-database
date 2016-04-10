@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.util.Log;
 
 public class Reachability {
 
@@ -23,9 +24,14 @@ public class Reachability {
 
     public static boolean registerReachability(Context context) {
         ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        if (reachability.isReceiving) {
-            context.unregisterReceiver(reachability.receiver);
-            reachability.isReceiving = false;
+
+        try {
+            if (reachability.isReceiving) {
+                context.unregisterReceiver(reachability.receiver);
+                reachability.isReceiving = false;
+            }
+        } catch (Exception e) {
+            Log.d("Reach", "ERRRR: " + e.getLocalizedMessage());
         }
 
         NetworkInfo info = connectivityManager.getActiveNetworkInfo();
@@ -45,9 +51,13 @@ public class Reachability {
     }
 
     public static void unregister(Context context) {
-        if (reachability.isReceiving) {
-            context.unregisterReceiver(reachability.receiver);
-            reachability.isReceiving = false;
+        try {
+            if (reachability.isReceiving) {
+                context.unregisterReceiver(reachability.receiver);
+                reachability.isReceiving = false;
+            }
+        } catch (Exception e) {
+            Log.d("Reach", "ERRRR: " + e.getLocalizedMessage());
         }
     }
 }

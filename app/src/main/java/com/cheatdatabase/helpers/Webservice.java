@@ -1214,7 +1214,7 @@ public class Webservice {
     }
 
     /**
-     * Holt sümtliche Games von einem System und liefert sie als String-Arrays
+     * Holt saemtliche Games von einem System und liefert sie als String-Arrays
      * in einer ArrayList zurück.
      *
      * @param systemId

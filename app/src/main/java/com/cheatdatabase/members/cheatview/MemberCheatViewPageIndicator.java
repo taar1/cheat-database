@@ -46,6 +46,8 @@ import com.viewpagerindicator.UnderlinePageIndicator;
 
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EBean;
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -148,16 +150,21 @@ public class MemberCheatViewPageIndicator extends AppCompatActivity {
     public void onResume() {
         super.onResume();
         Reachability.registerReachability(this);
-        CheatDatabaseApplication.getEventBus().register(this);
         member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
         invalidateOptionsMenu();
     }
 
     @Override
-    public void onPause() {
-        super.onPause();
+    protected void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    protected void onStop() {
+        EventBus.getDefault().unregister(this);
         Reachability.unregister(this);
-        CheatDatabaseApplication.getEventBus().unregister(this);
+        super.onStop();
     }
 
     @Override
@@ -388,6 +395,7 @@ public class MemberCheatViewPageIndicator extends AppCompatActivity {
 //        new ReportCheatTask().execute(reasons[selectedReason]);
 //    }
 
+    @Subscribe
     public void onEvent(CheatReportingFinishedEvent result) {
         if (result.isSucceeded()) {
             Toast.makeText(this, R.string.thanks_for_reporting, Toast.LENGTH_LONG).show();
@@ -418,6 +426,7 @@ public class MemberCheatViewPageIndicator extends AppCompatActivity {
 //        Toast.makeText(this, R.string.rating_inserted, Toast.LENGTH_SHORT).show();
 //    }
 
+    @Subscribe
     public void onEvent(CheatRatingFinishedEvent result) {
         visibleCheat.setMemberRating(result.getRating());
         cheatObj.get(activePage).setMemberRating(result.getRating());

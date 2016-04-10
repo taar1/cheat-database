@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.cheatdatabase.CheatDatabaseApplication;
 import com.cheatdatabase.R;
 import com.cheatdatabase.businessobjects.Game;
 import com.cheatdatabase.events.GameListRecyclerViewClickEvent;
@@ -19,6 +18,7 @@ import com.cheatdatabase.helpers.Tools;
 
 import org.androidannotations.annotations.EBean;
 import org.androidannotations.annotations.RootContext;
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 
@@ -87,9 +87,9 @@ public class GamesBySystemRecycleListViewAdapter extends RecyclerView.Adapter<Ga
             public void onGameClick(ViewHolder caller) {
 
                 if (Reachability.reachability.isReachable) {
-                    CheatDatabaseApplication.getEventBus().post(new GameListRecyclerViewClickEvent(mGames.get(caller.getAdapterPosition())));
+                    EventBus.getDefault().post(new GameListRecyclerViewClickEvent(mGames.get(caller.getAdapterPosition())));
                 } else {
-                    CheatDatabaseApplication.getEventBus().post(new GameListRecyclerViewClickEvent(new Exception()));
+                    EventBus.getDefault().post(new GameListRecyclerViewClickEvent(new Exception()));
                 }
             }
         });

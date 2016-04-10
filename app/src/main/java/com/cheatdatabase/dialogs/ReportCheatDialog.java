@@ -14,7 +14,6 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.cheatdatabase.CheatDatabaseApplication;
 import com.cheatdatabase.R;
 import com.cheatdatabase.businessobjects.Cheat;
 import com.cheatdatabase.businessobjects.Member;
@@ -23,6 +22,8 @@ import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Tools;
 import com.cheatdatabase.helpers.Webservice;
 import com.google.gson.Gson;
+
+import org.greenrobot.eventbus.EventBus;
 
 /**
  * Dialog displaying a list of reasons to report a particular cheat.
@@ -109,7 +110,7 @@ public class ReportCheatDialog extends DialogFragment {
 
         @Override
         protected void onPostExecute(Boolean success) {
-            CheatDatabaseApplication.getEventBus().post(new CheatReportingFinishedEvent(success));
+            EventBus.getDefault().post(new CheatReportingFinishedEvent(success));
         }
     }
 

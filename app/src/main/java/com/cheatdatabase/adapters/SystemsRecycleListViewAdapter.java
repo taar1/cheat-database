@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.cheatdatabase.CheatDatabaseApplication;
 import com.cheatdatabase.R;
 import com.cheatdatabase.businessobjects.SystemPlatform;
 import com.cheatdatabase.events.SystemListRecyclerViewClickEvent;
@@ -20,6 +19,7 @@ import com.cheatdatabase.helpers.Tools;
 
 import org.androidannotations.annotations.EBean;
 import org.androidannotations.annotations.RootContext;
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 
@@ -93,9 +93,9 @@ public class SystemsRecycleListViewAdapter extends RecyclerView.Adapter<SystemsR
             public void onSystemClick(ViewHolder caller) {
 
                 if (Reachability.reachability.isReachable) {
-                    CheatDatabaseApplication.getEventBus().post(new SystemListRecyclerViewClickEvent(mSystemObjects.get(caller.getAdapterPosition())));
+                    EventBus.getDefault().post(new SystemListRecyclerViewClickEvent(mSystemObjects.get(caller.getAdapterPosition())));
                 } else {
-                    CheatDatabaseApplication.getEventBus().post(new SystemListRecyclerViewClickEvent(new Exception()));
+                    EventBus.getDefault().post(new SystemListRecyclerViewClickEvent(new Exception()));
                 }
             }
         });
