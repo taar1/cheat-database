@@ -50,6 +50,8 @@ import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.Extra;
 import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -264,6 +266,7 @@ public class FavoriteCheatListActivity extends AppCompatActivity {
 //        Toast.makeText(this, R.string.rating_inserted, Toast.LENGTH_SHORT).show();
 //    }
 
+    @Subscribe
     public void onEvent(CheatRatingFinishedEvent result) {
         visibleCheat.setMemberRating(result.getRating());
 //        favoritesDetailsFragment.updateMemberCheatRating(result.getRating());
@@ -280,15 +283,19 @@ public class FavoriteCheatListActivity extends AppCompatActivity {
     public void onResume() {
         super.onResume();
         Reachability.registerReachability(this);
-        CheatDatabaseApplication.getEventBus().register(this);
-
     }
 
     @Override
-    public void onPause() {
-        super.onPause();
+    protected void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    protected void onStop() {
+        EventBus.getDefault().unregister(this);
         Reachability.unregister(this);
-        CheatDatabaseApplication.getEventBus().unregister(this);
+        super.onStop();
     }
 
     @Override
@@ -299,6 +306,7 @@ public class FavoriteCheatListActivity extends AppCompatActivity {
         super.onDestroy();
     }
 
+    @Subscribe
     public void onEvent(CheatListRecyclerViewClickEvent result) {
         if (result.isSucceeded()) {
             CheatDatabaseApplication.tracker().send(new HitBuilders.EventBuilder("ui", "click").setLabel(result.getCheat().getCheatTitle()).build());

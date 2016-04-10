@@ -49,6 +49,8 @@ import com.viewpagerindicator.UnderlinePageIndicator;
 
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EBean;
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 /**
  * Horizontal sliding gallery of cheats from a game.
@@ -345,20 +347,26 @@ public class FavoritesCheatViewPageIndicator extends AppCompatActivity implement
         }
     }
 
-    @Override
-    public void onPause() {
-        super.onPause();
-        Reachability.unregister(this);
-        CheatDatabaseApplication.getEventBus().unregister(this);
-    }
 
     @Override
     protected void onResume() {
         super.onResume();
         Reachability.registerReachability(this);
-        CheatDatabaseApplication.getEventBus().register(this);
         member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
         invalidateOptionsMenu();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    protected void onStop() {
+        EventBus.getDefault().unregister(this);
+        Reachability.unregister(this);
+        super.onStop();
     }
 
     @Override
@@ -384,6 +392,7 @@ public class FavoritesCheatViewPageIndicator extends AppCompatActivity implement
         }
     }
 
+    @Subscribe
     public void onEvent(CheatReportingFinishedEvent result) {
         if (result.isSucceeded()) {
             Toast.makeText(this, R.string.thanks_for_reporting, Toast.LENGTH_LONG).show();
@@ -406,6 +415,7 @@ public class FavoritesCheatViewPageIndicator extends AppCompatActivity implement
         }
     }
 
+    @Subscribe
     public void onEvent(CheatRatingFinishedEvent result) {
         visibleCheat.setMemberRating(result.getRating());
         cheatObj[activePage].setMemberRating(result.getRating());

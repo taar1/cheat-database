@@ -2,7 +2,6 @@ package com.cheatdatabase.tasks;
 
 import android.util.Log;
 
-import com.cheatdatabase.CheatDatabaseApplication;
 import com.cheatdatabase.businessobjects.SystemPlatform;
 import com.cheatdatabase.helpers.CheatDatabaseAdapter;
 import com.cheatdatabase.helpers.Webservice;
@@ -13,6 +12,7 @@ import org.androidannotations.annotations.Background;
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EBean;
 import org.androidannotations.annotations.UiThread;
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -107,7 +107,7 @@ public class GamesAndCheatsCountTask {
     @UiThread
     void updateUI() {
         db.close();
-        CheatDatabaseApplication.getEventBus().post(gamesAndCheatsCountTaskResult);
+        EventBus.getDefault().post(gamesAndCheatsCountTaskResult);
     }
 
 }

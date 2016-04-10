@@ -58,6 +58,8 @@ import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.Extra;
 import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.Calendar;
 
@@ -353,19 +355,25 @@ public class CheatForumActivity extends AppCompatActivity implements CheatListFr
         return tl;
     }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-        Reachability.unregister(this);
-        CheatDatabaseApplication.getEventBus().unregister(this);
-    }
 
     @Override
     protected void onResume() {
         super.onResume();
         Reachability.registerReachability(this);
-        CheatDatabaseApplication.getEventBus().register(this);
         member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    protected void onStop() {
+        EventBus.getDefault().unregister(this);
+        Reachability.unregister(this);
+        super.onStop();
     }
 
     @Override
@@ -503,6 +511,7 @@ public class CheatForumActivity extends AppCompatActivity implements CheatListFr
         }
     }
 
+    @Subscribe
     public void onEvent(CheatReportingFinishedEvent result) {
         if (result.isSucceeded()) {
             Toast.makeText(this, R.string.thanks_for_reporting, Toast.LENGTH_LONG).show();
@@ -525,8 +534,9 @@ public class CheatForumActivity extends AppCompatActivity implements CheatListFr
         }
     }
 
+    @Subscribe
     public void onEvent(CheatRatingFinishedEvent result) {
-        Log.d(TAG, "BBBBB3 OnEvent result: " + result.getRating());
+        Log.d(TAG, "OnEvent result: " + result.getRating());
         cheatObj.setMemberRating(result.getRating());
         // highlightRatingIcon(true);
         Toast.makeText(this, R.string.rating_inserted, Toast.LENGTH_SHORT).show();

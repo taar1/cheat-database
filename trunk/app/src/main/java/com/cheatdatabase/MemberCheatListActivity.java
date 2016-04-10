@@ -39,6 +39,8 @@ import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.Extra;
 import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -86,7 +88,7 @@ public class MemberCheatListActivity extends AppCompatActivity {
 
     private ArrayList<Cheat> cheatsArrayList;
 
-//    private Typeface latoFontLight;
+    //    private Typeface latoFontLight;
     private Editor editor;
     private Cheat[] cheats;
 
@@ -177,14 +179,19 @@ public class MemberCheatListActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         Reachability.registerReachability(this);
-        CheatDatabaseApplication.getEventBus().register(this);
     }
 
     @Override
-    public void onPause() {
-        super.onPause();
+    protected void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    protected void onStop() {
+        EventBus.getDefault().unregister(this);
         Reachability.unregister(this);
-        CheatDatabaseApplication.getEventBus().unregister(this);
+        super.onStop();
     }
 
     @Override
@@ -241,6 +248,7 @@ public class MemberCheatListActivity extends AppCompatActivity {
         }).create().show();
     }
 
+    @Subscribe
     public void onEvent(CheatListRecyclerViewClickEvent result) {
         if (result.isSucceeded()) {
             CheatDatabaseApplication.tracker().send(new HitBuilders.EventBuilder("ui", "click").setLabel(result.getCheat().getCheatTitle()).build());

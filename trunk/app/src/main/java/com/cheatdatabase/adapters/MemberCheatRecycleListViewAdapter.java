@@ -11,7 +11,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.cheatdatabase.CheatDatabaseApplication;
 import com.cheatdatabase.R;
 import com.cheatdatabase.businessobjects.Cheat;
 import com.cheatdatabase.events.CheatListRecyclerViewClickEvent;
@@ -22,6 +21,7 @@ import com.cheatdatabase.helpers.Tools;
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EBean;
 import org.androidannotations.annotations.RootContext;
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 
@@ -102,9 +102,9 @@ public class MemberCheatRecycleListViewAdapter extends RecyclerView.Adapter<Memb
                     Log.d(TAG, "caller.getAdapterPosition(): " + caller.getAdapterPosition());
                     Log.d(TAG, "Cheat Title: " + mCheats.get(caller.getAdapterPosition()).getCheatTitle());
 
-                    CheatDatabaseApplication.getEventBus().post(new CheatListRecyclerViewClickEvent(mCheats.get(caller.getAdapterPosition()), caller.getAdapterPosition()));
+                    EventBus.getDefault().post(new CheatListRecyclerViewClickEvent(mCheats.get(caller.getAdapterPosition()), caller.getAdapterPosition()));
                 } else {
-                    CheatDatabaseApplication.getEventBus().post(new CheatListRecyclerViewClickEvent(new Exception()));
+                    EventBus.getDefault().post(new CheatListRecyclerViewClickEvent(new Exception()));
                 }
             }
         });

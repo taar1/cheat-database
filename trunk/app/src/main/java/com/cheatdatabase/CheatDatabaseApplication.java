@@ -7,8 +7,6 @@ import com.cheatdatabase.helpers.Konstanten;
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.Tracker;
 
-import de.greenrobot.event.EventBus;
-
 /**
  * Created by Dominik on 06.06.2015.
  */
@@ -16,7 +14,7 @@ public class CheatDatabaseApplication extends Application {
 
     private static final String TAG = CheatDatabaseApplication.class.getSimpleName();
 
-    private static EventBus sEventBus;
+    //    private static EventBus sEventBus;
     private static Context sAppContext;
 
     // GOOGLE ANALYTICS EXAMPLE CODE
@@ -70,15 +68,10 @@ public class CheatDatabaseApplication extends Application {
         tracker.enableAutoActivityTracking(true);
 
         sAppContext = getApplicationContext();
-        sEventBus = EventBus.builder().throwSubscriberException(BuildConfig.DEBUG).installDefaultEventBus();
     }
 
     public static Context getAppContext() {
         return sAppContext;
-    }
-
-    public static EventBus getEventBus() {
-        return sEventBus;
     }
 
 }

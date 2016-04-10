@@ -52,6 +52,8 @@ import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.Extra;
 import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -202,17 +204,17 @@ public class CheatListActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
+    protected void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
         Reachability.registerReachability(this);
-        CheatDatabaseApplication.getEventBus().register(this);
     }
 
     @Override
-    public void onPause() {
-        super.onPause();
+    protected void onStop() {
+        EventBus.getDefault().unregister(this);
         Reachability.unregister(this);
-        CheatDatabaseApplication.getEventBus().unregister(this);
+        super.onStop();
     }
 
     @Override
@@ -243,6 +245,7 @@ public class CheatListActivity extends AppCompatActivity {
         }
     }
 
+    @Subscribe
     public void onEvent(CheatReportingFinishedEvent result) {
         if (result.isSucceeded()) {
             Toast.makeText(this, R.string.thanks_for_reporting, Toast.LENGTH_LONG).show();
@@ -265,6 +268,7 @@ public class CheatListActivity extends AppCompatActivity {
         }
     }
 
+    @Subscribe
     public void onEvent(CheatRatingFinishedEvent result) {
         visibleCheat.setMemberRating(result.getRating());
         Toast.makeText(this, R.string.rating_inserted, Toast.LENGTH_SHORT).show();
@@ -426,6 +430,7 @@ public class CheatListActivity extends AppCompatActivity {
         }
     }
 
+    @Subscribe
     public void onEvent(CheatListRecyclerViewClickEvent result) {
         if (result.isSucceeded()) {
             CheatDatabaseApplication.tracker().send(new HitBuilders.EventBuilder("ui", "click").setLabel(result.getCheat().getCheatTitle()).build());
