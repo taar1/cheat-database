@@ -46,7 +46,9 @@ public class SubmitCheatFragment extends Fragment {
     public void onCreateView() {
         ca = getActivity();
 
-        Reachability.registerReachability(ca);
+        if (!Reachability.isRegistered()) {
+            Reachability.registerReachability(ca);
+        }
         Mint.initAndStartSession(ca.getApplicationContext(), Konstanten.SPLUNK_MINT_API_KEY);
 
         latoFontLight = Tools.getFont(ca.getAssets(), Konstanten.FONT_LIGHT);

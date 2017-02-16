@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="mopub-sdk-interstitial-4.9.0">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/app/build/intermediates/exploded-aar/com.mopub/mopub-sdk-interstitial/4.9.0/jars/classes.jar!/" />
+      <root url="file://$PROJECT_DIR$/app/build/intermediates/exploded-aar/com.mopub/mopub-sdk-interstitial/4.9.0/res" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.mopub/mopub-sdk-interstitial/4.9.0/67adfd95ca0d3d1715ea92e3098dd07c41969ed7/mopub-sdk-interstitial-4.9.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

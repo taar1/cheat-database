@@ -169,7 +169,9 @@ public class CheatForumActivity extends AppCompatActivity implements CheatListFr
     }
 
     private void init() {
-        Reachability.registerReachability(this);
+        if (!Reachability.isRegistered()) {
+            Reachability.registerReachability(this);
+        }
         Mint.initAndStartSession(this, Konstanten.SPLUNK_MINT_API_KEY);
 
         CheatDatabaseApplication.tracker().send(new HitBuilders.EventBuilder("ui", cheatObj.getGameName() + " (" + cheatObj.getSystemName() + ")").setLabel("activity").build());
@@ -359,7 +361,9 @@ public class CheatForumActivity extends AppCompatActivity implements CheatListFr
     @Override
     protected void onResume() {
         super.onResume();
-        Reachability.registerReachability(this);
+        if (!Reachability.isRegistered()) {
+            Reachability.registerReachability(this);
+        }
         member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
     }
 
