@@ -187,7 +187,9 @@ public class LoginActivity extends AppCompatActivity implements AlreadyLoggedInD
     @Override
     protected void onResume() {
         super.onResume();
-        Reachability.registerReachability(this);
+        if (!Reachability.isRegistered()) {
+            Reachability.registerReachability(this);
+        }
     }
 
     @Override

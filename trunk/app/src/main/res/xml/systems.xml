@@ -108,4 +108,7 @@
     <system
         name="Xbox One"
         sysId="38" />
+    <system
+        name="Nintendo Switch"
+        sysId="39" />
 </resources>

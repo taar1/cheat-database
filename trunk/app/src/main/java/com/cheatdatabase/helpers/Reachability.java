@@ -22,6 +22,13 @@ public class Reachability {
         reachability = new Reachability();
     }
 
+    public static boolean isRegistered() {
+        if (reachability.receiver != null) {
+            return true;
+        }
+        return false;
+    }
+
     public static boolean registerReachability(Context context) {
         ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
 

@@ -153,7 +153,9 @@ public class MainActivity extends AppCompatActivity implements ActionBar.OnNavig
     @Override
     public void onResume() {
         super.onResume();
-        Reachability.registerReachability(this);
+        if (!Reachability.isRegistered()) {
+            Reachability.registerReachability(this);
+        }
         member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
 
         // OGURY ADS START
@@ -162,7 +164,6 @@ public class MainActivity extends AppCompatActivity implements ActionBar.OnNavig
             @Override
             public void onAdNotFound() {
                 Log.i("PRESAGE", "ad not found");
-                // can probably be deleted
                 tools.loadAd(mAdView, getString(R.string.screen_type));
             }
 
@@ -174,6 +175,16 @@ public class MainActivity extends AppCompatActivity implements ActionBar.OnNavig
             @Override
             public void onAdClosed() {
                 Log.i("PRESAGE", "ad closed");
+            }
+
+            @Override
+            public void onAdError(int code) {
+                Log.i("PRESAGE", String.format("error with code %d", code));
+            }
+
+            @Override
+            public void onAdDisplayed() {
+                Log.i("PRESAGE", "ad displayed");
             }
         });
         // OGURY ADS END

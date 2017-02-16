@@ -83,7 +83,9 @@ public class ContactFormFragment extends Fragment {
 
     @AfterViews
     public void onCreateView() {
-        Reachability.registerReachability(getActivity());
+        if (!Reachability.isRegistered()) {
+            Reachability.registerReachability(getActivity());
+        }
 
         SharedPreferences settings = getActivity().getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
         Member member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);

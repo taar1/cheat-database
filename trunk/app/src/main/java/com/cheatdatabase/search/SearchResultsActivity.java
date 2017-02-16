@@ -93,7 +93,9 @@ public class SearchResultsActivity extends AppCompatActivity {
 
     private void init() {
         setContentView(R.layout.activity_search_result);
-        Reachability.registerReachability(this);
+        if (!Reachability.isRegistered()) {
+            Reachability.registerReachability(this);
+        }
 
         latoFontLight = Tools.getFont(getAssets(), Konstanten.FONT_LIGHT);
         latoFontBold = Tools.getFont(getAssets(), Konstanten.FONT_BOLD);
