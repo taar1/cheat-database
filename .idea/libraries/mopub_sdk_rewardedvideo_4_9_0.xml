@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="mopub-sdk-rewardedvideo-4.9.0">
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/app/build/intermediates/exploded-aar/com.mopub/mopub-sdk-rewardedvideo/4.9.0/res" />
+      <root url="jar://$PROJECT_DIR$/app/build/intermediates/exploded-aar/com.mopub/mopub-sdk-rewardedvideo/4.9.0/jars/classes.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.mopub/mopub-sdk-rewardedvideo/4.9.0/431c4d0ef17dbf906b910ac50ee5afd4281f2984/mopub-sdk-rewardedvideo-4.9.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

@@ -177,7 +177,9 @@ public class GamesBySystemActivity extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
-        Reachability.registerReachability(this);
+        if (!Reachability.isRegistered()) {
+            Reachability.registerReachability(this);
+        }
     }
 
     @Override

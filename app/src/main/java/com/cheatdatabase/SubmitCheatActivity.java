@@ -161,7 +161,9 @@ public class SubmitCheatActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        Reachability.registerReachability(this);
+        if (!Reachability.isRegistered()) {
+            Reachability.registerReachability(this);
+        }
         member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
     }
 

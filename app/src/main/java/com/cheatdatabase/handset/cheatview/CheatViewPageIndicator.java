@@ -134,7 +134,9 @@ public class CheatViewPageIndicator extends AppCompatActivity {
     }
 
     private void init() {
-        Reachability.registerReachability(this);
+        if (!Reachability.isRegistered()) {
+            Reachability.registerReachability(this);
+        }
         Mint.initAndStartSession(this, Konstanten.SPLUNK_MINT_API_KEY);
 
         settings = getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
@@ -368,7 +370,6 @@ public class CheatViewPageIndicator extends AppCompatActivity {
         super.onResume();
         member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
         invalidateOptionsMenu();
-        Reachability.registerReachability(this);
     }
 
     @Override

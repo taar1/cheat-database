@@ -207,7 +207,9 @@ public class CheatListActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         EventBus.getDefault().register(this);
-        Reachability.registerReachability(this);
+        if (!Reachability.isRegistered()) {
+            Reachability.registerReachability(this);
+        }
     }
 
     @Override

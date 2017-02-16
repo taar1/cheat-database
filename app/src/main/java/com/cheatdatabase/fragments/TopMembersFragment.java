@@ -83,7 +83,9 @@ public class TopMembersFragment extends Fragment {
     @AfterViews
     public void onCreateView() {
         parentActivity = getActivity();
-        Reachability.registerReachability(parentActivity);
+        if (!Reachability.isRegistered()) {
+            Reachability.registerReachability(parentActivity);
+        }
 
         latoFontLight = tools.getFont(parentActivity.getAssets(), Konstanten.FONT_LIGHT);
         latoFontBold = tools.getFont(parentActivity.getAssets(), Konstanten.FONT_BOLD);

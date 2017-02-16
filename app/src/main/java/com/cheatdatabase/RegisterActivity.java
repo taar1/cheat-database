@@ -154,7 +154,9 @@ public class RegisterActivity extends AppCompatActivity {
 
     @Override
     protected void onResume() {
-        Reachability.registerReachability(this);
+        if (!Reachability.isRegistered()) {
+            Reachability.registerReachability(this);
+        }
         super.onResume();
     }
 

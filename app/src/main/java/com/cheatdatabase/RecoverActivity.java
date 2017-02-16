@@ -128,7 +128,9 @@ public class RecoverActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        Reachability.registerReachability(this);
+        if (!Reachability.isRegistered()) {
+            Reachability.registerReachability(this);
+        }
     }
 
 

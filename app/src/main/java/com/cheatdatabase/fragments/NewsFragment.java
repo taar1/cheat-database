@@ -63,7 +63,9 @@ public class NewsFragment extends Fragment {
     @AfterViews
     public void onCreateView() {
         parentActivity = getActivity();
-        Reachability.registerReachability(parentActivity);
+        if (!Reachability.isRegistered()) {
+            Reachability.registerReachability(parentActivity);
+        }
 
         latoFontBold = Tools.getFont(parentActivity.getAssets(), Konstanten.FONT_BOLD);
         latoFontLight = Tools.getFont(parentActivity.getAssets(), Konstanten.FONT_LIGHT);

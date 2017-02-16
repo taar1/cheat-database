@@ -1,6 +1,6 @@
 [
     {
-        "outputFile": "C:\\Users\\taar1\\Development\\Android\\AndroidStudioProjects\\Cheat-Database\\VPILibrary\\build\\intermediates\\res\\merged\\debug\\values\\values.xml",
+        "outputFile": "C:\\Users\\taar1\\Development\\Android\\AndroidStudioProjects\\Cheat-Database\\VPILibrary\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values\\values.xml",
         "map": [
             {
                 "to": {
@@ -498,11 +498,11 @@
             },
             {
                 "to": {
-                    "startLine": 33,
+                    "startLine": 40,
                     "startColumn": 4,
-                    "startOffset": 4134,
+                    "startOffset": 4217,
                     "endColumn": 61,
-                    "endOffset": 4191
+                    "endOffset": 4274
                 },
                 "from": {
                     "file": "C:\\Users\\taar1\\Development\\Android\\AndroidStudioProjects\\Cheat-Database\\VPILibrary\\res\\values\\vpi__defaults.xml",
@@ -517,11 +517,11 @@
             },
             {
                 "to": {
-                    "startLine": 34,
+                    "startLine": 41,
                     "startColumn": 4,
-                    "startOffset": 4196,
+                    "startOffset": 4279,
                     "endColumn": 67,
-                    "endOffset": 4259
+                    "endOffset": 4342
                 },
                 "from": {
                     "file": "C:\\Users\\taar1\\Development\\Android\\AndroidStudioProjects\\Cheat-Database\\VPILibrary\\res\\values\\vpi__defaults.xml",
@@ -536,11 +536,11 @@
             },
             {
                 "to": {
-                    "startLine": 35,
+                    "startLine": 42,
                     "startColumn": 4,
-                    "startOffset": 4264,
+                    "startOffset": 4347,
                     "endColumn": 62,
-                    "endOffset": 4322
+                    "endOffset": 4405
                 },
                 "from": {
                     "file": "C:\\Users\\taar1\\Development\\Android\\AndroidStudioProjects\\Cheat-Database\\VPILibrary\\res\\values\\vpi__defaults.xml",
@@ -555,11 +555,11 @@
             },
             {
                 "to": {
-                    "startLine": 36,
+                    "startLine": 43,
                     "startColumn": 4,
-                    "startOffset": 4327,
+                    "startOffset": 4410,
                     "endColumn": 64,
-                    "endOffset": 4387
+                    "endOffset": 4470
                 },
                 "from": {
                     "file": "C:\\Users\\taar1\\Development\\Android\\AndroidStudioProjects\\Cheat-Database\\VPILibrary\\res\\values\\vpi__defaults.xml",
@@ -574,11 +574,11 @@
             },
             {
                 "to": {
-                    "startLine": 37,
+                    "startLine": 44,
                     "startColumn": 4,
-                    "startOffset": 4392,
+                    "startOffset": 4475,
                     "endColumn": 65,
-                    "endOffset": 4453
+                    "endOffset": 4536
                 },
                 "from": {
                     "file": "C:\\Users\\taar1\\Development\\Android\\AndroidStudioProjects\\Cheat-Database\\VPILibrary\\res\\values\\vpi__defaults.xml",
@@ -593,11 +593,11 @@
             },
             {
                 "to": {
-                    "startLine": 38,
+                    "startLine": 45,
                     "startColumn": 4,
-                    "startOffset": 4458,
+                    "startOffset": 4541,
                     "endColumn": 66,
-                    "endOffset": 4520
+                    "endOffset": 4603
                 },
                 "from": {
                     "file": "C:\\Users\\taar1\\Development\\Android\\AndroidStudioProjects\\Cheat-Database\\VPILibrary\\res\\values\\vpi__defaults.xml",
@@ -612,11 +612,11 @@
             },
             {
                 "to": {
-                    "startLine": 39,
+                    "startLine": 46,
                     "startColumn": 4,
-                    "startOffset": 4525,
+                    "startOffset": 4608,
                     "endColumn": 77,
-                    "endOffset": 4598
+                    "endOffset": 4681
                 },
                 "from": {
                     "file": "C:\\Users\\taar1\\Development\\Android\\AndroidStudioProjects\\Cheat-Database\\VPILibrary\\res\\values\\vpi__defaults.xml",
@@ -631,11 +631,11 @@
             },
             {
                 "to": {
-                    "startLine": 40,
+                    "startLine": 47,
                     "startColumn": 4,
-                    "startOffset": 4603,
+                    "startOffset": 4686,
                     "endColumn": 89,
-                    "endOffset": 4688
+                    "endOffset": 4771
                 },
                 "from": {
                     "file": "C:\\Users\\taar1\\Development\\Android\\AndroidStudioProjects\\Cheat-Database\\VPILibrary\\res\\values\\vpi__defaults.xml",
@@ -650,11 +650,11 @@
             },
             {
                 "to": {
-                    "startLine": 41,
+                    "startLine": 48,
                     "startColumn": 4,
-                    "startOffset": 4693,
+                    "startOffset": 4776,
                     "endColumn": 72,
-                    "endOffset": 4761
+                    "endOffset": 4844
                 },
                 "from": {
                     "file": "C:\\Users\\taar1\\Development\\Android\\AndroidStudioProjects\\Cheat-Database\\VPILibrary\\res\\values\\vpi__defaults.xml",
@@ -669,11 +669,11 @@
             },
             {
                 "to": {
-                    "startLine": 42,
+                    "startLine": 49,
                     "startColumn": 4,
-                    "startOffset": 4766,
+                    "startOffset": 4849,
                     "endColumn": 68,
-                    "endOffset": 4830
+                    "endOffset": 4913
                 },
                 "from": {
                     "file": "C:\\Users\\taar1\\Development\\Android\\AndroidStudioProjects\\Cheat-Database\\VPILibrary\\res\\values\\vpi__defaults.xml",
@@ -688,11 +688,11 @@
             },
             {
                 "to": {
-                    "startLine": 43,
+                    "startLine": 50,
                     "startColumn": 4,
-                    "startOffset": 4835,
+                    "startOffset": 4918,
                     "endColumn": 64,
-                    "endOffset": 4895
+                    "endOffset": 4978
                 },
                 "from": {
                     "file": "C:\\Users\\taar1\\Development\\Android\\AndroidStudioProjects\\Cheat-Database\\VPILibrary\\res\\values\\vpi__defaults.xml",
@@ -707,11 +707,11 @@
             },
             {
                 "to": {
-                    "startLine": 44,
+                    "startLine": 51,
                     "startColumn": 4,
-                    "startOffset": 4900,
+                    "startOffset": 4983,
                     "endColumn": 67,
-                    "endOffset": 4963
+                    "endOffset": 5046
                 },
                 "from": {
                     "file": "C:\\Users\\taar1\\Development\\Android\\AndroidStudioProjects\\Cheat-Database\\VPILibrary\\res\\values\\vpi__defaults.xml",
@@ -726,11 +726,11 @@
             },
             {
                 "to": {
-                    "startLine": 45,
+                    "startLine": 52,
                     "startColumn": 4,
-                    "startOffset": 4968,
+                    "startOffset": 5051,
                     "endColumn": 65,
-                    "endOffset": 5029
+                    "endOffset": 5112
                 },
                 "from": {
                     "file": "C:\\Users\\taar1\\Development\\Android\\AndroidStudioProjects\\Cheat-Database\\VPILibrary\\res\\values\\vpi__defaults.xml",
@@ -745,11 +745,11 @@
             },
             {
                 "to": {
-                    "startLine": 46,
+                    "startLine": 53,
                     "startColumn": 4,
-                    "startOffset": 5034,
+                    "startOffset": 5117,
                     "endColumn": 68,
-                    "endOffset": 5098
+                    "endOffset": 5181
                 },
                 "from": {
                     "file": "C:\\Users\\taar1\\Development\\Android\\AndroidStudioProjects\\Cheat-Database\\VPILibrary\\res\\values\\vpi__defaults.xml",
@@ -764,11 +764,11 @@
             },
             {
                 "to": {
-                    "startLine": 47,
+                    "startLine": 54,
                     "startColumn": 4,
-                    "startOffset": 5103,
+                    "startOffset": 5186,
                     "endColumn": 78,
-                    "endOffset": 5177
+                    "endOffset": 5260
                 },
                 "from": {
                     "file": "C:\\Users\\taar1\\Development\\Android\\AndroidStudioProjects\\Cheat-Database\\VPILibrary\\res\\values\\vpi__defaults.xml",
@@ -783,11 +783,11 @@
             },
             {
                 "to": {
-                    "startLine": 48,
+                    "startLine": 55,
                     "startColumn": 4,
-                    "startOffset": 5182,
+                    "startOffset": 5265,
                     "endColumn": 69,
-                    "endOffset": 5247
+                    "endOffset": 5330
                 },
                 "from": {
                     "file": "C:\\Users\\taar1\\Development\\Android\\AndroidStudioProjects\\Cheat-Database\\VPILibrary\\res\\values\\vpi__defaults.xml",
@@ -802,11 +802,11 @@
             },
             {
                 "to": {
-                    "startLine": 49,
+                    "startLine": 56,
                     "startColumn": 4,
-                    "startOffset": 5252,
+                    "startOffset": 5335,
                     "endColumn": 72,
-                    "endOffset": 5320
+                    "endOffset": 5403
                 },
                 "from": {
                     "file": "C:\\Users\\taar1\\Development\\Android\\AndroidStudioProjects\\Cheat-Database\\VPILibrary\\res\\values\\vpi__defaults.xml",
@@ -821,11 +821,11 @@
             },
             {
                 "to": {
-                    "startLine": 50,
+                    "startLine": 57,
                     "startColumn": 4,
-                    "startOffset": 5325,
+                    "startOffset": 5408,
                     "endColumn": 73,
-                    "endOffset": 5394
+                    "endOffset": 5477
                 },
                 "from": {
                     "file": "C:\\Users\\taar1\\Development\\Android\\AndroidStudioProjects\\Cheat-Database\\VPILibrary\\res\\values\\vpi__defaults.xml",
@@ -840,12 +840,12 @@
             },
             {
                 "to": {
-                    "startLine": 51,
+                    "startLine": 58,
                     "startColumn": 4,
-                    "startOffset": 5399,
-                    "endLine": 54,
+                    "startOffset": 5482,
+                    "endLine": 61,
                     "endColumn": 12,
-                    "endOffset": 5594
+                    "endOffset": 5677
                 },
                 "from": {
                     "file": "C:\\Users\\taar1\\Development\\Android\\AndroidStudioProjects\\Cheat-Database\\VPILibrary\\res\\values\\vpi__styles.xml",
@@ -861,12 +861,12 @@
             },
             {
                 "to": {
-                    "startLine": 55,
+                    "startLine": 62,
                     "startColumn": 4,
-                    "startOffset": 5599,
-                    "endLine": 58,
+                    "startOffset": 5682,
+                    "endLine": 65,
                     "endColumn": 12,
-                    "endOffset": 5847
+                    "endOffset": 5930
                 },
                 "from": {
                     "file": "C:\\Users\\taar1\\Development\\Android\\AndroidStudioProjects\\Cheat-Database\\VPILibrary\\res\\values\\vpi__styles.xml",
@@ -882,12 +882,12 @@
             },
             {
                 "to": {
-                    "startLine": 59,
+                    "startLine": 66,
                     "startColumn": 4,
-                    "startOffset": 5852,
-                    "endLine": 60,
+                    "startOffset": 5935,
+                    "endLine": 67,
                     "endColumn": 12,
-                    "endOffset": 5886
+                    "endOffset": 5969
                 },
                 "from": {
                     "file": "C:\\Users\\taar1\\Development\\Android\\AndroidStudioProjects\\Cheat-Database\\VPILibrary\\res\\values\\vpi__styles.xml",
@@ -903,12 +903,12 @@
             },
             {
                 "to": {
-                    "startLine": 61,
+                    "startLine": 68,
                     "startColumn": 4,
-                    "startOffset": 5891,
-                    "endLine": 64,
+                    "startOffset": 5974,
+                    "endLine": 71,
                     "endColumn": 12,
-                    "endOffset": 6076
+                    "endOffset": 6159
                 },
                 "from": {
                     "file": "C:\\Users\\taar1\\Development\\Android\\AndroidStudioProjects\\Cheat-Database\\VPILibrary\\res\\values\\vpi__styles.xml",
@@ -924,12 +924,12 @@
             },
             {
                 "to": {
-                    "startLine": 65,
+                    "startLine": 72,
                     "startColumn": 4,
-                    "startOffset": 6081,
-                    "endLine": 75,
+                    "startOffset": 6164,
+                    "endLine": 82,
                     "endColumn": 12,
-                    "endOffset": 6678
+                    "endOffset": 6761
                 },
                 "from": {
                     "file": "C:\\Users\\taar1\\Development\\Android\\AndroidStudioProjects\\Cheat-Database\\VPILibrary\\res\\values\\vpi__styles.xml",

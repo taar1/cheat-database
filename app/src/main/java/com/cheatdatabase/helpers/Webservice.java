@@ -543,7 +543,10 @@ public class Webservice {
 
     public static Game[] searchGames(Activity activity, String searchString) {
         String gameListString = searchGamesAsString(searchString);
-        return Tools.getGameListConvertStringToGameList(activity, gameListString);
+        if (gameListString != null) {
+            return Tools.getGameListConvertStringToGameList(activity, gameListString);
+        }
+        return null;
     }
 
     /**

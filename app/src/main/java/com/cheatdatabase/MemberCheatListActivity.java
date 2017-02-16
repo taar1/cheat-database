@@ -178,7 +178,9 @@ public class MemberCheatListActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        Reachability.registerReachability(this);
+        if (!Reachability.isRegistered()) {
+            Reachability.registerReachability(this);
+        }
     }
 
     @Override
