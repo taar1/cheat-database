@@ -113,7 +113,6 @@ public class TopMembersFragment extends Fragment {
 
             getMembersInBackground();
         } else {
-
             Toast.makeText(parentActivity, R.string.no_internet, Toast.LENGTH_LONG).show();
         }
 
@@ -127,7 +126,9 @@ public class TopMembersFragment extends Fragment {
 
     private void initAdapter(ArrayList<Member> members) {
         mTopMembersListViewAdapter.init(members);
-        mRecyclerView.setAdapter(mTopMembersListViewAdapter);
+        if (mTopMembersListViewAdapter != null) {
+            mRecyclerView.setAdapter(mTopMembersListViewAdapter);
+        }
         mTopMembersListViewAdapter.notifyDataSetChanged();
     }
 

@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
@@ -98,6 +99,7 @@ public class CheatViewPageIndicator extends AppCompatActivity {
     private Toolbar mToolbar;
     private ShareActionProvider mShare;
 
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -148,6 +150,7 @@ public class CheatViewPageIndicator extends AppCompatActivity {
         member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
     }
 
+
     private void initialisePaging() {
 
         String[] cheatTitles = new String[cheatObj.length];
@@ -195,6 +198,13 @@ public class CheatViewPageIndicator extends AppCompatActivity {
                 }
             });
 
+            FloatingActionButton fa = (FloatingActionButton) viewLayout.findViewById(R.id.add_new_cheat_button);
+            fa.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    SubmitCheatActivity_.intent(CheatViewPageIndicator.this).gameObj(gameObj).start();
+                }
+            });
         } catch (Exception e2) {
             Log.e(TAG, "ERROR: " + getPackageName() + "/" + getTitle() + "... " + e2.getMessage());
         }

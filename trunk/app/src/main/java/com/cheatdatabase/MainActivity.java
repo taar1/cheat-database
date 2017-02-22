@@ -53,6 +53,7 @@ import com.splunk.mint.Mint;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Bean;
+import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.Extra;
 import org.androidannotations.annotations.OnActivityResult;
@@ -135,6 +136,12 @@ public class MainActivity extends AppCompatActivity implements ActionBar.OnNavig
         Presage.getInstance().setContext(this.getBaseContext());
         Presage.getInstance().start();
     }
+
+    @Click(R.id.add_new_cheat_button)
+    void addNewCheat() {
+        selectItem(5);
+    }
+
 
     @Override
     public void onSaveInstanceState(Bundle outState) {

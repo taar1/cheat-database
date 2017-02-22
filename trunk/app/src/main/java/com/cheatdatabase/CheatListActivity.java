@@ -48,6 +48,7 @@ import com.splunk.mint.Mint;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Background;
 import org.androidannotations.annotations.Bean;
+import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.Extra;
 import org.androidannotations.annotations.UiThread;
@@ -308,6 +309,14 @@ public class CheatListActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
+
+    @Click(R.id.add_new_cheat_button)
+    void addNewCheat() {
+        Intent explicitIntent = new Intent(CheatListActivity.this, SubmitCheatActivity_.class);
+        explicitIntent.putExtra("gameObj", gameObj);
+        startActivity(explicitIntent);
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
