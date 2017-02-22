@@ -299,4 +299,5 @@ public class MemberCheatListActivity extends AppCompatActivity {
 //        menu.setHeaderTitle(R.string.context_menu_title);
 //        menu.add(0, ADD_TO_FAVORITES, 1, R.string.add_one_favorite);
 //    }
+
 }

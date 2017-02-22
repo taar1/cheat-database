@@ -188,8 +188,10 @@ public class FavoriteGamesListFragment extends Fragment {
         }
 
         private void fillList() {
-            for (int i = 0; i < groups.size(); i++) {
-                listView.expandGroup(i, false);
+            if (groups != null && listView != null) {
+                for (int i = 0; i < groups.size(); i++) {
+                    listView.expandGroup(i, false);
+                }
             }
         }
     };

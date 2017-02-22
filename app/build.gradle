@@ -12,10 +12,10 @@ android {
     buildToolsVersion '25.0.1'
     defaultConfig {
         applicationId "com.cheatdatabase"
-        minSdkVersion 14
+        minSdkVersion 16
         targetSdkVersion 23
-        versionCode 28
-        versionName "2.1.6"
+        versionCode 29
+        versionName "2.1.7"
         signingConfig signingConfigs.config
     }
     buildTypes {
@@ -44,6 +44,9 @@ repositories {
     maven {
         url 'http://swisscodemonkeys.github.io/appbrain-sdk/maven'
     }
+    maven {
+        url "https://jitpack.io"
+    }
     jcenter()
     mavenCentral()
 }
@@ -58,7 +61,9 @@ dependencies {
     compile project(':VPILibrary')
     compile files('libs/presage-lib-1.8.3.jar')
     compile 'com.android.support:appcompat-v7:25.0.1'
+	compile 'com.android.support:design:25.0.1'
     compile 'com.android.support:recyclerview-v7:25.0.1'
+    compile 'com.github.vajro:MaterialDesignLibrary:1.6'
     compile 'com.google.code.gson:gson:2.3'
     compile 'com.google.android.gms:play-services-analytics:8.4.0'
     compile 'com.google.android.gms:play-services-auth:8.4.0'
@@ -68,8 +73,7 @@ dependencies {
     compile 'org.greenrobot:eventbus:3.0.0'
     apt "org.androidannotations:androidannotations:4.2.0"
     compile 'org.androidannotations:androidannotations-api:4.2.0'
-    compile 'com.github.navasmdc:MaterialDesign:1.5@aar'
-    compile('com.mopub:mopub-sdk:4.9.0@aar') {
+    compile('com.mopub:mopub-sdk:4.12.0@aar') {
         transitive = true
     }
 }
