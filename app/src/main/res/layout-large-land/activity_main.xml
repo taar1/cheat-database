@@ -19,7 +19,16 @@
             android:layout_weight="100"
             android:gravity="top"
             tools:context=".MainActivity"
-            tools:ignore="MergeRootFrame"></FrameLayout>
+            tools:ignore="MergeRootFrame">
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/add_new_cheat_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|end"
+                android:layout_margin="20dp"
+                android:src="@drawable/ic_add_black_48dp" />
+        </FrameLayout>
 
         <include layout="@layout/adview" />
     </LinearLayout>

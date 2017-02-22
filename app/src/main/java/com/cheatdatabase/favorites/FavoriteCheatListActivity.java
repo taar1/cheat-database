@@ -23,6 +23,7 @@ import android.widget.Toast;
 
 import com.cheatdatabase.CheatDatabaseApplication;
 import com.cheatdatabase.R;
+import com.cheatdatabase.SubmitCheatActivity_;
 import com.cheatdatabase.adapters.CheatRecycleListViewAdapter;
 import com.cheatdatabase.businessobjects.Cheat;
 import com.cheatdatabase.businessobjects.Game;
@@ -46,6 +47,7 @@ import com.splunk.mint.Mint;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Background;
 import org.androidannotations.annotations.Bean;
+import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.Extra;
 import org.androidannotations.annotations.UiThread;
@@ -341,6 +343,10 @@ public class FavoriteCheatListActivity extends AppCompatActivity {
         }
     }
 
+    @Click(R.id.add_new_cheat_button)
+    void addNewCheat() {
+        SubmitCheatActivity_.intent(FavoriteCheatListActivity.this).gameObj(gameObj).start();
+    }
 
     @Background
     void getCheats() {

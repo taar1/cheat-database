@@ -24,20 +24,43 @@
         android:layout_gravity="center"
         android:background="@color/white" />
 
-    <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/swipe_refresh_layout"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="100">
+        android:layout_height="match_parent">
 
-        <com.cheatdatabase.widgets.EmptyRecyclerView
-            android:id="@+id/my_recycler_view"
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/swipe_refresh_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scrollbars="vertical" />
+            android:layout_weight="100"
+            android:paddingBottom="52dp">
 
-    </android.support.v4.widget.SwipeRefreshLayout>
+            <com.cheatdatabase.widgets.EmptyRecyclerView
+                android:id="@+id/my_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scrollbars="vertical" />
 
-    <include layout="@layout/adview" />
+
+        </android.support.v4.widget.SwipeRefreshLayout>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/add_new_cheat_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/swipe_refresh_layout"
+            android:layout_alignRight="@id/swipe_refresh_layout"
+            android:layout_marginBottom="72dp"
+            android:layout_marginRight="20dp"
+            android:src="@drawable/ic_add_black_48dp" />
+
+        <com.mopub.mobileads.MoPubView
+            android:id="@+id/adview"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/black" />
+    </RelativeLayout>
+
 
 </LinearLayout>
