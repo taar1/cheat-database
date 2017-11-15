@@ -117,13 +117,8 @@ public class SystemListFragment extends Fragment {
     @Subscribe
     public void onEvent(SystemListRecyclerViewClickEvent result) {
         if (result.isSucceeded()) {
-            // 39 = NINTENDO SWITCH
-            if (result.getSystemPlatform().getSystemId() == 39) {
-                Toast.makeText(getActivity(), "Nintendo Switch coming soon.", Toast.LENGTH_SHORT).show();
-            } else {
-                CheatDatabaseApplication.tracker().send(new HitBuilders.EventBuilder("ui", "click").setLabel(result.getSystemPlatform().getSystemName()).build());
-                GamesBySystemActivity_.intent(getActivity()).systemObj(result.getSystemPlatform()).start();
-            }
+            CheatDatabaseApplication.tracker().send(new HitBuilders.EventBuilder("ui", "click").setLabel(result.getSystemPlatform().getSystemName()).build());
+            GamesBySystemActivity_.intent(getActivity()).systemObj(result.getSystemPlatform()).start();
         } else {
             Toast.makeText(getActivity(), R.string.no_internet, Toast.LENGTH_SHORT).show();
         }

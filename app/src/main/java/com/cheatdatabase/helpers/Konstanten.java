@@ -6,11 +6,11 @@ public class Konstanten {
     public final static int DEFAULT_TOTAL_CHEATS = 150000;
 
     // URL Konstanten
-    public final static String BASE_URL = "http://www.cheat-database.com/";
-    public final static String BASE_URL_ANDROID = "http://www.cheat-database.com/android/json/";
-    public final static String SCREENSHOT_ROOT_WEBDIR = "http://www.cheat-database.com/cheatpics/";
-    public final static String WEBDIR_MEMBER_AVATAR = "http://www.cheat-database.com/getblobimage.php?blobid=";
-    public final static String CHEATDATABASE_ANDROID_ICON_512 = "http://www.cheat-database.com/images/android_icons/cheat-database_icon_512x512.png";
+    public final static String BASE_URL = "https://www.cheat-database.com/";
+    public final static String BASE_URL_ANDROID = "https://www.cheat-database.com/android/json/";
+    public final static String SCREENSHOT_ROOT_WEBDIR = "https://www.cheat-database.com/cheatpics/";
+    public final static String WEBDIR_MEMBER_AVATAR = "https://www.cheat-database.com/getblobimage.php?blobid=";
+    public final static String CHEATDATABASE_ANDROID_ICON_512 = "https://www.cheat-database.com/images/android_icons/cheat-database_icon_512x512.png";
 
     public static final int LOGIN_REGISTER_FAIL_RETURN_CODE = 0;
     public static final int LOGIN_REGISTER_OK_RETURN_CODE = 1;
