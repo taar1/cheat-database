@@ -46,7 +46,6 @@ import com.google.android.gms.analytics.HitBuilders;
 import com.google.gson.Gson;
 import com.mopub.mobileads.MoPubView;
 import com.splunk.mint.Mint;
-import com.viewpagerindicator.UnderlinePageIndicator;
 
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EBean;
@@ -88,7 +87,7 @@ public class FavoritesCheatViewPageIndicator extends AppCompatActivity implement
 
     private FavoritesCheatViewFragmentAdapter mAdapter;
     private ViewPager mPager;
-    private UnderlinePageIndicator mIndicator;
+//    private UnderlinePageIndicator mIndicator;
 
     private int activePage;
 
@@ -164,37 +163,37 @@ public class FavoritesCheatViewPageIndicator extends AppCompatActivity implement
             mPager = (ViewPager) viewLayout.findViewById(R.id.pager);
             mPager.setAdapter(mAdapter);
 
-            mIndicator = (UnderlinePageIndicator) viewLayout.findViewById(R.id.indicator);
-            mIndicator.setViewPager(mPager);
-            mIndicator.notifyDataSetChanged();
-            mIndicator.setCurrentItem(pageSelected);
-
-            mIndicator.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-                @Override
-                public void onPageSelected(int position) {
-
-                    // Save the last selected page
-                    editor.putInt(Konstanten.PREFERENCES_PAGE_SELECTED, position);
-                    editor.commit();
-
-                    activePage = position;
-
-                    try {
-                        visibleCheat = cheatObj[position];
-                        invalidateOptionsMenu();
-                    } catch (Exception e) {
-                        Toast.makeText(FavoritesCheatViewPageIndicator.this, R.string.err_somethings_wrong, Toast.LENGTH_SHORT).show();
-                    }
-                }
-
-                @Override
-                public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                }
-
-                @Override
-                public void onPageScrollStateChanged(int state) {
-                }
-            });
+//            mIndicator = (UnderlinePageIndicator) viewLayout.findViewById(R.id.indicator);
+//            mIndicator.setViewPager(mPager);
+//            mIndicator.notifyDataSetChanged();
+//            mIndicator.setCurrentItem(pageSelected);
+//
+//            mIndicator.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+//                @Override
+//                public void onPageSelected(int position) {
+//
+//                    // Save the last selected page
+//                    editor.putInt(Konstanten.PREFERENCES_PAGE_SELECTED, position);
+//                    editor.commit();
+//
+//                    activePage = position;
+//
+//                    try {
+//                        visibleCheat = cheatObj[position];
+//                        invalidateOptionsMenu();
+//                    } catch (Exception e) {
+//                        Toast.makeText(FavoritesCheatViewPageIndicator.this, R.string.err_somethings_wrong, Toast.LENGTH_SHORT).show();
+//                    }
+//                }
+//
+//                @Override
+//                public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+//                }
+//
+//                @Override
+//                public void onPageScrollStateChanged(int state) {
+//                }
+//            });
 
             FloatingActionButton fa = (FloatingActionButton) viewLayout.findViewById(R.id.add_new_cheat_button);
             fa.setOnClickListener(new View.OnClickListener() {
@@ -313,11 +312,6 @@ public class FavoritesCheatViewPageIndicator extends AppCompatActivity implement
                 return true;
             case R.id.action_forum:
                 if (Reachability.reachability.isReachable) {
-//                    Intent forumIntent = new Intent(FavoritesCheatViewPageIndicator.this, CheatForumActivity.class);
-//                    forumIntent.putExtra("gameObj", gameObj);
-//                    forumIntent.putExtra("cheatObj", visibleCheat);
-//                    startActivity(forumIntent);
-
                     CheatForumActivity_.intent(this).gameObj(gameObj).cheatObj(visibleCheat).start();
                 } else {
                     Toast.makeText(this, R.string.no_internet, Toast.LENGTH_SHORT).show();

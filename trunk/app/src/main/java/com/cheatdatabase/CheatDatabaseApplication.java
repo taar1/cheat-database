@@ -7,6 +7,7 @@ import com.cheatdatabase.helpers.Konstanten;
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.Tracker;
 
+
 /**
  * Created by Dominik on 06.06.2015.
  */
@@ -53,6 +54,7 @@ public class CheatDatabaseApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        //Fabric.with(this, new Crashlytics());
         analytics = GoogleAnalytics.getInstance(this);
         // TODO: Replace the tracker-id with your app one from https://www.google.com/analytics/web/
         tracker = analytics.newTracker(Konstanten.GOOGLE_ANALYTICS_ID);
