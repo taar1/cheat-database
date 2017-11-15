@@ -31,7 +31,7 @@
             android:layout_weight="100"
             android:paddingBottom="52dp" />
 
-        <com.viewpagerindicator.UnderlinePageIndicator
+        <net.lucode.hackware.magicindicator.MagicIndicator
             android:id="@+id/indicator"
             android:layout_width="match_parent"
             android:layout_height="3dp"

@@ -1,5 +1,9 @@
 apply plugin: 'com.android.application'
-apply plugin: 'com.neenbedankt.android-apt'
+
+String APK_ID = "com.cheatdatabase"
+String APK_NAME = "Cheat-Database"
+int VERSION_CODE = 31
+String VERSION_NAME = "2.1.8"
 
 android {
     signingConfigs {
@@ -9,25 +13,53 @@ android {
         }
     }
     compileSdkVersion 25
-    buildToolsVersion '25.0.1'
+    buildToolsVersion '26.0.2'
     defaultConfig {
-        applicationId "com.cheatdatabase"
+        applicationId APK_ID
+        archivesBaseName = APK_NAME
         minSdkVersion 16
         targetSdkVersion 23
-        versionCode 29
-        versionName "2.1.7"
+        versionCode VERSION_CODE
+        versionName VERSION_NAME
         signingConfig signingConfigs.config
+        multiDexEnabled true
     }
+
+    dexOptions {
+        javaMaxHeapSize "4g" //specify the heap size for the dex process
+    }
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES.txt'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/notice.txt'
+        exclude 'META-INF/license.txt'
+        exclude 'META-INF/dependencies.txt'
+        exclude 'META-INF/LGPL2.1'
+    }
+
+    // Specifies a flavor dimension.
+    flavorDimensions "myDimension"
+
     productFlavors {
         googlePlayFlavor {
+            dimension "myDimension"
+            versionNameSuffix "-googlePlay"
         }
         amazonFlavor {
+            dimension "myDimension"
+            versionNameSuffix "-amazon"
         }
     }
 
@@ -47,35 +79,50 @@ repositories {
     maven {
         url "https://jitpack.io"
     }
+    maven {
+        name "MoPub"
+        url "https://s3.amazonaws.com/moat-sdk-builds"
+    }
+    maven {
+        name "Needed for MoPub"
+        url 'https://maven.google.com'
+    }
     jcenter()
     mavenCentral()
 }
 
-apt {
-    arguments {
-        androidManifestFile variant.outputs[0].processResources.manifestFile
-    }
+ext {
+    supportVersion = '26.1.0'
+    playServicesVersion = '11.4.2'
+    AAVersion = '4.4.0'
 }
 
 dependencies {
-    compile project(':VPILibrary')
-    compile files('libs/presage-lib-1.8.3.jar')
-    compile 'com.android.support:appcompat-v7:25.0.1'
-	compile 'com.android.support:design:25.0.1'
-    compile 'com.android.support:recyclerview-v7:25.0.1'
-    compile 'com.github.vajro:MaterialDesignLibrary:1.6'
-    compile 'com.google.code.gson:gson:2.3'
-    compile 'com.google.android.gms:play-services-analytics:8.4.0'
-    compile 'com.google.android.gms:play-services-auth:8.4.0'
-    compile 'com.squareup.picasso:picasso:2.5.2'
-    compile 'com.splunk.mint:mint:4.1'
-    compile 'com.appbrain:appbrain-applift-sdk:+'
-    compile 'org.greenrobot:eventbus:3.0.0'
-    apt "org.androidannotations:androidannotations:4.2.0"
-    compile 'org.androidannotations:androidannotations-api:4.2.0'
-    compile('com.mopub:mopub-sdk:4.12.0@aar') {
+//    compile "com.google.firebase:firebase-core:$playServicesVersion"
+//    compile "com.google.firebase:firebase-invites:$playServicesVersion"
+    compile "com.android.support:appcompat-v7:$supportVersion"
+    compile "com.android.support:design:$supportVersion"
+    //compile "com.android.support:recyclerview-v7:$supportVersion"
+    compile "com.github.vajro:MaterialDesignLibrary:1.6"
+    compile "com.google.code.gson:gson:2.3"
+    compile "com.google.android.gms:play-services-analytics:$playServicesVersion"
+    compile "com.google.android.gms:play-services-auth:$playServicesVersion"
+    compile "com.squareup.picasso:picasso:2.5.2"
+    compile "com.splunk.mint:mint:4.1"
+    compile "com.appbrain:appbrain-applift-sdk:+"
+    compile "org.greenrobot:eventbus:3.1.1"
+    annotationProcessor "org.androidannotations:androidannotations:$AAVersion"
+    annotationProcessor "org.androidannotations:ormlite:$AAVersion"
+    compile "org.androidannotations:androidannotations-api:$AAVersion"
+    compile("com.mopub:mopub-sdk:4.18.0@aar") {
         transitive = true
+        // Exclude this to make it work with Gradle 3 / Android Studio 3
+        exclude module: "libAvid-mopub" // To exclude AVID
+        exclude module: "moat-mobile-app-kit" // To exclude Moat
     }
+    compile "com.github.hackware1993:MagicIndicator:1.5.0"
 }
 
-apply plugin: 'com.google.gms.google-services'
+// ADD THIS AT THE BOTTOM
+// Needed for Google Analytics
+apply plugin: "com.google.gms.google-services"

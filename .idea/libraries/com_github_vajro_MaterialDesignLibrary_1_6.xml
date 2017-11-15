@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="com.github.vajro:MaterialDesignLibrary-1.6">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/MaterialDesignLibrary-1.6.aar/b02c5dc37d5a41ba398156eb57fe074e/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/MaterialDesignLibrary-1.6.aar/b02c5dc37d5a41ba398156eb57fe074e/res" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

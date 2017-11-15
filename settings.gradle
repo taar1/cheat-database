@@ -1,1 +1,1 @@
-include ':app', ':VPILibrary', ':NiceButtons2'
+include ':app'

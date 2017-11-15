@@ -62,9 +62,6 @@ import org.androidannotations.annotations.ViewById;
 import java.util.ArrayList;
 import java.util.List;
 
-import io.presage.Presage;
-import io.presage.utils.IADHandler;
-
 @EActivity(R.layout.activity_main)
 public class MainActivity extends AppCompatActivity implements ActionBar.OnNavigationListener {
 
@@ -132,9 +129,6 @@ public class MainActivity extends AppCompatActivity implements ActionBar.OnNavig
         // damit das zuletzt aktive fragment wieder angezeigt wird, wenn man auf "back" klickt.
         createNavigationDrawer();
 
-        // PRESAGE ADS (http://admin.ogury.co/docs/library_android?api_key=264890)
-        Presage.getInstance().setContext(this.getBaseContext());
-        Presage.getInstance().start();
     }
 
     @Click(R.id.add_new_cheat_button)
@@ -164,37 +158,6 @@ public class MainActivity extends AppCompatActivity implements ActionBar.OnNavig
             Reachability.registerReachability(this);
         }
         member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
-
-        // OGURY ADS START
-        Presage.getInstance().adToServe("interstitial", new IADHandler() {
-
-            @Override
-            public void onAdNotFound() {
-                Log.i("PRESAGE", "ad not found");
-                tools.loadAd(mAdView, getString(R.string.screen_type));
-            }
-
-            @Override
-            public void onAdFound() {
-                Log.i("PRESAGE", "ad found");
-            }
-
-            @Override
-            public void onAdClosed() {
-                Log.i("PRESAGE", "ad closed");
-            }
-
-            @Override
-            public void onAdError(int code) {
-                Log.i("PRESAGE", String.format("error with code %d", code));
-            }
-
-            @Override
-            public void onAdDisplayed() {
-                Log.i("PRESAGE", "ad displayed");
-            }
-        });
-        // OGURY ADS END
     }
 
     @Override

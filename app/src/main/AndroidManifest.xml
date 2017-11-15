@@ -10,10 +10,10 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
-    <!--<uses-permission android:name="com.android.browser.permission.READ_HISTORY_BOOKMARKS" />-->
-    <!--<uses-permission android:name="com.android.browser.permission.WRITE_HISTORY_BOOKMARKS" />-->
-    <!--<uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT" />-->
-    <!--<uses-permission android:name="com.android.launcher.permission.UNINSTALL_SHORTCUT" />-->
+    <uses-permission android:name="com.android.browser.permission.READ_HISTORY_BOOKMARKS" />
+    <uses-permission android:name="com.android.browser.permission.WRITE_HISTORY_BOOKMARKS" />
+    <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT" />
+    <uses-permission android:name="com.android.launcher.permission.UNINSTALL_SHORTCUT" />
 
     <application
         android:name=".CheatDatabaseApplication"
@@ -209,12 +209,6 @@
             </intent-filter>
         </receiver>
 
-        <!-- INMOBI -->
-        <activity
-            android:name="com.inmobi.androidsdk.IMBrowserActivity"
-            android:configChanges="keyboardHidden|orientation|keyboard|smallestScreenSize|screenSize"
-            android:hardwareAccelerated="true" />
-
         <!-- GOOGLE ANALYTICS -->
         <!-- Enable background dispatching to improve delivery on non-Google Play devices -->
         <receiver
@@ -243,34 +237,9 @@
         <service
             android:name="com.google.android.gms.analytics.CampaignTrackingService"
             android:enabled="true" />
-
-        <!-- PRESAGE LIBRARY (OGURY ADS) -->
         <meta-data
-            android:name="presage_key"
-            android:value="264890" />
-
-        <service android:name="io.presage.services.PresageServiceImp" />
-
-        <activity
-            android:name="io.presage.activities.PresageActivity"
-            android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
-            android:hardwareAccelerated="true"
-            android:label="@string/app_name"
-            android:theme="@style/Presage.Theme.Transparent">
-            <intent-filter>
-                <action android:name="io.presage.intent.action.LAUNCH_WEBVIEW" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-
-        <receiver android:name="io.presage.receivers.BootReceiver">
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-                <action android:name="android.intent.action.DATE_CHANGED" />
-                <action android:name="io.presage.receivers.BootReceiver.RESTART_SERVICE" />
-            </intent-filter>
-        </receiver>
+            android:name="io.fabric.ApiKey"
+            android:value="887f8ad41ac6b3277f277e83ddc0103a7215fc26" />
     </application>
 
 </manifest>

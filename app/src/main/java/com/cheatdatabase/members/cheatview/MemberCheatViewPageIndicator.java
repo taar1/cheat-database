@@ -43,7 +43,6 @@ import com.google.android.gms.analytics.HitBuilders;
 import com.google.gson.Gson;
 import com.mopub.mobileads.MoPubView;
 import com.splunk.mint.Mint;
-import com.viewpagerindicator.UnderlinePageIndicator;
 
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EBean;
@@ -87,7 +86,7 @@ public class MemberCheatViewPageIndicator extends AppCompatActivity {
 
     private MemberCheatViewFragmentAdapter mAdapter;
     private ViewPager mPager;
-    private UnderlinePageIndicator mIndicator;
+//    private UnderlinePageIndicator mIndicator;
 
     private int activePage;
 
@@ -191,50 +190,49 @@ public class MemberCheatViewPageIndicator extends AppCompatActivity {
             mPager = (ViewPager) viewLayout.findViewById(R.id.pager);
             mPager.setAdapter(mAdapter);
 
-            mIndicator = (UnderlinePageIndicator) viewLayout.findViewById(R.id.indicator);
-//			mIndicator.setSelectedColor(color.page_indicator);
-            mIndicator.setViewPager(mPager);
-            mIndicator.notifyDataSetChanged();
-            mIndicator.setCurrentItem(pageSelected);
-
-            mIndicator.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-                @Override
-                public void onPageSelected(int position) {
-
-                    // Save selected page
-                    editor.putInt(Konstanten.PREFERENCES_PAGE_SELECTED, position);
-                    editor.commit();
-
-                    activePage = position;
-
-                    try {
-                        visibleCheat = cheatObj.get(position);
-//                        setShareText(visibleCheat);
-                        invalidateOptionsMenu();
-
-                        gameObj = new Game();
-                        gameObj.setCheat(visibleCheat);
-                        gameObj.setGameId(visibleCheat.getGameId());
-                        gameObj.setGameName(visibleCheat.getGameName());
-                        gameObj.setSystemId(visibleCheat.getSystemId());
-                        gameObj.setSystemName(visibleCheat.getSystemName());
-
-                        getSupportActionBar().setTitle(visibleCheat.getGameName());
-                        getSupportActionBar().setSubtitle(visibleCheat.getSystemName());
-                    } catch (Exception e) {
-                        Log.e(TAG, e.getMessage());
-                        Toast.makeText(MemberCheatViewPageIndicator.this, R.string.err_somethings_wrong, Toast.LENGTH_SHORT).show();
-                    }
-                }
-
-                @Override
-                public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                }
-
-                @Override
-                public void onPageScrollStateChanged(int state) {
-                }
-            });
+//            mIndicator = (UnderlinePageIndicator) viewLayout.findViewById(R.id.indicator);
+//            mIndicator.setViewPager(mPager);
+//            mIndicator.notifyDataSetChanged();
+//            mIndicator.setCurrentItem(pageSelected);
+//
+//            mIndicator.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+//                @Override
+//                public void onPageSelected(int position) {
+//
+//                    // Save selected page
+//                    editor.putInt(Konstanten.PREFERENCES_PAGE_SELECTED, position);
+//                    editor.commit();
+//
+//                    activePage = position;
+//
+//                    try {
+//                        visibleCheat = cheatObj.get(position);
+////                        setShareText(visibleCheat);
+//                        invalidateOptionsMenu();
+//
+//                        gameObj = new Game();
+//                        gameObj.setCheat(visibleCheat);
+//                        gameObj.setGameId(visibleCheat.getGameId());
+//                        gameObj.setGameName(visibleCheat.getGameName());
+//                        gameObj.setSystemId(visibleCheat.getSystemId());
+//                        gameObj.setSystemName(visibleCheat.getSystemName());
+//
+//                        getSupportActionBar().setTitle(visibleCheat.getGameName());
+//                        getSupportActionBar().setSubtitle(visibleCheat.getSystemName());
+//                    } catch (Exception e) {
+//                        Log.e(TAG, e.getMessage());
+//                        Toast.makeText(MemberCheatViewPageIndicator.this, R.string.err_somethings_wrong, Toast.LENGTH_SHORT).show();
+//                    }
+//                }
+//
+//                @Override
+//                public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+//                }
+//
+//                @Override
+//                public void onPageScrollStateChanged(int state) {
+//                }
+//            });
 
             FloatingActionButton fa = (FloatingActionButton) viewLayout.findViewById(R.id.add_new_cheat_button);
             fa.setOnClickListener(new View.OnClickListener() {
