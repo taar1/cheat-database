@@ -92,7 +92,7 @@ repositories {
 }
 
 ext {
-    supportVersion = '26.1.0'
+    supportVersion = '25.3.1'
     playServicesVersion = '11.4.2'
     AAVersion = '4.4.0'
 }
@@ -102,10 +102,10 @@ dependencies {
 //    compile "com.google.firebase:firebase-invites:$playServicesVersion"
     compile "com.android.support:appcompat-v7:$supportVersion"
     compile "com.android.support:design:$supportVersion"
-    //compile "com.android.support:recyclerview-v7:$supportVersion"
+    compile "com.android.support:recyclerview-v7:$supportVersion"
     compile "com.github.vajro:MaterialDesignLibrary:1.6"
     compile "com.google.code.gson:gson:2.3"
-    compile "com.google.android.gms:play-services-analytics:$playServicesVersion"
+//    compile "com.google.android.gms:play-services-analytics:$playServicesVersion"
     compile "com.google.android.gms:play-services-auth:$playServicesVersion"
     compile "com.squareup.picasso:picasso:2.5.2"
     compile "com.splunk.mint:mint:4.1"

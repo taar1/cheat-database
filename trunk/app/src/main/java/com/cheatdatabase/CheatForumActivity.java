@@ -46,7 +46,6 @@ import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.helpers.Tools;
 import com.cheatdatabase.helpers.Webservice;
-import com.google.android.gms.analytics.HitBuilders;
 import com.google.gson.Gson;
 import com.mopub.mobileads.MoPubView;
 import com.splunk.mint.Mint;
@@ -174,7 +173,7 @@ public class CheatForumActivity extends AppCompatActivity implements CheatListFr
         }
         Mint.initAndStartSession(this, Konstanten.SPLUNK_MINT_API_KEY);
 
-        CheatDatabaseApplication.tracker().send(new HitBuilders.EventBuilder("ui", cheatObj.getGameName() + " (" + cheatObj.getSystemName() + ")").setLabel("activity").build());
+        //CheatDatabaseApplication.tracker().send(new HitBuilders.EventBuilder("ui", cheatObj.getGameName() + " (" + cheatObj.getSystemName() + ")").setLabel("activity").build());
 
         settings = getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
 
@@ -201,7 +200,7 @@ public class CheatForumActivity extends AppCompatActivity implements CheatListFr
                 cheatObj = (Cheat) intent.getSerializableExtra("cheatObj");
                 gameObj = (Game) intent.getSerializableExtra("gameObj");
 
-                CheatDatabaseApplication.tracker().send(new HitBuilders.EventBuilder("ui", cheatObj.getGameName() + " (" + cheatObj.getSystemName() + ")").setLabel("activity").build());
+                //CheatDatabaseApplication.tracker().send(new HitBuilders.EventBuilder("ui", cheatObj.getGameName() + " (" + cheatObj.getSystemName() + ")").setLabel("activity").build());
             }
         }).start();
 

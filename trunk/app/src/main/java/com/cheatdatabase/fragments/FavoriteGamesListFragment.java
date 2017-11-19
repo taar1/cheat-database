@@ -18,7 +18,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.cheatdatabase.CheatDatabaseApplication;
 import com.cheatdatabase.MainActivity;
 import com.cheatdatabase.R;
 import com.cheatdatabase.businessobjects.Game;
@@ -28,7 +27,6 @@ import com.cheatdatabase.helpers.CheatDatabaseAdapter;
 import com.cheatdatabase.helpers.Group;
 import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Tools;
-import com.google.android.gms.analytics.HitBuilders;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EFragment;
@@ -93,7 +91,7 @@ public class FavoriteGamesListFragment extends Fragment {
         db = new CheatDatabaseAdapter(parentActivity);
         db.open();
 
-        CheatDatabaseApplication.tracker().send(new HitBuilders.EventBuilder("ui", "User Favorites").setLabel("activity").build());
+        //CheatDatabaseApplication.tracker().send(new HitBuilders.EventBuilder("ui", "User Favorites").setLabel("activity").build());
         adapter = new FavoritesExpandableListAdapter(parentActivity, groups);
 
         // TODO FIXME CONTEXT MENU DOES NOT WORK YET

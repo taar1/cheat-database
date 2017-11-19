@@ -7,7 +7,6 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.cheatdatabase.CheatDatabaseApplication;
 import com.cheatdatabase.GamesBySystemActivity_;
 import com.cheatdatabase.MainActivity;
 import com.cheatdatabase.R;
@@ -18,7 +17,6 @@ import com.cheatdatabase.helpers.CheatDatabaseAdapter;
 import com.cheatdatabase.helpers.Tools;
 import com.cheatdatabase.helpers.Webservice;
 import com.cheatdatabase.taskresults.GamesAndCheatsCountTaskResult;
-import com.google.android.gms.analytics.HitBuilders;
 import com.google.gson.Gson;
 
 import org.androidannotations.annotations.AfterViews;
@@ -117,7 +115,7 @@ public class SystemListFragment extends Fragment {
     @Subscribe
     public void onEvent(SystemListRecyclerViewClickEvent result) {
         if (result.isSucceeded()) {
-            CheatDatabaseApplication.tracker().send(new HitBuilders.EventBuilder("ui", "click").setLabel(result.getSystemPlatform().getSystemName()).build());
+            //CheatDatabaseApplication.tracker().send(new HitBuilders.EventBuilder("ui", "click").setLabel(result.getSystemPlatform().getSystemName()).build());
             GamesBySystemActivity_.intent(getActivity()).systemObj(result.getSystemPlatform()).start();
         } else {
             Toast.makeText(getActivity(), R.string.no_internet, Toast.LENGTH_SHORT).show();

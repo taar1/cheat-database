@@ -22,7 +22,6 @@ import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.helpers.Tools;
 import com.cheatdatabase.helpers.Webservice;
-import com.google.android.gms.analytics.HitBuilders;
 import com.google.gson.Gson;
 import com.splunk.mint.Mint;
 
@@ -129,7 +128,7 @@ public class SubmitCheatActivity extends AppCompatActivity {
 
 
     private void init() {
-        CheatDatabaseApplication.tracker().send(new HitBuilders.EventBuilder("ui", "Submit Cheat Form").setLabel("activity").build());
+        //CheatDatabaseApplication.tracker().send(new HitBuilders.EventBuilder("ui", "Submit Cheat Form").setLabel("activity").build());
         Mint.initAndStartSession(this, Konstanten.SPLUNK_MINT_API_KEY);
 
         if (mToolbar != null) {

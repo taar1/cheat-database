@@ -46,7 +46,6 @@ import com.cheatdatabase.helpers.Tools;
 import com.cheatdatabase.navigationdrawer.CustomDrawerAdapter;
 import com.cheatdatabase.navigationdrawer.DrawerItem;
 import com.cheatdatabase.search.SearchSuggestionProvider;
-import com.google.android.gms.analytics.HitBuilders;
 import com.google.gson.Gson;
 import com.mopub.mobileads.MoPubView;
 import com.splunk.mint.Mint;
@@ -117,7 +116,7 @@ public class MainActivity extends AppCompatActivity implements ActionBar.OnNavig
 
         tools.loadAd(mAdView, getString(R.string.screen_type));
 
-        CheatDatabaseApplication.tracker().send(new HitBuilders.EventBuilder("ui", "MainActivity").setLabel("activity").build());
+        //CheatDatabaseApplication.tracker().send(new HitBuilders.EventBuilder("ui", "MainActivity").setLabel("activity").build());
 
         AppBrain.init(this);
 
@@ -383,39 +382,39 @@ public class MainActivity extends AppCompatActivity implements ActionBar.OnNavig
         switch (position) {
             case DRAWER_MAIN:
                 // Log setting open event with category="ui", action="open", and label="settings"
-                CheatDatabaseApplication.tracker().send(new HitBuilders.EventBuilder("ui", "open").setLabel("main").build());
+                //CheatDatabaseApplication.tracker().send(new HitBuilders.EventBuilder("ui", "open").setLabel("main").build());
                 annotationFragmentManager.beginTransaction().replace(R.id.content_frame, SystemListFragment_.builder().mDrawerId(position).mDrawerName(dataList.get(position).getItemName()).build()).commit();
                 isFragment = false;
                 break;
             case DRAWER_NEWS:
-                CheatDatabaseApplication.tracker().send(new HitBuilders.EventBuilder("ui", "open").setLabel("news").build());
+                //CheatDatabaseApplication.tracker().send(new HitBuilders.EventBuilder("ui", "open").setLabel("news").build());
                 annotationFragmentManager.beginTransaction().replace(R.id.content_frame, NewsFragment_.builder().mDrawerId(position).mDrawerName(dataList.get(position).getItemName()).build()).commit();
                 isFragment = false;
                 break;
             case DRAWER_FAVORITES:
-                CheatDatabaseApplication.tracker().send(new HitBuilders.EventBuilder("ui", "open").setLabel("favorites").build());
+                //CheatDatabaseApplication.tracker().send(new HitBuilders.EventBuilder("ui", "open").setLabel("favorites").build());
                 annotationFragmentManager.beginTransaction().replace(R.id.content_frame, FavoriteGamesListFragment_.builder().mDrawerId(position).mDrawerName(dataList.get(position).getItemName()).build()).commit();
                 isFragment = false;
                 break;
             case DRAWER_TOP_MEMBERS:
-                CheatDatabaseApplication.tracker().send(new HitBuilders.EventBuilder("ui", "open").setLabel("top_members").build());
+                //CheatDatabaseApplication.tracker().send(new HitBuilders.EventBuilder("ui", "open").setLabel("top_members").build());
                 annotationFragmentManager.beginTransaction().replace(R.id.content_frame, TopMembersFragment_.builder().mDrawerId(position).mDrawerName(dataList.get(position).getItemName()).build()).commit();
                 isFragment = false;
                 break;
             case DRAWER_SUBMIT_CHEAT:
-                CheatDatabaseApplication.tracker().send(new HitBuilders.EventBuilder("ui", "open").setLabel("submit_cheat").build());
+                //CheatDatabaseApplication.tracker().send(new HitBuilders.EventBuilder("ui", "open").setLabel("submit_cheat").build());
                 annotationFragmentManager.beginTransaction().replace(R.id.content_frame, SubmitCheatFragment_.builder().mDrawerId(position).mDrawerName(dataList.get(position).getItemName()).build()).commit();
                 isFragment = false;
                 break;
             case DRAWER_CONTACT:
                 // If position = 8 -> out of bounds error. no idea why... it works like this here.
                 position = 7;
-                CheatDatabaseApplication.tracker().send(new HitBuilders.EventBuilder("ui", "open").setLabel("contact").build());
+                //CheatDatabaseApplication.tracker().send(new HitBuilders.EventBuilder("ui", "open").setLabel("contact").build());
                 annotationFragmentManager.beginTransaction().replace(R.id.content_frame, ContactFormFragment_.builder().mDrawerId(position).mDrawerName(dataList.get(position).getItemName()).build()).commit();
                 isFragment = false;
                 break;
             case DRAWER_MORE_APPS:
-                CheatDatabaseApplication.tracker().send(new HitBuilders.EventBuilder("ui", "open").setLabel("more_apps").build());
+                //CheatDatabaseApplication.tracker().send(new HitBuilders.EventBuilder("ui", "open").setLabel("more_apps").build());
                 Uri uri = Uri.parse(DistinctValues.URL_MORE_APPS);
                 Intent intentMoreApps = new Intent(Intent.ACTION_VIEW, uri);
                 if (intentMoreApps.resolveActivity(getPackageManager()) != null) {
@@ -425,7 +424,7 @@ public class MainActivity extends AppCompatActivity implements ActionBar.OnNavig
                 }
                 break;
             case DRAWER_RATE_APP:
-                CheatDatabaseApplication.tracker().send(new HitBuilders.EventBuilder("ui", "open").setLabel("rate_app").build());
+                //CheatDatabaseApplication.tracker().send(new HitBuilders.EventBuilder("ui", "open").setLabel("rate_app").build());
                 Uri appUri = Uri.parse(DistinctValues.GOOGLE_PLAY_URL);
                 Intent intentRateApp = new Intent(Intent.ACTION_VIEW, appUri);
                 if (intentRateApp.resolveActivity(getPackageManager()) != null) {
