@@ -25,7 +25,6 @@ import com.cheatdatabase.helpers.Webservice;
 import com.cheatdatabase.widgets.DividerDecoration;
 import com.cheatdatabase.widgets.EmptyRecyclerView;
 import com.gc.materialdesign.views.ProgressBarCircularIndeterminate;
-import com.google.android.gms.analytics.HitBuilders;
 import com.mopub.mobileads.MoPubView;
 import com.splunk.mint.Mint;
 
@@ -81,7 +80,7 @@ public class GamesBySystemActivity extends AppCompatActivity {
         mSwipeRefreshLayout.setRefreshing(true);
 
         setTitle(systemObj.getSystemName());
-        CheatDatabaseApplication.tracker().send(new HitBuilders.EventBuilder("ui", "loaded").setLabel("GamesBySystemActivity").build());
+        //CheatDatabaseApplication.tracker().send(new HitBuilders.EventBuilder("ui", "loaded").setLabel("GamesBySystemActivity").build());
 
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -206,7 +205,7 @@ public class GamesBySystemActivity extends AppCompatActivity {
     @Subscribe
     public void onEvent(GameListRecyclerViewClickEvent result) {
         if (result.isSucceeded()) {
-            CheatDatabaseApplication.tracker().send(new HitBuilders.EventBuilder("ui", "click").setLabel(result.getGame().getGameName()).build());
+            //CheatDatabaseApplication.tracker().send(new HitBuilders.EventBuilder("ui", "click").setLabel(result.getGame().getGameName()).build());
 
             CheatListActivity_.intent(this).gameObj(result.getGame()).start();
         } else {

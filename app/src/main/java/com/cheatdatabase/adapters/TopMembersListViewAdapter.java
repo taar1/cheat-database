@@ -12,14 +12,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.cheatdatabase.CheatDatabaseApplication;
 import com.cheatdatabase.MemberCheatListActivity_;
 import com.cheatdatabase.R;
 import com.cheatdatabase.businessobjects.Member;
 import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.helpers.Tools;
-import com.google.android.gms.analytics.HitBuilders;
 import com.squareup.picasso.Picasso;
 
 import org.androidannotations.annotations.EBean;
@@ -78,7 +76,7 @@ public class TopMembersListViewAdapter extends RecyclerView.Adapter<TopMembersLi
     }
 
     private void showMemberCheatList(Member member) {
-        CheatDatabaseApplication.tracker().send(new HitBuilders.EventBuilder("ui", "show_member").setLabel(member.getUsername()).build());
+//        //CheatDatabaseApplication.tracker().send(new HitBuilders.EventBuilder("ui", "show_member").setLabel(member.getUsername()).build());
 
         if (Reachability.reachability.isReachable) {
             Intent explicitIntent = new Intent(mContext, MemberCheatListActivity_.class);
@@ -138,7 +136,7 @@ public class TopMembersListViewAdapter extends RecyclerView.Adapter<TopMembersLi
 
             @Override
             public void onClick(View v) {
-                CheatDatabaseApplication.tracker().send(new HitBuilders.EventBuilder("ui", "show_member_website").setLabel(memberObj.getUsername()).build());
+//                //CheatDatabaseApplication.tracker().send(new HitBuilders.EventBuilder("ui", "show_member_website").setLabel(memberObj.getUsername()).build());
                 openWebsite(memberObj.getWebsite());
             }
         });

@@ -24,7 +24,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
-import com.cheatdatabase.CheatDatabaseApplication;
 import com.cheatdatabase.CheatForumActivity_;
 import com.cheatdatabase.LoginActivity_;
 import com.cheatdatabase.R;
@@ -41,7 +40,6 @@ import com.cheatdatabase.helpers.Helper;
 import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.helpers.Tools;
-import com.google.android.gms.analytics.HitBuilders;
 import com.google.gson.Gson;
 import com.mopub.mobileads.MoPubView;
 import com.splunk.mint.Mint;
@@ -137,7 +135,7 @@ public class CheatViewPageIndicator extends AppCompatActivity {
         getSupportActionBar().setTitle(gameObj.getGameName());
         getSupportActionBar().setSubtitle(gameObj.getSystemName());
 
-        CheatDatabaseApplication.tracker().send(new HitBuilders.EventBuilder("ui", visibleCheat.getGameName() + " (" + visibleCheat.getSystemName() + ")").setLabel("activity").build());
+        //CheatDatabaseApplication.tracker().send(new HitBuilders.EventBuilder("ui", visibleCheat.getGameName() + " (" + visibleCheat.getSystemName() + ")").setLabel("activity").build());
 
         initialisePaging();
     }
