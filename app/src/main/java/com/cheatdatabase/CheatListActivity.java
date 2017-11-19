@@ -40,7 +40,6 @@ import com.cheatdatabase.helpers.Webservice;
 import com.cheatdatabase.widgets.DividerDecoration;
 import com.cheatdatabase.widgets.EmptyRecyclerView;
 import com.gc.materialdesign.views.ProgressBarCircularIndeterminate;
-import com.google.android.gms.analytics.HitBuilders;
 import com.google.gson.Gson;
 import com.mopub.mobileads.MoPubView;
 import com.splunk.mint.Mint;
@@ -137,7 +136,7 @@ public class CheatListActivity extends AppCompatActivity {
     }
 
     private void init() {
-        CheatDatabaseApplication.tracker().send(new HitBuilders.EventBuilder("ui", "Cheat List").setLabel(TAG).build());
+        //CheatDatabaseApplication.tracker().send(new HitBuilders.EventBuilder("ui", "Cheat List").setLabel(TAG).build());
         Mint.initAndStartSession(this, Konstanten.SPLUNK_MINT_API_KEY);
 
         tools.loadAd(mAdView, getString(R.string.screen_type));
@@ -444,12 +443,12 @@ public class CheatListActivity extends AppCompatActivity {
     @Subscribe
     public void onEvent(CheatListRecyclerViewClickEvent result) {
         if (result.isSucceeded()) {
-            CheatDatabaseApplication.tracker().send(new HitBuilders.EventBuilder("ui", "click").setLabel(result.getCheat().getCheatTitle()).build());
+            //CheatDatabaseApplication.tracker().send(new HitBuilders.EventBuilder("ui", "click").setLabel(result.getCheat().getCheatTitle()).build());
 
             this.visibleCheat = result.getCheat();
             Game lastGameObj = result.getCheat().getGame();
 
-            CheatDatabaseApplication.tracker().send(new HitBuilders.EventBuilder("ui", "select_cheat").setLabel(result.getCheat().getGameName() + ": " + result.getCheat().getCheatTitle()).build());
+            //CheatDatabaseApplication.tracker().send(new HitBuilders.EventBuilder("ui", "select_cheat").setLabel(result.getCheat().getGameName() + ": " + result.getCheat().getCheatTitle()).build());
 
             editor.putInt(Konstanten.PREFERENCES_PAGE_SELECTED, result.getPosition());
             editor.commit();

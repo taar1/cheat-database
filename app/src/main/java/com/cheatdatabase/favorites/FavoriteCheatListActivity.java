@@ -21,7 +21,6 @@ import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.cheatdatabase.CheatDatabaseApplication;
 import com.cheatdatabase.R;
 import com.cheatdatabase.SubmitCheatActivity_;
 import com.cheatdatabase.adapters.CheatRecycleListViewAdapter;
@@ -39,7 +38,6 @@ import com.cheatdatabase.helpers.Tools;
 import com.cheatdatabase.widgets.DividerDecoration;
 import com.cheatdatabase.widgets.EmptyRecyclerView;
 import com.gc.materialdesign.views.ProgressBarCircularIndeterminate;
-import com.google.android.gms.analytics.HitBuilders;
 import com.google.gson.Gson;
 import com.mopub.mobileads.MoPubView;
 import com.splunk.mint.Mint;
@@ -138,7 +136,7 @@ public class FavoriteCheatListActivity extends AppCompatActivity {
     }
 
     private void init() {
-        CheatDatabaseApplication.tracker().send(new HitBuilders.EventBuilder("ui", "Favorites Cheat List").setLabel(TAG).build());
+        //CheatDatabaseApplication.tracker().send(new HitBuilders.EventBuilder("ui", "Favorites Cheat List").setLabel(TAG).build());
 
         Mint.initAndStartSession(this, Konstanten.SPLUNK_MINT_API_KEY);
 
@@ -313,12 +311,12 @@ public class FavoriteCheatListActivity extends AppCompatActivity {
     @Subscribe
     public void onEvent(CheatListRecyclerViewClickEvent result) {
         if (result.isSucceeded()) {
-            CheatDatabaseApplication.tracker().send(new HitBuilders.EventBuilder("ui", "click").setLabel(result.getCheat().getCheatTitle()).build());
+            //CheatDatabaseApplication.tracker().send(new HitBuilders.EventBuilder("ui", "click").setLabel(result.getCheat().getCheatTitle()).build());
 
             this.visibleCheat = result.getCheat();
             this.lastGameObj = result.getCheat().getGame();
 
-            CheatDatabaseApplication.tracker().send(new HitBuilders.EventBuilder("ui", "select_cheat").setLabel(result.getCheat().getGameName() + ": " + result.getCheat().getCheatTitle()).build());
+            //CheatDatabaseApplication.tracker().send(new HitBuilders.EventBuilder("ui", "select_cheat").setLabel(result.getCheat().getGameName() + ": " + result.getCheat().getCheatTitle()).build());
 
             // editor.putString(Konstanten.PREFERENCES_TEMP_GAME_OBJECT_VIEW,
             // new Gson().toJson(gameObj));
