@@ -45,12 +45,15 @@ import com.mopub.mobileads.MoPubView;
 import com.splunk.mint.Mint;
 
 import net.lucode.hackware.magicindicator.MagicIndicator;
+import net.lucode.hackware.magicindicator.ViewPagerHelper;
+import net.lucode.hackware.magicindicator.buildins.UIUtil;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.CommonNavigator;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.CommonNavigatorAdapter;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerIndicator;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerTitleView;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.indicators.LinePagerIndicator;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.ColorTransitionPagerTitleView;
+import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.SimplePagerTitleView;
 
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EBean;
@@ -77,7 +80,7 @@ public class CheatViewPageIndicator extends AppCompatActivity {
     private int pageSelected;
 
     private Game gameObj;
-    private Cheat[] cheatObj;
+    private Cheat[] cheatArray;
     private Cheat visibleCheat;
 
     private MoPubView mAdView;
@@ -129,8 +132,8 @@ public class CheatViewPageIndicator extends AppCompatActivity {
 
         pageSelected = intent.getIntExtra("selectedPage", 0);
         activePage = pageSelected;
-        cheatObj = gameObj.getCheats();
-        visibleCheat = cheatObj[pageSelected];
+        cheatArray = gameObj.getCheats();
+        visibleCheat = cheatArray[pageSelected];
 
         getSupportActionBar().setTitle(gameObj.getGameName());
         getSupportActionBar().setSubtitle(gameObj.getSystemName());
@@ -155,10 +158,12 @@ public class CheatViewPageIndicator extends AppCompatActivity {
         member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
     }
 
+
+
     private void initialisePaging() {
-        String[] cheatTitles = new String[cheatObj.length];
-        for (int i = 0; i < cheatObj.length; i++) {
-            cheatTitles[i] = cheatObj[i].getCheatTitle();
+        final String[] cheatTitles = new String[cheatArray.length];
+        for (int i = 0; i < cheatArray.length; i++) {
+            cheatTitles[i] = cheatArray[i].getCheatTitle();
         }
 
         try {
@@ -167,40 +172,99 @@ public class CheatViewPageIndicator extends AppCompatActivity {
             mPager = (ViewPager) viewLayout.findViewById(R.id.pager);
             mPager.setAdapter(mAdapter);
 
-            magicIndicator = (MagicIndicator) viewLayout.findViewById(R.id.indicator);
-            CommonNavigator commonNavigator = new CommonNavigator(this);
-            commonNavigator.setAdapter(new CommonNavigatorAdapter() {
 
+
+            // TODO FIXME irgendwie geht der MagicIndicator noch nicht...
+            // TODO FIXME irgendwie geht der MagicIndicator noch nicht...
+            // TODO FIXME irgendwie geht der MagicIndicator noch nicht...
+            // TODO FIXME irgendwie geht der MagicIndicator noch nicht...
+            // TODO FIXME irgendwie geht der MagicIndicator noch nicht...
+
+
+
+
+            MagicIndicator magicIndicator = (MagicIndicator) findViewById(R.id.indicator);
+            magicIndicator.setBackgroundColor(Color.parseColor("#00c853"));
+            CommonNavigator commonNavigator = new CommonNavigator(this);
+            commonNavigator.setScrollPivotX(0.25f);
+            commonNavigator.setAdapter(new CommonNavigatorAdapter() {
                 @Override
                 public int getCount() {
-                    // return mTitleDataList == null ? 0 : mTitleDataList.size();
-                    return 999;
+                    return cheatArray == null ? 0 : cheatArray.length;
                 }
 
                 @Override
                 public IPagerTitleView getTitleView(Context context, final int index) {
-                    ColorTransitionPagerTitleView colorTransitionPagerTitleView = new ColorTransitionPagerTitleView(context);
-                    colorTransitionPagerTitleView.setNormalColor(Color.GRAY);
-                    colorTransitionPagerTitleView.setSelectedColor(Color.BLACK);
-                    // colorTransitionPagerTitleView.setText(mTitleDataList.get(index));
-                    colorTransitionPagerTitleView.setText("8888");
-                    colorTransitionPagerTitleView.setOnClickListener(new View.OnClickListener() {
+                    SimplePagerTitleView simplePagerTitleView = new SimplePagerTitleView(context);
+                    simplePagerTitleView.setText(cheatTitles[index]);
+                    simplePagerTitleView.setNormalColor(Color.parseColor("#c8e6c9"));
+                    simplePagerTitleView.setSelectedColor(Color.WHITE);
+                    simplePagerTitleView.setTextSize(12);
+                    simplePagerTitleView.setOnClickListener(new View.OnClickListener() {
                         @Override
-                        public void onClick(View view) {
+                        public void onClick(View v) {
                             mPager.setCurrentItem(index);
                         }
                     });
-                    return colorTransitionPagerTitleView;
+                    return simplePagerTitleView;
                 }
 
                 @Override
                 public IPagerIndicator getIndicator(Context context) {
                     LinePagerIndicator indicator = new LinePagerIndicator(context);
-                    indicator.setMode(LinePagerIndicator.MODE_WRAP_CONTENT);
+                    indicator.setMode(LinePagerIndicator.MODE_EXACTLY);
+                    indicator.setYOffset(UIUtil.dip2px(context, 3));
+                    indicator.setColors(Color.parseColor("#ffffff"));
                     return indicator;
                 }
             });
             magicIndicator.setNavigator(commonNavigator);
+            ViewPagerHelper.bind(magicIndicator, mPager);
+
+
+
+
+
+
+
+
+//            magicIndicator = (MagicIndicator) viewLayout.findViewById(R.id.indicator);
+//            CommonNavigator commonNavigator = new CommonNavigator(this);
+//            commonNavigator.setAdapter(new CommonNavigatorAdapter() {
+//
+//                @Override
+//                public int getCount() {
+//                     return cheatArray == null ? 0 : cheatArray.length;
+//                }
+//
+//                @Override
+//                public IPagerTitleView getTitleView(Context context, final int index) {
+//                    ColorTransitionPagerTitleView colorTransitionPagerTitleView = new ColorTransitionPagerTitleView(context);
+//                    colorTransitionPagerTitleView.setNormalColor(Color.RED);
+//                    colorTransitionPagerTitleView.setSelectedColor(Color.RED);
+//                    // colorTransitionPagerTitleView.setText(mTitleDataList.get(index));
+//                    colorTransitionPagerTitleView.setText("8888");
+//                    colorTransitionPagerTitleView.setOnClickListener(new View.OnClickListener() {
+//                        @Override
+//                        public void onClick(View view) {
+//                            mPager.setCurrentItem(index);
+//                        }
+//                    });
+//                    return colorTransitionPagerTitleView;
+//                }
+//
+//                @Override
+//                public IPagerIndicator getIndicator(Context context) {
+//                    LinePagerIndicator indicator = new LinePagerIndicator(context);
+//                    indicator.setMode(LinePagerIndicator.MODE_WRAP_CONTENT);
+//                    return indicator;
+//                }
+//            });
+//            magicIndicator.setNavigator(commonNavigator);
+//            ViewPagerHelper.bind(magicIndicator, mPager);
+
+
+
             // magicIndicator.setSelectedColor(color.page_indicator);
 
             // TODO MagicIndicator neu verwenden. demo app anschauen...
@@ -220,7 +284,7 @@ public class CheatViewPageIndicator extends AppCompatActivity {
 //                    activePage = position;
 //
 //                    try {
-//                        visibleCheat = cheatObj[position];
+//                        visibleCheat = cheatArray[position];
 ////                        setShareText(visibleCheat);
 //                        invalidateOptionsMenu();
 //                    } catch (Exception e) {
@@ -361,7 +425,7 @@ public class CheatViewPageIndicator extends AppCompatActivity {
                 if (Reachability.reachability.isReachable) {
 //                    Intent forumIntent = new Intent(CheatViewPageIndicator.this, CheatForumActivity.class);
 //                    forumIntent.putExtra("gameObj", gameObj);
-//                    forumIntent.putExtra("cheatObj", visibleCheat);
+//                    forumIntent.putExtra("cheatArray", visibleCheat);
 //                    startActivity(forumIntent);
                     CheatForumActivity_.intent(this).gameObj(gameObj).cheatObj(visibleCheat).start();
                 } else {
@@ -447,7 +511,7 @@ public class CheatViewPageIndicator extends AppCompatActivity {
             Toast.makeText(this, R.string.error_login_required, Toast.LENGTH_SHORT).show();
         } else {
             Bundle args = new Bundle();
-            args.putSerializable("cheatObj", visibleCheat);
+            args.putSerializable("cheatArray", visibleCheat);
 
             FragmentManager fm = getSupportFragmentManager();
             ReportCheatDialog reportCheatDialog = new ReportCheatDialog();
@@ -470,7 +534,7 @@ public class CheatViewPageIndicator extends AppCompatActivity {
             Toast.makeText(this, R.string.error_login_required, Toast.LENGTH_LONG).show();
         } else {
             Bundle args = new Bundle();
-            args.putSerializable("cheatObj", visibleCheat);
+            args.putSerializable("cheatArray", visibleCheat);
 
             FragmentManager fm = getSupportFragmentManager();
             RateCheatDialog ratingCheatDialog = new RateCheatDialog();
@@ -482,13 +546,13 @@ public class CheatViewPageIndicator extends AppCompatActivity {
     @Subscribe
     public void onEvent(CheatRatingFinishedEvent result) {
         visibleCheat.setMemberRating(result.getRating());
-        cheatObj[activePage].setMemberRating(result.getRating());
+        cheatArray[activePage].setMemberRating(result.getRating());
         invalidateOptionsMenu();
         Toast.makeText(this, R.string.rating_inserted, Toast.LENGTH_SHORT).show();
     }
 
     public void setRating(int position, float rating) {
-        cheatObj[position].setMemberRating(rating);
+        cheatArray[position].setMemberRating(rating);
         invalidateOptionsMenu();
     }
 
