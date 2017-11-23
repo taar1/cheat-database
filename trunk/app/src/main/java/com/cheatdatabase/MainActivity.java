@@ -79,6 +79,9 @@ public class MainActivity extends AppCompatActivity implements ActionBar.OnNavig
     @Extra
     int mFragmentId;
 
+//    @FragmentById
+//    SystemListFragment systemListFragment;
+
     public static final String DRAWER_ITEM_ID = "drawerId";
     public static final String DRAWER_ITEM_NAME = "drawerName";
 
@@ -123,6 +126,7 @@ public class MainActivity extends AppCompatActivity implements ActionBar.OnNavig
         // TODO FIXME - find out where this part was before and re-add it.
         FragmentManager frgManager = getFragmentManager();
         frgManager.beginTransaction().replace(R.id.content_frame, SystemListFragment_.builder().build()).commit();
+//        frgManager.beginTransaction().replace(R.id.content_frame, systemListFragment).commit();
 
         // Create Drawer
         // damit das zuletzt aktive fragment wieder angezeigt wird, wenn man auf "back" klickt.
@@ -134,7 +138,6 @@ public class MainActivity extends AppCompatActivity implements ActionBar.OnNavig
     void addNewCheat() {
         selectItem(5);
     }
-
 
     @Override
     public void onSaveInstanceState(Bundle outState) {

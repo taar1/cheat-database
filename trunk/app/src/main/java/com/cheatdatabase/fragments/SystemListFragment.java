@@ -134,7 +134,7 @@ public class SystemListFragment extends Fragment {
 
         db.open();
 
-        // SYSETM'S GAME COUNT WILL ONLY LOADED ONCE EVERY 24h
+        // SYSETM'S GAME COUNT WILL ONLY BE LOADED ONCE EVERY 24h
         boolean getSystemsAndCountsFromWebservice = false;
 
         ArrayList<SystemPlatform> systemsLocal = db.getAllSystemsAndCount();

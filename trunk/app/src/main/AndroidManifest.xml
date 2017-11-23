@@ -16,7 +16,7 @@
     <uses-permission android:name="com.android.launcher.permission.UNINSTALL_SHORTCUT" />
 
     <application
-        android:name=".CheatDatabaseApplication"
+        android:name=".CheatDatabaseApplication_"
         android:allowBackup="true"
         android:hardwareAccelerated="true"
         android:icon="@drawable/app_icon_fox"

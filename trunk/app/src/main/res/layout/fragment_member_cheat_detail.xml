@@ -42,14 +42,14 @@
                 android:textIsSelectable="true" />
 
             <TableLayout
-                android:id="@+id/tblCheatListMain"
+                android:id="@+id/table_cheat_list_main"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:gravity="top"
                 android:paddingTop="10dp" />
 
             <TextView
-                android:id="@+id/text_cheat_text"
+                android:id="@+id/cheat_content"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:maxWidth="250dp"
@@ -58,7 +58,7 @@
                 android:textIsSelectable="true" />
 
             <ProgressBar
-                android:id="@+id/progressBar1"
+                android:id="@+id/progress_bar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
