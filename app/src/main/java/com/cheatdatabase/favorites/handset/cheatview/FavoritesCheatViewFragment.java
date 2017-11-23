@@ -149,7 +149,7 @@ public class FavoritesCheatViewFragment extends Fragment implements OnClickListe
 
             new FetchCheatRatingOnlineBackgroundTask().execute();
 
-            mainTable = (TableLayout) ll.findViewById(R.id.tblCheatListMain);
+            mainTable = (TableLayout) ll.findViewById(R.id.table_cheat_list_main);
 
             tvTextBeforeTable = (TextView) ll.findViewById(R.id.text_cheat_before_table);
             tvTextBeforeTable.setOnClickListener(this);
@@ -166,10 +166,10 @@ public class FavoritesCheatViewFragment extends Fragment implements OnClickListe
 
             screenshotGallery = (Gallery) ll.findViewById(R.id.gallery);
 
-            progressBar = (ProgressBar) ll.findViewById(R.id.progressBar1);
+            progressBar = (ProgressBar) ll.findViewById(R.id.progress_bar);
             progressBar.setVisibility(View.INVISIBLE);
 
-            tvCheatText = (TextView) ll.findViewById(R.id.text_cheat_text);
+            tvCheatText = (TextView) ll.findViewById(R.id.cheat_content);
             tvCheatText.setTypeface(latoFontLight);
 
             reloadView = (ImageView) ll.findViewById(R.id.reload);

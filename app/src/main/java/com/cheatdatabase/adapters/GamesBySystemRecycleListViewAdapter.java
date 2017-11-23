@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.cheatdatabase.CheatDatabaseApplication;
 import com.cheatdatabase.R;
 import com.cheatdatabase.businessobjects.Game;
 import com.cheatdatabase.events.GameListRecyclerViewClickEvent;
@@ -16,6 +17,7 @@ import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.helpers.Tools;
 
+import org.androidannotations.annotations.App;
 import org.androidannotations.annotations.EBean;
 import org.androidannotations.annotations.RootContext;
 import org.greenrobot.eventbus.EventBus;
@@ -34,6 +36,16 @@ public class GamesBySystemRecycleListViewAdapter extends RecyclerView.Adapter<Ga
 
     @RootContext
     Context mContext;
+
+    @App
+    CheatDatabaseApplication app;
+
+    // TODO FIXME CheatDatabaseApplication geht evtl. noch nicht
+    // TODO FIXME CheatDatabaseApplication geht evtl. noch nicht
+    // TODO FIXME CheatDatabaseApplication geht evtl. noch nicht
+    // TODO FIXME CheatDatabaseApplication geht evtl. noch nicht
+    // TODO FIXME CheatDatabaseApplication geht evtl. noch nicht
+    // TODO FIXME CheatDatabaseApplication geht evtl. noch nicht
 
     public void init(ArrayList<Game> gameList) {
         mGames = gameList;
@@ -74,7 +86,6 @@ public class GamesBySystemRecycleListViewAdapter extends RecyclerView.Adapter<Ga
     // Create new views (invoked by the layout manager)
     @Override
     public GamesBySystemRecycleListViewAdapter.ViewHolder onCreateViewHolder(final ViewGroup parent, int viewType) {
-
         latoFontBold = Tools.getFont(parent.getContext().getAssets(), Konstanten.FONT_BOLD);
         latoFontLight = Tools.getFont(parent.getContext().getAssets(), Konstanten.FONT_LIGHT);
 

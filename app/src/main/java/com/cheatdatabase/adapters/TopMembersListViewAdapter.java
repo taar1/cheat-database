@@ -161,7 +161,6 @@ public class TopMembersListViewAdapter extends RecyclerView.Adapter<TopMembersLi
 
         });
         Picasso.with(mContext.getApplicationContext()).load(Konstanten.WEBDIR_MEMBER_AVATAR + memberObj.getMid()).placeholder(R.drawable.avatar).into(holder.avatarImageView);
-
     }
 
     @Override
