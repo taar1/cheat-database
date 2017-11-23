@@ -1,8 +1,8 @@
 <component name="libraryTable">
   <library name="com.mopub:mopub-sdk-4.18.0">
     <CLASSES>
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/mopub-sdk-4.18.0.aar/f34ce1824ee7b66bb6ff27542e5ead36/res" />
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/mopub-sdk-4.18.0.aar/f34ce1824ee7b66bb6ff27542e5ead36/jars/classes.jar!/" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/mopub-sdk-4.18.0.aar/6ea3e4e8d8fca629dccbf89cc2f1ff5e/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/mopub-sdk-4.18.0.aar/6ea3e4e8d8fca629dccbf89cc2f1ff5e/res" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>

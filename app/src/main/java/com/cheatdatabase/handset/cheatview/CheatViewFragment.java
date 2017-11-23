@@ -58,7 +58,7 @@ import java.util.ArrayList;
 public class CheatViewFragment extends Fragment implements OnClickListener {
 
     private TableLayout mainTable;
-    private LinearLayout ll;
+    private LinearLayout outerLinearLayout;
     private TextView tvCheatText;
     private TextView tvTextBeforeTable;
     private TextView tvCheatTitle;
@@ -145,37 +145,37 @@ public class CheatViewFragment extends Fragment implements OnClickListener {
 
         getFragmentRelevantData();
 
-        ll = (LinearLayout) inflater.inflate(R.layout.fragment_cheat_detail_handset, container, false);
+        outerLinearLayout = (LinearLayout) inflater.inflate(R.layout.fragment_cheat_detail_handset, container, false);
 
         cheats = game.getCheats();
         cheatObj = cheats[offset];
 
         new FetchCheatRatingOnlineBackgroundTask().execute();
 
-        mainTable = (TableLayout) ll.findViewById(R.id.tblCheatListMain);
+        mainTable = (TableLayout) outerLinearLayout.findViewById(R.id.table_cheat_list_main);
 
-        tvTextBeforeTable = (TextView) ll.findViewById(R.id.text_cheat_before_table);
+        tvTextBeforeTable = (TextView) outerLinearLayout.findViewById(R.id.text_cheat_before_table);
         tvTextBeforeTable.setOnClickListener(this);
         tvTextBeforeTable.setVisibility(View.VISIBLE);
         tvTextBeforeTable.setTypeface(latoFontLight);
 
-        tvCheatTitle = (TextView) ll.findViewById(R.id.text_cheat_title);
+        tvCheatTitle = (TextView) outerLinearLayout.findViewById(R.id.text_cheat_title);
         tvCheatTitle.setTypeface(latoFontBold);
         tvCheatTitle.setText(cheatObj.getCheatTitle());
 
-        tvGalleryInfo = (TextView) ll.findViewById(R.id.gallery_info);
+        tvGalleryInfo = (TextView) outerLinearLayout.findViewById(R.id.gallery_info);
         tvGalleryInfo.setVisibility(View.INVISIBLE);
         tvGalleryInfo.setTypeface(latoFontLight);
 
-        screenshotGallery = (Gallery) ll.findViewById(R.id.gallery);
+        screenshotGallery = (Gallery) outerLinearLayout.findViewById(R.id.gallery);
 
-        progressBar = (ProgressBar) ll.findViewById(R.id.progressBar1);
+        progressBar = (ProgressBar) outerLinearLayout.findViewById(R.id.progress_bar);
         progressBar.setVisibility(View.INVISIBLE);
 
-        tvCheatText = (TextView) ll.findViewById(R.id.text_cheat_text);
+        tvCheatText = (TextView) outerLinearLayout.findViewById(R.id.cheat_content);
         tvCheatText.setTypeface(latoFontLight);
 
-        reloadView = (ImageView) ll.findViewById(R.id.reload);
+        reloadView = (ImageView) outerLinearLayout.findViewById(R.id.reload);
         if (Reachability.reachability.isReachable) {
             getOnlineContent();
         } else {
@@ -194,7 +194,7 @@ public class CheatViewFragment extends Fragment implements OnClickListener {
             Toast.makeText(ca, R.string.no_internet, Toast.LENGTH_SHORT).show();
         }
 
-        return ll;
+        return outerLinearLayout;
     }
 
     private void getOnlineContent() {

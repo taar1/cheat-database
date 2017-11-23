@@ -2,11 +2,17 @@ package com.cheatdatabase;
 
 import android.app.Application;
 import android.content.Context;
+import android.graphics.Typeface;
+
+import com.cheatdatabase.helpers.Konstanten;
+
+import org.androidannotations.annotations.EApplication;
 
 
 /**
  * Created by Dominik on 06.06.2015.
  */
+@EApplication
 public class CheatDatabaseApplication extends Application {
 
     private static final String TAG = CheatDatabaseApplication.class.getSimpleName();
@@ -71,4 +77,15 @@ public class CheatDatabaseApplication extends Application {
         return sAppContext;
     }
 
+    public static Typeface getFontBold() {
+        return Typeface.createFromAsset(getAppContext().getAssets(), Konstanten.FONT_BOLD);
+    }
+
+    public static Typeface getFontLight() {
+        return Typeface.createFromAsset(getAppContext().getAssets(), Konstanten.FONT_LIGHT);
+    }
+
+    public static Typeface getFontRegular() {
+        return Typeface.createFromAsset(getAppContext().getAssets(), Konstanten.FONT_REGULAR);
+    }
 }
