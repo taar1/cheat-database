@@ -6,12 +6,6 @@ int VERSION_CODE = 31
 String VERSION_NAME = "2.1.8"
 
 android {
-    signingConfigs {
-        config {
-            storeFile file('C:/Users/taar1/Development/Android/enature.keystore')
-            storePassword 'Ocarina2000.'
-        }
-    }
     compileSdkVersion 25
     buildToolsVersion '26.0.2'
     defaultConfig {
@@ -21,7 +15,6 @@ android {
         targetSdkVersion 23
         versionCode VERSION_CODE
         versionName VERSION_NAME
-        signingConfig signingConfigs.config
         multiDexEnabled true
     }
 
