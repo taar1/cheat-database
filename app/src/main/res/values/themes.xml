@@ -230,4 +230,11 @@
         <item name="android:text">@string/undo</item>
     </style>
 
+    <style name="cheat_detail_view_page_indicator">
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:background">@color/color_primary_dark</item>
+    </style>
+
 </resources>

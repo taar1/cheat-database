@@ -52,13 +52,15 @@ import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.CommonNav
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerIndicator;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerTitleView;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.indicators.LinePagerIndicator;
-import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.ColorTransitionPagerTitleView;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.SimplePagerTitleView;
 
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EBean;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Horizontal sliding gallery of cheats from a game.
@@ -158,7 +160,8 @@ public class CheatViewPageIndicator extends AppCompatActivity {
         member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
     }
 
-
+    private static final String[] CHANNELS = new String[]{"CUPCAKE", "DONUT", "ECLAIR", "GINGERBREAD", "HONEYCOMB", "ICE_CREAM_SANDWICH", "JELLY_BEAN", "KITKAT", "LOLLIPOP", "M", "NOUGAT"};
+    private List<String> mDataList = Arrays.asList(CHANNELS);
 
     private void initialisePaging() {
         final String[] cheatTitles = new String[cheatArray.length];
@@ -172,19 +175,7 @@ public class CheatViewPageIndicator extends AppCompatActivity {
             mPager = (ViewPager) viewLayout.findViewById(R.id.pager);
             mPager.setAdapter(mAdapter);
 
-
-
-            // TODO FIXME irgendwie geht der MagicIndicator noch nicht...
-            // TODO FIXME irgendwie geht der MagicIndicator noch nicht...
-            // TODO FIXME irgendwie geht der MagicIndicator noch nicht...
-            // TODO FIXME irgendwie geht der MagicIndicator noch nicht...
-            // TODO FIXME irgendwie geht der MagicIndicator noch nicht...
-
-
-
-
-            MagicIndicator magicIndicator = (MagicIndicator) findViewById(R.id.indicator);
-            magicIndicator.setBackgroundColor(Color.parseColor("#00c853"));
+            MagicIndicator magicIndicator = (MagicIndicator) findViewById(R.id.magic_indicator);
             CommonNavigator commonNavigator = new CommonNavigator(this);
             commonNavigator.setScrollPivotX(0.25f);
             commonNavigator.setAdapter(new CommonNavigatorAdapter() {
@@ -193,11 +184,12 @@ public class CheatViewPageIndicator extends AppCompatActivity {
                     return cheatArray == null ? 0 : cheatArray.length;
                 }
 
+
                 @Override
                 public IPagerTitleView getTitleView(Context context, final int index) {
                     SimplePagerTitleView simplePagerTitleView = new SimplePagerTitleView(context);
                     simplePagerTitleView.setText(cheatTitles[index]);
-                    simplePagerTitleView.setNormalColor(Color.parseColor("#c8e6c9"));
+                    simplePagerTitleView.setNormalColor(R.color.color_primary_dark);
                     simplePagerTitleView.setSelectedColor(Color.WHITE);
                     simplePagerTitleView.setTextSize(12);
                     simplePagerTitleView.setOnClickListener(new View.OnClickListener() {
@@ -214,18 +206,12 @@ public class CheatViewPageIndicator extends AppCompatActivity {
                     LinePagerIndicator indicator = new LinePagerIndicator(context);
                     indicator.setMode(LinePagerIndicator.MODE_EXACTLY);
                     indicator.setYOffset(UIUtil.dip2px(context, 3));
-                    indicator.setColors(Color.parseColor("#ffffff"));
+                    indicator.setColors(Color.parseColor("#FFFF00"));
                     return indicator;
                 }
             });
             magicIndicator.setNavigator(commonNavigator);
             ViewPagerHelper.bind(magicIndicator, mPager);
-
-
-
-
-
-
 
 
 //            magicIndicator = (MagicIndicator) viewLayout.findViewById(R.id.indicator);
@@ -262,7 +248,6 @@ public class CheatViewPageIndicator extends AppCompatActivity {
 //            });
 //            magicIndicator.setNavigator(commonNavigator);
 //            ViewPagerHelper.bind(magicIndicator, mPager);
-
 
 
             // magicIndicator.setSelectedColor(color.page_indicator);
