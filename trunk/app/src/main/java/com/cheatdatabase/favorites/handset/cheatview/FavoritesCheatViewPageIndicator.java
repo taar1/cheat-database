@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.os.Parcelable;
@@ -45,6 +46,17 @@ import com.google.gson.Gson;
 import com.mopub.mobileads.MoPubView;
 import com.splunk.mint.Mint;
 
+import net.lucode.hackware.magicindicator.MagicIndicator;
+import net.lucode.hackware.magicindicator.ViewPagerHelper;
+import net.lucode.hackware.magicindicator.buildins.UIUtil;
+import net.lucode.hackware.magicindicator.buildins.commonnavigator.CommonNavigator;
+import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.CommonNavigatorAdapter;
+import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerIndicator;
+import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerTitleView;
+import net.lucode.hackware.magicindicator.buildins.commonnavigator.indicators.LinePagerIndicator;
+import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.ColorTransitionPagerTitleView;
+import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.SimplePagerTitleView;
+
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EBean;
 import org.greenrobot.eventbus.EventBus;
@@ -70,7 +82,7 @@ public class FavoritesCheatViewPageIndicator extends AppCompatActivity implement
     private int pageSelected;
 
     private Game gameObj;
-    private Cheat[] cheatObj;
+    private Cheat[] cheatArray;
     private Cheat visibleCheat;
 
     private MoPubView mAdView;
@@ -85,7 +97,6 @@ public class FavoritesCheatViewPageIndicator extends AppCompatActivity implement
 
     private FavoritesCheatViewFragmentAdapter mAdapter;
     private ViewPager mPager;
-//    private UnderlinePageIndicator mIndicator;
 
     private int activePage;
 
@@ -117,13 +128,11 @@ public class FavoritesCheatViewPageIndicator extends AppCompatActivity implement
 
             pageSelected = intent.getIntExtra("position", 0);
             activePage = pageSelected;
-            cheatObj = gameObj.getCheats();
-            visibleCheat = cheatObj[pageSelected];
+            cheatArray = gameObj.getCheats();
+            visibleCheat = cheatArray[pageSelected];
 
             getSupportActionBar().setTitle(gameObj.getGameName());
             getSupportActionBar().setSubtitle(gameObj.getSystemName());
-
-            //CheatDatabaseApplication.tracker().send(new HitBuilders.EventBuilder("ui", visibleCheat.getGameName() + " (" + visibleCheat.getSystemName() + ")").setLabel("activity").build());
 
             initialisePaging();
         } catch (Exception e) {
@@ -147,12 +156,11 @@ public class FavoritesCheatViewPageIndicator extends AppCompatActivity implement
         member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
     }
 
-
     private void initialisePaging() {
 
-        String[] cheatTitles = new String[cheatObj.length];
-        for (int i = 0; i < cheatObj.length; i++) {
-            cheatTitles[i] = cheatObj[i].getCheatTitle();
+        final String[] cheatTitles = new String[cheatArray.length];
+        for (int i = 0; i < cheatArray.length; i++) {
+            cheatTitles[i] = cheatArray[i].getCheatTitle();
         }
 
         try {
@@ -160,38 +168,70 @@ public class FavoritesCheatViewPageIndicator extends AppCompatActivity implement
 
             mPager = (ViewPager) viewLayout.findViewById(R.id.pager);
             mPager.setAdapter(mAdapter);
+            mPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+                @Override
+                public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
-//            mIndicator = (UnderlinePageIndicator) viewLayout.findViewById(R.id.indicator);
-//            mIndicator.setViewPager(mPager);
-//            mIndicator.notifyDataSetChanged();
-//            mIndicator.setCurrentItem(pageSelected);
-//
-//            mIndicator.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-//                @Override
-//                public void onPageSelected(int position) {
-//
-//                    // Save the last selected page
-//                    editor.putInt(Konstanten.PREFERENCES_PAGE_SELECTED, position);
-//                    editor.commit();
-//
-//                    activePage = position;
-//
-//                    try {
-//                        visibleCheat = cheatObj[position];
-//                        invalidateOptionsMenu();
-//                    } catch (Exception e) {
-//                        Toast.makeText(FavoritesCheatViewPageIndicator.this, R.string.err_somethings_wrong, Toast.LENGTH_SHORT).show();
-//                    }
-//                }
-//
-//                @Override
-//                public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-//                }
-//
-//                @Override
-//                public void onPageScrollStateChanged(int state) {
-//                }
-//            });
+                }
+
+                @Override
+                public void onPageSelected(int position) {
+                    // Save the last selected page
+                    editor.putInt(Konstanten.PREFERENCES_PAGE_SELECTED, position);
+                    editor.commit();
+
+                    activePage = position;
+
+                    try {
+                        visibleCheat = cheatArray[position];
+                        invalidateOptionsMenu();
+                    } catch (Exception e) {
+                        Toast.makeText(FavoritesCheatViewPageIndicator.this, R.string.err_somethings_wrong, Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                @Override
+                public void onPageScrollStateChanged(int state) {
+
+                }
+            });
+
+            MagicIndicator magicIndicator = (MagicIndicator) findViewById(R.id.magic_indicator);
+            CommonNavigator commonNavigator = new CommonNavigator(this);
+            commonNavigator.setSkimOver(true);
+            commonNavigator.setAdapter(new CommonNavigatorAdapter() {
+                @Override
+                public int getCount() {
+                    return cheatArray == null ? 0 : cheatArray.length;
+                }
+
+                @Override
+                public IPagerTitleView getTitleView(Context context, final int index) {
+                    SimplePagerTitleView clipPagerTitleView = new ColorTransitionPagerTitleView(context);
+                    clipPagerTitleView.setText(cheatTitles[index]);
+                    clipPagerTitleView.setNormalColor(Color.parseColor("#88ffffff")); // White transparent
+                    clipPagerTitleView.setSelectedColor(Color.WHITE);
+                    clipPagerTitleView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            mPager.setCurrentItem(index);
+                        }
+                    });
+                    return clipPagerTitleView;
+                }
+
+                @Override
+                public IPagerIndicator getIndicator(Context context) {
+                    LinePagerIndicator indicator = new LinePagerIndicator(context);
+                    indicator.setMode(LinePagerIndicator.MODE_EXACTLY);
+                    indicator.setYOffset(UIUtil.dip2px(context, 3));
+                    indicator.setColors(Color.WHITE);
+                    return indicator;
+                }
+            });
+            magicIndicator.setNavigator(commonNavigator);
+            ViewPagerHelper.bind(magicIndicator, mPager);
+            mPager.setCurrentItem(pageSelected);
 
             FloatingActionButton fa = (FloatingActionButton) viewLayout.findViewById(R.id.add_new_cheat_button);
             fa.setOnClickListener(new View.OnClickListener() {
@@ -383,7 +423,7 @@ public class FavoritesCheatViewPageIndicator extends AppCompatActivity implement
             Toast.makeText(this, R.string.error_login_required, Toast.LENGTH_SHORT).show();
         } else {
             Bundle args = new Bundle();
-            args.putSerializable("cheatObj", visibleCheat);
+            args.putSerializable("cheatArray", visibleCheat);
 
             FragmentManager fm = getSupportFragmentManager();
             ReportCheatDialog reportCheatDialog = new ReportCheatDialog();
@@ -406,7 +446,7 @@ public class FavoritesCheatViewPageIndicator extends AppCompatActivity implement
             Toast.makeText(this, R.string.error_login_required, Toast.LENGTH_LONG).show();
         } else {
             Bundle args = new Bundle();
-            args.putSerializable("cheatObj", visibleCheat);
+            args.putSerializable("cheatArray", visibleCheat);
 
             FragmentManager fm = getSupportFragmentManager();
             RateCheatDialog ratingCheatDialog = new RateCheatDialog();
@@ -418,13 +458,13 @@ public class FavoritesCheatViewPageIndicator extends AppCompatActivity implement
     @Subscribe
     public void onEvent(CheatRatingFinishedEvent result) {
         visibleCheat.setMemberRating(result.getRating());
-        cheatObj[activePage].setMemberRating(result.getRating());
+        cheatArray[activePage].setMemberRating(result.getRating());
         invalidateOptionsMenu();
         Toast.makeText(this, R.string.rating_inserted, Toast.LENGTH_SHORT).show();
     }
 
     public void setRating(int position, float rating) {
-        cheatObj[position].setMemberRating(rating);
+        cheatArray[position].setMemberRating(rating);
         invalidateOptionsMenu();
     }
 

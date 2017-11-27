@@ -40,13 +40,6 @@ public class GamesBySystemRecycleListViewAdapter extends RecyclerView.Adapter<Ga
     @App
     CheatDatabaseApplication app;
 
-    // TODO FIXME CheatDatabaseApplication geht evtl. noch nicht
-    // TODO FIXME CheatDatabaseApplication geht evtl. noch nicht
-    // TODO FIXME CheatDatabaseApplication geht evtl. noch nicht
-    // TODO FIXME CheatDatabaseApplication geht evtl. noch nicht
-    // TODO FIXME CheatDatabaseApplication geht evtl. noch nicht
-    // TODO FIXME CheatDatabaseApplication geht evtl. noch nicht
-
     public void init(ArrayList<Game> gameList) {
         mGames = gameList;
     }
