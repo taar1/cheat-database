@@ -630,6 +630,13 @@ public class Webservice {
     public static Cheat[] getCheatList(Game game, int memberId) {
         String systemString = getCheatListAsString(game.getGameId(), memberId);
 
+        // TODO PHP seitig das query anpassen, dass die anzahl foreneinträge noch mitgeliefert werden
+        // TODO PHP seitig das query anpassen, dass die anzahl foreneinträge noch mitgeliefert werden
+        // TODO PHP seitig das query anpassen, dass die anzahl foreneinträge noch mitgeliefert werden
+        // TODO PHP seitig das query anpassen, dass die anzahl foreneinträge noch mitgeliefert werden
+        // TODO PHP seitig das query anpassen, dass die anzahl foreneinträge noch mitgeliefert werden
+        // TODO PHP seitig das query anpassen, dass die anzahl foreneinträge noch mitgeliefert werden
+
         Cheat[] cheats = null;
         JSONArray jArray = null;
 

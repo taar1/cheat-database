@@ -65,28 +65,21 @@ public class CheatListActivity extends AppCompatActivity {
 
     @Extra
     Game gameObj;
-
-    @ViewById(R.id.my_recycler_view)
-    EmptyRecyclerView mRecyclerView;
-
-    @ViewById(R.id.swipe_refresh_layout)
-    SwipeRefreshLayout mSwipeRefreshLayout;
-
     @Bean
     Tools tools;
-
-    @ViewById(R.id.adview)
-    MoPubView mAdView;
-
-    @ViewById(R.id.toolbar)
-    Toolbar mToolbar;
-
     @Bean
     CheatRecycleListViewAdapter cheatRecycleListViewAdapter;
 
+    @ViewById(R.id.my_recycler_view)
+    EmptyRecyclerView mRecyclerView;
+    @ViewById(R.id.swipe_refresh_layout)
+    SwipeRefreshLayout mSwipeRefreshLayout;
+    @ViewById(R.id.adview)
+    MoPubView mAdView;
+    @ViewById(R.id.toolbar)
+    Toolbar mToolbar;
     @ViewById(R.id.item_list_empty_view)
     TextView mEmptyView;
-
     @ViewById(R.id.items_list_load_progress)
     ProgressBarCircularIndeterminate mProgressView;
 
@@ -136,7 +129,6 @@ public class CheatListActivity extends AppCompatActivity {
     }
 
     private void init() {
-        //CheatDatabaseApplication.tracker().send(new HitBuilders.EventBuilder("ui", "Cheat List").setLabel(TAG).build());
         Mint.initAndStartSession(this, Konstanten.SPLUNK_MINT_API_KEY);
 
         tools.loadAd(mAdView, getString(R.string.screen_type));
@@ -185,7 +177,6 @@ public class CheatListActivity extends AppCompatActivity {
                 error();
             }
         } catch (Exception e) {
-//            Log.e(TAG, e.getLocalizedMessage());
             error();
         }
 
@@ -327,30 +318,6 @@ public class CheatListActivity extends AppCompatActivity {
             getMenuInflater().inflate(R.menu.signin_menu, menu);
         }
 
-//        getMenuInflater().inflate(R.menu.handset_cheatview_rating_off_menu, menu);
-//
-//        // Locate MenuItem with ShareActionProvider
-//        MenuItem item = menu.findItem(R.id.action_share);
-//
-//        // Sharing
-//        mShareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(item);
-//        Intent shareIntent = new Intent(Intent.ACTION_SEND);
-//        shareIntent.setAction(Intent.ACTION_SEND);
-//        shareIntent.setType("text/plain");
-//        try {
-//            String result = String.format(getString(R.string.share_email_subject), visibleCheat.getGameName());
-//            shareIntent.putExtra(Intent.EXTRA_SUBJECT, result);
-//            String fullBody = visibleCheat.getGameName() + " (" + visibleCheat.getSystemName() + "): " + visibleCheat.getCheatTitle() + "\n";
-//            fullBody += Konstanten.BASE_URL + "display/switch.php?id=" + visibleCheat.getCheatId() + "\n\n";
-//            shareIntent.putExtra(Intent.EXTRA_TEXT, fullBody);
-//        } catch (Exception ee) {
-//            // TODO bei einem wipe muss der visibleCheat hier geupdated werden
-//            // TODO icon unten rechts wird vom share icon überdeckt...
-//            shareIntent.putExtra(Intent.EXTRA_SUBJECT, "EMPTY SUBJECT");
-//            shareIntent.putExtra(Intent.EXTRA_TEXT, "EMPTY BODY");
-//        }
-//        mShareActionProvider.setShareIntent(shareIntent);
-
         // Search
         getMenuInflater().inflate(R.menu.search_menu, menu);
 
@@ -443,12 +410,8 @@ public class CheatListActivity extends AppCompatActivity {
     @Subscribe
     public void onEvent(CheatListRecyclerViewClickEvent result) {
         if (result.isSucceeded()) {
-            //CheatDatabaseApplication.tracker().send(new HitBuilders.EventBuilder("ui", "click").setLabel(result.getCheat().getCheatTitle()).build());
-
             this.visibleCheat = result.getCheat();
             Game lastGameObj = result.getCheat().getGame();
-
-            //CheatDatabaseApplication.tracker().send(new HitBuilders.EventBuilder("ui", "select_cheat").setLabel(result.getCheat().getGameName() + ": " + result.getCheat().getCheatTitle()).build());
 
             editor.putInt(Konstanten.PREFERENCES_PAGE_SELECTED, result.getPosition());
             editor.commit();
