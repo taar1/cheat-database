@@ -19,7 +19,6 @@ public final class AnalyticsTrackers {
 // TODO switch to firebase analytics
 // TODO switch to firebase analytics
 
-
     public enum Target {
         APP,
         // Add more trackers here if you need, and update the code in #get(Target) below

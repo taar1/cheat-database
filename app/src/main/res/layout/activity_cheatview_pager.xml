@@ -24,13 +24,19 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <net.lucode.hackware.magicindicator.MagicIndicator
+            android:id="@+id/magic_indicator"
+            style="@style/cheat_detail_view_page_indicator"
+            android:layout_width="match_parent"
+            android:layout_height="45dp" />
 
         <android.support.v4.view.ViewPager
             android:id="@+id/pager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_below="@id/magic_indicator"
+            android:layout_weight="1"
             android:paddingBottom="52dp" />
-
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/add_new_cheat_button"
@@ -43,13 +49,6 @@
             android:layout_marginRight="20dp"
             android:alpha="0.8"
             android:src="@drawable/ic_add_black_48dp" />
-
-        <net.lucode.hackware.magicindicator.MagicIndicator
-            android:id="@+id/magic_indicator"
-            style="@style/cheat_detail_view_page_indicator"
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:layout_above="@id/adview" />
 
         <com.mopub.mobileads.MoPubView
             android:id="@+id/adview"

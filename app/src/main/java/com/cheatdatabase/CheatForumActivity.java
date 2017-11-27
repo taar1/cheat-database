@@ -21,7 +21,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
 import android.widget.EditText;
@@ -72,50 +71,35 @@ public class CheatForumActivity extends AppCompatActivity implements CheatListFr
 
     @Extra
     Cheat cheatObj;
-
     @Extra
     Game gameObj;
-
     @Bean
     Tools tools;
 
     @ViewById(R.id.toolbar)
     Toolbar mToolbar;
-
     @ViewById(R.id.llForumMain)
     LinearLayout llForumMain;
-
     @ViewById(R.id.text_cheat_title)
     TextView tvCheatTitle;
-
     @ViewById(R.id.tvEmpty)
     TextView tvEmpty;
-
     @ViewById(R.id.sv)
     ScrollView sv;
-
     @ViewById(R.id.reload)
     ImageView reloadView;
-
     @ViewById(R.id.etEnterForumPost)
     EditText editText;
-
     @ViewById(R.id.btnSubmitPost)
     Button postButton;
 
     private ForumPost[] forumThread;
-
     private SharedPreferences settings;
-
+    private ShareActionProvider mShare;
     private Member member;
-
-    private ViewGroup adViewContainer;
     private MoPubView mAdView;
-
     private Typeface latoFontBold;
     private Typeface latoFontLight;
-
-    private ShareActionProvider mShare;
 
     @AfterViews
     public void onCreateView() {
@@ -131,7 +115,6 @@ public class CheatForumActivity extends AppCompatActivity implements CheatListFr
 
         if (Reachability.reachability.isReachable) {
             reloadView.setVisibility(View.GONE);
-            //new GetForumBackgroundTask().execute();
             loadForumAsync();
         } else {
             reloadView.setVisibility(View.VISIBLE);
@@ -140,7 +123,6 @@ public class CheatForumActivity extends AppCompatActivity implements CheatListFr
                 @Override
                 public void onClick(View v) {
                     if (Reachability.reachability.isReachable) {
-                        //new GetForumBackgroundTask().execute();
                         loadForumAsync();
                     } else {
                         Toast.makeText(CheatForumActivity.this, R.string.no_internet, Toast.LENGTH_SHORT).show();
@@ -173,8 +155,6 @@ public class CheatForumActivity extends AppCompatActivity implements CheatListFr
         }
         Mint.initAndStartSession(this, Konstanten.SPLUNK_MINT_API_KEY);
 
-        //CheatDatabaseApplication.tracker().send(new HitBuilders.EventBuilder("ui", cheatObj.getGameName() + " (" + cheatObj.getSystemName() + ")").setLabel("activity").build());
-
         settings = getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
 
         mAdView = Tools.initMoPubAdView(this, mAdView);
@@ -189,6 +169,8 @@ public class CheatForumActivity extends AppCompatActivity implements CheatListFr
         }
         getSupportActionBar().setTitle(cheatObj.getGameName());
         getSupportActionBar().setSubtitle(cheatObj.getSystemName());
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
     }
 
     private void handleIntent(final Intent intent) {
