@@ -135,6 +135,10 @@
     <string name="forum_submit_failed">Tu comentario no ha podido ser enviado. Vuelve a probar más tarde.</string>
     <string name="forum_submit_ok">Enviado.</string>
     <string name="forum_yet_empty">El foro para este truco todavía está vacio. Sé el primero en escribir algo. Consejo: Marca este truco como favorito para volver más fácilmente más adelante.</string>
+    <string name="forum_hint">Your message</string>
+    <string name="forum_amount_posts">Forum (%1$d %2$s)</string>
+    <string name="forum_single_post">post</string>
+    <string name="forum_many_posts">posts</string>
 
     <!-- SUBMIT CHEAT -->
     <string name="submit_cheat_short">Enviar un truco</string>

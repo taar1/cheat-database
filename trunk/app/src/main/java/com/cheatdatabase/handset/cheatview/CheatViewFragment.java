@@ -107,12 +107,14 @@ public class CheatViewFragment extends Fragment implements OnClickListener {
     private String mContent = "???";
     private Typeface latoFontBold;
     private Typeface latoFontLight;
-    private CheatViewPageIndicator ca;
+    private CheatViewPageIndicator cheatViewPageIndicator;
     private ImageView reloadView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        settings = getActivity().getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
+        editor = settings.edit();
 
         init();
 
@@ -123,13 +125,10 @@ public class CheatViewFragment extends Fragment implements OnClickListener {
     }
 
     private void init() {
-        ca = (CheatViewPageIndicator) getActivity();
+        cheatViewPageIndicator = (CheatViewPageIndicator) getActivity();
 
-        latoFontLight = Tools.getFont(ca.getAssets(), Konstanten.FONT_LIGHT);
-        latoFontBold = Tools.getFont(ca.getAssets(), Konstanten.FONT_BOLD);
-
-        settings = getActivity().getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
-        editor = settings.edit();
+        latoFontLight = Tools.getFont(cheatViewPageIndicator.getAssets(), Konstanten.FONT_LIGHT);
+        latoFontBold = Tools.getFont(cheatViewPageIndicator.getAssets(), Konstanten.FONT_BOLD);
 
         member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
     }
@@ -187,11 +186,11 @@ public class CheatViewFragment extends Fragment implements OnClickListener {
                     if (Reachability.reachability.isReachable) {
                         getOnlineContent();
                     } else {
-                        Toast.makeText(ca, R.string.no_internet, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(cheatViewPageIndicator, R.string.no_internet, Toast.LENGTH_SHORT).show();
                     }
                 }
             });
-            Toast.makeText(ca, R.string.no_internet, Toast.LENGTH_SHORT).show();
+            Toast.makeText(cheatViewPageIndicator, R.string.no_internet, Toast.LENGTH_SHORT).show();
         }
 
         return outerLinearLayout;
@@ -244,7 +243,7 @@ public class CheatViewFragment extends Fragment implements OnClickListener {
     }
 
     private void buildGallery() {
-        screenshotGallery.setAdapter(new ImageAdapter(ca));
+        screenshotGallery.setAdapter(new ImageAdapter(cheatViewPageIndicator));
         screenshotGallery.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
@@ -310,21 +309,21 @@ public class CheatViewFragment extends Fragment implements OnClickListener {
         String secondThColumn = "<b>" + th2[0].trim() + "</b>";
 
 		/* Create a new row to be added. */
-        TableRow trTh = new TableRow(ca);
+        TableRow trTh = new TableRow(cheatViewPageIndicator);
         trTh.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
 
-        TextView tvFirstThCol = new TextView(ca);
+        TextView tvFirstThCol = new TextView(cheatViewPageIndicator);
         tvFirstThCol.setText(Html.fromHtml(firstThColumn));
         tvFirstThCol.setPadding(1, 1, 5, 1);
         tvFirstThCol.setMinimumWidth(Konstanten.TABLE_ROW_MINIMUM_WIDTH);
-        tvFirstThCol.setTextAppearance(ca, R.style.NormalText);
+        tvFirstThCol.setTextAppearance(cheatViewPageIndicator, R.style.NormalText);
         tvFirstThCol.setTypeface(latoFontLight);
         trTh.addView(tvFirstThCol);
 
-        TextView tvSecondThCol = new TextView(ca);
+        TextView tvSecondThCol = new TextView(cheatViewPageIndicator);
         tvSecondThCol.setText(Html.fromHtml(secondThColumn));
         tvSecondThCol.setPadding(5, 1, 1, 1);
-        tvSecondThCol.setTextAppearance(ca, R.style.NormalText);
+        tvSecondThCol.setTextAppearance(cheatViewPageIndicator, R.style.NormalText);
         tvSecondThCol.setTypeface(latoFontLight);
         trTh.addView(tvSecondThCol);
 
@@ -341,21 +340,21 @@ public class CheatViewFragment extends Fragment implements OnClickListener {
             String secondTdColumn = td2[0].replaceAll("<br>", "\n").trim();
 
 			/* Create a new row to be added. */
-            TableRow trTd = new TableRow(ca);
+            TableRow trTd = new TableRow(cheatViewPageIndicator);
             trTd.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
 
-            TextView tvFirstTdCol = new TextView(ca);
+            TextView tvFirstTdCol = new TextView(cheatViewPageIndicator);
             tvFirstTdCol.setText(firstTdColumn);
             tvFirstTdCol.setPadding(1, 1, 10, 1);
             tvFirstTdCol.setMinimumWidth(Konstanten.TABLE_ROW_MINIMUM_WIDTH);
-            tvFirstTdCol.setTextAppearance(ca, R.style.NormalText);
+            tvFirstTdCol.setTextAppearance(cheatViewPageIndicator, R.style.NormalText);
             tvFirstTdCol.setTypeface(latoFontLight);
             trTd.addView(tvFirstTdCol);
 
-            TextView tvSecondTdCol = new TextView(ca);
+            TextView tvSecondTdCol = new TextView(cheatViewPageIndicator);
             tvSecondTdCol.setText(secondTdColumn);
             tvSecondTdCol.setPadding(10, 1, 30, 1);
-            tvSecondTdCol.setTextAppearance(ca, R.style.NormalText);
+            tvSecondTdCol.setTextAppearance(cheatViewPageIndicator, R.style.NormalText);
             tvSecondTdCol.setTypeface(latoFontLight);
             trTd.addView(tvSecondTdCol);
 
@@ -372,7 +371,7 @@ public class CheatViewFragment extends Fragment implements OnClickListener {
         tvCheatText.setText(styledText);
 
         if (cheatObj.isWalkthroughFormat()) {
-            tvCheatText.setTextAppearance(ca, R.style.WalkthroughText);
+            tvCheatText.setTextAppearance(cheatViewPageIndicator, R.style.WalkthroughText);
         }
     }
 
@@ -445,7 +444,7 @@ public class CheatViewFragment extends Fragment implements OnClickListener {
                 editor.putFloat("c" + cheatObj.getCheatId(), cheatRating);
                 editor.commit();
 
-                ca.setRating(offset, cheatRating);
+                cheatViewPageIndicator.setRating(offset, cheatRating);
 
                 // ratingBar.setRating(cheatRating / 2);
             }
@@ -509,7 +508,7 @@ public class CheatViewFragment extends Fragment implements OnClickListener {
              * Apply the Bitmap to the ImageView that will be returned.
              */
             for (int i = 0; i < imageViews.length; i++) {
-                imageViews[i] = new ImageView(ca);
+                imageViews[i] = new ImageView(cheatViewPageIndicator);
                 imageViews[i].setScaleType(ImageView.ScaleType.MATRIX);
                 imageViews[i].setLayoutParams(new Gallery.LayoutParams(300, biggestHeight));
                 imageViews[i].setImageBitmap(bms[i]);

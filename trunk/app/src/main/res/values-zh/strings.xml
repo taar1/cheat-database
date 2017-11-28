@@ -131,6 +131,10 @@
     <string name="forum_submit_failed">您的提交暂时无法完成。请稍后重试。</string>
     <string name="forum_submit_ok">提交成功。</string>
     <string name="forum_yet_empty">此秘籍的专题讨论区暂时为空。成为第一个在这里写东西的。小贴士:收藏这个秘籍可以让您很容易的回到这个专题讨论区。</string>
+    <string name="forum_hint">Your message</string>
+    <string name="forum_amount_posts">Forum (%1$d %2$s)</string>
+    <string name="forum_single_post">post</string>
+    <string name="forum_many_posts">posts</string>
 
     <!-- SUBMIT CHEAT -->
     <string name="submit_cheat_short">提交一个秘籍</string>

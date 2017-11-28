@@ -142,6 +142,9 @@
     <string name="forum_submit_ok">Forumeintrag erfolgreich gesendet.</string>
     <string name="forum_yet_empty">Das Forum für diesen Cheat ist noch leer. Sei der Erste, der etwas schreibt. Am besten du trägst den Cheat in deine Favoriten ein, so kannst du schneller auf dieses Forum wieder zugreifen.</string>
     <string name="forum_hint">Deine Nachricht</string>
+    <string name="forum_amount_posts">Forum (%1$d %2$s)</string>
+    <string name="forum_single_post">Beitrag</string>
+    <string name="forum_many_posts">Beiträge</string>
 
     <!-- SUBMIT CHEAT -->
     <string name="submit_cheat_short">Cheat einsenden</string>
