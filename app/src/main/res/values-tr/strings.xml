@@ -123,6 +123,10 @@
     <string name="forum_submit_failed">Talebiniz yerine getirilemedi. Lütfen daha sonra tekrar deneyin.</string>
     <string name="forum_submit_ok">Talep yerine getirildi.</string>
     <string name="forum_yet_empty">Bu ipucu için forum henüz boş. İlk yazan siz olun. Öneri: Bu ipucunu favorilerinize eklerseniz, bu alana daha kolay erişebilirsiniz.</string>
+    <string name="forum_hint">Your message</string>
+    <string name="forum_amount_posts">Forum (%1$d %2$s)</string>
+    <string name="forum_single_post">post</string>
+    <string name="forum_many_posts">posts</string>
     <string name="submit_cheat_short">İpucu’nu gönder</string>
     <string name="submit_cheat_long">Bu oyun için bir ipucu gönder</string>
     <string name="submit_cheat_your_title">İpucu içeriği</string>
