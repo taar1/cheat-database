@@ -129,6 +129,10 @@
     <string name="forum_submit_failed">您的提交暫時無法完成。請稍後重試。</string>
     <string name="forum_submit_ok">提交成功。</string>
     <string name="forum_yet_empty">此秘籍的專題討論區暫時為空。成為第一個在這裡寫東西的。小貼士:收藏這個秘籍可以讓您很容易的回到這個專題討論區。</string>
+    <string name="forum_hint">Your message</string>
+    <string name="forum_amount_posts">Forum (%1$d %2$s)</string>
+    <string name="forum_single_post">post</string>
+    <string name="forum_many_posts">posts</string>
 
     <!-- SUBMIT CHEAT -->
     <string name="submit_cheat_short">提交一個秘籍</string>

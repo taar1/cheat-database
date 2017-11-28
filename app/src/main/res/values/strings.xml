@@ -144,6 +144,9 @@
     <string name="forum_submit_ok">Submission successful.</string>
     <string name="forum_yet_empty">The forum for this cheat is yet empty. Be the first to write something. Tip: Favorite this cheat so you can come back to the forum easier.</string>
     <string name="forum_hint">Your message</string>
+    <string name="forum_amount_posts">Forum (%1$d %2$s)</string>
+    <string name="forum_single_post">post</string>
+    <string name="forum_many_posts">posts</string>
 
     <!-- SUBMIT CHEAT -->
     <string name="submit_cheat_short">Submit a Cheat</string>

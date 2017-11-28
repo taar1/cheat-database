@@ -630,13 +630,6 @@ public class Webservice {
     public static Cheat[] getCheatList(Game game, int memberId) {
         String systemString = getCheatListAsString(game.getGameId(), memberId);
 
-        // TODO PHP seitig das query anpassen, dass die anzahl foreneinträge noch mitgeliefert werden
-        // TODO PHP seitig das query anpassen, dass die anzahl foreneinträge noch mitgeliefert werden
-        // TODO PHP seitig das query anpassen, dass die anzahl foreneinträge noch mitgeliefert werden
-        // TODO PHP seitig das query anpassen, dass die anzahl foreneinträge noch mitgeliefert werden
-        // TODO PHP seitig das query anpassen, dass die anzahl foreneinträge noch mitgeliefert werden
-        // TODO PHP seitig das query anpassen, dass die anzahl foreneinträge noch mitgeliefert werden
-
         Cheat[] cheats = null;
         JSONArray jArray = null;
 
@@ -656,6 +649,7 @@ public class Webservice {
                 String rating = jsonObject.getString("rating");
                 String memberRating = jsonObject.getString("member_rating");
                 String created = jsonObject.getString("created");
+                int forumCount = jsonObject.getInt("forum_count");
 
                 Cheat cheat = new Cheat();
 
@@ -691,6 +685,7 @@ public class Webservice {
                 cheat.setSystemId(game.getSystemId());
                 cheat.setSystemName(game.getSystemName());
                 cheat.setCreated(created);
+                cheat.setForumCount(forumCount);
 
                 cheats[i] = cheat;
             }

@@ -273,7 +273,6 @@ public class CheatViewPageIndicator extends AppCompatActivity {
 
         // Sharing
         mShare = (ShareActionProvider) MenuItemCompat.getActionProvider(item);
-//        setShareText(visibleCheat);
 
         // Search
         getMenuInflater().inflate(R.menu.search_menu, menu);
@@ -305,9 +304,16 @@ public class CheatViewPageIndicator extends AppCompatActivity {
         // Locate MenuItem with ShareActionProvider
         MenuItem item = menu.findItem(R.id.action_share);
 
+
+        String postOrPosts = getString(R.string.forum_many_posts);
+        if (visibleCheat.getForumCount() == 1) {
+            postOrPosts = getString(R.string.forum_single_post);
+        }
+        MenuItem forumMenuItem = menu.findItem(R.id.action_forum);
+        forumMenuItem.setTitle(getString(R.string.forum_amount_posts, visibleCheat.getForumCount(), postOrPosts));
+
         // Sharing
         mShare = (ShareActionProvider) MenuItemCompat.getActionProvider(item);
-//        setShareText(visibleCheat);
 
         // Search
         getMenuInflater().inflate(R.menu.search_menu, menu);
@@ -333,6 +339,9 @@ public class CheatViewPageIndicator extends AppCompatActivity {
                 finish();
                 // TODO FIXME anstatt finish() richtig zu CheatList zurueck gehen. via annotations...
 
+                // TODO braucht es onPrepareOptionsMenu überhaupt?
+                // TODO braucht es onPrepareOptionsMenu überhaupt?
+
                 return true;
             case R.id.action_submit_cheat:
                 Intent explicitIntent = new Intent(CheatViewPageIndicator.this, SubmitCheatActivity_.class);
@@ -344,10 +353,6 @@ public class CheatViewPageIndicator extends AppCompatActivity {
                 return true;
             case R.id.action_forum:
                 if (Reachability.reachability.isReachable) {
-//                    Intent forumIntent = new Intent(CheatViewPageIndicator.this, CheatForumActivity.class);
-//                    forumIntent.putExtra("gameObj", gameObj);
-//                    forumIntent.putExtra("cheatArray", visibleCheat);
-//                    startActivity(forumIntent);
                     CheatForumActivity_.intent(this).gameObj(gameObj).cheatObj(visibleCheat).start();
                 } else {
                     Toast.makeText(this, R.string.no_internet, Toast.LENGTH_SHORT).show();

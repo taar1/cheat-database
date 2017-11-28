@@ -24,7 +24,7 @@ public class Cheat extends Game implements Serializable {
     private Member submittingMember;
     private float rating, memberRating;
     private Screenshot[] screens;
-    private int cheatId, languageId, views, votes, viewsLifetime, viewsToday;
+    private int cheatId, languageId, views, votes, viewsLifetime, viewsToday, forumCount;
     private boolean walkthroughFormat, screenshots;
 
     public Cheat() {
@@ -234,4 +234,11 @@ public class Cheat extends Game implements Serializable {
         this.walkthroughFormat = walkthroughFormat;
     }
 
+    public int getForumCount() {
+        return forumCount;
+    }
+
+    public void setForumCount(int forumCount) {
+        this.forumCount = forumCount;
+    }
 }

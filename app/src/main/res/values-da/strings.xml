@@ -142,6 +142,10 @@
     <string name="forum_submit_ok">Indlægget er blevet sendt.</string>
     <string name="forum_yet_empty">Forummet til denne cheat er stadig tomt. Bliv den første der skriver noget. Tilføj cheaten til dine favoritter, på den måde er det nemt at finde forummet igen senere.</string>
     <string name="forum_hint">Your message</string>
+    <string name="forum_amount_posts">Forum (%1$d %2$s)</string>
+    <string name="forum_single_post">post</string>
+    <string name="forum_many_posts">posts</string>
+
 
     <!-- SUBMIT CHEAT -->
     <string name="submit_cheat_short">Indsend cheat</string>
