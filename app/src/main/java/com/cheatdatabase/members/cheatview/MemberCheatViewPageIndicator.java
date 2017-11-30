@@ -321,7 +321,6 @@ public class MemberCheatViewPageIndicator extends AppCompatActivity {
 
         // Sharing
         mShare = (ShareActionProvider) MenuItemCompat.getActionProvider(item);
-//        setShareText(visibleCheat);
 
         // Search
         getMenuInflater().inflate(R.menu.search_menu, menu);
@@ -332,38 +331,6 @@ public class MemberCheatViewPageIndicator extends AppCompatActivity {
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
 
         return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-        menu.clear();
-        if ((visibleCheat != null) && (visibleCheat.getMemberRating() > 0)) {
-            getMenuInflater().inflate(R.menu.handset_cheatview_rating_on_menu, menu);
-        } else {
-            getMenuInflater().inflate(R.menu.handset_cheatview_rating_off_menu, menu);
-        }
-
-        if (member != null) {
-            getMenuInflater().inflate(R.menu.signout_menu, menu);
-        } else {
-            getMenuInflater().inflate(R.menu.signin_menu, menu);
-        }
-
-        // Locate MenuItem with ShareActionProvider
-        MenuItem item = menu.findItem(R.id.action_share);
-
-        // Sharing
-        mShare = (ShareActionProvider) MenuItemCompat.getActionProvider(item);
-//        setShareText(visibleCheat);
-
-        // Search
-        getMenuInflater().inflate(R.menu.search_menu, menu);
-
-        // Associate searchable configuration with the SearchView
-        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-        return super.onPrepareOptionsMenu(menu);
     }
 
     // Call to update the share intent
@@ -433,12 +400,6 @@ public class MemberCheatViewPageIndicator extends AppCompatActivity {
         }
     }
 
-//    @Override
-//    public void onFinishReportDialog(int selectedReason) {
-//        String[] reasons = getResources().getStringArray(R.array.report_reasons);
-//        new ReportCheatTask().execute(reasons[selectedReason]);
-//    }
-
     @Subscribe
     public void onEvent(CheatReportingFinishedEvent result) {
         if (result.isSucceeded()) {
@@ -462,14 +423,6 @@ public class MemberCheatViewPageIndicator extends AppCompatActivity {
         }
     }
 
-//    @Override
-//    public void onFinishRateCheatDialog(int selectedRating) {
-//        visibleCheat.setMemberRating(selectedRating);
-//        cheatArrayList.get(activePage).setMemberRating(selectedRating);
-//        invalidateOptionsMenu();
-//        Toast.makeText(this, R.string.rating_inserted, Toast.LENGTH_SHORT).show();
-//    }
-
     @Subscribe
     public void onEvent(CheatRatingFinishedEvent result) {
         visibleCheat.setMemberRating(result.getRating());
@@ -477,29 +430,6 @@ public class MemberCheatViewPageIndicator extends AppCompatActivity {
         invalidateOptionsMenu();
         Toast.makeText(this, R.string.rating_inserted, Toast.LENGTH_SHORT).show();
     }
-
-//    private class ReportCheatTask extends AsyncTask<String, Boolean, Boolean> {
-//
-//        @Override
-//        protected Boolean doInBackground(String... reason) {
-//
-//            try {
-//                Webservice.reportCheat(visibleCheat.getCheatId(), member.getMid(), reason[0]);
-//                return true;
-//            } catch (Exception e) {
-//                return false;
-//            }
-//        }
-//
-//        @Override
-//        protected void onPostExecute(Boolean success) {
-//            if (success) {
-//                Toast.makeText(MemberCheatViewPageIndicator.this, R.string.thanks_for_reporting, Toast.LENGTH_LONG).show();
-//            } else {
-//                Toast.makeText(MemberCheatViewPageIndicator.this, R.string.no_internet, Toast.LENGTH_SHORT).show();
-//            }
-//        }
-//    }
 
     public void setRating(int position, float rating) {
         cheatArrayList.get(position).setMemberRating(rating);

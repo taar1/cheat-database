@@ -296,37 +296,6 @@ public class FavoritesCheatViewPageIndicator extends AppCompatActivity implement
         return super.onCreateOptionsMenu(menu);
     }
 
-    @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-        menu.clear();
-        if ((visibleCheat != null) && (visibleCheat.getMemberRating() > 0)) {
-            getMenuInflater().inflate(R.menu.handset_favorites_cheatview_rating_on_menu, menu);
-        } else {
-            getMenuInflater().inflate(R.menu.handset_favorites_cheatview_rating_off_menu, menu);
-        }
-
-        if (member != null) {
-            getMenuInflater().inflate(R.menu.signout_menu, menu);
-        } else {
-            getMenuInflater().inflate(R.menu.signin_menu, menu);
-        }
-
-        // Locate MenuItem with ShareActionProvider
-        MenuItem item = menu.findItem(R.id.action_share);
-
-        // Sharing
-        mShare = (ShareActionProvider) MenuItemCompat.getActionProvider(item);
-
-        // Search
-        getMenuInflater().inflate(R.menu.search_menu, menu);
-
-        // Associate searchable configuration with the SearchView
-        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-        return super.onPrepareOptionsMenu(menu);
-    }
-
     // Call to update the share intent
     private void setShareIntent(Intent shareIntent) {
         if (mShare != null) {
@@ -386,7 +355,6 @@ public class FavoritesCheatViewPageIndicator extends AppCompatActivity implement
                 return super.onOptionsItemSelected(item);
         }
     }
-
 
     @Override
     protected void onResume() {
