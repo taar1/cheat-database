@@ -204,6 +204,7 @@ public class MainActivity extends AppCompatActivity implements ActionBar.OnNavig
         dataList.add(new DrawerItem(getString(R.string.menu_more_apps), R.drawable.ic_otherapps));
         dataList.add(new DrawerItem(getString(R.string.rate_us), R.drawable.ic_rate));
         dataList.add(new DrawerItem(getString(R.string.contactform_title), R.drawable.ic_contact));
+        dataList.add(new DrawerItem(getString(R.string.action_settings), android.R.drawable.ic_menu_preferences));
 
         mAdapter = new CustomDrawerAdapter(this, R.layout.custom_drawer_item, dataList);
         mDrawerList.setAdapter(mAdapter);

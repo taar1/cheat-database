@@ -268,6 +268,13 @@ public class CheatViewPageIndicator extends AppCompatActivity {
             getMenuInflater().inflate(R.menu.signin_menu, menu);
         }
 
+        String postOrPosts = getString(R.string.forum_many_posts);
+        if (visibleCheat.getForumCount() == 1) {
+            postOrPosts = getString(R.string.forum_single_post);
+        }
+        MenuItem forumMenuItem = menu.findItem(R.id.action_forum);
+        forumMenuItem.setTitle(getString(R.string.forum_amount_posts, visibleCheat.getForumCount(), postOrPosts));
+
         // Locate MenuItem with ShareActionProvider
         MenuItem item = menu.findItem(R.id.action_share);
 
@@ -285,46 +292,6 @@ public class CheatViewPageIndicator extends AppCompatActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
-
-    @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-        menu.clear();
-        if ((visibleCheat != null) && (visibleCheat.getMemberRating() > 0)) {
-            getMenuInflater().inflate(R.menu.handset_cheatview_rating_on_menu, menu);
-        } else {
-            getMenuInflater().inflate(R.menu.handset_cheatview_rating_off_menu, menu);
-        }
-
-        if (member != null) {
-            getMenuInflater().inflate(R.menu.signout_menu, menu);
-        } else {
-            getMenuInflater().inflate(R.menu.signin_menu, menu);
-        }
-
-        // Locate MenuItem with ShareActionProvider
-        MenuItem item = menu.findItem(R.id.action_share);
-
-
-        String postOrPosts = getString(R.string.forum_many_posts);
-        if (visibleCheat.getForumCount() == 1) {
-            postOrPosts = getString(R.string.forum_single_post);
-        }
-        MenuItem forumMenuItem = menu.findItem(R.id.action_forum);
-        forumMenuItem.setTitle(getString(R.string.forum_amount_posts, visibleCheat.getForumCount(), postOrPosts));
-
-        // Sharing
-        mShare = (ShareActionProvider) MenuItemCompat.getActionProvider(item);
-
-        // Search
-        getMenuInflater().inflate(R.menu.search_menu, menu);
-
-        // Associate searchable configuration with the SearchView
-        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-        return super.onPrepareOptionsMenu(menu);
-    }
-
     // Call to update the share intent
     private void setShareIntent(Intent shareIntent) {
         if (mShare != null) {
@@ -337,11 +304,6 @@ public class CheatViewPageIndicator extends AppCompatActivity {
         switch (item.getItemId()) {
             case android.R.id.home:
                 finish();
-                // TODO FIXME anstatt finish() richtig zu CheatList zurueck gehen. via annotations...
-
-                // TODO braucht es onPrepareOptionsMenu überhaupt?
-                // TODO braucht es onPrepareOptionsMenu überhaupt?
-
                 return true;
             case R.id.action_submit_cheat:
                 Intent explicitIntent = new Intent(CheatViewPageIndicator.this, SubmitCheatActivity_.class);
