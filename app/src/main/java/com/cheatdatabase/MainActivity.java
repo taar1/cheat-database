@@ -196,15 +196,15 @@ public class MainActivity extends AppCompatActivity implements ActionBar.OnNavig
 
         // Add Drawer Item to dataList
         dataList = new ArrayList<>();
-        dataList.add(new DrawerItem(getString(R.string.goto_games_and_cheats), R.drawable.ic_home));
-        dataList.add(new DrawerItem(getString(R.string.goto_news), R.drawable.ic_info));
-        dataList.add(new DrawerItem(getString(R.string.favorites), R.drawable.ic_favorite));
-        dataList.add(new DrawerItem(getString(R.string.top_members_title), R.drawable.ic_topmembers));
-        dataList.add(new DrawerItem(getString(R.string.submit_cheat_title), R.drawable.ic_submit));
-        dataList.add(new DrawerItem(getString(R.string.menu_more_apps), R.drawable.ic_otherapps));
-        dataList.add(new DrawerItem(getString(R.string.rate_us), R.drawable.ic_rate));
-        dataList.add(new DrawerItem(getString(R.string.contactform_title), R.drawable.ic_contact));
-        dataList.add(new DrawerItem(getString(R.string.action_settings), android.R.drawable.ic_menu_preferences));
+        dataList.add(new DrawerItem(getString(R.string.goto_games_and_cheats), R.drawable.drawer_cheats_24px));
+        dataList.add(new DrawerItem(getString(R.string.goto_news), R.drawable.drawer_news_18px));
+        dataList.add(new DrawerItem(getString(R.string.favorites), R.drawable.drawer_favorites_24px));
+        dataList.add(new DrawerItem(getString(R.string.top_members_title), R.drawable.drawer_members_24px));
+        dataList.add(new DrawerItem(getString(R.string.submit_cheat_title), R.drawable.drawer_upload_18px));
+        dataList.add(new DrawerItem(getString(R.string.menu_more_apps), R.drawable.drawer_more_18px));
+        dataList.add(new DrawerItem(getString(R.string.rate_us), R.drawable.drawer_rate_18px));
+        dataList.add(new DrawerItem(getString(R.string.contactform_title), R.drawable.drawer_contact_18px));
+        dataList.add(new DrawerItem(getString(R.string.action_settings), R.drawable.drawer_settings_18px));
 
         mAdapter = new CustomDrawerAdapter(this, R.layout.custom_drawer_item, dataList);
         mDrawerList.setAdapter(mAdapter);
