@@ -44,7 +44,7 @@
 
     <color name="page_indicator_background">#d5e3f2</color>
     <color name="drawer_divider_bars_background">#005694</color>
-    <color name="drawer_background">#CC000000</color>
+    <color name="drawer_background">@color/color_primary_dark</color>
     <color name="drawer_item_background">#000000</color>
     <color name="drawer_text_color">#DDd5e3f2</color>
 

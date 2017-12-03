@@ -315,4 +315,10 @@
     </plurals>
     <string name="title_activity_second">SecondActivity</string>
 
+
+    <string name="rate_us_title">Rate us</string>
+    <string name="rate_us_text">Do you like Cheat-Database? Please let us know!</string>
+    <string name="rate_us_submit">Submit rating</string>
+    <string name="rate_us_thanks_good_rating">Thanks for your great rating! Please also make sure to rate us on Google Play.</string>
+
 </resources>

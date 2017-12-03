@@ -27,7 +27,7 @@ public class PlainInformationDialog extends Dialog {
         Typeface latoFontLight = Tools.getFont(context.getAssets(), Konstanten.FONT_LIGHT);
 
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.layout_information_dialog);
+        setContentView(R.layout.dialog_information);
         setTitle(R.string.guidelines);
 
         mTitle = (TextView) findViewById(R.id.termsandconditions_title);

@@ -37,8 +37,9 @@ import java.util.Comparator;
 public class SystemListFragment extends Fragment {
 
     private final String TAG = SystemListFragment.class.getSimpleName();
-
     private RecyclerView.LayoutManager mLayoutManager;
+    private GamesAndCheatsCountTaskResult gamesAndCheatsCountTaskResult;
+    private ArrayList<SystemPlatform> systemGameandCheatCounterList = null;
 
     @ViewById(R.id.my_recycler_view)
     RecyclerView mRecyclerView;
@@ -57,6 +58,9 @@ public class SystemListFragment extends Fragment {
 
     @Bean
     SystemsRecycleListViewAdapter mSystemsRecycleListViewAdapter;
+
+    @Bean
+    CheatDatabaseAdapter db;
 
     @AfterViews
     public void onCreateView() {
@@ -104,8 +108,6 @@ public class SystemListFragment extends Fragment {
     public void onEvent(GamesAndCheatsCountTaskResult result) {
         mSwipeRefreshLayout.setRefreshing(false);
         if (result.isSucceeded()) {
-//            mAdapter = new SystemsRecycleListViewAdapter(result.getSystemPlatforms());
-//            mRecyclerView.setAdapter(mAdapter);
             initAdapter(result.getSystemPlatforms());
         } else {
             Toast.makeText(getActivity(), R.string.no_internet, Toast.LENGTH_LONG).show();
@@ -122,16 +124,8 @@ public class SystemListFragment extends Fragment {
         }
     }
 
-    @Bean
-    CheatDatabaseAdapter db;
-
-    private GamesAndCheatsCountTaskResult gamesAndCheatsCountTaskResult;
-
-    private ArrayList<SystemPlatform> systemGameandCheatCounterList = null;
-
     @Background
     public void loadGamesAndCheatsCounterBackground() {
-
         db.open();
 
         // SYSETM'S GAME COUNT WILL ONLY BE LOADED ONCE EVERY 24h
