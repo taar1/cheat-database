@@ -19,10 +19,8 @@
             android:id="@+id/drawer_icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingEnd="4dp"
-            android:paddingLeft="8dp"
-            android:paddingRight="4dp"
-            android:paddingStart="8dp"
+            android:paddingLeft="15dp"
+            android:paddingStart="15dp"
             android:src="@android:drawable/ic_dialog_info" />
 
         <TextView
@@ -30,24 +28,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
-            android:paddingLeft="10dp"
+            android:paddingLeft="15dp"
             android:text="@string/placeholder"
             android:textAppearance="@style/DrawerText"
             android:textColor="@color/drawer_text_color" />
     </LinearLayout>
-
-    <!--
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginBottom="1dp"
-        android:layout_marginEnd="2dp"
-        android:layout_marginLeft="2dp"
-        android:layout_marginRight="2dp"
-        android:layout_marginStart="2dp"
-        android:layout_marginTop="1dp"
-        android:background="@color/drawer_divier_bars_background" >
-    </View>
-    -->
 
 </LinearLayout>

@@ -6,8 +6,8 @@ int VERSION_CODE = 31
 String VERSION_NAME = "2.1.8"
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion '26.0.2'
+    compileSdkVersion 27
+    buildToolsVersion '27.0.1'
     defaultConfig {
         applicationId APK_ID
         archivesBaseName = APK_NAME
@@ -23,6 +23,11 @@ android {
     }
 
     buildTypes {
+        debug {
+            debuggable true
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
@@ -85,14 +90,15 @@ repositories {
 }
 
 ext {
-    supportVersion = '25.3.1'
+    supportVersion = '27.0.1'
     playServicesVersion = '11.4.2'
     AAVersion = '4.4.0'
 }
 
 dependencies {
-//    compile "com.google.firebase:firebase-core:$playServicesVersion"
-//    compile "com.google.firebase:firebase-invites:$playServicesVersion"
+    compile "com.afollestad.material-dialogs:core:0.9.6.0"
+    compile "com.google.firebase:firebase-core:$playServicesVersion"
+    compile "com.google.firebase:firebase-invites:$playServicesVersion"
     compile "com.android.support:appcompat-v7:$supportVersion"
     compile "com.android.support:design:$supportVersion"
     compile "com.android.support:recyclerview-v7:$supportVersion"
@@ -114,6 +120,7 @@ dependencies {
         exclude module: "moat-mobile-app-kit" // To exclude Moat
     }
     compile "com.github.hackware1993:MagicIndicator:1.5.0"
+
 }
 
 // ADD THIS AT THE BOTTOM
