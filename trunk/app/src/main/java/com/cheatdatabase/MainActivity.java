@@ -33,9 +33,9 @@ import android.widget.Toast;
 
 import com.appbrain.AppBrain;
 import com.cheatdatabase.businessobjects.Member;
+import com.cheatdatabase.dialogs.RateCheatDatabaseDialog;
 import com.cheatdatabase.fragments.ContactFormFragment_;
 import com.cheatdatabase.fragments.FavoriteGamesListFragment_;
-import com.cheatdatabase.fragments.NewsFragment_;
 import com.cheatdatabase.fragments.SubmitCheatFragment_;
 import com.cheatdatabase.fragments.SystemListFragment_;
 import com.cheatdatabase.fragments.TopMembersFragment_;
@@ -197,7 +197,6 @@ public class MainActivity extends AppCompatActivity implements ActionBar.OnNavig
         // Add Drawer Item to dataList
         dataList = new ArrayList<>();
         dataList.add(new DrawerItem(getString(R.string.goto_games_and_cheats), R.drawable.drawer_cheats_24px));
-        dataList.add(new DrawerItem(getString(R.string.goto_news), R.drawable.drawer_news_18px));
         dataList.add(new DrawerItem(getString(R.string.favorites), R.drawable.drawer_favorites_24px));
         dataList.add(new DrawerItem(getString(R.string.top_members_title), R.drawable.drawer_members_24px));
         dataList.add(new DrawerItem(getString(R.string.submit_cheat_title), R.drawable.drawer_upload_18px));
@@ -349,8 +348,6 @@ public class MainActivity extends AppCompatActivity implements ActionBar.OnNavig
                 Toast.makeText(MainActivity.this, R.string.search_history_cleared, Toast.LENGTH_LONG).show();
                 return true;
             case R.id.action_login:
-//                LoginActivity_.intent(this).startForResult(Konstanten.LOGIN_REGISTER_OK_RETURN_CODE);
-
                 Intent loginIntent = new Intent(MainActivity.this, LoginActivity_.class);
                 startActivityForResult(loginIntent, Konstanten.LOGIN_REGISTER_OK_RETURN_CODE);
                 return true;
@@ -366,13 +363,13 @@ public class MainActivity extends AppCompatActivity implements ActionBar.OnNavig
 
     // See strings.xml for menu list. Don't change the order!
     public static final int DRAWER_MAIN = 1;
-    public static final int DRAWER_NEWS = 2;
-    public static final int DRAWER_FAVORITES = 3;
-    public static final int DRAWER_TOP_MEMBERS = 4;
-    public static final int DRAWER_SUBMIT_CHEAT = 5;
-    public static final int DRAWER_MORE_APPS = 6;
-    public static final int DRAWER_RATE_APP = 7;
-    public static final int DRAWER_CONTACT = 8;
+    public static final int DRAWER_FAVORITES = 2;
+    public static final int DRAWER_TOP_MEMBERS = 3;
+    public static final int DRAWER_SUBMIT_CHEAT = 4;
+    public static final int DRAWER_MORE_APPS = 5;
+    public static final int DRAWER_RATE_APP = 6;
+    public static final int DRAWER_CONTACT = 7;
+    public static final int DRAWER_SETTINGS = 8;
 
     // update the main content by replacing fragments
     private void selectItem(int position) {
@@ -388,11 +385,6 @@ public class MainActivity extends AppCompatActivity implements ActionBar.OnNavig
                 // Log setting open event with category="ui", action="open", and label="settings"
                 //CheatDatabaseApplication.tracker().send(new HitBuilders.EventBuilder("ui", "open").setLabel("main").build());
                 annotationFragmentManager.beginTransaction().replace(R.id.content_frame, SystemListFragment_.builder().mDrawerId(position).mDrawerName(dataList.get(position).getItemName()).build()).commit();
-                isFragment = false;
-                break;
-            case DRAWER_NEWS:
-                //CheatDatabaseApplication.tracker().send(new HitBuilders.EventBuilder("ui", "open").setLabel("news").build());
-                annotationFragmentManager.beginTransaction().replace(R.id.content_frame, NewsFragment_.builder().mDrawerId(position).mDrawerName(dataList.get(position).getItemName()).build()).commit();
                 isFragment = false;
                 break;
             case DRAWER_FAVORITES:
@@ -412,7 +404,7 @@ public class MainActivity extends AppCompatActivity implements ActionBar.OnNavig
                 break;
             case DRAWER_CONTACT:
                 // If position = 8 -> out of bounds error. no idea why... it works like this here.
-                position = 7;
+                position = 6;
                 //CheatDatabaseApplication.tracker().send(new HitBuilders.EventBuilder("ui", "open").setLabel("contact").build());
                 annotationFragmentManager.beginTransaction().replace(R.id.content_frame, ContactFormFragment_.builder().mDrawerId(position).mDrawerName(dataList.get(position).getItemName()).build()).commit();
                 isFragment = false;
@@ -428,14 +420,9 @@ public class MainActivity extends AppCompatActivity implements ActionBar.OnNavig
                 }
                 break;
             case DRAWER_RATE_APP:
-                //CheatDatabaseApplication.tracker().send(new HitBuilders.EventBuilder("ui", "open").setLabel("rate_app").build());
-                Uri appUri = Uri.parse(DistinctValues.GOOGLE_PLAY_URL);
-                Intent intentRateApp = new Intent(Intent.ACTION_VIEW, appUri);
-                if (intentRateApp.resolveActivity(getPackageManager()) != null) {
-                    startActivity(intentRateApp);
-                } else {
-                    Toast.makeText(MainActivity.this, R.string.err_other_problem, Toast.LENGTH_LONG).show();
-                }
+                new RateCheatDatabaseDialog(this);
+                break;
+            case DRAWER_SETTINGS:
                 break;
             default:
                 break;
@@ -453,7 +440,7 @@ public class MainActivity extends AppCompatActivity implements ActionBar.OnNavig
             positionFixed = 0;
         }
         mDrawerList.setItemChecked(positionFixed, true);
-        setTitle(dataList.get(positionFixed).getItemName());
+//        setTitle(dataList.get(positionFixed).getItemName());
         mDrawerLayout.closeDrawer(mDrawerList);
     }
 
@@ -462,20 +449,22 @@ public class MainActivity extends AppCompatActivity implements ActionBar.OnNavig
             case DRAWER_MAIN:
                 mToolbar.setTitle(R.string.app_name);
                 break;
-            case DRAWER_NEWS:
-                mToolbar.setTitle(R.string.news_title);
-                break;
             case DRAWER_FAVORITES:
                 mToolbar.setTitle(R.string.favorites);
                 break;
             case DRAWER_TOP_MEMBERS:
                 mToolbar.setTitle(R.string.top_members_top_helping);
                 break;
+            case DRAWER_RATE_APP:
+                break;
             case DRAWER_SUBMIT_CHEAT:
                 mToolbar.setTitle(R.string.submit_cheat_short);
                 break;
             case DRAWER_CONTACT:
                 mToolbar.setTitle(R.string.contactform_title);
+                break;
+            case DRAWER_SETTINGS:
+                mToolbar.setTitle(R.string.action_settings);
                 break;
             default:
                 mToolbar.setTitle(R.string.app_name);

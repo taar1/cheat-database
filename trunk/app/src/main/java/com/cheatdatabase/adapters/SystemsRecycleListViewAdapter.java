@@ -72,11 +72,6 @@ public class SystemsRecycleListViewAdapter extends RecyclerView.Adapter<SystemsR
         void onSystemClick(SystemsRecycleListViewAdapter.ViewHolder caller);
     }
 
-//    // Provide a suitable constructor (depends on the kind of dataset)
-//    public SystemsRecycleListViewAdapter(ArrayList<SystemPlatform> systemObjects) {
-//        mSystemObjects = systemObjects;
-//    }
-
     // Create new views (invoked by the layout manager)
     @Override
     public SystemsRecycleListViewAdapter.ViewHolder onCreateViewHolder(final ViewGroup parent, int viewType) {
@@ -122,7 +117,6 @@ public class SystemsRecycleListViewAdapter extends RecyclerView.Adapter<SystemsR
         } catch (Exception e) {
             Log.e(TAG, e.getLocalizedMessage());
         }
-
     }
 
     // Return the size of your dataset (invoked by the layout manager)
