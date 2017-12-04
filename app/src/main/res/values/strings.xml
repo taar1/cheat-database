@@ -319,6 +319,10 @@
     <string name="rate_us_title">Rate us</string>
     <string name="rate_us_text">Do you like Cheat-Database? Please let us know!</string>
     <string name="rate_us_submit">Submit rating</string>
-    <string name="rate_us_thanks_good_rating">Thanks for your great rating! Please also make sure to rate us on Google Play.</string>
+    <string name="rate_us_thanks_good_rating">Thanks for your great rating! Please also make sure to rate us on Google Play, too.</string>
+    <string name="bad_rating_ouch">Ouch!</string>
+    <string name="bad_rating_text">That didn\'t go as expected.\n\nWould you mind telling us why you rated Cheat-Database with %1$d stars? We would love to hear your thoughts so we can improve the app accordingly.</string>
+    <string name="submit_feedback">Submit feedback</string>
+    <string name="no_thanks">No thanks</string>
 
 </resources>
