@@ -2,6 +2,7 @@ package com.cheatdatabase.dialogs;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Handler;
@@ -14,6 +15,7 @@ import android.widget.Toast;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.Theme;
+import com.cheatdatabase.MainActivity;
 import com.cheatdatabase.R;
 import com.cheatdatabase.helpers.DistinctValues;
 import com.cheatdatabase.helpers.Konstanten;
@@ -26,11 +28,20 @@ public class RateCheatDatabaseDialog {
     private final Typeface latoFontBold;
     private final Typeface latoFontLight;
     private final Activity activity;
+    private final MainActivity.OpenContactFormCallback openContactFormCallback;
+
+    private final SharedPreferences settings;
+    private final SharedPreferences.Editor editor;
+    private final String APP_RATING_LOCAL = "app_rating_local";
 
     private int rating = 0;
 
-    public RateCheatDatabaseDialog(final Activity activity) {
+    public RateCheatDatabaseDialog(final Activity activity, MainActivity.OpenContactFormCallback openContactFormCallback) {
         this.activity = activity;
+        this.openContactFormCallback = openContactFormCallback;
+
+        settings = activity.getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
+        editor = settings.edit();
 
         latoFontBold = Tools.getFont(activity.getAssets(), Konstanten.FONT_BOLD);
         latoFontLight = Tools.getFont(activity.getAssets(), Konstanten.FONT_LIGHT);
@@ -42,7 +53,8 @@ public class RateCheatDatabaseDialog {
                 .onPositive(new MaterialDialog.SingleButtonCallback() {
                     @Override
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                        // TODO rating in sharedpreferences speichern und nächstes mal pre-selecten
+                        editor.putInt(APP_RATING_LOCAL, rating);
+                        editor.apply();
 
                         if (rating >= MINIMUM_RATING_FOR_GOOGLE_PLAY) {
                             Toast.makeText(activity, R.string.rate_us_thanks_good_rating, Toast.LENGTH_LONG).show();
@@ -80,6 +92,7 @@ public class RateCheatDatabaseDialog {
                 rating = Math.round(ratingBar.getRating());
             }
         });
+        ratingBar.setRating(Float.valueOf(String.valueOf(settings.getInt(APP_RATING_LOCAL, 0))));
     }
 
     private void goToGooglePlay() {
@@ -100,7 +113,7 @@ public class RateCheatDatabaseDialog {
                 .onPositive(new MaterialDialog.SingleButtonCallback() {
                     @Override
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                        // TODO go to feedback activity
+                        openContactFormCallback.openContactForm();
                     }
                 })
                 .onNegative(new MaterialDialog.SingleButtonCallback() {
@@ -113,17 +126,12 @@ public class RateCheatDatabaseDialog {
                 .cancelable(false)
                 .show();
 
-        // TODO text noch mit anzahl sternen ersetzen
-        // TODO text noch mit anzahl sternen ersetzen
-        // TODO text noch mit anzahl sternen ersetzen
-        // TODO text noch mit anzahl sternen ersetzen
-        // TODO text noch mit anzahl sternen ersetzen
-
         View dialogView = badRatingDialog.getCustomView();
 
         final TextView dialogTitle = dialogView.findViewById(R.id.bad_rating_title);
         dialogTitle.setTypeface(latoFontBold);
         final TextView dialogText = dialogView.findViewById(R.id.bad_rating_text);
+        dialogText.setText(activity.getString(R.string.bad_rating_text, rating));
         dialogText.setTypeface(latoFontLight);
     }
 }

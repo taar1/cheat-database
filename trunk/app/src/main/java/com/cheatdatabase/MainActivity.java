@@ -420,7 +420,12 @@ public class MainActivity extends AppCompatActivity implements ActionBar.OnNavig
                 }
                 break;
             case DRAWER_RATE_APP:
-                new RateCheatDatabaseDialog(this);
+                new RateCheatDatabaseDialog(this, new OpenContactFormCallback() {
+                    @Override
+                    public void openContactForm() {
+                        selectItem(DRAWER_CONTACT);
+                    }
+                });
                 break;
             case DRAWER_SETTINGS:
                 break;
@@ -440,7 +445,6 @@ public class MainActivity extends AppCompatActivity implements ActionBar.OnNavig
             positionFixed = 0;
         }
         mDrawerList.setItemChecked(positionFixed, true);
-//        setTitle(dataList.get(positionFixed).getItemName());
         mDrawerLayout.closeDrawer(mDrawerList);
     }
 
@@ -450,6 +454,7 @@ public class MainActivity extends AppCompatActivity implements ActionBar.OnNavig
                 mToolbar.setTitle(R.string.app_name);
                 break;
             case DRAWER_FAVORITES:
+                mToolbar.setTitle(R.string.favorites);
                 mToolbar.setTitle(R.string.favorites);
                 break;
             case DRAWER_TOP_MEMBERS:
@@ -491,8 +496,12 @@ public class MainActivity extends AppCompatActivity implements ActionBar.OnNavig
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        AppBrain.getAds().maybeShowInterstitial(this);
+        AppBrain.getAds().showOfferWall(this);
         finish();
+    }
+
+    public interface OpenContactFormCallback {
+        void openContactForm();
     }
 
 }
