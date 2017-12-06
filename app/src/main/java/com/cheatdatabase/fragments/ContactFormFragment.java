@@ -266,6 +266,7 @@ public class ContactFormFragment extends Fragment {
     }
 
     private void selectMenu(Menu menu) {
+        menu.clear();
         if (!isFormSent) {
             getActivity().getMenuInflater().inflate(R.menu.contactform_send_menu, menu);
         } else {
@@ -289,6 +290,13 @@ public class ContactFormFragment extends Fragment {
     @Background
     public void sendForm() {
         Webservice.submitContactForm(mEmailView.getText().toString().trim(), mMessageView.getText().toString().trim());
+
+        // TODO thank you message als toast anzeigen und direkt auf die game übersicht weitergehen
+        // TODO thank you message als toast anzeigen und direkt auf die game übersicht weitergehen
+        // TODO thank you message als toast anzeigen und direkt auf die game übersicht weitergehen
+        // TODO thank you message als toast anzeigen und direkt auf die game übersicht weitergehen
+        // TODO thank you message als toast anzeigen und direkt auf die game übersicht weitergehen
+
         updateView();
     }
 
