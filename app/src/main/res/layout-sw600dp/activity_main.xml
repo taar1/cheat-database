@@ -27,7 +27,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom|end"
                 android:layout_margin="20dp"
-                android:src="@drawable/ic_add_black_48dp" />
+                android:src="@drawable/ic_add_black_48dp"
+                android:visibility="gone" />
         </FrameLayout>
 
         <include layout="@layout/adview" />

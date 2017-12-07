@@ -339,7 +339,6 @@ public class CheatListActivity extends AppCompatActivity {
         }
 
         getMenuInflater().inflate(R.menu.cheats_by_game_menu, menu);
-
         getMenuInflater().inflate(R.menu.search_menu, menu);
 
         // Associate searchable configuration with the SearchView
