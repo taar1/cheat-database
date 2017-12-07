@@ -27,7 +27,6 @@ import java.util.ArrayList;
 
 @EBean
 public class TopMembersListViewAdapter extends RecyclerView.Adapter<TopMembersListViewAdapter.ViewHolder> {
-
     private static final String TAG = TopMembersListViewAdapter.class.getSimpleName();
 
     private ArrayList<Member> mMemberObjects;
@@ -47,7 +46,6 @@ public class TopMembersListViewAdapter extends RecyclerView.Adapter<TopMembersLi
     // you provide access to all the views for a data item in a view holder
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView tvNumeration;
         TextView tvMemberName;
         TextView tvCheatCount;
         TextView tvHiMessage;
@@ -57,11 +55,10 @@ public class TopMembersListViewAdapter extends RecyclerView.Adapter<TopMembersLi
         public ViewHolder(View v) {
             super(v);
 
-            tvNumeration = (TextView) v.findViewById(R.id.numeration);
-            tvMemberName = (TextView) v.findViewById(R.id.membername);
-            tvCheatCount = (TextView) v.findViewById(R.id.cheatcount);
-            tvHiMessage = (TextView) v.findViewById(R.id.hi_message);
-            tvWebsite = (TextView) v.findViewById(R.id.website);
+            tvMemberName = v.findViewById(R.id.membername);
+            tvCheatCount = v.findViewById(R.id.cheatcount);
+            tvHiMessage = v.findViewById(R.id.hi_message);
+            tvWebsite = v.findViewById(R.id.website);
             avatarImageView = (ImageView) v.findViewById(R.id.avatar);
         }
     }
@@ -105,9 +102,6 @@ public class TopMembersListViewAdapter extends RecyclerView.Adapter<TopMembersLi
     public void onBindViewHolder(ViewHolder holder, final int position) {
         memberObj = mMemberObjects.get(position);
 
-        holder.tvNumeration.setTypeface(latoFontBold);
-        holder.tvNumeration.setText(String.valueOf(position + 1));
-
         holder.tvMemberName.setTypeface(latoFontBold);
         holder.tvMemberName.setText(memberObj.getUsername().toUpperCase());
         holder.tvMemberName.setOnClickListener(new View.OnClickListener() {
@@ -149,8 +143,6 @@ public class TopMembersListViewAdapter extends RecyclerView.Adapter<TopMembersLi
         } else {
             holder.tvHiMessage.setVisibility(View.GONE);
         }
-
-        holder.tvNumeration.setText(String.valueOf(position + 1));
 
         holder.avatarImageView.setOnClickListener(new View.OnClickListener() {
 

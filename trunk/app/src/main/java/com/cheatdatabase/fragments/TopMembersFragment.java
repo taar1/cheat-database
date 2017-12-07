@@ -45,7 +45,6 @@ import java.util.Collections;
  */
 @EFragment(R.layout.fragment_topmembers)
 public class TopMembersFragment extends Fragment {
-
     private static final String TAG = TopMembersFragment.class.getSimpleName();
 
     private Member[] members;
