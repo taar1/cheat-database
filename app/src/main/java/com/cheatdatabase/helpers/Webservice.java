@@ -14,6 +14,8 @@ import com.cheatdatabase.businessobjects.SystemPlatform;
 import com.cheatdatabase.businessobjects.WelcomeMessage;
 import com.google.gson.Gson;
 
+import org.androidannotations.annotations.EBean;
+import org.androidannotations.annotations.sharedpreferences.Pref;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -35,9 +37,13 @@ import java.util.Map;
 /**
  * REST Calls class.
  */
+@EBean
 public class Webservice {
 
     private static final String TAG = Webservice.class.getSimpleName();
+
+    @Pref
+    static MyPrefs_ myPrefs;
 
     /**
      * Holt eine Liste von Games von einem System anhand des übergebenen
@@ -137,6 +143,13 @@ public class Webservice {
      * @return
      */
     public static String getCheatListAsString(int gameId, int memberId) {
+
+        // TODO FIXME gibt noch ein NULL POINTER (vermutlich wegen STATIC....)
+        // TODO FIXME gibt noch ein NULL POINTER (vermutlich wegen STATIC....)
+        // TODO FIXME gibt noch ein NULL POINTER (vermutlich wegen STATIC....)
+        // TODO FIXME gibt noch ein NULL POINTER (vermutlich wegen STATIC....)
+//        myPrefs.isAchievementsDisabled();
+
         String ret = null;
         try {
             String urlParameters = "memberId=" + URLEncoder.encode(String.valueOf(memberId), "UTF-8") + "&gameId=" + URLEncoder.encode(String.valueOf(gameId), "UTF-8");
@@ -1510,10 +1523,8 @@ public class Webservice {
      * @return
      */
     public static String excutePost(String targetURL, String urlParameters) {
-
         // PARAMETER FORMAT
         // String urlParameters = "fName=" + URLEncoder.encode("???", "UTF-8") + "&lName=" + URLEncoder.encode("???", "UTF-8");
-
         URL url;
         HttpURLConnection connection = null;
         try {
@@ -1555,10 +1566,8 @@ public class Webservice {
             responseString = responseString.substring(0, responseString.length() - 1);
 
             return responseString;
-
         } catch (Exception e) {
-            e.printStackTrace();
-            return null;
+            return "";
         } finally {
             if (connection != null) {
                 connection.disconnect();

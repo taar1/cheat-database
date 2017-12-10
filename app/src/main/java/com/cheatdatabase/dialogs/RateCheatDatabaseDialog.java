@@ -28,7 +28,7 @@ public class RateCheatDatabaseDialog {
     private final Typeface latoFontBold;
     private final Typeface latoFontLight;
     private final Activity activity;
-    private final MainActivity.OpenContactFormCallback openContactFormCallback;
+    private final MainActivity.MainActivityCallbacks mainActivityCallbacks;
 
     private final SharedPreferences settings;
     private final SharedPreferences.Editor editor;
@@ -36,9 +36,9 @@ public class RateCheatDatabaseDialog {
 
     private int rating = 0;
 
-    public RateCheatDatabaseDialog(final Activity activity, MainActivity.OpenContactFormCallback openContactFormCallback) {
+    public RateCheatDatabaseDialog(final Activity activity, MainActivity.MainActivityCallbacks mainActivityCallbacks) {
         this.activity = activity;
-        this.openContactFormCallback = openContactFormCallback;
+        this.mainActivityCallbacks = mainActivityCallbacks;
 
         settings = activity.getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
         editor = settings.edit();
@@ -113,7 +113,7 @@ public class RateCheatDatabaseDialog {
                 .onPositive(new MaterialDialog.SingleButtonCallback() {
                     @Override
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                        openContactFormCallback.openContactForm();
+                        mainActivityCallbacks.openDrawerItem(MainActivity.DRAWER_CONTACT);
                     }
                 })
                 .onNegative(new MaterialDialog.SingleButtonCallback() {

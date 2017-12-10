@@ -1,0 +1,8 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <SwitchPreference
+        android:key="@string/pref_diable_achievements_key"
+        android:summary="@string/pref_diable_achievements_summary"
+        android:title="@string/pref_diable_achievements" />
+
+</PreferenceScreen>

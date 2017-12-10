@@ -325,4 +325,10 @@
     <string name="submit_feedback">Submit feedback</string>
     <string name="no_thanks">No thanks</string>
 
+    <string name="pref_diable_achievements_key">disable_achievements</string>
+    <string name="pref_diable_achievements">Achievements &amp; Trophies</string>
+    <string name="pref_diable_achievements_summary">Filter out all Achievement &amp; Trophy cheats.</string>
+    <string name="pref_achievements_button_disabled">Everything will be displayed</string>
+    <string name="pref_achievements_button_enabled">Achievements &amp; Trophies are disabled</string>
+
 </resources>
