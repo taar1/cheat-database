@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.Fragment;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Build;
@@ -15,12 +16,15 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.cheatdatabase.MainActivity;
 import com.cheatdatabase.R;
 import com.cheatdatabase.businessobjects.Member;
+import com.cheatdatabase.events.GenericEvent;
 import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.helpers.Tools;
@@ -33,37 +37,30 @@ import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.FragmentArg;
 import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
+import org.greenrobot.eventbus.EventBus;
 
 @EFragment(R.layout.fragment_contact_form)
 public class ContactFormFragment extends Fragment {
 
     @ViewById(R.id.email)
     EditText mEmailView;
-
     @ViewById(R.id.form_message)
     EditText mMessageView;
-
     @ViewById(R.id.emailaddress)
     TextView mEmailaddressView;
-
     @ViewById(R.id.send_status_message)
     TextView mLoginStatusMessageView;
-
     @ViewById(R.id.thankyou_text)
     TextView mThankyouText;
-
     @ViewById(R.id.contact_form)
     View mContactFormView;
-
     @ViewById(R.id.send_status)
     View mContactStatusView;
-
     @ViewById(R.id.thankyou)
     View mThankyouView;
 
     @FragmentArg(MainActivity.DRAWER_ITEM_ID)
     int mDrawerId;
-
     @FragmentArg(MainActivity.DRAWER_ITEM_NAME)
     String mDrawerName;
 
@@ -78,7 +75,6 @@ public class ContactFormFragment extends Fragment {
     private boolean isFormSent = false;
 
     public ContactFormFragment() {
-
     }
 
     @AfterViews
@@ -134,10 +130,6 @@ public class ContactFormFragment extends Fragment {
      * actual login attempt is made.
      */
     public void attemptSendForm() {
-//        if (mContactTask != null) {
-//            return;
-//        }
-
         // Reset errors.
         mEmailView.setError(null);
         mMessageView.setError(null);
@@ -176,12 +168,9 @@ public class ContactFormFragment extends Fragment {
             // form field with an error.
             focusView.requestFocus();
         } else {
-            // Show a progress spinner, and kick off a background task to
-            // perform the user login attempt.
+            // Show a progress spinner, and kick off a background task to perform the user login attempt.
             mLoginStatusMessageView.setText(R.string.sending_message_progress);
             showProgress(true, 1);
-//            mContactTask = new SendFormTask();
-//            mContactTask.execute((Void) null);
             sendForm();
         }
     }
@@ -290,27 +279,22 @@ public class ContactFormFragment extends Fragment {
     @Background
     public void sendForm() {
         Webservice.submitContactForm(mEmailView.getText().toString().trim(), mMessageView.getText().toString().trim());
-
-        // TODO thank you message als toast anzeigen und direkt auf die game übersicht weitergehen
-        // TODO thank you message als toast anzeigen und direkt auf die game übersicht weitergehen
-        // TODO thank you message als toast anzeigen und direkt auf die game übersicht weitergehen
-        // TODO thank you message als toast anzeigen und direkt auf die game übersicht weitergehen
-        // TODO thank you message als toast anzeigen und direkt auf die game übersicht weitergehen
-
-        updateView();
+        actionAfterSendForm();
     }
 
     @UiThread
-    public void updateView() {
-//        mContactTask = null;
-        showProgress(false, 3);
-
-        isFormSent = true;
-
-        mThankyouView.setVisibility(View.VISIBLE);
-        if (Build.VERSION.SDK_INT >= 11) {
-            getActivity().invalidateOptionsMenu();
+    public void actionAfterSendForm() {
+        View view = getActivity().getCurrentFocus();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
+        Toast.makeText(getActivity(), getActivity().getString(R.string.contactform_thanks), Toast.LENGTH_LONG).show();
+        forwardToMainView();
     }
 
+    @UiThread(delay = 2000)
+    public void forwardToMainView() {
+        EventBus.getDefault().post(new GenericEvent(GenericEvent.Action.CLICK_CHEATS_DRAWER));
+    }
 }
