@@ -34,6 +34,7 @@ import android.widget.Toast;
 import com.appbrain.AppBrain;
 import com.cheatdatabase.businessobjects.Member;
 import com.cheatdatabase.dialogs.RateCheatDatabaseDialog;
+import com.cheatdatabase.events.GenericEvent;
 import com.cheatdatabase.fragments.ContactFormFragment_;
 import com.cheatdatabase.fragments.FavoriteGamesListFragment_;
 import com.cheatdatabase.fragments.SubmitCheatFragment_;
@@ -57,12 +58,16 @@ import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.Extra;
 import org.androidannotations.annotations.OnActivityResult;
 import org.androidannotations.annotations.ViewById;
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @EActivity(R.layout.activity_main)
 public class MainActivity extends AppCompatActivity implements ActionBar.OnNavigationListener {
+
+    private static final String TAG = MainActivity.class.getSimpleName();
 
     @ViewById(R.id.adview)
     MoPubView mAdView;
@@ -372,7 +377,7 @@ public class MainActivity extends AppCompatActivity implements ActionBar.OnNavig
     public static final int DRAWER_SETTINGS = 8;
 
     // update the main content by replacing fragments
-    private void selectItem(int position) {
+    public void selectItem(int position) {
         Fragment fragment = null;
         Bundle args = new Bundle();
         boolean isFragment = false;
@@ -420,14 +425,15 @@ public class MainActivity extends AppCompatActivity implements ActionBar.OnNavig
                 }
                 break;
             case DRAWER_RATE_APP:
-                new RateCheatDatabaseDialog(this, new OpenContactFormCallback() {
+                new RateCheatDatabaseDialog(this, new MainActivityCallbacks() {
                     @Override
-                    public void openContactForm() {
-                        selectItem(DRAWER_CONTACT);
+                    public void openDrawerItem(int drawerId) {
+                        selectItem(drawerId);
                     }
                 });
                 break;
             case DRAWER_SETTINGS:
+                SettingsActivity_.intent(this).start();
                 break;
             default:
                 break;
@@ -500,8 +506,26 @@ public class MainActivity extends AppCompatActivity implements ActionBar.OnNavig
         finish();
     }
 
-    public interface OpenContactFormCallback {
-        void openContactForm();
+    public interface MainActivityCallbacks {
+        void openDrawerItem(int drawerId);
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    protected void onStop() {
+        EventBus.getDefault().unregister(this);
+        super.onStop();
+    }
+
+    @Subscribe
+    public void onEvent(GenericEvent event) {
+        if (event.getAction() == GenericEvent.Action.CLICK_CHEATS_DRAWER) {
+            selectItem(DRAWER_MAIN);
+        }
+    }
 }
