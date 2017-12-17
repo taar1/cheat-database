@@ -15,7 +15,6 @@ import com.cheatdatabase.businessobjects.WelcomeMessage;
 import com.google.gson.Gson;
 
 import org.androidannotations.annotations.EBean;
-import org.androidannotations.annotations.sharedpreferences.Pref;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -41,9 +40,6 @@ import java.util.Map;
 public class Webservice {
 
     private static final String TAG = Webservice.class.getSimpleName();
-
-    @Pref
-    static MyPrefs_ myPrefs;
 
     /**
      * Holt eine Liste von Games von einem System anhand des übergebenen
@@ -140,19 +136,15 @@ public class Webservice {
      *
      * @param gameId
      * @param memberId
+     * @param isAchievementsEnabled
      * @return
      */
-    public static String getCheatListAsString(int gameId, int memberId) {
-
-        // TODO FIXME gibt noch ein NULL POINTER (vermutlich wegen STATIC....)
-        // TODO FIXME gibt noch ein NULL POINTER (vermutlich wegen STATIC....)
-        // TODO FIXME gibt noch ein NULL POINTER (vermutlich wegen STATIC....)
-        // TODO FIXME gibt noch ein NULL POINTER (vermutlich wegen STATIC....)
-//        myPrefs.isAchievementsDisabled();
+    public static String getCheatListAsString(int gameId, int memberId, boolean isAchievementsEnabled) {
+        String achievementsEnabled = (isAchievementsEnabled ? "1" : "0");
 
         String ret = null;
         try {
-            String urlParameters = "memberId=" + URLEncoder.encode(String.valueOf(memberId), "UTF-8") + "&gameId=" + URLEncoder.encode(String.valueOf(gameId), "UTF-8");
+            String urlParameters = "memberId=" + URLEncoder.encode(String.valueOf(memberId), "UTF-8") + "&gameId=" + URLEncoder.encode(String.valueOf(gameId), "UTF-8") + "&achievementsEnabled=" + URLEncoder.encode(achievementsEnabled, "UTF-8");
             ret = excutePost(Konstanten.BASE_URL_ANDROID + "getCheatsAndRatingByGameId.php", urlParameters);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
@@ -168,6 +160,7 @@ public class Webservice {
      * @param gameId
      * @return
      */
+
     public static String getCheatTitleListAsString(int gameId) {
         String ret = null;
         try {
@@ -640,8 +633,8 @@ public class Webservice {
      * @param memberId
      * @return
      */
-    public static Cheat[] getCheatList(Game game, int memberId) {
-        String systemString = getCheatListAsString(game.getGameId(), memberId);
+    public static Cheat[] getCheatList(Game game, int memberId, boolean isAchievementsEnabled) {
+        String systemString = getCheatListAsString(game.getGameId(), memberId, isAchievementsEnabled);
 
         Cheat[] cheats = null;
         JSONArray jArray = null;
@@ -1238,12 +1231,14 @@ public class Webservice {
      * @param systemId
      * @return Game[]
      */
-    public static Game[] getGameListBySystemId(int systemId, String systemName) {
+    public static Game[] getGameListBySystemId(int systemId, String systemName, boolean isAchievementsEnabled) {
         Game[] games = null;
         JSONArray jArray = null;
 
+        String achievementsEnabled = (isAchievementsEnabled ? "1" : "0");
+
         try {
-            String urlParameters = "systemId=" + URLEncoder.encode(String.valueOf(systemId), "UTF-8");
+            String urlParameters = "systemId=" + URLEncoder.encode(String.valueOf(systemId), "UTF-8") + "&achievementsEnabled=" + URLEncoder.encode(achievementsEnabled, "UTF-8");
             String responseString = excutePost(Konstanten.BASE_URL_ANDROID + "getGamesBySystemId.php", urlParameters);
 
             jArray = new JSONArray(responseString);
