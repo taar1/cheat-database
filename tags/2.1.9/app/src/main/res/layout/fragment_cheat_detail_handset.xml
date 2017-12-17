@@ -1,0 +1,88 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/standard_background"
+    android:baselineAligned="false"
+    android:orientation="vertical">
+
+    <ScrollView
+        android:id="@+id/sv"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_gravity="top"
+        android:layout_weight="10"
+        android:padding="12dp"
+        android:scrollbars="vertical">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/text_cheat_title"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/placeholder"
+                android:textAppearance="@style/CheatTitleTablet"
+                android:textIsSelectable="false" />
+
+            <ImageView
+                android:id="@+id/reload"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="top"
+                android:paddingTop="10dp"
+                android:src="@drawable/reload"
+                android:visibility="invisible" />
+
+            <TextView
+                android:id="@+id/text_cheat_before_table"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/NormalText"
+                android:textIsSelectable="true" />
+
+            <TableLayout
+                android:id="@+id/table_cheat_list_main"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="top"
+                android:paddingTop="10dp" />
+
+            <TextView
+                android:id="@+id/cheat_content"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="10dp"
+                android:textAppearance="@style/NormalText"
+                android:textIsSelectable="true" />
+
+            <ProgressBar
+                android:id="@+id/progress_bar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="top" />
+
+            <Gallery
+                android:id="@+id/gallery"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="bottom"
+                android:paddingTop="30dp" />
+
+            <TextView
+                android:id="@+id/gallery_info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:paddingTop="4dp"
+                android:text="@string/slide_gallery"
+                android:textAppearance="@style/NormalText" />
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

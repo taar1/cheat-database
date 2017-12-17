@@ -1,0 +1,64 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:minHeight="100dp"
+    android:padding="@dimen/outer_padding_listview_item">
+
+    <LinearLayout
+        android:id="@+id/avatar_layout"
+        android:layout_width="90dp"
+        android:layout_height="90dp"
+        android:gravity="center">
+
+        <ImageView
+            android:id="@+id/avatar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/avatar" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/text_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@+id/avatar_layout"
+
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/membername"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="start"
+            android:textAppearance="@style/TopMemberName"
+            android:textIsSelectable="false" />
+
+        <TextView
+            android:id="@+id/cheatcount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="start"
+            android:textAppearance="@style/TopMemberCheatCount"
+            android:textIsSelectable="false" />
+
+        <TextView
+            android:id="@+id/hi_message"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="start"
+            android:textAppearance="@style/TopMemberFreetext"
+            android:textIsSelectable="false" />
+
+        <TextView
+            android:id="@+id/website"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:textAppearance="@style/TopMemberHomepage"
+            android:textIsSelectable="false" />
+    </LinearLayout>
+
+</RelativeLayout>

@@ -1,0 +1,26 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="60dp"
+    android:orientation="vertical"
+    android:padding="@dimen/outer_padding_listview_item">
+
+    <TextView
+        android:id="@+id/cheat_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:singleLine="true"
+        android:textAppearance="@style/ListItemPhone"
+        android:textIsSelectable="false" />
+
+    <TextView
+        android:id="@+id/cheats_count"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_gravity="start"
+        android:layout_weight="90"
+        android:singleLine="true"
+        android:textAppearance="@style/ListSubItemPhone"
+        android:textIsSelectable="false" />
+
+</LinearLayout>

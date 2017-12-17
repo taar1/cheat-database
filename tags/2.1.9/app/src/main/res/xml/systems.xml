@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <system
+        name="Android"
+        sysId="33" />
+    <system
+        name="C64"
+        sysId="31" />
+    <system
+        name="Dream Cast"
+        sysId="11" />
+    <system
+        name="Game Boy"
+        sysId="1" />
+    <system
+        name="Game Boy Advance"
+        sysId="2" />
+    <system
+        name="Game Gear"
+        sysId="18" />
+    <system
+        name="GameCube"
+        sysId="6" />
+    <system
+        name="iOS"
+        sysId="30" />
+    <system
+        name="Jaguar"
+        sysId="22" />
+    <system
+        name="Lynx"
+        sysId="15" />
+    <system
+        name="Macintosh"
+        sysId="32" />
+    <system
+        name="Master System"
+        sysId="12" />
+    <system
+        name="Mega Drive / Sega Genesis"
+        sysId="13" />
+    <system
+        name="N-Gage"
+        sysId="23" />
+    <system
+        name="NES"
+        sysId="3" />
+    <system
+        name="Neo Geo"
+        sysId="19" />
+    <system
+        name="Neo Geo Pocket"
+        sysId="21" />
+    <system
+        name="Nintendo 64"
+        sysId="5" />
+    <system
+        name="Nintendo DS"
+        sysId="25" />
+    <system
+        name="Nintendo 3DS"
+        sysId="34" />
+    <system
+        name="PC"
+        sysId="16" />
+    <system
+        name="PlayStation 1"
+        sysId="8" />
+    <system
+        name="PlayStation 2"
+        sysId="9" />
+    <system
+        name="PlayStation 3"
+        sysId="29" />
+    <system
+        name="PlayStation 4"
+        sysId="37" />
+    <system
+        name="PlayStation Portable"
+        sysId="26" />
+    <system
+        name="PlayStation Vita"
+        sysId="35" />
+    <system
+        name="Sega Saturn"
+        sysId="17" />
+    <system
+        name="SNES"
+        sysId="4" />
+    <system
+        name="Virtual Boy"
+        sysId="20" />
+    <system
+        name="Wii"
+        sysId="28" />
+    <system
+        name="Wii U"
+        sysId="36" />
+    <system
+        name="Wonderswan"
+        sysId="10" />
+    <system
+        name="Xbox"
+        sysId="7" />
+    <system
+        name="Xbox 360"
+        sysId="27" />
+    <system
+        name="Xbox One"
+        sysId="38" />
+    <system
+        name="Nintendo Switch"
+        sysId="39" />
+</resources>

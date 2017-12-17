@@ -1,0 +1,66 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/toolbar" />
+
+    <LinearLayout
+        android:id="@+id/undobar"
+        style="@style/UndoBar"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/undobar_message"
+            style="@style/UndoBarMessage"
+            android:textIsSelectable="false" />
+
+        <Button
+            android:id="@+id/undobar_button"
+            style="@style/UndoBarButton" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <net.lucode.hackware.magicindicator.MagicIndicator
+            android:id="@+id/magic_indicator"
+            style="@style/cheat_detail_view_page_indicator"
+            android:layout_width="match_parent"
+            android:layout_height="45dp" />
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/pager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/magic_indicator"
+            android:layout_weight="1"
+            android:paddingBottom="52dp" />
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/add_new_cheat_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="72dp"
+            android:layout_marginRight="20dp"
+            android:alpha="0.8"
+            android:src="@drawable/ic_add_black_48dp" />
+
+        <com.mopub.mobileads.MoPubView
+            android:id="@+id/adview"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/black" />
+    </RelativeLayout>
+
+    <FrameLayout
+        android:id="@+id/fragment_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>
