@@ -19,6 +19,7 @@ import com.cheatdatabase.businessobjects.Game;
 import com.cheatdatabase.businessobjects.SystemPlatform;
 import com.cheatdatabase.events.GameListRecyclerViewClickEvent;
 import com.cheatdatabase.helpers.Konstanten;
+import com.cheatdatabase.helpers.MyPrefs_;
 import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.helpers.Tools;
 import com.cheatdatabase.helpers.Webservice;
@@ -29,17 +30,20 @@ import com.mopub.mobileads.MoPubView;
 import com.splunk.mint.Mint;
 
 import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.App;
 import org.androidannotations.annotations.Background;
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.Extra;
 import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
+import org.androidannotations.annotations.sharedpreferences.Pref;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.TreeMap;
 
 @EActivity(R.layout.activity_gamelist)
 public class GamesBySystemActivity extends AppCompatActivity {
@@ -47,30 +51,30 @@ public class GamesBySystemActivity extends AppCompatActivity {
     private static final String TAG = GamesBySystemActivity.class.getSimpleName();
     private ArrayList<Game> gameArrayList;
 
+    @App
+    CheatDatabaseApplication app;
+
     @Extra
     SystemPlatform systemObj;
 
-    @ViewById(R.id.my_recycler_view)
-    EmptyRecyclerView mRecyclerView;
-
-    @ViewById(R.id.swipe_refresh_layout)
-    SwipeRefreshLayout mSwipeRefreshLayout;
-
     @Bean
     Tools tools;
-
-    @ViewById(R.id.adview)
-    MoPubView mAdView;
-
-    @ViewById(R.id.toolbar)
-    Toolbar mToolbar;
-
     @Bean
     GamesBySystemRecycleListViewAdapter mGamesBySystemRecycleListViewAdapter;
 
+    @Pref
+    MyPrefs_ myPrefs;
+
+    @ViewById(R.id.my_recycler_view)
+    EmptyRecyclerView mRecyclerView;
+    @ViewById(R.id.swipe_refresh_layout)
+    SwipeRefreshLayout mSwipeRefreshLayout;
+    @ViewById(R.id.adview)
+    MoPubView mAdView;
+    @ViewById(R.id.toolbar)
+    Toolbar mToolbar;
     @ViewById(R.id.item_list_empty_view)
     TextView mEmptyView;
-
     @ViewById(R.id.items_list_load_progress)
     ProgressBarCircularIndeterminate mProgressView;
 
@@ -85,7 +89,7 @@ public class GamesBySystemActivity extends AppCompatActivity {
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                getGames();
+                getGames(true);
             }
         });
 
@@ -100,7 +104,7 @@ public class GamesBySystemActivity extends AppCompatActivity {
 
         if (Reachability.reachability.isReachable) {
             mRecyclerView.showLoading();
-            getGames();
+            getGames(false);
         }
     }
 
@@ -131,15 +135,63 @@ public class GamesBySystemActivity extends AppCompatActivity {
     }
 
     @Background
-    public void getGames() {
+    public void getGames(boolean forceLoadOnline) {
         Log.d(TAG, "getGames() System ID/NAME: " + systemObj.getSystemId() + "/" + systemObj.getSystemName());
 
         gameArrayList = new ArrayList<>();
-        Game[] gamesFound = Webservice.getGameListBySystemId(systemObj.getSystemId(), systemObj.getSystemName());
-        while (gamesFound == null) {
-            gamesFound = Webservice.getGameListBySystemId(systemObj.getSystemId(), systemObj.getSystemName());
+        Game[] cachedGamesCollection;
+        Game[] gamesFound = null;
+        boolean isCached = false;
+        String achievementsEnabled;
+        boolean isAchievementsEnabled = myPrefs.isAchievementsEnabled().getOr(true);
+        if (isAchievementsEnabled) {
+            achievementsEnabled = app.ACHIEVEMENTS;
+        } else {
+            achievementsEnabled = app.NO_ACHIEVEMENTS;
         }
 
+        TreeMap<String, TreeMap<String, Game[]>> gamesBySystemInCache = app.getGamesBySystemCached();
+        TreeMap gameList = null;
+        if (gamesBySystemInCache.containsKey(String.valueOf(systemObj.getSystemId()))) {
+
+            gameList = gamesBySystemInCache.get(String.valueOf(systemObj.getSystemId()));
+            if (gameList != null) {
+
+                if (gameList.containsKey(achievementsEnabled)) {
+                    cachedGamesCollection = (Game[]) gameList.get(achievementsEnabled);
+
+                    if (cachedGamesCollection.length > 0) {
+                        gamesFound = cachedGamesCollection;
+                        isCached = true;
+                    }
+                }
+            }
+        }
+
+        if (!isCached || forceLoadOnline) {
+            gamesFound = Webservice.getGameListBySystemId(systemObj.getSystemId(), systemObj.getSystemName(), isAchievementsEnabled);
+            while (gamesFound == null) {
+                gamesFound = Webservice.getGameListBySystemId(systemObj.getSystemId(), systemObj.getSystemName(), isAchievementsEnabled);
+            }
+
+            TreeMap<String, Game[]> updatedGameListForCache = new TreeMap<>();
+            updatedGameListForCache.put(achievementsEnabled, gamesFound);
+
+            String checkWhichSubKey;
+            if (achievementsEnabled.equalsIgnoreCase(app.ACHIEVEMENTS)) {
+                checkWhichSubKey = app.NO_ACHIEVEMENTS;
+            } else {
+                checkWhichSubKey = app.ACHIEVEMENTS;
+            }
+
+            if ((gameList != null) && (gameList.containsKey(checkWhichSubKey))) {
+                Game[] existingGamesInCache = (Game[]) gameList.get(checkWhichSubKey);
+                updatedGameListForCache.put(checkWhichSubKey, existingGamesInCache);
+            }
+
+            gamesBySystemInCache.put(String.valueOf(systemObj.getSystemId()), updatedGameListForCache);
+            app.setGamesBySystemCached(gamesBySystemInCache);
+        }
         Collections.addAll(gameArrayList, gamesFound);
         fillListWithGames();
     }
@@ -207,11 +259,10 @@ public class GamesBySystemActivity extends AppCompatActivity {
         if (result.isSucceeded()) {
             //CheatDatabaseApplication.tracker().send(new HitBuilders.EventBuilder("ui", "click").setLabel(result.getGame().getGameName()).build());
 
-            CheatListActivity_.intent(this).gameObj(result.getGame()).start();
+            CheatsByGameActivity_.intent(this).gameObj(result.getGame()).start();
         } else {
             Toast.makeText(this, R.string.no_internet, Toast.LENGTH_SHORT).show();
         }
     }
-
 
 }

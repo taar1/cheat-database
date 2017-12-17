@@ -49,7 +49,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
     void initPrefs() {
         PreferenceManager.setDefaultValues(this, R.xml.pref_general, false);
 
-        if (myPrefs.isAchievementsDisabled().getOr(true)) {
+        if (myPrefs.isAchievementsEnabled().getOr(true)) {
             enableAchievements.setSummary(R.string.enabled);
             enableAchievements.setChecked(true);
         } else {

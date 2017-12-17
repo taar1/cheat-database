@@ -9,6 +9,10 @@ import org.androidannotations.annotations.sharedpreferences.SharedPref;
 public interface MyPrefs {
 
     @DefaultBoolean(value = false, keyRes = R.string.pref_enable_achievements_key)
-    boolean isAchievementsDisabled();
+    boolean isAchievementsEnabled();
+
+
+    @DefaultBoolean(value = false)
+    boolean isSeenAchievementsDialog();
 
 }

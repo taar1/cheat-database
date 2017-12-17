@@ -57,8 +57,8 @@ public class GamesBySystemRecycleListViewAdapter extends RecyclerView.Adapter<Ga
             super(v);
             mListener = listener;
 
-            mGameName = (TextView) v.findViewById(R.id.cheat_title);
-            mCheatCount = (TextView) v.findViewById(R.id.cheats_count);
+            mGameName = v.findViewById(R.id.cheat_title);
+            mCheatCount = v.findViewById(R.id.cheats_count);
             mGameName.setTypeface(Tools.getFont(v.getContext().getAssets(), Konstanten.FONT_BOLD));
             mCheatCount.setTypeface(Tools.getFont(v.getContext().getAssets(), Konstanten.FONT_LIGHT));
 

@@ -191,12 +191,12 @@ public class SystemListFragment extends Fragment {
             gamesAndCheatsCountTaskResult = new GamesAndCheatsCountTaskResult(systemsLocal);
         }
 
+        db.close();
         updateUI();
     }
 
     @UiThread
     void updateUI() {
-        db.close();
         EventBus.getDefault().post(gamesAndCheatsCountTaskResult);
     }
 

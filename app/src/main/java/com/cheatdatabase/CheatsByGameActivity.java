@@ -34,6 +34,7 @@ import com.cheatdatabase.events.CheatReportingFinishedEvent;
 import com.cheatdatabase.handset.cheatview.CheatViewPageIndicator;
 import com.cheatdatabase.helpers.CheatDatabaseAdapter;
 import com.cheatdatabase.helpers.Konstanten;
+import com.cheatdatabase.helpers.MyPrefs_;
 import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.helpers.Tools;
 import com.cheatdatabase.helpers.Webservice;
@@ -45,6 +46,7 @@ import com.mopub.mobileads.MoPubView;
 import com.splunk.mint.Mint;
 
 import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.App;
 import org.androidannotations.annotations.Background;
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.Click;
@@ -52,23 +54,30 @@ import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.Extra;
 import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
+import org.androidannotations.annotations.sharedpreferences.Pref;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.TreeMap;
 
 @EActivity(R.layout.activity_cheat_list)
-public class CheatListActivity extends AppCompatActivity {
+public class CheatsByGameActivity extends AppCompatActivity {
 
-    private static String TAG = CheatListActivity.class.getSimpleName();
+    private static String TAG = CheatsByGameActivity.class.getSimpleName();
 
-    @Extra
-    Game gameObj;
+    @App
+    CheatDatabaseApplication app;
     @Bean
     Tools tools;
     @Bean
     CheatRecycleListViewAdapter cheatRecycleListViewAdapter;
+    @Pref
+    MyPrefs_ myPrefs;
+
+    @Extra
+    Game gameObj;
 
     @ViewById(R.id.my_recycler_view)
     EmptyRecyclerView mRecyclerView;
@@ -107,7 +116,7 @@ public class CheatListActivity extends AppCompatActivity {
             @Override
             public void onRefresh() {
                 mRecyclerView.showLoading();
-                getCheats();
+                getCheats(true);
             }
         });
 
@@ -122,7 +131,7 @@ public class CheatListActivity extends AppCompatActivity {
 
         if (Reachability.reachability.isReachable) {
             mRecyclerView.showLoading();
-            getCheats();
+            getCheats(false);
         } else {
             Toast.makeText(this, R.string.no_internet, Toast.LENGTH_SHORT).show();
         }
@@ -148,20 +157,67 @@ public class CheatListActivity extends AppCompatActivity {
     }
 
     @Background
-    public void getCheats() {
-        Log.d(TAG, "getCheats() GAME: " + gameObj.getGameName() + " / " + gameObj.getGameId());
+    public void getCheats(boolean forceLoadOnline) {
+        Log.d(TAG, "get cheats by game: " + gameObj.getGameName() + " / " + gameObj.getGameId());
 
         cheatsArrayList = new ArrayList<>();
-        Cheat[] cheats;
-
-        if (member == null) {
-            cheats = Webservice.getCheatList(gameObj, 0);
+        Cheat[] cachedCheatsCollection;
+        Cheat[] cheatsFound = null;
+        boolean isCached = false;
+        String achievementsEnabled;
+        boolean isAchievementsEnabled = myPrefs.isAchievementsEnabled().getOr(true);
+        if (isAchievementsEnabled) {
+            achievementsEnabled = app.ACHIEVEMENTS;
         } else {
-            cheats = Webservice.getCheatList(gameObj, member.getMid());
+            achievementsEnabled = app.NO_ACHIEVEMENTS;
         }
-        gameObj.setCheats(cheats);
 
-        Collections.addAll(cheatsArrayList, cheats);
+        TreeMap<String, TreeMap<String, Cheat[]>> cheatsByGameInCache = app.getCheatsByGameCached();
+        TreeMap cheatList = null;
+        if (cheatsByGameInCache.containsKey(String.valueOf(gameObj.getGameId()))) {
+
+            cheatList = cheatsByGameInCache.get(String.valueOf(gameObj.getGameId()));
+            if (cheatList != null) {
+
+                if (cheatList.containsKey(achievementsEnabled)) {
+                    cachedCheatsCollection = (Cheat[]) cheatList.get(achievementsEnabled);
+
+                    if (cachedCheatsCollection.length > 0) {
+                        cheatsFound = cachedCheatsCollection;
+                        isCached = true;
+                    }
+                }
+            }
+        }
+
+        if (!isCached || forceLoadOnline) {
+            if (member == null) {
+                cheatsFound = Webservice.getCheatList(gameObj, 0, isAchievementsEnabled);
+            } else {
+                cheatsFound = Webservice.getCheatList(gameObj, member.getMid(), isAchievementsEnabled);
+            }
+            gameObj.setCheats(cheatsFound);
+
+            TreeMap<String, Cheat[]> updatedCheatListForCache = new TreeMap<>();
+            updatedCheatListForCache.put(achievementsEnabled, cheatsFound);
+
+            String checkWhichSubKey;
+            if (achievementsEnabled.equalsIgnoreCase(app.ACHIEVEMENTS)) {
+                checkWhichSubKey = app.NO_ACHIEVEMENTS;
+            } else {
+                checkWhichSubKey = app.ACHIEVEMENTS;
+            }
+
+            if ((cheatList != null) && (cheatList.containsKey(checkWhichSubKey))) {
+                Cheat[] existingGamesInCache = (Cheat[]) cheatList.get(checkWhichSubKey);
+                updatedCheatListForCache.put(checkWhichSubKey, existingGamesInCache);
+            }
+
+            cheatsByGameInCache.put(String.valueOf(gameObj.getGameId()), updatedCheatListForCache);
+            app.setCheatsByGameCached(cheatsByGameInCache);
+        }
+
+        Collections.addAll(cheatsArrayList, cheatsFound);
         fillListWithCheats();
     }
 
@@ -186,7 +242,7 @@ public class CheatListActivity extends AppCompatActivity {
 
     private void error() {
         Log.e(TAG, "Error: " + getPackageName() + "/" + getTitle());
-        new AlertDialog.Builder(CheatListActivity.this).setIcon(R.drawable.ic_action_warning).setTitle(getString(R.string.err)).setMessage(R.string.err_data_not_accessible).setNeutralButton(R.string.ok, new DialogInterface.OnClickListener() {
+        new AlertDialog.Builder(CheatsByGameActivity.this).setIcon(R.drawable.ic_action_warning).setTitle(getString(R.string.err)).setMessage(R.string.err_data_not_accessible).setNeutralButton(R.string.ok, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int whichButton) {
                 finish();
@@ -274,25 +330,25 @@ public class CheatListActivity extends AppCompatActivity {
             case android.R.id.home:
                 editor.remove(Konstanten.PREFERENCES_TEMP_GAME_OBJECT_VIEW);
                 editor.commit();
-                GamesBySystemActivity_.intent(this).systemObj(tools.getSystemObjectByName(CheatListActivity.this, tools.getSystemNameById(this, gameObj.getSystemId()))).start();
+                GamesBySystemActivity_.intent(this).systemObj(tools.getSystemObjectByName(CheatsByGameActivity.this, tools.getSystemNameById(this, gameObj.getSystemId()))).start();
                 return true;
             case R.id.action_add_to_favorites:
-                Toast.makeText(CheatListActivity.this, R.string.favorite_adding, Toast.LENGTH_SHORT).show();
+                Toast.makeText(CheatsByGameActivity.this, R.string.favorite_adding, Toast.LENGTH_SHORT).show();
                 //new AddCheatsToFavoritesTask().execute(gameObj);
                 addCheatsToFavoritesTask(gameObj);
                 return true;
             case R.id.action_submit_cheat:
-                Intent explicitIntent = new Intent(CheatListActivity.this, SubmitCheatActivity_.class);
+                Intent explicitIntent = new Intent(CheatsByGameActivity.this, SubmitCheatActivity_.class);
                 explicitIntent.putExtra("gameObj", gameObj);
                 startActivity(explicitIntent);
                 return true;
             case R.id.action_login:
-                Intent loginIntent = new Intent(CheatListActivity.this, LoginActivity_.class);
+                Intent loginIntent = new Intent(CheatsByGameActivity.this, LoginActivity_.class);
                 startActivityForResult(loginIntent, Konstanten.LOGIN_REGISTER_OK_RETURN_CODE);
                 return true;
             case R.id.action_logout:
                 member = null;
-                tools.logout(CheatListActivity.this, editor);
+                tools.logout(CheatsByGameActivity.this, editor);
                 invalidateOptionsMenu();
                 return true;
             default:
@@ -302,7 +358,7 @@ public class CheatListActivity extends AppCompatActivity {
 
     @Click(R.id.add_new_cheat_button)
     void addNewCheat() {
-        Intent explicitIntent = new Intent(CheatListActivity.this, SubmitCheatActivity_.class);
+        Intent explicitIntent = new Intent(CheatsByGameActivity.this, SubmitCheatActivity_.class);
         explicitIntent.putExtra("gameObj", gameObj);
         startActivity(explicitIntent);
     }
@@ -361,9 +417,9 @@ public class CheatListActivity extends AppCompatActivity {
                 member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
                 invalidateOptionsMenu();
                 if ((member != null) && intentReturnCode == Konstanten.REGISTER_SUCCESS_RETURN_CODE) {
-                    Toast.makeText(CheatListActivity.this, R.string.register_thanks, Toast.LENGTH_LONG).show();
+                    Toast.makeText(CheatsByGameActivity.this, R.string.register_thanks, Toast.LENGTH_LONG).show();
                 } else if ((member != null) && intentReturnCode == Konstanten.LOGIN_SUCCESS_RETURN_CODE) {
-                    Toast.makeText(CheatListActivity.this, R.string.login_ok, Toast.LENGTH_LONG).show();
+                    Toast.makeText(CheatsByGameActivity.this, R.string.login_ok, Toast.LENGTH_LONG).show();
                 }
             }
         }
@@ -374,7 +430,7 @@ public class CheatListActivity extends AppCompatActivity {
         int returnValueCode;
         CheatDatabaseAdapter dbAdapter = null;
         try {
-            dbAdapter = new CheatDatabaseAdapter(CheatListActivity.this);
+            dbAdapter = new CheatDatabaseAdapter(CheatsByGameActivity.this);
             dbAdapter.open();
             int retVal = dbAdapter.insertFavorites(game);
             if (retVal > 0) {
@@ -395,7 +451,7 @@ public class CheatListActivity extends AppCompatActivity {
     @UiThread
     void finishedAddingCheatsToFavorites(int returnValueCode) {
         // TODO Favorite Icon animation abschalten
-        Toast.makeText(CheatListActivity.this, returnValueCode, Toast.LENGTH_LONG).show();
+        Toast.makeText(CheatsByGameActivity.this, returnValueCode, Toast.LENGTH_LONG).show();
     }
 
     public void highlightRatingIcon(ImageButton btnRateCheat, boolean highlight) {
@@ -418,7 +474,7 @@ public class CheatListActivity extends AppCompatActivity {
             if (Reachability.reachability.isReachable) {
                 // Using local Preferences to pass data for large game objects
                 // (instead of intent) such as Pokemon
-                Intent explicitIntent = new Intent(CheatListActivity.this, CheatViewPageIndicator.class);
+                Intent explicitIntent = new Intent(CheatsByGameActivity.this, CheatViewPageIndicator.class);
                 explicitIntent.putExtra("gameObj", gameObj);
                 explicitIntent.putExtra("selectedPage", result.getPosition());
                 explicitIntent.putExtra("layoutResourceId", R.layout.activity_cheatview_pager);

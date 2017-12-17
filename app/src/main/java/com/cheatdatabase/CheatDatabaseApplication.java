@@ -4,9 +4,13 @@ import android.app.Application;
 import android.content.Context;
 import android.graphics.Typeface;
 
+import com.cheatdatabase.businessobjects.Cheat;
+import com.cheatdatabase.businessobjects.Game;
 import com.cheatdatabase.helpers.Konstanten;
 
 import org.androidannotations.annotations.EApplication;
+
+import java.util.TreeMap;
 
 
 /**
@@ -19,6 +23,13 @@ public class CheatDatabaseApplication extends Application {
 
     //    private static EventBus sEventBus;
     private static Context sAppContext;
+
+    TreeMap<String, TreeMap<String, Game[]>> gamesBySystemCached = new TreeMap<>();
+    TreeMap<String, TreeMap<String, Cheat[]>> cheatsByGameCached = new TreeMap<>();
+
+
+    public  final String ACHIEVEMENTS = "achievements";
+    public  final String NO_ACHIEVEMENTS = "noAchievements";
 
     // GOOGLE ANALYTICS EXAMPLE CODE
     // https://github.com/googleanalytics/hello-world-android-app/blob/master/app/src/main/java/com/example/googleanalyticshelloworld/MyApp.java
@@ -87,5 +98,37 @@ public class CheatDatabaseApplication extends Application {
 
     public static Typeface getFontRegular() {
         return Typeface.createFromAsset(getAppContext().getAssets(), Konstanten.FONT_REGULAR);
+    }
+
+    /**
+     * Naming convention: systemId, "achievements/noAchievements", Game[]
+     * @return
+     */
+    public TreeMap<String, TreeMap<String, Game[]>> getGamesBySystemCached() {
+        return gamesBySystemCached;
+    }
+
+    /**
+     * Naming convention: systemId, "achievements/noAchievements", Game[]
+     * @param gamesBySystemCached
+     */
+    public void setGamesBySystemCached(TreeMap<String, TreeMap<String, Game[]>> gamesBySystemCached) {
+        this.gamesBySystemCached = gamesBySystemCached;
+    }
+
+    /**
+     * Naming convention: gameId, "achievements/noAchievements", Cheat[]
+     * @return
+     */
+    public TreeMap<String, TreeMap<String, Cheat[]>> getCheatsByGameCached() {
+        return cheatsByGameCached;
+    }
+
+    /**
+     * Naming convention: gameId, "achievements/noAchievements", Cheat[]
+     * @param cheatsByGameCached
+     */
+    public void setCheatsByGameCached(TreeMap<String, TreeMap<String, Cheat[]>> cheatsByGameCached) {
+        this.cheatsByGameCached = cheatsByGameCached;
     }
 }
