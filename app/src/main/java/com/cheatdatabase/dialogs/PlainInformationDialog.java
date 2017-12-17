@@ -30,9 +30,9 @@ public class PlainInformationDialog extends Dialog {
         setContentView(R.layout.dialog_information);
         setTitle(R.string.guidelines);
 
-        mTitle = (TextView) findViewById(R.id.termsandconditions_title);
+        mTitle = findViewById(R.id.termsandconditions_title);
         mTitle.setTypeface(latoFontBold);
-        mText = (TextView) findViewById(R.id.termsandconditions_text);
+        mText = findViewById(R.id.termsandconditions_text);
         mText.setTypeface(latoFontLight);
     }
 

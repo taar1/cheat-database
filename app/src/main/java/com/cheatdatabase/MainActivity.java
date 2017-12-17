@@ -13,6 +13,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.SearchRecentSuggestions;
+import android.support.annotation.NonNull;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -31,6 +32,9 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
+import com.afollestad.materialdialogs.Theme;
 import com.appbrain.AppBrain;
 import com.cheatdatabase.businessobjects.Member;
 import com.cheatdatabase.dialogs.RateCheatDatabaseDialog;
@@ -42,6 +46,7 @@ import com.cheatdatabase.fragments.SystemListFragment_;
 import com.cheatdatabase.fragments.TopMembersFragment_;
 import com.cheatdatabase.helpers.DistinctValues;
 import com.cheatdatabase.helpers.Konstanten;
+import com.cheatdatabase.helpers.MyPrefs_;
 import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.helpers.Tools;
 import com.cheatdatabase.navigationdrawer.CustomDrawerAdapter;
@@ -58,6 +63,7 @@ import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.Extra;
 import org.androidannotations.annotations.OnActivityResult;
 import org.androidannotations.annotations.ViewById;
+import org.androidannotations.annotations.sharedpreferences.Pref;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
@@ -69,23 +75,20 @@ public class MainActivity extends AppCompatActivity implements ActionBar.OnNavig
 
     private static final String TAG = MainActivity.class.getSimpleName();
 
-    @ViewById(R.id.adview)
-    MoPubView mAdView;
-
-    @ViewById(R.id.toolbar)
-    Toolbar mToolbar;
-
-    @ViewById(R.id.drawer_layout)
-    DrawerLayout mDrawerLayout;
-
     @Bean
     Tools tools;
+    @Pref
+    MyPrefs_ myPrefs;
 
     @Extra
     int mFragmentId;
 
-//    @FragmentById
-//    SystemListFragment systemListFragment;
+    @ViewById(R.id.adview)
+    MoPubView mAdView;
+    @ViewById(R.id.toolbar)
+    Toolbar mToolbar;
+    @ViewById(R.id.drawer_layout)
+    DrawerLayout mDrawerLayout;
 
     public static final String DRAWER_ITEM_ID = "drawerId";
     public static final String DRAWER_ITEM_NAME = "drawerName";
@@ -137,6 +140,7 @@ public class MainActivity extends AppCompatActivity implements ActionBar.OnNavig
         // damit das zuletzt aktive fragment wieder angezeigt wird, wenn man auf "back" klickt.
         createNavigationDrawer();
 
+        showAchievementsDialog();
     }
 
     @Click(R.id.add_new_cheat_button)
@@ -526,6 +530,24 @@ public class MainActivity extends AppCompatActivity implements ActionBar.OnNavig
     public void onEvent(GenericEvent event) {
         if (event.getAction() == GenericEvent.Action.CLICK_CHEATS_DRAWER) {
             selectItem(DRAWER_MAIN);
+        }
+    }
+
+    private void showAchievementsDialog() {
+        if (!myPrefs.isSeenAchievementsDialog().getOr(false)) {
+            MaterialDialog md = new MaterialDialog.Builder(this)
+                    .title(R.string.new_feature)
+                    .content(R.string.disable_achievements_text)
+                    .positiveText(R.string.ok)
+                    .onPositive(new MaterialDialog.SingleButtonCallback() {
+                        @Override
+                        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                            myPrefs.edit().isSeenAchievementsDialog().put(true).apply();
+                        }
+                    })
+                    .theme(Theme.DARK)
+                    .cancelable(false)
+                    .show();
         }
     }
 }

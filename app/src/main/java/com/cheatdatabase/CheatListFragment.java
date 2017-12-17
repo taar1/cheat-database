@@ -48,6 +48,19 @@ public class CheatListFragment extends ListFragment {
 
     private static String TAG = CheatListFragment.class.getSimpleName();
 
+    public Game gameObj;
+    private ArrayList<Cheat> cheatsArrayList = new ArrayList<>();
+    private Cheat[] cheats;
+    private CheatAdapter cheatAdapter;
+    private Typeface latoFontRegular;
+    private CheatsByGameActivity cheatsByGameActivity;
+    private SharedPreferences settings;
+    private Editor editor;
+    private Member member;
+
+    @Bean
+    Tools tools;
+
     /**
      * The serialization (saved instance state) Bundle key representing the
      * activated item position. Only used on tablets.
@@ -87,26 +100,6 @@ public class CheatListFragment extends ListFragment {
         }
     };
 
-    public Game gameObj;
-
-    private ArrayList<Cheat> cheatsArrayList = new ArrayList<>();
-
-    private Cheat[] cheats;
-
-    private CheatAdapter cheatAdapter;
-
-    private Typeface latoFontRegular;
-
-    private CheatListActivity cheatListActivity;
-
-    private SharedPreferences settings;
-    private Editor editor;
-
-    private Member member;
-
-    @Bean
-    Tools tools;
-
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
@@ -118,17 +111,17 @@ public class CheatListFragment extends ListFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        cheatListActivity = (CheatListActivity) getActivity();
+        cheatsByGameActivity = (CheatsByGameActivity) getActivity();
         latoFontRegular = tools.getFont(getActivity().getAssets(), Konstanten.FONT_REGULAR);
 
-        settings = cheatListActivity.getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
+        settings = cheatsByGameActivity.getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
         editor = settings.edit();
 
         if (member == null) {
             member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
         }
 
-        gameObj = (Game) cheatListActivity.getIntent().getSerializableExtra("gameObj");
+        gameObj = (Game) cheatsByGameActivity.getIntent().getSerializableExtra("gameObj");
         if (gameObj == null) {
             new GetCheatsTask().execute(new Game());
         } else {
@@ -140,7 +133,6 @@ public class CheatListFragment extends ListFragment {
 
         @Override
         protected Void doInBackground(Game... params) {
-
             if (params[0].getCheats() == null) {
                 cheats = getCheatsNow();
             } else {
@@ -160,22 +152,18 @@ public class CheatListFragment extends ListFragment {
     }
 
     private Cheat[] getCheatsNow() {
-
         try {
             if (member == null) {
-                cheats = Webservice.getCheatList(gameObj, 0);
+                cheats = Webservice.getCheatList(gameObj, 0, true);
             } else {
-                cheats = Webservice.getCheatList(gameObj, member.getMid());
+                cheats = Webservice.getCheatList(gameObj, member.getMid(), true);
             }
             cheatsArrayList = new ArrayList<>();
 
             if (cheats != null) {
-//                for (int j = 0; j < cheats.length; j++) {
-//                    cheatsArrayList.add(cheats[j]);
-//                }
                 Collections.addAll(cheatsArrayList, cheats);
             } else {
-                Log.e("CheatListActivity()", "Webservice.getCheatList() == null");
+                Log.e("CheatsByGameActivity()", "Webservice.getCheatList() == null");
             }
 
             gameObj.setCheats(cheats);
@@ -282,16 +270,16 @@ public class CheatListFragment extends ListFragment {
                 Cheat cheat = items.get(position);
                 if (cheat != null) {
 
-                    TextView tt = (TextView) v.findViewById(R.id.cheat_title);
+                    TextView tt = v.findViewById(R.id.cheat_title);
                     tt.setText(cheat.getCheatTitle());
                     tt.setTypeface(latoFontRegular);
 
                     // Durchschnittsrating (nicht Member-Rating)
-                    RatingBar ratingBar = (RatingBar) v.findViewById(R.id.small_ratingbar);
+                    RatingBar ratingBar = v.findViewById(R.id.small_ratingbar);
                     ratingBar.setNumStars(5);
                     ratingBar.setRating(cheat.getRatingAverage() / 2);
 
-                    ImageView flag_newaddition = (ImageView) v.findViewById(R.id.newaddition);
+                    ImageView flag_newaddition = v.findViewById(R.id.newaddition);
                     if (cheat.getDayAge() < Konstanten.CHEAT_DAY_AGE_SHOW_NEWADDITION_ICON) {
                         flag_newaddition.setImageResource(R.drawable.flag_new);
                         flag_newaddition.setVisibility(View.VISIBLE);
@@ -299,7 +287,7 @@ public class CheatListFragment extends ListFragment {
                         flag_newaddition.setVisibility(View.GONE);
                     }
 
-                    ImageView flag_screenshots = (ImageView) v.findViewById(R.id.screenshots);
+                    ImageView flag_screenshots = v.findViewById(R.id.screenshots);
                     if (cheat.isScreenshots()) {
                         flag_screenshots.setVisibility(View.VISIBLE);
                         flag_screenshots.setImageResource(R.drawable.flag_img);
@@ -307,7 +295,7 @@ public class CheatListFragment extends ListFragment {
                         flag_screenshots.setVisibility(View.GONE);
                     }
 
-                    ImageView flag_german = (ImageView) v.findViewById(R.id.flag);
+                    ImageView flag_german = v.findViewById(R.id.flag);
                     if (cheat.getLanguageId() == 2) { // 2 = Deutsch
                         flag_german.setVisibility(View.VISIBLE);
                         flag_german.setImageResource(R.drawable.flag_german);

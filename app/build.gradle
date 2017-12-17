@@ -2,8 +2,8 @@ apply plugin: 'com.android.application'
 
 String APK_ID = "com.cheatdatabase"
 String APK_NAME = "Cheat-Database"
-int VERSION_CODE = 31
-String VERSION_NAME = "2.1.8"
+int VERSION_CODE = 32
+String VERSION_NAME = "2.1.9"
 
 android {
     compileSdkVersion 27
@@ -104,7 +104,7 @@ dependencies {
     compile "com.android.support:recyclerview-v7:$supportVersion"
     compile "com.github.vajro:MaterialDesignLibrary:1.6"
     compile "com.google.code.gson:gson:2.3"
-//    compile "com.google.android.gms:play-services-analytics:$playServicesVersion"
+    compile "com.google.android.gms:play-services-analytics:$playServicesVersion"
     compile "com.google.android.gms:play-services-auth:$playServicesVersion"
     compile "com.squareup.picasso:picasso:2.5.2"
     compile "com.splunk.mint:mint:4.1"
@@ -113,7 +113,7 @@ dependencies {
     annotationProcessor "org.androidannotations:androidannotations:$AAVersion"
     annotationProcessor "org.androidannotations:ormlite:$AAVersion"
     compile "org.androidannotations:androidannotations-api:$AAVersion"
-    compile("com.mopub:mopub-sdk:4.18.0@aar") {
+    compile("com.mopub:mopub-sdk:4.19.0@aar") {
         transitive = true
         // Exclude this to make it work with Gradle 3 / Android Studio 3
         exclude module: "libAvid-mopub" // To exclude AVID
