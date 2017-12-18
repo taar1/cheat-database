@@ -122,8 +122,7 @@ public class CheatDatabaseAdapter {
      * @param cheat
      * @return
      */
-    public int insertFavorite(Cheat cheat) {
-
+    public int insertCheat(Cheat cheat) {
         if (cheat == null) {
             return 0;
         } else {
@@ -157,8 +156,7 @@ public class CheatDatabaseAdapter {
      * @param cheats []
      * @return
      */
-    public int insertFavorites(Cheat[] cheats) {
-
+    public int insertCheats(Cheat[] cheats) {
         int retValInt = 0;
         long retVal = 0;
 
@@ -178,6 +176,7 @@ public class CheatDatabaseAdapter {
             initialValues.put(FAV_LANGUAGE_ID, cheat.getLanguageId());
             initialValues.put(FAV_SYSTEM_ID, cheat.getSystemId());
             initialValues.put(FAV_SYSTEM_NAME, cheat.getSystemName());
+            initialValues.put(FAV_MEMBER_ID, cheat.getSubmittingMember().getMid());
             int walkthroughFormat = 0;
             if (cheat.isWalkthroughFormat()) {
                 walkthroughFormat = 1;
@@ -208,7 +207,7 @@ public class CheatDatabaseAdapter {
      * @param game
      * @return
      */
-    public int insertFavorites(Game game) {
+    public int insertCheats(Game game) {
 
         int int_anzInserts = 0;
 
@@ -245,11 +244,11 @@ public class CheatDatabaseAdapter {
         return int_anzInserts;
     }
 
-    public boolean deleteFavorite(Cheat cheat) {
+    public boolean deleteCheat(Cheat cheat) {
         return mDb.delete(DATABASE_TABLE_FAVORITES, FAV_CHEAT_ID + "=" + cheat.getCheatId(), null) > 0;
     }
 
-    public boolean deleteFavorites(Game game) {
+    public boolean deleteCheats(Game game) {
         return mDb.delete(DATABASE_TABLE_FAVORITES, FAV_GAME_ID + "=" + game.getGameId(), null) > 0;
     }
 
