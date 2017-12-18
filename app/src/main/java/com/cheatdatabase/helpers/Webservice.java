@@ -693,6 +693,10 @@ public class Webservice {
                 cheat.setCreated(created);
                 cheat.setForumCount(forumCount);
 
+                Member member = new Member();
+                member.setMid(memberId);
+                cheat.setMember(member);
+
                 cheats[i] = cheat;
             }
 

@@ -325,7 +325,7 @@ public class FavoritesCheatViewPageIndicator extends AppCompatActivity implement
                 }
                 return true;
             case R.id.action_remove_from_favorites:
-                db.deleteFavorite(visibleCheat);
+                db.deleteCheat(visibleCheat);
                 mUndoBarController.showUndoBar(false, getString(R.string.remove_favorite_neutral_ok), null);
                 return true;
             case R.id.action_report:
@@ -450,7 +450,7 @@ public class FavoritesCheatViewPageIndicator extends AppCompatActivity implement
 
     @Override
     public void onUndo(Parcelable token) {
-        db.insertFavorite(visibleCheat);
+        db.insertCheat(visibleCheat);
     }
 
 }

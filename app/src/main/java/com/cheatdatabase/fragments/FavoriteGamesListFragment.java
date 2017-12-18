@@ -239,7 +239,7 @@ public class FavoriteGamesListFragment extends Fragment {
      * Deletes a game from the local favorites database table.
      */
     private void removeFavorite() {
-        if (db.deleteFavorites(selectedGame)) {
+        if (db.deleteCheats(selectedGame)) {
             Toast.makeText(parentActivity, getString(R.string.remove_favorites_ok, "'" + selectedGame.getGameName() + "'"), Toast.LENGTH_SHORT).show();
 
             // TODO liste neu laden

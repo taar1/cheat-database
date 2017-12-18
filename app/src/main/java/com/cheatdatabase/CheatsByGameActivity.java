@@ -103,6 +103,9 @@ public class CheatsByGameActivity extends AppCompatActivity {
 
     private ShareActionProvider mShareActionProvider;
 
+    // TODO die cheats noch in die SQLITE db eintragen
+    private CheatDatabaseAdapter db;
+
     @AfterViews
     public void createView() {
         init();
@@ -139,6 +142,8 @@ public class CheatsByGameActivity extends AppCompatActivity {
 
     private void init() {
         Mint.initAndStartSession(this, Konstanten.SPLUNK_MINT_API_KEY);
+        db = new CheatDatabaseAdapter(this);
+        db.open();
 
         tools.loadAd(mAdView, getString(R.string.screen_type));
 
@@ -217,6 +222,13 @@ public class CheatsByGameActivity extends AppCompatActivity {
             app.setCheatsByGameCached(cheatsByGameInCache);
         }
 
+        // TODO hier weitermachen, checken ob cheats in DB sind und wenn ja dann aus DB laden und nicht online
+        // TODO hier weitermachen, checken ob cheats in DB sind und wenn ja dann aus DB laden und nicht online
+        // TODO hier weitermachen, checken ob cheats in DB sind und wenn ja dann aus DB laden und nicht online
+        // TODO überlegen wie machen damit das caching nicht ewig ist...
+        // TODO überlegen wie machen damit das caching nicht ewig ist...
+        // TODO überlegen wie machen damit das caching nicht ewig ist...
+        db.insertCheats(cheatsFound);
         Collections.addAll(cheatsArrayList, cheatsFound);
         fillListWithCheats();
     }
@@ -432,7 +444,7 @@ public class CheatsByGameActivity extends AppCompatActivity {
         try {
             dbAdapter = new CheatDatabaseAdapter(CheatsByGameActivity.this);
             dbAdapter.open();
-            int retVal = dbAdapter.insertFavorites(game);
+            int retVal = dbAdapter.insertCheats(game);
             if (retVal > 0) {
                 returnValueCode = R.string.add_favorites_ok;
             } else {

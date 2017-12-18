@@ -74,7 +74,7 @@ public class Helper extends Activity {
         CheatDatabaseAdapter db = new CheatDatabaseAdapter(context);
         db.open();
 
-        if (db.insertFavorite(visibleCheat) > 0) {
+        if (db.insertCheat(visibleCheat) > 0) {
             Toast.makeText(context, R.string.add_favorite_ok, Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(context, R.string.favorite_error, Toast.LENGTH_SHORT).show();
