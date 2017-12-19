@@ -106,6 +106,14 @@ public class GamesBySystemActivity extends AppCompatActivity {
             mRecyclerView.showLoading();
             getGames(false);
         }
+
+
+
+        // TODO fast scroll einbauen: https://github.com/timusus/RecyclerView-FastScroll
+        // TODO fast scroll einbauen: https://github.com/timusus/RecyclerView-FastScroll
+        // TODO fast scroll einbauen: https://github.com/timusus/RecyclerView-FastScroll
+        // TODO fast scroll einbauen: https://github.com/timusus/RecyclerView-FastScroll
+        // TODO fast scroll einbauen: https://github.com/timusus/RecyclerView-FastScroll
     }
 
     private void init() {
