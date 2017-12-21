@@ -1,7 +1,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/outerLayout"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:background="@drawable/bg"
     android:orientation="vertical">
 
@@ -17,24 +18,25 @@
         android:textSize="20sp"
         android:visibility="gone" />
 
-    <com.gc.materialdesign.views.ProgressBarCircularIndeterminate
-        android:id="@+id/items_list_load_progress"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_gravity="center"
-        android:background="@color/white" />
-
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swipe_refresh_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="100">
 
-        <com.cheatdatabase.widgets.EmptyRecyclerView
+        <com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView
             android:id="@+id/my_recycler_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scrollbars="vertical" />
+            app:fastScrollAutoHide="true"
+            app:fastScrollAutoHideDelay="1500"
+            app:fastScrollPopupBackgroundSize="88dp"
+            app:fastScrollPopupBgColor="@color/color_primary_light"
+            app:fastScrollPopupPosition="adjacent"
+            app:fastScrollPopupTextColor="@color/color_primary_light"
+            app:fastScrollPopupTextSize="44sp"
+            app:fastScrollThumbColor="@color/accent_color"
+            tools:listitem="@layout/fastscroll_item" />
 
     </android.support.v4.widget.SwipeRefreshLayout>
 

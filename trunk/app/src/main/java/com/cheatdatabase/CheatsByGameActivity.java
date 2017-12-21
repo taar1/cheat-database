@@ -104,7 +104,7 @@ public class CheatsByGameActivity extends AppCompatActivity {
     private ShareActionProvider mShareActionProvider;
 
     // TODO die cheats noch in die SQLITE db eintragen
-    private CheatDatabaseAdapter db;
+//    private CheatDatabaseAdapter db;
 
     @AfterViews
     public void createView() {
@@ -142,8 +142,8 @@ public class CheatsByGameActivity extends AppCompatActivity {
 
     private void init() {
         Mint.initAndStartSession(this, Konstanten.SPLUNK_MINT_API_KEY);
-        db = new CheatDatabaseAdapter(this);
-        db.open();
+//        db = new CheatDatabaseAdapter(this);
+//        db.open();
 
         tools.loadAd(mAdView, getString(R.string.screen_type));
 
@@ -228,7 +228,7 @@ public class CheatsByGameActivity extends AppCompatActivity {
         // TODO überlegen wie machen damit das caching nicht ewig ist...
         // TODO überlegen wie machen damit das caching nicht ewig ist...
         // TODO überlegen wie machen damit das caching nicht ewig ist...
-        db.insertCheats(cheatsFound);
+//        db.insertCheats(cheatsFound);
         Collections.addAll(cheatsArrayList, cheatsFound);
         fillListWithCheats();
     }
