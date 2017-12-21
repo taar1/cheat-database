@@ -11,4 +11,7 @@
     <dimen name="fab_size">56dp</dimen>
 
     <dimen name="outer_padding_listview_item">10dp</dimen>
+
+    <dimen name="list_item_height">56dp</dimen>
+    <dimen name="list_item_tall_height">72dp</dimen>
 </resources>

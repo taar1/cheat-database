@@ -2,7 +2,7 @@ package com.cheatdatabase.helpers;
 
 public class Konstanten {
 
-    public final static String CURRENT_VERSION = "2.1.3";
+    public final static String CURRENT_VERSION = "2.1.9";
     public final static int DEFAULT_TOTAL_CHEATS = 150000;
 
     // URL Konstanten

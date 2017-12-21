@@ -24,9 +24,8 @@ import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.helpers.Tools;
 import com.cheatdatabase.helpers.Webservice;
 import com.cheatdatabase.widgets.DividerDecoration;
-import com.cheatdatabase.widgets.EmptyRecyclerView;
-import com.gc.materialdesign.views.ProgressBarCircularIndeterminate;
 import com.mopub.mobileads.MoPubView;
+import com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView;
 import com.splunk.mint.Mint;
 
 import org.androidannotations.annotations.AfterViews;
@@ -66,7 +65,7 @@ public class GamesBySystemActivity extends AppCompatActivity {
     MyPrefs_ myPrefs;
 
     @ViewById(R.id.my_recycler_view)
-    EmptyRecyclerView mRecyclerView;
+    FastScrollRecyclerView mRecyclerView;
     @ViewById(R.id.swipe_refresh_layout)
     SwipeRefreshLayout mSwipeRefreshLayout;
     @ViewById(R.id.adview)
@@ -75,8 +74,6 @@ public class GamesBySystemActivity extends AppCompatActivity {
     Toolbar mToolbar;
     @ViewById(R.id.item_list_empty_view)
     TextView mEmptyView;
-    @ViewById(R.id.items_list_load_progress)
-    ProgressBarCircularIndeterminate mProgressView;
 
     @AfterViews
     public void createView() {
@@ -98,22 +95,11 @@ public class GamesBySystemActivity extends AppCompatActivity {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         mRecyclerView.addItemDecoration(new DividerDecoration(this));
         mRecyclerView.getItemAnimator().setRemoveDuration(50);
-        mRecyclerView.setEmptyView(mEmptyView);
-        mRecyclerView.setLoadingView(mProgressView);
         mRecyclerView.setHasFixedSize(true);
 
         if (Reachability.reachability.isReachable) {
-            mRecyclerView.showLoading();
             getGames(false);
         }
-
-
-
-        // TODO fast scroll einbauen: https://github.com/timusus/RecyclerView-FastScroll
-        // TODO fast scroll einbauen: https://github.com/timusus/RecyclerView-FastScroll
-        // TODO fast scroll einbauen: https://github.com/timusus/RecyclerView-FastScroll
-        // TODO fast scroll einbauen: https://github.com/timusus/RecyclerView-FastScroll
-        // TODO fast scroll einbauen: https://github.com/timusus/RecyclerView-FastScroll
     }
 
     private void init() {
@@ -220,7 +206,6 @@ public class GamesBySystemActivity extends AppCompatActivity {
         }
 
         mSwipeRefreshLayout.setRefreshing(false);
-        mRecyclerView.hideLoading();
     }
 
     private void error() {
