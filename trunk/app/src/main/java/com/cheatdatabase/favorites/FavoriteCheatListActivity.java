@@ -23,7 +23,7 @@ import android.widget.Toast;
 
 import com.cheatdatabase.R;
 import com.cheatdatabase.SubmitCheatActivity_;
-import com.cheatdatabase.adapters.CheatRecycleListViewAdapter;
+import com.cheatdatabase.adapters.CheatsByGameRecycleListViewAdapter;
 import com.cheatdatabase.businessobjects.Cheat;
 import com.cheatdatabase.businessobjects.Game;
 import com.cheatdatabase.businessobjects.Member;
@@ -80,7 +80,7 @@ public class FavoriteCheatListActivity extends AppCompatActivity {
     Toolbar mToolbar;
 
     @Bean
-    CheatRecycleListViewAdapter cheatRecycleListViewAdapter;
+    CheatsByGameRecycleListViewAdapter cheatsByGameRecycleListViewAdapter;
 
     @ViewById(R.id.item_list_empty_view)
     TextView mEmptyView;
@@ -374,10 +374,10 @@ public class FavoriteCheatListActivity extends AppCompatActivity {
     public void fillListWithCheats() {
         try {
             if (cheatsArrayList != null && cheatsArrayList.size() > 0) {
-                cheatRecycleListViewAdapter.init(cheatsArrayList);
-                mRecyclerView.setAdapter(cheatRecycleListViewAdapter);
+                cheatsByGameRecycleListViewAdapter.init(cheatsArrayList);
+                mRecyclerView.setAdapter(cheatsByGameRecycleListViewAdapter);
 
-                cheatRecycleListViewAdapter.notifyDataSetChanged();
+                cheatsByGameRecycleListViewAdapter.notifyDataSetChanged();
             } else {
                 error();
             }

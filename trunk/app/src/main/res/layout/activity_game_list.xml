@@ -21,21 +21,22 @@
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swipe_refresh_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="100">
+        android:layout_height="match_parent">
 
         <com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView
             android:id="@+id/my_recycler_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginRight="100dp"
+            android:layout_marginLeft="100dp"
             app:fastScrollAutoHide="true"
             app:fastScrollAutoHideDelay="1500"
             app:fastScrollPopupBackgroundSize="88dp"
             app:fastScrollPopupBgColor="@color/color_primary_light"
             app:fastScrollPopupPosition="adjacent"
-            app:fastScrollPopupTextColor="@color/color_primary_light"
+            app:fastScrollPopupTextColor="@color/accent_color"
             app:fastScrollPopupTextSize="44sp"
-            app:fastScrollThumbColor="@color/accent_color"
+            app:fastScrollThumbColor="@color/color_primary_light"
             tools:listitem="@layout/fastscroll_item" />
 
     </android.support.v4.widget.SwipeRefreshLayout>
