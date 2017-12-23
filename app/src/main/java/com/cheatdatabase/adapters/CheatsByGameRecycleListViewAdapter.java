@@ -2,6 +2,7 @@ package com.cheatdatabase.adapters;
 
 import android.content.Context;
 import android.graphics.Typeface;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,6 +18,7 @@ import com.cheatdatabase.events.CheatListRecyclerViewClickEvent;
 import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.helpers.Tools;
+import com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView;
 
 import org.androidannotations.annotations.EBean;
 import org.androidannotations.annotations.RootContext;
@@ -25,9 +27,10 @@ import org.greenrobot.eventbus.EventBus;
 import java.util.ArrayList;
 
 @EBean
-public class CheatRecycleListViewAdapter extends RecyclerView.Adapter<CheatRecycleListViewAdapter.ViewHolder> {
+public class CheatsByGameRecycleListViewAdapter extends RecyclerView.Adapter<CheatsByGameRecycleListViewAdapter.ViewHolder> implements FastScrollRecyclerView.SectionedAdapter,
+        FastScrollRecyclerView.MeasurableAdapter {
 
-    private static final String TAG = CheatRecycleListViewAdapter.class.getSimpleName();
+    private static final String TAG = CheatsByGameRecycleListViewAdapter.class.getSimpleName();
 
     private ArrayList<Cheat> mCheats;
     private Typeface latoFontBold;
@@ -46,29 +49,29 @@ public class CheatRecycleListViewAdapter extends RecyclerView.Adapter<CheatRecyc
     // you provide access to all the views for a data item in a view holder
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        public TextView mCheatTitle;
-        public RatingBar mRatingBar;
-        public IMyViewHolderClicks mListener;
-        public ImageView mFlagNewAddition;
-        public ImageView mFlagScreenshot;
-        public ImageView mFlagGerman;
+        TextView mCheatTitle;
+        RatingBar mRatingBar;
+        IMyViewHolderClicks mListener;
+        ImageView mFlagNewAddition;
+        ImageView mFlagScreenshot;
+        ImageView mFlagGerman;
 
         public ViewHolder(View v, IMyViewHolderClicks listener) {
             super(v);
             mListener = listener;
 
-            mCheatTitle = (TextView) v.findViewById(R.id.cheat_title);
+            mCheatTitle = v.findViewById(R.id.cheat_title);
             mCheatTitle.setTypeface(Tools.getFont(v.getContext().getAssets(), Konstanten.FONT_REGULAR));
 
             // Durchschnittsrating (nicht Member-Rating)
             mRatingBar = (RatingBar) v.findViewById(R.id.small_ratingbar);
             mRatingBar.setNumStars(5);
 
-            mFlagNewAddition = (ImageView) v.findViewById(R.id.newaddition);
+            mFlagNewAddition = v.findViewById(R.id.newaddition);
             mFlagNewAddition.setImageResource(R.drawable.flag_new);
-            mFlagScreenshot = (ImageView) v.findViewById(R.id.screenshots);
+            mFlagScreenshot = v.findViewById(R.id.screenshots);
             mFlagScreenshot.setImageResource(R.drawable.flag_img);
-            mFlagGerman = (ImageView) v.findViewById(R.id.flag);
+            mFlagGerman = v.findViewById(R.id.flag);
             mFlagGerman.setImageResource(R.drawable.flag_german);
 
             v.setOnClickListener(this);
@@ -82,18 +85,18 @@ public class CheatRecycleListViewAdapter extends RecyclerView.Adapter<CheatRecyc
     }
 
     public interface IMyViewHolderClicks {
-        void onCheatClick(CheatRecycleListViewAdapter.ViewHolder caller);
+        void onCheatClick(CheatsByGameRecycleListViewAdapter.ViewHolder caller);
     }
 
     // Create new views (invoked by the layout manager)
     @Override
-    public CheatRecycleListViewAdapter.ViewHolder onCreateViewHolder(final ViewGroup parent, int viewType) {
+    public CheatsByGameRecycleListViewAdapter.ViewHolder onCreateViewHolder(final ViewGroup parent, int viewType) {
 
         latoFontBold = Tools.getFont(parent.getContext().getAssets(), Konstanten.FONT_BOLD);
         latoFontLight = Tools.getFont(parent.getContext().getAssets(), Konstanten.FONT_LIGHT);
 
         // create a new view
-        final View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.cheatlist_item, parent, false);
+        final View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.listrow_cheat_item, parent, false);
         v.setDrawingCacheEnabled(true);
 
         return new ViewHolder(v, new IMyViewHolderClicks() {
@@ -145,5 +148,23 @@ public class CheatRecycleListViewAdapter extends RecyclerView.Adapter<CheatRecyc
     @Override
     public int getItemCount() {
         return mCheats.size();
+    }
+
+    // Display the first letter of the cheat during fast scrolling
+    @NonNull
+    @Override
+    public String getSectionName(int position) {
+        return mCheats.get(position).getCheatTitle().substring(0, 1).toUpperCase();
+    }
+
+    // Height of the scroll-bar at the right screen side
+    @Override
+    public int getViewTypeHeight(RecyclerView recyclerView, int viewType) {
+        // TODO FIXME hier mit verschiedenen nimmern testen was alles geht und was nicht
+        // TODO FIXME hier mit verschiedenen nimmern testen was alles geht und was nicht
+        // TODO FIXME hier mit verschiedenen nimmern testen was alles geht und was nicht
+        // TODO FIXME hier mit verschiedenen nimmern testen was alles geht und was nicht
+        // TODO FIXME hier mit verschiedenen nimmern testen was alles geht und was nicht
+        return 100;
     }
 }

@@ -44,7 +44,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.TreeMap;
 
-@EActivity(R.layout.activity_gamelist)
+@EActivity(R.layout.activity_game_list)
 public class GamesBySystemActivity extends AppCompatActivity {
 
     private static final String TAG = GamesBySystemActivity.class.getSimpleName();
@@ -257,5 +257,7 @@ public class GamesBySystemActivity extends AppCompatActivity {
             Toast.makeText(this, R.string.no_internet, Toast.LENGTH_SHORT).show();
         }
     }
+
+
 
 }

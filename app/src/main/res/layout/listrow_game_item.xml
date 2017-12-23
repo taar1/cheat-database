@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/game_list_item"
     android:layout_width="match_parent"
     android:layout_height="60dp"
+    android:background="?selectableItemBackground"
     android:gravity="center_vertical"
     android:orientation="vertical"
+    android:layout_marginRight="20dp"
     android:padding="@dimen/outer_padding_listview_item">
 
     <TextView

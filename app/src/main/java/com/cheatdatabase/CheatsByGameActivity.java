@@ -22,7 +22,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.cheatdatabase.adapters.CheatRecycleListViewAdapter;
+import com.cheatdatabase.adapters.CheatsByGameRecycleListViewAdapter;
 import com.cheatdatabase.businessobjects.Cheat;
 import com.cheatdatabase.businessobjects.Game;
 import com.cheatdatabase.businessobjects.Member;
@@ -43,6 +43,7 @@ import com.cheatdatabase.widgets.EmptyRecyclerView;
 import com.gc.materialdesign.views.ProgressBarCircularIndeterminate;
 import com.google.gson.Gson;
 import com.mopub.mobileads.MoPubView;
+import com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView;
 import com.splunk.mint.Mint;
 
 import org.androidannotations.annotations.AfterViews;
@@ -72,7 +73,7 @@ public class CheatsByGameActivity extends AppCompatActivity {
     @Bean
     Tools tools;
     @Bean
-    CheatRecycleListViewAdapter cheatRecycleListViewAdapter;
+    CheatsByGameRecycleListViewAdapter cheatsByGameRecycleListViewAdapter;
     @Pref
     MyPrefs_ myPrefs;
 
@@ -80,7 +81,7 @@ public class CheatsByGameActivity extends AppCompatActivity {
     Game gameObj;
 
     @ViewById(R.id.my_recycler_view)
-    EmptyRecyclerView mRecyclerView;
+    FastScrollRecyclerView mRecyclerView;
     @ViewById(R.id.swipe_refresh_layout)
     SwipeRefreshLayout mSwipeRefreshLayout;
     @ViewById(R.id.adview)
@@ -118,7 +119,6 @@ public class CheatsByGameActivity extends AppCompatActivity {
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                mRecyclerView.showLoading();
                 getCheats(true);
             }
         });
@@ -128,12 +128,9 @@ public class CheatsByGameActivity extends AppCompatActivity {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         mRecyclerView.addItemDecoration(new DividerDecoration(this));
         mRecyclerView.getItemAnimator().setRemoveDuration(50);
-        mRecyclerView.setEmptyView(mEmptyView);
-        mRecyclerView.setLoadingView(mProgressView);
         mRecyclerView.setHasFixedSize(true);
 
         if (Reachability.reachability.isReachable) {
-            mRecyclerView.showLoading();
             getCheats(false);
         } else {
             Toast.makeText(this, R.string.no_internet, Toast.LENGTH_SHORT).show();
@@ -237,10 +234,10 @@ public class CheatsByGameActivity extends AppCompatActivity {
     public void fillListWithCheats() {
         try {
             if (cheatsArrayList != null && cheatsArrayList.size() > 0) {
-                cheatRecycleListViewAdapter.init(cheatsArrayList);
-                mRecyclerView.setAdapter(cheatRecycleListViewAdapter);
+                cheatsByGameRecycleListViewAdapter.init(cheatsArrayList);
+                mRecyclerView.setAdapter(cheatsByGameRecycleListViewAdapter);
 
-                cheatRecycleListViewAdapter.notifyDataSetChanged();
+                cheatsByGameRecycleListViewAdapter.notifyDataSetChanged();
             } else {
                 error();
             }
@@ -249,7 +246,6 @@ public class CheatsByGameActivity extends AppCompatActivity {
         }
 
         mSwipeRefreshLayout.setRefreshing(false);
-        mRecyclerView.hideLoading();
     }
 
     private void error() {

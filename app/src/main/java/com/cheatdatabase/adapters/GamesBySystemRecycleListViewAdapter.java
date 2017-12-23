@@ -2,6 +2,7 @@ package com.cheatdatabase.adapters;
 
 import android.content.Context;
 import android.graphics.Typeface;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,6 +17,7 @@ import com.cheatdatabase.events.GameListRecyclerViewClickEvent;
 import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.helpers.Tools;
+import com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView;
 
 import org.androidannotations.annotations.App;
 import org.androidannotations.annotations.EBean;
@@ -25,7 +27,8 @@ import org.greenrobot.eventbus.EventBus;
 import java.util.ArrayList;
 
 @EBean
-public class GamesBySystemRecycleListViewAdapter extends RecyclerView.Adapter<GamesBySystemRecycleListViewAdapter.ViewHolder> {
+public class GamesBySystemRecycleListViewAdapter extends RecyclerView.Adapter<GamesBySystemRecycleListViewAdapter.ViewHolder> implements FastScrollRecyclerView.SectionedAdapter,
+        FastScrollRecyclerView.MeasurableAdapter {
 
     private static final String TAG = GamesBySystemRecycleListViewAdapter.class.getSimpleName();
 
@@ -69,7 +72,6 @@ public class GamesBySystemRecycleListViewAdapter extends RecyclerView.Adapter<Ga
         public void onClick(View v) {
             mListener.onGameClick(this);
         }
-
     }
 
     public interface IMyViewHolderClicks {
@@ -83,7 +85,7 @@ public class GamesBySystemRecycleListViewAdapter extends RecyclerView.Adapter<Ga
         latoFontLight = Tools.getFont(parent.getContext().getAssets(), Konstanten.FONT_LIGHT);
 
         // create a new view
-        final View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.listrow_gamelist, parent, false);
+        final View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.listrow_game_item, parent, false);
         v.setDrawingCacheEnabled(true);
 
         return new ViewHolder(v, new IMyViewHolderClicks() {
@@ -125,4 +127,18 @@ public class GamesBySystemRecycleListViewAdapter extends RecyclerView.Adapter<Ga
     public int getItemCount() {
         return mGames.size();
     }
+
+    // Display the first letter of the game during fast scrolling
+    @NonNull
+    @Override
+    public String getSectionName(int position) {
+        return mGames.get(position).getGameName().substring(0, 1).toUpperCase();
+    }
+
+    @Override
+    public int getViewTypeHeight(RecyclerView recyclerView, int viewType) {
+        return 100;
+    }
+
+
 }

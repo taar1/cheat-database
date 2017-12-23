@@ -146,7 +146,7 @@ public class CheatListFragment extends ListFragment {
         protected void onPostExecute(Void result) {
             super.onPostExecute(result);
 
-            cheatAdapter = new CheatAdapter(getActivity(), R.layout.cheatlist_item, cheatsArrayList);
+            cheatAdapter = new CheatAdapter(getActivity(), R.layout.listrow_cheat_item, cheatsArrayList);
             setListAdapter(cheatAdapter);
         }
     }
@@ -263,7 +263,7 @@ public class CheatListFragment extends ListFragment {
             View v = convertView;
             if (v == null) {
                 LayoutInflater vi = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                v = vi.inflate(R.layout.cheatlist_item, parent);
+                v = vi.inflate(R.layout.listrow_cheat_item, parent);
             }
 
             try {
