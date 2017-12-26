@@ -7,7 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.cheatdatabase.GamesBySystemActivity_;
+import com.cheatdatabase.GamesBySystemListActivity_;
 import com.cheatdatabase.MainActivity;
 import com.cheatdatabase.R;
 import com.cheatdatabase.adapters.SystemsRecycleListViewAdapter;
@@ -43,22 +43,18 @@ public class SystemListFragment extends Fragment {
 
     @ViewById(R.id.my_recycler_view)
     RecyclerView mRecyclerView;
-
     @ViewById(R.id.swipe_refresh_layout)
     SwipeRefreshLayout mSwipeRefreshLayout;
 
     @FragmentArg(MainActivity.DRAWER_ITEM_ID)
     int mDrawerId;
-
     @FragmentArg(MainActivity.DRAWER_ITEM_NAME)
     String mDrawerName;
 
     @Bean
     Tools tools;
-
     @Bean
     SystemsRecycleListViewAdapter mSystemsRecycleListViewAdapter;
-
     @Bean
     CheatDatabaseAdapter db;
 
@@ -118,7 +114,7 @@ public class SystemListFragment extends Fragment {
     public void onEvent(SystemListRecyclerViewClickEvent result) {
         if (result.isSucceeded()) {
             //CheatDatabaseApplication.tracker().send(new HitBuilders.EventBuilder("ui", "click").setLabel(result.getSystemPlatform().getSystemName()).build());
-            GamesBySystemActivity_.intent(getActivity()).systemObj(result.getSystemPlatform()).start();
+            GamesBySystemListActivity_.intent(getActivity()).systemObj(result.getSystemPlatform()).start();
         } else {
             Toast.makeText(getActivity(), R.string.no_internet, Toast.LENGTH_SHORT).show();
         }

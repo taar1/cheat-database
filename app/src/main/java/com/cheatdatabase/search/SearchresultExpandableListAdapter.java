@@ -12,7 +12,7 @@ import android.widget.CheckedTextView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.cheatdatabase.CheatsByGameActivity_;
+import com.cheatdatabase.CheatsByGameListActivity_;
 import com.cheatdatabase.R;
 import com.cheatdatabase.businessobjects.Game;
 import com.cheatdatabase.helpers.Group;
@@ -76,11 +76,11 @@ public class SearchresultExpandableListAdapter extends BaseExpandableListAdapter
             @Override
             public void onClick(View v) {
                 if (Reachability.reachability.isReachable) {
-//                    Intent explicitIntent = new Intent(activity, CheatsByGameActivity.class);
+//                    Intent explicitIntent = new Intent(activity, CheatsByGameListActivity.class);
 //                    explicitIntent.putExtra("gameObj", gameObj);
 //                    activity.startActivity(explicitIntent);
 
-                    CheatsByGameActivity_.intent(activity).gameObj(gameObj).start();
+                    CheatsByGameListActivity_.intent(activity).gameObj(gameObj).start();
                 } else {
                     Toast.makeText(activity, R.string.no_internet, Toast.LENGTH_SHORT).show();
                 }

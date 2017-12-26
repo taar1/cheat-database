@@ -53,7 +53,7 @@ public class CheatListFragment extends ListFragment {
     private Cheat[] cheats;
     private CheatAdapter cheatAdapter;
     private Typeface latoFontRegular;
-    private CheatsByGameActivity cheatsByGameActivity;
+    private CheatsByGameListActivity cheatsByGameListActivity;
     private SharedPreferences settings;
     private Editor editor;
     private Member member;
@@ -111,17 +111,17 @@ public class CheatListFragment extends ListFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        cheatsByGameActivity = (CheatsByGameActivity) getActivity();
+        cheatsByGameListActivity = (CheatsByGameListActivity) getActivity();
         latoFontRegular = tools.getFont(getActivity().getAssets(), Konstanten.FONT_REGULAR);
 
-        settings = cheatsByGameActivity.getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
+        settings = cheatsByGameListActivity.getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
         editor = settings.edit();
 
         if (member == null) {
             member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
         }
 
-        gameObj = (Game) cheatsByGameActivity.getIntent().getSerializableExtra("gameObj");
+        gameObj = (Game) cheatsByGameListActivity.getIntent().getSerializableExtra("gameObj");
         if (gameObj == null) {
             new GetCheatsTask().execute(new Game());
         } else {
@@ -163,7 +163,7 @@ public class CheatListFragment extends ListFragment {
             if (cheats != null) {
                 Collections.addAll(cheatsArrayList, cheats);
             } else {
-                Log.e("CheatsByGameActivity()", "Webservice.getCheatList() == null");
+                Log.e("CheatsByGameListActivity()", "Webservice.getCheatList() == null");
             }
 
             gameObj.setCheats(cheats);

@@ -160,11 +160,6 @@ public class CheatsByGameRecycleListViewAdapter extends RecyclerView.Adapter<Che
     // Height of the scroll-bar at the right screen side
     @Override
     public int getViewTypeHeight(RecyclerView recyclerView, int viewType) {
-        // TODO FIXME hier mit verschiedenen nimmern testen was alles geht und was nicht
-        // TODO FIXME hier mit verschiedenen nimmern testen was alles geht und was nicht
-        // TODO FIXME hier mit verschiedenen nimmern testen was alles geht und was nicht
-        // TODO FIXME hier mit verschiedenen nimmern testen was alles geht und was nicht
-        // TODO FIXME hier mit verschiedenen nimmern testen was alles geht und was nicht
         return 100;
     }
 }

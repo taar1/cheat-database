@@ -62,7 +62,7 @@
                 android:value="com.cheatdatabase.search.SearchResultsActivity" />
         </activity>
         <activity
-            android:name=".GamesBySystemActivity_"
+            android:name=".GamesBySystemListActivity_"
             android:logo="@drawable/app_icon_fox"
             android:parentActivityName=".MainActivity_">
             <meta-data
@@ -74,13 +74,13 @@
             android:name=".SubmitCheatActivity_"
             android:logo="@drawable/app_icon_fox" />
         <activity
-            android:name=".CheatsByGameActivity_"
+            android:name=".CheatsByGameListActivity_"
             android:label="@string/title_cheat_list"
             android:logo="@drawable/app_icon_fox"
-            android:parentActivityName=".GamesBySystemActivity_">
+            android:parentActivityName=".GamesBySystemListActivity_">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.cheatdatabase.GamesBySystemActivity_" />
+                android:value="com.cheatdatabase.GamesBySystemListActivity_" />
             <meta-data
                 android:name="android.app.default_searchable"
                 android:value="com.cheatdatabase.search.SearchResultsActivity" />
@@ -116,7 +116,7 @@
                 android:value="com.cheatdatabase.search.SearchResultsActivity" />
         </activity>
         <activity
-            android:name=".MemberCheatListActivity_"
+            android:name=".CheatsByMemberListActivity_"
             android:logo="@drawable/app_icon_fox"
             android:parentActivityName=".MainActivity_">
             <meta-data
@@ -126,7 +126,7 @@
         <activity
             android:name=".members.cheatview.MemberCheatViewPageIndicator"
             android:logo="@drawable/app_icon_fox"
-            android:parentActivityName=".MemberCheatListActivity"
+            android:parentActivityName=".CheatsByMemberListActivity"
             android:uiOptions="splitActionBarWhenNarrow">
             <meta-data
                 android:name="android.app.default_searchable"
@@ -136,11 +136,11 @@
             android:name=".handset.cheatview.CheatViewPageIndicator"
             android:label="@string/title_cheat_detail"
             android:logo="@drawable/app_icon_fox"
-            android:parentActivityName=".CheatsByGameActivity_"
+            android:parentActivityName=".CheatsByGameListActivity_"
             android:uiOptions="splitActionBarWhenNarrow">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".CheatsByGameActivity_" />
+                android:value=".CheatsByGameListActivity_" />
             <meta-data
                 android:name="android.app.default_searchable"
                 android:value="com.cheatdatabase.search.SearchResultsActivity" />

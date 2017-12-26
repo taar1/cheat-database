@@ -45,9 +45,9 @@ import java.util.Collections;
 import java.util.TreeMap;
 
 @EActivity(R.layout.activity_game_list)
-public class GamesBySystemActivity extends AppCompatActivity {
+public class GamesBySystemListActivity extends AppCompatActivity {
 
-    private static final String TAG = GamesBySystemActivity.class.getSimpleName();
+    private static final String TAG = GamesBySystemListActivity.class.getSimpleName();
     private ArrayList<Game> gameArrayList;
 
     @App
@@ -81,7 +81,7 @@ public class GamesBySystemActivity extends AppCompatActivity {
         mSwipeRefreshLayout.setRefreshing(true);
 
         setTitle(systemObj.getSystemName());
-        //CheatDatabaseApplication.tracker().send(new HitBuilders.EventBuilder("ui", "loaded").setLabel("GamesBySystemActivity").build());
+        //CheatDatabaseApplication.tracker().send(new HitBuilders.EventBuilder("ui", "loaded").setLabel("GamesBySystemListActivity").build());
 
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -210,7 +210,7 @@ public class GamesBySystemActivity extends AppCompatActivity {
 
     private void error() {
         Log.e(TAG, "caught error: " + getPackageName() + "/" + getTitle());
-        new AlertDialog.Builder(GamesBySystemActivity.this).setIcon(R.drawable.ic_action_warning).setTitle(getString(R.string.err)).setMessage(R.string.err_data_not_accessible).setNeutralButton(R.string.ok, new DialogInterface.OnClickListener() {
+        new AlertDialog.Builder(GamesBySystemListActivity.this).setIcon(R.drawable.ic_action_warning).setTitle(getString(R.string.err)).setMessage(R.string.err_data_not_accessible).setNeutralButton(R.string.ok, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int whichButton) {
                 finish();
@@ -252,7 +252,7 @@ public class GamesBySystemActivity extends AppCompatActivity {
         if (result.isSucceeded()) {
             //CheatDatabaseApplication.tracker().send(new HitBuilders.EventBuilder("ui", "click").setLabel(result.getGame().getGameName()).build());
 
-            CheatsByGameActivity_.intent(this).gameObj(result.getGame()).start();
+            CheatsByGameListActivity_.intent(this).gameObj(result.getGame()).start();
         } else {
             Toast.makeText(this, R.string.no_internet, Toast.LENGTH_SHORT).show();
         }
