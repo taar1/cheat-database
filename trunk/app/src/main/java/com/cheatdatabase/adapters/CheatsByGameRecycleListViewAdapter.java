@@ -63,8 +63,8 @@ public class CheatsByGameRecycleListViewAdapter extends RecyclerView.Adapter<Che
             mCheatTitle = v.findViewById(R.id.cheat_title);
             mCheatTitle.setTypeface(Tools.getFont(v.getContext().getAssets(), Konstanten.FONT_REGULAR));
 
-            // Durchschnittsrating (nicht Member-Rating)
-            mRatingBar = (RatingBar) v.findViewById(R.id.small_ratingbar);
+            // Average rating (not member rating)
+            mRatingBar = v.findViewById(R.id.small_ratingbar);
             mRatingBar.setNumStars(5);
 
             mFlagNewAddition = v.findViewById(R.id.newaddition);
@@ -137,7 +137,7 @@ public class CheatsByGameRecycleListViewAdapter extends RecyclerView.Adapter<Che
             holder.mFlagScreenshot.setVisibility(View.GONE);
         }
 
-        if (cheatObj.getLanguageId() == 2) { // 2 = Deutsch
+        if (cheatObj.getLanguageId() == 2) { // 2 = German
             holder.mFlagGerman.setVisibility(View.VISIBLE);
         } else {
             holder.mFlagGerman.setVisibility(View.GONE);

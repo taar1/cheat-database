@@ -325,5 +325,8 @@
     <string name="new_feature">Neue Funktion</string>
     <string name="disable_achievements_text">Wir wissen, dass viele die <b>Achievements und Trophies</b> Cheat nerven. Aus dem Grund haben wir eine Option eingebaut, mit der ihr diese Cheats aus der App filtern könnt. Klickt einfach auf <b>Einstellungen</b> im Drawer links oben und aktiviert oder deaktiviert diese. Standardmässig werden sie in der App angezeigt. Wenn ihr sie also nicht mehr sehen wollt, müsst ihr kurz bei den Einstellungen rein.\n\nFalls ihr noch irgendwas in der Cheat-Database App vermisst, benutzt das Feedback Formular, um eure Wünsche anzubringen.</string>
 
-
+    <plurals name="entries">
+        <item quantity="one">Eintrag</item>
+        <item quantity="other">Einträge</item>
+    </plurals>
 </resources>

@@ -54,9 +54,9 @@ public class SystemsRecycleListViewAdapter extends RecyclerView.Adapter<SystemsR
             super(v);
             mListener = listener;
 
-            mLinearLayout = (LinearLayout) v.findViewById(R.id.ll);
-            mSystemName = (TextView) v.findViewById(R.id.system_name);
-            mSubtitle = (TextView) v.findViewById(R.id.subtitle);
+            mLinearLayout = v.findViewById(R.id.ll);
+            mSystemName = v.findViewById(R.id.system_name);
+            mSubtitle = v.findViewById(R.id.subtitle);
 
             v.setOnClickListener(this);
         }
