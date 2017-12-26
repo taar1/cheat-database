@@ -112,7 +112,7 @@ public class GamesBySystemRecycleListViewAdapter extends RecyclerView.Adapter<Ga
         try {
             if (gameObj.getCheatsCount() > 0) {
                 holder.mCheatCount.setVisibility(View.VISIBLE);
-                holder.mCheatCount.setText(gameObj.getCheatsCount() + " " + mContext.getResources().getQuantityString(R.plurals.set_cheats, gameObj.getCheatsCount()));
+                holder.mCheatCount.setText(gameObj.getCheatsCount() + " " + mContext.getResources().getQuantityString(R.plurals.entries, gameObj.getCheatsCount()));
                 holder.mCheatCount.setTypeface(latoFontLight);
             } else {
                 holder.mCheatCount.setVisibility(View.GONE);

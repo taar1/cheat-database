@@ -319,10 +319,13 @@ public class CheatDatabaseAdapter {
                     Log.d(TAG, "DDDD name: " + sysPla.getSystemName());
                     Log.d(TAG, "DDDD count: " + sysPla.getGameCount());
 
-                    systems.add(sysPla);
+                    // EXCLUDE ANDROID FOR THE TIME BEING
+                    if (sysPla.getSystemId() != 33) {
+                        systems.add(sysPla);
+                    }
+
                 } while (cur.moveToNext());
             }
-
 
 
             cur.close();

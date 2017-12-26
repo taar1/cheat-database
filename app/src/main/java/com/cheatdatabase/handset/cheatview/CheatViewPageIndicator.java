@@ -124,6 +124,10 @@ public class CheatViewPageIndicator extends AppCompatActivity {
         pageSelected = intent.getIntExtra("selectedPage", 0);
         activePage = pageSelected;
         cheatArray = gameObj.getCheats();
+
+        if (cheatArray == null) {
+            finish();
+        }
         visibleCheat = cheatArray[pageSelected];
 
         getSupportActionBar().setTitle(gameObj.getGameName());
@@ -185,7 +189,7 @@ public class CheatViewPageIndicator extends AppCompatActivity {
                 }
             });
 
-            MagicIndicator magicIndicator = (MagicIndicator) findViewById(R.id.magic_indicator);
+            MagicIndicator magicIndicator = findViewById(R.id.magic_indicator);
             CommonNavigator commonNavigator = new CommonNavigator(this);
             commonNavigator.setSkimOver(true);
             commonNavigator.setAdapter(new CommonNavigatorAdapter() {
@@ -207,6 +211,7 @@ public class CheatViewPageIndicator extends AppCompatActivity {
                         }
                     });
                     return clipPagerTitleView;
+
                 }
 
                 @Override
