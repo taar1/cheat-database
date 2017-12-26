@@ -316,9 +316,6 @@ public class CheatDatabaseAdapter {
                     sysPla.setCheatCount(cheatCount);
                     sysPla.setLastModTimeStamp(Long.parseLong(lastMod));
 
-                    Log.d(TAG, "DDDD name: " + sysPla.getSystemName());
-                    Log.d(TAG, "DDDD count: " + sysPla.getGameCount());
-
                     // EXCLUDE ANDROID FOR THE TIME BEING
                     if (sysPla.getSystemId() != 33) {
                         systems.add(sysPla);
