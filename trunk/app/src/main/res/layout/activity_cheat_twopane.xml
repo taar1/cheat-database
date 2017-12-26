@@ -19,7 +19,7 @@
         android:paddingStart="4dp"
         android:showDividers="middle"
         android:weightSum="3"
-        tools:context="com.cheatdatabase.CheatsByGameActivity">
+        tools:context="com.cheatdatabase.CheatsByGameListActivity">
 
         <TextView
             android:id="@+id/item_list_empty_view"

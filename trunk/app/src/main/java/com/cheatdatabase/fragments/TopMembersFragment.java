@@ -62,19 +62,16 @@ public class TopMembersFragment extends Fragment {
 
     @ViewById(R.id.my_recycler_view)
     RecyclerView mRecyclerView;
-
     @ViewById(R.id.swipe_refresh_layout)
     SwipeRefreshLayout mSwipeRefreshLayout;
 
     @FragmentArg(MainActivity.DRAWER_ITEM_ID)
     int mDrawerId;
-
     @FragmentArg(MainActivity.DRAWER_ITEM_NAME)
     String mDrawerName;
 
     @Bean
     Tools tools;
-
     @Bean
     TopMembersListViewAdapter mTopMembersListViewAdapter;
 
@@ -129,6 +126,7 @@ public class TopMembersFragment extends Fragment {
             mRecyclerView.setAdapter(mTopMembersListViewAdapter);
         }
         mTopMembersListViewAdapter.notifyDataSetChanged();
+        mSwipeRefreshLayout.setRefreshing(false);
     }
 
     @Override

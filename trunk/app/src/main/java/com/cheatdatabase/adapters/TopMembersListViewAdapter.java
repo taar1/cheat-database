@@ -12,7 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.cheatdatabase.MemberCheatListActivity_;
+import com.cheatdatabase.CheatsByMemberListActivity_;
 import com.cheatdatabase.R;
 import com.cheatdatabase.businessobjects.Member;
 import com.cheatdatabase.helpers.Konstanten;
@@ -76,7 +76,7 @@ public class TopMembersListViewAdapter extends RecyclerView.Adapter<TopMembersLi
 //        //CheatDatabaseApplication.tracker().send(new HitBuilders.EventBuilder("ui", "show_member").setLabel(member.getUsername()).build());
 
         if (Reachability.reachability.isReachable) {
-            Intent explicitIntent = new Intent(mContext, MemberCheatListActivity_.class);
+            Intent explicitIntent = new Intent(mContext, CheatsByMemberListActivity_.class);
             explicitIntent.putExtra("memberObj", member);
             mContext.startActivity(explicitIntent);
         } else {

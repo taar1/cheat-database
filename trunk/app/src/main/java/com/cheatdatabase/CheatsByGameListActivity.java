@@ -39,8 +39,6 @@ import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.helpers.Tools;
 import com.cheatdatabase.helpers.Webservice;
 import com.cheatdatabase.widgets.DividerDecoration;
-import com.cheatdatabase.widgets.EmptyRecyclerView;
-import com.gc.materialdesign.views.ProgressBarCircularIndeterminate;
 import com.google.gson.Gson;
 import com.mopub.mobileads.MoPubView;
 import com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView;
@@ -64,9 +62,9 @@ import java.util.Collections;
 import java.util.TreeMap;
 
 @EActivity(R.layout.activity_cheat_list)
-public class CheatsByGameActivity extends AppCompatActivity {
+public class CheatsByGameListActivity extends AppCompatActivity {
 
-    private static String TAG = CheatsByGameActivity.class.getSimpleName();
+    private static String TAG = CheatsByGameListActivity.class.getSimpleName();
 
     @App
     CheatDatabaseApplication app;
@@ -90,8 +88,6 @@ public class CheatsByGameActivity extends AppCompatActivity {
     Toolbar mToolbar;
     @ViewById(R.id.item_list_empty_view)
     TextView mEmptyView;
-    @ViewById(R.id.items_list_load_progress)
-    ProgressBarCircularIndeterminate mProgressView;
 
     private SharedPreferences settings;
     private Editor editor;
@@ -250,7 +246,7 @@ public class CheatsByGameActivity extends AppCompatActivity {
 
     private void error() {
         Log.e(TAG, "Error: " + getPackageName() + "/" + getTitle());
-        new AlertDialog.Builder(CheatsByGameActivity.this).setIcon(R.drawable.ic_action_warning).setTitle(getString(R.string.err)).setMessage(R.string.err_data_not_accessible).setNeutralButton(R.string.ok, new DialogInterface.OnClickListener() {
+        new AlertDialog.Builder(CheatsByGameListActivity.this).setIcon(R.drawable.ic_action_warning).setTitle(getString(R.string.err)).setMessage(R.string.err_data_not_accessible).setNeutralButton(R.string.ok, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int whichButton) {
                 finish();
@@ -338,25 +334,25 @@ public class CheatsByGameActivity extends AppCompatActivity {
             case android.R.id.home:
                 editor.remove(Konstanten.PREFERENCES_TEMP_GAME_OBJECT_VIEW);
                 editor.commit();
-                GamesBySystemActivity_.intent(this).systemObj(tools.getSystemObjectByName(CheatsByGameActivity.this, tools.getSystemNameById(this, gameObj.getSystemId()))).start();
+                GamesBySystemListActivity_.intent(this).systemObj(tools.getSystemObjectByName(CheatsByGameListActivity.this, tools.getSystemNameById(this, gameObj.getSystemId()))).start();
                 return true;
             case R.id.action_add_to_favorites:
-                Toast.makeText(CheatsByGameActivity.this, R.string.favorite_adding, Toast.LENGTH_SHORT).show();
+                Toast.makeText(CheatsByGameListActivity.this, R.string.favorite_adding, Toast.LENGTH_SHORT).show();
                 //new AddCheatsToFavoritesTask().execute(gameObj);
                 addCheatsToFavoritesTask(gameObj);
                 return true;
             case R.id.action_submit_cheat:
-                Intent explicitIntent = new Intent(CheatsByGameActivity.this, SubmitCheatActivity_.class);
+                Intent explicitIntent = new Intent(CheatsByGameListActivity.this, SubmitCheatActivity_.class);
                 explicitIntent.putExtra("gameObj", gameObj);
                 startActivity(explicitIntent);
                 return true;
             case R.id.action_login:
-                Intent loginIntent = new Intent(CheatsByGameActivity.this, LoginActivity_.class);
+                Intent loginIntent = new Intent(CheatsByGameListActivity.this, LoginActivity_.class);
                 startActivityForResult(loginIntent, Konstanten.LOGIN_REGISTER_OK_RETURN_CODE);
                 return true;
             case R.id.action_logout:
                 member = null;
-                tools.logout(CheatsByGameActivity.this, editor);
+                tools.logout(CheatsByGameListActivity.this, editor);
                 invalidateOptionsMenu();
                 return true;
             default:
@@ -366,7 +362,7 @@ public class CheatsByGameActivity extends AppCompatActivity {
 
     @Click(R.id.add_new_cheat_button)
     void addNewCheat() {
-        Intent explicitIntent = new Intent(CheatsByGameActivity.this, SubmitCheatActivity_.class);
+        Intent explicitIntent = new Intent(CheatsByGameListActivity.this, SubmitCheatActivity_.class);
         explicitIntent.putExtra("gameObj", gameObj);
         startActivity(explicitIntent);
     }
@@ -425,9 +421,9 @@ public class CheatsByGameActivity extends AppCompatActivity {
                 member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
                 invalidateOptionsMenu();
                 if ((member != null) && intentReturnCode == Konstanten.REGISTER_SUCCESS_RETURN_CODE) {
-                    Toast.makeText(CheatsByGameActivity.this, R.string.register_thanks, Toast.LENGTH_LONG).show();
+                    Toast.makeText(CheatsByGameListActivity.this, R.string.register_thanks, Toast.LENGTH_LONG).show();
                 } else if ((member != null) && intentReturnCode == Konstanten.LOGIN_SUCCESS_RETURN_CODE) {
-                    Toast.makeText(CheatsByGameActivity.this, R.string.login_ok, Toast.LENGTH_LONG).show();
+                    Toast.makeText(CheatsByGameListActivity.this, R.string.login_ok, Toast.LENGTH_LONG).show();
                 }
             }
         }
@@ -438,7 +434,7 @@ public class CheatsByGameActivity extends AppCompatActivity {
         int returnValueCode;
         CheatDatabaseAdapter dbAdapter = null;
         try {
-            dbAdapter = new CheatDatabaseAdapter(CheatsByGameActivity.this);
+            dbAdapter = new CheatDatabaseAdapter(CheatsByGameListActivity.this);
             dbAdapter.open();
             int retVal = dbAdapter.insertCheats(game);
             if (retVal > 0) {
@@ -459,7 +455,7 @@ public class CheatsByGameActivity extends AppCompatActivity {
     @UiThread
     void finishedAddingCheatsToFavorites(int returnValueCode) {
         // TODO Favorite Icon animation abschalten
-        Toast.makeText(CheatsByGameActivity.this, returnValueCode, Toast.LENGTH_LONG).show();
+        Toast.makeText(CheatsByGameListActivity.this, returnValueCode, Toast.LENGTH_LONG).show();
     }
 
     public void highlightRatingIcon(ImageButton btnRateCheat, boolean highlight) {
@@ -482,7 +478,7 @@ public class CheatsByGameActivity extends AppCompatActivity {
             if (Reachability.reachability.isReachable) {
                 // Using local Preferences to pass data for large game objects
                 // (instead of intent) such as Pokemon
-                Intent explicitIntent = new Intent(CheatsByGameActivity.this, CheatViewPageIndicator.class);
+                Intent explicitIntent = new Intent(CheatsByGameListActivity.this, CheatViewPageIndicator.class);
                 explicitIntent.putExtra("gameObj", gameObj);
                 explicitIntent.putExtra("selectedPage", result.getPosition());
                 explicitIntent.putExtra("layoutResourceId", R.layout.activity_cheatview_pager);

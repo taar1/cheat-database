@@ -25,10 +25,9 @@ import com.cheatdatabase.helpers.Tools;
 import com.cheatdatabase.helpers.Webservice;
 import com.cheatdatabase.members.cheatview.MemberCheatViewPageIndicator;
 import com.cheatdatabase.widgets.DividerDecoration;
-import com.cheatdatabase.widgets.EmptyRecyclerView;
-import com.gc.materialdesign.views.ProgressBarCircularIndeterminate;
 import com.google.gson.Gson;
 import com.mopub.mobileads.MoPubView;
+import com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView;
 import com.splunk.mint.Mint;
 
 import org.androidannotations.annotations.AfterViews;
@@ -49,45 +48,33 @@ import java.util.Collections;
  *
  * @author Dominik
  */
-@EActivity(R.layout.activity_member_cheatlist)
-public class MemberCheatListActivity extends AppCompatActivity {
+@EActivity(R.layout.activity_member_cheat_list)
+public class CheatsByMemberListActivity extends AppCompatActivity {
 
-    private final String TAG = MemberCheatListActivity.class.getSimpleName();
+    private final String TAG = CheatsByMemberListActivity.class.getSimpleName();
+
+    @Bean
+    Tools tools;
+    @Bean
+    MemberCheatRecycleListViewAdapter cheatRecycleListViewAdapter;
 
     @Extra
     Member memberObj;
 
     @ViewById(R.id.my_recycler_view)
-    EmptyRecyclerView mRecyclerView;
-
+    FastScrollRecyclerView mRecyclerView;
     @ViewById(R.id.swipe_refresh_layout)
     SwipeRefreshLayout mSwipeRefreshLayout;
 
-    @Bean
-    Tools tools;
-
     @ViewById(R.id.adview)
     MoPubView mAdView;
-
     @ViewById(R.id.toolbar)
     Toolbar mToolbar;
-
-    @Bean
-    MemberCheatRecycleListViewAdapter cheatRecycleListViewAdapter;
-
     @ViewById(R.id.item_list_empty_view)
     TextView mEmptyView;
 
-    @ViewById(R.id.items_list_load_progress)
-    ProgressBarCircularIndeterminate mProgressView;
-
-//    private final int ADD_TO_FAVORITES = 0;
-//    private Cheat selectedCheat;
-//    private ShareActionProvider mShareActionProvider;
-
     private ArrayList<Cheat> cheatsArrayList;
 
-    //    private Typeface latoFontLight;
     private Editor editor;
     private Cheat[] cheats;
 
@@ -99,7 +86,6 @@ public class MemberCheatListActivity extends AppCompatActivity {
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                mRecyclerView.showLoading();
                 getCheats();
             }
         });
@@ -109,12 +95,9 @@ public class MemberCheatListActivity extends AppCompatActivity {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         mRecyclerView.addItemDecoration(new DividerDecoration(this));
         mRecyclerView.getItemAnimator().setRemoveDuration(50);
-        mRecyclerView.setEmptyView(mEmptyView);
-        mRecyclerView.setLoadingView(mProgressView);
         mRecyclerView.setHasFixedSize(true);
 
         if (Reachability.reachability.isReachable) {
-            mRecyclerView.showLoading();
             getCheats();
         } else {
             Toast.makeText(this, R.string.no_internet, Toast.LENGTH_SHORT).show();
@@ -136,9 +119,6 @@ public class MemberCheatListActivity extends AppCompatActivity {
 
         SharedPreferences settings = getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
         editor = settings.edit();
-
-//        latoFontLight = tools.getFont(getAssets(), Konstanten.FONT_LIGHT);
-        //memberObj = (Member) getIntent().getSerializableExtra("memberObj");
     }
 
     @Background
@@ -171,7 +151,6 @@ public class MemberCheatListActivity extends AppCompatActivity {
         }
 
         mSwipeRefreshLayout.setRefreshing(false);
-        mRecyclerView.hideLoading();
     }
 
     @Override
@@ -214,34 +193,14 @@ public class MemberCheatListActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             // Respond to the action bar's Up/Home button
             case android.R.id.home:
-//                onBackPressed();
                 MainActivity_.intent(this).mFragmentId(MainActivity.DRAWER_TOP_MEMBERS).start();
                 return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
-//    @Override
-//    public boolean onContextItemSelected(MenuItem item) {
-//        switch (item.getItemId()) {
-//            case ADD_TO_FAVORITES:
-//                CheatDatabaseAdapter db = new CheatDatabaseAdapter(this);
-//                db.open();
-//                int retVal = db.insertFavorite(selectedCheat);
-//
-//                if (retVal > 0) {
-//                    Toast.makeText(MemberCheatListActivity.this, R.string.add_favorite_ok, Toast.LENGTH_SHORT).show();
-//                } else {
-//                    Toast.makeText(MemberCheatListActivity.this, R.string.favorite_error, Toast.LENGTH_SHORT).show();
-//                }
-//                return true;
-//        }
-//
-//        return super.onContextItemSelected(item);
-//    }
-
     private void error(int msg) {
-        new AlertDialog.Builder(MemberCheatListActivity.this).setIcon(R.drawable.ic_action_warning).setTitle(getString(R.string.err)).setMessage(msg).setNeutralButton(R.string.ok, new DialogInterface.OnClickListener() {
+        new AlertDialog.Builder(CheatsByMemberListActivity.this).setIcon(R.drawable.ic_action_warning).setTitle(getString(R.string.err)).setMessage(msg).setNeutralButton(R.string.ok, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int whichButton) {
                 finish();
@@ -262,7 +221,7 @@ public class MemberCheatListActivity extends AppCompatActivity {
             if (Reachability.reachability.isReachable) {
                 // Using local Preferences to pass data for large game objects
                 // (instead of intent) such as Pokemon
-                Intent explicitIntent = new Intent(MemberCheatListActivity.this, MemberCheatViewPageIndicator.class);
+                Intent explicitIntent = new Intent(CheatsByMemberListActivity.this, MemberCheatViewPageIndicator.class);
 
                 if (cheats.length <= 100) {
                     // Delete Walkthrough texts (otherwise runs into a timeout)
@@ -288,15 +247,5 @@ public class MemberCheatListActivity extends AppCompatActivity {
             Toast.makeText(this, R.string.no_internet, Toast.LENGTH_SHORT).show();
         }
     }
-
-//    @Override
-//    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-//        super.onCreateContextMenu(menu, v, menuInfo);
-//
-//        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
-//        selectedCheat = cheats[Integer.parseInt(String.valueOf(info.id))];
-//        menu.setHeaderTitle(R.string.context_menu_title);
-//        menu.add(0, ADD_TO_FAVORITES, 1, R.string.add_one_favorite);
-//    }
 
 }
