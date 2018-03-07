@@ -1,4 +1,14 @@
+buildscript {
+    repositories {
+        maven { url 'https://maven.fabric.io/public' }
+    }
+
+    dependencies {
+        classpath 'io.fabric.tools:gradle:1.+'
+    }
+}
 apply plugin: 'com.android.application'
+apply plugin: 'io.fabric'
 
 String APK_ID = "com.cheatdatabase"
 String APK_NAME = "Cheat-Database"
@@ -85,6 +95,7 @@ repositories {
         name "Needed for MoPub"
         url 'https://maven.google.com'
     }
+    maven { url 'https://maven.fabric.io/public' }
     jcenter()
     mavenCentral()
 }
@@ -122,6 +133,9 @@ dependencies {
     compile "com.github.hackware1993:MagicIndicator:1.5.0"
     compile 'com.simplecityapps:recyclerview-fastscroll:1.0.16'
 //    compile "com.appolica:flubber:1.0.1" // https://android-arsenal.com/details/1/6139 (VIEW ANIMATIONS)
+    compile('com.crashlytics.sdk.android:crashlytics:2.8.0@aar') {
+        transitive = true;
+    }
 }
 
 // ADD THIS AT THE BOTTOM
