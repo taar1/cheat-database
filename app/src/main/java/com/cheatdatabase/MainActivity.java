@@ -39,6 +39,7 @@ import com.appbrain.AppBrain;
 import com.cheatdatabase.businessobjects.Member;
 import com.cheatdatabase.dialogs.RateCheatDatabaseDialog;
 import com.cheatdatabase.events.GenericEvent;
+import com.cheatdatabase.events.RemoteConfigLoadedEvent;
 import com.cheatdatabase.fragments.ContactFormFragment_;
 import com.cheatdatabase.fragments.FavoriteGamesListFragment_;
 import com.cheatdatabase.fragments.SubmitCheatFragment_;
@@ -52,6 +53,10 @@ import com.cheatdatabase.helpers.Tools;
 import com.cheatdatabase.navigationdrawer.CustomDrawerAdapter;
 import com.cheatdatabase.navigationdrawer.DrawerItem;
 import com.cheatdatabase.search.SearchSuggestionProvider;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
+import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings;
 import com.google.gson.Gson;
 import com.mopub.mobileads.MoPubView;
 import com.splunk.mint.Mint;
@@ -109,9 +114,18 @@ public class MainActivity extends AppCompatActivity implements ActionBar.OnNavig
     private SearchManager searchManager;
     private SearchView searchView;
 
+
+    private FirebaseRemoteConfig mFirebaseRemoteConfig;
+    // Remote Config keys
+    private static final String REMOTE_CONFIG_HACKS_ENABLED_KEY = "hacks_enabled";
+    private static final String REMOTE_CONFIG_IOS_ENABLED_KEY = "ios_enabled";
+    private static final String REMOTE_CONFIG_ANDROID_ENABLED_KEY = "android_enabled";
+
     @AfterViews
     public void createView() {
         setTitle(R.string.app_name);
+
+        remoteConfigStuff();
 
         Mint.initAndStartSession(this, Konstanten.SPLUNK_MINT_API_KEY);
 
@@ -141,6 +155,52 @@ public class MainActivity extends AppCompatActivity implements ActionBar.OnNavig
         createNavigationDrawer();
 
         showAchievementsDialog();
+    }
+
+    // https://firebase.google.com/docs/remote-config/use-config-android
+    private void remoteConfigStuff() {
+        mFirebaseRemoteConfig = FirebaseRemoteConfig.getInstance();
+        FirebaseRemoteConfigSettings configSettings = new FirebaseRemoteConfigSettings.Builder()
+                .setDeveloperModeEnabled(BuildConfig.DEBUG)
+                .build();
+        mFirebaseRemoteConfig.setConfigSettings(configSettings);
+
+        mFirebaseRemoteConfig.setDefaults(R.xml.remote_config_defaults);
+
+        long cacheExpiration = 604800; // 1 week in seconds.
+        // If your app is using developer mode, cacheExpiration is set to 0, so each fetch will
+        // retrieve values from the service.
+        if (mFirebaseRemoteConfig.getInfo().getConfigSettings().isDeveloperModeEnabled()) {
+            cacheExpiration = 0;
+        }
+
+        mFirebaseRemoteConfig.fetch(cacheExpiration)
+                .addOnCompleteListener( this, new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            Log.d(TAG, "XXXXX Fetch Succeeded");
+                            Log.d(TAG, "XXXXX2: " + mFirebaseRemoteConfig.getBoolean(REMOTE_CONFIG_HACKS_ENABLED_KEY));
+
+                            // TODO die remote config noch in den sharedpreferences speichern, damit man später drauf zugreifen kann
+                            // TODO die remote config noch in den sharedpreferences speichern, damit man später drauf zugreifen kann
+                            // TODO die remote config noch in den sharedpreferences speichern, damit man später drauf zugreifen kann
+                            // TODO die remote config noch in den sharedpreferences speichern, damit man später drauf zugreifen kann
+                            // TODO die remote config noch in den sharedpreferences speichern, damit man später drauf zugreifen kann
+                            // TODO die remote config noch in den sharedpreferences speichern, damit man später drauf zugreifen kann
+
+                            // After config data is successfully fetched, it must be activated before newly fetched
+                            // values are returned.
+                            mFirebaseRemoteConfig.activateFetched();
+                            Log.d(TAG, "XXXXX3: " + mFirebaseRemoteConfig.getBoolean(REMOTE_CONFIG_HACKS_ENABLED_KEY));
+
+                            // Tell SystemListFragment that the remote config has been loaded and reload the recyclerlistview
+                            EventBus.getDefault().post(new RemoteConfigLoadedEvent());
+                        } else {
+                            Log.d(TAG, "XXXXX Fetch Failed");
+                        }
+                    }
+                });
     }
 
     @Click(R.id.add_new_cheat_button)
@@ -295,8 +355,7 @@ public class MainActivity extends AppCompatActivity implements ActionBar.OnNavig
         searchView = (SearchView) menu.findItem(R.id.search).getActionView();
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
 
-        // If the nav drawer is open, hide action items related to the content
-        // view
+        // If the nav drawer is open, hide action items related to the content view
         boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
         menu.findItem(R.id.search).setVisible(!drawerOpen);
 

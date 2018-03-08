@@ -1133,17 +1133,19 @@ public class Webservice {
             jArray = new JSONArray(gamesAndCheatCounter);
 
             for (int i = 0; i < jArray.length(); i++) {
-
                 JSONObject jsonObject = jArray.getJSONObject(i);
 
-                SystemPlatform system = new SystemPlatform();
-                system.setSystemId(jsonObject.getInt("systemId"));
-                system.setSystemName(jsonObject.getString("systemName"));
-                system.setGameCount(jsonObject.getInt("gamesCounter"));
-                system.setCheatCount(jsonObject.getInt("cheatsCounter"));
-                system.setLastModTimeStamp(System.currentTimeMillis());
+                // Avoid Android for the time being
+                if (jsonObject.getInt("systemId") != 33) {
+                    SystemPlatform system = new SystemPlatform();
+                    system.setSystemId(jsonObject.getInt("systemId"));
+                    system.setSystemName(jsonObject.getString("systemName"));
+                    system.setGameCount(jsonObject.getInt("gamesCounter"));
+                    system.setCheatCount(jsonObject.getInt("cheatsCounter"));
+                    system.setLastModTimeStamp(System.currentTimeMillis());
 
-                systems.add(system);
+                    systems.add(system);
+                }
             }
 
         } catch (JSONException e) {
