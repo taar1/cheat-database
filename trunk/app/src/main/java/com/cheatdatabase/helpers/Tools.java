@@ -46,6 +46,7 @@ import java.util.regex.Pattern;
  */
 @EBean
 public class Tools {
+    private final String TAG = Tools.class.getSimpleName();
 
     public static boolean isEmailValid(String email) {
         boolean isValid = false;
@@ -216,7 +217,7 @@ public class Tools {
     }
 
     /**
-     * Pr�fen, ob die SD Karte beschreibbar ist.
+     * Prüfen, ob die SD Karte beschreibbar ist.
      * http://developer.android.com/guide
      * /topics/data/data-storage.html#filesExternal
      *
@@ -334,6 +335,7 @@ public class Tools {
      * @return
      */
     public ArrayList<SystemPlatform> getGameSystemsFromXml(Activity activity) {
+        Log.d(TAG, "XXXXX getGameSystemsFromXml()");
 
         ArrayList<SystemPlatform> al = new ArrayList<>();
 

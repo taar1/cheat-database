@@ -28,17 +28,12 @@ public class EmptyRecyclerView extends RecyclerView {
             if (getAdapter().getItemCount() > 0) {
                 emptyView.setVisibility(GONE);
                 setVisibility(VISIBLE);
-//                setBackgroundColor(getResources().getColor(android.R.color.white));
             } else {
                 setVisibility(GONE);
                 emptyView.setVisibility(VISIBLE);
-
-//                setBackgroundColor(getResources().getColor(R.color.postBrown4));
             }
         } else {
-            //emptyView.setVisibility(GONE);
             setVisibility(VISIBLE);
-//            setBackgroundColor(getResources().getColor(android.R.color.white));
         }
         setBackgroundResource(R.drawable.bg);
     }

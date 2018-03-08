@@ -26,7 +26,7 @@
     <string name="no_internet">No Internet connection available. Try again a bit later.</string>
     <string name="search_hint">Search a game</string>
     <string name="splash_screen">Loading Cheat-Database&#8230;&#8230;&#8230;</string>
-    <string name="members_cheats_title">%s\'s Cheats</string>
+    <string name="members_cheats_title">%s\'s Tricks</string>
     <string name="placeholder">Placeholder</string>
 
     <!-- ADS TEXT -->
@@ -51,7 +51,7 @@
     <string name="favorites">Favorites</string>
     <string name="goto_main_screen">Home</string>
     <string name="goto_news">News</string>
-    <string name="goto_games_and_cheats">Games &amp; Cheats</string>
+    <string name="goto_games_and_cheats">Games &amp; Tricks</string>
     <string name="goto_cheat">To cheat</string>
     <string name="goto_cheat_list">To cheat overview</string>
     <string name="menu_fulltext_search_short">Full Text Search</string>

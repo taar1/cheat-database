@@ -31,8 +31,9 @@ public class CheatDatabaseApplication extends Application {
     TreeMap<String, TreeMap<String, Cheat[]>> cheatsByGameCached = new TreeMap<>();
 
 
-    public  final String ACHIEVEMENTS = "achievements";
-    public  final String NO_ACHIEVEMENTS = "noAchievements";
+    public final String ACHIEVEMENTS = "achievements";
+    public final String NO_ACHIEVEMENTS = "noAchievements";
+
 
     // GOOGLE ANALYTICS EXAMPLE CODE
     // https://github.com/googleanalytics/hello-world-android-app/blob/master/app/src/main/java/com/example/googleanalyticshelloworld/MyApp.java
@@ -105,6 +106,7 @@ public class CheatDatabaseApplication extends Application {
 
     /**
      * Naming convention: systemId, "achievements/noAchievements", Game[]
+     *
      * @return
      */
     public TreeMap<String, TreeMap<String, Game[]>> getGamesBySystemCached() {
@@ -113,6 +115,7 @@ public class CheatDatabaseApplication extends Application {
 
     /**
      * Naming convention: systemId, "achievements/noAchievements", Game[]
+     *
      * @param gamesBySystemCached
      */
     public void setGamesBySystemCached(TreeMap<String, TreeMap<String, Game[]>> gamesBySystemCached) {
@@ -121,6 +124,7 @@ public class CheatDatabaseApplication extends Application {
 
     /**
      * Naming convention: gameId, "achievements/noAchievements", Cheat[]
+     *
      * @return
      */
     public TreeMap<String, TreeMap<String, Cheat[]>> getCheatsByGameCached() {
@@ -129,6 +133,7 @@ public class CheatDatabaseApplication extends Application {
 
     /**
      * Naming convention: gameId, "achievements/noAchievements", Cheat[]
+     *
      * @param cheatsByGameCached
      */
     public void setCheatsByGameCached(TreeMap<String, TreeMap<String, Cheat[]>> cheatsByGameCached) {

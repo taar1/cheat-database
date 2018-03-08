@@ -140,5 +140,4 @@ public class GamesBySystemRecycleListViewAdapter extends RecyclerView.Adapter<Ga
         return 100;
     }
 
-
 }

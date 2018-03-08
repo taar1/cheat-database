@@ -12,6 +12,7 @@ import com.cheatdatabase.MainActivity;
 import com.cheatdatabase.R;
 import com.cheatdatabase.adapters.SystemsRecycleListViewAdapter;
 import com.cheatdatabase.businessobjects.SystemPlatform;
+import com.cheatdatabase.events.RemoteConfigLoadedEvent;
 import com.cheatdatabase.events.SystemListRecyclerViewClickEvent;
 import com.cheatdatabase.helpers.CheatDatabaseAdapter;
 import com.cheatdatabase.helpers.Tools;
@@ -35,8 +36,8 @@ import java.util.Comparator;
 
 @EFragment(R.layout.fragment_systemlist)
 public class SystemListFragment extends Fragment {
-
     private final String TAG = SystemListFragment.class.getSimpleName();
+
     private RecyclerView.LayoutManager mLayoutManager;
     private GamesAndCheatsCountTaskResult gamesAndCheatsCountTaskResult;
     private ArrayList<SystemPlatform> systemGameandCheatCounterList = null;
@@ -120,6 +121,22 @@ public class SystemListFragment extends Fragment {
         }
     }
 
+    @Subscribe
+    public void onEvent(RemoteConfigLoadedEvent event) {
+        Log.d(TAG, "XXXXX RemoteConfigLoadedEvent FIRED");
+        // TODO bei getGameSystemsFromXml() die REMOTE CONFIG verwenden
+        // TODO: mFirebaseRemoteConfig.getBoolean(REMOTE_CONFIG_HACKS_ENABLED_KEY)
+        // TODO vorher in MainActivity.java noch die remote config values in die sharedpreferences speichern, damit man von hier aus drauf zugreifen kann
+        // TODO vorher in MainActivity.java noch die remote config values in die sharedpreferences speichern, damit man von hier aus drauf zugreifen kann
+        // TODO vorher in MainActivity.java noch die remote config values in die sharedpreferences speichern, damit man von hier aus drauf zugreifen kann
+        // TODO vorher in MainActivity.java noch die remote config values in die sharedpreferences speichern, damit man von hier aus drauf zugreifen kann
+        // TODO vorher in MainActivity.java noch die remote config values in die sharedpreferences speichern, damit man von hier aus drauf zugreifen kann
+
+        initAdapter(tools.getGameSystemsFromXml(getActivity()));
+        mSwipeRefreshLayout.setRefreshing(true);
+        loadGamesAndCheatsCounterBackground();
+    }
+
     @Background
     public void loadGamesAndCheatsCounterBackground() {
         db.open();
@@ -135,7 +152,6 @@ public class SystemListFragment extends Fragment {
             // load them again from the webservice.
 
             long lastmod = systemsLocal.get(0).getLastModTimeStamp();
-
             long now = System.currentTimeMillis();
             long differenceInHours = (now - lastmod) / (1000 * 60 * 60);
             long differenceInMins = (now - lastmod) / (1000 * 60);
