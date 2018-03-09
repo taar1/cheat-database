@@ -190,9 +190,8 @@ public class Tools {
     }
 
     /**
-     * Prüfen, ob die SD Karte lesbar ist.
-     * http://developer.android.com/guide/topics
-     * /data/data-storage.html#filesExternal
+     * Check whether the SD card is readable.
+     * http://developer.android.com/guide/topics/data/data-storage.html#filesExternal
      *
      * @return boolean
      */
