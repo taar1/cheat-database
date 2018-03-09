@@ -1,4 +1,4 @@
-# cheat-database
+# Cheat-Database
 Cheat-Database app for Android. Collection of tricks, tips, walkthroughs and passwords for games for all past and current video game systems as well as PC and mobile phones.
 
 You can download and install the app through Google Play:
