@@ -123,7 +123,8 @@ public class MainActivity extends AppCompatActivity implements ActionBar.OnNavig
 
     @AfterViews
     public void createView() {
-        setTitle(R.string.app_name);
+//        setTitle(R.string.app_name);
+        showAchievementsDialog();
 
         remoteConfigStuff();
 
@@ -153,8 +154,6 @@ public class MainActivity extends AppCompatActivity implements ActionBar.OnNavig
         // Create Drawer
         // damit das zuletzt aktive fragment wieder angezeigt wird, wenn man auf "back" klickt.
         createNavigationDrawer();
-
-        showAchievementsDialog();
     }
 
     // https://firebase.google.com/docs/remote-config/use-config-android

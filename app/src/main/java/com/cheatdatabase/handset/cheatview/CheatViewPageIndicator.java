@@ -159,7 +159,7 @@ public class CheatViewPageIndicator extends AppCompatActivity {
 
         try {
             mAdapter = new CheatViewFragmentAdapter(getSupportFragmentManager(), gameObj, cheatTitles);
-            mPager = (ViewPager) viewLayout.findViewById(R.id.pager);
+            mPager = viewLayout.findViewById(R.id.pager);
             mPager.setAdapter(mAdapter);
             mPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
                 @Override
@@ -227,7 +227,7 @@ public class CheatViewPageIndicator extends AppCompatActivity {
             ViewPagerHelper.bind(magicIndicator, mPager);
             mPager.setCurrentItem(pageSelected);
 
-            FloatingActionButton fa = (FloatingActionButton) viewLayout.findViewById(R.id.add_new_cheat_button);
+            FloatingActionButton fa = viewLayout.findViewById(R.id.add_new_cheat_button);
             fa.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
