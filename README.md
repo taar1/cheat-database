@@ -1,4 +1,4 @@
-[![Cheat-Database Logo](https://raw.githubusercontent.com/taar1/cheat-database/master/app/src/main/res/drawable-xxhdpi/app_icon_fox.png)](https://play.google.com/store/apps/details?id=com.cheatdatabase) 
+[![Cheat-Database Logo](https://raw.githubusercontent.com/taar1/cheat-database/master/app/src/main/res/drawable-xxhdpi/logo_full.png)](https://play.google.com/store/apps/details?id=com.cheatdatabase) 
 
 # Cheat-Database (for Android)
 Cheat-Database for Android. A continuously growing collection of tricks, tips, walkthroughs and passwords for games on past and current video game systems, PC and mobile phones.
