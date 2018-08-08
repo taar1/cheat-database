@@ -14,6 +14,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.SearchRecentSuggestions;
 import android.support.annotation.NonNull;
+import android.support.annotation.UiThread;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -591,7 +592,9 @@ public class MainActivity extends AppCompatActivity implements ActionBar.OnNavig
         }
     }
 
+    @UiThread
     private void showAchievementsDialog() {
+        // TODO text überarbeiten
         if (!myPrefs.isSeenAchievementsDialog().getOr(false)) {
             MaterialDialog md = new MaterialDialog.Builder(this)
                     .title(R.string.new_feature)
