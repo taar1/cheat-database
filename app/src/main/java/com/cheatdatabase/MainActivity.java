@@ -256,12 +256,18 @@ public class MainActivity extends AppCompatActivity implements ActionBar.OnNavig
         drawerHeaderLogo.setImageResource(R.drawable.logo_full_small);
         drawerHeaderLayout.addView(drawerHeaderLogo);
 
-        mDrawerList = (ListView) findViewById(R.id.left_drawer);
+        mDrawerList = findViewById(R.id.left_drawer);
         mDrawerList.addHeaderView(drawerHeaderLayout);
         mDrawerList.setHeaderDividersEnabled(true);
 
         // set custom shadow that overlays main content when drawer opens
         mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
+
+        // TODO DRAWER IN XML AUSLAGERN
+        // TODO DRAWER IN XML AUSLAGERN
+        // TODO DRAWER IN XML AUSLAGERN
+        // TODO DRAWER IN XML AUSLAGERN
+        // TODO DRAWER IN XML AUSLAGERN
 
         // Add Drawer Item to dataList
         dataList = new ArrayList<>();
