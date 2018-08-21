@@ -15,6 +15,7 @@ import android.os.Bundle;
 import android.provider.SearchRecentSuggestions;
 import android.support.annotation.NonNull;
 import android.support.annotation.UiThread;
+import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -95,6 +96,8 @@ public class MainActivity extends AppCompatActivity implements ActionBar.OnNavig
     Toolbar mToolbar;
     @ViewById(R.id.drawer_layout)
     DrawerLayout mDrawerLayout;
+    @ViewById(R.id.nav_view)
+    NavigationView navigationView;
 
     public static final String DRAWER_ITEM_ID = "drawerId";
     public static final String DRAWER_ITEM_NAME = "drawerName";
@@ -124,9 +127,7 @@ public class MainActivity extends AppCompatActivity implements ActionBar.OnNavig
 
     @AfterViews
     public void createView() {
-//        setTitle(R.string.app_name);
         showAchievementsDialog();
-
         remoteConfigStuff();
 
         Mint.initAndStartSession(this, Konstanten.SPLUNK_MINT_API_KEY);
@@ -143,8 +144,6 @@ public class MainActivity extends AppCompatActivity implements ActionBar.OnNavig
 
         tools.loadAd(mAdView, getString(R.string.screen_type));
 
-        //CheatDatabaseApplication.tracker().send(new HitBuilders.EventBuilder("ui", "MainActivity").setLabel("activity").build());
-
         AppBrain.init(this);
 
         // TODO FIXME - find out where this part was before and re-add it.
@@ -154,7 +153,24 @@ public class MainActivity extends AppCompatActivity implements ActionBar.OnNavig
 
         // Create Drawer
         // damit das zuletzt aktive fragment wieder angezeigt wird, wenn man auf "back" klickt.
-        createNavigationDrawer();
+//        createNavigationDrawer();
+
+        navigationView.setNavigationItemSelectedListener(
+                new NavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(MenuItem menuItem) {
+                        // set item as selected to persist highlight
+                        menuItem.setChecked(true);
+                        // close drawer when item is tapped
+                        mDrawerLayout.closeDrawers();
+
+                        // Add code here to update the UI based on the item selected
+                        // For example, swap UI fragments here
+
+                        return true;
+                    }
+                });
+
     }
 
     // https://firebase.google.com/docs/remote-config/use-config-android
@@ -175,7 +191,7 @@ public class MainActivity extends AppCompatActivity implements ActionBar.OnNavig
         }
 
         mFirebaseRemoteConfig.fetch(cacheExpiration)
-                .addOnCompleteListener( this, new OnCompleteListener<Void>() {
+                .addOnCompleteListener(this, new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
@@ -271,14 +287,14 @@ public class MainActivity extends AppCompatActivity implements ActionBar.OnNavig
 
         // Add Drawer Item to dataList
         dataList = new ArrayList<>();
-        dataList.add(new DrawerItem(getString(R.string.goto_games_and_cheats), R.drawable.drawer_cheats_24px));
-        dataList.add(new DrawerItem(getString(R.string.favorites), R.drawable.drawer_favorites_24px));
-        dataList.add(new DrawerItem(getString(R.string.top_members_title), R.drawable.drawer_members_24px));
-        dataList.add(new DrawerItem(getString(R.string.submit_cheat_title), R.drawable.drawer_upload_18px));
-        dataList.add(new DrawerItem(getString(R.string.menu_more_apps), R.drawable.drawer_more_18px));
-        dataList.add(new DrawerItem(getString(R.string.rate_us), R.drawable.drawer_rate_18px));
-        dataList.add(new DrawerItem(getString(R.string.contactform_title), R.drawable.drawer_contact_18px));
-        dataList.add(new DrawerItem(getString(R.string.action_settings), R.drawable.drawer_settings_18px));
+        dataList.add(new DrawerItem(getString(R.string.goto_games_and_cheats), R.drawable.ic_drawer_cheats));
+        dataList.add(new DrawerItem(getString(R.string.favorites), R.drawable.ic_drawer_favorites));
+        dataList.add(new DrawerItem(getString(R.string.top_members_title), R.drawable.ic_drawer_members));
+        dataList.add(new DrawerItem(getString(R.string.submit_cheat_title), R.drawable.ic_drawer_upload));
+        dataList.add(new DrawerItem(getString(R.string.menu_more_apps), R.drawable.ic_drawer_more));
+        dataList.add(new DrawerItem(getString(R.string.rate_us), R.drawable.ic_drawer_rate));
+        dataList.add(new DrawerItem(getString(R.string.contactform_title), R.drawable.ic_drawer_contact));
+        dataList.add(new DrawerItem(getString(R.string.action_settings), R.drawable.ic_drawer_settings));
 
         mAdapter = new CustomDrawerAdapter(this, R.layout.custom_drawer_item, dataList);
         mDrawerList.setAdapter(mAdapter);

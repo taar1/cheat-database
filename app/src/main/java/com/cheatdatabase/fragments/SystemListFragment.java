@@ -193,7 +193,7 @@ public class SystemListFragment extends Fragment {
                     gamesAndCheatsCountTaskResult = new GamesAndCheatsCountTaskResult(systemGameandCheatCounterList);
                 }
             } catch (Exception e) {
-                db.deleteSystemsAndCount();
+                //db.deleteSystemsAndCount();
                 Log.e(TAG, "Load game and cheats counters failed: " + e.getLocalizedMessage());
                 gamesAndCheatsCountTaskResult = new GamesAndCheatsCountTaskResult(new Exception());
             }
