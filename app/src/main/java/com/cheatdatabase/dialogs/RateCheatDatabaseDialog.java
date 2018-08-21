@@ -113,7 +113,12 @@ public class RateCheatDatabaseDialog {
                 .onPositive(new MaterialDialog.SingleButtonCallback() {
                     @Override
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                        mainActivityCallbacks.openDrawerItem(MainActivity.DRAWER_CONTACT);
+                        // TODO FIXME
+                        // TODO FIXME
+                        // TODO FIXME
+                        // TODO FIXME
+                        // TODO FIXME
+//                        mainActivityCallbacks.openDrawerItem(MainActivity.DRAWER_CONTACT);
                     }
                 })
                 .onNegative(new MaterialDialog.SingleButtonCallback() {

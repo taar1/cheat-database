@@ -107,34 +107,34 @@ ext {
 }
 
 dependencies {
-    compile "com.afollestad.material-dialogs:core:0.9.6.0"
-    compile "com.google.firebase:firebase-core:$playServicesVersion"
-    compile "com.google.firebase:firebase-invites:$playServicesVersion"
-    compile "com.google.firebase:firebase-config:$playServicesVersion"
-    compile "com.android.support:appcompat-v7:$supportVersion"
-    compile "com.android.support:design:$supportVersion"
-    compile "com.android.support:recyclerview-v7:$supportVersion"
-    compile "com.github.vajro:MaterialDesignLibrary:1.6"
-    compile "com.google.code.gson:gson:2.3"
-    compile "com.google.android.gms:play-services-analytics:$playServicesVersion"
-    compile "com.google.android.gms:play-services-auth:$playServicesVersion"
-    compile "com.squareup.picasso:picasso:2.5.2"
-    compile "com.splunk.mint:mint:4.1"
-    compile "com.appbrain:appbrain-applift-sdk:+"
-    compile "org.greenrobot:eventbus:3.1.1"
+    implementation "com.afollestad.material-dialogs:core:0.9.6.0"
+    implementation "com.google.firebase:firebase-core:$playServicesVersion"
+    implementation "com.google.firebase:firebase-invites:$playServicesVersion"
+    implementation "com.google.firebase:firebase-config:$playServicesVersion"
+    implementation "com.android.support:appcompat-v7:$supportVersion"
+    implementation "com.android.support:design:$supportVersion"
+    implementation "com.android.support:recyclerview-v7:$supportVersion"
+    implementation "com.github.vajro:MaterialDesignLibrary:1.6"
+    implementation "com.google.code.gson:gson:2.3"
+    implementation "com.google.android.gms:play-services-analytics:$playServicesVersion"
+    implementation "com.google.android.gms:play-services-auth:$playServicesVersion"
+    implementation "com.squareup.picasso:picasso:2.5.2"
+    implementation "com.splunk.mint:mint:4.1"
+    implementation "com.appbrain:appbrain-applift-sdk:+"
+    implementation "org.greenrobot:eventbus:3.1.1"
     annotationProcessor "org.androidannotations:androidannotations:$AAVersion"
     annotationProcessor "org.androidannotations:ormlite:$AAVersion"
-    compile "org.androidannotations:androidannotations-api:$AAVersion"
-    compile("com.mopub:mopub-sdk:4.19.0@aar") {
+    implementation "org.androidannotations:androidannotations-api:$AAVersion"
+    implementation("com.mopub:mopub-sdk:4.19.0@aar") {
         transitive = true
         // Exclude this to make it work with Gradle 3 / Android Studio 3
         exclude module: "libAvid-mopub" // To exclude AVID
         exclude module: "moat-mobile-app-kit" // To exclude Moat
     }
-    compile "com.github.hackware1993:MagicIndicator:1.5.0"
-    compile 'com.simplecityapps:recyclerview-fastscroll:1.0.16'
-//    compile "com.appolica:flubber:1.0.1" // https://android-arsenal.com/details/1/6139 (VIEW ANIMATIONS)
-    compile('com.crashlytics.sdk.android:crashlytics:2.8.0@aar') {
+    implementation "com.github.hackware1993:MagicIndicator:1.5.0"
+    implementation 'com.simplecityapps:recyclerview-fastscroll:1.0.16'
+//    implementation "com.appolica:flubber:1.0.1" // https://android-arsenal.com/details/1/6139 (VIEW ANIMATIONS)
+    implementation('com.crashlytics.sdk.android:crashlytics:2.8.0@aar') {
         transitive = true;
     }
 }

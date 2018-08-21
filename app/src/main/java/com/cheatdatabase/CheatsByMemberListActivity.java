@@ -193,7 +193,11 @@ public class CheatsByMemberListActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             // Respond to the action bar's Up/Home button
             case android.R.id.home:
-                MainActivity_.intent(this).mFragmentId(MainActivity.DRAWER_TOP_MEMBERS).start();
+                // TODO FIXME
+                // TODO FIXME
+                // TODO FIXME
+                // TODO FIXME
+//                MainActivity_.intent(this).mFragmentId(MainActivity.DRAWER_TOP_MEMBERS).start();
                 return true;
         }
         return super.onOptionsItemSelected(item);

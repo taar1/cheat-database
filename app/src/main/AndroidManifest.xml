@@ -45,6 +45,16 @@
                 android:name="android.app.default_searchable"
                 android:value="com.cheatdatabase.search.SearchResultsActivity" />
         </activity>
+
+        <activity
+            android:name=".GamesBySystemActivity_"
+            android:parentActivityName=".MainActivity_">
+            <meta-data
+                android:name="android.app.default_searchable"
+                android:value="com.cheatdatabase.search.SearchResultsActivity" />
+        </activity>
+
+
         <activity
             android:name=".search.SearchResultsActivity"
             android:label="@string/title_activity_search_result"

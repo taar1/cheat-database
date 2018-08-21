@@ -35,8 +35,7 @@
         <include layout="@layout/adview" />
     </LinearLayout>
 
-    <!--TODO DRAWER IN XML AUSLAGERN-->
-    <!--TODO DRAWER IN XML AUSLAGERN-->
+
     <android.support.design.widget.NavigationView
         android:id="@+id/nav_view"
         android:layout_width="wrap_content"
@@ -48,14 +47,5 @@
         app:headerLayout="@layout/drawer_header"
         app:menu="@menu/drawer_view"></android.support.design.widget.NavigationView>
 
-    <ListView
-        android:id="@+id/left_drawer"
-        android:layout_width="280dp"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        android:background="@color/drawer_background"
-        android:choiceMode="singleChoice"
-        android:dividerHeight="0dp"
-        android:fitsSystemWindows="true" />
 
 </android.support.v4.widget.DrawerLayout>
