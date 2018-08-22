@@ -33,6 +33,7 @@ import com.afollestad.materialdialogs.Theme;
 import com.appbrain.AppBrain;
 import com.cheatdatabase.businessobjects.Member;
 import com.cheatdatabase.dialogs.RateCheatDatabaseDialog;
+import com.cheatdatabase.events.GenericEvent;
 import com.cheatdatabase.events.RemoteConfigLoadedEvent;
 import com.cheatdatabase.fragments.ContactFormFragment_;
 import com.cheatdatabase.fragments.FavoriteGamesListFragment_;
@@ -63,6 +64,7 @@ import org.androidannotations.annotations.OnActivityResult;
 import org.androidannotations.annotations.ViewById;
 import org.androidannotations.annotations.sharedpreferences.Pref;
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.List;
 
@@ -352,8 +354,8 @@ public class MainActivity extends AppCompatActivity implements ActionBar.OnNavig
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
 
         // If the nav drawer is open, hide action items related to the content view
-        boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
-        menu.findItem(R.id.search).setVisible(!drawerOpen);
+//        boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
+//        menu.findItem(R.id.search).setVisible(!drawerOpen);
 
         return super.onPrepareOptionsMenu(menu);
     }
@@ -582,12 +584,13 @@ public class MainActivity extends AppCompatActivity implements ActionBar.OnNavig
         super.onStop();
     }
 
-//    @Subscribe
-//    public void onEvent(GenericEvent event) {
-//        if (event.getAction() == GenericEvent.Action.CLICK_CHEATS_DRAWER) {
-//            selectItem(DRAWER_MAIN);
-//        }
-//    }
+    @Subscribe
+    public void onEvent(GenericEvent event) {
+        if (event.getAction() == GenericEvent.Action.CLICK_CHEATS_DRAWER) {
+            // TODO
+            //selectItem(DRAWER_MAIN);
+        }
+    }
 
     @UiThread
     private void showAchievementsDialog() {
