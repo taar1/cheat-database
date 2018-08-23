@@ -21,7 +21,7 @@ android {
     defaultConfig {
         applicationId APK_ID
         archivesBaseName = APK_NAME
-        minSdkVersion 16
+        minSdkVersion 19
         targetSdkVersion 27
         versionCode VERSION_CODE
         versionName VERSION_NAME
@@ -79,9 +79,6 @@ android {
 
 repositories {
     maven {
-        url "https://mint.splunk.com/gradle/"
-    }
-    maven {
         url 'http://swisscodemonkeys.github.io/appbrain-sdk/maven'
     }
     maven {
@@ -96,6 +93,7 @@ repositories {
         url 'https://maven.google.com'
     }
     maven { url 'https://maven.fabric.io/public' }
+    maven { url "https://dl.bintray.com/drummer-aidan/maven/" }
     jcenter()
     mavenCentral()
 }
@@ -107,25 +105,27 @@ ext {
 }
 
 dependencies {
-    implementation "com.afollestad.material-dialogs:core:0.9.6.0"
     implementation "com.google.firebase:firebase-core:$playServicesVersion"
     implementation "com.google.firebase:firebase-invites:$playServicesVersion"
     implementation "com.google.firebase:firebase-config:$playServicesVersion"
-    implementation "com.android.support:appcompat-v7:$supportVersion"
-    implementation "com.android.support:design:$supportVersion"
-    implementation "com.android.support:recyclerview-v7:$supportVersion"
+    implementation "com.google.firebase:firebase-crash:$playServicesVersion"
+    implementation "com.google.firebase:firebase-messaging:$playServicesVersion"
+    implementation "com.google.firebase:firebase-appindexing:$playServicesVersion"
     implementation "com.github.vajro:MaterialDesignLibrary:1.6"
-    implementation "com.google.code.gson:gson:2.3"
+    implementation "com.afollestad.material-dialogs:core:0.9.6.0"
+    implementation "com.google.code.gson:gson:2.8.5"
     implementation "com.google.android.gms:play-services-analytics:$playServicesVersion"
     implementation "com.google.android.gms:play-services-auth:$playServicesVersion"
-    implementation "com.squareup.picasso:picasso:2.5.2"
-    implementation "com.splunk.mint:mint:4.1"
+    implementation 'com.squareup.picasso:picasso:2.71828'
     implementation "com.appbrain:appbrain-applift-sdk:+"
     implementation "org.greenrobot:eventbus:3.1.1"
+    implementation "com.android.support:design:$supportVersion"
+    implementation "com.android.support:recyclerview-v7:$supportVersion"
+    implementation "com.android.support:appcompat-v7:$supportVersion"
     annotationProcessor "org.androidannotations:androidannotations:$AAVersion"
     annotationProcessor "org.androidannotations:ormlite:$AAVersion"
     implementation "org.androidannotations:androidannotations-api:$AAVersion"
-    implementation("com.mopub:mopub-sdk:4.19.0@aar") {
+    implementation("com.mopub:mopub-sdk:5.3.0@aar") {
         transitive = true
         // Exclude this to make it work with Gradle 3 / Android Studio 3
         exclude module: "libAvid-mopub" // To exclude AVID
@@ -133,12 +133,9 @@ dependencies {
     }
     implementation "com.github.hackware1993:MagicIndicator:1.5.0"
     implementation 'com.simplecityapps:recyclerview-fastscroll:1.0.16'
-//    implementation "com.appolica:flubber:1.0.1" // https://android-arsenal.com/details/1/6139 (VIEW ANIMATIONS)
-    implementation('com.crashlytics.sdk.android:crashlytics:2.8.0@aar') {
-        transitive = true;
+    implementation('com.crashlytics.sdk.android:crashlytics:2.9.1@aar') {
+        transitive = true
     }
 }
 
-// ADD THIS AT THE BOTTOM
-// Needed for Google Analytics
 apply plugin: "com.google.gms.google-services"

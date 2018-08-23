@@ -47,7 +47,7 @@ import com.cheatdatabase.helpers.Tools;
 import com.cheatdatabase.helpers.Webservice;
 import com.google.gson.Gson;
 import com.mopub.mobileads.MoPubView;
-import com.splunk.mint.Mint;
+
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Background;
@@ -153,7 +153,7 @@ public class CheatForumActivity extends AppCompatActivity implements CheatListFr
         if (!Reachability.isRegistered()) {
             Reachability.registerReachability(this);
         }
-        Mint.initAndStartSession(this, Konstanten.SPLUNK_MINT_API_KEY);
+
 
         settings = getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
 

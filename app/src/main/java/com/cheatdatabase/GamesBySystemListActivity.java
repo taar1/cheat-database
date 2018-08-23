@@ -26,7 +26,7 @@ import com.cheatdatabase.helpers.Webservice;
 import com.cheatdatabase.widgets.DividerDecoration;
 import com.mopub.mobileads.MoPubView;
 import com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView;
-import com.splunk.mint.Mint;
+
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.App;
@@ -103,7 +103,7 @@ public class GamesBySystemListActivity extends AppCompatActivity {
     }
 
     private void init() {
-        Mint.initAndStartSession(this, Konstanten.SPLUNK_MINT_API_KEY);
+
 
         tools.loadAd(mAdView, getString(R.string.screen_type));
 

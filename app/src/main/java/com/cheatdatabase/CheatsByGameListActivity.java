@@ -42,7 +42,7 @@ import com.cheatdatabase.widgets.DividerDecoration;
 import com.google.gson.Gson;
 import com.mopub.mobileads.MoPubView;
 import com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView;
-import com.splunk.mint.Mint;
+
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.App;
@@ -134,7 +134,7 @@ public class CheatsByGameListActivity extends AppCompatActivity {
     }
 
     private void init() {
-        Mint.initAndStartSession(this, Konstanten.SPLUNK_MINT_API_KEY);
+
 //        db = new CheatDatabaseAdapter(this);
 //        db.open();
 

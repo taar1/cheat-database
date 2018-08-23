@@ -13,7 +13,7 @@ import com.cheatdatabase.R;
 import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.helpers.Tools;
-import com.splunk.mint.Mint;
+
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EFragment;
@@ -49,7 +49,7 @@ public class SubmitCheatFragment extends Fragment {
         if (!Reachability.isRegistered()) {
             Reachability.registerReachability(ca);
         }
-        Mint.initAndStartSession(ca.getApplicationContext(), Konstanten.SPLUNK_MINT_API_KEY);
+
 
         latoFontLight = Tools.getFont(ca.getAssets(), Konstanten.FONT_LIGHT);
         latoFontBold = Tools.getFont(ca.getAssets(), Konstanten.FONT_BOLD);

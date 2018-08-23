@@ -20,7 +20,6 @@ import com.cheatdatabase.businessobjects.Member;
 import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Tools;
 import com.cheatdatabase.helpers.Webservice;
-import com.splunk.mint.Mint;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -42,7 +41,6 @@ public class CheatMetaDialog extends Dialog implements OnClickListener {
     private TextView tvAverageRatingTitle;
     private TextView tvSubmittedByTitle;
     private TextView tvTotalSubmissionsMemberTitle;
-
     private TextView tvAverageRatingText;
     private TextView tvTotalViewsText;
     private TextView tvSubmissionDateText;
@@ -73,47 +71,45 @@ public class CheatMetaDialog extends Dialog implements OnClickListener {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.layout_cheatview_meta_dialog);
 
-        Mint.initAndStartSession(context.getApplicationContext(), Konstanten.SPLUNK_MINT_API_KEY);
-
         member = cheat.getSubmittingMember();
 
         new MetaDataLoader().execute(cheat);
 
-        title_cheat_details = (TextView) findViewById(R.id.title_cheat_details);
+        title_cheat_details = findViewById(R.id.title_cheat_details);
         title_cheat_details.setTypeface(latoFontBold);
-        submission_date_title = (TextView) findViewById(R.id.submission_date_title);
+        submission_date_title = findViewById(R.id.submission_date_title);
         submission_date_title.setTypeface(latoFontBold);
-        lifetime_views_title = (TextView) findViewById(R.id.lifetime_views_title);
+        lifetime_views_title = findViewById(R.id.lifetime_views_title);
         lifetime_views_title.setTypeface(latoFontBold);
-        views_today_title = (TextView) findViewById(R.id.views_today_title);
+        views_today_title = findViewById(R.id.views_today_title);
         views_today_title.setTypeface(latoFontBold);
-        tvAverageRatingTitle = (TextView) findViewById(R.id.tvAverageRatingTitle);
+        tvAverageRatingTitle = findViewById(R.id.tvAverageRatingTitle);
         tvAverageRatingTitle.setTypeface(latoFontBold);
-        tvSubmittedByTitle = (TextView) findViewById(R.id.tvSubmittedByTitle);
+        tvSubmittedByTitle = findViewById(R.id.tvSubmittedByTitle);
         tvSubmittedByTitle.setTypeface(latoFontBold);
-        tvTotalSubmissionsMemberTitle = (TextView) findViewById(R.id.tvTotalSubmissionsMemberTitle);
+        tvTotalSubmissionsMemberTitle = findViewById(R.id.tvTotalSubmissionsMemberTitle);
         tvTotalSubmissionsMemberTitle.setTypeface(latoFontBold);
 
-        tvAverageRatingText = (TextView) findViewById(R.id.tvAverageRatingText);
+        tvAverageRatingText = findViewById(R.id.tvAverageRatingText);
         tvAverageRatingText.setTypeface(latoFontLight);
 
-        tvTotalViewsText = (TextView) findViewById(R.id.lifetime_views_text);
+        tvTotalViewsText = findViewById(R.id.lifetime_views_text);
         tvTotalViewsText.setOnClickListener(this);
         tvTotalViewsText.setTypeface(latoFontLight);
 
-        tvViewsTodayText = (TextView) findViewById(R.id.views_today_text);
+        tvViewsTodayText = findViewById(R.id.views_today_text);
         tvViewsTodayText.setOnClickListener(this);
         tvViewsTodayText.setTypeface(latoFontLight);
 
-        tvTotalSubmissionCountMemberText = (TextView) findViewById(R.id.tvTotalSubmissionsMemberText);
+        tvTotalSubmissionCountMemberText = findViewById(R.id.tvTotalSubmissionsMemberText);
         tvTotalSubmissionCountMemberText.setOnClickListener(this);
         tvTotalSubmissionCountMemberText.setTypeface(latoFontLight);
 
-        tvTotalSubmissionShowAll = (TextView) findViewById(R.id.tvTotalSubmissionsShow);
+        tvTotalSubmissionShowAll = findViewById(R.id.tvTotalSubmissionsShow);
         tvTotalSubmissionShowAll.setOnClickListener(this);
         tvTotalSubmissionShowAll.setTypeface(latoFontLight);
 
-        tvSubmissionDateText = (TextView) findViewById(R.id.submission_date_text);
+        tvSubmissionDateText = findViewById(R.id.submission_date_text);
         tvSubmissionDateText.setOnClickListener(this);
         tvSubmissionDateText.setTypeface(latoFontLight);
 
@@ -195,9 +191,9 @@ public class CheatMetaDialog extends Dialog implements OnClickListener {
                     llBuffer6.setVisibility(View.GONE);
                 }
 
-				/*
+                /*
                  * Bei Member-ID 1 werden Teile ausgeblendet
-				 */
+                 */
                 if (member.getMid() <= 1) {
                     llSubmittedBy.setVisibility(View.GONE);
                     llCountSubmissions.setVisibility(View.GONE);
@@ -215,16 +211,16 @@ public class CheatMetaDialog extends Dialog implements OnClickListener {
 
                     if (member.getWebsite().length() > 3) {
                         llMemberHomepage.setVisibility(View.VISIBLE);
-                        tvMemberHomepageText = (TextView) findViewById(R.id.tvMemberHomepageText);
+                        tvMemberHomepageText = findViewById(R.id.tvMemberHomepageText);
                         tvMemberHomepageText.setText(member.getWebsite());
                         tvMemberHomepageText.setOnClickListener(CheatMetaDialog.this);
                         tvMemberHomepageText.setTypeface(latoFontLight);
                     } else {
                         llBuffer6.setVisibility(View.INVISIBLE);
                     }
-                    tvAuthorText = (TextView) findViewById(R.id.tvSubmittedByText);
+                    tvAuthorText = findViewById(R.id.tvSubmittedByText);
                     tvAuthorText.setTypeface(latoFontLight);
-                    tvMemberHomepageTitle = (TextView) findViewById(R.id.tvMemberHomepageTitle);
+                    tvMemberHomepageTitle = findViewById(R.id.tvMemberHomepageTitle);
                     tvMemberHomepageTitle.setTypeface(latoFontBold);
                     if (member.getUsername().length() > 1) {
                         tvAuthorText.setText(member.getUsername());

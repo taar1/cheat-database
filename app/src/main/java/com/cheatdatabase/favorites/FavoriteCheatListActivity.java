@@ -40,7 +40,7 @@ import com.cheatdatabase.widgets.EmptyRecyclerView;
 import com.gc.materialdesign.views.ProgressBarCircularIndeterminate;
 import com.google.gson.Gson;
 import com.mopub.mobileads.MoPubView;
-import com.splunk.mint.Mint;
+
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Background;
@@ -138,7 +138,7 @@ public class FavoriteCheatListActivity extends AppCompatActivity {
     private void init() {
         //CheatDatabaseApplication.tracker().send(new HitBuilders.EventBuilder("ui", "Favorites Cheat List").setLabel(TAG).build());
 
-        Mint.initAndStartSession(this, Konstanten.SPLUNK_MINT_API_KEY);
+
 
         tools.loadAd(mAdView, getString(R.string.screen_type));
 

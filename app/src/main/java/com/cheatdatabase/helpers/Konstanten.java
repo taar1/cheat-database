@@ -71,7 +71,6 @@ public class Konstanten {
     public final static String MOBILECORE_DEVELOPER_HASH = "199AFTT5YE9OVNXRKEAT08E4BWV2T";
     public final static String MDOTM_API_KEY = "ee6de4fe5b8fde6a06f161973f712ded";
     public final static String AMAZON_API_KEY = "cf2064f5f51249ecbd6b86f6c86d382a";
-    public final static String SPLUNK_MINT_API_KEY = "b19b084a";
     public final static String OGURY_API_KEY = "264890";
 
     // SD CARD SETTINGS

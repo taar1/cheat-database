@@ -130,7 +130,6 @@ public class TopMembersListViewAdapter extends RecyclerView.Adapter<TopMembersLi
 
             @Override
             public void onClick(View v) {
-//                //CheatDatabaseApplication.tracker().send(new HitBuilders.EventBuilder("ui", "show_member_website").setLabel(memberObj.getUsername()).build());
                 openWebsite(memberObj.getWebsite());
             }
         });
@@ -152,7 +151,7 @@ public class TopMembersListViewAdapter extends RecyclerView.Adapter<TopMembersLi
             }
 
         });
-        Picasso.with(mContext.getApplicationContext()).load(Konstanten.WEBDIR_MEMBER_AVATAR + memberObj.getMid()).placeholder(R.drawable.avatar).into(holder.avatarImageView);
+        Picasso.get().load(Konstanten.WEBDIR_MEMBER_AVATAR + memberObj.getMid()).placeholder(R.drawable.avatar).into(holder.avatarImageView);
     }
 
     @Override

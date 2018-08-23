@@ -18,7 +18,6 @@ import com.cheatdatabase.adapters.GamesBySystemRecycleListViewAdapter;
 import com.cheatdatabase.businessobjects.Game;
 import com.cheatdatabase.businessobjects.SystemPlatform;
 import com.cheatdatabase.events.GameListRecyclerViewClickEvent;
-import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.MyPrefs_;
 import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.helpers.Tools;
@@ -27,7 +26,6 @@ import com.cheatdatabase.widgets.DividerDecoration;
 import com.gc.materialdesign.views.ProgressBarCircularIndeterminate;
 import com.mopub.mobileads.MoPubView;
 import com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView;
-import com.splunk.mint.Mint;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.App;
@@ -117,7 +115,7 @@ public class GamesBySystemActivity extends AppCompatActivity {
     }
 
     private void init() {
-        Mint.initAndStartSession(this, Konstanten.SPLUNK_MINT_API_KEY);
+
 
         tools.loadAd(mAdView, getString(R.string.screen_type));
 

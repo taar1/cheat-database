@@ -3,11 +3,15 @@ package com.cheatdatabase;
 import android.app.Application;
 import android.content.Context;
 import android.graphics.Typeface;
+import android.net.ConnectivityManager;
 
 import com.cheatdatabase.businessobjects.Cheat;
 import com.cheatdatabase.businessobjects.Game;
 import com.cheatdatabase.helpers.Konstanten;
 import com.crashlytics.android.Crashlytics;
+import com.google.android.gms.analytics.GoogleAnalytics;
+import com.google.android.gms.analytics.Tracker;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import org.androidannotations.annotations.EApplication;
 
@@ -33,6 +37,33 @@ public class CheatDatabaseApplication extends Application {
 
     public final String ACHIEVEMENTS = "achievements";
     public final String NO_ACHIEVEMENTS = "noAchievements";
+
+    private static CheatDatabaseApplication currentApplicationInstance;
+    private Tracker googleAnalyticsTracker;
+    private FirebaseAnalytics firebaseAnalytics;
+    private ConnectivityManager connectivityManager;
+
+    /**
+     * Gets the default {@link Tracker} for this {@link CheatDatabaseApplication}.
+     *
+     * @return Tracker
+     */
+    synchronized public Tracker getGoogleAnalyticsTracker() {
+        if (googleAnalyticsTracker == null) {
+            GoogleAnalytics analytics = GoogleAnalytics.getInstance(this);
+            googleAnalyticsTracker = analytics.newTracker(Konstanten.GOOGLE_ANALYTICS_ID);
+        }
+        return googleAnalyticsTracker;
+    }
+
+    /**
+     * Get the current cineman app instance
+     *
+     * @return CinemanApplication
+     */
+    public static CheatDatabaseApplication getCurrentAppInstance() {
+        return currentApplicationInstance;
+    }
 
 
     // GOOGLE ANALYTICS EXAMPLE CODE
@@ -70,7 +101,12 @@ public class CheatDatabaseApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        currentApplicationInstance = this;
         Fabric.with(this, new Crashlytics());
+
+        // Set firebase logging
+        firebaseAnalytics = FirebaseAnalytics.getInstance(getApplicationContext());
+
 //        analytics = GoogleAnalytics.getInstance(this);
 //        // TODO: Replace the tracker-id with your app one from https://www.google.com/analytics/web/
 //        tracker = analytics.newTracker(Konstanten.GOOGLE_ANALYTICS_ID);

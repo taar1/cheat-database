@@ -45,6 +45,7 @@ import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.MyPrefs_;
 import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.helpers.Tools;
+import com.cheatdatabase.helpers.TrackingUtils;
 import com.cheatdatabase.navigationdrawer.CustomDrawerAdapter;
 import com.cheatdatabase.navigationdrawer.DrawerItem;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -53,7 +54,6 @@ import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings;
 import com.google.gson.Gson;
 import com.mopub.mobileads.MoPubView;
-import com.splunk.mint.Mint;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Bean;
@@ -112,6 +112,7 @@ public class MainActivity extends AppCompatActivity implements ActionBar.OnNavig
 
 
     private FirebaseRemoteConfig mFirebaseRemoteConfig;
+
     // Remote Config keys
     private static final String REMOTE_CONFIG_HACKS_ENABLED_KEY = "hacks_enabled";
     private static final String REMOTE_CONFIG_IOS_ENABLED_KEY = "ios_enabled";
@@ -119,13 +120,9 @@ public class MainActivity extends AppCompatActivity implements ActionBar.OnNavig
 
     @AfterViews
     public void createView() {
+        init();
         showAchievementsDialog();
         remoteConfigStuff();
-
-        Mint.initAndStartSession(this, Konstanten.SPLUNK_MINT_API_KEY);
-
-        settings = getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
-        editor = settings.edit();
 
         if (mToolbar != null) {
             setSupportActionBar(mToolbar);
@@ -135,8 +132,6 @@ public class MainActivity extends AppCompatActivity implements ActionBar.OnNavig
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.app_icon_fox);
 
         tools.loadAd(mAdView, getString(R.string.screen_type));
-
-        AppBrain.init(this);
 
         // TODO FIXME - find out where this part was before and re-add it.
         FragmentManager frgManager = getFragmentManager();
@@ -148,6 +143,16 @@ public class MainActivity extends AppCompatActivity implements ActionBar.OnNavig
 //        createNavigationDrawer();
 
         navigationView.setNavigationItemSelectedListener(this);
+    }
+
+    private void init() {
+        settings = getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
+        editor = settings.edit();
+
+        // Initialize the Tracking Utils
+        TrackingUtils.getInstance().init(this);
+
+        AppBrain.init(this);
     }
 
     // https://firebase.google.com/docs/remote-config/use-config-android

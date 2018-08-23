@@ -41,7 +41,7 @@ import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.helpers.Tools;
 import com.google.gson.Gson;
 import com.mopub.mobileads.MoPubView;
-import com.splunk.mint.Mint;
+
 
 import net.lucode.hackware.magicindicator.MagicIndicator;
 import net.lucode.hackware.magicindicator.ViewPagerHelper;
@@ -142,7 +142,7 @@ public class MemberCheatViewPageIndicator extends AppCompatActivity {
     }
 
     private void init() {
-        Mint.initAndStartSession(this, Konstanten.SPLUNK_MINT_API_KEY);
+
 
         settings = getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
         editor = settings.edit();
