@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Build;
+import android.support.design.widget.TextInputEditText;
 import android.text.TextUtils;
 import android.text.util.Linkify;
 import android.view.KeyEvent;
@@ -17,9 +18,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.cheatdatabase.MainActivity;
 import com.cheatdatabase.R;
@@ -42,10 +42,12 @@ import org.greenrobot.eventbus.EventBus;
 @EFragment(R.layout.fragment_contact_form)
 public class ContactFormFragment extends Fragment {
 
+    @ViewById(R.id.outer_layout)
+    LinearLayout outerLayout;
     @ViewById(R.id.email)
-    EditText mEmailView;
+    TextInputEditText mEmailView;
     @ViewById(R.id.form_message)
-    EditText mMessageView;
+    TextInputEditText mMessageView;
     @ViewById(R.id.emailaddress)
     TextView mEmailaddressView;
     @ViewById(R.id.send_status_message)
@@ -56,7 +58,7 @@ public class ContactFormFragment extends Fragment {
     View mContactFormView;
     @ViewById(R.id.send_status)
     View mContactStatusView;
-    @ViewById(R.id.thankyou)
+    @ViewById(R.id.thank_you)
     View mThankyouView;
 
     @FragmentArg(MainActivity.DRAWER_ITEM_ID)
@@ -116,6 +118,12 @@ public class ContactFormFragment extends Fragment {
         mEmailaddressView.setTypeface(latoFontLight);
         mThankyouText.setTypeface(latoFontLight);
         mLoginStatusMessageView.setTypeface(latoFontLight);
+
+        // TODO FIXME keyboard anzeigen
+        // TODO FIXME keyboard anzeigen
+        // TODO FIXME keyboard anzeigen
+        // TODO FIXME keyboard anzeigen
+//        Tools.showKeyboard(getActivity(), outerLayout);
     }
 
     @Override
@@ -289,11 +297,11 @@ public class ContactFormFragment extends Fragment {
             InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
-        Toast.makeText(getActivity(), getActivity().getString(R.string.contactform_thanks), Toast.LENGTH_LONG).show();
+        Tools.showSnackbar(outerLayout, getActivity().getString(R.string.contactform_thanks));
         forwardToMainView();
     }
 
-    @UiThread(delay = 2000)
+    @UiThread(delay = 1500)
     public void forwardToMainView() {
         EventBus.getDefault().post(new GenericEvent(GenericEvent.Action.CLICK_CHEATS_DRAWER));
     }

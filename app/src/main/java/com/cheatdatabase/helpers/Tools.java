@@ -15,6 +15,7 @@ import android.support.v7.widget.Toolbar;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import com.cheatdatabase.R;
@@ -484,7 +485,7 @@ public class Tools {
     }
 
     public static Toolbar initToolbarBase(AppCompatActivity a, Toolbar toolbar) {
-        toolbar = (Toolbar) a.findViewById(R.id.toolbar);
+        toolbar = a.findViewById(R.id.toolbar);
         if (toolbar != null) {
             a.setSupportActionBar(toolbar);
         }
@@ -513,5 +514,15 @@ public class Tools {
             snackbar.setText(message);
             snackbar.show();
         }
+    }
+
+    public static void showKeyboard(Context context, View view) {
+        InputMethodManager imm = (InputMethodManager) context.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        imm.showSoftInput(view, 0);
+    }
+
+    public static void hideKeyboard(Context context, View view) {
+        InputMethodManager imm = (InputMethodManager) context.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 }
