@@ -3,6 +3,7 @@ package com.cheatdatabase.adapters;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -152,7 +153,7 @@ public class MemberCheatRecycleListViewAdapter extends RecyclerView.Adapter<Memb
 
     // Height of the scroll-bar at the right screen side
     @Override
-    public int getViewTypeHeight(RecyclerView recyclerView, int viewType) {
+    public int getViewTypeHeight(RecyclerView recyclerView, @Nullable RecyclerView.ViewHolder viewHolder, int viewType) {
         return 100;
     }
 }

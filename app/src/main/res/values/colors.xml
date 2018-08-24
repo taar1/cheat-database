@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <color name="white">#FFFFFF</color>
     <color name="yellow">#FFFF00</color>
     <color name="fuchsia">#FF00FF</color>
@@ -21,14 +20,10 @@
     <color name="navy_blue_medium_dark">#003160</color>
     <color name="subtitle">#BBBBBB</color>
 
-    <!-- COLOR THEME - NAVY-BLUE -->
-    <!-- OLD: http://jgilfelt.github.io/android-actionbarstylegenerator/#name=Navyblue&compat=holo&theme=dark&actionbarstyle=solid&texture=0&hairline=0&neutralPressed=1&backColor=036%2C100&secondaryColor=054678%2C100&tabColor=fff%2C100&tertiaryColor=194775%2C100&accentColor=fff%2C100&cabBackColor=002e3e%2C100&cabHighlightColor=194775%2C100 -->
-    <!-- NEW: http://jgilfelt.github.io/android-actionbarstylegenerator/#name=Navyblue&compat=holo&theme=dark&actionbarstyle=solid&texture=0&hairline=0&neutralPressed=1&backColor=003160%2C100&secondaryColor=005694%2C100&tabColor=fff%2C100&tertiaryColor=005694%2C100&accentColor=d5e3f2%2C100&cabBackColor=003160%2C100&cabHighlightColor=005694%2C100 -->
-
     <color name="color_primary_light">#005694</color>
     <color name="color_primary_dark">#003366</color>
     <color name="color_accent">#d5e3f2</color>
-    <color name="color_navigation_bar">#000000</color>
+    <color name="color_navigation_bar">@color/color_primary_light</color>
 
     <!-- COLOR THEME - BLUE -->
     <color name="standard_background">#000000</color>

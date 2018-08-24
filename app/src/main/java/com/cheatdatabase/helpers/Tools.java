@@ -9,10 +9,12 @@ import android.content.res.Resources;
 import android.content.res.XmlResourceParser;
 import android.graphics.Typeface;
 import android.os.Environment;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.format.DateFormat;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import com.cheatdatabase.R;
@@ -503,5 +505,13 @@ public class Tools {
         shareIntent.putExtra(Intent.EXTRA_SUBJECT, cheatShareTitle);
         shareIntent.putExtra(Intent.EXTRA_TEXT, cheatShareBody);
         return shareIntent;
+    }
+
+    public static void showSnackbar(View fromView, String message) {
+        if ((message != null) && (fromView != null)) {
+            Snackbar snackbar = Snackbar.make(fromView, message, Snackbar.LENGTH_LONG);
+            snackbar.setText(message);
+            snackbar.show();
+        }
     }
 }

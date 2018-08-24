@@ -1,8 +1,6 @@
 package com.cheatdatabase;
 
 import android.annotation.TargetApi;
-import android.app.ActionBar;
-import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.SearchManager;
 import android.content.Context;
@@ -14,6 +12,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.UiThread;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -24,6 +23,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -32,7 +32,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.Theme;
 import com.appbrain.AppBrain;
 import com.cheatdatabase.businessobjects.Member;
-import com.cheatdatabase.dialogs.RateCheatDatabaseDialog;
+import com.cheatdatabase.dialogs.RateAppDialog;
 import com.cheatdatabase.events.GenericEvent;
 import com.cheatdatabase.events.RemoteConfigLoadedEvent;
 import com.cheatdatabase.fragments.ContactFormFragment_;
@@ -69,7 +69,7 @@ import org.greenrobot.eventbus.Subscribe;
 import java.util.List;
 
 @EActivity(R.layout.activity_main)
-public class MainActivity extends AppCompatActivity implements ActionBar.OnNavigationListener, NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private static final String TAG = MainActivity.class.getSimpleName();
 
@@ -89,7 +89,8 @@ public class MainActivity extends AppCompatActivity implements ActionBar.OnNavig
     DrawerLayout mDrawerLayout;
     @ViewById(R.id.nav_view)
     NavigationView navigationView;
-
+    @ViewById(R.id.add_new_cheat_button)
+    FloatingActionButton fab;
 
     public static final String DRAWER_ITEM_ID = "drawerId";
     public static final String DRAWER_ITEM_NAME = "drawerName";
@@ -141,6 +142,10 @@ public class MainActivity extends AppCompatActivity implements ActionBar.OnNavig
         // Create Drawer
         // damit das zuletzt aktive fragment wieder angezeigt wird, wenn man auf "back" klickt.
 //        createNavigationDrawer();
+
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, mDrawerLayout, mToolbar, R.string.drawer_open, R.string.drawer_close);
+        mDrawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
 
         navigationView.setNavigationItemSelectedListener(this);
     }
@@ -202,12 +207,11 @@ public class MainActivity extends AppCompatActivity implements ActionBar.OnNavig
     }
 
     @Click(R.id.add_new_cheat_button)
-    void addNewCheat() {
-        // TODO
-        // TODO
-        // TODO
-        // TODO
-//        selectItem(5);
+    void clickedAddNewCheatFloatingButton() {
+        FragmentManager annotationFragmentManager = getFragmentManager();
+        mToolbar.setTitle(R.string.submit_cheat_short);
+        annotationFragmentManager.beginTransaction().replace(R.id.content_frame, SubmitCheatFragment_.builder().build()).commit();
+        fab.setVisibility(View.GONE);
     }
 
     @Override
@@ -379,17 +383,17 @@ public class MainActivity extends AppCompatActivity implements ActionBar.OnNavig
         }
     }
 
-    @Override
-    public boolean onNavigationItemSelected(int position, long id) {
-        FragmentManager frgManager = getFragmentManager();
-        frgManager.beginTransaction().replace(R.id.content_frame, SystemListFragment_.builder().build()).commit();
-
-        mDrawerList.setItemChecked(position, true);
-        setTitle(dataList.get(position).getItemName());
-        mDrawerLayout.closeDrawer(mDrawerList);
-
-        return true;
-    }
+//    @Override
+//    public boolean onNavigationItemSelected(int position, long id) {
+//        FragmentManager frgManager = getFragmentManager();
+//        frgManager.beginTransaction().replace(R.id.content_frame, SystemListFragment_.builder().build()).commit();
+//
+//        mDrawerList.setItemChecked(position, true);
+//        setTitle(dataList.get(position).getItemName());
+//        mDrawerLayout.closeDrawer(mDrawerList);
+//
+//        return true;
+//    }
 
     @OnActivityResult(Konstanten.LOGIN_SUCCESS_RETURN_CODE)
     void onResult(int resultCode, Intent data) {
@@ -491,9 +495,9 @@ public class MainActivity extends AppCompatActivity implements ActionBar.OnNavig
 //                }
 //                break;
 //            case DRAWER_RATE_APP:
-//                new RateCheatDatabaseDialog(this, new MainActivityCallbacks() {
+//                new RateAppDialog(this, new MainActivityCallbacks() {
 //                    @Override
-//                    public void openDrawerItem(int drawerId) {
+//                    public void showContactFormFrament(int drawerId) {
 //                        selectItem(drawerId);
 //                    }
 //                });
@@ -574,7 +578,7 @@ public class MainActivity extends AppCompatActivity implements ActionBar.OnNavig
     }
 
     public interface MainActivityCallbacks {
-        void openDrawerItem(int drawerId);
+        void showContactFormFrament();
     }
 
     @Override
@@ -622,63 +626,67 @@ public class MainActivity extends AppCompatActivity implements ActionBar.OnNavig
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        Fragment fragment = null;
-        Bundle args = new Bundle();
         FragmentManager annotationFragmentManager = getFragmentManager();
 
-        if (id == R.id.nav_games) {
+        if (id == R.id.nav_gamesystems) {
             mToolbar.setTitle(R.string.app_name);
             annotationFragmentManager.beginTransaction().replace(R.id.content_frame, SystemListFragment_.builder().build()).commit();
-            return true;
+            fab.setVisibility(View.VISIBLE);
         } else if (id == R.id.nav_favorites) {
             mToolbar.setTitle(R.string.favorites);
             annotationFragmentManager.beginTransaction().replace(R.id.content_frame, FavoriteGamesListFragment_.builder().build()).commit();
-            return true;
+            fab.setVisibility(View.VISIBLE);
         } else if (id == R.id.nav_members) {
             mToolbar.setTitle(R.string.top_members_top_helping);
             annotationFragmentManager.beginTransaction().replace(R.id.content_frame, TopMembersFragment_.builder().build()).commit();
+            fab.setVisibility(View.VISIBLE);
         } else if (id == R.id.nav_rate) {
-            new RateCheatDatabaseDialog(this, new MainActivityCallbacks() {
+            new RateAppDialog(this, new MainActivityCallbacks() {
                 @Override
-                public void openDrawerItem(int drawerId) {
-                    // TODO
-                    // TODO
-                    // TODO
-//                    selectItem(drawerId);
+                public void showContactFormFrament() {
+                    showContactFormFragment();
                 }
             });
+            mDrawerLayout.closeDrawers();
             return true;
         } else if (id == R.id.nav_submit) {
             mToolbar.setTitle(R.string.submit_cheat_short);
             annotationFragmentManager.beginTransaction().replace(R.id.content_frame, SubmitCheatFragment_.builder().build()).commit();
+            fab.setVisibility(View.GONE);
         } else if (id == R.id.nav_contact) {
-            mToolbar.setTitle(R.string.contactform_title);
-            annotationFragmentManager.beginTransaction().replace(R.id.content_frame, ContactFormFragment_.builder().build()).commit();
+            showContactFormFragment();
         } else if (id == R.id.nav_settings) {
             SettingsActivity_.intent(this).start();
-            return true;
+            mDrawerLayout.closeDrawers();
         } else if (id == R.id.nav_more_apps) {
             Uri uri = Uri.parse(DistinctValues.URL_MORE_APPS);
             Intent intentMoreApps = new Intent(Intent.ACTION_VIEW, uri);
             if (intentMoreApps.resolveActivity(getPackageManager()) != null) {
                 startActivity(intentMoreApps);
             } else {
-                Toast.makeText(MainActivity.this, R.string.err_other_problem, Toast.LENGTH_LONG).show();
+                Tools.showSnackbar(mDrawerLayout, getResources().getString(R.string.err_other_problem));
             }
+            mDrawerLayout.closeDrawers();
         } else {
             mToolbar.setTitle(R.string.app_name);
+            annotationFragmentManager.beginTransaction().replace(R.id.content_frame, SystemListFragment_.builder().build()).commit();
+            fab.setVisibility(View.VISIBLE);
         }
 
         mDrawerLayout.closeDrawers();
 
-        fragment.setArguments(args);
-        FragmentManager frgManager = getFragmentManager();
-        frgManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
 
         if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
             getSupportFragmentManager().popBackStackImmediate();
         }
 
         return true;
+    }
+
+    private void showContactFormFragment() {
+        FragmentManager annotationFragmentManager = getFragmentManager();
+        mToolbar.setTitle(R.string.contactform_title);
+        annotationFragmentManager.beginTransaction().replace(R.id.content_frame, ContactFormFragment_.builder().build()).commit();
+        fab.setVisibility(View.GONE);
     }
 }

@@ -50,7 +50,6 @@ public class SubmitCheatFragment extends Fragment {
             Reachability.registerReachability(ca);
         }
 
-
         latoFontLight = Tools.getFont(ca.getAssets(), Konstanten.FONT_LIGHT);
         latoFontBold = Tools.getFont(ca.getAssets(), Konstanten.FONT_BOLD);
 
