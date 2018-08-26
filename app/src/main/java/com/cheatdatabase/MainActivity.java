@@ -100,7 +100,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private SearchManager searchManager;
     private SearchView searchView;
 
-
     private FirebaseRemoteConfig mFirebaseRemoteConfig;
 
     // Remote Config keys
