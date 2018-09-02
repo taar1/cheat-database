@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.net.ConnectivityManager;
+import android.util.Log;
 
 import com.cheatdatabase.businessobjects.Cheat;
 import com.cheatdatabase.businessobjects.Game;
@@ -11,7 +12,6 @@ import com.cheatdatabase.helpers.Konstanten;
 import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.Tracker;
-import com.google.firebase.analytics.FirebaseAnalytics;
 import com.mopub.common.MoPub;
 import com.mopub.common.SdkConfiguration;
 import com.mopub.common.SdkInitializationListener;
@@ -45,7 +45,7 @@ public class CheatDatabaseApplication extends Application {
 
     private static CheatDatabaseApplication currentApplicationInstance;
     private Tracker googleAnalyticsTracker;
-    private FirebaseAnalytics firebaseAnalytics;
+    //    private FirebaseAnalytics firebaseAnalytics;
     private ConnectivityManager connectivityManager;
 
     /**
@@ -110,7 +110,7 @@ public class CheatDatabaseApplication extends Application {
         Fabric.with(this, new Crashlytics());
 
         // Set firebase logging
-        firebaseAnalytics = FirebaseAnalytics.getInstance(getApplicationContext());
+//        firebaseAnalytics = FirebaseAnalytics.getInstance(getApplicationContext());
 
 //        analytics = GoogleAnalytics.getInstance(this);
 //        // TODO: Replace the tracker-id with your app one from https://www.google.com/analytics/web/
@@ -128,6 +128,7 @@ public class CheatDatabaseApplication extends Application {
 
         sAppContext = getApplicationContext();
 
+//        initMopub();
     }
 
     private void initMopub() {
@@ -138,8 +139,11 @@ public class CheatDatabaseApplication extends Application {
         networksToInit.add("com.mopub.mobileads.FacebookRewardedVideo");
         networksToInit.add("com.mopub.mobileads.FacebookBanner");
 
+//        SdkConfiguration sdkConfiguration = new SdkConfiguration.Builder(Konstanten.MOPUB_PHONE_UNIT_ID)
+//                .withNetworksToInit(networksToInit)
+//                .build();
+
         SdkConfiguration sdkConfiguration = new SdkConfiguration.Builder(Konstanten.MOPUB_PHONE_UNIT_ID)
-                .withNetworksToInit(networksToInit)
                 .build();
 
         MoPub.initializeSdk(this, sdkConfiguration, initSdkListener());
@@ -149,6 +153,7 @@ public class CheatDatabaseApplication extends Application {
         return new SdkInitializationListener() {
             @Override
             public void onInitializationFinished() {
+                Log.d(TAG, "XXXXX MoPub SDK initialized");
            /* MoPub SDK initialized.
            Check if you should show the consent dialog here, and make your ad requests. */
             }

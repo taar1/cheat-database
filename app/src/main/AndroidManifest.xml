@@ -221,6 +221,9 @@
 
         <service android:name="com.appbrain.AppBrainService" />
 
+        <!-- AMAZON -->
+        <activity android:name="com.amazon.device.ads.AdActivity" android:configChanges="keyboardHidden|orientation|screenSize"/>
+
         <receiver
             android:name="com.appbrain.ReferrerReceiver"
             android:exported="true">

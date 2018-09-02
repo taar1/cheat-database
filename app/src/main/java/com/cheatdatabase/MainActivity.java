@@ -29,11 +29,13 @@ import android.widget.Toast;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.Theme;
+import com.amazon.device.ads.AdLayout;
+import com.amazon.device.ads.AdRegistration;
+import com.amazon.device.ads.AdTargetingOptions;
 import com.appbrain.AppBrain;
 import com.cheatdatabase.businessobjects.Member;
 import com.cheatdatabase.dialogs.RateAppDialog;
 import com.cheatdatabase.events.GenericEvent;
-import com.cheatdatabase.events.RemoteConfigLoadedEvent;
 import com.cheatdatabase.fragments.ContactFormFragment_;
 import com.cheatdatabase.fragments.FavoriteGamesListFragment_;
 import com.cheatdatabase.fragments.SubmitCheatFragment_;
@@ -45,12 +47,7 @@ import com.cheatdatabase.helpers.MyPrefs_;
 import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.helpers.Tools;
 import com.cheatdatabase.helpers.TrackingUtils;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
-import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings;
 import com.google.gson.Gson;
-import com.mopub.mobileads.MoPubView;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Bean;
@@ -76,8 +73,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Extra
     int mFragmentId;
 
-    @ViewById(R.id.adview)
-    MoPubView mAdView;
+    @ViewById(R.id.amazon_adview)
+    AdLayout mAdView;
     @ViewById(R.id.toolbar)
     Toolbar mToolbar;
     @ViewById(R.id.drawer_layout)
@@ -100,7 +97,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private SearchManager searchManager;
     private SearchView searchView;
 
-    private FirebaseRemoteConfig mFirebaseRemoteConfig;
+//    private FirebaseRemoteConfig mFirebaseRemoteConfig;
 
     // Remote Config keys
     private static final String REMOTE_CONFIG_HACKS_ENABLED_KEY = "hacks_enabled";
@@ -120,7 +117,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.app_icon_fox);
 
-        tools.loadAd(mAdView, getString(R.string.screen_type));
+//        tools.loadAd(mAdView, getString(R.string.screen_type));
 
         // TODO FIXME - find out where this part was before and re-add it.
         FragmentManager fragmentManager = getFragmentManager();
@@ -141,52 +138,73 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         TrackingUtils.getInstance().init(this);
 
         AppBrain.init(this);
+
+        AdRegistration.setAppKey(Konstanten.AMAZON_APP_ID);
+
+        AdTargetingOptions adOptions = new AdTargetingOptions();
+        AdRegistration.enableTesting(true);
+        AdRegistration.enableLogging(true);
+        // Optional: Set ad targeting options here.
+        this.mAdView.loadAd(adOptions); // Retrieves an ad on background thread
+
+        // TODO FIXME "The Amazon Mobile Ad Network only serves ads to users in the U.S., U.K., Germany, France, Spain, Italy, and Japan."
+        // TODO FIXME "The Amazon Mobile Ad Network only serves ads to users in the U.S., U.K., Germany, France, Spain, Italy, and Japan."
+        // TODO FIXME "The Amazon Mobile Ad Network only serves ads to users in the U.S., U.K., Germany, France, Spain, Italy, and Japan."
+        // TODO FIXME "The Amazon Mobile Ad Network only serves ads to users in the U.S., U.K., Germany, France, Spain, Italy, and Japan."
+        // TODO FIXME "The Amazon Mobile Ad Network only serves ads to users in the U.S., U.K., Germany, France, Spain, Italy, and Japan."
+
+        // TODO https://developer.amazon.com/docs/mobile-ads/mb-quick-start.html#enabling-ads-in-android-apps
+        // TODO https://developer.amazon.com/docs/mobile
+        // -ads/mb-quick-start.html#enabling-ads-in-android-apps
+        // TODO https://developer.amazon.com/docs/mobile-ads/mb-quick-start.html#enabling-ads-in-android-apps
+        // TODO https://developer.amazon.com/docs/mobile-ads/mb-quick-start.html#enabling-ads-in-android-apps
+        // TODO https://developer.amazon.com/docs/mobile-ads/mb-quick-start.html#enabling-ads-in-android-apps
     }
 
     // https://firebase.google.com/docs/remote-config/use-config-android
     private void remoteConfigStuff() {
-        mFirebaseRemoteConfig = FirebaseRemoteConfig.getInstance();
-        FirebaseRemoteConfigSettings configSettings = new FirebaseRemoteConfigSettings.Builder()
-                .setDeveloperModeEnabled(BuildConfig.DEBUG)
-                .build();
-        mFirebaseRemoteConfig.setConfigSettings(configSettings);
-
-        mFirebaseRemoteConfig.setDefaults(R.xml.remote_config_defaults);
-
-        long cacheExpiration = 604800; // 1 week in seconds.
-        // If your app is using developer mode, cacheExpiration is set to 0, so each fetch will
-        // retrieve values from the service.
-        if (mFirebaseRemoteConfig.getInfo().getConfigSettings().isDeveloperModeEnabled()) {
-            cacheExpiration = 0;
-        }
-
-        mFirebaseRemoteConfig.fetch(cacheExpiration)
-                .addOnCompleteListener(this, new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()) {
-                            Log.d(TAG, "XXXXX Fetch Succeeded");
-                            Log.d(TAG, "XXXXX2: " + mFirebaseRemoteConfig.getBoolean(REMOTE_CONFIG_HACKS_ENABLED_KEY));
-
-                            // TODO die remote config noch in den sharedpreferences speichern, damit man später drauf zugreifen kann
-                            // TODO die remote config noch in den sharedpreferences speichern, damit man später drauf zugreifen kann
-                            // TODO die remote config noch in den sharedpreferences speichern, damit man später drauf zugreifen kann
-                            // TODO die remote config noch in den sharedpreferences speichern, damit man später drauf zugreifen kann
-                            // TODO die remote config noch in den sharedpreferences speichern, damit man später drauf zugreifen kann
-                            // TODO die remote config noch in den sharedpreferences speichern, damit man später drauf zugreifen kann
-
-                            // After config data is successfully fetched, it must be activated before newly fetched
-                            // values are returned.
-                            mFirebaseRemoteConfig.activateFetched();
-                            Log.d(TAG, "XXXXX3: " + mFirebaseRemoteConfig.getBoolean(REMOTE_CONFIG_HACKS_ENABLED_KEY));
-
-                            // Tell SystemListFragment that the remote config has been loaded and reload the recyclerlistview
-                            EventBus.getDefault().post(new RemoteConfigLoadedEvent());
-                        } else {
-                            Log.d(TAG, "XXXXX Fetch Failed");
-                        }
-                    }
-                });
+//        mFirebaseRemoteConfig = FirebaseRemoteConfig.getInstance();
+//        FirebaseRemoteConfigSettings configSettings = new FirebaseRemoteConfigSettings.Builder()
+//                .setDeveloperModeEnabled(BuildConfig.DEBUG)
+//                .build();
+//        mFirebaseRemoteConfig.setConfigSettings(configSettings);
+//
+//        mFirebaseRemoteConfig.setDefaults(R.xml.remote_config_defaults);
+//
+//        long cacheExpiration = 604800; // 1 week in seconds.
+//        // If your app is using developer mode, cacheExpiration is set to 0, so each fetch will
+//        // retrieve values from the service.
+//        if (mFirebaseRemoteConfig.getInfo().getConfigSettings().isDeveloperModeEnabled()) {
+//            cacheExpiration = 0;
+//        }
+//
+//        mFirebaseRemoteConfig.fetch(cacheExpiration)
+//                .addOnCompleteListener(this, new OnCompleteListener<Void>() {
+//                    @Override
+//                    public void onComplete(@NonNull Task<Void> task) {
+//                        if (task.isSuccessful()) {
+//                            Log.d(TAG, "XXXXX Fetch Succeeded");
+//                            Log.d(TAG, "XXXXX2: " + mFirebaseRemoteConfig.getBoolean(REMOTE_CONFIG_HACKS_ENABLED_KEY));
+//
+//                            // TODO die remote config noch in den sharedpreferences speichern, damit man später drauf zugreifen kann
+//                            // TODO die remote config noch in den sharedpreferences speichern, damit man später drauf zugreifen kann
+//                            // TODO die remote config noch in den sharedpreferences speichern, damit man später drauf zugreifen kann
+//                            // TODO die remote config noch in den sharedpreferences speichern, damit man später drauf zugreifen kann
+//                            // TODO die remote config noch in den sharedpreferences speichern, damit man später drauf zugreifen kann
+//                            // TODO die remote config noch in den sharedpreferences speichern, damit man später drauf zugreifen kann
+//
+//                            // After config data is successfully fetched, it must be activated before newly fetched
+//                            // values are returned.
+//                            mFirebaseRemoteConfig.activateFetched();
+//                            Log.d(TAG, "XXXXX3: " + mFirebaseRemoteConfig.getBoolean(REMOTE_CONFIG_HACKS_ENABLED_KEY));
+//
+//                            // Tell SystemListFragment that the remote config has been loaded and reload the recyclerlistview
+//                            EventBus.getDefault().post(new RemoteConfigLoadedEvent());
+//                        } else {
+//                            Log.d(TAG, "XXXXX Fetch Failed");
+//                        }
+//                    }
+//                });
     }
 
     @Click(R.id.add_new_cheat_button)

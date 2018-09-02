@@ -459,6 +459,7 @@ public class Tools {
     }
 
     public void loadAd(MoPubView mAdView, String screenType) {
+        Log.d(TAG, "XXXXX screenType: " + screenType);
 
         try {
             if (screenType.equalsIgnoreCase("phone")) {
@@ -469,10 +470,14 @@ public class Tools {
 
             mAdView.setAutorefreshEnabled(true);
             mAdView.setTesting(true);
-            mAdView.setKeywords("m_age:15,m_gender:m,m_marital:single");
+            mAdView.setAutorefreshEnabled(true);
+//            mAdView.s
+// etKeywords("m_age:15,m_gender:m,m_marital:single");
             mAdView.loadAd();
+
+            Log.d(TAG, "XXXXX AD LOADED");
         } catch (Exception e) {
-            Log.e("ADVIEW LOAD", e.getMessage());
+            Log.e("XXXXX ADVIEW LOAD", e.getMessage());
             e.printStackTrace();
         }
     }

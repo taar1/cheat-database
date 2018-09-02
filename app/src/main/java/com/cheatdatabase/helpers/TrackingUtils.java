@@ -8,7 +8,6 @@ import android.text.TextUtils;
 import com.cheatdatabase.CheatDatabaseApplication;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
-import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.text.Normalizer;
 import java.util.Locale;
@@ -23,7 +22,7 @@ import okhttp3.OkHttpClient;
 public class TrackingUtils {
     private static final String LOG_TAG = "TrackingUtils";
 
-    private FirebaseAnalytics firebaseAnalytics;
+    //    private FirebaseAnalytics firebaseAnalytics;
     private OkHttpClient okHttpClient;
     private static TrackingUtils _instance;
     private String lastPageID = null;
@@ -52,7 +51,7 @@ public class TrackingUtils {
      * @param activity Activity
      */
     public void init(Activity activity) {
-        firebaseAnalytics = FirebaseAnalytics.getInstance(activity);
+//        firebaseAnalytics = FirebaseAnalytics.getInstance(activity);
         okHttpClient = new OkHttpClient.Builder()
                 .connectTimeout(5, TimeUnit.SECONDS)
                 .writeTimeout(10, TimeUnit.SECONDS)
@@ -141,19 +140,19 @@ public class TrackingUtils {
     private void trackFirebasePageView(String pageID, String pageType, String entityName) {
         // Log the content view
         Bundle bundle = new Bundle();
-        if (pageID != null) {
-            bundle.putString(FirebaseAnalytics.Param.ITEM_ID, pageID);
-        }
-        if (pageType != null) {
-            bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, pageType);
-        }
-        if (entityName != null) {
-            bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, entityName);
-        }
-
-        if ((pageID != null) && (pageType != null) && (entityName != null)) {
-            firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
-        }
+//        if (pageID != null) {
+//            bundle.putString(FirebaseAnalytics.Param.ITEM_ID, pageID);
+//        }
+//        if (pageType != null) {
+//            bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, pageType);
+//        }
+//        if (entityName != null) {
+//            bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, entityName);
+//        }
+//
+//        if ((pageID != null) && (pageType != null) && (entityName != null)) {
+//            firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+//        }
     }
 
     /**

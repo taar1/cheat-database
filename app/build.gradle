@@ -16,8 +16,8 @@ int VERSION_CODE = 32
 String VERSION_NAME = "2.1.9"
 
 android {
-    compileSdkVersion 28
-    buildToolsVersion '28.0.2'
+    compileSdkVersion 27
+    buildToolsVersion '27.0.3'
     defaultConfig {
         applicationId APK_ID
         archivesBaseName = APK_NAME
@@ -92,18 +92,18 @@ repositories {
 }
 
 ext {
-    supportVersion = '27.1.1'
+    supportVersion = '27.1.0'
     playServicesVersion = '15.0.0'
     AAVersion = '4.4.0'
 }
 
 dependencies {
-    implementation "com.google.firebase:firebase-core:$playServicesVersion"
-    implementation "com.google.firebase:firebase-invites:$playServicesVersion"
-    implementation "com.google.firebase:firebase-config:$playServicesVersion"
-    implementation "com.google.firebase:firebase-crash:$playServicesVersion"
-    implementation "com.google.firebase:firebase-messaging:$playServicesVersion"
-    implementation "com.google.firebase:firebase-appindexing:$playServicesVersion"
+//    implementation "com.google.firebase:firebase-core:$playServicesVersion"
+//    implementation "com.google.firebase:firebase-invites:$playServicesVersion"
+//    implementation "com.google.firebase:firebase-config:$playServicesVersion"
+//    implementation "com.google.firebase:firebase-crash:$playServicesVersion"
+//    implementation "com.google.firebase:firebase-messaging:$playServicesVersion"
+//    implementation "com.google.firebase:firebase-appindexing:$playServicesVersion"
     api "com.android.support:appcompat-v7:$supportVersion"
     api "com.android.support:design:$supportVersion"
     api "com.android.support:recyclerview-v7:$supportVersion"
@@ -150,6 +150,8 @@ dependencies {
     // Tapjoy
     implementation 'com.tapjoy:tapjoy-android-sdk:12.0.0@aar'
     implementation 'com.mopub.mediation:tapjoy:12.0.0.1'
+
+    implementation 'com.amazon.android:mobile-ads:5.+'
 }
 
 apply plugin: "com.google.gms.google-services"
