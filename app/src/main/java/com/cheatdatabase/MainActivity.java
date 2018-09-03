@@ -128,6 +128,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         actionBarDrawerToggle.syncState();
 
         navigationView.setNavigationItemSelectedListener(this);
+
+//        testCrash();
     }
 
     private void init() {
@@ -159,6 +161,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // TODO https://developer.amazon.com/docs/mobile-ads/mb-quick-start.html#enabling-ads-in-android-apps
         // TODO https://developer.amazon.com/docs/mobile-ads/mb-quick-start.html#enabling-ads-in-android-apps
         // TODO https://developer.amazon.com/docs/mobile-ads/mb-quick-start.html#enabling-ads-in-android-apps
+    }
+
+    private void testCrash() {
+        throw new RuntimeException("This is a crash");
     }
 
     // https://firebase.google.com/docs/remote-config/use-config-android

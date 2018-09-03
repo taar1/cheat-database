@@ -63,7 +63,7 @@ public class TrackingUtils {
     /**
      * Helper function to reset the tracking controller when the app goes into background
      */
-    void reset() {
+    public void reset() {
         lastPageID = null;
     }
 
@@ -73,7 +73,7 @@ public class TrackingUtils {
      * @param pageID   the name / id of the page
      * @param pageType the type of the page
      */
-    void trackPageView(String pageID, String pageType) {
+    public void trackPageView(String pageID, String pageType) {
         if (lastPageID != null && lastPageID.equals(pageID)) {
             return;
         }
@@ -88,7 +88,7 @@ public class TrackingUtils {
      * @param pageID   the name / id of the page
      * @param pageType the type of the page
      */
-    void trackPageViewWithoutNetmetrix(String pageID, String pageType) {
+    public void trackPageViewWithoutNetmetrix(String pageID, String pageType) {
         if (lastPageID != null && lastPageID.equals(pageID)) {
             return;
         }
@@ -104,7 +104,7 @@ public class TrackingUtils {
      * @param pageType   the type of the page
      * @param entityName the name of the entity on the page
      */
-    void trackPageView(String pageID, String pageType, String entityName) {
+    public void trackPageView(String pageID, String pageType, String entityName) {
         if (lastPageID != null && lastPageID.equals(pageID)) {
             return;
         }
@@ -120,7 +120,7 @@ public class TrackingUtils {
      * @param pageType   the type of the page
      * @param entityName the name of the entity on the page
      */
-    void trackPageViewWithoutNetmetrix(String pageID, String pageType, String entityName) {
+    public void trackPageViewWithoutNetmetrix(String pageID, String pageType, String entityName) {
         if (lastPageID != null && lastPageID.equals(pageID)) {
             return;
         }

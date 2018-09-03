@@ -1,17 +1,22 @@
 package com.cheatdatabase;
 
+import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.net.ConnectivityManager;
+import android.os.Bundle;
+import android.support.multidex.MultiDexApplication;
 import android.util.Log;
 
 import com.cheatdatabase.businessobjects.Cheat;
 import com.cheatdatabase.businessobjects.Game;
 import com.cheatdatabase.helpers.Konstanten;
+import com.cheatdatabase.helpers.TrackingUtils;
 import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.Tracker;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.mopub.common.MoPub;
 import com.mopub.common.SdkConfiguration;
 import com.mopub.common.SdkInitializationListener;
@@ -24,29 +29,25 @@ import java.util.TreeMap;
 
 import io.fabric.sdk.android.Fabric;
 
-
-/**
- * Created by Dominik on 06.06.2015.
- */
 @EApplication
-public class CheatDatabaseApplication extends Application {
+public class CheatDatabaseApplication extends MultiDexApplication implements Application.ActivityLifecycleCallbacks {
 
     private static final String TAG = CheatDatabaseApplication.class.getSimpleName();
 
-    //    private static EventBus sEventBus;
     private static Context sAppContext;
 
     TreeMap<String, TreeMap<String, Game[]>> gamesBySystemCached = new TreeMap<>();
     TreeMap<String, TreeMap<String, Cheat[]>> cheatsByGameCached = new TreeMap<>();
-
 
     public final String ACHIEVEMENTS = "achievements";
     public final String NO_ACHIEVEMENTS = "noAchievements";
 
     private static CheatDatabaseApplication currentApplicationInstance;
     private Tracker googleAnalyticsTracker;
-    //    private FirebaseAnalytics firebaseAnalytics;
+    private FirebaseAnalytics firebaseAnalytics;
     private ConnectivityManager connectivityManager;
+
+    private boolean isActivityVisible = false;
 
     /**
      * Gets the default {@link Tracker} for this {@link CheatDatabaseApplication}.
@@ -70,47 +71,12 @@ public class CheatDatabaseApplication extends Application {
         return currentApplicationInstance;
     }
 
-
-    // GOOGLE ANALYTICS EXAMPLE CODE
-    // https://github.com/googleanalytics/hello-world-android-app/blob/master/app/src/main/java/com/example/googleanalyticshelloworld/MyApp.java
-
-    /**
-     * The Analytics singleton. The field is set in onCreate method override when the application
-     * class is initially created.
-     */
-//    private static GoogleAnalytics analytics;
-
-    /**
-     * The default app tracker. The field is from onCreate callback when the application is
-     * initially created.
-     */
-//    private static Tracker tracker;
-
-    /**
-     * Access to the global Analytics singleton. If this method returns null you forgot to either
-     * set android:name="&lt;this.class.name&gt;" attribute on your application element in
-     * AndroidManifest.xml or you are not setting this.analytics field in onCreate method override.
-     */
-//    public static GoogleAnalytics analytics() {
-//        return analytics;
-//    }
-
-    /**
-     * The default app tracker. If this method returns null you forgot to either set
-     * android:name="&lt;this.class.name&gt;" attribute on your application element in
-     * AndroidManifest.xml or you are not setting this.tracker field in onCreate method override.
-     */
-//    public static Tracker tracker() {
-//        return tracker;
-//    }
     @Override
     public void onCreate() {
         super.onCreate();
         currentApplicationInstance = this;
-        Fabric.with(this, new Crashlytics());
 
-        // Set firebase logging
-//        firebaseAnalytics = FirebaseAnalytics.getInstance(getApplicationContext());
+        init();
 
 //        analytics = GoogleAnalytics.getInstance(this);
 //        // TODO: Replace the tracker-id with your app one from https://www.google.com/analytics/web/
@@ -129,6 +95,20 @@ public class CheatDatabaseApplication extends Application {
         sAppContext = getApplicationContext();
 
 //        initMopub();
+    }
+
+    private void init() {
+        Fabric.with(this, new Crashlytics());
+
+        // Setup lifecycle callbacks
+        registerActivityLifecycleCallbacks(this);
+
+        // Set firebase logging
+        firebaseAnalytics = FirebaseAnalytics.getInstance(getApplicationContext());
+
+        // Set the connectivity manager
+        connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+
     }
 
     private void initMopub() {
@@ -158,6 +138,53 @@ public class CheatDatabaseApplication extends Application {
            Check if you should show the consent dialog here, and make your ad requests. */
             }
         };
+    }
+
+    @Override
+    public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
+        if (activity.getClass().equals(MainActivity.class)) {
+            isActivityVisible = true;
+        }
+    }
+
+    /**
+     * {@link Application.ActivityLifecycleCallbacks#onActivityStarted(Activity)}
+     */
+    @Override
+    public void onActivityStarted(Activity activity) {
+        if (activity.getClass().equals(MainActivity.class)) {
+            firebaseAnalytics.logEvent(FirebaseAnalytics.Event.APP_OPEN, null);
+        }
+    }
+
+    @Override
+    public void onActivityResumed(Activity activity) {
+        if (activity.getClass().equals(MainActivity.class)) {
+            isActivityVisible = true;
+        }
+    }
+
+    @Override
+    public void onActivityPaused(Activity activity) {
+        if (activity.getClass().equals(MainActivity.class)) {
+            isActivityVisible = false;
+            TrackingUtils.getInstance().reset();
+        }
+    }
+
+    @Override
+    public void onActivityStopped(Activity activity) {
+
+    }
+
+    @Override
+    public void onActivitySaveInstanceState(Activity activity, Bundle outState) {
+
+    }
+
+    @Override
+    public void onActivityDestroyed(Activity activity) {
+
     }
 
     public static Context getAppContext() {

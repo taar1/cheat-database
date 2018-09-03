@@ -92,26 +92,24 @@ repositories {
 }
 
 ext {
+    firebaseVersion = '16.0.2'
     supportVersion = '27.1.0'
-    playServicesVersion = '15.0.0'
     AAVersion = '4.4.0'
 }
 
 dependencies {
-//    implementation "com.google.firebase:firebase-core:$playServicesVersion"
-//    implementation "com.google.firebase:firebase-invites:$playServicesVersion"
-//    implementation "com.google.firebase:firebase-config:$playServicesVersion"
-//    implementation "com.google.firebase:firebase-crash:$playServicesVersion"
-//    implementation "com.google.firebase:firebase-messaging:$playServicesVersion"
-//    implementation "com.google.firebase:firebase-appindexing:$playServicesVersion"
+    implementation "com.google.firebase:firebase-core:16.0.3"
+    implementation "com.google.firebase:firebase-messaging:17.3.0"
+    implementation "com.google.firebase:firebase-config:16.0.0"
+    implementation "com.google.firebase:firebase-appindexing:16.0.1"
     api "com.android.support:appcompat-v7:$supportVersion"
     api "com.android.support:design:$supportVersion"
     api "com.android.support:recyclerview-v7:$supportVersion"
     implementation "com.github.vajro:MaterialDesignLibrary:1.6"
     implementation "com.afollestad.material-dialogs:core:0.9.6.0"
     implementation "com.google.code.gson:gson:2.8.5"
-    implementation "com.google.android.gms:play-services-analytics:$playServicesVersion"
-    implementation "com.google.android.gms:play-services-auth:$playServicesVersion"
+    implementation "com.google.android.gms:play-services-analytics:16.0.3"
+    implementation "com.google.android.gms:play-services-auth:15.0.1"
     implementation "com.squareup.picasso:picasso:2.71828"
     implementation "com.appbrain:appbrain-applift-sdk:+"
     implementation "org.greenrobot:eventbus:3.1.1"
@@ -127,7 +125,7 @@ dependencies {
 
     implementation "com.github.hackware1993:MagicIndicator:1.5.0"
     implementation "com.simplecityapps:recyclerview-fastscroll:1.0.18"
-    implementation('com.crashlytics.sdk.android:crashlytics:2.9.1@aar') {
+    implementation('com.crashlytics.sdk.android:crashlytics:2.9.5@aar') {
         transitive = true
     }
 
@@ -155,3 +153,4 @@ dependencies {
 }
 
 apply plugin: "com.google.gms.google-services"
+
