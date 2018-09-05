@@ -24,12 +24,12 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.Theme;
-import com.amazon.device.ads.AdLayout;
 import com.amazon.device.ads.AdRegistration;
 import com.amazon.device.ads.AdTargetingOptions;
 import com.appbrain.AppBrain;
@@ -47,6 +47,8 @@ import com.cheatdatabase.helpers.MyPrefs_;
 import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.helpers.Tools;
 import com.cheatdatabase.helpers.TrackingUtils;
+import com.facebook.ads.AdSize;
+import com.facebook.ads.AdView;
 import com.google.gson.Gson;
 
 import org.androidannotations.annotations.AfterViews;
@@ -73,8 +75,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Extra
     int mFragmentId;
 
-    @ViewById(R.id.amazon_adview)
-    AdLayout mAdView;
+    @ViewById(R.id.banner_container)
+    LinearLayout facebookBanner;
+    //    @ViewById(R.id.amazon_adview)
+//    AdLayout mAdView;
     @ViewById(R.id.toolbar)
     Toolbar mToolbar;
     @ViewById(R.id.drawer_layout)
@@ -96,6 +100,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private SearchManager searchManager;
     private SearchView searchView;
+    private AdView adView;
 
 //    private FirebaseRemoteConfig mFirebaseRemoteConfig;
 
@@ -118,6 +123,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.app_icon_fox);
 
 //        tools.loadAd(mAdView, getString(R.string.screen_type));
+        adView = new AdView(this, "148040821872637_2083092671700766", AdSize.BANNER_HEIGHT_50);
+//        adView = new AdView(this, "148040821872637_2095967317079968", AdSize.BANNER_HEIGHT_90);
+        facebookBanner.addView(adView);
+        adView.loadAd();
+        Log.d(TAG, "XXXXX " + adView.getPlacementId());
+
 
         // TODO FIXME - find out where this part was before and re-add it.
         FragmentManager fragmentManager = getFragmentManager();
@@ -128,8 +139,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         actionBarDrawerToggle.syncState();
 
         navigationView.setNavigationItemSelectedListener(this);
-
-//        testCrash();
     }
 
     private void init() {
@@ -141,26 +150,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         AppBrain.init(this);
 
-        AdRegistration.setAppKey(Konstanten.AMAZON_APP_ID);
+//        AdRegistration.setAppKey(Konstanten.AMAZON_APP_ID);
 
-        AdTargetingOptions adOptions = new AdTargetingOptions();
-        AdRegistration.enableTesting(true);
-        AdRegistration.enableLogging(true);
+//        AdTargetingOptions adOptions = new AdTargetingOptions();
+//        AdRegistration.enableTesting(true);
+//        AdRegistration.enableLogging(true);
+
         // Optional: Set ad targeting options here.
-        this.mAdView.loadAd(adOptions); // Retrieves an ad on background thread
-
-        // TODO FIXME "The Amazon Mobile Ad Network only serves ads to users in the U.S., U.K., Germany, France, Spain, Italy, and Japan."
-        // TODO FIXME "The Amazon Mobile Ad Network only serves ads to users in the U.S., U.K., Germany, France, Spain, Italy, and Japan."
-        // TODO FIXME "The Amazon Mobile Ad Network only serves ads to users in the U.S., U.K., Germany, France, Spain, Italy, and Japan."
-        // TODO FIXME "The Amazon Mobile Ad Network only serves ads to users in the U.S., U.K., Germany, France, Spain, Italy, and Japan."
-        // TODO FIXME "The Amazon Mobile Ad Network only serves ads to users in the U.S., U.K., Germany, France, Spain, Italy, and Japan."
-
-        // TODO https://developer.amazon.com/docs/mobile-ads/mb-quick-start.html#enabling-ads-in-android-apps
-        // TODO https://developer.amazon.com/docs/mobile
-        // -ads/mb-quick-start.html#enabling-ads-in-android-apps
-        // TODO https://developer.amazon.com/docs/mobile-ads/mb-quick-start.html#enabling-ads-in-android-apps
-        // TODO https://developer.amazon.com/docs/mobile-ads/mb-quick-start.html#enabling-ads-in-android-apps
-        // TODO https://developer.amazon.com/docs/mobile-ads/mb-quick-start.html#enabling-ads-in-android-apps
+//        this.mAdView.loadAd(adOptions); // Retrieves an ad on background thread
     }
 
     private void testCrash() {
@@ -246,8 +243,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public void onDestroy() {
-        if (mAdView != null) {
-            mAdView.destroy();
+//        if (mAdView != null) {
+//            mAdView.destroy();
+//        }
+        if (adView != null) {
+            adView.destroy();
         }
         editor.putInt(Konstanten.PREFERENCES_SELECTED_DRAWER_FRAGMENT_ID, 0);
         editor.apply();

@@ -31,7 +31,7 @@
                 android:src="@drawable/ic_add_black_48dp" />
         </FrameLayout>
 
-        <include layout="@layout/amazon_adview" />
+        <include layout="@layout/adview_facebook" />
     </LinearLayout>
 
     <android.support.design.widget.NavigationView

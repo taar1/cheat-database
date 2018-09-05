@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/banner_container"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:minHeight="50dp"
+    android:layout_alignParentBottom="true"
+    android:layout_gravity="bottom"
+    android:layout_weight="1"
+    android:background="@android:color/transparent"
+    android:gravity="top"
+    android:orientation="vertical" />
