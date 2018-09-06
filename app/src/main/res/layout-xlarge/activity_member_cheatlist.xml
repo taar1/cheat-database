@@ -38,5 +38,5 @@
 
     </android.support.v4.widget.SwipeRefreshLayout>
 
-    <include layout="@layout/adview" />
+    <include layout="@layout/adview_facebook" />
 </LinearLayout>

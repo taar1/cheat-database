@@ -61,19 +61,21 @@
         </ScrollView>
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+    <include layout="@layout/adview_facebook" />
 
-        <com.mopub.mobileads.MoPubView
-            android:id="@+id/adview"
-            android:layout_width="fill_parent"
-            android:layout_height="52dp"
-            android:layout_weight="1"
-            android:background="@color/black" />
+    <!--<LinearLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:orientation="vertical">-->
 
-    </LinearLayout>
+        <!--<com.mopub.mobileads.MoPubView-->
+            <!--android:id="@+id/adview"-->
+            <!--android:layout_width="fill_parent"-->
+            <!--android:layout_height="52dp"-->
+            <!--android:layout_weight="1"-->
+            <!--android:background="@color/black" />-->
+
+    <!--</LinearLayout>-->
 
     <LinearLayout
         android:id="@+id/llForumInputMain"

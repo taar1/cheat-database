@@ -45,9 +45,9 @@ import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.helpers.Tools;
 import com.cheatdatabase.helpers.Webservice;
+import com.facebook.ads.AdSize;
+import com.facebook.ads.AdView;
 import com.google.gson.Gson;
-import com.mopub.mobileads.MoPubView;
-
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Background;
@@ -97,9 +97,14 @@ public class CheatForumActivity extends AppCompatActivity implements CheatListFr
     private SharedPreferences settings;
     private ShareActionProvider mShare;
     private Member member;
-    private MoPubView mAdView;
+    //    private MoPubView mAdView;
     private Typeface latoFontBold;
     private Typeface latoFontLight;
+
+    @ViewById(R.id.banner_container)
+    LinearLayout facebookBanner;
+    private AdView adView;
+
 
     @AfterViews
     public void onCreateView() {
@@ -154,10 +159,13 @@ public class CheatForumActivity extends AppCompatActivity implements CheatListFr
             Reachability.registerReachability(this);
         }
 
-
         settings = getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
 
-        mAdView = Tools.initMoPubAdView(this, mAdView);
+//        mAdView = Tools.initMoPubAdView(this, mAdView);
+//        facebookBanner = findViewById(R.id.banner_container);
+        adView = new AdView(this, Konstanten.FACEBOOK_AUDIENCE_NETWORK_NATIVE_BANNER_ID, AdSize.BANNER_HEIGHT_50);
+        facebookBanner.addView(adView);
+        adView.loadAd();
 
         latoFontLight = tools.getFont(getAssets(), Konstanten.FONT_LIGHT);
         latoFontBold = tools.getFont(getAssets(), Konstanten.FONT_BOLD);
@@ -187,28 +195,6 @@ public class CheatForumActivity extends AppCompatActivity implements CheatListFr
         }).start();
 
     }
-
-    /**
-     * Fill table with parsed ForumPosts.
-     */
-//    private void fillViewWithThread() {
-//        reloadView.setVisibility(View.GONE);
-//
-//        llForumMain.removeAllViews();
-//        if (forumThread.length > 0) {
-//            tvEmpty.setVisibility(View.GONE);
-//        } else {
-//            tvEmpty.setVisibility(View.VISIBLE);
-//        }
-//
-//        for (int i = 0; i < forumThread.length; i++) {
-//            ForumPost tempFP = forumThread[i];
-//
-//            LinearLayout tl = createForumPosts(tempFP);
-//            llForumMain.addView(tl, new TableLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
-//        }
-//
-//    }
 
     /**
      * Submits the forum post and scrolls down to the bottom of the list.
@@ -363,8 +349,12 @@ public class CheatForumActivity extends AppCompatActivity implements CheatListFr
 
     @Override
     protected void onDestroy() {
-        if (mAdView != null) {
-            mAdView.destroy();
+//        if (mAdView != null) {
+//            mAdView.destroy();
+//        }
+
+        if (adView != null) {
+            adView.destroy();
         }
         super.onDestroy();
     }

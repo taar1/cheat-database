@@ -59,12 +59,14 @@
             android:layout_marginRight="20dp"
             android:src="@drawable/ic_add_black_48dp" />
 
-        <com.mopub.mobileads.MoPubView
-            android:id="@+id/adview"
-            android:layout_width="match_parent"
-            android:layout_height="52dp"
-            android:layout_alignParentBottom="true"
-            android:background="@color/black" />
+        <!--<com.mopub.mobileads.MoPubView-->
+            <!--android:id="@+id/adview"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="52dp"-->
+            <!--android:layout_alignParentBottom="true"-->
+            <!--android:background="@color/black" />-->
+
+        <include layout="@layout/adview_facebook" />
     </RelativeLayout>
 
 

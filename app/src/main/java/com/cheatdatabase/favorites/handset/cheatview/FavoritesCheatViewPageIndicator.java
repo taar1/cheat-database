@@ -23,6 +23,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.cheatdatabase.CheatForumActivity_;
@@ -42,9 +43,9 @@ import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.helpers.Tools;
 import com.cheatdatabase.helpers.UndoBarController;
+import com.facebook.ads.AdSize;
+import com.facebook.ads.AdView;
 import com.google.gson.Gson;
-import com.mopub.mobileads.MoPubView;
-
 
 import net.lucode.hackware.magicindicator.MagicIndicator;
 import net.lucode.hackware.magicindicator.ViewPagerHelper;
@@ -85,7 +86,7 @@ public class FavoritesCheatViewPageIndicator extends AppCompatActivity implement
     private Cheat[] cheatArray;
     private Cheat visibleCheat;
 
-    private MoPubView mAdView;
+//    private MoPubView mAdView;
 
     private SharedPreferences settings;
     private Editor editor;
@@ -108,6 +109,9 @@ public class FavoritesCheatViewPageIndicator extends AppCompatActivity implement
 
     private CheatDatabaseAdapter db;
     private Toolbar mToolbar;
+
+    private LinearLayout facebookBanner;
+    private AdView adView;
 
     @Bean
     Tools tools;
@@ -142,8 +146,6 @@ public class FavoritesCheatViewPageIndicator extends AppCompatActivity implement
     }
 
     private void init() {
-
-
         settings = getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
         editor = settings.edit();
 
@@ -151,7 +153,12 @@ public class FavoritesCheatViewPageIndicator extends AppCompatActivity implement
         db.open();
 
         mToolbar = tools.initToolbarBase(this, mToolbar);
-        mAdView = tools.initMoPubAdView(this, mAdView);
+
+//        mAdView = tools.initMoPubAdView(this, mAdView);
+        facebookBanner = findViewById(R.id.banner_container);
+        adView = new AdView(this, Konstanten.FACEBOOK_AUDIENCE_NETWORK_NATIVE_BANNER_ID, AdSize.BANNER_HEIGHT_50);
+        facebookBanner.addView(adView);
+        adView.loadAd();
 
         member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
     }
@@ -380,8 +387,12 @@ public class FavoritesCheatViewPageIndicator extends AppCompatActivity implement
     @Override
     protected void onDestroy() {
         mUndoBarController.hideUndoBar(true);
-        if (mAdView != null) {
-            mAdView.destroy();
+//        if (mAdView != null) {
+//            mAdView.destroy();
+//        }
+
+        if (adView != null) {
+            adView.destroy();
         }
         super.onDestroy();
     }

@@ -59,12 +59,11 @@ public class TopMembersListViewAdapter extends RecyclerView.Adapter<TopMembersLi
             tvCheatCount = v.findViewById(R.id.cheatcount);
             tvHiMessage = v.findViewById(R.id.hi_message);
             tvWebsite = v.findViewById(R.id.website);
-            avatarImageView = (ImageView) v.findViewById(R.id.avatar);
+            avatarImageView = v.findViewById(R.id.avatar);
         }
     }
 
     private void openWebsite(String url) {
-        // TODO member per email informieren, dass jemand seine homepage geoeffnet hat.
         if ((url != null) && (url.length() > 4)) {
             Intent intent = new Intent(Intent.ACTION_VIEW);
             intent.setData(Uri.parse(url));
@@ -73,8 +72,6 @@ public class TopMembersListViewAdapter extends RecyclerView.Adapter<TopMembersLi
     }
 
     private void showMemberCheatList(Member member) {
-//        //CheatDatabaseApplication.tracker().send(new HitBuilders.EventBuilder("ui", "show_member").setLabel(member.getUsername()).build());
-
         if (Reachability.reachability.isReachable) {
             Intent explicitIntent = new Intent(mContext, CheatsByMemberListActivity_.class);
             explicitIntent.putExtra("memberObj", member);

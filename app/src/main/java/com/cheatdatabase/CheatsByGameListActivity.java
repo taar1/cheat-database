@@ -19,6 +19,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,10 +40,10 @@ import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.helpers.Tools;
 import com.cheatdatabase.helpers.Webservice;
 import com.cheatdatabase.widgets.DividerDecoration;
+import com.facebook.ads.AdSize;
+import com.facebook.ads.AdView;
 import com.google.gson.Gson;
-import com.mopub.mobileads.MoPubView;
 import com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView;
-
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.App;
@@ -82,8 +83,8 @@ public class CheatsByGameListActivity extends AppCompatActivity {
     FastScrollRecyclerView mRecyclerView;
     @ViewById(R.id.swipe_refresh_layout)
     SwipeRefreshLayout mSwipeRefreshLayout;
-    @ViewById(R.id.adview)
-    MoPubView mAdView;
+    //    @ViewById(R.id.adview)
+//    MoPubView mAdView;
     @ViewById(R.id.toolbar)
     Toolbar mToolbar;
     @ViewById(R.id.item_list_empty_view)
@@ -99,6 +100,10 @@ public class CheatsByGameListActivity extends AppCompatActivity {
     private Cheat visibleCheat;
 
     private ShareActionProvider mShareActionProvider;
+
+    @ViewById(R.id.banner_container)
+    LinearLayout facebookBanner;
+    private AdView adView;
 
     // TODO die cheats noch in die SQLITE db eintragen
 //    private CheatDatabaseAdapter db;
@@ -138,7 +143,10 @@ public class CheatsByGameListActivity extends AppCompatActivity {
 //        db = new CheatDatabaseAdapter(this);
 //        db.open();
 
-        tools.loadAd(mAdView, getString(R.string.screen_type));
+//        tools.loadAd(mAdView, getString(R.string.screen_type));
+        adView = new AdView(this, Konstanten.FACEBOOK_AUDIENCE_NETWORK_NATIVE_BANNER_ID, AdSize.BANNER_HEIGHT_50);
+        facebookBanner.addView(adView);
+        adView.loadAd();
 
         if (mToolbar != null) {
             setSupportActionBar(mToolbar);
@@ -272,8 +280,11 @@ public class CheatsByGameListActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
-        if (mAdView != null) {
-            mAdView.destroy();
+//        if (mAdView != null) {
+//            mAdView.destroy();
+//        }
+        if (adView != null) {
+            adView.destroy();
         }
         super.onDestroy();
     }

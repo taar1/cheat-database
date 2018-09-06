@@ -171,7 +171,6 @@ public class TopMembersFragment extends Fragment {
     @UiThread
     public void notifyAdapter() {
         if (members != null && members.length > 0) {
-
             ArrayList<Member> memberList = new ArrayList<>();
             Collections.addAll(memberList, members);
 

@@ -7,7 +7,6 @@ import android.graphics.Typeface;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.support.multidex.MultiDexApplication;
-import android.util.Log;
 
 import com.cheatdatabase.businessobjects.Cheat;
 import com.cheatdatabase.businessobjects.Game;
@@ -17,14 +16,9 @@ import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.Tracker;
 import com.google.firebase.analytics.FirebaseAnalytics;
-import com.mopub.common.MoPub;
-import com.mopub.common.SdkConfiguration;
-import com.mopub.common.SdkInitializationListener;
 
 import org.androidannotations.annotations.EApplication;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.TreeMap;
 
 import io.fabric.sdk.android.Fabric;
@@ -111,34 +105,34 @@ public class CheatDatabaseApplication extends MultiDexApplication implements App
 
     }
 
-    private void initMopub() {
-        // A list of rewarded video adapters to initialize
-        List<String> networksToInit = new ArrayList<>();
-        networksToInit.add("com.mopub.mobileads.VungleRewardedVideo");
-        networksToInit.add("com.mopub.mobileads.AdColonyRewardedVideo");
-        networksToInit.add("com.mopub.mobileads.FacebookRewardedVideo");
-        networksToInit.add("com.mopub.mobileads.FacebookBanner");
-
+//    private void initMopub() {
+//        // A list of rewarded video adapters to initialize
+//        List<String> networksToInit = new ArrayList<>();
+//        networksToInit.add("com.mopub.mobileads.VungleRewardedVideo");
+//        networksToInit.add("com.mopub.mobileads.AdColonyRewardedVideo");
+//        networksToInit.add("com.mopub.mobileads.FacebookRewardedVideo");
+//        networksToInit.add("com.mopub.mobileads.FacebookBanner");
+//
+////        SdkConfiguration sdkConfiguration = new SdkConfiguration.Builder(Konstanten.MOPUB_PHONE_UNIT_ID)
+////                .withNetworksToInit(networksToInit)
+////                .build();
+//
 //        SdkConfiguration sdkConfiguration = new SdkConfiguration.Builder(Konstanten.MOPUB_PHONE_UNIT_ID)
-//                .withNetworksToInit(networksToInit)
 //                .build();
-
-        SdkConfiguration sdkConfiguration = new SdkConfiguration.Builder(Konstanten.MOPUB_PHONE_UNIT_ID)
-                .build();
-
-        MoPub.initializeSdk(this, sdkConfiguration, initSdkListener());
-    }
-
-    private SdkInitializationListener initSdkListener() {
-        return new SdkInitializationListener() {
-            @Override
-            public void onInitializationFinished() {
-                Log.d(TAG, "XXXXX MoPub SDK initialized");
-           /* MoPub SDK initialized.
-           Check if you should show the consent dialog here, and make your ad requests. */
-            }
-        };
-    }
+//
+//        MoPub.initializeSdk(this, sdkConfiguration, initSdkListener());
+//    }
+//
+//    private SdkInitializationListener initSdkListener() {
+//        return new SdkInitializationListener() {
+//            @Override
+//            public void onInitializationFinished() {
+//                Log.d(TAG, "XXXXX MoPub SDK initialized");
+//           /* MoPub SDK initialized.
+//           Check if you should show the consent dialog here, and make your ad requests. */
+//            }
+//        };
+//    }
 
     @Override
     public void onActivityCreated(Activity activity, Bundle savedInstanceState) {

@@ -433,30 +433,29 @@ public class Tools {
     }
 
 
-    public static MoPubView initMoPubAdView(final Activity activity, MoPubView mAdView) {
-
-//        mAdView = new MoPubView(activity);
-        mAdView = (MoPubView) activity.findViewById(R.id.adview);
-
-        try {
-            String screen = activity.getString(R.string.screen_type);
-            if (screen.equalsIgnoreCase("phone")) {
-                mAdView.setAdUnitId(Konstanten.MOPUB_PHONE_UNIT_ID);
-            } else {
-                mAdView.setAdUnitId(Konstanten.MOPUB_TABLET_UNIT_ID);
-            }
-
-            mAdView.setAutorefreshEnabled(true);
-            mAdView.setTesting(false);
-            mAdView.setKeywords("m_age:15,m_gender:m,m_marital:single");
-            mAdView.loadAd();
-        } catch (Exception e) {
-            Log.e("ADVIEW LOAD", e.getMessage());
-            e.printStackTrace();
-        }
-
-        return mAdView;
-    }
+//    public static MoPubView initMoPubAdView(final Activity activity, MoPubView mAdView) {
+//
+//        mAdView = (MoPubView) activity.findViewById(R.id.adview);
+//
+//        try {
+//            String screen = activity.getString(R.string.screen_type);
+//            if (screen.equalsIgnoreCase("phone")) {
+//                mAdView.setAdUnitId(Konstanten.MOPUB_PHONE_UNIT_ID);
+//            } else {
+//                mAdView.setAdUnitId(Konstanten.MOPUB_TABLET_UNIT_ID);
+//            }
+//
+//            mAdView.setAutorefreshEnabled(true);
+//            mAdView.setTesting(false);
+//            mAdView.setKeywords("m_age:15,m_gender:m,m_marital:single");
+//            mAdView.loadAd();
+//        } catch (Exception e) {
+//            Log.e("ADVIEW LOAD", e.getMessage());
+//            e.printStackTrace();
+//        }
+//
+//        return mAdView;
+//    }
 
     public void loadAd(MoPubView mAdView, String screenType) {
         Log.d(TAG, "XXXXX screenType: " + screenType);
