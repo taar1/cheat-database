@@ -18,7 +18,6 @@ import com.cheatdatabase.adapters.GamesBySystemRecycleListViewAdapter;
 import com.cheatdatabase.businessobjects.Game;
 import com.cheatdatabase.businessobjects.SystemPlatform;
 import com.cheatdatabase.events.GameListRecyclerViewClickEvent;
-import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.MyPrefs_;
 import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.helpers.Tools;
@@ -26,7 +25,6 @@ import com.cheatdatabase.helpers.Webservice;
 import com.cheatdatabase.widgets.DividerDecoration;
 import com.mopub.mobileads.MoPubView;
 import com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView;
-
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.App;

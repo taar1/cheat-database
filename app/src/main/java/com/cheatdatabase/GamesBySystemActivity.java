@@ -28,7 +28,6 @@ import com.cheatdatabase.widgets.DividerDecoration;
 import com.facebook.ads.AdSize;
 import com.facebook.ads.AdView;
 import com.gc.materialdesign.views.ProgressBarCircularIndeterminate;
-import com.mopub.mobileads.MoPubView;
 import com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView;
 
 import org.androidannotations.annotations.AfterViews;

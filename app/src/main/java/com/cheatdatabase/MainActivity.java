@@ -30,8 +30,6 @@ import android.widget.Toast;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.Theme;
-import com.amazon.device.ads.AdRegistration;
-import com.amazon.device.ads.AdTargetingOptions;
 import com.appbrain.AppBrain;
 import com.cheatdatabase.businessobjects.Member;
 import com.cheatdatabase.dialogs.RateAppDialog;
