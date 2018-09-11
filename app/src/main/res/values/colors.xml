@@ -28,6 +28,7 @@
     <!-- COLOR THEME - BLUE -->
     <color name="standard_background">#000000</color>
     <color name="action_bar">#003160</color>
+    <color name="scrollbar">#002447</color>
     <color name="stacked_color">#005694</color>
     <color name="tab_indicator">#005694</color>
     <color name="popup_menu_color">#005694</color>

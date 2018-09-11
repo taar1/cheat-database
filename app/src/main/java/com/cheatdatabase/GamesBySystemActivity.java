@@ -46,7 +46,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.TreeMap;
 
-@EActivity(R.layout.activity_gamelist)
+@EActivity(R.layout.activity_game_list)
 public class GamesBySystemActivity extends AppCompatActivity {
 
     private static final String TAG = GamesBySystemActivity.class.getSimpleName();
@@ -54,24 +54,20 @@ public class GamesBySystemActivity extends AppCompatActivity {
 
     @App
     CheatDatabaseApplication app;
-
-    @Extra
-    SystemPlatform systemObj;
-
     @Bean
     Tools tools;
     @Bean
     GamesBySystemRecycleListViewAdapter mGamesBySystemRecycleListViewAdapter;
-
     @Pref
     MyPrefs_ myPrefs;
+
+    @Extra
+    SystemPlatform systemObj;
 
     @ViewById(R.id.my_recycler_view)
     FastScrollRecyclerView mRecyclerView;
     @ViewById(R.id.swipe_refresh_layout)
     SwipeRefreshLayout mSwipeRefreshLayout;
-    //    @ViewById(R.id.adview)
-//    MoPubView mAdView;
     @ViewById(R.id.toolbar)
     Toolbar mToolbar;
     @ViewById(R.id.item_list_empty_view)
@@ -105,10 +101,11 @@ public class GamesBySystemActivity extends AppCompatActivity {
         // in content do not change the layout size of the RecyclerView
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         mRecyclerView.addItemDecoration(new DividerDecoration(this));
-        mRecyclerView.getItemAnimator().setRemoveDuration(50);
+//        mRecyclerView.getItemAnimator().setRemoveDuration(50);
 //        mRecyclerView.setEmptyView(mEmptyView);
 //        mRecyclerView.setLoadingView(mProgressView);
         mRecyclerView.setHasFixedSize(true);
+        mRecyclerView.showScrollbar();
 
         if (Reachability.reachability.isReachable) {
 //            mRecyclerView.showLoading();
@@ -116,11 +113,6 @@ public class GamesBySystemActivity extends AppCompatActivity {
         }
 
 
-        // TODO fast scroll einbauen: https://github.com/timusus/RecyclerView-FastScroll
-        // TODO fast scroll einbauen: https://github.com/timusus/RecyclerView-FastScroll
-        // TODO fast scroll einbauen: https://github.com/timusus/RecyclerView-FastScroll
-        // TODO fast scroll einbauen: https://github.com/timusus/RecyclerView-FastScroll
-        // TODO fast scroll einbauen: https://github.com/timusus/RecyclerView-FastScroll
     }
 
     private void init() {
@@ -286,8 +278,6 @@ public class GamesBySystemActivity extends AppCompatActivity {
     @Subscribe
     public void onEvent(GameListRecyclerViewClickEvent result) {
         if (result.isSucceeded()) {
-            //CheatDatabaseApplication.tracker().send(new HitBuilders.EventBuilder("ui", "click").setLabel(result.getGame().getGameName()).build());
-
             CheatsByGameListActivity_.intent(this).gameObj(result.getGame()).start();
         } else {
             Toast.makeText(this, R.string.no_internet, Toast.LENGTH_SHORT).show();

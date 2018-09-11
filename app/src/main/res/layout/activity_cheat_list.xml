@@ -1,6 +1,4 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bg"
@@ -19,46 +17,25 @@
         android:textSize="20sp"
         android:visibility="gone" />
 
-    <RelativeLayout
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_refresh_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:paddingBottom="52dp">
 
-        <android.support.v4.widget.SwipeRefreshLayout
-            android:id="@+id/swipe_refresh_layout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingBottom="52dp">
+        <include layout="@layout/include_fastscroll_recyclerview" />
 
-            <com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView
-                android:id="@+id/my_recycler_view"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="100dp"
-                android:layout_marginRight="100dp"
-                app:fastScrollAutoHide="true"
-                app:fastScrollAutoHideDelay="1500"
-                app:fastScrollPopupBackgroundSize="88dp"
-                app:fastScrollPopupBgColor="@color/color_primary_light"
-                app:fastScrollPopupPosition="adjacent"
-                app:fastScrollPopupTextColor="@color/accent_color"
-                app:fastScrollPopupTextSize="44sp"
-                app:fastScrollThumbColor="@color/color_primary_light"
-                tools:listitem="@layout/fastscroll_item" />
+    </android.support.v4.widget.SwipeRefreshLayout>
 
-        </android.support.v4.widget.SwipeRefreshLayout>
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/add_new_cheat_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/swipe_refresh_layout"
+        android:layout_alignRight="@id/swipe_refresh_layout"
+        android:layout_marginBottom="72dp"
+        android:layout_marginRight="20dp"
+        android:src="@drawable/ic_add_black_48dp" />
 
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/add_new_cheat_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@id/swipe_refresh_layout"
-            android:layout_alignRight="@id/swipe_refresh_layout"
-            android:layout_marginBottom="72dp"
-            android:layout_marginRight="20dp"
-            android:src="@drawable/ic_add_black_48dp" />
-
-        <include layout="@layout/adview_facebook" />
-    </RelativeLayout>
-
-
+    <include layout="@layout/adview_facebook" />
 </LinearLayout>

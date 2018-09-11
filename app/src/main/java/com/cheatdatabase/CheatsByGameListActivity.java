@@ -42,6 +42,7 @@ import com.cheatdatabase.helpers.Webservice;
 import com.cheatdatabase.widgets.DividerDecoration;
 import com.facebook.ads.AdSize;
 import com.facebook.ads.AdView;
+import com.gc.materialdesign.views.ProgressBarCircularIndeterminate;
 import com.google.gson.Gson;
 import com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView;
 
@@ -67,6 +68,17 @@ public class CheatsByGameListActivity extends AppCompatActivity {
 
     private static String TAG = CheatsByGameListActivity.class.getSimpleName();
 
+    private SharedPreferences settings;
+    private Editor editor;
+    private Member member;
+
+    private ArrayList<Cheat> cheatsArrayList;
+
+    private int lastPosition;
+    private Cheat visibleCheat;
+
+    private ShareActionProvider mShareActionProvider;
+
     @App
     CheatDatabaseApplication app;
     @Bean
@@ -83,23 +95,12 @@ public class CheatsByGameListActivity extends AppCompatActivity {
     FastScrollRecyclerView mRecyclerView;
     @ViewById(R.id.swipe_refresh_layout)
     SwipeRefreshLayout mSwipeRefreshLayout;
-    //    @ViewById(R.id.adview)
-//    MoPubView mAdView;
     @ViewById(R.id.toolbar)
     Toolbar mToolbar;
     @ViewById(R.id.item_list_empty_view)
     TextView mEmptyView;
-
-    private SharedPreferences settings;
-    private Editor editor;
-    private Member member;
-
-    private ArrayList<Cheat> cheatsArrayList;
-
-    private int lastPosition;
-    private Cheat visibleCheat;
-
-    private ShareActionProvider mShareActionProvider;
+    @ViewById(R.id.items_list_load_progress)
+    ProgressBarCircularIndeterminate mProgressView;
 
     @ViewById(R.id.banner_container)
     LinearLayout facebookBanner;
