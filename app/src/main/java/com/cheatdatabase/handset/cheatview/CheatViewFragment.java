@@ -207,6 +207,7 @@ public class CheatViewFragment extends Fragment implements OnClickListener {
             imageViews = new ImageView[cheatObj.getScreens().length];
             progressBar.setVisibility(View.VISIBLE);
 
+            // TODO FIXME use Needle for background task
             new LoadScreenshotsInBackgroundTask().execute();
         } else {
             tvGalleryInfo.setVisibility(View.GONE);
@@ -450,6 +451,8 @@ public class CheatViewFragment extends Fragment implements OnClickListener {
             }
         }
     }
+
+
 
     private class LoadScreenshotsInBackgroundTask extends AsyncTask<Void, Void, Bitmap[]> {
         Bitmap bms[];

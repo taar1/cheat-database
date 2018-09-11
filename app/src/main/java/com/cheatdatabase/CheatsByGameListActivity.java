@@ -139,11 +139,9 @@ public class CheatsByGameListActivity extends AppCompatActivity {
     }
 
     private void init() {
-
 //        db = new CheatDatabaseAdapter(this);
 //        db.open();
 
-//        tools.loadAd(mAdView, getString(R.string.screen_type));
         adView = new AdView(this, Konstanten.FACEBOOK_AUDIENCE_NETWORK_NATIVE_BANNER_ID, AdSize.BANNER_HEIGHT_50);
         facebookBanner.addView(adView);
         adView.loadAd();
@@ -280,9 +278,6 @@ public class CheatsByGameListActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
-//        if (mAdView != null) {
-//            mAdView.destroy();
-//        }
         if (adView != null) {
             adView.destroy();
         }

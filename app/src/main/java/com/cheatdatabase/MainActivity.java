@@ -73,8 +73,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Extra
     int mFragmentId;
 
-    @ViewById(R.id.banner_container)
-    LinearLayout facebookBanner;
     //    @ViewById(R.id.amazon_adview)
 //    AdLayout mAdView;
     @ViewById(R.id.toolbar)
@@ -98,6 +96,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private SearchManager searchManager;
     private SearchView searchView;
+
+    @ViewById(R.id.banner_container)
+    LinearLayout facebookBanner;
     private AdView adView;
 
 //    private FirebaseRemoteConfig mFirebaseRemoteConfig;
@@ -120,13 +121,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.app_icon_fox);
 
-//        tools.loadAd(mAdView, getString(R.string.screen_type));
-        adView = new AdView(this, "148040821872637_2083092671700766", AdSize.BANNER_HEIGHT_50);
-//        adView = new AdView(this, "148040821872637_2095967317079968", AdSize.BANNER_HEIGHT_90);
+        adView = new AdView(this, Konstanten.FACEBOOK_AUDIENCE_NETWORK_NATIVE_BANNER_ID, AdSize.BANNER_HEIGHT_50);
         facebookBanner.addView(adView);
         adView.loadAd();
-        Log.d(TAG, "XXXXX " + adView.getPlacementId());
-
 
         // TODO FIXME - find out where this part was before and re-add it.
         FragmentManager fragmentManager = getFragmentManager();
@@ -143,19 +140,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         settings = getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
         editor = settings.edit();
 
-        // Initialize the Tracking Utils
         TrackingUtils.getInstance().init(this);
 
         AppBrain.init(this);
-
-//        AdRegistration.setAppKey(Konstanten.AMAZON_APP_ID);
-
-//        AdTargetingOptions adOptions = new AdTargetingOptions();
-//        AdRegistration.enableTesting(true);
-//        AdRegistration.enableLogging(true);
-
-        // Optional: Set ad targeting options here.
-//        this.mAdView.loadAd(adOptions); // Retrieves an ad on background thread
     }
 
     private void testCrash() {
@@ -241,9 +228,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public void onDestroy() {
-//        if (mAdView != null) {
-//            mAdView.destroy();
-//        }
         if (adView != null) {
             adView.destroy();
         }
@@ -254,7 +238,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // menu.clear();
+        menu.clear();
         if (member != null) {
             getMenuInflater().inflate(R.menu.signout_menu, menu);
         } else {

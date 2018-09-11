@@ -8,6 +8,7 @@
 
     <include layout="@layout/toolbar" />
 
+    <!-- List item layout: gamelist_item.xml -->
     <TextView
         android:id="@+id/item_list_empty_view"
         android:layout_width="wrap_content"
@@ -18,28 +19,34 @@
         android:textSize="20sp"
         android:visibility="gone" />
 
-    <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/swipe_refresh_layout"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView
-            android:id="@+id/my_recycler_view"
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/swipe_refresh_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginRight="100dp"
-            android:layout_marginLeft="100dp"
-            app:fastScrollAutoHide="true"
-            app:fastScrollAutoHideDelay="1500"
-            app:fastScrollPopupBackgroundSize="88dp"
-            app:fastScrollPopupBgColor="@color/color_primary_light"
-            app:fastScrollPopupPosition="adjacent"
-            app:fastScrollPopupTextColor="@color/accent_color"
-            app:fastScrollPopupTextSize="44sp"
-            app:fastScrollThumbColor="@color/color_primary_light"
-            tools:listitem="@layout/fastscroll_item" />
+            android:paddingBottom="52dp">
 
-    </android.support.v4.widget.SwipeRefreshLayout>
+            <com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView
+                android:id="@+id/my_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="100dp"
+                android:layout_marginRight="100dp"
+                app:fastScrollAutoHide="true"
+                app:fastScrollAutoHideDelay="1500"
+                app:fastScrollPopupBackgroundSize="88dp"
+                app:fastScrollPopupBgColor="@color/color_primary_light"
+                app:fastScrollPopupPosition="adjacent"
+                app:fastScrollPopupTextColor="@color/accent_color"
+                app:fastScrollPopupTextSize="44sp"
+                app:fastScrollThumbColor="@color/color_primary_light"
+                tools:listitem="@layout/fastscroll_item" />
 
-    <include layout="@layout/adview_facebook" />
+        </android.support.v4.widget.SwipeRefreshLayout>
+
+        <include layout="@layout/adview_facebook" />
+    </RelativeLayout>
 </LinearLayout>
