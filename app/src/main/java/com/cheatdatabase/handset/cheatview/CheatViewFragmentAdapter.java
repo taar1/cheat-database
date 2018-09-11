@@ -4,35 +4,35 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import com.cheatdatabase.businessobjects.Cheat;
 import com.cheatdatabase.businessobjects.Game;
+
+import java.util.List;
 
 public class CheatViewFragmentAdapter extends FragmentPagerAdapter {
 
-    private String[] cheatTitles;
+    private List<Cheat> cheatArray;
     private Game game;
 
-    public CheatViewFragmentAdapter(FragmentManager fm, Game game, String[] cheatTitleNames) {
+    public CheatViewFragmentAdapter(FragmentManager fm, Game game, List<Cheat> cheatArray) {
         super(fm);
         this.game = game;
-        cheatTitles = cheatTitleNames;
+        this.cheatArray = cheatArray;
     }
 
     @Override
     public Fragment getItem(int position) {
-        if (cheatTitles == null) {
-            cheatTitles = new String[game.getCheatsCount()];
-        }
-        return CheatViewFragment.newInstance(cheatTitles[position % cheatTitles.length], game, position);
+        return CheatViewFragment.newInstance(cheatArray.get(position).getCheatTitle(), game, position);
     }
 
     @Override
     public int getCount() {
-        return cheatTitles.length;
+        return cheatArray.size();
     }
 
     @Override
     public CharSequence getPageTitle(int position) {
-        return cheatTitles[position % cheatTitles.length];
+        return cheatArray.get(position).getCheatTitle();
     }
 
 }

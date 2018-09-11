@@ -84,7 +84,7 @@ public class CheatViewFragment extends Fragment implements OnClickListener {
     private static final String KEY_CONTENT = "CheatViewFragment:Content";
     private static final String TAG = CheatViewFragment.class.getSimpleName();
 
-    public static CheatViewFragment newInstance(String content, Game gameObj, int offset) {
+    public static CheatViewFragment newInstance(String cheatTitle, Game gameObj, int offset) {
 
         CheatViewFragment fragment = new CheatViewFragment();
 
@@ -96,7 +96,7 @@ public class CheatViewFragment extends Fragment implements OnClickListener {
 
         StringBuilder builder = new StringBuilder();
         for (int i = 0; i < 20; i++) {
-            builder.append(content).append(" ");
+            builder.append(cheatTitle).append(" ");
         }
         builder.deleteCharAt(builder.length() - 1);
         fragment.mContent = builder.toString();

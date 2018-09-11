@@ -60,6 +60,9 @@ import org.androidannotations.annotations.EBean;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Swipe through cheats horizontally with this CheatViewPageIndicator.
  *
@@ -80,10 +83,8 @@ public class CheatViewPageIndicator extends AppCompatActivity {
     private int pageSelected;
 
     private Game gameObj;
-    private Cheat[] cheatArray;
+    private List<Cheat> cheatArray;
     private Cheat visibleCheat;
-
-    //    private MoPubView mAdView;
 
     private SharedPreferences settings;
     private Editor editor;
@@ -126,12 +127,15 @@ public class CheatViewPageIndicator extends AppCompatActivity {
 
         pageSelected = intent.getIntExtra("selectedPage", 0);
         activePage = pageSelected;
-        cheatArray = gameObj.getCheats();
 
-        if (cheatArray == null) {
+        for (Cheat cheat : gameObj.getCheats()) {
+            cheatArray.add(cheat);
+        }
+
+        if ((cheatArray == null) || (cheatArray.size() < 1)) {
             finish();
         }
-        visibleCheat = cheatArray[pageSelected];
+        visibleCheat = cheatArray.get(pageSelected);
 
         getSupportActionBar().setTitle(gameObj.getGameName());
         getSupportActionBar().setSubtitle(gameObj.getSystemName());
@@ -156,16 +160,23 @@ public class CheatViewPageIndicator extends AppCompatActivity {
         adView.loadAd();
 
         member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
+
+        cheatArray = new ArrayList();
     }
 
     private void initialisePaging() {
-        final String[] cheatTitles = new String[cheatArray.length];
-        for (int i = 0; i < cheatArray.length; i++) {
-            cheatTitles[i] = cheatArray[i].getCheatTitle();
-        }
+//        final String[] cheatTitles = new String[cheatArray.size()];
+//        for(Cheat cheat : cheatArray) {
+//            cheatTitles[i] = cheatArray[i].getCheatTitle();
+//        }
+//
+//
+//        for (int i = 0; i < cheatArray.length; i++) {
+//            cheatTitles[i] = cheatArray[i].getCheatTitle();
+//        }
 
         try {
-            mAdapter = new CheatViewFragmentAdapter(getSupportFragmentManager(), gameObj, cheatTitles);
+            mAdapter = new CheatViewFragmentAdapter(getSupportFragmentManager(), gameObj, cheatArray);
             mPager = viewLayout.findViewById(R.id.pager);
             mPager.setAdapter(mAdapter);
             mPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -183,7 +194,7 @@ public class CheatViewPageIndicator extends AppCompatActivity {
                     activePage = position;
 
                     try {
-                        visibleCheat = cheatArray[position];
+                        visibleCheat = cheatArray.get(position);
                         invalidateOptionsMenu();
                     } catch (Exception e) {
                         Toast.makeText(CheatViewPageIndicator.this, R.string.err_somethings_wrong, Toast.LENGTH_SHORT).show();
@@ -202,13 +213,13 @@ public class CheatViewPageIndicator extends AppCompatActivity {
             commonNavigator.setAdapter(new CommonNavigatorAdapter() {
                 @Override
                 public int getCount() {
-                    return cheatArray == null ? 0 : cheatArray.length;
+                    return cheatArray == null ? 0 : cheatArray.size();
                 }
 
                 @Override
                 public IPagerTitleView getTitleView(Context context, final int index) {
                     SimplePagerTitleView clipPagerTitleView = new ColorTransitionPagerTitleView(context);
-                    clipPagerTitleView.setText(cheatTitles[index]);
+                    clipPagerTitleView.setText(cheatArray.get(index).getCheatTitle());
                     clipPagerTitleView.setNormalColor(Color.parseColor("#88ffffff")); // White transparent
                     clipPagerTitleView.setSelectedColor(Color.WHITE);
                     clipPagerTitleView.setOnClickListener(new View.OnClickListener() {
@@ -450,13 +461,13 @@ public class CheatViewPageIndicator extends AppCompatActivity {
     @Subscribe
     public void onEvent(CheatRatingFinishedEvent result) {
         visibleCheat.setMemberRating(result.getRating());
-        cheatArray[activePage].setMemberRating(result.getRating());
+        cheatArray.get(activePage).setMemberRating(result.getRating());
         invalidateOptionsMenu();
         Toast.makeText(this, R.string.rating_inserted, Toast.LENGTH_SHORT).show();
     }
 
     public void setRating(int position, float rating) {
-        cheatArray[position].setMemberRating(rating);
+        cheatArray.get(position).setMemberRating(rating);
         invalidateOptionsMenu();
     }
 
