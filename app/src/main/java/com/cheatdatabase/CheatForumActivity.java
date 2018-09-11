@@ -164,8 +164,6 @@ public class CheatForumActivity extends AppCompatActivity implements CheatListFr
 
         settings = getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
 
-//        mAdView = Tools.initMoPubAdView(this, mAdView);
-//        facebookBanner = findViewById(R.id.banner_container);
         adView = new AdView(this, Konstanten.FACEBOOK_AUDIENCE_NETWORK_NATIVE_BANNER_ID, AdSize.BANNER_HEIGHT_50);
         facebookBanner.addView(adView);
         adView.loadAd();

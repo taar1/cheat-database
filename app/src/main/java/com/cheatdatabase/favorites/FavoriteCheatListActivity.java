@@ -18,6 +18,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,9 +38,10 @@ import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.helpers.Tools;
 import com.cheatdatabase.widgets.DividerDecoration;
 import com.cheatdatabase.widgets.EmptyRecyclerView;
+import com.facebook.ads.AdSize;
+import com.facebook.ads.AdView;
 import com.gc.materialdesign.views.ProgressBarCircularIndeterminate;
 import com.google.gson.Gson;
-import com.mopub.mobileads.MoPubView;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Background;
@@ -62,30 +64,25 @@ public class FavoriteCheatListActivity extends AppCompatActivity {
 
     @Extra
     Game gameObj;
-
-    @ViewById(R.id.my_recycler_view)
-    EmptyRecyclerView mRecyclerView;
-
-    @ViewById(R.id.swipe_refresh_layout)
-    SwipeRefreshLayout mSwipeRefreshLayout;
-
     @Bean
     Tools tools;
-
-    @ViewById(R.id.adview)
-    MoPubView mAdView;
-
-    @ViewById(R.id.toolbar)
-    Toolbar mToolbar;
-
     @Bean
     CheatsByGameRecycleListViewAdapter cheatsByGameRecycleListViewAdapter;
 
+    @ViewById(R.id.my_recycler_view)
+    EmptyRecyclerView mRecyclerView;
+    @ViewById(R.id.swipe_refresh_layout)
+    SwipeRefreshLayout mSwipeRefreshLayout;
+    @ViewById(R.id.toolbar)
+    Toolbar mToolbar;
     @ViewById(R.id.item_list_empty_view)
     TextView mEmptyView;
-
     @ViewById(R.id.items_list_load_progress)
     ProgressBarCircularIndeterminate mProgressView;
+
+    @ViewById(R.id.banner_container)
+    LinearLayout facebookBanner;
+    private AdView adView;
 
     private SharedPreferences settings;
     private SharedPreferences.Editor editor;
@@ -135,11 +132,9 @@ public class FavoriteCheatListActivity extends AppCompatActivity {
     }
 
     private void init() {
-        //CheatDatabaseApplication.tracker().send(new HitBuilders.EventBuilder("ui", "Favorites Cheat List").setLabel(TAG).build());
-
-
-
-        tools.loadAd(mAdView, getString(R.string.screen_type));
+        adView = new AdView(this, Konstanten.FACEBOOK_AUDIENCE_NETWORK_NATIVE_BANNER_ID, AdSize.BANNER_HEIGHT_50);
+        facebookBanner.addView(adView);
+        adView.loadAd();
 
         if (mToolbar != null) {
             setSupportActionBar(mToolbar);
@@ -301,8 +296,8 @@ public class FavoriteCheatListActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
-        if (mAdView != null) {
-            mAdView.destroy();
+        if (adView != null) {
+            adView.destroy();
         }
         super.onDestroy();
     }

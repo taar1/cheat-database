@@ -47,16 +47,16 @@
 
             <TableLayout
                 android:id="@+id/table_cheat_list_main"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="top"
-                android:paddingTop="10dp" />
+                android:layout_marginTop="10dp"
+                android:gravity="top" />
 
             <TextView
                 android:id="@+id/cheat_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingTop="10dp"
+                android:layout_marginTop="10dp"
                 android:textAppearance="@style/NormalText"
                 android:textIsSelectable="true" />
 
@@ -71,15 +71,15 @@
                 android:id="@+id/gallery"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="bottom"
-                android:paddingTop="30dp" />
+                android:layout_marginTop="30dp"
+                android:gravity="bottom" />
 
             <TextView
                 android:id="@+id/gallery_info"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:paddingTop="4dp"
+                android:layout_marginTop="4dp"
                 android:text="@string/slide_gallery"
                 android:textAppearance="@style/NormalText" />
         </LinearLayout>

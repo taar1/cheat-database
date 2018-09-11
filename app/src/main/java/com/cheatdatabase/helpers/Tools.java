@@ -22,7 +22,6 @@ import com.cheatdatabase.R;
 import com.cheatdatabase.businessobjects.Cheat;
 import com.cheatdatabase.businessobjects.Game;
 import com.cheatdatabase.businessobjects.SystemPlatform;
-import com.mopub.mobileads.MoPubView;
 
 import org.androidannotations.annotations.EBean;
 import org.json.JSONArray;
@@ -54,21 +53,21 @@ public class Tools {
     public static boolean isEmailValid(String email) {
         boolean isValid = false;
 
-		/*
+        /*
          * Email format: A valid email address will have following format:
-		 * [\\w\\.-]+: Begins with word characters, (may include periods and
-		 * hypens).
-		 * 
-		 * @: It must have a '@' symbol after initial characters.
-		 * ([\\w\\-]+\\.)+: '@' must follow by more alphanumeric characters (may
-		 * include hypens.). This part must also have a "." to separate domain
-		 * and subdomain names. [A-Z]{2,4}$ : Must end with two to four
-		 * alaphabets. (This will allow domain names with 2, 3 and 4 characters
-		 * e.g pa, com, net, wxyz)
-		 * 
-		 * Examples: Following email addresses will pass validation abc@xyz.net;
-		 * ab.c@tx.gov
-		 */
+         * [\\w\\.-]+: Begins with word characters, (may include periods and
+         * hypens).
+         *
+         * @: It must have a '@' symbol after initial characters.
+         * ([\\w\\-]+\\.)+: '@' must follow by more alphanumeric characters (may
+         * include hypens.). This part must also have a "." to separate domain
+         * and subdomain names. [A-Z]{2,4}$ : Must end with two to four
+         * alaphabets. (This will allow domain names with 2, 3 and 4 characters
+         * e.g pa, com, net, wxyz)
+         *
+         * Examples: Following email addresses will pass validation abc@xyz.net;
+         * ab.c@tx.gov
+         */
 
         // Initialize reg ex for email.
         String expression = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";
@@ -457,29 +456,29 @@ public class Tools {
 //        return mAdView;
 //    }
 
-    public void loadAd(MoPubView mAdView, String screenType) {
-        Log.d(TAG, "XXXXX screenType: " + screenType);
-
-        try {
-            if (screenType.equalsIgnoreCase("phone")) {
-                mAdView.setAdUnitId(Konstanten.MOPUB_PHONE_UNIT_ID);
-            } else {
-                mAdView.setAdUnitId(Konstanten.MOPUB_TABLET_UNIT_ID);
-            }
-
-            mAdView.setAutorefreshEnabled(true);
-            mAdView.setTesting(true);
-            mAdView.setAutorefreshEnabled(true);
-//            mAdView.s
-// etKeywords("m_age:15,m_gender:m,m_marital:single");
-            mAdView.loadAd();
-
-            Log.d(TAG, "XXXXX AD LOADED");
-        } catch (Exception e) {
-            Log.e("XXXXX ADVIEW LOAD", e.getMessage());
-            e.printStackTrace();
-        }
-    }
+//    public void loadAd(MoPubView mAdView, String screenType) {
+//        Log.d(TAG, "XXXXX screenType: " + screenType);
+//
+//        try {
+//            if (screenType.equalsIgnoreCase("phone")) {
+//                mAdView.setAdUnitId(Konstanten.MOPUB_PHONE_UNIT_ID);
+//            } else {
+//                mAdView.setAdUnitId(Konstanten.MOPUB_TABLET_UNIT_ID);
+//            }
+//
+//            mAdView.setAutorefreshEnabled(true);
+//            mAdView.setTesting(true);
+//            mAdView.setAutorefreshEnabled(true);
+////            mAdView.s
+//// etKeywords("m_age:15,m_gender:m,m_marital:single");
+//            mAdView.loadAd();
+//
+//            Log.d(TAG, "XXXXX AD LOADED");
+//        } catch (Exception e) {
+//            Log.e("XXXXX ADVIEW LOAD", e.getMessage());
+//            e.printStackTrace();
+//        }
+//    }
 
     public void logout(Activity activity, Editor editor) {
         editor.remove(Konstanten.MEMBER_OBJECT);

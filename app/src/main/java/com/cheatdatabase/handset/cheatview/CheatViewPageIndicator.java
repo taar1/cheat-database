@@ -121,6 +121,9 @@ public class CheatViewPageIndicator extends AppCompatActivity {
         if (gameObj == null) {
             gameObj = new Gson().fromJson(settings.getString(Konstanten.PREFERENCES_TEMP_GAME_OBJECT_VIEW, null), Game.class);
         }
+        if (gameObj == null) {
+            finish();
+        }
 
         editor.putString(Konstanten.PREFERENCES_TEMP_GAME_OBJECT_VIEW, new Gson().toJson(gameObj));
         editor.commit();
@@ -152,7 +155,6 @@ public class CheatViewPageIndicator extends AppCompatActivity {
         editor = settings.edit();
 
         mToolbar = tools.initToolbarBase(this, mToolbar);
-//        mAdView = tools.initMoPubAdView(this, mAdView);
 
         facebookBanner = findViewById(R.id.banner_container);
         adView = new AdView(this, Konstanten.FACEBOOK_AUDIENCE_NETWORK_NATIVE_BANNER_ID, AdSize.BANNER_HEIGHT_50);
@@ -165,16 +167,6 @@ public class CheatViewPageIndicator extends AppCompatActivity {
     }
 
     private void initialisePaging() {
-//        final String[] cheatTitles = new String[cheatArray.size()];
-//        for(Cheat cheat : cheatArray) {
-//            cheatTitles[i] = cheatArray[i].getCheatTitle();
-//        }
-//
-//
-//        for (int i = 0; i < cheatArray.length; i++) {
-//            cheatTitles[i] = cheatArray[i].getCheatTitle();
-//        }
-
         try {
             mAdapter = new CheatViewFragmentAdapter(getSupportFragmentManager(), gameObj, cheatArray);
             mPager = viewLayout.findViewById(R.id.pager);
@@ -411,10 +403,6 @@ public class CheatViewPageIndicator extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
-//        if (mAdView != null) {
-//            mAdView.destroy();
-//        }
-
         if (adView != null) {
             adView.destroy();
         }

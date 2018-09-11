@@ -19,6 +19,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
+import android.webkit.WebView;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
@@ -31,6 +32,8 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.MaterialDialog;
+import com.afollestad.materialdialogs.Theme;
 import com.cheatdatabase.R;
 import com.cheatdatabase.businessobjects.Cheat;
 import com.cheatdatabase.businessobjects.Game;
@@ -55,7 +58,7 @@ import java.util.ArrayList;
  * @author Dominik Erbsland
  * @version 1.0
  */
-public class CheatViewFragment extends Fragment implements OnClickListener {
+public class CheatViewFragment extends Fragment {
 
     private TableLayout mainTable;
     private LinearLayout outerLinearLayout;
@@ -151,30 +154,29 @@ public class CheatViewFragment extends Fragment implements OnClickListener {
 
         new FetchCheatRatingOnlineBackgroundTask().execute();
 
-        mainTable = (TableLayout) outerLinearLayout.findViewById(R.id.table_cheat_list_main);
+        mainTable = outerLinearLayout.findViewById(R.id.table_cheat_list_main);
 
-        tvTextBeforeTable = (TextView) outerLinearLayout.findViewById(R.id.text_cheat_before_table);
-        tvTextBeforeTable.setOnClickListener(this);
+        tvTextBeforeTable = outerLinearLayout.findViewById(R.id.text_cheat_before_table);
         tvTextBeforeTable.setVisibility(View.VISIBLE);
         tvTextBeforeTable.setTypeface(latoFontLight);
 
-        tvCheatTitle = (TextView) outerLinearLayout.findViewById(R.id.text_cheat_title);
+        tvCheatTitle = outerLinearLayout.findViewById(R.id.text_cheat_title);
         tvCheatTitle.setTypeface(latoFontBold);
         tvCheatTitle.setText(cheatObj.getCheatTitle());
 
-        tvGalleryInfo = (TextView) outerLinearLayout.findViewById(R.id.gallery_info);
+        tvGalleryInfo = outerLinearLayout.findViewById(R.id.gallery_info);
         tvGalleryInfo.setVisibility(View.INVISIBLE);
         tvGalleryInfo.setTypeface(latoFontLight);
 
-        screenshotGallery = (Gallery) outerLinearLayout.findViewById(R.id.gallery);
+        screenshotGallery = outerLinearLayout.findViewById(R.id.gallery);
 
-        progressBar = (ProgressBar) outerLinearLayout.findViewById(R.id.progress_bar);
+        progressBar = outerLinearLayout.findViewById(R.id.progress_bar);
         progressBar.setVisibility(View.INVISIBLE);
 
-        tvCheatText = (TextView) outerLinearLayout.findViewById(R.id.cheat_content);
+        tvCheatText = outerLinearLayout.findViewById(R.id.cheat_content);
         tvCheatText.setTypeface(latoFontLight);
 
-        reloadView = (ImageView) outerLinearLayout.findViewById(R.id.reload);
+        reloadView = outerLinearLayout.findViewById(R.id.reload);
         if (Reachability.reachability.isReachable) {
             getOnlineContent();
         } else {
@@ -273,17 +275,13 @@ public class CheatViewFragment extends Fragment implements OnClickListener {
     }
 
     private void fillTableContent() {
-
-        mainTable.setColumnShrinkable(0, true);
-        // mainTable.setColumnShrinkable(1, true);
-        mainTable.setOnClickListener(this);
         mainTable.setVisibility(View.VISIBLE);
+        mainTable.setHorizontalScrollBarEnabled(true);
 
-        // Cheat-Text oberhalb der Tabelle
+        // Cheat Text oberhalb der Tabelle
         String[] textBeforeTable = null;
 
-        // Einige tabellarische Cheats beginnen direkt mit der
-        // Tabelle
+        // Einige tabellarische Cheats beginnen direkt mit der Tabelle
         if (cheatObj.getCheatText().startsWith("<br><table")) {
             textBeforeTable = cheatObj.getCheatText().split("<br>");
             tvTextBeforeTable.setVisibility(View.GONE);
@@ -309,7 +307,7 @@ public class CheatViewFragment extends Fragment implements OnClickListener {
         String firstThColumn = "<b>" + th1[1].trim() + "</b>";
         String secondThColumn = "<b>" + th2[0].trim() + "</b>";
 
-		/* Create a new row to be added. */
+        /* Create a new row to be added. */
         TableRow trTh = new TableRow(cheatViewPageIndicator);
         trTh.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
 
@@ -324,11 +322,11 @@ public class CheatViewFragment extends Fragment implements OnClickListener {
         TextView tvSecondThCol = new TextView(cheatViewPageIndicator);
         tvSecondThCol.setText(Html.fromHtml(secondThColumn));
         tvSecondThCol.setPadding(5, 1, 1, 1);
-        tvSecondThCol.setTextAppearance(cheatViewPageIndicator, R.style.NormalText);
+        tvSecondThCol.setTextAppearance(getContext(), R.style.NormalText);
         tvSecondThCol.setTypeface(latoFontLight);
         trTh.addView(tvSecondThCol);
 
-		/* Add row to TableLayout. */
+        /* Add row to TableLayout. */
         mainTable.addView(trTh, new TableLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
 
         for (int i = 1; i < trs.length; i++) {
@@ -340,28 +338,39 @@ public class CheatViewFragment extends Fragment implements OnClickListener {
             String firstTdColumn = td1[1].replaceAll("<br>", "\n").trim();
             String secondTdColumn = td2[0].replaceAll("<br>", "\n").trim();
 
-			/* Create a new row to be added. */
+            /* Create a new row to be added. */
             TableRow trTd = new TableRow(cheatViewPageIndicator);
             trTd.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
 
             TextView tvFirstTdCol = new TextView(cheatViewPageIndicator);
+            tvFirstTdCol.setSingleLine(false);
             tvFirstTdCol.setText(firstTdColumn);
             tvFirstTdCol.setPadding(1, 1, 10, 1);
             tvFirstTdCol.setMinimumWidth(Konstanten.TABLE_ROW_MINIMUM_WIDTH);
-            tvFirstTdCol.setTextAppearance(cheatViewPageIndicator, R.style.NormalText);
+            tvFirstTdCol.setTextAppearance(getContext(), R.style.NormalText);
             tvFirstTdCol.setTypeface(latoFontLight);
             trTd.addView(tvFirstTdCol);
 
             TextView tvSecondTdCol = new TextView(cheatViewPageIndicator);
+            tvSecondTdCol.setSingleLine(false);
             tvSecondTdCol.setText(secondTdColumn);
+            tvSecondTdCol.canScrollHorizontally(1);
             tvSecondTdCol.setPadding(10, 1, 30, 1);
-            tvSecondTdCol.setTextAppearance(cheatViewPageIndicator, R.style.NormalText);
+            tvSecondTdCol.setTextAppearance(getContext(), R.style.NormalText);
             tvSecondTdCol.setTypeface(latoFontLight);
             trTd.addView(tvSecondTdCol);
 
-			/* Add row to TableLayout. */
+            /* Add row to TableLayout. */
             mainTable.addView(trTd, new TableLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
         }
+
+        mainTable.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                displayTableInWebview();
+            }
+        });
+
     }
 
     private void fillSimpleContent() {
@@ -372,7 +381,7 @@ public class CheatViewFragment extends Fragment implements OnClickListener {
         tvCheatText.setText(styledText);
 
         if (cheatObj.isWalkthroughFormat()) {
-            tvCheatText.setTextAppearance(cheatViewPageIndicator, R.style.WalkthroughText);
+            tvCheatText.setTextAppearance(getContext(), R.style.WalkthroughText);
         }
     }
 
@@ -390,13 +399,20 @@ public class CheatViewFragment extends Fragment implements OnClickListener {
         // TODO update member rating
     }
 
-    @Override
-    public void onClick(View v) {
-        Log.d("onClick", "onClick");
-        Bundle arguments = new Bundle();
-        arguments.putInt("CHANGEME", 1);
-        arguments.putSerializable("cheatObj", cheatObj);
+    private void displayTableInWebview() {
+        MaterialDialog md = new MaterialDialog.Builder(getActivity())
+                .customView(R.layout.layout_cheat_content_table, true)
+                .theme(Theme.DARK)
+                .positiveText(R.string.close)
+                .cancelable(true)
+                .show();
+
+        View dialogView = md.getCustomView();
+
+        WebView webview = dialogView.findViewById(R.id.webview);
+        webview.loadDataWithBaseURL("", cheatObj.getCheatText(), "text/html", "UTF-8", "");
     }
+
 
     private class FetchCheatTextTask extends AsyncTask<Void, Void, Void> {
 
@@ -453,7 +469,6 @@ public class CheatViewFragment extends Fragment implements OnClickListener {
     }
 
 
-
     private class LoadScreenshotsInBackgroundTask extends AsyncTask<Void, Void, Bitmap[]> {
         Bitmap bms[];
 
@@ -473,10 +488,10 @@ public class CheatViewFragment extends Fragment implements OnClickListener {
                 bms = new Bitmap[imageViews.length];
                 for (int i = 0; i < imageViews.length; i++) {
 
-					/*
+                    /*
                      * Open a new URL and get the InputStream to load data from
-					 * it.
-					 */
+                     * it.
+                     */
                     URL aURL = new URL(myRemoteImages[i]);
                     URLConnection conn = aURL.openConnection();
                     conn.connect();
