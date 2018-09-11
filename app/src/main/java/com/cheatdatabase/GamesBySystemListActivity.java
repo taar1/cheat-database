@@ -11,6 +11,7 @@ import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,12 +19,14 @@ import com.cheatdatabase.adapters.GamesBySystemRecycleListViewAdapter;
 import com.cheatdatabase.businessobjects.Game;
 import com.cheatdatabase.businessobjects.SystemPlatform;
 import com.cheatdatabase.events.GameListRecyclerViewClickEvent;
+import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.MyPrefs_;
 import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.helpers.Tools;
 import com.cheatdatabase.helpers.Webservice;
 import com.cheatdatabase.widgets.DividerDecoration;
-import com.mopub.mobileads.MoPubView;
+import com.facebook.ads.AdSize;
+import com.facebook.ads.AdView;
 import com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView;
 
 import org.androidannotations.annotations.AfterViews;
@@ -66,12 +69,16 @@ public class GamesBySystemListActivity extends AppCompatActivity {
     FastScrollRecyclerView mRecyclerView;
     @ViewById(R.id.swipe_refresh_layout)
     SwipeRefreshLayout mSwipeRefreshLayout;
-    @ViewById(R.id.adview)
-    MoPubView mAdView;
+    //    @ViewById(R.id.adview)
+//    MoPubView mAdView;
     @ViewById(R.id.toolbar)
     Toolbar mToolbar;
     @ViewById(R.id.item_list_empty_view)
     TextView mEmptyView;
+
+    @ViewById(R.id.banner_container)
+    LinearLayout facebookBanner;
+    private AdView adView;
 
     @AfterViews
     public void createView() {
@@ -101,9 +108,9 @@ public class GamesBySystemListActivity extends AppCompatActivity {
     }
 
     private void init() {
-
-
-        tools.loadAd(mAdView, getString(R.string.screen_type));
+        adView = new AdView(this, Konstanten.FACEBOOK_AUDIENCE_NETWORK_NATIVE_BANNER_ID, AdSize.BANNER_HEIGHT_50);
+        facebookBanner.addView(adView);
+        adView.loadAd();
 
         if (mToolbar != null) {
             setSupportActionBar(mToolbar);
@@ -239,8 +246,8 @@ public class GamesBySystemListActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
-        if (mAdView != null) {
-            mAdView.destroy();
+        if (adView != null) {
+            adView.destroy();
         }
         super.onDestroy();
     }
@@ -255,7 +262,6 @@ public class GamesBySystemListActivity extends AppCompatActivity {
             Toast.makeText(this, R.string.no_internet, Toast.LENGTH_SHORT).show();
         }
     }
-
 
 
 }

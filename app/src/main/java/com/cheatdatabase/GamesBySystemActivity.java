@@ -70,11 +70,8 @@ public class GamesBySystemActivity extends AppCompatActivity {
     FastScrollRecyclerView mRecyclerView;
     @ViewById(R.id.swipe_refresh_layout)
     SwipeRefreshLayout mSwipeRefreshLayout;
-//    @ViewById(R.id.adview)
+    //    @ViewById(R.id.adview)
 //    MoPubView mAdView;
-    @ViewById(R.id.banner_container)
-    LinearLayout facebookBanner;
-    // TODO FIXME
     @ViewById(R.id.toolbar)
     Toolbar mToolbar;
     @ViewById(R.id.item_list_empty_view)
@@ -82,16 +79,20 @@ public class GamesBySystemActivity extends AppCompatActivity {
     @ViewById(R.id.items_list_load_progress)
     ProgressBarCircularIndeterminate mProgressView;
 
-
+    @ViewById(R.id.banner_container)
+    LinearLayout facebookBanner;
     private AdView adView;
 
     @AfterViews
     public void createView() {
+        if (systemObj == null) {
+            finish();
+        }
+
         init();
         mSwipeRefreshLayout.setRefreshing(true);
 
         setTitle(systemObj.getSystemName());
-        //CheatDatabaseApplication.tracker().send(new HitBuilders.EventBuilder("ui", "loaded").setLabel("GamesBySystemActivity").build());
 
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -276,10 +277,6 @@ public class GamesBySystemActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
-//        if (mAdView != null) {
-//            mAdView.destroy();
-//        }
-
         if (adView != null) {
             adView.destroy();
         }

@@ -110,6 +110,9 @@ public class CheatForumActivity extends AppCompatActivity implements CheatListFr
     public void onCreateView() {
         cheatObj = (Cheat) getIntent().getSerializableExtra("cheatObj");
         gameObj = (Game) getIntent().getSerializableExtra("gameObj");
+        if (cheatObj == null) {
+            finish();
+        }
 
         init();
 

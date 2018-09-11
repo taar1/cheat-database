@@ -109,8 +109,6 @@ public class CheatsByMemberListActivity extends AppCompatActivity {
     }
 
     private void init() {
-//        tools.loadAd(mAdView, getString(R.string.screen_type));
-
         adView = new AdView(this, Konstanten.FACEBOOK_AUDIENCE_NETWORK_NATIVE_BANNER_ID, AdSize.BANNER_HEIGHT_50);
         facebookBanner.addView(adView);
         adView.loadAd();
@@ -181,10 +179,6 @@ public class CheatsByMemberListActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
-//        if (mAdView != null) {
-//            mAdView.destroy();
-//        }
-
         if (adView != null) {
             adView.destroy();
         }
@@ -200,13 +194,8 @@ public class CheatsByMemberListActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            // Respond to the action bar's Up/Home button
             case android.R.id.home:
-                // TODO FIXME
-                // TODO FIXME
-                // TODO FIXME
-                // TODO FIXME
-//                MainActivity_.intent(this).mFragmentId(MainActivity.DRAWER_TOP_MEMBERS).start();
+                onBackPressed();
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -224,10 +213,6 @@ public class CheatsByMemberListActivity extends AppCompatActivity {
     @Subscribe
     public void onEvent(CheatListRecyclerViewClickEvent result) {
         if (result.isSucceeded()) {
-            //CheatDatabaseApplication.tracker().send(new HitBuilders.EventBuilder("ui", "click").setLabel(result.getCheat().getCheatTitle()).build());
-
-            //CheatDatabaseApplication.tracker().send(new HitBuilders.EventBuilder("ui", "select_cheat").setLabel(result.getCheat().getGameName() + ": " + result.getCheat().getCheatTitle()).build());
-
             editor.putInt(Konstanten.PREFERENCES_PAGE_SELECTED, result.getPosition());
             editor.commit();
 
