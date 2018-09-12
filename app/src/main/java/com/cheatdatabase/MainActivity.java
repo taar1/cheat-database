@@ -10,6 +10,7 @@ import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.SearchRecentSuggestions;
 import android.support.annotation.NonNull;
 import android.support.annotation.UiThread;
 import android.support.design.widget.FloatingActionButton;
@@ -45,6 +46,7 @@ import com.cheatdatabase.helpers.MyPrefs_;
 import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.helpers.Tools;
 import com.cheatdatabase.helpers.TrackingUtils;
+import com.cheatdatabase.search.SearchSuggestionProvider;
 import com.facebook.ads.AdSize;
 import com.facebook.ads.AdView;
 import com.google.gson.Gson;
@@ -73,8 +75,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Extra
     int mFragmentId;
 
-    //    @ViewById(R.id.amazon_adview)
-//    AdLayout mAdView;
     @ViewById(R.id.toolbar)
     Toolbar mToolbar;
     @ViewById(R.id.drawer_layout)
@@ -282,6 +282,35 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
 
         return super.onPrepareOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // The action bar home/up action should open or close the drawer.
+        // ActionBarDrawerToggle will take care of this.
+        if (actionBarDrawerToggle.onOptionsItemSelected(item)) {
+            return true;
+        }
+
+        // Handle action buttons
+        switch (item.getItemId()) {
+            case R.id.action_clear_search_history:
+                SearchRecentSuggestions suggestions = new SearchRecentSuggestions(this, SearchSuggestionProvider.AUTHORITY, SearchSuggestionProvider.MODE);
+                suggestions.clearHistory();
+                Toast.makeText(MainActivity.this, R.string.search_history_cleared, Toast.LENGTH_LONG).show();
+                return true;
+            case R.id.action_login:
+                Intent loginIntent = new Intent(MainActivity.this, LoginActivity_.class);
+                startActivityForResult(loginIntent, Konstanten.LOGIN_REGISTER_OK_RETURN_CODE);
+                return true;
+            case R.id.action_logout:
+                member = null;
+                tools.logout(MainActivity.this, settings.edit());
+                invalidateOptionsMenu();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     /**

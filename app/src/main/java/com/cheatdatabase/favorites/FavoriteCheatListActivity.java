@@ -8,7 +8,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.NavUtils;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -28,7 +27,7 @@ import com.cheatdatabase.adapters.CheatsByGameRecycleListViewAdapter;
 import com.cheatdatabase.businessobjects.Cheat;
 import com.cheatdatabase.businessobjects.Game;
 import com.cheatdatabase.businessobjects.Member;
-import com.cheatdatabase.dialogs.RateCheatDialog;
+import com.cheatdatabase.dialogs.RateCheatMaterialDialog;
 import com.cheatdatabase.events.CheatListRecyclerViewClickEvent;
 import com.cheatdatabase.events.CheatRatingFinishedEvent;
 import com.cheatdatabase.favorites.handset.cheatview.FavoritesCheatViewPageIndicator;
@@ -37,11 +36,11 @@ import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.helpers.Tools;
 import com.cheatdatabase.widgets.DividerDecoration;
-import com.cheatdatabase.widgets.EmptyRecyclerView;
 import com.facebook.ads.AdSize;
 import com.facebook.ads.AdView;
 import com.gc.materialdesign.views.ProgressBarCircularIndeterminate;
 import com.google.gson.Gson;
+import com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Background;
@@ -70,7 +69,7 @@ public class FavoriteCheatListActivity extends AppCompatActivity {
     CheatsByGameRecycleListViewAdapter cheatsByGameRecycleListViewAdapter;
 
     @ViewById(R.id.my_recycler_view)
-    EmptyRecyclerView mRecyclerView;
+    FastScrollRecyclerView mRecyclerView;
     @ViewById(R.id.swipe_refresh_layout)
     SwipeRefreshLayout mSwipeRefreshLayout;
     @ViewById(R.id.toolbar)
@@ -107,7 +106,7 @@ public class FavoriteCheatListActivity extends AppCompatActivity {
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                mRecyclerView.showLoading();
+//                mRecyclerView.showLoading();
                 getCheats();
             }
         });
@@ -118,12 +117,12 @@ public class FavoriteCheatListActivity extends AppCompatActivity {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         mRecyclerView.addItemDecoration(new DividerDecoration(this));
         mRecyclerView.getItemAnimator().setRemoveDuration(50);
-        mRecyclerView.setEmptyView(mEmptyView);
-        mRecyclerView.setLoadingView(mProgressView);
+//        mRecyclerView.setEmptyView(mEmptyView);
+//        mRecyclerView.setLoadingView(mProgressView);
         mRecyclerView.setHasFixedSize(true);
 
         if (Reachability.reachability.isReachable) {
-            mRecyclerView.showLoading();
+//            mRecyclerView.showLoading();
             getCheats();
         } else {
             Toast.makeText(this, R.string.no_internet, Toast.LENGTH_SHORT).show();
@@ -237,13 +236,7 @@ public class FavoriteCheatListActivity extends AppCompatActivity {
         if ((member == null) || (member.getMid() == 0)) {
             Toast.makeText(this, R.string.error_login_required, Toast.LENGTH_LONG).show();
         } else {
-            Bundle args = new Bundle();
-            args.putSerializable("cheatObj", visibleCheat);
-
-            FragmentManager fm = getSupportFragmentManager();
-            RateCheatDialog ratingCheatDialog = new RateCheatDialog();
-            ratingCheatDialog.setArguments(args);
-            ratingCheatDialog.show(fm, "fragment_rating_cheat");
+            new RateCheatMaterialDialog(this, visibleCheat, member);
         }
     }
 
@@ -380,7 +373,7 @@ public class FavoriteCheatListActivity extends AppCompatActivity {
         }
 
         mSwipeRefreshLayout.setRefreshing(false);
-        mRecyclerView.hideLoading();
+//        mRecyclerView.hideLoading();
     }
 
     private void error() {

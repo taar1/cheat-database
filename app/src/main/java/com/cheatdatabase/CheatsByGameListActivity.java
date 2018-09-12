@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -27,11 +26,10 @@ import com.cheatdatabase.adapters.CheatsByGameRecycleListViewAdapter;
 import com.cheatdatabase.businessobjects.Cheat;
 import com.cheatdatabase.businessobjects.Game;
 import com.cheatdatabase.businessobjects.Member;
-import com.cheatdatabase.dialogs.RateCheatDialog;
-import com.cheatdatabase.dialogs.ReportCheatDialog;
+import com.cheatdatabase.dialogs.RateCheatMaterialDialog;
+import com.cheatdatabase.dialogs.ReportCheatMaterialDialog;
 import com.cheatdatabase.events.CheatListRecyclerViewClickEvent;
 import com.cheatdatabase.events.CheatRatingFinishedEvent;
-import com.cheatdatabase.events.CheatReportingFinishedEvent;
 import com.cheatdatabase.handset.cheatview.CheatViewPageIndicator;
 import com.cheatdatabase.helpers.CheatDatabaseAdapter;
 import com.cheatdatabase.helpers.Konstanten;
@@ -295,36 +293,16 @@ public class CheatsByGameListActivity extends AppCompatActivity {
         if ((member == null) || (member.getMid() == 0)) {
             Toast.makeText(this, R.string.error_login_required, Toast.LENGTH_LONG).show();
         } else {
-            Bundle args = new Bundle();
-            args.putSerializable("cheatObj", visibleCheat);
-
-            FragmentManager fm = getSupportFragmentManager();
-            ReportCheatDialog reportCheatDialog = new ReportCheatDialog();
-            reportCheatDialog.setArguments(args);
-            reportCheatDialog.show(fm, "fragment_report_cheat");
+            new ReportCheatMaterialDialog(this, visibleCheat, member);
         }
     }
 
-    @Subscribe
-    public void onEvent(CheatReportingFinishedEvent result) {
-        if (result.isSucceeded()) {
-            Toast.makeText(this, R.string.thanks_for_reporting, Toast.LENGTH_LONG).show();
-        } else {
-            Toast.makeText(this, R.string.no_internet, Toast.LENGTH_SHORT).show();
-        }
-    }
 
     public void showRatingDialog() {
         if ((member == null) || (member.getMid() == 0)) {
             Toast.makeText(this, R.string.error_login_required, Toast.LENGTH_LONG).show();
         } else {
-            Bundle args = new Bundle();
-            args.putSerializable("cheatObj", visibleCheat);
-
-            FragmentManager fm = getSupportFragmentManager();
-            RateCheatDialog ratingCheatDialog = new RateCheatDialog();
-            ratingCheatDialog.setArguments(args);
-            ratingCheatDialog.show(fm, "fragment_rating_cheat");
+            new RateCheatMaterialDialog(this, visibleCheat, member);
         }
     }
 

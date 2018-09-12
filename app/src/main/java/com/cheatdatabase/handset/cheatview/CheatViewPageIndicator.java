@@ -9,7 +9,6 @@ import android.content.SharedPreferences.Editor;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -32,10 +31,9 @@ import com.cheatdatabase.businessobjects.Cheat;
 import com.cheatdatabase.businessobjects.Game;
 import com.cheatdatabase.businessobjects.Member;
 import com.cheatdatabase.dialogs.CheatMetaDialog;
-import com.cheatdatabase.dialogs.RateCheatDialog;
-import com.cheatdatabase.dialogs.ReportCheatDialog;
+import com.cheatdatabase.dialogs.RateCheatMaterialDialog;
+import com.cheatdatabase.dialogs.ReportCheatMaterialDialog;
 import com.cheatdatabase.events.CheatRatingFinishedEvent;
-import com.cheatdatabase.events.CheatReportingFinishedEvent;
 import com.cheatdatabase.helpers.Helper;
 import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Reachability;
@@ -413,22 +411,7 @@ public class CheatViewPageIndicator extends AppCompatActivity {
         if ((member == null) || (member.getMid() == 0)) {
             Toast.makeText(this, R.string.error_login_required, Toast.LENGTH_SHORT).show();
         } else {
-            Bundle args = new Bundle();
-            args.putSerializable("cheatArray", visibleCheat);
-
-            FragmentManager fm = getSupportFragmentManager();
-            ReportCheatDialog reportCheatDialog = new ReportCheatDialog();
-            reportCheatDialog.setArguments(args);
-            reportCheatDialog.show(fm, "fragment_report_cheat");
-        }
-    }
-
-    @Subscribe
-    public void onEvent(CheatReportingFinishedEvent result) {
-        if (result.isSucceeded()) {
-            Toast.makeText(this, R.string.thanks_for_reporting, Toast.LENGTH_LONG).show();
-        } else {
-            Toast.makeText(this, R.string.no_internet, Toast.LENGTH_SHORT).show();
+            new ReportCheatMaterialDialog(this, visibleCheat, member);
         }
     }
 
@@ -436,13 +419,7 @@ public class CheatViewPageIndicator extends AppCompatActivity {
         if ((member == null) || (member.getMid() == 0)) {
             Toast.makeText(this, R.string.error_login_required, Toast.LENGTH_LONG).show();
         } else {
-            Bundle args = new Bundle();
-            args.putSerializable("cheatArray", visibleCheat);
-
-            FragmentManager fm = getSupportFragmentManager();
-            RateCheatDialog ratingCheatDialog = new RateCheatDialog();
-            ratingCheatDialog.setArguments(args);
-            ratingCheatDialog.show(fm, "fragment_rating_cheat");
+            new RateCheatMaterialDialog(this, visibleCheat, member);
         }
     }
 
