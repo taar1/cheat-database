@@ -69,8 +69,6 @@ public class GamesBySystemListActivity extends AppCompatActivity {
     FastScrollRecyclerView mRecyclerView;
     @ViewById(R.id.swipe_refresh_layout)
     SwipeRefreshLayout mSwipeRefreshLayout;
-    //    @ViewById(R.id.adview)
-//    MoPubView mAdView;
     @ViewById(R.id.toolbar)
     Toolbar mToolbar;
     @ViewById(R.id.item_list_empty_view)
@@ -86,7 +84,6 @@ public class GamesBySystemListActivity extends AppCompatActivity {
         mSwipeRefreshLayout.setRefreshing(true);
 
         setTitle(systemObj.getSystemName());
-        //CheatDatabaseApplication.tracker().send(new HitBuilders.EventBuilder("ui", "loaded").setLabel("GamesBySystemListActivity").build());
 
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
