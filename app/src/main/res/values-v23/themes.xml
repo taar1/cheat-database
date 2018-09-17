@@ -5,9 +5,7 @@
     <!-- http://antonioleiva.com/material-design-everywhere/ -->
     <style name="Theme.Navyblue" parent="AppThemeBase">
         <!-- <item name="android:windowNoTitle">true</item> not working anymore in Android 6 -->
-        <!--<item name="windowNoTitle">true</item>-->
         <item name="windowActionBar">false</item>
-
         <item name="android:windowContentTransitions">true</item>
         <item name="android:windowAllowEnterTransitionOverlap">true</item>
         <item name="android:windowAllowReturnTransitionOverlap">true</item>
