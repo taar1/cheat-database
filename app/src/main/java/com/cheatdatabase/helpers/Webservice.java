@@ -501,9 +501,9 @@ public class Webservice {
                 cheats[i] = tmpCheat;
             }
 
-			/*
+            /*
              * Neue Cheats ins Flat-File speichern
-			 */
+             */
             String cheat1 = gson.toJson(cheats[0]);
             String cheat2 = gson.toJson(cheats[1]);
             String cheat3 = gson.toJson(cheats[2]);
@@ -512,14 +512,14 @@ public class Webservice {
             editor.putString(Konstanten.PREF_NEWCHEAT3_VARIABLE, cheat3);
             editor.putString(Konstanten.PREF_NEWCHEATS_LAST_UPDATE_VARIABLE, Tools.now("yyyy-MM-dd"));
 
-			/*
+            /*
              * Total Cheats ins Flat-File speichern
-			 */
+             */
             editor.putInt(Konstanten.PREF_TOTAL_CHEATS_VARIABLE, totalCheats);
 
-			/*
+            /*
              * Anzahl Games pro System auslesen und ins Flat-File speichern
-			 */
+             */
             for (int j = 0; j < jaGamesPerSystem.length(); j++) {
                 JSONObject gpsObject = jaGamesPerSystem.getJSONObject(j);
                 int sysId = gpsObject.getInt("s");
@@ -588,9 +588,9 @@ public class Webservice {
 
                 Cheat cheat = new Cheat();
 
-				/*
+                /*
                  * Screenshot-Informationen auslesen
-				 */
+                 */
                 JSONArray screenshots = jsonObject.getJSONArray("screenshots");
                 Screenshot[] screens = new Screenshot[screenshots.length()];
                 for (int j = 0; j < screenshots.length(); j++) {
@@ -659,9 +659,9 @@ public class Webservice {
 
                 Cheat cheat = new Cheat();
 
-				/*
+                /*
                  * Screenshot-Informationen auslesen
-				 */
+                 */
                 JSONArray screenshots = jsonObject.getJSONArray("screenshots");
                 Screenshot[] screens = new Screenshot[screenshots.length()];
                 for (int j = 0; j < screenshots.length(); j++) {
@@ -924,9 +924,9 @@ public class Webservice {
                 tmpGame.setGameId(tmpGameId);
                 tmpGame.setGameName(tmpGameName);
 
-				/*
+                /*
                  * Dem Game-Objekt die System-ID und System-Namen ergünzen
-				 */
+                 */
                 for (int k = 0; k < temporaryGameList.size(); k++) {
                     Game gg = temporaryGameList.get(k);
                     if (gg.getGameId() == tmpGameId) {
@@ -944,12 +944,12 @@ public class Webservice {
 
                 /*
                  * Dem Game-Object die korrekte Anzahl Cheat-Objekten zuweisen
-				 */
+                 */
                 tmpGame.createCheatCollection(matchingCheats.size());
 
-				/*
+                /*
                  * Die passenden Cheats dem Game-Objekt hinzufügen
-				 */
+                 */
                 for (int i = 0; i < matchingCheats.size(); i++) {
                     tmpGame.addCheat(matchingCheats.get(i));
                 }
@@ -957,17 +957,17 @@ public class Webservice {
                 temporaryInnerGameList.add(tmpGame);
             }
 
-			/*
+            /*
              * Die Games zum globalen Game-Array-Objekt hinzufügen
-			 */
+             */
             games = new Game[temporaryInnerGameList.size()];
             for (int n = 0; n < temporaryInnerGameList.size(); n++) {
                 games[n] = temporaryInnerGameList.get(n);
             }
 
-			/*
+            /*
              * Die passenden Games dem System[]-Objekt hinzufügen.
-			 */
+             */
             for (int j2 = 0; j2 < systems.length; j2++) {
                 SystemPlatform ss = systems[j2];
 
@@ -980,9 +980,9 @@ public class Webservice {
                 }
                 systems[j2].createGameCollection(matchingGames.size());
 
-				/*
+                /*
                  * Die passenden Game-Objekte dem System-Objekt hinzufügen
-				 */
+                 */
                 for (Game game : matchingGames) {
                     systems[j2].addGame(game);
                 }
@@ -1030,9 +1030,9 @@ public class Webservice {
 
                 Cheat cheat = new Cheat();
 
-				/*
+                /*
                  * Screenshot-Informationen auslesen
-				 */
+                 */
                 JSONArray screenshots = jsonObject.getJSONArray("screenshots");
                 Screenshot[] screens = new Screenshot[screenshots.length()];
                 for (int j = 0; j < screenshots.length(); j++) {
@@ -1135,17 +1135,14 @@ public class Webservice {
             for (int i = 0; i < jArray.length(); i++) {
                 JSONObject jsonObject = jArray.getJSONObject(i);
 
-                // Avoid Android for the time being
-                if (jsonObject.getInt("systemId") != 33) {
-                    SystemPlatform system = new SystemPlatform();
-                    system.setSystemId(jsonObject.getInt("systemId"));
-                    system.setSystemName(jsonObject.getString("systemName"));
-                    system.setGameCount(jsonObject.getInt("gamesCounter"));
-                    system.setCheatCount(jsonObject.getInt("cheatsCounter"));
-                    system.setLastModTimeStamp(System.currentTimeMillis());
+                SystemPlatform system = new SystemPlatform();
+                system.setSystemId(jsonObject.getInt("systemId"));
+                system.setSystemName(jsonObject.getString("systemName"));
+                system.setGameCount(jsonObject.getInt("gamesCounter"));
+                system.setCheatCount(jsonObject.getInt("cheatsCounter"));
+                system.setLastModTimeStamp(System.currentTimeMillis());
 
-                    systems.add(system);
-                }
+                systems.add(system);
             }
 
         } catch (JSONException e) {
