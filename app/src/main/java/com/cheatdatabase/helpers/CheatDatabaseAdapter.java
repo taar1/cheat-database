@@ -316,10 +316,7 @@ public class CheatDatabaseAdapter {
                     sysPla.setCheatCount(cheatCount);
                     sysPla.setLastModTimeStamp(Long.parseLong(lastMod));
 
-                    // EXCLUDE ANDROID FOR THE TIME BEING
-                    if (sysPla.getSystemId() != 33) {
-                        systems.add(sysPla);
-                    }
+                    systems.add(sysPla);
 
                 } while (cur.moveToNext());
             }
