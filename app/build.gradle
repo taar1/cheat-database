@@ -85,8 +85,6 @@ repositories {
     maven { url 'https://s3.amazonaws.com/moat-sdk-builds' }
     maven { url 'https://maven.google.com' }
     maven { url 'https://jitpack.io' }
-    maven { url 'https://adcolony.bintray.com/AdColony' }
-    maven { url 'https://tapjoy.bintray.com/maven' }
     jcenter()
     mavenCentral()
 }
