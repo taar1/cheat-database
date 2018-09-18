@@ -20,6 +20,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
+import android.webkit.WebView;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
@@ -31,6 +32,8 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import com.afollestad.materialdialogs.MaterialDialog;
+import com.afollestad.materialdialogs.Theme;
 import com.cheatdatabase.R;
 import com.cheatdatabase.businessobjects.Cheat;
 import com.cheatdatabase.businessobjects.Member;
@@ -48,8 +51,7 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
 
-public class MemberCheatViewFragment extends Fragment implements OnClickListener {
-
+public class MemberCheatViewFragment extends Fragment {
     private TableLayout mainTable;
     private LinearLayout ll;
     private TextView tvCheatText;
@@ -75,6 +77,7 @@ public class MemberCheatViewFragment extends Fragment implements OnClickListener
     public AlertDialog alert;
 
     private static final String KEY_CONTENT = "MemberCheatViewFragment:Content";
+    private static final String TAG = MemberCheatViewFragment.class.getSimpleName();
 
     public static MemberCheatViewFragment newInstance(String content, ArrayList<Cheat> cheats, int offset) {
 
@@ -99,7 +102,7 @@ public class MemberCheatViewFragment extends Fragment implements OnClickListener
     private String mContent = "???";
     private Typeface latoFontBold;
     private Typeface latoFontLight;
-    private MemberCheatViewPageIndicator ca;
+    private MemberCheatViewPageIndicator cheatViewPageIndicator;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -109,12 +112,12 @@ public class MemberCheatViewFragment extends Fragment implements OnClickListener
             mContent = savedInstanceState.getString(KEY_CONTENT);
         }
 
-        ca = (MemberCheatViewPageIndicator) getActivity();
+        cheatViewPageIndicator = (MemberCheatViewPageIndicator) getActivity();
 
-        latoFontLight = Tools.getFont(ca.getAssets(), Konstanten.FONT_LIGHT);
-        latoFontBold = Tools.getFont(ca.getAssets(), Konstanten.FONT_BOLD);
+        latoFontLight = Tools.getFont(cheatViewPageIndicator.getAssets(), Konstanten.FONT_LIGHT);
+        latoFontBold = Tools.getFont(cheatViewPageIndicator.getAssets(), Konstanten.FONT_BOLD);
 
-        settings = ca.getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
+        settings = cheatViewPageIndicator.getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
         editor = settings.edit();
     }
 
@@ -137,26 +140,25 @@ public class MemberCheatViewFragment extends Fragment implements OnClickListener
             cheatObj = cheats.get(offset);
             new FetchCheatRatingOnlineBackgroundTask().execute();
 
-            mainTable = (TableLayout) ll.findViewById(R.id.table_cheat_list_main);
+            mainTable = ll.findViewById(R.id.table_cheat_list_main);
 
-            tvTextBeforeTable = (TextView) ll.findViewById(R.id.text_cheat_before_table);
-            tvTextBeforeTable.setOnClickListener(this);
+            tvTextBeforeTable = ll.findViewById(R.id.text_cheat_before_table);
             tvTextBeforeTable.setVisibility(View.VISIBLE);
 
-            tvCheatTitle = (TextView) ll.findViewById(R.id.text_cheat_title);
+            tvCheatTitle = ll.findViewById(R.id.text_cheat_title);
             tvCheatTitle.setTypeface(latoFontBold);
             tvCheatTitle.setText(cheatObj.getCheatTitle());
 
-            tvGalleryInfo = (TextView) ll.findViewById(R.id.gallery_info);
+            tvGalleryInfo = ll.findViewById(R.id.gallery_info);
             tvGalleryInfo.setVisibility(View.INVISIBLE);
             tvGalleryInfo.setTypeface(latoFontLight);
 
-            screenshotGallery = (Gallery) ll.findViewById(R.id.gallery);
+            screenshotGallery = ll.findViewById(R.id.gallery);
 
-            progressBar = (ProgressBar) ll.findViewById(R.id.progress_bar);
+            progressBar = ll.findViewById(R.id.progress_bar);
             progressBar.setVisibility(View.INVISIBLE);
 
-            tvCheatText = (TextView) ll.findViewById(R.id.cheat_content);
+            tvCheatText = ll.findViewById(R.id.cheat_content);
             tvCheatText.setTypeface(latoFontLight);
 
             /**
@@ -193,7 +195,7 @@ public class MemberCheatViewFragment extends Fragment implements OnClickListener
             editor.putString("cheat" + offset, new Gson().toJson(cheatObj));
             editor.commit();
         } catch (Exception e) {
-            Log.e(MemberCheatViewFragment.class.getName(), "BB: " + e.getMessage());
+            Log.e(TAG, "BB: " + e.getMessage());
         }
 
         return ll;
@@ -211,7 +213,7 @@ public class MemberCheatViewFragment extends Fragment implements OnClickListener
     }
 
     private void buildGallery() {
-        screenshotGallery.setAdapter(new ImageAdapter(ca));
+        screenshotGallery.setAdapter(new ImageAdapter(cheatViewPageIndicator));
         screenshotGallery.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
@@ -234,28 +236,20 @@ public class MemberCheatViewFragment extends Fragment implements OnClickListener
                 fillSimpleContent();
             }
         } catch (Exception e) {
-            Log.e(MemberCheatViewFragment.class.getName(), "Cheat " + cheatObj.getCheatId() + " contains(</td>) - Error creating table");
+            Log.e(TAG, "Cheat " + cheatObj.getCheatId() + " contains(</td>) - Error creating table");
             fillSimpleContent();
         }
     }
 
-    /**
-     * Populate Table Layout
-     */
     private void fillTableContent() {
-
-        mainTable.setColumnShrinkable(0, true);
-        // mainTable.setColumnShrinkable(1, true);
-        mainTable.setOnClickListener(this);
         mainTable.setVisibility(View.VISIBLE);
+        mainTable.setHorizontalScrollBarEnabled(true);
 
-        // Cheat-Text oberhalb der Tabelle
+        // Cheat Text oberhalb der Tabelle
         String[] textBeforeTable = null;
 
-        // Einige tabellarische Cheats beginnen direkt mit der
-        // Tabelle
+        // Einige tabellarische Cheats beginnen direkt mit der Tabelle
         if (cheatObj.getCheatText().startsWith("<br><table")) {
-            textBeforeTable = cheatObj.getCheatText().split("<br>");
             tvTextBeforeTable.setVisibility(View.GONE);
         } else {
             textBeforeTable = cheatObj.getCheatText().split("<br><br>");
@@ -279,26 +273,26 @@ public class MemberCheatViewFragment extends Fragment implements OnClickListener
         String firstThColumn = "<b>" + th1[1].trim() + "</b>";
         String secondThColumn = "<b>" + th2[0].trim() + "</b>";
 
-		/* Create a new row to be added. */
-        TableRow trTh = new TableRow(ca);
+        /* Create a new row to be added. */
+        TableRow trTh = new TableRow(cheatViewPageIndicator);
         trTh.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
 
-        TextView tvFirstThCol = new TextView(ca);
+        TextView tvFirstThCol = new TextView(cheatViewPageIndicator);
         tvFirstThCol.setText(Html.fromHtml(firstThColumn));
         tvFirstThCol.setPadding(1, 1, 5, 1);
         tvFirstThCol.setMinimumWidth(Konstanten.TABLE_ROW_MINIMUM_WIDTH);
-        tvFirstThCol.setTextAppearance(ca, R.style.NormalText);
+        tvFirstThCol.setTextAppearance(cheatViewPageIndicator, R.style.NormalText);
         tvFirstThCol.setTypeface(latoFontLight);
         trTh.addView(tvFirstThCol);
 
-        TextView tvSecondThCol = new TextView(ca);
+        TextView tvSecondThCol = new TextView(cheatViewPageIndicator);
         tvSecondThCol.setText(Html.fromHtml(secondThColumn));
         tvSecondThCol.setPadding(5, 1, 1, 1);
-        tvSecondThCol.setTextAppearance(ca, R.style.NormalText);
+        tvSecondThCol.setTextAppearance(getContext(), R.style.NormalText);
         tvSecondThCol.setTypeface(latoFontLight);
         trTh.addView(tvSecondThCol);
 
-		/* Add row to TableLayout. */
+        /* Add row to TableLayout. */
         mainTable.addView(trTh, new TableLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
 
         for (int i = 1; i < trs.length; i++) {
@@ -310,28 +304,37 @@ public class MemberCheatViewFragment extends Fragment implements OnClickListener
             String firstTdColumn = td1[1].replaceAll("<br>", "\n").trim();
             String secondTdColumn = td2[0].replaceAll("<br>", "\n").trim();
 
-			/* Create a new row to be added. */
-            TableRow trTd = new TableRow(ca);
+            /* Create a new row to be added. */
+            TableRow trTd = new TableRow(cheatViewPageIndicator);
             trTd.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
 
-            TextView tvFirstTdCol = new TextView(ca);
+            TextView tvFirstTdCol = new TextView(cheatViewPageIndicator);
             tvFirstTdCol.setText(firstTdColumn);
             tvFirstTdCol.setPadding(1, 1, 10, 1);
             tvFirstTdCol.setMinimumWidth(Konstanten.TABLE_ROW_MINIMUM_WIDTH);
-            tvFirstTdCol.setTextAppearance(ca, R.style.NormalText);
+            tvFirstTdCol.setTextAppearance(getContext(), R.style.NormalText);
             tvFirstTdCol.setTypeface(latoFontLight);
             trTd.addView(tvFirstTdCol);
 
-            TextView tvSecondTdCol = new TextView(ca);
+            TextView tvSecondTdCol = new TextView(cheatViewPageIndicator);
+            tvSecondTdCol.setSingleLine(false);
             tvSecondTdCol.setText(secondTdColumn);
+            tvSecondTdCol.canScrollHorizontally(1);
             tvSecondTdCol.setPadding(10, 1, 30, 1);
-            tvSecondTdCol.setTextAppearance(ca, R.style.NormalText);
+            tvSecondTdCol.setTextAppearance(getContext(), R.style.NormalText);
             tvSecondTdCol.setTypeface(latoFontLight);
             trTd.addView(tvSecondTdCol);
 
-			/* Add row to TableLayout. */
+            /* Add row to TableLayout. */
             mainTable.addView(trTd, new TableLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
         }
+
+        mainTable.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                displayTableInWebview();
+            }
+        });
     }
 
     private void fillSimpleContent() {
@@ -342,8 +345,22 @@ public class MemberCheatViewFragment extends Fragment implements OnClickListener
         tvCheatText.setText(styledText);
 
         if (cheatObj.isWalkthroughFormat()) {
-            tvCheatText.setTextAppearance(ca, R.style.WalkthroughText);
+            tvCheatText.setTextAppearance(cheatViewPageIndicator, R.style.WalkthroughText);
         }
+    }
+
+    private void displayTableInWebview() {
+        MaterialDialog md = new MaterialDialog.Builder(getActivity())
+                .customView(R.layout.layout_cheat_content_table, true)
+                .theme(Theme.DARK)
+                .positiveText(R.string.close)
+                .cancelable(true)
+                .show();
+
+        View dialogView = md.getCustomView();
+
+        WebView webview = dialogView.findViewById(R.id.webview);
+        webview.loadDataWithBaseURL("", cheatObj.getCheatText(), "text/html", "UTF-8", "");
     }
 
     @Override
@@ -356,13 +373,13 @@ public class MemberCheatViewFragment extends Fragment implements OnClickListener
         }
     }
 
-    @Override
-    public void onClick(View v) {
-        Log.d("onClick", "onClick");
-        Bundle arguments = new Bundle();
-        arguments.putInt("CHANGEME", 1);
-        arguments.putSerializable("cheatObj", cheatObj);
-    }
+//    @Override
+//    public void onClick(View v) {
+//        Log.d("onClick", "onClick");
+//        Bundle arguments = new Bundle();
+//        arguments.putInt("CHANGEME", 1);
+//        arguments.putSerializable("cheatObj", cheatObj);
+//    }
 
     private class FetchCheatTextTask extends AsyncTask<Void, Void, Void> {
 
@@ -378,7 +395,6 @@ public class MemberCheatViewFragment extends Fragment implements OnClickListener
         @Override
         protected void onPostExecute(Void result) {
             super.onPostExecute(result);
-
             if (fullCheatText.substring(0, 1).equalsIgnoreCase("2")) {
                 cheatObj.setWalkthroughFormat(true);
             }
@@ -390,7 +406,6 @@ public class MemberCheatViewFragment extends Fragment implements OnClickListener
     }
 
     private class FetchCheatRatingOnlineBackgroundTask extends AsyncTask<Void, Void, Void> {
-
         float cheatRating;
 
         @Override
@@ -409,7 +424,7 @@ public class MemberCheatViewFragment extends Fragment implements OnClickListener
             super.onPostExecute(result);
 
             if (cheatRating > 0) {
-                ca.setRating(offset, cheatRating);
+                cheatViewPageIndicator.setRating(offset, cheatRating);
             }
         }
     }
@@ -433,10 +448,10 @@ public class MemberCheatViewFragment extends Fragment implements OnClickListener
                 bms = new Bitmap[imageViews.length];
                 for (int i = 0; i < imageViews.length; i++) {
 
-					/*
+                    /*
                      * Open a new URL and get the InputStream to load data from
-					 * it.
-					 */
+                     * it.
+                     */
                     URL aURL = new URL(myRemoteImages[i]);
                     URLConnection conn = aURL.openConnection();
                     conn.connect();
@@ -453,12 +468,9 @@ public class MemberCheatViewFragment extends Fragment implements OnClickListener
                     if (biggestHeight < bm.getHeight()) {
                         biggestHeight = bm.getHeight();
                     }
-
                 }
-
-
             } catch (IOException e) {
-                Log.e(MemberCheatViewFragment.class.getName(), "Remtoe Image Exception", e);
+                Log.e(TAG, "Remtoe Image Exception", e);
             }
 
             return bms;
@@ -472,7 +484,7 @@ public class MemberCheatViewFragment extends Fragment implements OnClickListener
              * Apply the Bitmap to the ImageView that will be returned.
              */
             for (int i = 0; i < imageViews.length; i++) {
-                imageViews[i] = new ImageView(ca);
+                imageViews[i] = new ImageView(cheatViewPageIndicator);
                 imageViews[i].setScaleType(ImageView.ScaleType.MATRIX);
                 imageViews[i].setLayoutParams(new Gallery.LayoutParams(300, biggestHeight));
                 imageViews[i].setImageBitmap(bms[i]);
@@ -550,7 +562,7 @@ public class MemberCheatViewFragment extends Fragment implements OnClickListener
     }
 
     public void showMetaInfo(Context context) {
-        CheatMetaDialog cmDialog = new CheatMetaDialog(ca, cheatObj);
+        CheatMetaDialog cmDialog = new CheatMetaDialog(cheatViewPageIndicator, cheatObj);
         cmDialog.show();
     }
 

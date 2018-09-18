@@ -209,7 +209,6 @@ public class CheatViewFragment extends Fragment {
             imageViews = new ImageView[cheatObj.getScreens().length];
             progressBar.setVisibility(View.VISIBLE);
 
-            // TODO FIXME use Needle for background task
             new LoadScreenshotsInBackgroundTask().execute();
         } else {
             tvGalleryInfo.setVisibility(View.GONE);
@@ -283,7 +282,6 @@ public class CheatViewFragment extends Fragment {
 
         // Einige tabellarische Cheats beginnen direkt mit der Tabelle
         if (cheatObj.getCheatText().startsWith("<br><table")) {
-            textBeforeTable = cheatObj.getCheatText().split("<br>");
             tvTextBeforeTable.setVisibility(View.GONE);
         } else {
             textBeforeTable = cheatObj.getCheatText().split("<br><br>");
@@ -393,12 +391,6 @@ public class CheatViewFragment extends Fragment {
     // }
     // }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        // TODO update member rating
-    }
-
     private void displayTableInWebview() {
         MaterialDialog md = new MaterialDialog.Builder(getActivity())
                 .customView(R.layout.layout_cheat_content_table, true)
@@ -439,7 +431,6 @@ public class CheatViewFragment extends Fragment {
     }
 
     private class FetchCheatRatingOnlineBackgroundTask extends AsyncTask<Void, Void, Void> {
-
         float cheatRating;
 
         @Override
@@ -509,8 +500,6 @@ public class CheatViewFragment extends Fragment {
                         biggestHeight = bm.getHeight();
                     }
                 }
-
-
             } catch (IOException e) {
                 Log.e(TAG, "Remtoe Image Exception", e);
             }

@@ -129,6 +129,9 @@ public class CheatViewPageIndicator extends AppCompatActivity {
         pageSelected = intent.getIntExtra("selectedPage", 0);
         activePage = pageSelected;
 
+        // TODO FIXME hier crasht es beim zurück und vorwärts browsen...
+        // TODO FIXME hier crasht es beim zurück und vorwärts browsen...
+        // TODO FIXME hier crasht es beim zurück und vorwärts browsen...
         for (Cheat cheat : gameObj.getCheats()) {
             cheatArray.add(cheat);
         }
