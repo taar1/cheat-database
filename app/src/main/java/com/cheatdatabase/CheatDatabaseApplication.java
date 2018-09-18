@@ -59,7 +59,7 @@ public class CheatDatabaseApplication extends MultiDexApplication implements App
     /**
      * Get the current cineman app instance
      *
-     * @return CinemanApplication
+     * @return CheatDatabaseApplication
      */
     public static CheatDatabaseApplication getCurrentAppInstance() {
         return currentApplicationInstance;
@@ -69,26 +69,9 @@ public class CheatDatabaseApplication extends MultiDexApplication implements App
     public void onCreate() {
         super.onCreate();
         currentApplicationInstance = this;
-
-        init();
-
-//        analytics = GoogleAnalytics.getInstance(this);
-//        // TODO: Replace the tracker-id with your app one from https://www.google.com/analytics/web/
-//        tracker = analytics.newTracker(Konstanten.GOOGLE_ANALYTICS_ID);
-//
-//        // Provide unhandled exceptions reports. Do that first after creating the tracker
-//        tracker.enableExceptionReporting(true);
-//
-//        // Enable Remarketing, Demographics & Interests reports
-//        // https://developers.google.com/analytics/devguides/collection/android/display-features
-//        tracker.enableAdvertisingIdCollection(true);
-//
-//        // Enable automatic activity tracking for your app
-//        tracker.enableAutoActivityTracking(true);
-
         sAppContext = getApplicationContext();
 
-//        initMopub();
+        init();
     }
 
     private void init() {
@@ -104,35 +87,6 @@ public class CheatDatabaseApplication extends MultiDexApplication implements App
         connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 
     }
-
-//    private void initMopub() {
-//        // A list of rewarded video adapters to initialize
-//        List<String> networksToInit = new ArrayList<>();
-//        networksToInit.add("com.mopub.mobileads.VungleRewardedVideo");
-//        networksToInit.add("com.mopub.mobileads.AdColonyRewardedVideo");
-//        networksToInit.add("com.mopub.mobileads.FacebookRewardedVideo");
-//        networksToInit.add("com.mopub.mobileads.FacebookBanner");
-//
-////        SdkConfiguration sdkConfiguration = new SdkConfiguration.Builder(Konstanten.MOPUB_PHONE_UNIT_ID)
-////                .withNetworksToInit(networksToInit)
-////                .build();
-//
-//        SdkConfiguration sdkConfiguration = new SdkConfiguration.Builder(Konstanten.MOPUB_PHONE_UNIT_ID)
-//                .build();
-//
-//        MoPub.initializeSdk(this, sdkConfiguration, initSdkListener());
-//    }
-//
-//    private SdkInitializationListener initSdkListener() {
-//        return new SdkInitializationListener() {
-//            @Override
-//            public void onInitializationFinished() {
-//                Log.d(TAG, "XXXXX MoPub SDK initialized");
-//           /* MoPub SDK initialized.
-//           Check if you should show the consent dialog here, and make your ad requests. */
-//            }
-//        };
-//    }
 
     @Override
     public void onActivityCreated(Activity activity, Bundle savedInstanceState) {

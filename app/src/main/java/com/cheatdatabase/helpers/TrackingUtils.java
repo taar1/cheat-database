@@ -8,24 +8,18 @@ import android.text.TextUtils;
 import com.cheatdatabase.CheatDatabaseApplication;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.text.Normalizer;
 import java.util.Locale;
-import java.util.concurrent.TimeUnit;
-
-import okhttp3.ConnectionPool;
-import okhttp3.OkHttpClient;
 
 /**
  * Helper class for tracking tasks
  */
 public class TrackingUtils {
-    private static final String LOG_TAG = "TrackingUtils";
-
-    //    private FirebaseAnalytics firebaseAnalytics;
-    private OkHttpClient okHttpClient;
     private static TrackingUtils _instance;
     private String lastPageID = null;
+    private FirebaseAnalytics firebaseAnalytics;
 
     /**
      * private constructor to avoid creating instances which are not the singleton instance
@@ -51,13 +45,7 @@ public class TrackingUtils {
      * @param activity Activity
      */
     public void init(Activity activity) {
-//        firebaseAnalytics = FirebaseAnalytics.getInstance(activity);
-        okHttpClient = new OkHttpClient.Builder()
-                .connectTimeout(5, TimeUnit.SECONDS)
-                .writeTimeout(10, TimeUnit.SECONDS)
-                .readTimeout(30, TimeUnit.SECONDS)
-                .connectionPool(new ConnectionPool())
-                .build();
+        firebaseAnalytics = FirebaseAnalytics.getInstance(activity);
     }
 
     /**
