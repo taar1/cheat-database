@@ -63,9 +63,7 @@ public class MemberCheatViewFragment extends Fragment {
 
     private Cheat cheatObj;
     private ArrayList<Cheat> cheats;
-    // private Game game;
     private int offset;
-    public ArrayList<String[]> al_images;
     private ImageView[] imageViews;
     private ProgressBar progressBar;
     private Member member;
