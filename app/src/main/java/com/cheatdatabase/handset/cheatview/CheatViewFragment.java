@@ -9,7 +9,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Html;
@@ -45,15 +44,19 @@ import com.cheatdatabase.helpers.Tools;
 import com.cheatdatabase.helpers.Webservice;
 import com.google.gson.Gson;
 
+import org.androidannotations.annotations.Background;
+import org.androidannotations.annotations.UiThread;
+
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
- * List of all cheats for a game optimized for handsets.
+ * List of Cheats from a Game.
  *
  * @author Dominik Erbsland
  * @version 1.0
@@ -152,7 +155,7 @@ public class CheatViewFragment extends Fragment {
         cheats = game.getCheats();
         cheatObj = cheats[offset];
 
-        new FetchCheatRatingOnlineBackgroundTask().execute();
+        getCheatRatings();
 
         mainTable = outerLinearLayout.findViewById(R.id.table_cheat_list_main);
 
@@ -209,7 +212,7 @@ public class CheatViewFragment extends Fragment {
             imageViews = new ImageView[cheatObj.getScreens().length];
             progressBar.setVisibility(View.VISIBLE);
 
-            new LoadScreenshotsInBackgroundTask().execute();
+            getScreenshotsOnline();
         } else {
             tvGalleryInfo.setVisibility(View.GONE);
             progressBar.setVisibility(View.GONE);
@@ -223,7 +226,7 @@ public class CheatViewFragment extends Fragment {
          */
         if ((cheatObj.getCheatText() == null) || (cheatObj.getCheatText().length() < 10)) {
             progressBar.setVisibility(View.VISIBLE);
-            new FetchCheatTextTask().execute();
+            getCheatText();
         } else {
             populateView();
         }
@@ -383,14 +386,6 @@ public class CheatViewFragment extends Fragment {
         }
     }
 
-    // public void highlightRatingIcon(boolean highlight) {
-    // if (highlight) {
-    // btnRateCheat.setImageResource(R.drawable.ic_action_star);
-    // } else {
-    // btnRateCheat.setImageResource(R.drawable.ic_action_not_important);
-    // }
-    // }
-
     private void displayTableInWebview() {
         MaterialDialog md = new MaterialDialog.Builder(getActivity())
                 .customView(R.layout.layout_cheat_content_table, true)
@@ -405,130 +400,182 @@ public class CheatViewFragment extends Fragment {
         webview.loadDataWithBaseURL("", cheatObj.getCheatText(), "text/html", "UTF-8", "");
     }
 
-
-    private class FetchCheatTextTask extends AsyncTask<Void, Void, Void> {
-
-        String fullCheatText;
-
-        @Override
-        protected Void doInBackground(Void... params) {
-            fullCheatText = Webservice.getCheatById(cheatObj.getCheatId());
-
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void result) {
-            super.onPostExecute(result);
-            if (fullCheatText.substring(0, 1).equalsIgnoreCase("2")) {
-                cheatObj.setWalkthroughFormat(true);
-            }
-            progressBar.setVisibility(View.GONE);
-            cheatObj.setCheatText(fullCheatText.substring(1));
-
-            populateView();
-        }
+    @Background
+    void getCheatText() {
+        setCheatText(Webservice.getCheatById(cheatObj.getCheatId()));
     }
 
-    private class FetchCheatRatingOnlineBackgroundTask extends AsyncTask<Void, Void, Void> {
+    @UiThread
+    void setCheatText(String fullCheatText) {
+        if (fullCheatText.substring(0, 1).equalsIgnoreCase("2")) {
+            cheatObj.setWalkthroughFormat(true);
+        }
+        progressBar.setVisibility(View.GONE);
+        cheatObj.setCheatText(fullCheatText.substring(1));
+
+        populateView();
+    }
+
+    @Background
+    void getCheatRatings() {
         float cheatRating;
 
-        @Override
-        protected Void doInBackground(Void... params) {
-            try {
-                cheatRating = Webservice.getCheatRatingByMemberId(member.getMid(), cheatObj.getCheatId());
-            } catch (Exception e) {
-                cheatRating = 0;
-            }
-
-            return null;
+        try {
+            cheatRating = Webservice.getCheatRatingByMemberId(member.getMid(), cheatObj.getCheatId());
+        } catch (Exception e) {
+            cheatRating = 0;
         }
 
-        @Override
-        protected void onPostExecute(Void result) {
-            super.onPostExecute(result);
+        editor.putFloat("c" + cheatObj.getCheatId(), cheatRating);
+        editor.commit();
 
-            if (cheatRating > 0) {
-                editor.putFloat("c" + cheatObj.getCheatId(), cheatRating);
-                editor.commit();
+        setRating(cheatRating);
+    }
 
-                cheatViewPageIndicator.setRating(offset, cheatRating);
-
-                // ratingBar.setRating(cheatRating / 2);
-            }
+    @UiThread
+    void setRating(float cheatRating) {
+        if (cheatRating > 0) {
+            cheatViewPageIndicator.setRating(offset, cheatRating);
         }
     }
 
+//    private class LoadScreenshotsInBackgroundTask extends AsyncTask<Void, Void, Bitmap[]> {
+//        Bitmap bms[];
+//
+//        @Override
+//        protected Bitmap[] doInBackground(Void... params) {
+//            try {
+//                Screenshot[] screens = cheatObj.getScreens();
+//
+//                String[] myRemoteImages = new String[screens.length];
+//
+//                for (int i = 0; i < screens.length; i++) {
+//                    Screenshot s = screens[i];
+//                    String filename = s.getCheatId() + s.getFilename();
+//                    myRemoteImages[i] = Konstanten.SCREENSHOT_ROOT_WEBDIR + "image.php?width=150&image=/cheatpics/" + filename;
+//                }
+//
+//                bms = new Bitmap[imageViews.length];
+//                for (int i = 0; i < imageViews.length; i++) {
+//
+//                    /*
+//                     * Open a new URL and get the InputStream to load data from
+//                     * it.
+//                     */
+//                    URL aURL = new URL(myRemoteImages[i]);
+//                    URLConnection conn = aURL.openConnection();
+//                    conn.connect();
+//                    InputStream is = conn.getInputStream();
+//                    /* Buffered is always good for a performance plus. */
+//                    BufferedInputStream bis = new BufferedInputStream(is);
+//                    /* Decode url-data to a bitmap. */
+//                    Bitmap bm = BitmapFactory.decodeStream(bis);
+//                    bis.close();
+//                    is.close();
+//
+//                    bms[i] = bm;
+//
+//                    if (biggestHeight < bm.getHeight()) {
+//                        biggestHeight = bm.getHeight();
+//                    }
+//                }
+//            } catch (IOException e) {
+//                Log.e(TAG, "Remtoe Image Exception", e);
+//            }
+//
+//            return bms;
+//        }
+//
+//        @Override
+//        protected void onPostExecute(Bitmap[] bms) {
+//            super.onPostExecute(bms);
+//
+//            /*
+//             * Apply the Bitmap to the ImageView that will be returned.
+//             */
+//            for (int i = 0; i < imageViews.length; i++) {
+//                imageViews[i] = new ImageView(cheatViewPageIndicator);
+//                imageViews[i].setScaleType(ImageView.ScaleType.MATRIX);
+//                imageViews[i].setLayoutParams(new Gallery.LayoutParams(300, biggestHeight));
+//                imageViews[i].setImageBitmap(bms[i]);
+//            }
+//
+//            progressBar.setVisibility(View.GONE);
+//            if (cheatObj.getScreens().length <= 1) {
+//                tvGalleryInfo.setVisibility(View.GONE);
+//            } else {
+//                tvGalleryInfo.setVisibility(View.VISIBLE);
+//            }
+//            buildGallery();
+//        }
+//    }
 
-    private class LoadScreenshotsInBackgroundTask extends AsyncTask<Void, Void, Bitmap[]> {
-        Bitmap bms[];
+    @Background
+    void getScreenshotsOnline() {
+        List<Bitmap> bitmapList = new ArrayList<>();
 
-        @Override
-        protected Bitmap[] doInBackground(Void... params) {
-            try {
-                Screenshot[] screens = cheatObj.getScreens();
+        try {
+            Screenshot[] screens = cheatObj.getScreens();
 
-                String[] myRemoteImages = new String[screens.length];
+            String[] myRemoteImages = new String[screens.length];
 
-                for (int i = 0; i < screens.length; i++) {
-                    Screenshot s = screens[i];
-                    String filename = s.getCheatId() + s.getFilename();
-                    myRemoteImages[i] = Konstanten.SCREENSHOT_ROOT_WEBDIR + "image.php?width=150&image=/cheatpics/" + filename;
-                }
-
-                bms = new Bitmap[imageViews.length];
-                for (int i = 0; i < imageViews.length; i++) {
-
-                    /*
-                     * Open a new URL and get the InputStream to load data from
-                     * it.
-                     */
-                    URL aURL = new URL(myRemoteImages[i]);
-                    URLConnection conn = aURL.openConnection();
-                    conn.connect();
-                    InputStream is = conn.getInputStream();
-                    /* Buffered is always good for a performance plus. */
-                    BufferedInputStream bis = new BufferedInputStream(is);
-                    /* Decode url-data to a bitmap. */
-                    Bitmap bm = BitmapFactory.decodeStream(bis);
-                    bis.close();
-                    is.close();
-
-                    bms[i] = bm;
-
-                    if (biggestHeight < bm.getHeight()) {
-                        biggestHeight = bm.getHeight();
-                    }
-                }
-            } catch (IOException e) {
-                Log.e(TAG, "Remtoe Image Exception", e);
+            for (int i = 0; i < screens.length; i++) {
+                Screenshot s = screens[i];
+                String filename = s.getCheatId() + s.getFilename();
+                myRemoteImages[i] = Konstanten.SCREENSHOT_ROOT_WEBDIR + "image.php?width=150&image=/cheatpics/" + filename;
             }
 
-            return bms;
-        }
-
-        @Override
-        protected void onPostExecute(Bitmap[] bms) {
-            super.onPostExecute(bms);
-
-            /*
-             * Apply the Bitmap to the ImageView that will be returned.
-             */
             for (int i = 0; i < imageViews.length; i++) {
-                imageViews[i] = new ImageView(cheatViewPageIndicator);
-                imageViews[i].setScaleType(ImageView.ScaleType.MATRIX);
-                imageViews[i].setLayoutParams(new Gallery.LayoutParams(300, biggestHeight));
-                imageViews[i].setImageBitmap(bms[i]);
-            }
+                // Open a new URL and get the InputStream to load data from it.
+                URL aURL = new URL(myRemoteImages[i]);
+                URLConnection conn = aURL.openConnection();
+                conn.connect();
+                InputStream is = conn.getInputStream();
+                /* Buffered is always good for a performance plus. */
+                BufferedInputStream bis = new BufferedInputStream(is);
+                /* Decode url-data to a bitmap. */
+                Bitmap bm = BitmapFactory.decodeStream(bis);
+                bis.close();
+                is.close();
 
-            progressBar.setVisibility(View.GONE);
-            if (cheatObj.getScreens().length <= 1) {
-                tvGalleryInfo.setVisibility(View.GONE);
-            } else {
-                tvGalleryInfo.setVisibility(View.VISIBLE);
+                bitmapList.add(bm);
+
+                if (biggestHeight < bm.getHeight()) {
+                    biggestHeight = bm.getHeight();
+                }
             }
-            buildGallery();
+        } catch (IOException e) {
+            Log.e(TAG, "Remote Image Exception", e);
         }
+
+        displayScreenshots(bitmapList);
+    }
+
+    @UiThread
+    void displayScreenshots(List<Bitmap> bitmapList) {
+        // Apply the Bitmap to the ImageView that will be returned.
+//        for (int i = 0; i < imageViews.length; i++) {
+//            imageViews[i] = new ImageView(cheatViewPageIndicator);
+//            imageViews[i].setScaleType(ImageView.ScaleType.MATRIX);
+//            imageViews[i].setLayoutParams(new Gallery.LayoutParams(300, biggestHeight));
+//            imageViews[i].setImageBitmap(bms[i]);
+//        }
+
+        int i = 0;
+        for (Bitmap b : bitmapList) {
+            imageViews[i] = new ImageView(cheatViewPageIndicator);
+            imageViews[i].setScaleType(ImageView.ScaleType.MATRIX);
+            imageViews[i].setLayoutParams(new Gallery.LayoutParams(300, biggestHeight));
+            imageViews[i].setImageBitmap(b);
+        }
+
+        if (cheatObj.getScreens().length <= 1) {
+            tvGalleryInfo.setVisibility(View.GONE);
+        } else {
+            tvGalleryInfo.setVisibility(View.VISIBLE);
+        }
+
+        buildGallery();
     }
 
     /**

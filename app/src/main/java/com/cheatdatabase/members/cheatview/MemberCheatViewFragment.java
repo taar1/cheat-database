@@ -207,6 +207,7 @@ public class MemberCheatViewFragment extends Fragment {
         } catch (Exception e) {
             offset = 0;
             // TODO message ausgeben, dass kein Game objekt besteht
+            Log.e("Error", e.getLocalizedMessage());
         }
     }
 
