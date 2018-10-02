@@ -6,7 +6,6 @@ import android.content.Context;
 import android.graphics.Typeface;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
-import android.support.multidex.MultiDexApplication;
 
 import com.cheatdatabase.businessobjects.Cheat;
 import com.cheatdatabase.businessobjects.Game;
@@ -24,7 +23,7 @@ import java.util.TreeMap;
 import io.fabric.sdk.android.Fabric;
 
 @EApplication
-public class CheatDatabaseApplication extends MultiDexApplication implements Application.ActivityLifecycleCallbacks {
+public class CheatDatabaseApplication extends Application implements Application.ActivityLifecycleCallbacks {
 
     private static final String TAG = CheatDatabaseApplication.class.getSimpleName();
 
