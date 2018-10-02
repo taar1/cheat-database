@@ -24,11 +24,10 @@
         android:layout_alignParentTop="true"
         android:layout_marginLeft="10dp"
         android:layout_toRightOf="@+id/avatar_layout"
-
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/membername"
+            android:id="@+id/member_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="start"
@@ -36,7 +35,7 @@
             android:textIsSelectable="false" />
 
         <TextView
-            android:id="@+id/cheatcount"
+            android:id="@+id/cheat_count"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="start"
@@ -44,7 +43,7 @@
             android:textIsSelectable="false" />
 
         <TextView
-            android:id="@+id/hi_message"
+            android:id="@+id/member_message"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="start"

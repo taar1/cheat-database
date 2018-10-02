@@ -34,7 +34,7 @@ import butterknife.ButterKnife;
 import needle.Needle;
 
 /**
- * Show Top 20 helping members in a list.
+ * Show Top 20 helping memberList in a list.
  *
  * @author Dominik
  */
@@ -42,7 +42,7 @@ public class TopMembersFragment extends Fragment {
     private static final String TAG = TopMembersFragment.class.getSimpleName();
     private final int VISIT_WEBSITE = 0;
 
-    private List<Member> members;
+    private List<Member> memberList;
     private Member selectedMember;
 
     private Activity parentActivity;
@@ -73,27 +73,29 @@ public class TopMembersFragment extends Fragment {
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                getMembersInBackground();
+                loadMembersInBackground();
             }
         });
 
         if (Reachability.reachability.isReachable) {
-            // use this setting to improve performance if you know that changes
-            // in content do not change the layout size of the RecyclerView
-            mRecyclerView.setHasFixedSize(true);
-
-            // use a linear layout manager
             mLayoutManager = new LinearLayoutManager(getActivity());
             mRecyclerView.setLayoutManager(mLayoutManager);
+            mRecyclerView.setHasFixedSize(true);
 
-            mSwipeRefreshLayout.setRefreshing(true);
 
-            getMembersInBackground();
+
+
         } else {
             Toast.makeText(parentActivity, R.string.no_internet, Toast.LENGTH_LONG).show();
         }
 
         return view;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        loadMembersInBackground();
     }
 
     @Override
@@ -107,7 +109,7 @@ public class TopMembersFragment extends Fragment {
         super.onCreateContextMenu(menu, v, menuInfo);
 
         AdapterContextMenuInfo info = (AdapterContextMenuInfo) menuInfo;
-        selectedMember = members.get(Integer.parseInt(String.valueOf(info.id)));
+        selectedMember = memberList.get(Integer.parseInt(String.valueOf(info.id)));
 
         menu.setHeaderTitle(R.string.context_menu_title);
         menu.add(0, VISIT_WEBSITE, 1, getString(R.string.top_members_visit_website, selectedMember.getUsername()));
@@ -131,13 +133,15 @@ public class TopMembersFragment extends Fragment {
         return super.onContextItemSelected(item);
     }
 
-    public void getMembersInBackground() {
+    public void loadMembersInBackground() {
+        mSwipeRefreshLayout.setRefreshing(false);
+
         Needle.onBackgroundThread().execute(new Runnable() {
             @Override
             public void run() {
                 try {
-                    members.clear();
-                    Collections.addAll(members, Webservice.getMemberTop20());
+                    memberList.clear();
+                    Collections.addAll(memberList, Webservice.getMemberTop20());
                 } catch (Exception e) {
                     Log.e(TAG, e.getLocalizedMessage());
                 }
@@ -149,12 +153,14 @@ public class TopMembersFragment extends Fragment {
     }
 
     public void notifyAdapter() {
+        mSwipeRefreshLayout.setRefreshing(true);
+
         Needle.onMainThread().execute(new Runnable() {
             @Override
             public void run() {
-                if (members != null && members.size() > 0) {
+                if (memberList != null && memberList.size() > 0) {
 
-                    mTopMembersListViewAdapter.setMemberList(members);
+                    mTopMembersListViewAdapter.setMemberList(memberList);
                     if (mTopMembersListViewAdapter != null) {
                         mRecyclerView.setAdapter(mTopMembersListViewAdapter);
                     }
