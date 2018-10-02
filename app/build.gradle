@@ -17,11 +17,11 @@ String VERSION_NAME = "2.2.4"
 
 android {
     compileSdkVersion 28
-    buildToolsVersion '28.0.2'
+    buildToolsVersion '28.0.3'
     defaultConfig {
         applicationId APK_ID
         archivesBaseName = APK_NAME
-        minSdkVersion 19
+        minSdkVersion 21
         targetSdkVersion 27
         versionCode VERSION_CODE
         versionName VERSION_NAME
@@ -112,16 +112,16 @@ dependencies {
     implementation "org.greenrobot:eventbus:3.1.1"
     annotationProcessor "org.androidannotations:androidannotations:$AAVersion"
     annotationProcessor "org.androidannotations:ormlite:$AAVersion"
-    implementation "org.androidannotations:androidannotations-api:$AAVersion"
+    api "org.androidannotations:androidannotations-api:$AAVersion"
     implementation "com.github.hackware1993:MagicIndicator:1.5.0"
     implementation "com.simplecityapps:recyclerview-fastscroll:1.0.18"
     implementation('com.crashlytics.sdk.android:crashlytics:2.9.5@aar') {
         transitive = true
     }
-
-    // Facebook Audience Network
-    implementation 'com.facebook.android:audience-network-sdk:4.99.1'
+    implementation 'com.facebook.android:audience-network-sdk:+'
     implementation 'com.zsoltsafrany:needle:1.0.0'
+    implementation "com.jakewharton:butterknife:8.8.1"
+    annotationProcessor "com.jakewharton:butterknife-compiler:8.8.1"
 }
 
 apply plugin: "com.google.gms.google-services"

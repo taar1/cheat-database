@@ -44,9 +44,6 @@ import com.cheatdatabase.helpers.Tools;
 import com.cheatdatabase.helpers.Webservice;
 import com.google.gson.Gson;
 
-import org.androidannotations.annotations.Background;
-import org.androidannotations.annotations.UiThread;
-
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -54,6 +51,9 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
+
+//import org.androidannotations.annotations.Background;
+//import org.androidannotations.annotations.UiThread;
 
 /**
  * List of Cheats from a Game.
@@ -208,7 +208,7 @@ public class CheatViewFragment extends Fragment {
          * Get thumbnails if there are screenshots.
          */
         if (cheatObj.isScreenshots()) {
-            biggestHeight = 100; // init value
+            biggestHeight = 100; // setMemberList value
             imageViews = new ImageView[cheatObj.getScreens().length];
             progressBar.setVisibility(View.VISIBLE);
 
@@ -400,12 +400,12 @@ public class CheatViewFragment extends Fragment {
         webview.loadDataWithBaseURL("", cheatObj.getCheatText(), "text/html", "UTF-8", "");
     }
 
-    @Background
+    //    @Background
     void getCheatText() {
         setCheatText(Webservice.getCheatById(cheatObj.getCheatId()));
     }
 
-    @UiThread
+    //    @UiThread
     void setCheatText(String fullCheatText) {
         if (fullCheatText.substring(0, 1).equalsIgnoreCase("2")) {
             cheatObj.setWalkthroughFormat(true);
@@ -416,7 +416,7 @@ public class CheatViewFragment extends Fragment {
         populateView();
     }
 
-    @Background
+    //    @Background
     void getCheatRatings() {
         float cheatRating;
 
@@ -432,7 +432,7 @@ public class CheatViewFragment extends Fragment {
         setRating(cheatRating);
     }
 
-    @UiThread
+    //    @UiThread
     void setRating(float cheatRating) {
         if (cheatRating > 0) {
             cheatViewPageIndicator.setRating(offset, cheatRating);
@@ -510,7 +510,7 @@ public class CheatViewFragment extends Fragment {
 //        }
 //    }
 
-    @Background
+    //    @Background
     void getScreenshotsOnline() {
         List<Bitmap> bitmapList = new ArrayList<>();
 
@@ -551,7 +551,7 @@ public class CheatViewFragment extends Fragment {
         displayScreenshots(bitmapList);
     }
 
-    @UiThread
+    //    @UiThread
     void displayScreenshots(List<Bitmap> bitmapList) {
         // Apply the Bitmap to the ImageView that will be returned.
 //        for (int i = 0; i < imageViews.length; i++) {

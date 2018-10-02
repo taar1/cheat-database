@@ -12,7 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.cheatdatabase.CheatsByMemberListActivity_;
+import com.cheatdatabase.CheatsByMemberListActivity;
 import com.cheatdatabase.R;
 import com.cheatdatabase.businessobjects.Member;
 import com.cheatdatabase.helpers.Konstanten;
@@ -20,24 +20,19 @@ import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.helpers.Tools;
 import com.squareup.picasso.Picasso;
 
-import org.androidannotations.annotations.EBean;
-import org.androidannotations.annotations.RootContext;
-
 import java.util.ArrayList;
+import java.util.List;
 
-@EBean
 public class TopMembersListViewAdapter extends RecyclerView.Adapter<TopMembersListViewAdapter.ViewHolder> {
-    private static final String TAG = TopMembersListViewAdapter.class.getSimpleName();
+    private final String TAG = this.getClass().getSimpleName();
 
-    private ArrayList<Member> mMemberObjects;
+    private List<Member> mMemberObjects;
     private Typeface latoFontBold;
     private Typeface latoFontLight;
     private Member memberObj;
+    private Context mContext;
 
-    @RootContext
-    Context mContext;
-
-    public void init(ArrayList<Member> members) {
+    public void setMemberList(List<Member> members) {
         mMemberObjects = members;
     }
 
@@ -45,7 +40,6 @@ public class TopMembersListViewAdapter extends RecyclerView.Adapter<TopMembersLi
     // Complex data items may need more than one view per item, and
     // you provide access to all the views for a data item in a view holder
     public static class ViewHolder extends RecyclerView.ViewHolder {
-
         TextView tvMemberName;
         TextView tvCheatCount;
         TextView tvHiMessage;
@@ -72,8 +66,11 @@ public class TopMembersListViewAdapter extends RecyclerView.Adapter<TopMembersLi
     }
 
     private void showMemberCheatList(Member member) {
+        // TODO FIXME
+        // TODO FIXME
+        // TODO FIXME
         if (Reachability.reachability.isReachable) {
-            Intent explicitIntent = new Intent(mContext, CheatsByMemberListActivity_.class);
+            Intent explicitIntent = new Intent(mContext, CheatsByMemberListActivity.class);
             explicitIntent.putExtra("memberObj", member);
             mContext.startActivity(explicitIntent);
         } else {

@@ -15,6 +15,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.UiThread;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -39,6 +40,7 @@ import com.cheatdatabase.fragments.ContactFormFragment_;
 import com.cheatdatabase.fragments.FavoriteGamesListFragment_;
 import com.cheatdatabase.fragments.SubmitCheatFragment_;
 import com.cheatdatabase.fragments.SystemListFragment_;
+import com.cheatdatabase.fragments.TopMembersFragment;
 import com.cheatdatabase.fragments.TopMembersFragment_;
 import com.cheatdatabase.helpers.DistinctValues;
 import com.cheatdatabase.helpers.Konstanten;
@@ -403,6 +405,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         FragmentManager annotationFragmentManager = getFragmentManager();
 
+        android.support.v4.app.FragmentManager fragmentManager4 = getSupportFragmentManager();
+        FragmentTransaction ft = fragmentManager4.beginTransaction();
+
         if (id == R.id.nav_gamesystems) {
             showGameSystemsFragment();
         } else if (id == R.id.nav_favorites) {
@@ -412,6 +417,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else if (id == R.id.nav_members) {
             mToolbar.setTitle(R.string.top_members_top_helping);
             annotationFragmentManager.beginTransaction().replace(R.id.content_frame, TopMembersFragment_.builder().build()).commit();
+
+            // TODO FIXME hier umstellen von android annotations zu "normalem" code fürs replacen vom fagment...
+            // TODO FIXME hier umstellen von android annotations zu "normalem" code fürs replacen vom fagment...
+            // TODO FIXME hier umstellen von android annotations zu "normalem" code fürs replacen vom fagment...
+            // TODO FIXME hier umstellen von android annotations zu "normalem" code fürs replacen vom fagment...
+            ft.addToBackStack(TopMembersFragment.toString());
+            fragmentManager4.beginTransaction().replace(R.id.content_frame, new TopMembersFragment(), TopMembersFragment.class.toString()).commit();
+
             fab.setVisibility(View.VISIBLE);
         } else if (id == R.id.nav_rate) {
             new RateAppDialog(this, new MainActivityCallbacks() {
@@ -469,3 +482,4 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mDrawerLayout.closeDrawers();
     }
 }
+

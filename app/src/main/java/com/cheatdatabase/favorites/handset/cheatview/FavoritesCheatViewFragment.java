@@ -205,7 +205,7 @@ public class FavoritesCheatViewFragment extends Fragment implements OnClickListe
          * Get thumbnails if there are screenshots.
          */
         if (cheatObj.isScreenshots()) {
-            biggestHeight = 100; // init value
+            biggestHeight = 100;
             imageViews = new ImageView[cheatObj.getScreens().length];
             progressBar.setVisibility(View.VISIBLE);
 

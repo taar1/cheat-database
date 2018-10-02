@@ -206,7 +206,7 @@
 
     <!-- TOP MEMBERS -->
     <string name="top_members_title">Top 20 usuarios</string>
-    <string name="top_members_visit_website">Visita la web de %s</string>
+    <string name="top_members_visit_website">Visita la web de %1$s</string>
     <string name="top_members_no_website">El usuario %s no tiene web</string>
     <string name="top_members_cheats_count">Número de trucos</string>
 

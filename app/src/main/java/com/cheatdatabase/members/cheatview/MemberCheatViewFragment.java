@@ -163,7 +163,7 @@ public class MemberCheatViewFragment extends Fragment {
              * Get thumbnails if there are screenshots.
              */
             if (cheatObj.isScreenshots()) {
-                biggestHeight = 100; // init value
+                biggestHeight = 100; // setMemberList value
                 imageViews = new ImageView[cheatObj.getScreens().length];
                 progressBar.setVisibility(View.VISIBLE);
 
