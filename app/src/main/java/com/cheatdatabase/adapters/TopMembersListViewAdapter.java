@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.cheatdatabase.CheatDatabaseApplication;
 import com.cheatdatabase.CheatsByMemberListActivity;
 import com.cheatdatabase.R;
 import com.cheatdatabase.businessobjects.Member;
@@ -20,137 +21,134 @@ import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.helpers.Tools;
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class TopMembersListViewAdapter extends RecyclerView.Adapter<TopMembersListViewAdapter.ViewHolder> {
-    private final String TAG = this.getClass().getSimpleName();
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
-    private List<Member> mMemberObjects;
-    private Typeface latoFontBold;
-    private Typeface latoFontLight;
-    private Member memberObj;
-    private Context mContext;
+public class TopMembersListViewAdapter extends RecyclerView.Adapter<TopMembersListViewAdapter.TopMembersListViewItemHolder> {
+    private final String TAG = this.getClass().getSimpleName();
+    private List<Member> memberList;
 
     public void setMemberList(List<Member> members) {
-        mMemberObjects = members;
+        memberList = members;
     }
 
-    // Provide a reference to the views for each data item
-    // Complex data items may need more than one view per item, and
-    // you provide access to all the views for a data item in a view holder
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public class TopMembersListViewItemHolder extends RecyclerView.ViewHolder {
+        @BindView(R.id.membername)
         TextView tvMemberName;
+        @BindView(R.id.cheatcount)
         TextView tvCheatCount;
+        @BindView(R.id.hi_message)
         TextView tvHiMessage;
+        @BindView(R.id.website)
         TextView tvWebsite;
+        @BindView(R.id.avatar)
         ImageView avatarImageView;
 
-        public ViewHolder(View v) {
-            super(v);
+        private final Typeface latoFontBold;
+        private final Typeface latoFontLight;
+        private final Context context;
 
-            tvMemberName = v.findViewById(R.id.membername);
-            tvCheatCount = v.findViewById(R.id.cheatcount);
-            tvHiMessage = v.findViewById(R.id.hi_message);
-            tvWebsite = v.findViewById(R.id.website);
-            avatarImageView = v.findViewById(R.id.avatar);
+        public TopMembersListViewItemHolder(View view) {
+            super(view);
+            ButterKnife.bind(this, view);
+
+            context = CheatDatabaseApplication.getAppContext();
+
+            latoFontBold = Tools.getFont(context.getAssets(), Konstanten.FONT_BOLD);
+            latoFontLight = Tools.getFont(context.getAssets(), Konstanten.FONT_LIGHT);
+        }
+
+        public void updateUI(final Member member) {
+            Picasso.get().load(Konstanten.WEBDIR_MEMBER_AVATAR + member.getMid()).placeholder(R.drawable.avatar).into(avatarImageView);
+
+            tvMemberName.setTypeface(latoFontBold);
+            tvMemberName.setText(member.getUsername().toUpperCase());
+            tvMemberName.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    showMemberCheatList(member);
+                }
+            });
+
+            tvCheatCount.setTypeface(latoFontLight);
+            tvCheatCount.setText(context.getString(R.string.top_members_cheats_count) + ": " + String.valueOf(member.getCheatSubmissionCount()));
+            tvCheatCount.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    showMemberCheatList(member);
+                }
+            });
+
+            tvWebsite.setTypeface(latoFontLight);
+            if (member.getWebsite().length() > 1) {
+                tvWebsite.setText(member.getWebsite());
+            } else {
+                tvWebsite.setVisibility(View.GONE);
+            }
+            tvWebsite.setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View v) {
+                    openWebsite(member.getWebsite());
+                }
+            });
+
+            tvHiMessage.setTypeface(latoFontLight);
+            if (member.getGreeting().length() > 1) {
+                tvHiMessage.setText("\"" + member.getGreeting().replaceAll("\\\\", "").trim() + "\"");
+            } else {
+                tvHiMessage.setVisibility(View.GONE);
+            }
+
+            avatarImageView.setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View v) {
+                    showMemberCheatList(member);
+                }
+            });
+        }
+
+        private void openWebsite(String url) {
+            if ((url != null) && (url.length() > 4)) {
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setData(Uri.parse(url));
+                context.startActivity(intent);
+            }
+        }
+
+        private void showMemberCheatList(Member member) {
+            // TODO FIXME
+            // TODO FIXME
+            // TODO FIXME
+            if (Reachability.reachability.isReachable) {
+                Intent explicitIntent = new Intent(context, CheatsByMemberListActivity.class);
+                explicitIntent.putExtra("member", member);
+                context.startActivity(explicitIntent);
+            } else {
+                Toast.makeText(context, R.string.no_internet, Toast.LENGTH_SHORT).show();
+            }
         }
     }
 
-    private void openWebsite(String url) {
-        if ((url != null) && (url.length() > 4)) {
-            Intent intent = new Intent(Intent.ACTION_VIEW);
-            intent.setData(Uri.parse(url));
-            mContext.startActivity(intent);
-        }
-    }
-
-    private void showMemberCheatList(Member member) {
-        // TODO FIXME
-        // TODO FIXME
-        // TODO FIXME
-        if (Reachability.reachability.isReachable) {
-            Intent explicitIntent = new Intent(mContext, CheatsByMemberListActivity.class);
-            explicitIntent.putExtra("memberObj", member);
-            mContext.startActivity(explicitIntent);
-        } else {
-            Toast.makeText(mContext, R.string.no_internet, Toast.LENGTH_SHORT).show();
-        }
-    }
 
 
-    // Create new views (invoked by the layout manager)
     @Override
-    public TopMembersListViewAdapter.ViewHolder onCreateViewHolder(final ViewGroup parent, int viewType) {
-
-        latoFontBold = Tools.getFont(parent.getContext().getAssets(), Konstanten.FONT_BOLD);
-        latoFontLight = Tools.getFont(parent.getContext().getAssets(), Konstanten.FONT_LIGHT);
-
-        // create a new view
-        final View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.topmembers_list_item, parent, false);
-        v.setDrawingCacheEnabled(true);
-
-        return new ViewHolder(v);
+    public TopMembersListViewItemHolder onCreateViewHolder(final ViewGroup parent, int viewType) {
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.topmembers_list_item, parent, false);
+        return new TopMembersListViewItemHolder(itemView);
     }
 
-    public void onBindViewHolder(ViewHolder holder, final int position) {
-        memberObj = mMemberObjects.get(position);
-
-        holder.tvMemberName.setTypeface(latoFontBold);
-        holder.tvMemberName.setText(memberObj.getUsername().toUpperCase());
-        holder.tvMemberName.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showMemberCheatList(mMemberObjects.get(position));
-            }
-        });
-
-        holder.tvCheatCount.setTypeface(latoFontLight);
-        holder.tvCheatCount.setText(mContext.getString(R.string.top_members_cheats_count) + ": " + String.valueOf(memberObj.getCheatSubmissionCount()));
-        holder.tvCheatCount.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showMemberCheatList(mMemberObjects.get(position));
-            }
-        });
-
-        holder.tvWebsite.setTypeface(latoFontLight);
-        if (memberObj.getWebsite().length() > 1) {
-            holder.tvWebsite.setText(memberObj.getWebsite());
-        } else {
-            holder.tvWebsite.setVisibility(View.GONE);
-        }
-        holder.tvWebsite.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                openWebsite(memberObj.getWebsite());
-            }
-        });
-        holder.tvWebsite.setDrawingCacheEnabled(false);
-
-
-        holder.tvHiMessage.setTypeface(latoFontLight);
-        if (memberObj.getGreeting().length() > 1) {
-            holder.tvHiMessage.setText("\"" + memberObj.getGreeting().replaceAll("\\\\", "").trim() + "\"");
-        } else {
-            holder.tvHiMessage.setVisibility(View.GONE);
-        }
-
-        holder.avatarImageView.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                showMemberCheatList(mMemberObjects.get(position));
-            }
-
-        });
-        Picasso.get().load(Konstanten.WEBDIR_MEMBER_AVATAR + memberObj.getMid()).placeholder(R.drawable.avatar).into(holder.avatarImageView);
+    public void onBindViewHolder(TopMembersListViewItemHolder holder, final int position) {
+        TopMembersListViewItemHolder topMembersListViewItemHolder = holder;
+        topMembersListViewItemHolder.updateUI(memberList.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return mMemberObjects.size();
+        return memberList.size();
     }
 
 }
