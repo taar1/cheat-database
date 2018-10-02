@@ -416,14 +416,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             fab.setVisibility(View.VISIBLE);
         } else if (id == R.id.nav_members) {
             mToolbar.setTitle(R.string.top_members_top_helping);
-            annotationFragmentManager.beginTransaction().replace(R.id.content_frame, TopMembersFragment_.builder().build()).commit();
+//            annotationFragmentManager.beginTransaction().replace(R.id.content_frame, TopMembersFragment_.builder().build()).commit();
 
             // TODO FIXME hier umstellen von android annotations zu "normalem" code fürs replacen vom fagment...
             // TODO FIXME hier umstellen von android annotations zu "normalem" code fürs replacen vom fagment...
-            // TODO FIXME hier umstellen von android annotations zu "normalem" code fürs replacen vom fagment...
-            // TODO FIXME hier umstellen von android annotations zu "normalem" code fürs replacen vom fagment...
-            ft.addToBackStack(TopMembersFragment.toString());
-            fragmentManager4.beginTransaction().replace(R.id.content_frame, new TopMembersFragment(), TopMembersFragment.class.toString()).commit();
+            ft.addToBackStack(TopMembersFragment.class.getSimpleName());
+            fragmentManager4.beginTransaction().replace(R.id.content_frame, new TopMembersFragment(), TopMembersFragment.class.getSimpleName()).commit();
 
             fab.setVisibility(View.VISIBLE);
         } else if (id == R.id.nav_rate) {
@@ -457,7 +455,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
 
         mDrawerLayout.closeDrawers();
-
 
         if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
             getSupportFragmentManager().popBackStackImmediate();

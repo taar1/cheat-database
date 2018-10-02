@@ -1,8 +1,6 @@
 package com.cheatdatabase.fragments;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -18,6 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView.AdapterContextMenuInfo;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cheatdatabase.R;
@@ -26,6 +25,7 @@ import com.cheatdatabase.businessobjects.Member;
 import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.helpers.Webservice;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -53,21 +53,26 @@ public class TopMembersFragment extends Fragment {
     RecyclerView mRecyclerView;
     @BindView(R.id.swipe_refresh_layout)
     SwipeRefreshLayout mSwipeRefreshLayout;
+    @BindView(R.id.empty)
+    View emptyView;
+    @BindView(R.id.empty_label)
+    TextView emptyLabel;
+
+    public TopMembersFragment() {
+        mTopMembersListViewAdapter = new TopMembersListViewAdapter();
+        memberList = new ArrayList<>();
+        parentActivity = getActivity();
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_topmembers, container, false);
         ButterKnife.bind(this, view);
 
-        parentActivity = getActivity();
-
         if (!Reachability.isRegistered()) {
             Reachability.registerReachability(parentActivity);
         }
 
-        mTopMembersListViewAdapter = new TopMembersListViewAdapter();
-
-        // Update action bar menu items?
         setHasOptionsMenu(true);
 
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -81,10 +86,7 @@ public class TopMembersFragment extends Fragment {
             mLayoutManager = new LinearLayoutManager(getActivity());
             mRecyclerView.setLayoutManager(mLayoutManager);
             mRecyclerView.setHasFixedSize(true);
-
-
-
-
+            mRecyclerView.setAdapter(mTopMembersListViewAdapter);
         } else {
             Toast.makeText(parentActivity, R.string.no_internet, Toast.LENGTH_LONG).show();
         }
@@ -134,7 +136,9 @@ public class TopMembersFragment extends Fragment {
     }
 
     public void loadMembersInBackground() {
-        mSwipeRefreshLayout.setRefreshing(false);
+        if (!mSwipeRefreshLayout.isRefreshing()) {
+            mSwipeRefreshLayout.setRefreshing(true);
+        }
 
         Needle.onBackgroundThread().execute(new Runnable() {
             @Override
@@ -159,32 +163,28 @@ public class TopMembersFragment extends Fragment {
             @Override
             public void run() {
                 if (memberList != null && memberList.size() > 0) {
-
                     mTopMembersListViewAdapter.setMemberList(memberList);
-                    if (mTopMembersListViewAdapter != null) {
-                        mRecyclerView.setAdapter(mTopMembersListViewAdapter);
-                    }
                     mTopMembersListViewAdapter.notifyDataSetChanged();
-                    mSwipeRefreshLayout.setRefreshing(false);
                 } else {
-                    // TODO display empty view
-                    // TODO display empty view
-                    // TODO display empty view
-                    error(R.string.err_no_member_data);
+                    handleEmptyViewState();
                 }
+                mSwipeRefreshLayout.setRefreshing(false);
             }
         });
-
     }
 
-
-    private void error(int msg) {
-        new AlertDialog.Builder(parentActivity).setIcon(R.drawable.ic_action_warning).setTitle(getString(R.string.err)).setMessage(msg).setNeutralButton(R.string.ok, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int whichButton) {
-                // finish();
-            }
-        }).create().show();
+    private void handleEmptyViewState() {
+        if (mSwipeRefreshLayout == null || !isAdded()) {
+            return;
+        }
+        if (mTopMembersListViewAdapter.getItemCount() == 0) {
+            emptyLabel.setText(getString(R.string.err_no_member_data));
+            emptyView.setVisibility(View.VISIBLE);
+            mSwipeRefreshLayout.setVisibility(View.GONE);
+        } else {
+            mSwipeRefreshLayout.setVisibility(View.VISIBLE);
+            emptyView.setVisibility(View.GONE);
+        }
     }
 
 }

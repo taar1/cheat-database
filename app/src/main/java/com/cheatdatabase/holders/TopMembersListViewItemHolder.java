@@ -21,6 +21,7 @@ import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class TopMembersListViewItemHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.member_name)
@@ -37,6 +38,7 @@ public class TopMembersListViewItemHolder extends RecyclerView.ViewHolder {
     private final Typeface fontBold;
     private final Typeface fontLight;
     private final Context context;
+    private Member member;
 
     public TopMembersListViewItemHolder(View view) {
         super(view);
@@ -49,25 +51,15 @@ public class TopMembersListViewItemHolder extends RecyclerView.ViewHolder {
     }
 
     public void updateUI(final Member member) {
+        this.member = member;
+
         Picasso.get().load(Konstanten.WEBDIR_MEMBER_AVATAR + member.getMid()).placeholder(R.drawable.avatar).into(avatar);
 
         memberName.setTypeface(fontBold);
         memberName.setText(member.getUsername().toUpperCase());
-        memberName.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showMemberCheatList(member);
-            }
-        });
 
         cheatCount.setTypeface(fontLight);
         cheatCount.setText(context.getString(R.string.top_members_cheats_count) + ": " + String.valueOf(member.getCheatSubmissionCount()));
-        cheatCount.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showMemberCheatList(member);
-            }
-        });
 
         website.setTypeface(fontLight);
         if (member.getWebsite().length() > 1) {
@@ -75,13 +67,6 @@ public class TopMembersListViewItemHolder extends RecyclerView.ViewHolder {
         } else {
             website.setVisibility(View.GONE);
         }
-        website.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                openWebsite(member.getWebsite());
-            }
-        });
 
         memberMessage.setTypeface(fontLight);
         if (member.getGreeting().length() > 1) {
@@ -89,17 +74,11 @@ public class TopMembersListViewItemHolder extends RecyclerView.ViewHolder {
         } else {
             memberMessage.setVisibility(View.GONE);
         }
-
-        avatar.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                showMemberCheatList(member);
-            }
-        });
     }
 
-    private void openWebsite(String url) {
+    @OnClick(R.id.website)
+    void openWebsite() {
+        String url = member.getWebsite();
         if ((url != null) && (url.length() > 4)) {
             Intent intent = new Intent(Intent.ACTION_VIEW);
             intent.setData(Uri.parse(url));
@@ -107,7 +86,8 @@ public class TopMembersListViewItemHolder extends RecyclerView.ViewHolder {
         }
     }
 
-    private void showMemberCheatList(Member member) {
+    @OnClick({R.id.member_name, R.id.cheat_count, R.id.avatar})
+    void showMemberCheatList() {
         if (Reachability.reachability.isReachable) {
             Intent explicitIntent = new Intent(context, CheatsByMemberListActivity.class);
             explicitIntent.putExtra("member", member);
