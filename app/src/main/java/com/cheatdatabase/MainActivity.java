@@ -41,7 +41,6 @@ import com.cheatdatabase.fragments.FavoriteGamesListFragment_;
 import com.cheatdatabase.fragments.SubmitCheatFragment_;
 import com.cheatdatabase.fragments.SystemListFragment_;
 import com.cheatdatabase.fragments.TopMembersFragment;
-import com.cheatdatabase.fragments.TopMembersFragment_;
 import com.cheatdatabase.helpers.DistinctValues;
 import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.MyPrefs_;

@@ -59,9 +59,9 @@ public class TopMembersFragment extends Fragment {
     TextView emptyLabel;
 
     public TopMembersFragment() {
-        mTopMembersListViewAdapter = new TopMembersListViewAdapter();
         memberList = new ArrayList<>();
         parentActivity = getActivity();
+        mTopMembersListViewAdapter = new TopMembersListViewAdapter();
     }
 
     @Override
