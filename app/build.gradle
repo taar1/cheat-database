@@ -22,14 +22,8 @@ android {
         applicationId APK_ID
         archivesBaseName = APK_NAME
         minSdkVersion 21
-        targetSdkVersion 27
-        versionCode VERSION_CODE
+        targetSdkVersion 28
         versionName VERSION_NAME
-        multiDexEnabled true
-    }
-
-    dexOptions {
-        javaMaxHeapSize "4g" //specify the heap size for the dex process
     }
 
     buildTypes {
@@ -37,11 +31,19 @@ android {
             debuggable true
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            ext.alwaysUpdateBuildId = false
+
         }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+    }
+
+    if (project.hasProperty('devBuild')) {
+        splits.abi.enable = false
+        splity.density.enable = false
+        aaptOptions.cruncherEnabled = false
     }
 
     packagingOptions {
@@ -69,6 +71,11 @@ android {
             dimension "myDimension"
             versionNameSuffix "-amazon"
         }
+        development {
+            resConfigs("en", "de")
+            dimension "myDimension"
+            versionNameSuffix "-dev"
+        }
     }
 
     lintOptions {
@@ -89,38 +96,36 @@ repositories {
 }
 
 ext {
-    firebaseVersion = '16.0.2'
-    supportVersion = '27.1.0'
+    supportVersion = '26.1.0'
     AAVersion = '4.4.0'
 }
 
 dependencies {
-    implementation "com.google.firebase:firebase-core:16.0.3"
-    implementation "com.google.firebase:firebase-messaging:17.3.0"
-    implementation "com.google.firebase:firebase-config:16.0.0"
-    implementation "com.google.firebase:firebase-appindexing:16.0.1"
+    implementation 'com.google.firebase:firebase-core:16.0.3'
+    implementation 'com.google.firebase:firebase-messaging:17.3.0'
+    implementation 'com.google.firebase:firebase-config:16.0.0'
+    implementation 'com.google.firebase:firebase-appindexing:16.0.1'
     api "com.android.support:appcompat-v7:$supportVersion"
     api "com.android.support:design:$supportVersion"
     api "com.android.support:recyclerview-v7:$supportVersion"
-    implementation "com.github.vajro:MaterialDesignLibrary:1.6"
-    implementation "com.afollestad.material-dialogs:core:0.9.6.0"
-    implementation "com.google.code.gson:gson:2.8.5"
-    implementation "com.google.android.gms:play-services-analytics:16.0.3"
-    implementation "com.google.android.gms:play-services-auth:15.0.1"
-    implementation "com.squareup.picasso:picasso:2.71828"
-    implementation "com.appbrain:appbrain-applift-sdk:+"
-    implementation "org.greenrobot:eventbus:3.1.1"
+    implementation 'com.afollestad.material-dialogs:core:0.9.6.0'
+    implementation 'com.google.code.gson:gson:2.8.5'
+    implementation 'com.google.android.gms:play-services-analytics:16.0.3'
+    implementation 'com.google.android.gms:play-services-auth:16.0.0'
+    implementation 'com.squareup.picasso:picasso:2.71828'
+    implementation 'com.appbrain:appbrain-applift-sdk:+'
+    implementation 'org.greenrobot:eventbus:3.1.1'
     annotationProcessor "org.androidannotations:androidannotations:$AAVersion"
     annotationProcessor "org.androidannotations:ormlite:$AAVersion"
     api "org.androidannotations:androidannotations-api:$AAVersion"
-    implementation "com.github.hackware1993:MagicIndicator:1.5.0"
-    implementation "com.simplecityapps:recyclerview-fastscroll:1.0.18"
+//    implementation 'com.github.hackware1993:MagicIndicator:1.5.0'
+    implementation 'com.simplecityapps:recyclerview-fastscroll:1.0.18'
     implementation('com.crashlytics.sdk.android:crashlytics:2.9.5@aar') {
         transitive = true
     }
     implementation 'com.facebook.android:audience-network-sdk:+'
     implementation 'com.zsoltsafrany:needle:1.0.0'
-    implementation "com.jakewharton:butterknife:8.8.1"
+    implementation 'com.jakewharton:butterknife:8.8.1'
     annotationProcessor "com.jakewharton:butterknife-compiler:8.8.1"
 }
 
