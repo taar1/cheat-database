@@ -144,12 +144,18 @@ public class TopMembersFragment extends Fragment {
             @Override
             public void run() {
                 try {
+                    Log.d(TAG, "XXXXX 01");
+                    Member[] mem20 = Webservice.getMemberTop20();
+                    Log.d(TAG, "XXXXX 02");
                     memberList.clear();
-                    Collections.addAll(memberList, Webservice.getMemberTop20());
+                    Log.d(TAG, "XXXXX 03");
+                    Collections.addAll(memberList, mem20);
+                    Log.d(TAG, "XXXXX 04");
                 } catch (Exception e) {
-                    Log.e(TAG, e.getLocalizedMessage());
+                    Log.e(TAG, "XXXXX" + e.getLocalizedMessage());
                 }
 
+                Log.d(TAG, "XXXXX 05");
                 notifyAdapter();
             }
         });

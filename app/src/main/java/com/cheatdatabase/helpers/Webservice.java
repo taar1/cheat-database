@@ -1112,9 +1112,10 @@ public class Webservice {
             }
 
         } catch (JSONException e) {
-            Log.e(TAG, "JSONException: " + e.getLocalizedMessage());
+            Log.e(TAG, "XXXXX JSONException: " + e.getLocalizedMessage());
         }
 
+        Log.d(TAG, "XXXXX 01b");
         return members;
     }
 
