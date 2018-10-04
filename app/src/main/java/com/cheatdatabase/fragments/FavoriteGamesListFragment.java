@@ -1,10 +1,10 @@
 package com.cheatdatabase.fragments;
 
 import android.app.Activity;
-import android.app.Fragment;
 import android.graphics.Typeface;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.util.SparseArray;
 import android.view.ContextMenu;

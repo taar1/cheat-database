@@ -25,7 +25,7 @@ import org.androidannotations.annotations.EBean;
 import org.androidannotations.annotations.RootContext;
 import org.greenrobot.eventbus.EventBus;
 
-import java.util.ArrayList;
+import java.util.List;
 
 @EBean
 public class CheatsByGameRecycleListViewAdapter extends RecyclerView.Adapter<CheatsByGameRecycleListViewAdapter.ViewHolder> implements FastScrollRecyclerView.SectionedAdapter,
@@ -33,7 +33,7 @@ public class CheatsByGameRecycleListViewAdapter extends RecyclerView.Adapter<Che
 
     private static final String TAG = CheatsByGameRecycleListViewAdapter.class.getSimpleName();
 
-    private ArrayList<Cheat> mCheats;
+    private List<Cheat> mCheats;
     private Typeface latoFontBold;
     private Typeface latoFontLight;
     private Cheat cheatObj;
@@ -41,7 +41,7 @@ public class CheatsByGameRecycleListViewAdapter extends RecyclerView.Adapter<Che
     @RootContext
     Context mContext;
 
-    public void init(ArrayList<Cheat> cheatList) {
+    public void init(List<Cheat> cheatList) {
         mCheats = cheatList;
     }
 

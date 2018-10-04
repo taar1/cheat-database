@@ -50,6 +50,7 @@ import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 //import org.androidannotations.annotations.Background;
@@ -73,10 +74,10 @@ public class CheatViewFragment extends Fragment {
     private int biggestHeight;
 
     private Cheat cheatObj;
-    private Cheat[] cheats;
+    private List<Cheat> cheatList;
     private Game game;
+    private String cheatTitle;
     private int offset;
-    public ArrayList<String[]> al_images;
     private ImageView[] imageViews;
     private ProgressBar progressBar;
     private Member member;
@@ -90,30 +91,36 @@ public class CheatViewFragment extends Fragment {
     private static final String KEY_CONTENT = "CheatViewFragment:Content";
     private static final String TAG = CheatViewFragment.class.getSimpleName();
 
-    public static CheatViewFragment newInstance(String cheatTitle, Game gameObj, int offset) {
+    public CheatViewFragment() {
+        cheatList = new ArrayList<>();
+    }
 
-        CheatViewFragment fragment = new CheatViewFragment();
+    public static CheatViewFragment newInstance(String cheatTitle, Game gameObj, int offset) {
+        CheatViewFragment cheatViewFragment = new CheatViewFragment();
+        cheatViewFragment.game = gameObj;
+        cheatViewFragment.cheatTitle = cheatTitle;
+        cheatViewFragment.offset = offset;
 
         // Uebergebene Parameter ins Bundle Objekt eintragen
-        Bundle args = new Bundle();
-        args.putSerializable("gameObj", gameObj);
-        args.putInt("offset", offset);
-        fragment.setArguments(args);
+//        Bundle args = new Bundle();
+//        args.putSerializable("gameObj", gameObj);
+//        args.putInt("offset", offset);
+//        cheatViewFragment.setArguments(args);
+//
+//        StringBuilder builder = new StringBuilder();
+//        for (int i = 0; i < 20; i++) {
+//            builder.append(cheatTitle).append(" ");
+//        }
+//        builder.deleteCharAt(builder.length() - 1);
+//        cheatViewFragment.mContent = builder.toString();
 
-        StringBuilder builder = new StringBuilder();
-        for (int i = 0; i < 20; i++) {
-            builder.append(cheatTitle).append(" ");
-        }
-        builder.deleteCharAt(builder.length() - 1);
-        fragment.mContent = builder.toString();
-
-        return fragment;
+        return cheatViewFragment;
     }
 
     private String mContent = "???";
     private Typeface latoFontBold;
     private Typeface latoFontLight;
-    private CheatViewPageIndicator cheatViewPageIndicator;
+    private CheatViewPageIndicatorActivity cheatViewPageIndicatorActivity;
     private ImageView reloadView;
 
     @Override
@@ -131,10 +138,10 @@ public class CheatViewFragment extends Fragment {
     }
 
     private void init() {
-        cheatViewPageIndicator = (CheatViewPageIndicator) getActivity();
+        cheatViewPageIndicatorActivity = (CheatViewPageIndicatorActivity) getActivity();
 
-        latoFontLight = Tools.getFont(cheatViewPageIndicator.getAssets(), Konstanten.FONT_LIGHT);
-        latoFontBold = Tools.getFont(cheatViewPageIndicator.getAssets(), Konstanten.FONT_BOLD);
+        latoFontLight = Tools.getFont(cheatViewPageIndicatorActivity.getAssets(), Konstanten.FONT_LIGHT);
+        latoFontBold = Tools.getFont(cheatViewPageIndicatorActivity.getAssets(), Konstanten.FONT_BOLD);
 
         member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
     }
@@ -148,14 +155,14 @@ public class CheatViewFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        getFragmentRelevantData();
+//        getFragmentRelevantData();
 
         outerLinearLayout = (LinearLayout) inflater.inflate(R.layout.fragment_cheat_detail_handset, container, false);
 
-        cheats = game.getCheats();
-        cheatObj = cheats[offset];
+        Collections.addAll(cheatList, game.getCheats());
+        cheatObj = cheatList.get(offset);
 
-        getCheatRatings();
+//        getCheatRatings();
 
         mainTable = outerLinearLayout.findViewById(R.id.table_cheat_list_main);
 
@@ -191,11 +198,11 @@ public class CheatViewFragment extends Fragment {
                     if (Reachability.reachability.isReachable) {
                         getOnlineContent();
                     } else {
-                        Toast.makeText(cheatViewPageIndicator, R.string.no_internet, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(cheatViewPageIndicatorActivity, R.string.no_internet, Toast.LENGTH_SHORT).show();
                     }
                 }
             });
-            Toast.makeText(cheatViewPageIndicator, R.string.no_internet, Toast.LENGTH_SHORT).show();
+            Toast.makeText(cheatViewPageIndicatorActivity, R.string.no_internet, Toast.LENGTH_SHORT).show();
         }
 
         return outerLinearLayout;
@@ -235,20 +242,20 @@ public class CheatViewFragment extends Fragment {
         editor.commit();
     }
 
-    private void getFragmentRelevantData() {
-        Bundle arguments = getArguments();
-        try {
-            game = (Game) arguments.getSerializable("gameObj");
-            offset = arguments.getInt("offset");
-        } catch (Exception e) {
-            offset = 0;
-            // TODO message ausgeben, dass kein Game objekt besteht
-            Log.e("Error", e.getLocalizedMessage());
-        }
-    }
+//    private void getFragmentRelevantData() {
+//        Bundle arguments = getArguments();
+//        try {
+//            game = (Game) arguments.getSerializable("gameObj");
+//            offset = arguments.getInt("offset");
+//        } catch (Exception e) {
+//            offset = 0;
+//            // TODO message ausgeben, dass kein Game objekt besteht
+//            Log.e("Error", e.getLocalizedMessage());
+//        }
+//    }
 
     private void buildGallery() {
-        screenshotGallery.setAdapter(new ImageAdapter(cheatViewPageIndicator));
+        screenshotGallery.setAdapter(new ImageAdapter(cheatViewPageIndicatorActivity));
         screenshotGallery.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
@@ -309,18 +316,18 @@ public class CheatViewFragment extends Fragment {
         String secondThColumn = "<b>" + th2[0].trim() + "</b>";
 
         /* Create a new row to be added. */
-        TableRow trTh = new TableRow(cheatViewPageIndicator);
+        TableRow trTh = new TableRow(cheatViewPageIndicatorActivity);
         trTh.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
 
-        TextView tvFirstThCol = new TextView(cheatViewPageIndicator);
+        TextView tvFirstThCol = new TextView(cheatViewPageIndicatorActivity);
         tvFirstThCol.setText(Html.fromHtml(firstThColumn));
         tvFirstThCol.setPadding(1, 1, 5, 1);
         tvFirstThCol.setMinimumWidth(Konstanten.TABLE_ROW_MINIMUM_WIDTH);
-        tvFirstThCol.setTextAppearance(cheatViewPageIndicator, R.style.NormalText);
+        tvFirstThCol.setTextAppearance(cheatViewPageIndicatorActivity, R.style.NormalText);
         tvFirstThCol.setTypeface(latoFontLight);
         trTh.addView(tvFirstThCol);
 
-        TextView tvSecondThCol = new TextView(cheatViewPageIndicator);
+        TextView tvSecondThCol = new TextView(cheatViewPageIndicatorActivity);
         tvSecondThCol.setText(Html.fromHtml(secondThColumn));
         tvSecondThCol.setPadding(5, 1, 1, 1);
         tvSecondThCol.setTextAppearance(getContext(), R.style.NormalText);
@@ -340,10 +347,10 @@ public class CheatViewFragment extends Fragment {
             String secondTdColumn = td2[0].replaceAll("<br>", "\n").trim();
 
             /* Create a new row to be added. */
-            TableRow trTd = new TableRow(cheatViewPageIndicator);
+            TableRow trTd = new TableRow(cheatViewPageIndicatorActivity);
             trTd.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
 
-            TextView tvFirstTdCol = new TextView(cheatViewPageIndicator);
+            TextView tvFirstTdCol = new TextView(cheatViewPageIndicatorActivity);
             tvFirstTdCol.setSingleLine(false);
             tvFirstTdCol.setText(firstTdColumn);
             tvFirstTdCol.setPadding(1, 1, 10, 1);
@@ -352,7 +359,7 @@ public class CheatViewFragment extends Fragment {
             tvFirstTdCol.setTypeface(latoFontLight);
             trTd.addView(tvFirstTdCol);
 
-            TextView tvSecondTdCol = new TextView(cheatViewPageIndicator);
+            TextView tvSecondTdCol = new TextView(cheatViewPageIndicatorActivity);
             tvSecondTdCol.setSingleLine(false);
             tvSecondTdCol.setText(secondTdColumn);
             tvSecondTdCol.canScrollHorizontally(1);
@@ -416,28 +423,28 @@ public class CheatViewFragment extends Fragment {
         populateView();
     }
 
-    //    @Background
-    void getCheatRatings() {
-        float cheatRating;
-
-        try {
-            cheatRating = Webservice.getCheatRatingByMemberId(member.getMid(), cheatObj.getCheatId());
-        } catch (Exception e) {
-            cheatRating = 0;
-        }
-
-        editor.putFloat("c" + cheatObj.getCheatId(), cheatRating);
-        editor.commit();
-
-        setRating(cheatRating);
-    }
-
-    //    @UiThread
-    void setRating(float cheatRating) {
-        if (cheatRating > 0) {
-            cheatViewPageIndicator.setRating(offset, cheatRating);
-        }
-    }
+//    //    @Background
+//    void getCheatRatings() {
+//        float cheatRating;
+//
+//        try {
+//            cheatRating = Webservice.getCheatRatingByMemberId(member.getMid(), cheatObj.getCheatId());
+//        } catch (Exception e) {
+//            cheatRating = 0;
+//        }
+//
+//        editor.putFloat("c" + cheatObj.getCheatId(), cheatRating);
+//        editor.commit();
+//
+//        setRating(cheatRating);
+//    }
+//
+//    //    @UiThread
+//    void setRating(float cheatRating) {
+//        if (cheatRating > 0) {
+//            cheatViewPageIndicatorActivity.setRating(offset, cheatRating);
+//        }
+//    }
 
 //    private class LoadScreenshotsInBackgroundTask extends AsyncTask<Void, Void, Bitmap[]> {
 //        Bitmap bms[];
@@ -494,7 +501,7 @@ public class CheatViewFragment extends Fragment {
 //             * Apply the Bitmap to the ImageView that will be returned.
 //             */
 //            for (int i = 0; i < imageViews.length; i++) {
-//                imageViews[i] = new ImageView(cheatViewPageIndicator);
+//                imageViews[i] = new ImageView(cheatViewPageIndicatorActivity);
 //                imageViews[i].setScaleType(ImageView.ScaleType.MATRIX);
 //                imageViews[i].setLayoutParams(new Gallery.LayoutParams(300, biggestHeight));
 //                imageViews[i].setImageBitmap(bms[i]);
@@ -555,7 +562,7 @@ public class CheatViewFragment extends Fragment {
     void displayScreenshots(List<Bitmap> bitmapList) {
         // Apply the Bitmap to the ImageView that will be returned.
 //        for (int i = 0; i < imageViews.length; i++) {
-//            imageViews[i] = new ImageView(cheatViewPageIndicator);
+//            imageViews[i] = new ImageView(cheatViewPageIndicatorActivity);
 //            imageViews[i].setScaleType(ImageView.ScaleType.MATRIX);
 //            imageViews[i].setLayoutParams(new Gallery.LayoutParams(300, biggestHeight));
 //            imageViews[i].setImageBitmap(bms[i]);
@@ -563,7 +570,7 @@ public class CheatViewFragment extends Fragment {
 
         int i = 0;
         for (Bitmap b : bitmapList) {
-            imageViews[i] = new ImageView(cheatViewPageIndicator);
+            imageViews[i] = new ImageView(cheatViewPageIndicatorActivity);
             imageViews[i].setScaleType(ImageView.ScaleType.MATRIX);
             imageViews[i].setLayoutParams(new Gallery.LayoutParams(300, biggestHeight));
             imageViews[i].setImageBitmap(b);

@@ -83,6 +83,10 @@ android {
         abortOnError false
         disable 'MissingTranslation'
     }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
 repositories {
@@ -102,6 +106,7 @@ ext {
 }
 
 dependencies {
+    implementation 'com.android.support:support-v4:26.1.0'
     implementation 'com.google.firebase:firebase-core:16.0.3'
     implementation 'com.google.firebase:firebase-messaging:17.3.0'
     implementation 'com.google.firebase:firebase-config:16.0.0'
@@ -109,7 +114,7 @@ dependencies {
     api "com.android.support:appcompat-v7:$supportVersion"
     api "com.android.support:design:$supportVersion"
     api "com.android.support:recyclerview-v7:$supportVersion"
-    implementation "com.github.vajro:MaterialDesignLibrary:1.6"
+    implementation 'com.github.vajro:MaterialDesignLibrary:1.6'
     implementation 'com.afollestad.material-dialogs:core:0.9.6.0'
     implementation 'com.google.code.gson:gson:2.8.5'
     implementation 'com.google.android.gms:play-services-analytics:16.0.3'
@@ -129,6 +134,7 @@ dependencies {
     implementation 'com.zsoltsafrany:needle:1.0.0'
     implementation 'com.jakewharton:butterknife:8.8.1'
     annotationProcessor "com.jakewharton:butterknife-compiler:8.8.1"
+    implementation 'de.hdodenhof:circleimageview:2.2.0'
 }
 
 apply plugin: "com.google.gms.google-services"

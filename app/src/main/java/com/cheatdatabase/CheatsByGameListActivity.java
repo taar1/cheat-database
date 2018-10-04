@@ -12,7 +12,6 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.SearchView;
-import android.support.v7.widget.ShareActionProvider;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -30,7 +29,7 @@ import com.cheatdatabase.dialogs.RateCheatMaterialDialog;
 import com.cheatdatabase.dialogs.ReportCheatMaterialDialog;
 import com.cheatdatabase.events.CheatListRecyclerViewClickEvent;
 import com.cheatdatabase.events.CheatRatingFinishedEvent;
-import com.cheatdatabase.handset.cheatview.CheatViewPageIndicator;
+import com.cheatdatabase.handset.cheatview.CheatViewPageIndicatorActivity;
 import com.cheatdatabase.helpers.CheatDatabaseAdapter;
 import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.MyPrefs_;
@@ -59,6 +58,7 @@ import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.TreeMap;
 
 @EActivity(R.layout.activity_cheat_list)
@@ -70,12 +70,8 @@ public class CheatsByGameListActivity extends AppCompatActivity {
     private Editor editor;
     private Member member;
 
-    private ArrayList<Cheat> cheatsArrayList;
-
-    private int lastPosition;
+    private List<Cheat> cheatsArrayList;
     private Cheat visibleCheat;
-
-    private ShareActionProvider mShareActionProvider;
 
     @App
     CheatDatabaseApplication app;
@@ -116,12 +112,7 @@ public class CheatsByGameListActivity extends AppCompatActivity {
         getSupportActionBar().setTitle(gameObj.getGameName());
         getSupportActionBar().setSubtitle(gameObj.getSystemName());
 
-        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                getCheats(true);
-            }
-        });
+        mSwipeRefreshLayout.setOnRefreshListener(() -> getCheats(true));
 
         // use this setting to improve performance if you know that changes
         // in content do not change the layout size of the RecyclerView
@@ -323,7 +314,6 @@ public class CheatsByGameListActivity extends AppCompatActivity {
                 return true;
             case R.id.action_add_to_favorites:
                 Toast.makeText(CheatsByGameListActivity.this, R.string.favorite_adding, Toast.LENGTH_SHORT).show();
-                //new AddCheatsToFavoritesTask().execute(gameObj);
                 addCheatsToFavoritesTask(gameObj);
                 return true;
             case R.id.action_submit_cheat:
@@ -463,7 +453,7 @@ public class CheatsByGameListActivity extends AppCompatActivity {
             if (Reachability.reachability.isReachable) {
                 // Using local Preferences to pass data for large game objects
                 // (instead of intent) such as Pokemon
-                Intent explicitIntent = new Intent(CheatsByGameListActivity.this, CheatViewPageIndicator.class);
+                Intent explicitIntent = new Intent(CheatsByGameListActivity.this, CheatViewPageIndicatorActivity.class);
                 explicitIntent.putExtra("gameObj", gameObj);
                 explicitIntent.putExtra("selectedPage", result.getPosition());
                 explicitIntent.putExtra("layoutResourceId", R.layout.activity_cheatview_pager);

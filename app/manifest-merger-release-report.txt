@@ -224,7 +224,7 @@ ADDED from AndroidManifest.xml:121:9
 		ADDED from AndroidManifest.xml:122:13
 	android:logo
 		ADDED from AndroidManifest.xml:123:13
-activity#com.cheatdatabase.handset.cheatview.CheatViewPageIndicator
+activity#com.cheatdatabase.handset.cheatview.CheatViewPageIndicatorActivity
 ADDED from AndroidManifest.xml:130:9
 	android:label
 		ADDED from AndroidManifest.xml:132:13

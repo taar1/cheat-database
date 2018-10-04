@@ -9,10 +9,15 @@ import com.cheatdatabase.R;
 import com.cheatdatabase.businessobjects.Member;
 import com.cheatdatabase.holders.TopMembersListViewItemHolder;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class TopMembersListViewAdapter extends RecyclerView.Adapter<TopMembersListViewItemHolder> {
     private List<Member> memberList;
+
+    public TopMembersListViewAdapter() {
+        memberList = new ArrayList<>();
+    }
 
     @Override
     public TopMembersListViewItemHolder onCreateViewHolder(final ViewGroup parent, int viewType) {

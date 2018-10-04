@@ -1,8 +1,8 @@
 package com.cheatdatabase.fragments;
 
 import android.app.Activity;
-import android.app.Fragment;
 import android.graphics.Typeface;
+import android.support.v4.app.Fragment;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;

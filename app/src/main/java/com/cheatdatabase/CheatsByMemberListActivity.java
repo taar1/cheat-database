@@ -58,16 +58,13 @@ public class CheatsByMemberListActivity extends AppCompatActivity {
     Tools tools;
     @Bean
     MemberCheatRecycleListViewAdapter cheatRecycleListViewAdapter;
-
     @Extra
-    Member memberObj;
+    Member member;
 
     @ViewById(R.id.my_recycler_view)
     FastScrollRecyclerView mRecyclerView;
     @ViewById(R.id.swipe_refresh_layout)
     SwipeRefreshLayout mSwipeRefreshLayout;
-    //    @ViewById(R.id.adview)
-//    MoPubView mAdView;
     @ViewById(R.id.toolbar)
     Toolbar mToolbar;
     @ViewById(R.id.item_list_empty_view)
@@ -118,7 +115,7 @@ public class CheatsByMemberListActivity extends AppCompatActivity {
         }
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
-        getSupportActionBar().setTitle(getString(R.string.members_cheats_title, memberObj.getUsername()));
+        getSupportActionBar().setTitle(getString(R.string.members_cheats_title, member.getUsername()));
 
         SharedPreferences settings = getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
         editor = settings.edit();
@@ -128,7 +125,7 @@ public class CheatsByMemberListActivity extends AppCompatActivity {
     void getCheats() {
         cheatsArrayList = new ArrayList<>();
 
-        cheats = Webservice.getCheatsByMemberId(memberObj.getMid());
+        cheats = Webservice.getCheatsByMemberId(member.getMid());
 
         editor.putString(Konstanten.PREFERENCES_TEMP_CHEAT_ARRAY_OBJECT_VIEW, new Gson().toJson(cheats));
         editor.commit();
@@ -162,6 +159,7 @@ public class CheatsByMemberListActivity extends AppCompatActivity {
         if (!Reachability.isRegistered()) {
             Reachability.registerReachability(this);
         }
+//        getCheats();
     }
 
     @Override
@@ -188,7 +186,7 @@ public class CheatsByMemberListActivity extends AppCompatActivity {
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putSerializable("memberObj", memberObj);
+        outState.putSerializable("member", member);
     }
 
     @Override

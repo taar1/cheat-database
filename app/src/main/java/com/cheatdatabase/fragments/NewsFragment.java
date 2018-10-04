@@ -1,7 +1,7 @@
 package com.cheatdatabase.fragments;
 
 import android.app.Activity;
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
 import android.graphics.Typeface;
 import android.text.Html;
 import android.text.Spanned;

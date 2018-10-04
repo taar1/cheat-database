@@ -1,7 +1,6 @@
 package com.cheatdatabase;
 
 import android.annotation.TargetApi;
-import android.app.FragmentManager;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
@@ -108,12 +107,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private static final String REMOTE_CONFIG_HACKS_ENABLED_KEY = "hacks_enabled";
     private static final String REMOTE_CONFIG_IOS_ENABLED_KEY = "ios_enabled";
     private static final String REMOTE_CONFIG_ANDROID_ENABLED_KEY = "android_enabled";
+    private android.support.v4.app.FragmentManager fragmentManager;
+    private FragmentTransaction ft;
 
     @AfterViews
     public void createView() {
         init();
         showAchievementsDialog();
-        remoteConfigStuff();
 
         if (mToolbar != null) {
             setSupportActionBar(mToolbar);
@@ -126,8 +126,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         facebookBanner.addView(adView);
         adView.loadAd();
 
-        // TODO FIXME - find out where this part was before and re-add it.
-        FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.content_frame, SystemListFragment_.builder().build()).commit();
 
         actionBarDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, mToolbar, R.string.drawer_open, R.string.drawer_close);
@@ -140,6 +138,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void init() {
         settings = getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
         editor = settings.edit();
+
+        fragmentManager = getSupportFragmentManager();
+        ft = fragmentManager.beginTransaction();
 
         TrackingUtils.getInstance().init(this);
 
@@ -198,9 +199,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Click(R.id.add_new_cheat_button)
     void clickedAddNewCheatFloatingButton() {
-        FragmentManager annotationFragmentManager = getFragmentManager();
         mToolbar.setTitle(R.string.submit_cheat_short);
-        annotationFragmentManager.beginTransaction().replace(R.id.content_frame, SubmitCheatFragment_.builder().build()).commit();
+        fragmentManager.beginTransaction().replace(R.id.content_frame, SubmitCheatFragment_.builder().build()).commit();
         fab.setVisibility(View.GONE);
     }
 
@@ -258,7 +258,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
             searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
         } catch (Exception e) {
-            Log.e("MainActivity", e.getLocalizedMessage());
+            Log.e(TAG, e.getLocalizedMessage());
         }
 
         return super.onCreateOptionsMenu(menu);
@@ -343,7 +343,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        // Pass any configuration change to the drawer toggls
+        // Pass any configuration change to the drawer toggle
         actionBarDrawerToggle.onConfigurationChanged(newConfig);
     }
 
@@ -379,7 +379,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @UiThread
     private void showAchievementsDialog() {
-        // TODO text überarbeiten
         if (!myPrefs.isSeenAchievementsDialog().getOr(false)) {
             MaterialDialog md = new MaterialDialog.Builder(this)
                     .title(R.string.new_feature)
@@ -402,25 +401,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        FragmentManager annotationFragmentManager = getFragmentManager();
-
-        android.support.v4.app.FragmentManager fragmentManager4 = getSupportFragmentManager();
-        FragmentTransaction ft = fragmentManager4.beginTransaction();
-
         if (id == R.id.nav_gamesystems) {
             showGameSystemsFragment();
         } else if (id == R.id.nav_favorites) {
             mToolbar.setTitle(R.string.favorites);
-            annotationFragmentManager.beginTransaction().replace(R.id.content_frame, FavoriteGamesListFragment_.builder().build()).commit();
+            fragmentManager.beginTransaction().replace(R.id.content_frame, FavoriteGamesListFragment_.builder().build()).commit();
             fab.setVisibility(View.VISIBLE);
         } else if (id == R.id.nav_members) {
             mToolbar.setTitle(R.string.top_members_top_helping);
-//            annotationFragmentManager.beginTransaction().replace(R.id.content_frame, TopMembersFragment_.builder().build()).commit();
-
-            // TODO FIXME hier umstellen von android annotations zu "normalem" code fürs replacen vom fagment...
-            // TODO FIXME hier umstellen von android annotations zu "normalem" code fürs replacen vom fagment...
             ft.addToBackStack(TopMembersFragment.class.getSimpleName());
-            fragmentManager4.beginTransaction().replace(R.id.content_frame, new TopMembersFragment(), TopMembersFragment.class.getSimpleName()).commit();
+            fragmentManager.beginTransaction().replace(R.id.content_frame, TopMembersFragment.newInstance(), TopMembersFragment.class.getSimpleName()).commit();
 
             fab.setVisibility(View.VISIBLE);
         } else if (id == R.id.nav_rate) {
@@ -433,7 +423,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             return true;
         } else if (id == R.id.nav_submit) {
             mToolbar.setTitle(R.string.submit_cheat_short);
-            annotationFragmentManager.beginTransaction().replace(R.id.content_frame, SubmitCheatFragment_.builder().build()).commit();
+            fragmentManager.beginTransaction().replace(R.id.content_frame, SubmitCheatFragment_.builder().build()).commit();
             fab.setVisibility(View.GONE);
         } else if (id == R.id.nav_contact) {
             showContactFormFragment();
@@ -463,17 +453,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void showContactFormFragment() {
-        FragmentManager annotationFragmentManager = getFragmentManager();
         mToolbar.setTitle(R.string.contactform_title);
-        annotationFragmentManager.beginTransaction().replace(R.id.content_frame, ContactFormFragment_.builder().build()).commit();
+        fragmentManager.beginTransaction().replace(R.id.content_frame, ContactFormFragment_.builder().build()).commit();
         fab.setVisibility(View.GONE);
         mDrawerLayout.closeDrawers();
     }
 
     private void showGameSystemsFragment() {
-        FragmentManager annotationFragmentManager = getFragmentManager();
         mToolbar.setTitle(R.string.app_name);
-        annotationFragmentManager.beginTransaction().replace(R.id.content_frame, SystemListFragment_.builder().build()).commit();
+        fragmentManager.beginTransaction().replace(R.id.content_frame, SystemListFragment_.builder().build()).commit();
         fab.setVisibility(View.VISIBLE);
         mDrawerLayout.closeDrawers();
     }

@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -26,7 +27,6 @@ import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.helpers.Webservice;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import butterknife.BindView;
@@ -46,11 +46,11 @@ public class TopMembersFragment extends Fragment {
     private Member selectedMember;
 
     private Activity parentActivity;
-    private RecyclerView.LayoutManager mLayoutManager;
+    private RecyclerView.LayoutManager layoutManager;
     private TopMembersListViewAdapter mTopMembersListViewAdapter;
 
     @BindView(R.id.my_recycler_view)
-    RecyclerView mRecyclerView;
+    RecyclerView recyclerView;
     @BindView(R.id.swipe_refresh_layout)
     SwipeRefreshLayout mSwipeRefreshLayout;
     @BindView(R.id.empty)
@@ -62,6 +62,11 @@ public class TopMembersFragment extends Fragment {
         memberList = new ArrayList<>();
         parentActivity = getActivity();
         mTopMembersListViewAdapter = new TopMembersListViewAdapter();
+    }
+
+    public static TopMembersFragment newInstance() {
+        TopMembersFragment topMembersFragment = new TopMembersFragment();
+        return topMembersFragment;
     }
 
     @Override
@@ -83,10 +88,12 @@ public class TopMembersFragment extends Fragment {
         });
 
         if (Reachability.reachability.isReachable) {
-            mLayoutManager = new LinearLayoutManager(getActivity());
-            mRecyclerView.setLayoutManager(mLayoutManager);
-            mRecyclerView.setHasFixedSize(true);
-            mRecyclerView.setAdapter(mTopMembersListViewAdapter);
+            layoutManager = new LinearLayoutManager(getActivity());
+            recyclerView.setLayoutManager(layoutManager);
+            recyclerView.setHasFixedSize(true);
+            recyclerView.setAdapter(mTopMembersListViewAdapter);
+            DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(), RecyclerView.VERTICAL);
+            recyclerView.addItemDecoration(dividerItemDecoration);
         } else {
             Toast.makeText(parentActivity, R.string.no_internet, Toast.LENGTH_LONG).show();
         }
@@ -97,7 +104,17 @@ public class TopMembersFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        loadMembersInBackground();
+        if (memberList.size() < 1) {
+            loadMembersInBackground();
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (memberList.size() < 1) {
+            loadMembersInBackground();
+        }
     }
 
     @Override
@@ -144,18 +161,10 @@ public class TopMembersFragment extends Fragment {
             @Override
             public void run() {
                 try {
-                    Log.d(TAG, "XXXXX 01");
-                    Member[] mem20 = Webservice.getMemberTop20();
-                    Log.d(TAG, "XXXXX 02");
-                    memberList.clear();
-                    Log.d(TAG, "XXXXX 03");
-                    Collections.addAll(memberList, mem20);
-                    Log.d(TAG, "XXXXX 04");
+                    memberList = Webservice.getMemberTop20();
                 } catch (Exception e) {
-                    Log.e(TAG, "XXXXX" + e.getLocalizedMessage());
+                    Log.e(TAG, e.getLocalizedMessage());
                 }
-
-                Log.d(TAG, "XXXXX 05");
                 notifyAdapter();
             }
         });
@@ -163,11 +172,11 @@ public class TopMembersFragment extends Fragment {
     }
 
     public void notifyAdapter() {
-        mSwipeRefreshLayout.setRefreshing(true);
-
         Needle.onMainThread().execute(new Runnable() {
             @Override
             public void run() {
+                mSwipeRefreshLayout.setRefreshing(true);
+
                 if (memberList != null && memberList.size() > 0) {
                     mTopMembersListViewAdapter.setMemberList(memberList);
                     mTopMembersListViewAdapter.notifyDataSetChanged();

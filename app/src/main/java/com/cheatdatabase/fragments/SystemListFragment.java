@@ -1,6 +1,6 @@
 package com.cheatdatabase.fragments;
 
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;

@@ -60,7 +60,7 @@ public class GamesBySystemListActivity extends AppCompatActivity {
     @Bean
     Tools tools;
     @Bean
-    GamesBySystemRecycleListViewAdapter mGamesBySystemRecycleListViewAdapter;
+    GamesBySystemRecycleListViewAdapter gamesBySystemRecycleListViewAdapter;
 
     @Pref
     MyPrefs_ myPrefs;
@@ -132,7 +132,7 @@ public class GamesBySystemListActivity extends AppCompatActivity {
 
     @Background
     public void getGames(boolean forceLoadOnline) {
-        Log.d(TAG, "getGames() System ID/NAME: " + systemObj.getSystemId() + "/" + systemObj.getSystemName());
+        Log.d(TAG, "XXXXX getGames() System ID/NAME: " + systemObj.getSystemId() + "/" + systemObj.getSystemName());
 
         gameArrayList = new ArrayList<>();
         Game[] cachedGamesCollection;
@@ -196,10 +196,9 @@ public class GamesBySystemListActivity extends AppCompatActivity {
     public void fillListWithGames() {
         try {
             if (gameArrayList != null && gameArrayList.size() > 0) {
-                mGamesBySystemRecycleListViewAdapter.init(gameArrayList);
-                mRecyclerView.setAdapter(mGamesBySystemRecycleListViewAdapter);
-
-                mGamesBySystemRecycleListViewAdapter.notifyDataSetChanged();
+                gamesBySystemRecycleListViewAdapter.setGameList(gameArrayList);
+                mRecyclerView.setAdapter(gamesBySystemRecycleListViewAdapter);
+                gamesBySystemRecycleListViewAdapter.notifyDataSetChanged();
             } else {
                 error();
             }

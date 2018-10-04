@@ -31,6 +31,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -1079,19 +1080,18 @@ public class Webservice {
      *
      * @return
      */
-    public static Member[] getMemberTop20() {
+    public static List<Member> getMemberTop20() {
         String topMembers = executeGet(Konstanten.BASE_URL_ANDROID + "getMemberTop20.php");
 
-        Member[] members = null;
+        ArrayList<Member> memberList = new ArrayList<>();
 
-        JSONArray jArray;
+        JSONArray membersArrayList;
         try {
-            jArray = new JSONArray(topMembers);
-            members = new Member[jArray.length()];
+            membersArrayList = new JSONArray(topMembers);
 
-            for (int i = 0; i < jArray.length(); i++) {
+            for (int i = 0; i < membersArrayList.length(); i++) {
 
-                JSONObject jsonObject = jArray.getJSONObject(i);
+                JSONObject jsonObject = membersArrayList.getJSONObject(i);
 
                 int mid = jsonObject.getInt("mid");
                 String memberName = jsonObject.getString("username");
@@ -1108,15 +1108,15 @@ public class Webservice {
                 member.setGreeting(greeting);
                 member.setCheatSubmissionCount(cheats_submitted);
 
-                members[i] = member;
+                memberList.add(member);
             }
 
         } catch (JSONException e) {
             Log.e(TAG, "XXXXX JSONException: " + e.getLocalizedMessage());
         }
 
-        Log.d(TAG, "XXXXX 01b");
-        return members;
+        Log.d(TAG, "XXXXX 01b memberList: " + memberList.size());
+        return memberList;
     }
 
     /**

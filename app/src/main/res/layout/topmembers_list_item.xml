@@ -10,11 +10,13 @@
         android:layout_height="90dp"
         android:gravity="center">
 
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/avatar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/avatar" />
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:src="@drawable/avatar"
+            app:civ_border_color="@color/accent_color"
+            app:civ_border_width="1dp" />
     </LinearLayout>
 
     <LinearLayout

@@ -25,7 +25,7 @@ import org.androidannotations.annotations.EBean;
 import org.androidannotations.annotations.RootContext;
 import org.greenrobot.eventbus.EventBus;
 
-import java.util.ArrayList;
+import java.util.List;
 
 @EBean
 public class GamesBySystemRecycleListViewAdapter extends RecyclerView.Adapter<GamesBySystemRecycleListViewAdapter.ViewHolder> implements FastScrollRecyclerView.SectionedAdapter,
@@ -33,7 +33,7 @@ public class GamesBySystemRecycleListViewAdapter extends RecyclerView.Adapter<Ga
 
     private static final String TAG = GamesBySystemRecycleListViewAdapter.class.getSimpleName();
 
-    private ArrayList<Game> mGames;
+    private List<Game> gameArrayList;
     private Typeface latoFontBold;
     private Typeface latoFontLight;
     private Game gameObj;
@@ -44,8 +44,8 @@ public class GamesBySystemRecycleListViewAdapter extends RecyclerView.Adapter<Ga
     @App
     CheatDatabaseApplication app;
 
-    public void init(ArrayList<Game> gameList) {
-        mGames = gameList;
+    public void setGameList(List<Game> gameList) {
+        gameArrayList = gameList;
     }
 
     // Provide a reference to the views for each data item
@@ -53,29 +53,29 @@ public class GamesBySystemRecycleListViewAdapter extends RecyclerView.Adapter<Ga
     // you provide access to all the views for a data item in a view holder
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        public TextView mGameName;
-        public TextView mCheatCount;
-        public IMyViewHolderClicks mListener;
+        public TextView gameName;
+        public TextView cheatCount;
+        public OnGameItemClickListener onGameItemClickListener;
 
-        public ViewHolder(View v, IMyViewHolderClicks listener) {
+        public ViewHolder(View v, OnGameItemClickListener listener) {
             super(v);
-            mListener = listener;
+            onGameItemClickListener = listener;
 
-            mGameName = v.findViewById(R.id.cheat_title);
-            mCheatCount = v.findViewById(R.id.cheats_count);
-            mGameName.setTypeface(Tools.getFont(v.getContext().getAssets(), Konstanten.FONT_BOLD));
-            mCheatCount.setTypeface(Tools.getFont(v.getContext().getAssets(), Konstanten.FONT_LIGHT));
+            gameName = v.findViewById(R.id.cheat_title);
+            cheatCount = v.findViewById(R.id.cheats_count);
+            gameName.setTypeface(Tools.getFont(v.getContext().getAssets(), Konstanten.FONT_BOLD));
+            cheatCount.setTypeface(Tools.getFont(v.getContext().getAssets(), Konstanten.FONT_LIGHT));
 
             v.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View v) {
-            mListener.onGameClick(this);
+            onGameItemClickListener.onGameClick(this);
         }
     }
 
-    public interface IMyViewHolderClicks {
+    public interface OnGameItemClickListener {
         void onGameClick(GamesBySystemRecycleListViewAdapter.ViewHolder caller);
     }
 
@@ -89,12 +89,12 @@ public class GamesBySystemRecycleListViewAdapter extends RecyclerView.Adapter<Ga
         final View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.listrow_game_item, parent, false);
         v.setDrawingCacheEnabled(true);
 
-        return new ViewHolder(v, new IMyViewHolderClicks() {
+        return new ViewHolder(v, new OnGameItemClickListener() {
             @Override
             public void onGameClick(ViewHolder caller) {
 
                 if (Reachability.reachability.isReachable) {
-                    EventBus.getDefault().post(new GameListRecyclerViewClickEvent(mGames.get(caller.getAdapterPosition())));
+                    EventBus.getDefault().post(new GameListRecyclerViewClickEvent(gameArrayList.get(caller.getAdapterPosition())));
                 } else {
                     EventBus.getDefault().post(new GameListRecyclerViewClickEvent(new Exception()));
                 }
@@ -105,18 +105,18 @@ public class GamesBySystemRecycleListViewAdapter extends RecyclerView.Adapter<Ga
     // Replace the contents of a view (invoked by the layout manager)
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        gameObj = mGames.get(position);
+        gameObj = gameArrayList.get(position);
 
-        holder.mGameName.setText(gameObj.getGameName());
-        holder.mGameName.setTypeface(latoFontBold);
+        holder.gameName.setText(gameObj.getGameName());
+        holder.gameName.setTypeface(latoFontBold);
 
         try {
             if (gameObj.getCheatsCount() > 0) {
-                holder.mCheatCount.setVisibility(View.VISIBLE);
-                holder.mCheatCount.setText(gameObj.getCheatsCount() + " " + mContext.getResources().getQuantityString(R.plurals.entries, gameObj.getCheatsCount()));
-                holder.mCheatCount.setTypeface(latoFontLight);
+                holder.cheatCount.setVisibility(View.VISIBLE);
+                holder.cheatCount.setText(gameObj.getCheatsCount() + " " + mContext.getResources().getQuantityString(R.plurals.entries, gameObj.getCheatsCount()));
+                holder.cheatCount.setTypeface(latoFontLight);
             } else {
-                holder.mCheatCount.setVisibility(View.GONE);
+                holder.cheatCount.setVisibility(View.GONE);
             }
         } catch (Exception e) {
             Log.e(TAG, e.getLocalizedMessage());
@@ -126,14 +126,14 @@ public class GamesBySystemRecycleListViewAdapter extends RecyclerView.Adapter<Ga
     // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
-        return mGames.size();
+        return gameArrayList.size();
     }
 
     // Display the first letter of the game during fast scrolling
     @NonNull
     @Override
     public String getSectionName(int position) {
-        return mGames.get(position).getGameName().substring(0, 1).toUpperCase();
+        return gameArrayList.get(position).getGameName().substring(0, 1).toUpperCase();
     }
 
     // Height of the scroll-bar at the right screen side

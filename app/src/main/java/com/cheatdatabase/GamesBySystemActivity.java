@@ -111,16 +111,12 @@ public class GamesBySystemActivity extends AppCompatActivity {
 //            mRecyclerView.showLoading();
             getGames(false);
         }
-
-
     }
 
     private void init() {
-//        tools.loadAd(mAdView, getString(R.string.screen_type));
         adView = new AdView(this, Konstanten.FACEBOOK_AUDIENCE_NETWORK_NATIVE_BANNER_ID, AdSize.BANNER_HEIGHT_50);
         facebookBanner.addView(adView);
         adView.loadAd();
-
 
         if (mToolbar != null) {
             setSupportActionBar(mToolbar);
@@ -221,7 +217,7 @@ public class GamesBySystemActivity extends AppCompatActivity {
     public void fillListWithGames() {
         try {
             if (gameArrayList != null && gameArrayList.size() > 0) {
-                mGamesBySystemRecycleListViewAdapter.init(gameArrayList);
+                mGamesBySystemRecycleListViewAdapter.setGameList(gameArrayList);
                 mRecyclerView.setAdapter(mGamesBySystemRecycleListViewAdapter);
 
                 mGamesBySystemRecycleListViewAdapter.notifyDataSetChanged();
