@@ -178,6 +178,7 @@ public class CheatsByGameListActivity extends AppCompatActivity {
 
                     if (cachedCheatsCollection.length > 0) {
                         cheatsFound = cachedCheatsCollection;
+                        gameObj.setCheats(cheatsFound);
                         isCached = true;
                     }
                 }
@@ -211,12 +212,6 @@ public class CheatsByGameListActivity extends AppCompatActivity {
             app.setCheatsByGameCached(cheatsByGameInCache);
         }
 
-        // TODO hier weitermachen, checken ob cheats in DB sind und wenn ja dann aus DB laden und nicht online
-        // TODO hier weitermachen, checken ob cheats in DB sind und wenn ja dann aus DB laden und nicht online
-        // TODO hier weitermachen, checken ob cheats in DB sind und wenn ja dann aus DB laden und nicht online
-        // TODO überlegen wie machen damit das caching nicht ewig ist...
-        // TODO überlegen wie machen damit das caching nicht ewig ist...
-        // TODO überlegen wie machen damit das caching nicht ewig ist...
 //        db.insertCheats(cheatsFound);
         Collections.addAll(cheatsArrayList, cheatsFound);
         fillListWithCheats();
@@ -226,7 +221,7 @@ public class CheatsByGameListActivity extends AppCompatActivity {
     public void fillListWithCheats() {
         try {
             if (cheatsArrayList != null && cheatsArrayList.size() > 0) {
-                cheatsByGameRecycleListViewAdapter.init(cheatsArrayList);
+                cheatsByGameRecycleListViewAdapter.setCheats(cheatsArrayList);
                 mRecyclerView.setAdapter(cheatsByGameRecycleListViewAdapter);
 
                 cheatsByGameRecycleListViewAdapter.notifyDataSetChanged();

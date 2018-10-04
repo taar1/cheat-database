@@ -33,7 +33,7 @@ public class CheatsByGameRecycleListViewAdapter extends RecyclerView.Adapter<Che
 
     private static final String TAG = CheatsByGameRecycleListViewAdapter.class.getSimpleName();
 
-    private List<Cheat> mCheats;
+    private List<Cheat> cheatList;
     private Typeface latoFontBold;
     private Typeface latoFontLight;
     private Cheat cheatObj;
@@ -41,8 +41,8 @@ public class CheatsByGameRecycleListViewAdapter extends RecyclerView.Adapter<Che
     @RootContext
     Context mContext;
 
-    public void init(List<Cheat> cheatList) {
-        mCheats = cheatList;
+    public void setCheats(List<Cheat> cheatList) {
+        this.cheatList = cheatList;
     }
 
     // Provide a reference to the views for each data item
@@ -52,12 +52,12 @@ public class CheatsByGameRecycleListViewAdapter extends RecyclerView.Adapter<Che
 
         TextView mCheatTitle;
         RatingBar mRatingBar;
-        IMyViewHolderClicks mListener;
+        OnCheatItemClickListener mListener;
         ImageView mFlagNewAddition;
         ImageView mFlagScreenshot;
         ImageView mFlagGerman;
 
-        public ViewHolder(View v, IMyViewHolderClicks listener) {
+        public ViewHolder(View v, OnCheatItemClickListener listener) {
             super(v);
             mListener = listener;
 
@@ -85,7 +85,7 @@ public class CheatsByGameRecycleListViewAdapter extends RecyclerView.Adapter<Che
 
     }
 
-    public interface IMyViewHolderClicks {
+    public interface OnCheatItemClickListener {
         void onCheatClick(CheatsByGameRecycleListViewAdapter.ViewHolder caller);
     }
 
@@ -100,15 +100,15 @@ public class CheatsByGameRecycleListViewAdapter extends RecyclerView.Adapter<Che
         final View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.listrow_cheat_item, parent, false);
         v.setDrawingCacheEnabled(true);
 
-        return new ViewHolder(v, new IMyViewHolderClicks() {
+        return new ViewHolder(v, new OnCheatItemClickListener() {
             @Override
             public void onCheatClick(ViewHolder caller) {
                 if (Reachability.reachability.isReachable) {
 
                     Log.d(TAG, "caller.getAdapterPosition(): " + caller.getAdapterPosition());
-                    Log.d(TAG, "Cheat Title: " + mCheats.get(caller.getAdapterPosition()).getCheatTitle());
+                    Log.d(TAG, "Cheat Title: " + cheatList.get(caller.getAdapterPosition()).getCheatTitle());
 
-                    EventBus.getDefault().post(new CheatListRecyclerViewClickEvent(mCheats.get(caller.getAdapterPosition()), caller.getAdapterPosition()));
+                    EventBus.getDefault().post(new CheatListRecyclerViewClickEvent(cheatList.get(caller.getAdapterPosition()), caller.getAdapterPosition()));
                 } else {
                     EventBus.getDefault().post(new CheatListRecyclerViewClickEvent(new Exception()));
                 }
@@ -119,7 +119,7 @@ public class CheatsByGameRecycleListViewAdapter extends RecyclerView.Adapter<Che
     // Replace the contents of a view (invoked by the layout manager)
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        cheatObj = mCheats.get(position);
+        cheatObj = cheatList.get(position);
 
         holder.mCheatTitle.setText(cheatObj.getCheatTitle());
         holder.mCheatTitle.setTypeface(latoFontBold);
@@ -148,14 +148,14 @@ public class CheatsByGameRecycleListViewAdapter extends RecyclerView.Adapter<Che
     // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
-        return mCheats.size();
+        return cheatList.size();
     }
 
     // Display the first letter of the cheat during fast scrolling
     @NonNull
     @Override
     public String getSectionName(int position) {
-        return mCheats.get(position).getCheatTitle().substring(0, 1).toUpperCase();
+        return cheatList.get(position).getCheatTitle().substring(0, 1).toUpperCase();
     }
 
     // Height of the scroll-bar at the right screen side

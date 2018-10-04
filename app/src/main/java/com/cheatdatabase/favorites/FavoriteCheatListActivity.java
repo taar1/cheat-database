@@ -361,7 +361,7 @@ public class FavoriteCheatListActivity extends AppCompatActivity {
     public void fillListWithCheats() {
         try {
             if (cheatsArrayList != null && cheatsArrayList.size() > 0) {
-                cheatsByGameRecycleListViewAdapter.init(cheatsArrayList);
+                cheatsByGameRecycleListViewAdapter.setCheats(cheatsArrayList);
                 mRecyclerView.setAdapter(cheatsByGameRecycleListViewAdapter);
 
                 cheatsByGameRecycleListViewAdapter.notifyDataSetChanged();
