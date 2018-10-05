@@ -114,7 +114,7 @@
             android:parentActivityName=".LoginActivity_"
             android:windowSoftInputMode="adjustResize|stateVisible" />
         <activity
-            android:name=".CheatForumActivity_"
+            android:name=".CheatForumActivity"
             android:logo="@drawable/app_icon_fox"
             android:parentActivityName=".handset.cheatview.CheatViewPageIndicatorActivity"
             android:uiOptions="splitActionBarWhenNarrow"

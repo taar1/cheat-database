@@ -25,7 +25,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.cheatdatabase.CheatForumActivity_;
+import com.cheatdatabase.CheatForumActivity;
 import com.cheatdatabase.LoginActivity;
 import com.cheatdatabase.R;
 import com.cheatdatabase.SubmitCheatActivity_;
@@ -310,12 +310,13 @@ public class FavoritesCheatViewPageIndicator extends AppCompatActivity implement
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        Intent explicitIntent;
         switch (item.getItemId()) {
             case android.R.id.home:
                 finish();
                 return true;
             case R.id.action_submit_cheat:
-                Intent explicitIntent = new Intent(FavoritesCheatViewPageIndicator.this, SubmitCheatActivity_.class);
+                explicitIntent = new Intent(FavoritesCheatViewPageIndicator.this, SubmitCheatActivity_.class);
                 explicitIntent.putExtra("gameObj", gameObj);
                 startActivity(explicitIntent);
                 return true;
@@ -324,7 +325,11 @@ public class FavoritesCheatViewPageIndicator extends AppCompatActivity implement
                 return true;
             case R.id.action_forum:
                 if (Reachability.reachability.isReachable) {
-                    CheatForumActivity_.intent(this).gameObj(gameObj).cheatObj(visibleCheat).start();
+                    explicitIntent = new Intent(FavoritesCheatViewPageIndicator.this, CheatForumActivity.class);
+                    explicitIntent.putExtra("gameObj", gameObj);
+                    explicitIntent.putExtra("cheatObj", visibleCheat);
+                    startActivity(explicitIntent);
+
                 } else {
                     Toast.makeText(this, R.string.no_internet, Toast.LENGTH_SHORT).show();
                 }

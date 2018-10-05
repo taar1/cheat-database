@@ -480,7 +480,7 @@ public class Tools {
 //        }
 //    }
 
-    public void logout(Activity activity, Editor editor) {
+    public static void logout(Activity activity, Editor editor) {
         editor.remove(Konstanten.MEMBER_OBJECT);
         editor.commit();
 

@@ -7,7 +7,9 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.support.annotation.Nullable;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
@@ -46,65 +48,58 @@ import com.facebook.ads.AdSize;
 import com.facebook.ads.AdView;
 import com.google.gson.Gson;
 
-import org.androidannotations.annotations.AfterViews;
-import org.androidannotations.annotations.Background;
-import org.androidannotations.annotations.Bean;
-import org.androidannotations.annotations.EActivity;
-import org.androidannotations.annotations.Extra;
-import org.androidannotations.annotations.UiThread;
-import org.androidannotations.annotations.ViewById;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.util.Calendar;
+import java.util.List;
+
+import butterknife.BindView;
+import needle.Needle;
 
 /**
  * Displaying the forum of one cheat.
  */
-@EActivity(R.layout.activity_cheat_forum)
 public class CheatForumActivity extends AppCompatActivity implements CheatListFragment.CheatListClickCallbacks {
 
     private static String TAG = CheatForumActivity.class.getSimpleName();
 
-    @Extra
-    Cheat cheatObj;
-    @Extra
-    Game gameObj;
-    @Bean
-    Tools tools;
+    private Cheat cheatObj;
+    private Game gameObj;
 
-    @ViewById(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar mToolbar;
-    @ViewById(R.id.llForumMain)
+    @BindView(R.id.llForumMain)
     LinearLayout llForumMain;
-    @ViewById(R.id.text_cheat_title)
+    @BindView(R.id.text_cheat_title)
     TextView tvCheatTitle;
-    @ViewById(R.id.tvEmpty)
+    @BindView(R.id.tvEmpty)
     TextView tvEmpty;
-    @ViewById(R.id.sv)
+    @BindView(R.id.sv)
     ScrollView sv;
-    @ViewById(R.id.reload)
+    @BindView(R.id.reload)
     ImageView reloadView;
-    @ViewById(R.id.etEnterForumPost)
+    @BindView(R.id.etEnterForumPost)
     EditText editText;
-    @ViewById(R.id.btnSubmitPost)
+    @BindView(R.id.btnSubmitPost)
     Button postButton;
 
-    private ForumPost[] forumThread;
     private SharedPreferences settings;
     private ShareActionProvider mShare;
     private Member member;
-    //    private MoPubView mAdView;
     private Typeface latoFontBold;
     private Typeface latoFontLight;
 
-    @ViewById(R.id.banner_container)
+    @BindView(R.id.banner_container)
     LinearLayout facebookBanner;
     private AdView adView;
 
 
-    @AfterViews
-    public void onCreateView() {
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_cheat_forum);
+
         cheatObj = (Cheat) getIntent().getSerializableExtra("cheatObj");
         gameObj = (Game) getIntent().getSerializableExtra("gameObj");
         if (cheatObj == null) {
@@ -165,8 +160,8 @@ public class CheatForumActivity extends AppCompatActivity implements CheatListFr
         facebookBanner.addView(adView);
         adView.loadAd();
 
-        latoFontLight = tools.getFont(getAssets(), Konstanten.FONT_LIGHT);
-        latoFontBold = tools.getFont(getAssets(), Konstanten.FONT_BOLD);
+        latoFontLight = Tools.getFont(getAssets(), Konstanten.FONT_LIGHT);
+        latoFontBold = Tools.getFont(getAssets(), Konstanten.FONT_BOLD);
 
         member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
 
@@ -177,21 +172,6 @@ public class CheatForumActivity extends AppCompatActivity implements CheatListFr
         getSupportActionBar().setSubtitle(cheatObj.getSystemName());
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
-    }
-
-    private void handleIntent(final Intent intent) {
-
-        new Thread(new Runnable() {
-
-            @Override
-            public void run() {
-                cheatObj = (Cheat) intent.getSerializableExtra("cheatObj");
-                gameObj = (Game) intent.getSerializableExtra("gameObj");
-
-                //CheatDatabaseApplication.tracker().send(new HitBuilders.EventBuilder("ui", cheatObj.getGameName() + " (" + cheatObj.getSystemName() + ")").setLabel("activity").build());
-            }
-        }).start();
-
     }
 
     /**
@@ -347,10 +327,6 @@ public class CheatForumActivity extends AppCompatActivity implements CheatListFr
 
     @Override
     protected void onDestroy() {
-//        if (mAdView != null) {
-//            mAdView.destroy();
-//        }
-
         if (adView != null) {
             adView.destroy();
         }
@@ -442,7 +418,7 @@ public class CheatForumActivity extends AppCompatActivity implements CheatListFr
                 return true;
             case R.id.action_logout:
                 member = null;
-                tools.logout(CheatForumActivity.this, settings.edit());
+                Tools.logout(CheatForumActivity.this, settings.edit());
                 invalidateOptionsMenu();
                 return true;
             default:
@@ -504,7 +480,7 @@ public class CheatForumActivity extends AppCompatActivity implements CheatListFr
             try {
                 Webservice.insertForum(cheatObj.getCheatId(), member.getMid(), member.getPassword(), fp.getText());
             } catch (Exception e) {
-                Log.e("CheatForumActivity", e.getLocalizedMessage());
+                Log.e(TAG, e.getLocalizedMessage());
             }
 
             return null;
@@ -520,28 +496,28 @@ public class CheatForumActivity extends AppCompatActivity implements CheatListFr
 
     }
 
-    @Background
     public void loadForumAsync() {
-        forumThread = Webservice.getForum(cheatObj.getCheatId());
-
-        forumLoaded();
+        Needle.onBackgroundThread().execute(() -> forumLoaded(Webservice.getForum(cheatObj.getCheatId())));
     }
 
-    @UiThread
-    public void forumLoaded() {
-        reloadView.setVisibility(View.GONE);
+    public void forumLoaded(List<ForumPost> forumThread) {
 
-        llForumMain.removeAllViews();
-        if (forumThread.length > 0) {
-            tvEmpty.setVisibility(View.GONE);
+        Needle.onMainThread().execute(() -> {
+            reloadView.setVisibility(View.GONE);
 
-            for (ForumPost tempFP : forumThread) {
-                LinearLayout tl = createForumPosts(tempFP);
-                llForumMain.addView(tl, new TableLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+            llForumMain.removeAllViews();
+            if (forumThread.size() > 0) {
+                tvEmpty.setVisibility(View.GONE);
+
+                for (ForumPost forumPost : forumThread) {
+                    LinearLayout linearLayout = createForumPosts(forumPost);
+                    llForumMain.addView(linearLayout, new TableLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+                }
+            } else {
+                tvEmpty.setVisibility(View.VISIBLE);
             }
-        } else {
-            tvEmpty.setVisibility(View.VISIBLE);
-        }
+        });
+
 
     }
 

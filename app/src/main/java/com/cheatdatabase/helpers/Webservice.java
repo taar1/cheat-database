@@ -1177,21 +1177,20 @@ public class Webservice {
     }
 
     /**
-     * Holt das Forum eines Cheats.
-     *
+     * Loads the forum thread from one cheat.
      * @param cheatId
      * @return
      */
-    public static ForumPost[] getForum(int cheatId) {
-        ForumPost[] thread = null;
-        JSONArray jArray = null;
+    public static List<ForumPost> getForum(int cheatId) {
+        List<ForumPost> forumPostList = null;
+        JSONArray jArray;
 
         try {
             String urlParameters = "cheatId=" + URLEncoder.encode(String.valueOf(cheatId), "UTF-8");
             String forumString = excutePost(Konstanten.BASE_URL_ANDROID + "getForum.php", urlParameters);
 
             jArray = new JSONArray(forumString);
-            thread = new ForumPost[jArray.length()];
+            forumPostList = new ArrayList<>();
 
             for (int i = 0; i < jArray.length(); i++) {
 
@@ -1218,14 +1217,14 @@ public class Webservice {
                 forum.setUpdated(updated);
                 forum.setIp(ip);
 
-                thread[i] = forum;
+                forumPostList.add(forum);
             }
 
         } catch (JSONException | UnsupportedEncodingException e) {
-            Log.e(TAG, "getGameListBySystemId | UnsupportedEncodingException: " + e);
+            Log.e(TAG, e.getLocalizedMessage());
         }
 
-        return thread;
+        return forumPostList;
     }
 
     /**
@@ -1237,7 +1236,7 @@ public class Webservice {
      */
     public static Game[] getGameListBySystemId(int systemId, String systemName, boolean isAchievementsEnabled) {
         Game[] games = null;
-        JSONArray jArray = null;
+        JSONArray jArray;
 
         String achievementsEnabled = (isAchievementsEnabled ? "1" : "0");
 

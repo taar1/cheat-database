@@ -23,7 +23,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.cheatdatabase.CheatForumActivity_;
+import com.cheatdatabase.CheatForumActivity;
 import com.cheatdatabase.LoginActivity;
 import com.cheatdatabase.R;
 import com.cheatdatabase.SubmitCheatActivity_;
@@ -352,12 +352,13 @@ public class MemberCheatViewPageIndicator extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        Intent explicitIntent;
         switch (item.getItemId()) {
             case android.R.id.home:
                 onBackPressed();
                 return true;
             case R.id.action_submit_cheat:
-                Intent explicitIntent = new Intent(MemberCheatViewPageIndicator.this, SubmitCheatActivity_.class);
+                explicitIntent = new Intent(MemberCheatViewPageIndicator.this, SubmitCheatActivity_.class);
                 explicitIntent.putExtra("gameObj", gameObj);
                 startActivity(explicitIntent);
                 return true;
@@ -365,7 +366,10 @@ public class MemberCheatViewPageIndicator extends AppCompatActivity {
                 showRatingDialog();
                 return true;
             case R.id.action_forum:
-                CheatForumActivity_.intent(this).gameObj(gameObj).cheatObj(visibleCheat).start();
+                explicitIntent = new Intent(MemberCheatViewPageIndicator.this, CheatForumActivity.class);
+                explicitIntent.putExtra("gameObj", gameObj);
+                explicitIntent.putExtra("cheatObj", visibleCheat);
+                startActivity(explicitIntent);
                 return true;
             case R.id.action_add_to_favorites:
                 Toast.makeText(MemberCheatViewPageIndicator.this, R.string.favorite_adding, Toast.LENGTH_SHORT).show();
