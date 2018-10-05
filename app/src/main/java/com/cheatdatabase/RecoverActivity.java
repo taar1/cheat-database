@@ -2,10 +2,11 @@ package com.cheatdatabase;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
-import android.annotation.TargetApi;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Build;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
@@ -22,19 +23,14 @@ import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.helpers.Tools;
 import com.cheatdatabase.helpers.Webservice;
 
-import org.androidannotations.annotations.AfterViews;
-import org.androidannotations.annotations.Background;
-import org.androidannotations.annotations.Bean;
-import org.androidannotations.annotations.Click;
-import org.androidannotations.annotations.EActivity;
-import org.androidannotations.annotations.UiThread;
-import org.androidannotations.annotations.ViewById;
+import butterknife.BindView;
+import butterknife.OnClick;
+import needle.Needle;
 
 /**
  * Activity which displays a login screen to the user, offering registration as
  * well.
  */
-@EActivity(R.layout.activity_recover)
 public class RecoverActivity extends AppCompatActivity {
 
     /**
@@ -42,38 +38,31 @@ public class RecoverActivity extends AppCompatActivity {
      */
     public static final String EXTRA_EMAIL = "com.example.android.authenticatordemo.extra.EMAIL";
 
-    // UI references.
-    @ViewById(R.id.email)
+    @BindView(R.id.email)
     EditText mEmailView;
-
-    @ViewById(R.id.login_form)
+    @BindView(R.id.login_form)
     View mLoginFormView;
-
-    @ViewById(R.id.send_status)
+    @BindView(R.id.send_status)
     View mLoginStatusView;
-
-    @ViewById(R.id.send_status_message)
+    @BindView(R.id.send_status_message)
     TextView mLoginStatusMessageView;
-
-    @ViewById(R.id.recover_return_message)
+    @BindView(R.id.recover_return_message)
     TextView mResponseMessageView;
-
-    @ViewById(R.id.recover_button)
+    @BindView(R.id.recover_button)
     Button recoverButton;
-
-    @ViewById(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar mToolbar;
 
-    @Bean
     Tools tools;
 
     private String mEmail;
 
     private int successMessage;
 
-    @AfterViews
-    public void onCreate() {
-        init();
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_recover);
 
         mEmail = getIntent().getStringExtra(EXTRA_EMAIL);
         mEmailView.setText(mEmail);
@@ -95,7 +84,7 @@ public class RecoverActivity extends AppCompatActivity {
         });
     }
 
-    @Click(R.id.recover_button)
+    @OnClick(R.id.recover_button)
     void recoverButtonClicked() {
         if (Reachability.reachability.isReachable) {
             attemptRecover();
@@ -133,8 +122,7 @@ public class RecoverActivity extends AppCompatActivity {
         }
     }
 
-
-    public void attemptRecover() {
+    private void attemptRecover() {
         // Reset errors.
         mEmailView.setError(null);
 
@@ -164,18 +152,16 @@ public class RecoverActivity extends AppCompatActivity {
             // perform the user login attempt.
             mLoginStatusMessageView.setText(R.string.recover_login);
             showProgress(true);
-            recoverTask(mEmailView.getText().toString().trim());
+            sendRecoveryEmail(mEmailView.getText().toString().trim());
         }
     }
 
     /**
      * Shows the progress UI and hides the login form.
+     *
+     * @param show
      */
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
     private void showProgress(final boolean show) {
-        // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
-        // for very easy animations. If available, use these APIs to fade-in
-        // the progress spinner.
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
             int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
 
@@ -202,33 +188,38 @@ public class RecoverActivity extends AppCompatActivity {
         }
     }
 
-    @Background
-    void recoverTask(String email) {
-        successMessage = Webservice.sendLoginData(email);
+    void sendRecoveryEmail(String email) {
+        Needle.onBackgroundThread().execute(() -> {
+            successMessage = Webservice.sendLoginData(email);
 
-        boolean success = successMessage != R.string.err_email_invalid;
-        afterRecover(success, successMessage);
+            boolean success = successMessage != R.string.err_email_invalid;
+            updateUIAfterRecovery(success, successMessage);
+        });
+
     }
 
-    @UiThread
-    void afterRecover(boolean success, int successMessage) {
-        showProgress(false);
+    void updateUIAfterRecovery(boolean success, int successMessage) {
+        Needle.onMainThread().execute(() -> {
+            showProgress(false);
 
-        if (success) {
-            mResponseMessageView.setText(getString(successMessage));
-            mResponseMessageView.setVisibility(View.VISIBLE);
+            if (success) {
+                mResponseMessageView.setText(getString(successMessage));
+                mResponseMessageView.setVisibility(View.VISIBLE);
 
-            if (successMessage != R.string.err_email_user_not_found) {
-                Intent returnIntent = new Intent();
-                returnIntent.putExtra("result", Konstanten.RECOVER_PASSWORD_SUCCESS_RETURN_CODE);
-                setResult(RESULT_OK, returnIntent);
-                finish();
+                if (successMessage != R.string.err_email_user_not_found) {
+                    Intent returnIntent = new Intent();
+                    returnIntent.putExtra("result", Konstanten.RECOVER_PASSWORD_SUCCESS_RETURN_CODE);
+                    setResult(RESULT_OK, returnIntent);
+                    finish();
+                }
+
+            } else {
+                mEmailView.setError(getString(successMessage));
+                mEmailView.requestFocus();
             }
+        });
 
-        } else {
-            mEmailView.setError(getString(successMessage));
-            mEmailView.requestFocus();
-        }
+
     }
 
 }

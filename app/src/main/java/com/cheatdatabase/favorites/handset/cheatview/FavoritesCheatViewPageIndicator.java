@@ -56,8 +56,6 @@ import net.lucode.hackware.magicindicator.buildins.commonnavigator.indicators.Li
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.ColorTransitionPagerTitleView;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.SimplePagerTitleView;
 
-import org.androidannotations.annotations.Bean;
-import org.androidannotations.annotations.EBean;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
@@ -67,7 +65,6 @@ import org.greenrobot.eventbus.Subscribe;
  * @author Dominik Erbsland
  * @version 1.0
  */
-@EBean
 public class FavoritesCheatViewPageIndicator extends AppCompatActivity implements UndoBarController.UndoListener {
 
     private final String TAG = FavoritesCheatViewPageIndicator.class.getSimpleName();
@@ -84,8 +81,6 @@ public class FavoritesCheatViewPageIndicator extends AppCompatActivity implement
     private Cheat[] cheatArray;
     private Cheat visibleCheat;
 
-//    private MoPubView mAdView;
-
     private SharedPreferences settings;
     private Editor editor;
 
@@ -99,8 +94,6 @@ public class FavoritesCheatViewPageIndicator extends AppCompatActivity implement
 
     private int activePage;
 
-    private static final String SCREEN_LABEL = "CheatView PageIndicator Screen";
-
     private ConnectivityManager cm;
 
     private ShareActionProvider mShare;
@@ -110,9 +103,6 @@ public class FavoritesCheatViewPageIndicator extends AppCompatActivity implement
 
     private LinearLayout facebookBanner;
     private AdView adView;
-
-    @Bean
-    Tools tools;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -127,8 +117,8 @@ public class FavoritesCheatViewPageIndicator extends AppCompatActivity implement
 
         try {
             gameObj = (Game) intent.getSerializableExtra("gameObj");
-
             pageSelected = intent.getIntExtra("position", 0);
+
             activePage = pageSelected;
             cheatArray = gameObj.getCheats();
             visibleCheat = cheatArray[pageSelected];
@@ -150,9 +140,8 @@ public class FavoritesCheatViewPageIndicator extends AppCompatActivity implement
         db = new CheatDatabaseAdapter(this);
         db.open();
 
-        mToolbar = tools.initToolbarBase(this, mToolbar);
+        mToolbar = Tools.initToolbarBase(this, mToolbar);
 
-//        mAdView = tools.initMoPubAdView(this, mAdView);
         facebookBanner = findViewById(R.id.banner_container);
         adView = new AdView(this, Konstanten.FACEBOOK_AUDIENCE_NETWORK_NATIVE_BANNER_ID, AdSize.BANNER_HEIGHT_50);
         facebookBanner.addView(adView);
@@ -329,7 +318,6 @@ public class FavoritesCheatViewPageIndicator extends AppCompatActivity implement
                     explicitIntent.putExtra("gameObj", gameObj);
                     explicitIntent.putExtra("cheatObj", visibleCheat);
                     startActivity(explicitIntent);
-
                 } else {
                     Toast.makeText(this, R.string.no_internet, Toast.LENGTH_SHORT).show();
                 }
@@ -355,11 +343,11 @@ public class FavoritesCheatViewPageIndicator extends AppCompatActivity implement
                 return true;
             case R.id.action_logout:
                 member = null;
-                tools.logout(FavoritesCheatViewPageIndicator.this, editor);
+                Tools.logout(FavoritesCheatViewPageIndicator.this, editor);
                 invalidateOptionsMenu();
                 return true;
             case R.id.action_share:
-                setShareIntent(tools.setShareText(FavoritesCheatViewPageIndicator.this, visibleCheat));
+                setShareIntent(Tools.setShareText(FavoritesCheatViewPageIndicator.this, visibleCheat));
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -390,9 +378,6 @@ public class FavoritesCheatViewPageIndicator extends AppCompatActivity implement
     @Override
     protected void onDestroy() {
         mUndoBarController.hideUndoBar(true);
-//        if (mAdView != null) {
-//            mAdView.destroy();
-//        }
 
         if (adView != null) {
             adView.destroy();

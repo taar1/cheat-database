@@ -23,7 +23,6 @@ import com.cheatdatabase.businessobjects.Cheat;
 import com.cheatdatabase.businessobjects.Game;
 import com.cheatdatabase.businessobjects.SystemPlatform;
 
-import org.androidannotations.annotations.EBean;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -46,7 +45,6 @@ import java.util.regex.Pattern;
  *
  * @version 1.0
  */
-@EBean
 public class Tools {
     private final String TAG = Tools.class.getSimpleName();
 

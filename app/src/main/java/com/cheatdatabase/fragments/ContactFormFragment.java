@@ -42,23 +42,23 @@ import org.greenrobot.eventbus.EventBus;
 @EFragment(R.layout.fragment_contact_form)
 public class ContactFormFragment extends Fragment {
 
-    @ViewById(R.id.outer_layout)
+    @BindView(R.id.outer_layout)
     LinearLayout outerLayout;
-    @ViewById(R.id.email)
+    @BindView(R.id.email)
     TextInputEditText mEmailView;
-    @ViewById(R.id.form_message)
+    @BindView(R.id.form_message)
     TextInputEditText mMessageView;
-    @ViewById(R.id.emailaddress)
+    @BindView(R.id.emailaddress)
     TextView mEmailaddressView;
-    @ViewById(R.id.send_status_message)
+    @BindView(R.id.send_status_message)
     TextView mLoginStatusMessageView;
-    @ViewById(R.id.thankyou_text)
+    @BindView(R.id.thankyou_text)
     TextView mThankyouText;
-    @ViewById(R.id.contact_form)
+    @BindView(R.id.contact_form)
     View mContactFormView;
-    @ViewById(R.id.send_status)
+    @BindView(R.id.send_status)
     View mContactStatusView;
-    @ViewById(R.id.thank_you)
+    @BindView(R.id.thank_you)
     View mThankyouView;
 
     @FragmentArg(MainActivity.DRAWER_ITEM_ID)

@@ -8,6 +8,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.annotation.MainThread;
+import android.support.annotation.Nullable;
 import android.support.v4.app.NavUtils;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -22,7 +24,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cheatdatabase.R;
-import com.cheatdatabase.SubmitCheatActivity_;
+import com.cheatdatabase.SubmitCheatActivity;
 import com.cheatdatabase.adapters.CheatsByGameRecycleListViewAdapter;
 import com.cheatdatabase.businessobjects.Cheat;
 import com.cheatdatabase.businessobjects.Game;
@@ -34,7 +36,6 @@ import com.cheatdatabase.favorites.handset.cheatview.FavoritesCheatViewPageIndic
 import com.cheatdatabase.helpers.CheatDatabaseAdapter;
 import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Reachability;
-import com.cheatdatabase.helpers.Tools;
 import com.cheatdatabase.widgets.DividerDecoration;
 import com.facebook.ads.AdSize;
 import com.facebook.ads.AdView;
@@ -42,44 +43,36 @@ import com.gc.materialdesign.views.ProgressBarCircularIndeterminate;
 import com.google.gson.Gson;
 import com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView;
 
-import org.androidannotations.annotations.AfterViews;
-import org.androidannotations.annotations.Background;
-import org.androidannotations.annotations.Bean;
-import org.androidannotations.annotations.Click;
-import org.androidannotations.annotations.EActivity;
-import org.androidannotations.annotations.Extra;
-import org.androidannotations.annotations.UiThread;
-import org.androidannotations.annotations.ViewById;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.Collections;
 
-@EActivity(R.layout.activity_cheat_list)
+import butterknife.BindView;
+import butterknife.OnClick;
+import needle.Needle;
+
 public class FavoriteCheatListActivity extends AppCompatActivity {
 
     private final String TAG = this.getClass().getSimpleName();
 
-    @Extra
-    Game gameObj;
-    @Bean
-    Tools tools;
-    @Bean
-    CheatsByGameRecycleListViewAdapter cheatsByGameRecycleListViewAdapter;
+    private Game gameObj;
 
-    @ViewById(R.id.my_recycler_view)
+    private CheatsByGameRecycleListViewAdapter cheatsByGameRecycleListViewAdapter;
+
+    @BindView(R.id.my_recycler_view)
     FastScrollRecyclerView mRecyclerView;
-    @ViewById(R.id.swipe_refresh_layout)
+    @BindView(R.id.swipe_refresh_layout)
     SwipeRefreshLayout mSwipeRefreshLayout;
-    @ViewById(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar mToolbar;
-    @ViewById(R.id.item_list_empty_view)
+    @BindView(R.id.item_list_empty_view)
     TextView mEmptyView;
-    @ViewById(R.id.items_list_load_progress)
+    @BindView(R.id.items_list_load_progress)
     ProgressBarCircularIndeterminate mProgressView;
 
-    @ViewById(R.id.banner_container)
+    @BindView(R.id.banner_container)
     LinearLayout facebookBanner;
     private AdView adView;
 
@@ -94,12 +87,20 @@ public class FavoriteCheatListActivity extends AppCompatActivity {
     private CheatDatabaseAdapter db;
     private ArrayList<Cheat> cheatsArrayList;
 
-    @AfterViews
-    public void createView() {
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        gameObj = (Game) getIntent().getSerializableExtra("gameObj");
+
+        setContentView(R.layout.activity_cheat_list);
+        setTitle(gameObj.getGameName());
+
         init();
+
+        cheatsByGameRecycleListViewAdapter = new CheatsByGameRecycleListViewAdapter();
+
         mSwipeRefreshLayout.setRefreshing(true);
 
-        setTitle(gameObj.getGameName());
         getSupportActionBar().setTitle(gameObj.getGameName());
         getSupportActionBar().setSubtitle(gameObj.getSystemName());
 
@@ -298,12 +299,8 @@ public class FavoriteCheatListActivity extends AppCompatActivity {
     @Subscribe
     public void onEvent(CheatListRecyclerViewClickEvent result) {
         if (result.isSucceeded()) {
-            //CheatDatabaseApplication.tracker().send(new HitBuilders.EventBuilder("ui", "click").setLabel(result.getCheat().getCheatTitle()).build());
-
             this.visibleCheat = result.getCheat();
             this.lastGameObj = result.getCheat().getGame();
-
-            //CheatDatabaseApplication.tracker().send(new HitBuilders.EventBuilder("ui", "select_cheat").setLabel(result.getCheat().getGameName() + ": " + result.getCheat().getCheatTitle()).build());
 
             // editor.putString(Konstanten.PREFERENCES_TEMP_GAME_OBJECT_VIEW,
             // new Gson().toJson(gameObj));
@@ -328,37 +325,45 @@ public class FavoriteCheatListActivity extends AppCompatActivity {
         }
     }
 
-    @Click(R.id.add_new_cheat_button)
-    void addNewCheat() {
-        SubmitCheatActivity_.intent(FavoriteCheatListActivity.this).gameObj(gameObj).start();
+    @OnClick(R.id.add_new_cheat_button)
+    void clickAddNewCheat() {
+        Intent explicitIntent = new Intent(FavoriteCheatListActivity.this, SubmitCheatActivity.class);
+        explicitIntent.putExtra("gameObj", gameObj);
+        startActivity(explicitIntent);
     }
 
-    @Background
     void getCheats() {
-        cheatsArrayList = new ArrayList<>();
+        Needle.onBackgroundThread().execute(new Runnable() {
+            @Override
+            public void run() {
+                cheatsArrayList = new ArrayList<>();
 
-        if (gameObj != null) {
-            if (gameObj.getCheats() == null) {
-                Collections.addAll(cheatsArrayList, db.getAllFavoritedCheatsByGame(gameObj.getGameId()));
-            } else {
-                Collections.addAll(cheatsArrayList, gameObj.getCheats());
+                if (gameObj != null) {
+                    if (gameObj.getCheats() == null) {
+                        Collections.addAll(cheatsArrayList, db.getAllFavoritedCheatsByGame(gameObj.getGameId()));
+                    } else {
+                        Collections.addAll(cheatsArrayList, gameObj.getCheats());
+                    }
+
+                    Cheat[] cheats = new Cheat[cheatsArrayList.size()];
+                    for (int i = 0; i < cheatsArrayList.size(); i++) {
+                        cheats[i] = cheatsArrayList.get(i);
+                    }
+
+                    gameObj.setCheats(cheats);
+
+                    fillListWithCheats();
+                } else {
+                    error();
+                }
             }
-
-            Cheat[] cheats = new Cheat[cheatsArrayList.size()];
-            for (int i = 0; i < cheatsArrayList.size(); i++) {
-                cheats[i] = cheatsArrayList.get(i);
-            }
-
-            gameObj.setCheats(cheats);
-
-            fillListWithCheats();
-        } else {
-            error();
-        }
+        });
     }
 
-    @UiThread
+    @MainThread
     public void fillListWithCheats() {
+        // TODO FIXME schauen ob man das in eine Needle packen muss
+
         try {
             if (cheatsArrayList != null && cheatsArrayList.size() > 0) {
                 cheatsByGameRecycleListViewAdapter.setCheats(cheatsArrayList);

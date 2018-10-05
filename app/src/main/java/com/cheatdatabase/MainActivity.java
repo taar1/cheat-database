@@ -75,13 +75,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Extra
     int mFragmentId;
 
-    @ViewById(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar mToolbar;
-    @ViewById(R.id.drawer_layout)
+    @BindView(R.id.drawer_layout)
     DrawerLayout mDrawerLayout;
-    @ViewById(R.id.nav_view)
+    @BindView(R.id.nav_view)
     NavigationView navigationView;
-    @ViewById(R.id.add_new_cheat_button)
+    @BindView(R.id.add_new_cheat_button)
     FloatingActionButton fab;
 
     public static final String DRAWER_ITEM_ID = "drawerId";
@@ -97,7 +97,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private SearchManager searchManager;
     private SearchView searchView;
 
-    @ViewById(R.id.banner_container)
+    @BindView(R.id.banner_container)
     LinearLayout facebookBanner;
     private AdView adView;
 

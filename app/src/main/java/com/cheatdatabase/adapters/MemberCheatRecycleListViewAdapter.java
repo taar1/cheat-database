@@ -1,6 +1,5 @@
 package com.cheatdatabase.adapters;
 
-import android.content.Context;
 import android.graphics.Typeface;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -21,38 +20,25 @@ import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.helpers.Tools;
 import com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView;
 
-import org.androidannotations.annotations.Bean;
-import org.androidannotations.annotations.EBean;
-import org.androidannotations.annotations.RootContext;
 import org.greenrobot.eventbus.EventBus;
 
-import java.util.ArrayList;
+import java.util.List;
 
-@EBean
 public class MemberCheatRecycleListViewAdapter extends RecyclerView.Adapter<MemberCheatRecycleListViewAdapter.ViewHolder> implements FastScrollRecyclerView.SectionedAdapter,
         FastScrollRecyclerView.MeasurableAdapter {
 
     private static final String TAG = MemberCheatRecycleListViewAdapter.class.getSimpleName();
 
-    private ArrayList<Cheat> mCheats;
+    private List<Cheat> cheatList;
     private Typeface latoFontRegular;
     private Cheat cheatObj;
 
-    @RootContext
-    Context mContext;
 
-    @Bean
-    Tools tools;
-
-    public void init(ArrayList<Cheat> cheatList) {
-        mCheats = cheatList;
+    public void setCheatList(List<Cheat> cheatList) {
+        this.cheatList = cheatList;
     }
 
-    // Provide a reference to the views for each data item
-    // Complex data items may need more than one view per item, and
-    // you provide access to all the views for a data item in a vie1w holder
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-
         public TextView tvGameName;
         public TextView tvCheatTitle;
         public LinearLayout flagLayout;
@@ -87,7 +73,7 @@ public class MemberCheatRecycleListViewAdapter extends RecyclerView.Adapter<Memb
     @Override
     public MemberCheatRecycleListViewAdapter.ViewHolder onCreateViewHolder(final ViewGroup parent, int viewType) {
 
-        latoFontRegular = tools.getFont(parent.getContext().getAssets(), Konstanten.FONT_REGULAR);
+        latoFontRegular = Tools.getFont(parent.getContext().getAssets(), Konstanten.FONT_REGULAR);
 
         // create a new view
         final View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.listrow_member_cheat_item, parent, false);
@@ -99,9 +85,9 @@ public class MemberCheatRecycleListViewAdapter extends RecyclerView.Adapter<Memb
                 if (Reachability.reachability.isReachable) {
 
                     Log.d(TAG, "caller.getAdapterPosition(): " + caller.getAdapterPosition());
-                    Log.d(TAG, "Cheat Title: " + mCheats.get(caller.getAdapterPosition()).getCheatTitle());
+                    Log.d(TAG, "Cheat Title: " + cheatList.get(caller.getAdapterPosition()).getCheatTitle());
 
-                    EventBus.getDefault().post(new CheatListRecyclerViewClickEvent(mCheats.get(caller.getAdapterPosition()), caller.getAdapterPosition()));
+                    EventBus.getDefault().post(new CheatListRecyclerViewClickEvent(cheatList.get(caller.getAdapterPosition()), caller.getAdapterPosition()));
                 } else {
                     EventBus.getDefault().post(new CheatListRecyclerViewClickEvent(new Exception()));
                 }
@@ -112,7 +98,7 @@ public class MemberCheatRecycleListViewAdapter extends RecyclerView.Adapter<Memb
     // Replace the contents of a view (invoked by the layout manager)
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        cheatObj = mCheats.get(position);
+        cheatObj = cheatList.get(position);
 
         holder.tvCheatTitle.setTypeface(latoFontRegular);
         holder.tvGameName.setText(cheatObj.getGameName() + " (" + cheatObj.getSystemName() + ")");
@@ -141,14 +127,14 @@ public class MemberCheatRecycleListViewAdapter extends RecyclerView.Adapter<Memb
     // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
-        return mCheats.size();
+        return cheatList.size();
     }
 
     // Display the first letter of the game during fast scrolling
     @NonNull
     @Override
     public String getSectionName(int position) {
-        return mCheats.get(position).getGameName().substring(0, 1).toUpperCase();
+        return cheatList.get(position).getGameName().substring(0, 1).toUpperCase();
     }
 
     // Height of the scroll-bar at the right screen side

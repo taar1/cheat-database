@@ -42,9 +42,9 @@ public class SystemListFragment extends Fragment {
     private GamesAndCheatsCountTaskResult gamesAndCheatsCountTaskResult;
     private ArrayList<SystemPlatform> systemGameandCheatCounterList = null;
 
-    @ViewById(R.id.my_recycler_view)
+    @BindView(R.id.my_recycler_view)
     RecyclerView mRecyclerView;
-    @ViewById(R.id.swipe_refresh_layout)
+    @BindView(R.id.swipe_refresh_layout)
     SwipeRefreshLayout mSwipeRefreshLayout;
 
     @FragmentArg(MainActivity.DRAWER_ITEM_ID)

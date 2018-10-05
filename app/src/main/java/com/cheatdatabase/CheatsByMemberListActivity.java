@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
+import android.support.annotation.MainThread;
+import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -22,7 +24,6 @@ import com.cheatdatabase.businessobjects.Member;
 import com.cheatdatabase.events.CheatListRecyclerViewClickEvent;
 import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Reachability;
-import com.cheatdatabase.helpers.Tools;
 import com.cheatdatabase.helpers.Webservice;
 import com.cheatdatabase.members.cheatview.MemberCheatViewPageIndicator;
 import com.cheatdatabase.widgets.DividerDecoration;
@@ -31,56 +32,53 @@ import com.facebook.ads.AdView;
 import com.google.gson.Gson;
 import com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView;
 
-import org.androidannotations.annotations.AfterViews;
-import org.androidannotations.annotations.Background;
-import org.androidannotations.annotations.Bean;
-import org.androidannotations.annotations.EActivity;
-import org.androidannotations.annotations.Extra;
-import org.androidannotations.annotations.UiThread;
-import org.androidannotations.annotations.ViewById;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.List;
+
+import butterknife.BindView;
+import needle.Needle;
+
+import static android.icu.lang.UCharacter.GraphemeClusterBreak.T;
 
 /**
  * Shows all cheats of one particular member.
  *
  * @author Dominik
  */
-@EActivity(R.layout.activity_member_cheat_list)
 public class CheatsByMemberListActivity extends AppCompatActivity {
 
     private final String TAG = CheatsByMemberListActivity.class.getSimpleName();
 
-    @Bean
-    Tools tools;
-    @Bean
-    MemberCheatRecycleListViewAdapter cheatRecycleListViewAdapter;
-    @Extra
-    Member member;
-
-    @ViewById(R.id.my_recycler_view)
+    @BindView(R.id.my_recycler_view)
     FastScrollRecyclerView mRecyclerView;
-    @ViewById(R.id.swipe_refresh_layout)
+    @BindView(R.id.swipe_refresh_layout)
     SwipeRefreshLayout mSwipeRefreshLayout;
-    @ViewById(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar mToolbar;
-    @ViewById(R.id.item_list_empty_view)
+    @BindView(R.id.item_list_empty_view)
     TextView mEmptyView;
-
-    @ViewById(R.id.banner_container)
+    @BindView(R.id.banner_container)
     LinearLayout facebookBanner;
     private AdView adView;
 
-    private ArrayList<Cheat> cheatsArrayList;
+    private MemberCheatRecycleListViewAdapter memberCheatRecycleListViewAdapter;
+
+    private Member member;
+    private List<Cheat> cheatList;
 
     private Editor editor;
-    private Cheat[] cheats;
 
-    @AfterViews
-    void onCreate() {
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_member_cheat_list);
+
+        member = (Member) getIntent().getSerializableExtra("member");
+        memberCheatRecycleListViewAdapter = new MemberCheatRecycleListViewAdapter();
+
         init();
         mSwipeRefreshLayout.setRefreshing(true);
 
@@ -121,27 +119,32 @@ public class CheatsByMemberListActivity extends AppCompatActivity {
         editor = settings.edit();
     }
 
-    @Background
     void getCheats() {
-        cheatsArrayList = new ArrayList<>();
+        Needle.onBackgroundThread().execute(new Runnable() {
+            @Override
+            public void run() {
+                cheatList = Webservice.getCheatsByMemberId(member.getMid());
 
-        cheats = Webservice.getCheatsByMemberId(member.getMid());
+                editor.putString(Konstanten.PREFERENCES_TEMP_CHEAT_ARRAY_OBJECT_VIEW, new Gson().toJson(cheatList));
+                editor.commit();
 
-        editor.putString(Konstanten.PREFERENCES_TEMP_CHEAT_ARRAY_OBJECT_VIEW, new Gson().toJson(cheats));
-        editor.commit();
+                fillListWithCheats();
+            }
+        });
 
-        Collections.addAll(cheatsArrayList, cheats);
-        fillListWithCheats();
     }
 
-    @UiThread
+    @MainThread
     void fillListWithCheats() {
+        // TODO FIXME @MainThread geht vielleicht nicht
+        // TODO FIXME @MainThread geht vielleicht nicht
+        // TODO FIXME @MainThread geht vielleicht nicht
         try {
-            if (cheatsArrayList.size() > 0) {
-                cheatRecycleListViewAdapter.init(cheatsArrayList);
-                mRecyclerView.setAdapter(cheatRecycleListViewAdapter);
+            if (cheatList.size() > 0) {
+                memberCheatRecycleListViewAdapter.setCheatList(cheatList);
+                mRecyclerView.setAdapter(memberCheatRecycleListViewAdapter);
 
-                cheatRecycleListViewAdapter.notifyDataSetChanged();
+                memberCheatRecycleListViewAdapter.notifyDataSetChanged();
             } else {
                 error(R.string.err_data_not_accessible);
             }
@@ -217,25 +220,26 @@ public class CheatsByMemberListActivity extends AppCompatActivity {
             if (Reachability.reachability.isReachable) {
                 // Using local Preferences to pass data for large game objects
                 // (instead of intent) such as Pokemon
-                Intent explicitIntent = new Intent(CheatsByMemberListActivity.this, MemberCheatViewPageIndicator.class);
+                Intent intent = new Intent(CheatsByMemberListActivity.this, MemberCheatViewPageIndicator.class);
 
-                if (cheats.length <= 100) {
+                if (cheatList.size() <= 100) {
                     // Delete Walkthrough texts (otherwise runs into a timeout)
-                    for (int i = 0; i < cheats.length; i++) {
-                        if (cheats[i].isWalkthroughFormat()) {
-                            cheats[i].setCheatText("");
+                    for (int i = 0; i < cheatList.size(); i++) {
+                        if (cheatList.get(i).isWalkthroughFormat()) {
+                            cheatList.get(i).setCheatText("");
                         }
                     }
-                    explicitIntent.putExtra("cheatObj", cheats);
+
+                    intent.putParcelableArrayListExtra("cheatArrayList", (ArrayList) cheatList);
                 } else {
                     // Save to SharedPreferences if array too big
-                    editor.putString(Konstanten.PREFERENCES_TEMP_CHEAT_ARRAY_OBJECT_VIEW, new Gson().toJson(cheats));
+                    editor.putString(Konstanten.PREFERENCES_TEMP_CHEAT_ARRAY_OBJECT_VIEW, new Gson().toJson(cheatList));
                     editor.apply();
                 }
 
-                explicitIntent.putExtra("selectedPage", result.getPosition());
-                explicitIntent.putExtra("layoutResourceId", R.layout.activity_cheatview_pager);
-                startActivity(explicitIntent);
+                intent.putExtra("selectedPage", result.getPosition());
+                intent.putExtra("layoutResourceId", R.layout.activity_cheatview_pager);
+                startActivity(intent);
             } else {
                 Toast.makeText(this, R.string.no_internet, Toast.LENGTH_SHORT).show();
             }

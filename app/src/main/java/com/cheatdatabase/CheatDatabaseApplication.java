@@ -16,13 +16,10 @@ import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.Tracker;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
-import org.androidannotations.annotations.EApplication;
-
 import java.util.TreeMap;
 
 import io.fabric.sdk.android.Fabric;
 
-@EApplication
 public class CheatDatabaseApplication extends Application implements Application.ActivityLifecycleCallbacks {
 
     private static final String TAG = CheatDatabaseApplication.class.getSimpleName();

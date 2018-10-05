@@ -41,25 +41,25 @@ import org.androidannotations.annotations.ViewById;
 @EActivity(R.layout.activity_submit_cheat_layout)
 public class SubmitCheatActivity extends AppCompatActivity {
 
-    @ViewById(R.id.text_cheat_submission_title)
+    @BindView(R.id.text_cheat_submission_title)
     TextView textCheatTitle;
 
-    @ViewById(R.id.edit_cheat_title)
+    @BindView(R.id.edit_cheat_title)
     EditText cheatTitle;
 
-    @ViewById(R.id.edit_cheat_text)
+    @BindView(R.id.edit_cheat_text)
     EditText cheatText;
 
-    @ViewById(R.id.checkbox_terms)
+    @BindView(R.id.checkbox_terms)
     CheckBox checkBoxTerms;
 
-    @ViewById(R.id.send_button)
+    @BindView(R.id.send_button)
     Button sendButton;
 
     @Extra
     Game gameObj;
 
-    @ViewById(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar mToolbar;
 
     @Bean

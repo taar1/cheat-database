@@ -50,25 +50,25 @@ public class RegisterActivity extends AppCompatActivity {
     private String mEmail;
     private String mUsername;
 
-    @ViewById(R.id.email)
+    @BindView(R.id.email)
     EditText mEmailView;
 
-    @ViewById(R.id.username)
+    @BindView(R.id.username)
     EditText mUsernameView;
 
-    @ViewById(R.id.login_form)
+    @BindView(R.id.login_form)
     View mLoginFormView;
 
-    @ViewById(R.id.send_status)
+    @BindView(R.id.send_status)
     View mLoginStatusView;
 
-    @ViewById(R.id.send_status_message)
+    @BindView(R.id.send_status_message)
     TextView mLoginStatusMessageView;
 
-    @ViewById(R.id.register_button)
+    @BindView(R.id.register_button)
     Button registerButton;
 
-    @ViewById(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar mToolbar;
 
     @Bean

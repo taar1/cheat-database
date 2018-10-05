@@ -53,13 +53,11 @@ import net.lucode.hackware.magicindicator.buildins.commonnavigator.indicators.Li
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.ColorTransitionPagerTitleView;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.SimplePagerTitleView;
 
-import org.androidannotations.annotations.Bean;
-import org.androidannotations.annotations.EBean;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.List;
 
 /**
  * Horizontal sliding through cheats submitted by member.
@@ -67,13 +65,9 @@ import java.util.Arrays;
  * @author Dominik Erbsland
  * @version 1.0
  */
-@EBean
 public class MemberCheatViewPageIndicator extends AppCompatActivity {
 
     private final String TAG = MemberCheatViewPageIndicator.class.getName();
-
-    @Bean
-    Tools tools;
 
     private Intent intent;
 
@@ -83,8 +77,6 @@ public class MemberCheatViewPageIndicator extends AppCompatActivity {
     private ArrayList<Cheat> cheatArrayList;
     private Cheat visibleCheat;
     private Game gameObj;
-
-//    private MoPubView mAdView;
 
     private SharedPreferences settings;
     private Editor editor;
@@ -117,12 +109,11 @@ public class MemberCheatViewPageIndicator extends AppCompatActivity {
         init();
 
         try {
-            Cheat[] cheatObjX = new Gson().fromJson(settings.getString(Konstanten.PREFERENCES_TEMP_CHEAT_ARRAY_OBJECT_VIEW, null), Cheat[].class);
-
-            cheatArrayList = new ArrayList<>(Arrays.asList(cheatObjX));
+            // TODO FIXME hier noch die LIST holen korrekt von den local settings.... (war bisher Cheat[]
+            cheatArrayList = new Gson().fromJson(settings.getString(Konstanten.PREFERENCES_TEMP_CHEAT_ARRAY_OBJECT_VIEW, null), List<Cheat>.class);
 
             if (cheatArrayList == null) {
-                cheatArrayList = (ArrayList<Cheat>) intent.getSerializableExtra("cheatArrayList");
+                cheatArrayList = getIntent().getParcelableArrayListExtra("cheatArrayList");
             }
             pageSelected = intent.getIntExtra("selectedPage", 0);
             activePage = pageSelected;

@@ -997,21 +997,20 @@ public class Webservice {
     }
 
     /**
-     * Holt alle eingeschickten Cheats von einem Member.
+     * Loads all cheats from the member.
      *
      * @param memberId
-     * @return Cheat[]
+     * @return
      */
-    public static Cheat[] getCheatsByMemberId(int memberId) {
-        Cheat[] cheats = null;
-        JSONArray jArray = null;
+    public static List<Cheat> getCheatsByMemberId(int memberId) {
+        List<Cheat> cheats = new ArrayList<>();
+        JSONArray jArray;
 
         try {
             String urlParameters = "memberId=" + URLEncoder.encode(String.valueOf(memberId), "UTF-8");
             String cheatsString = excutePost(Konstanten.BASE_URL_ANDROID + "getCheatsByMemberId.php", urlParameters);
 
             jArray = new JSONArray(cheatsString);
-            cheats = new Cheat[jArray.length()];
 
             for (int i = 0; i < jArray.length(); i++) {
 
@@ -1032,7 +1031,7 @@ public class Webservice {
                 Cheat cheat = new Cheat();
 
                 /*
-                 * Screenshot-Informationen auslesen
+                 * Read the screenshot informationen
                  */
                 JSONArray screenshots = jsonObject.getJSONArray("screenshots");
                 Screenshot[] screens = new Screenshot[screenshots.length()];
@@ -1065,11 +1064,11 @@ public class Webservice {
                 cheat.setSystemId(systemId);
                 cheat.setSystemName(systemName);
 
-                cheats[i] = cheat;
+                cheats.add(cheat);
             }
 
         } catch (JSONException | UnsupportedEncodingException e) {
-            Log.e(TAG, "JSONException | UnsupportedEncodingException: " + e.getLocalizedMessage());
+            Log.e(TAG, e.getLocalizedMessage());
         }
 
         return cheats;
@@ -1178,6 +1177,7 @@ public class Webservice {
 
     /**
      * Loads the forum thread from one cheat.
+     *
      * @param cheatId
      * @return
      */

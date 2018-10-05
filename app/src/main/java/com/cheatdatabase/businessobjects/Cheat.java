@@ -1,6 +1,8 @@
 package com.cheatdatabase.businessobjects;
 
 import android.os.Environment;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.util.Log;
 
 import com.cheatdatabase.helpers.Konstanten;
@@ -18,7 +20,7 @@ import java.util.Date;
  * @author Dominik Erbsland
  * @since 2010
  */
-public class Cheat extends Game implements Serializable {
+public class Cheat extends Game implements Serializable, Parcelable {
 
     private String cheatTitle, cheatText, created, author;
     private Member submittingMember;
@@ -240,5 +242,15 @@ public class Cheat extends Game implements Serializable {
 
     public void setForumCount(int forumCount) {
         this.forumCount = forumCount;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+
     }
 }

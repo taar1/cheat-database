@@ -56,19 +56,19 @@ public class FavoriteGamesListFragment extends Fragment {
 
     private Activity parentActivity;
 
-    @ViewById(R.id.listView)
+    @BindView(R.id.listView)
     ExpandableListView listView;
 
-    @ViewById(R.id.somethingfound_layout)
+    @BindView(R.id.somethingfound_layout)
     RelativeLayout somethingfoundLayout;
 
-    @ViewById(R.id.nothingfound_layout)
+    @BindView(R.id.nothingfound_layout)
     LinearLayout nothingFoundLayout;
 
-    @ViewById(R.id.nothingfound_title)
+    @BindView(R.id.nothingfound_title)
     TextView nothingFoundTitle;
 
-    @ViewById(R.id.nothingfound_text)
+    @BindView(R.id.nothingfound_text)
     TextView nothingFoundText;
 
     @FragmentArg(MainActivity.DRAWER_ITEM_ID)

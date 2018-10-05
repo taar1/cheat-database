@@ -58,31 +58,31 @@ public class LoginActivity extends AppCompatActivity implements AlreadyLoggedInD
     private String mEmail;
     private String mPassword;
 
-    @ViewById(R.id.email)
+    @BindView(R.id.email)
     EditText mEmailView;
 
-    @ViewById(R.id.password)
+    @BindView(R.id.password)
     EditText mPasswordView;
 
-    @ViewById(R.id.login_form)
+    @BindView(R.id.login_form)
     View mLoginFormView;
 
-    @ViewById(R.id.send_status)
+    @BindView(R.id.send_status)
     View mLoginStatusView;
 
-    @ViewById(R.id.send_status_message)
+    @BindView(R.id.send_status_message)
     TextView mLoginStatusMessageView;
 
-    @ViewById(R.id.txt_send_login)
+    @BindView(R.id.txt_send_login)
     TextView mForgotPassword;
 
-    @ViewById(R.id.login_button)
+    @BindView(R.id.login_button)
     Button loginButton;
 
-    @ViewById(R.id.cancel_button)
+    @BindView(R.id.cancel_button)
     Button cancelButton;
 
-    @ViewById(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar mToolbar;
 
     @Bean

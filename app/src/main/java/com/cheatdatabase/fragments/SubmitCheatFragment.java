@@ -26,13 +26,13 @@ public class SubmitCheatFragment extends Fragment {
     private Typeface latoFontLight;
     private Typeface latoFontBold;
 
-    @ViewById(R.id.title)
+    @BindView(R.id.title)
     TextView mTitle;
 
-    @ViewById(R.id.subtitle)
+    @BindView(R.id.subtitle)
     TextView mSubtitle;
 
-    @ViewById(R.id.search_button)
+    @BindView(R.id.search_button)
     Button mSearchButton;
 
     @FragmentArg(MainActivity.DRAWER_ITEM_ID)

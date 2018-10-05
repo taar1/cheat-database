@@ -32,19 +32,19 @@ import org.androidannotations.annotations.ViewById;
 @EFragment(R.layout.fragment_welcome_view)
 public class NewsFragment extends Fragment {
 
-    @ViewById(R.id.progress_bar)
+    @BindView(R.id.progress_bar)
     ProgressBar progressBar;
 
-    @ViewById(R.id.reload)
+    @BindView(R.id.reload)
     ImageView reloadView;
 
-    @ViewById(R.id.text_welcome_title)
+    @BindView(R.id.text_welcome_title)
     TextView welcomeTitle;
 
-    @ViewById(R.id.text_created)
+    @BindView(R.id.text_created)
     TextView createdTitle;
 
-    @ViewById(R.id.text_welcome_text)
+    @BindView(R.id.text_welcome_text)
     TextView welcomeText;
 
     @FragmentArg(MainActivity.DRAWER_ITEM_ID)

@@ -65,16 +65,16 @@ public class GamesBySystemListActivity extends AppCompatActivity {
     @Pref
     MyPrefs_ myPrefs;
 
-    @ViewById(R.id.my_recycler_view)
+    @BindView(R.id.my_recycler_view)
     FastScrollRecyclerView mRecyclerView;
-    @ViewById(R.id.swipe_refresh_layout)
+    @BindView(R.id.swipe_refresh_layout)
     SwipeRefreshLayout mSwipeRefreshLayout;
-    @ViewById(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar mToolbar;
-    @ViewById(R.id.item_list_empty_view)
+    @BindView(R.id.item_list_empty_view)
     TextView mEmptyView;
 
-    @ViewById(R.id.banner_container)
+    @BindView(R.id.banner_container)
     LinearLayout facebookBanner;
     private AdView adView;
 

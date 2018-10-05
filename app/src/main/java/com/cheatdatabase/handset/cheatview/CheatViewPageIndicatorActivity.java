@@ -26,6 +26,7 @@ import android.widget.Toast;
 import com.cheatdatabase.CheatForumActivity;
 import com.cheatdatabase.LoginActivity_;
 import com.cheatdatabase.R;
+import com.cheatdatabase.SubmitCheatActivity;
 import com.cheatdatabase.SubmitCheatActivity_;
 import com.cheatdatabase.businessobjects.Cheat;
 import com.cheatdatabase.businessobjects.Game;
@@ -53,8 +54,6 @@ import net.lucode.hackware.magicindicator.buildins.commonnavigator.indicators.Li
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.ColorTransitionPagerTitleView;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.SimplePagerTitleView;
 
-import org.androidannotations.annotations.Bean;
-import org.androidannotations.annotations.EBean;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
@@ -67,13 +66,9 @@ import java.util.List;
  * @author Dominik Erbsland
  * @version 1.0
  */
-@EBean
 public class CheatViewPageIndicatorActivity extends AppCompatActivity {
 
     private static final String TAG = CheatViewPageIndicatorActivity.class.getSimpleName();
-
-    @Bean
-    Tools tools;
 
     private Intent intent;
 
@@ -129,9 +124,6 @@ public class CheatViewPageIndicatorActivity extends AppCompatActivity {
         pageSelected = intent.getIntExtra("selectedPage", 0);
         activePage = pageSelected;
 
-        // TODO FIXME hier crasht es beim zurück und vorwärts browsen...
-        // TODO FIXME hier crasht es beim zurück und vorwärts browsen...
-        // TODO FIXME hier crasht es beim zurück und vorwärts browsen...
         for (Cheat cheat : gameObj.getCheats()) {
             cheatArray.add(cheat);
         }
@@ -155,7 +147,7 @@ public class CheatViewPageIndicatorActivity extends AppCompatActivity {
         settings = getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
         editor = settings.edit();
 
-        mToolbar = tools.initToolbarBase(this, mToolbar);
+        mToolbar = Tools.initToolbarBase(this, mToolbar);
 
         facebookBanner = findViewById(R.id.banner_container);
         adView = new AdView(this, Konstanten.FACEBOOK_AUDIENCE_NETWORK_NATIVE_BANNER_ID, AdSize.BANNER_HEIGHT_50);
@@ -242,7 +234,9 @@ public class CheatViewPageIndicatorActivity extends AppCompatActivity {
             fa.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    SubmitCheatActivity_.intent(CheatViewPageIndicatorActivity.this).gameObj(gameObj).start();
+                    Intent explicitIntent = new Intent(CheatViewPageIndicatorActivity.this, SubmitCheatActivity.class);
+                    explicitIntent.putExtra("gameObj", gameObj);
+                    startActivity(explicitIntent);
                 }
             });
         } catch (Exception e2) {
@@ -375,11 +369,11 @@ public class CheatViewPageIndicatorActivity extends AppCompatActivity {
                 return true;
             case R.id.action_logout:
                 member = null;
-                tools.logout(CheatViewPageIndicatorActivity.this, editor);
+                Tools.logout(CheatViewPageIndicatorActivity.this, editor);
                 invalidateOptionsMenu();
                 return true;
             case R.id.action_share:
-                setShareIntent(tools.setShareText(CheatViewPageIndicatorActivity.this, visibleCheat));
+                setShareIntent(Tools.setShareText(CheatViewPageIndicatorActivity.this, visibleCheat));
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
