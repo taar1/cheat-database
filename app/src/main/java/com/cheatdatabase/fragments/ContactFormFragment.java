@@ -3,25 +3,27 @@ package com.cheatdatabase.fragments;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
-import android.support.v4.app.Fragment;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
+import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.text.util.Linkify;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.cheatdatabase.MainActivity;
 import com.cheatdatabase.R;
 import com.cheatdatabase.businessobjects.Member;
 import com.cheatdatabase.events.GenericEvent;
@@ -31,15 +33,13 @@ import com.cheatdatabase.helpers.Tools;
 import com.cheatdatabase.helpers.Webservice;
 import com.google.gson.Gson;
 
-import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Background;
-import org.androidannotations.annotations.EFragment;
-import org.androidannotations.annotations.FragmentArg;
 import org.androidannotations.annotations.UiThread;
-import org.androidannotations.annotations.ViewById;
 import org.greenrobot.eventbus.EventBus;
 
-@EFragment(R.layout.fragment_contact_form)
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class ContactFormFragment extends Fragment {
 
     @BindView(R.id.outer_layout)
@@ -61,11 +61,6 @@ public class ContactFormFragment extends Fragment {
     @BindView(R.id.thank_you)
     View mThankyouView;
 
-    @FragmentArg(MainActivity.DRAWER_ITEM_ID)
-    int mDrawerId;
-    @FragmentArg(MainActivity.DRAWER_ITEM_NAME)
-    String mDrawerName;
-
     /**
      * The default email to populate the email field with.
      */
@@ -76,11 +71,11 @@ public class ContactFormFragment extends Fragment {
 
     private boolean isFormSent = false;
 
-    public ContactFormFragment() {
-    }
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_contact_form, container, false);
+        ButterKnife.bind(this, view);
 
-    @AfterViews
-    public void onCreateView() {
         if (!Reachability.isRegistered()) {
             Reachability.registerReachability(getActivity());
         }
@@ -124,6 +119,8 @@ public class ContactFormFragment extends Fragment {
         // TODO FIXME keyboard anzeigen
         // TODO FIXME keyboard anzeigen
 //        Tools.showKeyboard(getActivity(), outerLayout);
+
+        return view;
     }
 
     @Override

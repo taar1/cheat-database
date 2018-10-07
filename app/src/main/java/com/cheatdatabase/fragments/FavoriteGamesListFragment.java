@@ -2,15 +2,19 @@ package com.cheatdatabase.fragments;
 
 import android.app.Activity;
 import android.graphics.Typeface;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.util.SparseArray;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ExpandableListView;
 import android.widget.ExpandableListView.ExpandableListContextMenuInfo;
 import android.widget.LinearLayout;
@@ -18,21 +22,13 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.cheatdatabase.MainActivity;
 import com.cheatdatabase.R;
 import com.cheatdatabase.businessobjects.Game;
-import com.cheatdatabase.businessobjects.SystemPlatform;
 import com.cheatdatabase.favorites.cheatview.FavoritesExpandableListAdapter;
 import com.cheatdatabase.helpers.CheatDatabaseAdapter;
 import com.cheatdatabase.helpers.Group;
 import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Tools;
-
-import org.androidannotations.annotations.AfterViews;
-import org.androidannotations.annotations.EFragment;
-import org.androidannotations.annotations.FragmentArg;
-import org.androidannotations.annotations.UiThread;
-import org.androidannotations.annotations.ViewById;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -40,12 +36,13 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-@EFragment(R.layout.fragment_favorites_main_list)
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import needle.Needle;
+
 public class FavoriteGamesListFragment extends Fragment {
 
     SparseArray<Group> groups = new SparseArray<>();
-
-    protected SystemPlatform systemObj;
 
     private FavoritesExpandableListAdapter adapter;
 
@@ -58,44 +55,30 @@ public class FavoriteGamesListFragment extends Fragment {
 
     @BindView(R.id.listView)
     ExpandableListView listView;
-
     @BindView(R.id.somethingfound_layout)
     RelativeLayout somethingfoundLayout;
-
     @BindView(R.id.nothingfound_layout)
     LinearLayout nothingFoundLayout;
-
     @BindView(R.id.nothingfound_title)
     TextView nothingFoundTitle;
-
     @BindView(R.id.nothingfound_text)
     TextView nothingFoundText;
 
-    @FragmentArg(MainActivity.DRAWER_ITEM_ID)
-    int mDrawerId;
-
-    @FragmentArg(MainActivity.DRAWER_ITEM_NAME)
-    String mDrawerName;
-
-    private static final String SCREEN_LABEL = "Favorites Main Screen";
-
     private final int REMOVE_FROM_FAVORITES = 1;
+    private Typeface latoFontLight;
+    private Typeface latoFontBold;
 
-    @AfterViews
-    public void createView() {
-        parentActivity = getActivity();
-
-        Typeface latoFontLight = Tools.getFont(parentActivity.getAssets(), Konstanten.FONT_LIGHT);
-        Typeface latoFontBold = Tools.getFont(parentActivity.getAssets(), Konstanten.FONT_BOLD);
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_favorites_main_list, container, false);
+        ButterKnife.bind(this, view);
 
         db = new CheatDatabaseAdapter(parentActivity);
         db.open();
 
-        //CheatDatabaseApplication.tracker().send(new HitBuilders.EventBuilder("ui", "User Favorites").setLabel("activity").build());
         adapter = new FavoritesExpandableListAdapter(parentActivity, groups);
 
         // TODO FIXME CONTEXT MENU DOES NOT WORK YET
-
         // Update action bar menu items?
         setHasOptionsMenu(true);
 
@@ -103,25 +86,33 @@ public class FavoriteGamesListFragment extends Fragment {
         nothingFoundText.setTypeface(latoFontLight);
 
         listView.setAdapter(adapter);
-        getViewContent();
-
         registerForContextMenu(listView);
+
+        loadGames();
+
+        return view;
     }
 
-    private void getViewContent() {
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
-        new Thread(new Runnable() {
+        parentActivity = getActivity();
 
-            @Override
-            public void run() {
-                gamesFound = db.getAllFavoritedGames();
+        latoFontLight = Tools.getFont(parentActivity.getAssets(), Konstanten.FONT_LIGHT);
+        latoFontBold = Tools.getFont(parentActivity.getAssets(), Konstanten.FONT_BOLD);
+    }
 
-                Message msg = Message.obtain();
-                msg.what = STEP_ONE_COMPLETE;
-                handler.sendMessage(msg);
+    private void loadGames() {
 
-                createData();
-            }
+        new Thread(() -> {
+            gamesFound = db.getAllFavoritedGames();
+
+            Message msg = Message.obtain();
+            msg.what = STEP_ONE_COMPLETE;
+            handler.sendMessage(msg);
+
+            createData();
         }).start();
 
     }
@@ -134,7 +125,7 @@ public class FavoriteGamesListFragment extends Fragment {
 //
 //            somethingfoundLayout.setVisibility(View.GONE);
 //            nothingFoundLayout.setVisibility(View.VISIBLE);
-            changeView();
+            updateUI();
         } else {
             if ((gamesFound != null) && (gamesFound.length > 0)) {
                 Set<String> systems = new HashSet<>();
@@ -168,11 +159,12 @@ public class FavoriteGamesListFragment extends Fragment {
 
     }
 
-    @UiThread
-    public void changeView() {
-        nothingFoundText.setText(R.string.favorite_empty);
-        somethingfoundLayout.setVisibility(View.GONE);
-        nothingFoundLayout.setVisibility(View.VISIBLE);
+    public void updateUI() {
+        Needle.onMainThread().execute(() -> {
+            nothingFoundText.setText(R.string.favorite_empty);
+            somethingfoundLayout.setVisibility(View.GONE);
+            nothingFoundLayout.setVisibility(View.VISIBLE);
+        });
     }
 
     private Handler handler = new Handler() {
@@ -240,7 +232,7 @@ public class FavoriteGamesListFragment extends Fragment {
      */
     private void removeFavorite() {
         if (db.deleteCheats(selectedGame)) {
-            Toast.makeText(parentActivity, getString(R.string.remove_favorites_ok, "'" + selectedGame.getGameName() + "'"), Toast.LENGTH_SHORT).show();
+            Toast.makeText(parentActivity, getString(R.string.remove_favorites_ok), Toast.LENGTH_SHORT).show();
 
             // TODO liste neu laden
             gamesFound = db.getAllFavoritedGames();
@@ -253,7 +245,7 @@ public class FavoriteGamesListFragment extends Fragment {
     public void onResume() {
         super.onResume();
         listView.setAdapter(adapter);
-        getViewContent();
+        loadGames();
         adapter.notifyDataSetChanged();
     }
 

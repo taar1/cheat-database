@@ -1,20 +1,22 @@
 package com.cheatdatabase.fragments;
 
 import android.app.Activity;
-import android.support.v4.app.Fragment;
 import android.graphics.Typeface;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.text.Html;
 import android.text.Spanned;
 import android.text.util.Linkify;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.cheatdatabase.MainActivity;
 import com.cheatdatabase.R;
 import com.cheatdatabase.businessobjects.WelcomeMessage;
 import com.cheatdatabase.helpers.Konstanten;
@@ -22,46 +24,32 @@ import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.helpers.Tools;
 import com.cheatdatabase.helpers.Webservice;
 
-import org.androidannotations.annotations.AfterViews;
-import org.androidannotations.annotations.Background;
-import org.androidannotations.annotations.EFragment;
-import org.androidannotations.annotations.FragmentArg;
-import org.androidannotations.annotations.UiThread;
-import org.androidannotations.annotations.ViewById;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import needle.Needle;
 
-@EFragment(R.layout.fragment_welcome_view)
 public class NewsFragment extends Fragment {
 
     @BindView(R.id.progress_bar)
     ProgressBar progressBar;
-
     @BindView(R.id.reload)
     ImageView reloadView;
-
     @BindView(R.id.text_welcome_title)
     TextView welcomeTitle;
-
     @BindView(R.id.text_created)
     TextView createdTitle;
-
     @BindView(R.id.text_welcome_text)
     TextView welcomeText;
-
-    @FragmentArg(MainActivity.DRAWER_ITEM_ID)
-    int mDrawerId;
-
-    @FragmentArg(MainActivity.DRAWER_ITEM_NAME)
-    String mDrawerName;
 
     private Typeface latoFontBold;
     private Typeface latoFontLight;
     private Activity parentActivity;
 
-    public NewsFragment() {
-    }
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_welcome_view, container, false);
+        ButterKnife.bind(this, view);
 
-    @AfterViews
-    public void onCreateView() {
         parentActivity = getActivity();
         if (!Reachability.isRegistered()) {
             Reachability.registerReachability(parentActivity);
@@ -88,6 +76,8 @@ public class NewsFragment extends Fragment {
         });
 
         getWelcomeMessage();
+
+        return view;
     }
 
     @Override
@@ -108,33 +98,35 @@ public class NewsFragment extends Fragment {
         menu.clear();
     }
 
-    @Background
     void getWelcomeMessage() {
-        if (Reachability.reachability.isReachable) {
-            updateUI(Webservice.getWelcomeMessage());
-        } else {
-            updateUI(null);
-        }
+        Needle.onBackgroundThread().execute(() -> {
+            if (Reachability.reachability.isReachable) {
+                updateUI(Webservice.getWelcomeMessage());
+            } else {
+                updateUI(null);
+            }
+        });
     }
 
-    @UiThread
     void updateUI(WelcomeMessage welcomeMessage) {
-        if (welcomeMessage != null) {
-            welcomeTitle.setText(welcomeMessage.getTitle());
-            welcomeTitle.setVisibility(View.VISIBLE);
+        Needle.onMainThread().execute(() -> {
+            if (welcomeMessage != null) {
+                welcomeTitle.setText(welcomeMessage.getTitle());
+                welcomeTitle.setVisibility(View.VISIBLE);
 
-            createdTitle.setText(Tools.convertDateToLocaleDateFormat(welcomeMessage.getCreated(), parentActivity));
+                createdTitle.setText(Tools.convertDateToLocaleDateFormat(welcomeMessage.getCreated(), parentActivity));
 
-            Spanned spanned = Html.fromHtml(welcomeMessage.getWelcomeMessage());
-            welcomeText.setText(spanned);
-            welcomeText.setVisibility(View.VISIBLE);
-            Linkify.addLinks(welcomeText, Linkify.ALL);
-            reloadView.setVisibility(View.GONE);
-        } else {
-            Toast.makeText(parentActivity, R.string.no_internet, Toast.LENGTH_SHORT).show();
-            reloadView.setVisibility(View.VISIBLE);
-        }
-        progressBar.setVisibility(View.GONE);
+                Spanned spanned = Html.fromHtml(welcomeMessage.getWelcomeMessage());
+                welcomeText.setText(spanned);
+                welcomeText.setVisibility(View.VISIBLE);
+                Linkify.addLinks(welcomeText, Linkify.ALL);
+                reloadView.setVisibility(View.GONE);
+            } else {
+                Toast.makeText(parentActivity, R.string.no_internet, Toast.LENGTH_SHORT).show();
+                reloadView.setVisibility(View.VISIBLE);
+            }
+            progressBar.setVisibility(View.GONE);
+        });
     }
 
 }

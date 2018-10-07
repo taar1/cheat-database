@@ -34,6 +34,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
+import butterknife.BindView;
+
 @EFragment(R.layout.fragment_systemlist)
 public class SystemListFragment extends Fragment {
     private final String TAG = SystemListFragment.class.getSimpleName();
@@ -52,8 +54,6 @@ public class SystemListFragment extends Fragment {
     @FragmentArg(MainActivity.DRAWER_ITEM_NAME)
     String mDrawerName;
 
-    @Bean
-    Tools tools;
     @Bean
     SystemsRecycleListViewAdapter mSystemsRecycleListViewAdapter;
     @Bean

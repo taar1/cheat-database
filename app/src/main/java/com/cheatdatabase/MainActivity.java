@@ -11,7 +11,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.SearchRecentSuggestions;
 import android.support.annotation.NonNull;
-import android.support.annotation.UiThread;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentTransaction;
@@ -28,21 +28,19 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.afollestad.materialdialogs.DialogAction;
-import com.afollestad.materialdialogs.MaterialDialog;
-import com.afollestad.materialdialogs.Theme;
 import com.appbrain.AppBrain;
 import com.cheatdatabase.businessobjects.Member;
 import com.cheatdatabase.dialogs.RateAppDialog;
 import com.cheatdatabase.events.GenericEvent;
 import com.cheatdatabase.fragments.ContactFormFragment_;
+import com.cheatdatabase.fragments.FavoriteGamesListFragment;
 import com.cheatdatabase.fragments.FavoriteGamesListFragment_;
+import com.cheatdatabase.fragments.SubmitCheatFragment;
 import com.cheatdatabase.fragments.SubmitCheatFragment_;
 import com.cheatdatabase.fragments.SystemListFragment_;
 import com.cheatdatabase.fragments.TopMembersFragment;
 import com.cheatdatabase.helpers.DistinctValues;
 import com.cheatdatabase.helpers.Konstanten;
-import com.cheatdatabase.helpers.MyPrefs_;
 import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.helpers.Tools;
 import com.cheatdatabase.helpers.TrackingUtils;
@@ -51,29 +49,17 @@ import com.facebook.ads.AdSize;
 import com.facebook.ads.AdView;
 import com.google.gson.Gson;
 
-import org.androidannotations.annotations.AfterViews;
-import org.androidannotations.annotations.Bean;
-import org.androidannotations.annotations.Click;
-import org.androidannotations.annotations.EActivity;
-import org.androidannotations.annotations.Extra;
-import org.androidannotations.annotations.OnActivityResult;
-import org.androidannotations.annotations.ViewById;
-import org.androidannotations.annotations.sharedpreferences.Pref;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
-@EActivity(R.layout.activity_main)
+import butterknife.BindView;
+import butterknife.OnClick;
+
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private static final String TAG = MainActivity.class.getSimpleName();
 
-    @Bean
-    Tools tools;
-    @Pref
-    MyPrefs_ myPrefs;
-
-    @Extra
-    int mFragmentId;
+    private int mFragmentId;
 
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
@@ -83,6 +69,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     NavigationView navigationView;
     @BindView(R.id.add_new_cheat_button)
     FloatingActionButton fab;
+    @BindView(R.id.banner_container)
+    LinearLayout facebookBanner;
+    private AdView adView;
 
     public static final String DRAWER_ITEM_ID = "drawerId";
     public static final String DRAWER_ITEM_NAME = "drawerName";
@@ -97,10 +86,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private SearchManager searchManager;
     private SearchView searchView;
 
-    @BindView(R.id.banner_container)
-    LinearLayout facebookBanner;
-    private AdView adView;
-
 //    private FirebaseRemoteConfig mFirebaseRemoteConfig;
 
     // Remote Config keys
@@ -110,10 +95,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private android.support.v4.app.FragmentManager fragmentManager;
     private FragmentTransaction ft;
 
-    @AfterViews
-    public void createView() {
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        mFragmentId = getIntent().getIntExtra("mFragmentId", 0);
+
         init();
-        showAchievementsDialog();
 
         if (mToolbar != null) {
             setSupportActionBar(mToolbar);
@@ -197,7 +185,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 //                });
     }
 
-    @Click(R.id.add_new_cheat_button)
+    @OnClick(R.id.add_new_cheat_button)
     void clickedAddNewCheatFloatingButton() {
         mToolbar.setTitle(R.string.submit_cheat_short);
         fragmentManager.beginTransaction().replace(R.id.content_frame, SubmitCheatFragment_.builder().build()).commit();
@@ -301,12 +289,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 Toast.makeText(MainActivity.this, R.string.search_history_cleared, Toast.LENGTH_LONG).show();
                 return true;
             case R.id.action_login:
-                Intent loginIntent = new Intent(MainActivity.this, LoginActivity_.class);
+                Intent loginIntent = new Intent(MainActivity.this, LoginActivity.class);
                 startActivityForResult(loginIntent, Konstanten.LOGIN_REGISTER_OK_RETURN_CODE);
                 return true;
             case R.id.action_logout:
                 member = null;
-                tools.logout(MainActivity.this, settings.edit());
+                Tools.logout(MainActivity.this, settings.edit());
                 invalidateOptionsMenu();
                 return true;
             default:
@@ -328,17 +316,30 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
-    @OnActivityResult(Konstanten.LOGIN_SUCCESS_RETURN_CODE)
-    void onResult(int resultCode, Intent data) {
+//    @OnActivityResult(Konstanten.LOGIN_SUCCESS_RETURN_CODE)
+//    void onResult(int resultCode, Intent data) {
+//        member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
+//        Toast.makeText(MainActivity.this, R.string.login_ok, Toast.LENGTH_LONG).show();
+//    }
+//
+//    @OnActivityResult(Konstanten.REGISTER_SUCCESS_RETURN_CODE)
+//    void onResult(int resultCode) {
+//        member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
+//        Toast.makeText(MainActivity.this, R.string.register_thanks, Toast.LENGTH_LONG).show();
+//    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
-        Toast.makeText(MainActivity.this, R.string.login_ok, Toast.LENGTH_LONG).show();
+
+        if (resultCode == Konstanten.LOGIN_SUCCESS_RETURN_CODE) {
+            Toast.makeText(MainActivity.this, R.string.login_ok, Toast.LENGTH_LONG).show();
+        } else if (resultCode == Konstanten.REGISTER_SUCCESS_RETURN_CODE) {
+            Toast.makeText(MainActivity.this, R.string.register_thanks, Toast.LENGTH_LONG).show();
+        }
     }
 
-    @OnActivityResult(Konstanten.REGISTER_SUCCESS_RETURN_CODE)
-    void onResult(int resultCode) {
-        member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
-        Toast.makeText(MainActivity.this, R.string.register_thanks, Toast.LENGTH_LONG).show();
-    }
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
@@ -377,25 +378,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
-    @UiThread
-    private void showAchievementsDialog() {
-        if (!myPrefs.isSeenAchievementsDialog().getOr(false)) {
-            MaterialDialog md = new MaterialDialog.Builder(this)
-                    .title(R.string.new_feature)
-                    .content(R.string.disable_achievements_text)
-                    .positiveText(R.string.ok)
-                    .onPositive(new MaterialDialog.SingleButtonCallback() {
-                        @Override
-                        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                            myPrefs.edit().isSeenAchievementsDialog().put(true).apply();
-                        }
-                    })
-                    .theme(Theme.DARK)
-                    .cancelable(false)
-                    .show();
-        }
-    }
-
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         // Handle navigation view item clicks here.
@@ -405,7 +387,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             showGameSystemsFragment();
         } else if (id == R.id.nav_favorites) {
             mToolbar.setTitle(R.string.favorites);
-            fragmentManager.beginTransaction().replace(R.id.content_frame, FavoriteGamesListFragment_.builder().build()).commit();
+            fragmentManager.beginTransaction().replace(R.id.content_frame, FavoriteGamesListFragment.builder().build()).commit();
             fab.setVisibility(View.VISIBLE);
         } else if (id == R.id.nav_members) {
             mToolbar.setTitle(R.string.top_members_top_helping);
@@ -423,12 +405,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             return true;
         } else if (id == R.id.nav_submit) {
             mToolbar.setTitle(R.string.submit_cheat_short);
-            fragmentManager.beginTransaction().replace(R.id.content_frame, SubmitCheatFragment_.builder().build()).commit();
+            fragmentManager.beginTransaction().replace(R.id.content_frame, SubmitCheatFragment.builder().build()).commit();
             fab.setVisibility(View.GONE);
         } else if (id == R.id.nav_contact) {
             showContactFormFragment();
         } else if (id == R.id.nav_settings) {
-            SettingsActivity_.intent(this).start();
+            startActivity(new Intent(MainActivity.this, AppPreferencesActivity.class));
             mDrawerLayout.closeDrawers();
         } else if (id == R.id.nav_more_apps) {
             Uri uri = Uri.parse(DistinctValues.URL_MORE_APPS);

@@ -2,9 +2,14 @@ package com.cheatdatabase.fragments;
 
 import android.app.Activity;
 import android.graphics.Typeface;
+import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -19,6 +24,8 @@ import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.FragmentArg;
 import org.androidannotations.annotations.ViewById;
 
+import butterknife.BindView;
+
 @EFragment(R.layout.activity_submit_cheat_game_selection)
 public class SubmitCheatFragment extends Fragment {
 
@@ -28,21 +35,16 @@ public class SubmitCheatFragment extends Fragment {
 
     @BindView(R.id.title)
     TextView mTitle;
-
     @BindView(R.id.subtitle)
     TextView mSubtitle;
-
     @BindView(R.id.search_button)
     Button mSearchButton;
 
-    @FragmentArg(MainActivity.DRAWER_ITEM_ID)
-    int mDrawerId;
 
-    @FragmentArg(MainActivity.DRAWER_ITEM_NAME)
-    String mDrawerName;
-
-    @AfterViews
-    public void onCreateView() {
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        return super.onCreateView(inflater, container, savedInstanceState);
         ca = getActivity();
 
         if (!Reachability.isRegistered()) {
