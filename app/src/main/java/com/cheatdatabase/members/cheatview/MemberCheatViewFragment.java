@@ -49,9 +49,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.ArrayList;
+import java.util.List;
+
+import needle.Needle;
 
 public class MemberCheatViewFragment extends Fragment {
+    private static final String TAG = MemberCheatViewFragment.class.getSimpleName();
+
     private TableLayout mainTable;
     private LinearLayout ll;
     private TextView tvCheatText;
@@ -62,7 +66,7 @@ public class MemberCheatViewFragment extends Fragment {
     private int biggestHeight;
 
     private Cheat cheatObj;
-    private ArrayList<Cheat> cheats;
+    private List<Cheat> cheats;
     private int offset;
     private ImageView[] imageViews;
     private ProgressBar progressBar;
@@ -74,41 +78,42 @@ public class MemberCheatViewFragment extends Fragment {
     public AlertDialog.Builder builder;
     public AlertDialog alert;
 
-    private static final String KEY_CONTENT = "MemberCheatViewFragment:Content";
-    private static final String TAG = MemberCheatViewFragment.class.getSimpleName();
+    //    private String mContent = "???";
+    private Typeface latoFontBold;
+    private Typeface latoFontLight;
+    private MemberCheatViewPageIndicator cheatViewPageIndicator;
 
-    public static MemberCheatViewFragment newInstance(String content, ArrayList<Cheat> cheats, int offset) {
+    private static final String KEY_CONTENT = "MemberCheatViewFragment:Content";
+
+    public static MemberCheatViewFragment newInstance(String content, List<Cheat> cheats, int offset) {
 
         MemberCheatViewFragment fragment = new MemberCheatViewFragment();
+        fragment.cheats = cheats;
+        fragment.offset = offset;
 
-        // übergebene Parameter ins Bundle Objekt eintragen
-        Bundle arguments = new Bundle();
-        arguments.putSerializable("cheatObj", cheats);
-        arguments.putInt("offset", offset);
-        fragment.setArguments(arguments);
-
-        StringBuilder builder = new StringBuilder();
-        for (int i = 0; i < 20; i++) {
-            builder.append(content).append(" ");
-        }
-        builder.deleteCharAt(builder.length() - 1);
-        fragment.mContent = builder.toString();
+//        Bundle arguments = new Bundle();
+//        arguments.putSerializable("cheatObj", cheats);
+//        arguments.putInt("offset", offset);
+//        fragment.setArguments(arguments);
+//
+//        StringBuilder builder = new StringBuilder();
+//        for (int i = 0; i < 20; i++) {
+//            builder.append(content).append(" ");
+//        }
+//        builder.deleteCharAt(builder.length() - 1);
+//        fragment.mContent = builder.toString();
 
         return fragment;
     }
 
-    private String mContent = "???";
-    private Typeface latoFontBold;
-    private Typeface latoFontLight;
-    private MemberCheatViewPageIndicator cheatViewPageIndicator;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if ((savedInstanceState != null) && savedInstanceState.containsKey(KEY_CONTENT)) {
-            mContent = savedInstanceState.getString(KEY_CONTENT);
-        }
+//        if ((savedInstanceState != null) && savedInstanceState.containsKey(KEY_CONTENT)) {
+//            mContent = savedInstanceState.getString(KEY_CONTENT);
+//        }
 
         cheatViewPageIndicator = (MemberCheatViewPageIndicator) getActivity();
 
@@ -119,16 +124,16 @@ public class MemberCheatViewFragment extends Fragment {
         editor = settings.edit();
     }
 
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putString(KEY_CONTENT, mContent);
-    }
+//    @Override
+//    public void onSaveInstanceState(Bundle outState) {
+//        super.onSaveInstanceState(outState);
+//        outState.putString(KEY_CONTENT, mContent);
+//    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        getFragmentRelevantData();
+//        getFragmentRelevantData();
 
         try {
             ll = (LinearLayout) inflater.inflate(R.layout.fragment_member_cheat_detail, container, false);
@@ -136,7 +141,8 @@ public class MemberCheatViewFragment extends Fragment {
             member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
 
             cheatObj = cheats.get(offset);
-            new FetchCheatRatingOnlineBackgroundTask().execute();
+//            new FetchCheatRatingOnlineBackgroundTask().execute();
+            getCheatRating();
 
             mainTable = ll.findViewById(R.id.table_cheat_list_main);
 
@@ -181,10 +187,11 @@ public class MemberCheatViewFragment extends Fragment {
             // FIXME das gibt noch einen fehler (walkthrough holen)
             // boolean isFromSearchResults = true;
             if ((cheatObj.getCheatText() == null) || (cheatObj.getCheatText().length() < 10)) {
-                // if ((isFromSearchResults == true) || (cheat.getCheatText() ==
-                // null) || (cheat.getCheatText().length() < 10)) {
+                // if ((isFromSearchResults == true) || (cheat.getFullCheatText() ==
+                // null) || (cheat.getFullCheatText().length() < 10)) {
                 progressBar.setVisibility(View.VISIBLE);
-                new FetchCheatTextTask().execute();
+//                new FetchCheatTextTask().execute();
+                getFullCheatText();
             } else {
                 progressBar.setVisibility(View.GONE);
                 populateView();
@@ -199,17 +206,17 @@ public class MemberCheatViewFragment extends Fragment {
         return ll;
     }
 
-    private void getFragmentRelevantData() {
-        Bundle arguments = getArguments();
-        try {
-            cheats = (ArrayList<Cheat>) arguments.getSerializable("cheatObj");
-            offset = arguments.getInt("offset");
-        } catch (Exception e) {
-            offset = 0;
-            // TODO message ausgeben, dass kein Game objekt besteht
-            Log.e("Error", e.getLocalizedMessage());
-        }
-    }
+//    private void getFragmentRelevantData() {
+//        Bundle arguments = getArguments();
+//        try {
+//            cheats = (ArrayList<Cheat>) arguments.getSerializable("cheatObj");
+//            offset = arguments.getInt("offset");
+//        } catch (Exception e) {
+//            offset = 0;
+//            // TODO message ausgeben, dass kein Game objekt besteht
+//            Log.e("Error", e.getLocalizedMessage());
+//        }
+//    }
 
     private void buildGallery() {
         screenshotGallery.setAdapter(new ImageAdapter(cheatViewPageIndicator));
@@ -380,20 +387,36 @@ public class MemberCheatViewFragment extends Fragment {
 //        arguments.putSerializable("cheatObj", cheatObj);
 //    }
 
-    private class FetchCheatTextTask extends AsyncTask<Void, Void, Void> {
+//    private class FetchCheatTextTask extends AsyncTask<Void, Void, Void> {
+//
+//        String fullCheatText;
+//
+//        @Override
+//        protected Void doInBackground(Void... params) {
+//            fullCheatText = Webservice.getCheatById(cheatObj.getCheatId());
+//
+//            return null;
+//        }
+//
+//        @Override
+//        protected void onPostExecute(Void result) {
+//            super.onPostExecute(result);
+//            if (fullCheatText.substring(0, 1).equalsIgnoreCase("2")) {
+//                cheatObj.setWalkthroughFormat(true);
+//            }
+//            progressBar.setVisibility(View.GONE);
+//            cheatObj.setCheatText(fullCheatText.substring(1));
+//
+//            populateView();
+//        }
+//    }
 
-        String fullCheatText;
+    private void getFullCheatText() {
+        Needle.onBackgroundThread().execute(() -> updateUI(Webservice.getCheatById(cheatObj.getCheatId())));
+    }
 
-        @Override
-        protected Void doInBackground(Void... params) {
-            fullCheatText = Webservice.getCheatById(cheatObj.getCheatId());
-
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void result) {
-            super.onPostExecute(result);
+    private void updateUI(String fullCheatText) {
+        Needle.onMainThread().execute(() -> {
             if (fullCheatText.substring(0, 1).equalsIgnoreCase("2")) {
                 cheatObj.setWalkthroughFormat(true);
             }
@@ -401,32 +424,53 @@ public class MemberCheatViewFragment extends Fragment {
             cheatObj.setCheatText(fullCheatText.substring(1));
 
             populateView();
+        });
+    }
+
+//    private class FetchCheatRatingOnlineBackgroundTask extends AsyncTask<Void, Void, Void> {
+//        float cheatRating;
+//
+//        @Override
+//        protected Void doInBackground(Void... params) {
+//            try {
+//                cheatRating = Webservice.getCheatRatingByMemberId(member.getMid(), cheatObj.getCheatId());
+//            } catch (Exception e) {
+//                cheatRating = 0;
+//            }
+//
+//            return null;
+//        }
+//
+//        @Override
+//        protected void onPostExecute(Void result) {
+//            super.onPostExecute(result);
+//
+//            if (cheatRating > 0) {
+//                cheatViewPageIndicator.setRating(offset, cheatRating);
+//            }
+//        }
+//    }
+
+    private void getCheatRating() {
+        Needle.onBackgroundThread().execute(new Runnable() {
+            @Override
+            public void run() {
+                float cheatRating = 0;
+                try {
+                    cheatRating = Webservice.getCheatRatingByMemberId(member.getMid(), cheatObj.getCheatId());
+                } catch (Exception e) {
+                }
+                updateRatingUI(cheatRating);
+            }
+        });
+    }
+
+    private void updateRatingUI(float cheatRating) {
+        if (cheatRating > 0) {
+            cheatViewPageIndicator.setRating(offset, cheatRating);
         }
     }
 
-    private class FetchCheatRatingOnlineBackgroundTask extends AsyncTask<Void, Void, Void> {
-        float cheatRating;
-
-        @Override
-        protected Void doInBackground(Void... params) {
-            try {
-                cheatRating = Webservice.getCheatRatingByMemberId(member.getMid(), cheatObj.getCheatId());
-            } catch (Exception e) {
-                cheatRating = 0;
-            }
-
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void result) {
-            super.onPostExecute(result);
-
-            if (cheatRating > 0) {
-                cheatViewPageIndicator.setRating(offset, cheatRating);
-            }
-        }
-    }
 
     private class LoadScreenshotsInBackgroundTask extends AsyncTask<Void, Void, Bitmap[]> {
         Bitmap bms[];

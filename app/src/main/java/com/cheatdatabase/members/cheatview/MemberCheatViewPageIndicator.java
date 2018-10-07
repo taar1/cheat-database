@@ -41,6 +41,7 @@ import com.cheatdatabase.helpers.Tools;
 import com.facebook.ads.AdSize;
 import com.facebook.ads.AdView;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import net.lucode.hackware.magicindicator.MagicIndicator;
 import net.lucode.hackware.magicindicator.ViewPagerHelper;
@@ -56,7 +57,7 @@ import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.Simple
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
-import java.util.ArrayList;
+import java.lang.reflect.Type;
 import java.util.List;
 
 /**
@@ -74,11 +75,11 @@ public class MemberCheatViewPageIndicator extends AppCompatActivity {
     private View viewLayout;
     private int pageSelected;
 
-    private ArrayList<Cheat> cheatArrayList;
+    private List<Cheat> cheatList;
     private Cheat visibleCheat;
     private Game gameObj;
 
-    private SharedPreferences settings;
+    private SharedPreferences sharedPreferences;
     private Editor editor;
 
     private Member member;
@@ -108,91 +109,56 @@ public class MemberCheatViewPageIndicator extends AppCompatActivity {
 
         init();
 
-        try {
-            // TODO FIXME hier noch die LIST holen korrekt von den local settings.... (war bisher Cheat[]
-            cheatArrayList = new Gson().fromJson(settings.getString(Konstanten.PREFERENCES_TEMP_CHEAT_ARRAY_OBJECT_VIEW, null), List<Cheat>.class);
+        // TODO prüfen ob das so korrekt funktioniert
+        // TODO prüfen ob das so korrekt funktioniert
+        Type type = new TypeToken<List<Cheat>>() {
+        }.getType();
+        cheatList = new Gson().fromJson(sharedPreferences.getString(Konstanten.PREFERENCES_TEMP_CHEAT_ARRAY_OBJECT_VIEW, null), type);
 
-            if (cheatArrayList == null) {
-                cheatArrayList = getIntent().getParcelableArrayListExtra("cheatArrayList");
-            }
-            pageSelected = intent.getIntExtra("selectedPage", 0);
-            activePage = pageSelected;
-
-            visibleCheat = cheatArrayList.get(pageSelected);
-            gameObj = new Game();
-            gameObj.setCheat(visibleCheat);
-            gameObj.setGameId(visibleCheat.getGameId());
-            gameObj.setGameName(visibleCheat.getGameName());
-            gameObj.setSystemId(visibleCheat.getSystemId());
-            gameObj.setSystemName(visibleCheat.getSystemName());
-
-            getSupportActionBar().setTitle(visibleCheat.getGameName());
-            getSupportActionBar().setSubtitle(visibleCheat.getSystemName());
-
-            initialisePaging();
-        } catch (Exception e) {
-            Log.e(TAG, e.getMessage());
+        if ((cheatList == null) || (cheatList.size() < 1)) {
+//            cheatList = new Gson().fromJson(intent.getStringExtra("cheatList"), type);
+            cheatList = intent.getParcelableArrayListExtra("cheatList");
         }
+        pageSelected = intent.getIntExtra("selectedPage", 0);
+        activePage = pageSelected;
+
+        visibleCheat = cheatList.get(pageSelected);
+
+        gameObj = new Game();
+        gameObj.setCheat(visibleCheat);
+        gameObj.setGameId(visibleCheat.getGameId());
+        gameObj.setGameName(visibleCheat.getGameName());
+        gameObj.setSystemId(visibleCheat.getSystemId());
+        gameObj.setSystemName(visibleCheat.getSystemName());
+
+        getSupportActionBar().setTitle(visibleCheat.getGameName());
+        getSupportActionBar().setSubtitle(visibleCheat.getSystemName());
+
+        initialisePaging();
     }
 
     private void init() {
-        settings = getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
-        editor = settings.edit();
+        sharedPreferences = getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
+        editor = sharedPreferences.edit();
 
         mToolbar = Tools.initToolbarBase(this, mToolbar);
 
-//        mAdView = Tools.initMoPubAdView(this, mAdView);
         facebookBanner = findViewById(R.id.banner_container);
         adView = new AdView(this, Konstanten.FACEBOOK_AUDIENCE_NETWORK_NATIVE_BANNER_ID, AdSize.BANNER_HEIGHT_50);
         facebookBanner.addView(adView);
         adView.loadAd();
 
-        member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        if (!Reachability.isRegistered()) {
-            Reachability.registerReachability(this);
-        }
-        member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
-        invalidateOptionsMenu();
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        EventBus.getDefault().register(this);
-    }
-
-    @Override
-    protected void onStop() {
-        EventBus.getDefault().unregister(this);
-        Reachability.unregister(this);
-        super.onStop();
-    }
-
-    @Override
-    protected void onDestroy() {
-//        if (mAdView != null) {
-//            mAdView.destroy();
-//        }
-
-        if (adView != null) {
-            adView.destroy();
-        }
-        super.onDestroy();
+        member = new Gson().fromJson(sharedPreferences.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
     }
 
     private void initialisePaging() {
-        final String[] cheatTitles = new String[cheatArrayList.size()];
-        for (int i = 0; i < cheatArrayList.size(); i++) {
-            cheatTitles[i] = cheatArrayList.get(i).getCheatTitle();
+        final String[] cheatTitles = new String[cheatList.size()];
+        for (int i = 0; i < cheatList.size(); i++) {
+            cheatTitles[i] = cheatList.get(i).getCheatTitle();
         }
 
         try {
-            mAdapter = new MemberCheatViewFragmentAdapter(getSupportFragmentManager(), cheatArrayList, cheatTitles);
+            mAdapter = new MemberCheatViewFragmentAdapter(getSupportFragmentManager(), cheatList, cheatTitles);
 
             mPager = (ViewPager) viewLayout.findViewById(R.id.pager);
             mPager.setAdapter(mAdapter);
@@ -210,7 +176,7 @@ public class MemberCheatViewPageIndicator extends AppCompatActivity {
                     activePage = position;
 
                     try {
-                        visibleCheat = cheatArrayList.get(position);
+                        visibleCheat = cheatList.get(position);
                         invalidateOptionsMenu();
 
                         gameObj = new Game();
@@ -240,7 +206,7 @@ public class MemberCheatViewPageIndicator extends AppCompatActivity {
             commonNavigator.setAdapter(new CommonNavigatorAdapter() {
                 @Override
                 public int getCount() {
-                    return cheatArrayList == null ? 0 : cheatArrayList.size();
+                    return cheatList == null ? 0 : cheatList.size();
                 }
 
                 @Override
@@ -292,7 +258,7 @@ public class MemberCheatViewPageIndicator extends AppCompatActivity {
             int intentReturnCode = data.getIntExtra("result", Konstanten.LOGIN_REGISTER_FAIL_RETURN_CODE);
 
             if (requestCode == Konstanten.LOGIN_REGISTER_OK_RETURN_CODE) {
-                member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
+                member = new Gson().fromJson(sharedPreferences.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
                 invalidateOptionsMenu();
                 if ((member != null) && intentReturnCode == Konstanten.REGISTER_SUCCESS_RETURN_CODE) {
                     Toast.makeText(MemberCheatViewPageIndicator.this, R.string.register_thanks, Toast.LENGTH_LONG).show();
@@ -360,6 +326,8 @@ public class MemberCheatViewPageIndicator extends AppCompatActivity {
                 explicitIntent = new Intent(MemberCheatViewPageIndicator.this, CheatForumActivity.class);
                 explicitIntent.putExtra("gameObj", gameObj);
                 explicitIntent.putExtra("cheatObj", visibleCheat);
+
+                explicitIntent.putExtra("cheatList", new Gson().toJson(cheatList));
                 startActivity(explicitIntent);
                 return true;
             case R.id.action_add_to_favorites:
@@ -379,11 +347,11 @@ public class MemberCheatViewPageIndicator extends AppCompatActivity {
                 return true;
             case R.id.action_logout:
                 member = null;
-                tools.logout(MemberCheatViewPageIndicator.this, editor);
+                Tools.logout(MemberCheatViewPageIndicator.this, editor);
                 invalidateOptionsMenu();
                 return true;
             case R.id.action_share:
-                setShareIntent(tools.setShareText(MemberCheatViewPageIndicator.this, visibleCheat));
+                setShareIntent(Tools.setShareText(MemberCheatViewPageIndicator.this, visibleCheat));
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -410,13 +378,44 @@ public class MemberCheatViewPageIndicator extends AppCompatActivity {
     @Subscribe
     public void onEvent(CheatRatingFinishedEvent result) {
         visibleCheat.setMemberRating(result.getRating());
-        cheatArrayList.get(activePage).setMemberRating(result.getRating());
+        cheatList.get(activePage).setMemberRating(result.getRating());
         invalidateOptionsMenu();
         Toast.makeText(this, R.string.rating_inserted, Toast.LENGTH_SHORT).show();
     }
 
     public void setRating(int position, float rating) {
-        cheatArrayList.get(position).setMemberRating(rating);
+        cheatList.get(position).setMemberRating(rating);
         invalidateOptionsMenu();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (!Reachability.isRegistered()) {
+            Reachability.registerReachability(this);
+        }
+        member = new Gson().fromJson(sharedPreferences.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
+        invalidateOptionsMenu();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    protected void onStop() {
+        EventBus.getDefault().unregister(this);
+        Reachability.unregister(this);
+        super.onStop();
+    }
+
+    @Override
+    protected void onDestroy() {
+        if (adView != null) {
+            adView.destroy();
+        }
+        super.onDestroy();
     }
 }

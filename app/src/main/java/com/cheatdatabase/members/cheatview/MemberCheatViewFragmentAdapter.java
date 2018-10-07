@@ -6,19 +6,16 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 import com.cheatdatabase.businessobjects.Cheat;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class MemberCheatViewFragmentAdapter extends FragmentPagerAdapter {
 
     protected static String[] CONTENT = new String[]{"T1", "T2", "T3"};
-    private int mCount = CONTENT.length;
+    private int mCount;
 
-    // Icons not used....
-    protected static final int[] ICONS = new int[]{android.R.drawable.btn_plus, android.R.drawable.btn_plus, android.R.drawable.btn_plus, android.R.drawable.btn_plus};
+    private List<Cheat> cheats;
 
-    private ArrayList<Cheat> cheats;
-
-    public MemberCheatViewFragmentAdapter(FragmentManager fm, ArrayList<Cheat> cheats, String[] cheatTitleNames) {
+    public MemberCheatViewFragmentAdapter(FragmentManager fm, List<Cheat> cheats, String[] cheatTitleNames) {
         super(fm);
         this.cheats = cheats;
         CONTENT = cheatTitleNames;
@@ -43,15 +40,5 @@ public class MemberCheatViewFragmentAdapter extends FragmentPagerAdapter {
         return MemberCheatViewFragmentAdapter.CONTENT[position % CONTENT.length];
     }
 
-    public int getIconResId(int index) {
-        return ICONS[index % ICONS.length];
-    }
-
-    public void setCount(int count) {
-        if (count > 0 && count <= 10) {
-            mCount = count;
-            notifyDataSetChanged();
-        }
-    }
 
 }

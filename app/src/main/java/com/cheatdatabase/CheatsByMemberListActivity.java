@@ -230,7 +230,7 @@ public class CheatsByMemberListActivity extends AppCompatActivity {
                         }
                     }
 
-                    intent.putParcelableArrayListExtra("cheatArrayList", (ArrayList) cheatList);
+                    intent.putParcelableArrayListExtra("cheatList", (ArrayList) cheatList);
                 } else {
                     // Save to SharedPreferences if array too big
                     editor.putString(Konstanten.PREFERENCES_TEMP_CHEAT_ARRAY_OBJECT_VIEW, new Gson().toJson(cheatList));

@@ -5,6 +5,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -24,13 +26,8 @@ import com.cheatdatabase.helpers.Tools;
 import com.cheatdatabase.helpers.Webservice;
 import com.google.gson.Gson;
 
-import org.androidannotations.annotations.AfterViews;
-import org.androidannotations.annotations.Bean;
-import org.androidannotations.annotations.Click;
-import org.androidannotations.annotations.EActivity;
-import org.androidannotations.annotations.Extra;
-import org.androidannotations.annotations.OnActivityResult;
-import org.androidannotations.annotations.ViewById;
+import butterknife.BindView;
+import butterknife.OnClick;
 
 /**
  * Liste mit allen Cheats eines Games.
@@ -38,7 +35,6 @@ import org.androidannotations.annotations.ViewById;
  *
  * @author erbsland
  */
-@EActivity(R.layout.activity_submit_cheat_layout)
 public class SubmitCheatActivity extends AppCompatActivity {
 
     @BindView(R.id.text_cheat_submission_title)
@@ -56,30 +52,29 @@ public class SubmitCheatActivity extends AppCompatActivity {
     @BindView(R.id.send_button)
     Button sendButton;
 
-    @Extra
-    Game gameObj;
-
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
 
-    @Bean
-    Tools tools;
-
-    Member member;
+    private Game gameObj;
+    private Member member;
 
     private SharedPreferences settings;
     private Typeface latoFontBold;
     private Typeface latoFontLight;
 
-    @AfterViews
-    public void onCreate() {
-        //handleIntent(getIntent());
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_submit_cheat_layout);
+
+        gameObj = (Game) getIntent().getSerializableExtra("gameObj");
+
         init();
 
         changeSubmitButtonText();
     }
 
-    @Click(R.id.send_button)
+    @OnClick(R.id.send_button)
     void sendButtonClick() {
         if ((member != null) && (member.getMid() != 0)) {
             if ((cheatText.getText().toString().trim().length() < 5) || (cheatTitle.getText().toString().trim().length() < 2)) {
@@ -127,9 +122,6 @@ public class SubmitCheatActivity extends AppCompatActivity {
 
 
     private void init() {
-        //CheatDatabaseApplication.tracker().send(new HitBuilders.EventBuilder("ui", "Submit Cheat Form").setLabel("activity").build());
-
-
         if (mToolbar != null) {
             setSupportActionBar(mToolbar);
         }
@@ -140,8 +132,8 @@ public class SubmitCheatActivity extends AppCompatActivity {
 
         settings = getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
 
-        latoFontLight = tools.getFont(getAssets(), Konstanten.FONT_LIGHT);
-        latoFontBold = tools.getFont(getAssets(), Konstanten.FONT_BOLD);
+        latoFontLight = Tools.getFont(getAssets(), Konstanten.FONT_LIGHT);
+        latoFontBold = Tools.getFont(getAssets(), Konstanten.FONT_BOLD);
 
         textCheatTitle.setTypeface(latoFontBold);
         cheatTitle.setTypeface(latoFontLight);
@@ -186,7 +178,7 @@ public class SubmitCheatActivity extends AppCompatActivity {
                 return true;
             case R.id.action_logout:
                 member = null;
-                tools.logout(SubmitCheatActivity.this, settings.edit());
+                Tools.logout(SubmitCheatActivity.this, settings.edit());
                 changeSubmitButtonText();
                 invalidateOptionsMenu();
                 return true;
@@ -236,29 +228,49 @@ public class SubmitCheatActivity extends AppCompatActivity {
         startActivityForResult(loginIntent, Konstanten.LOGIN_REGISTER_OK_RETURN_CODE);
     }
 
-    @OnActivityResult(Konstanten.LOGIN_SUCCESS_RETURN_CODE)
-    void onResult(int resultCode, Intent data_login) {
-        member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
-        changeSubmitButtonText();
+//    @OnActivityResult(Konstanten.LOGIN_SUCCESS_RETURN_CODE)
+//    void onResult(int resultCode, Intent data_login) {
+//        member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
+//        changeSubmitButtonText();
+//
+//        invalidateOptionsMenu();
+//        if (member != null) {
+//            Toast.makeText(SubmitCheatActivity.this, R.string.login_ok, Toast.LENGTH_LONG).show();
+//        }
+//    }
+//
+//    @OnActivityResult(Konstanten.REGISTER_SUCCESS_RETURN_CODE)
+//    void onResult(int resultCode) {
+//        member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
+//        changeSubmitButtonText();
+//
+//        invalidateOptionsMenu();
+//        if (member != null) {
+//            Toast.makeText(SubmitCheatActivity.this, R.string.register_thanks, Toast.LENGTH_LONG).show();
+//        }
+//    }
 
-        invalidateOptionsMenu();
-        if (member != null) {
-            Toast.makeText(SubmitCheatActivity.this, R.string.login_ok, Toast.LENGTH_LONG).show();
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
+
+        if (resultCode == Konstanten.LOGIN_SUCCESS_RETURN_CODE) {
+            if (member != null) {
+                Toast.makeText(SubmitCheatActivity.this, R.string.login_ok, Toast.LENGTH_LONG).show();
+            }
+        } else if (resultCode == Konstanten.REGISTER_SUCCESS_RETURN_CODE) {
+            if (member != null) {
+                Toast.makeText(SubmitCheatActivity.this, R.string.register_thanks, Toast.LENGTH_LONG).show();
+            }
         }
+
+        changeSubmitButtonText();
+        invalidateOptionsMenu();
     }
 
-    @OnActivityResult(Konstanten.REGISTER_SUCCESS_RETURN_CODE)
-    void onResult(int resultCode) {
-        member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
-        changeSubmitButtonText();
-
-        invalidateOptionsMenu();
-        if (member != null) {
-            Toast.makeText(SubmitCheatActivity.this, R.string.register_thanks, Toast.LENGTH_LONG).show();
-        }
-    }
-
-//    @Override
+    //    @Override
 //    public void onActivityResult(int requestCode, int resultCode, Intent data) {
 //        super.onActivityResult(requestCode, resultCode, data);
 //
