@@ -72,9 +72,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     LinearLayout facebookBanner;
     private AdView adView;
 
-    public static final String DRAWER_ITEM_ID = "drawerId";
-    public static final String DRAWER_ITEM_NAME = "drawerName";
-
     private ActionBarDrawerToggle actionBarDrawerToggle;
 
     private Member member;
