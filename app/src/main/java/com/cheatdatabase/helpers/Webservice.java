@@ -632,15 +632,15 @@ public class Webservice {
      * @param memberId
      * @return
      */
-    public static Cheat[] getCheatList(Game game, int memberId, boolean isAchievementsEnabled) {
+    public static List<Cheat> getCheatList(Game game, int memberId, boolean isAchievementsEnabled) {
         String systemString = getCheatListAsString(game.getGameId(), memberId, isAchievementsEnabled);
 
-        Cheat[] cheats = null;
-        JSONArray jArray = null;
+        List<Cheat> cheats = null;
+        JSONArray jArray;
 
         try {
             jArray = new JSONArray(systemString);
-            cheats = new Cheat[jArray.length()];
+            cheats = new ArrayList<>();
 
             for (int i = 0; i < jArray.length(); i++) {
 
@@ -696,7 +696,7 @@ public class Webservice {
                 member.setMid(memberId);
                 cheat.setMember(member);
 
-                cheats[i] = cheat;
+                cheats.add(cheat);
             }
 
         } catch (JSONException e) {

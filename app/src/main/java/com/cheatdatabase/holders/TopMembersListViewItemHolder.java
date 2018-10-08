@@ -10,7 +10,6 @@ import android.widget.Toast;
 
 import com.cheatdatabase.CheatDatabaseApplication;
 import com.cheatdatabase.CheatsByMemberListActivity;
-import com.cheatdatabase.CheatsByMemberListActivity_;
 import com.cheatdatabase.R;
 import com.cheatdatabase.businessobjects.Member;
 import com.cheatdatabase.helpers.Konstanten;
@@ -88,7 +87,7 @@ public class TopMembersListViewItemHolder extends RecyclerView.ViewHolder {
     @OnClick({R.id.member_name, R.id.cheat_count, R.id.avatar})
     void showMemberCheatList() {
         if (Reachability.reachability.isReachable) {
-            Intent explicitIntent = new Intent(CheatDatabaseApplication.getAppContext(), CheatsByMemberListActivity_.class);
+            Intent explicitIntent = new Intent(CheatDatabaseApplication.getAppContext(), CheatsByMemberListActivity.class);
             explicitIntent.putExtra("member", member);
             CheatDatabaseApplication.getAppContext().startActivity(explicitIntent);
         } else {

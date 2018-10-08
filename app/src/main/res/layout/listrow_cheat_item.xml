@@ -23,14 +23,15 @@
             android:layout_height="wrap_content"
             android:paddingBottom="2dp"
             android:singleLine="true"
-            android:textAppearance="@style/ListItemPhone"
-            android:text="@string/placeholder" />
+            android:text="@string/placeholder"
+            android:textAppearance="@style/ListItemPhone" />
 
         <RatingBar
             android:id="@+id/small_ratingbar"
             style="?android:attr/ratingBarStyleSmall"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:numStars="5" />
     </LinearLayout>
 
     <LinearLayout

@@ -68,6 +68,11 @@ public class FavoriteGamesListFragment extends Fragment {
     private Typeface latoFontLight;
     private Typeface latoFontBold;
 
+    public static FavoriteGamesListFragment newInstance() {
+        FavoriteGamesListFragment favoriteGamesListFragment = new FavoriteGamesListFragment();
+        return favoriteGamesListFragment;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_favorites_main_list, container, false);

@@ -1,6 +1,5 @@
 package com.cheatdatabase.adapters;
 
-import android.content.Context;
 import android.graphics.Typeface;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -21,13 +20,13 @@ import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.helpers.Tools;
 import com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView;
 
-import org.androidannotations.annotations.EBean;
-import org.androidannotations.annotations.RootContext;
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
 
-@EBean
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class CheatsByGameRecycleListViewAdapter extends RecyclerView.Adapter<CheatsByGameRecycleListViewAdapter.ViewHolder> implements FastScrollRecyclerView.SectionedAdapter,
         FastScrollRecyclerView.MeasurableAdapter {
 
@@ -38,44 +37,43 @@ public class CheatsByGameRecycleListViewAdapter extends RecyclerView.Adapter<Che
     private Typeface latoFontLight;
     private Cheat cheatObj;
 
-    @RootContext
-    Context mContext;
-
     public void setCheats(List<Cheat> cheatList) {
         this.cheatList = cheatList;
     }
 
-    // Provide a reference to the views for each data item
-    // Complex data items may need more than one view per item, and
-    // you provide access to all the views for a data item in a view holder
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        TextView mCheatTitle;
-        RatingBar mRatingBar;
-        OnCheatItemClickListener mListener;
-        ImageView mFlagNewAddition;
-        ImageView mFlagScreenshot;
-        ImageView mFlagGerman;
+        @BindView(R.id.cheat_title)
+        private TextView mCheatTitle;
+        @BindView(R.id.small_ratingbar)
+        private RatingBar mRatingBar;
+        @BindView(R.id.newaddition)
+        private ImageView mFlagNewAddition;
+        @BindView(R.id.screenshots)
+        private ImageView mFlagScreenshot;
+        @BindView(R.id.flag)
+        private ImageView mFlagGerman;
 
-        public ViewHolder(View v, OnCheatItemClickListener listener) {
-            super(v);
+        private OnCheatItemClickListener mListener;
+
+        public ViewHolder(View view, OnCheatItemClickListener listener) {
+            super(view);
+            ButterKnife.bind(this, view);
             mListener = listener;
 
-            mCheatTitle = v.findViewById(R.id.cheat_title);
-            mCheatTitle.setTypeface(Tools.getFont(v.getContext().getAssets(), Konstanten.FONT_REGULAR));
+            mCheatTitle.setTypeface(Tools.getFont(view.getContext().getAssets(), Konstanten.FONT_REGULAR));
 
-            // Average rating (not member rating)
-            mRatingBar = v.findViewById(R.id.small_ratingbar);
-            mRatingBar.setNumStars(5);
+//            mCheatTitle = view.findViewById(R.id.cheat_title);
+//            mRatingBar = view.findViewById(R.id.small_ratingbar);
+//            mFlagNewAddition = view.findViewById(R.id.newaddition);
+//            mFlagScreenshot = view.findViewById(R.id.screenshots);
+//            mFlagGerman = view.findViewById(R.id.flag);
 
-            mFlagNewAddition = v.findViewById(R.id.newaddition);
             mFlagNewAddition.setImageResource(R.drawable.flag_new);
-            mFlagScreenshot = v.findViewById(R.id.screenshots);
             mFlagScreenshot.setImageResource(R.drawable.flag_img);
-            mFlagGerman = v.findViewById(R.id.flag);
             mFlagGerman.setImageResource(R.drawable.flag_german);
 
-            v.setOnClickListener(this);
+            view.setOnClickListener(this);
         }
 
         @Override

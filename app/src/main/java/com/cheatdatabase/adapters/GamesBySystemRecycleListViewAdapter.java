@@ -19,7 +19,6 @@ import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.helpers.Tools;
 import com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView;
 
-import org.androidannotations.annotations.RootContext;
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;

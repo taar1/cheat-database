@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.graphics.Typeface;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.util.Log;
@@ -28,29 +27,18 @@ import com.cheatdatabase.helpers.Tools;
 import com.cheatdatabase.helpers.Webservice;
 import com.google.gson.Gson;
 
-import org.androidannotations.annotations.Bean;
-import org.androidannotations.annotations.EBean;
-
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
-/**
- * A list fragment representing a list of Cheats. This fragment also supports
- * tablet devices by allowing list items to be given an 'activated' state upon
- * selection. This helps indicate which item is currently being viewed in a
- * {@link CheatDetail%Fragment}.
- * <p/>
- * Activities containing this fragment MUST implement the {@link com.cheatdatabase.CheatListFragment.CheatListClickCallbacks}
- * interface.
- */
-@EBean
+import needle.Needle;
+
 public class CheatListFragment extends ListFragment {
-
     private static String TAG = CheatListFragment.class.getSimpleName();
 
     public Game gameObj;
-    private ArrayList<Cheat> cheatsArrayList = new ArrayList<>();
-    private Cheat[] cheats;
+    private List<Cheat> cheatsArrayList;
+    private List<Cheat> cheats;
     private CheatAdapter cheatAdapter;
     private Typeface latoFontRegular;
     private CheatsByGameListActivity cheatsByGameListActivity;
@@ -58,8 +46,6 @@ public class CheatListFragment extends ListFragment {
     private Editor editor;
     private Member member;
 
-    @Bean
-    Tools tools;
 
     /**
      * The serialization (saved instance state) Bundle key representing the
@@ -105,6 +91,8 @@ public class CheatListFragment extends ListFragment {
      * fragment (e.g. upon screen orientation changes).
      */
     public CheatListFragment() {
+        cheatsArrayList = new ArrayList<>();
+        cheats = new ArrayList<>();
     }
 
     @Override
@@ -112,7 +100,7 @@ public class CheatListFragment extends ListFragment {
         super.onCreate(savedInstanceState);
 
         cheatsByGameListActivity = (CheatsByGameListActivity) getActivity();
-        latoFontRegular = tools.getFont(getActivity().getAssets(), Konstanten.FONT_REGULAR);
+        latoFontRegular = Tools.getFont(getActivity().getAssets(), Konstanten.FONT_REGULAR);
 
         settings = cheatsByGameListActivity.getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
         editor = settings.edit();
@@ -122,36 +110,31 @@ public class CheatListFragment extends ListFragment {
         }
 
         gameObj = (Game) cheatsByGameListActivity.getIntent().getSerializableExtra("gameObj");
-        if (gameObj == null) {
-            new GetCheatsTask().execute(new Game());
-        } else {
-            new GetCheatsTask().execute(gameObj);
-        }
+        getCheats();
     }
 
-    private class GetCheatsTask extends AsyncTask<Game, Void, Void> {
-
-        @Override
-        protected Void doInBackground(Game... params) {
-            if (params[0].getCheats() == null) {
+    /**
+     * Get cheats either from the object or load them online.
+     */
+    private void getCheats() {
+        Needle.onBackgroundThread().execute(() -> {
+            if ((gameObj == null) || (gameObj.getCheats() == null) || (gameObj.getCheats().length < 1)) {
                 cheats = getCheatsNow();
             } else {
-                cheats = params[0].getCheats();
+                Collections.addAll(cheats, gameObj.getCheats());
             }
-
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void result) {
-            super.onPostExecute(result);
-
-            cheatAdapter = new CheatAdapter(getActivity(), R.layout.listrow_cheat_item, cheatsArrayList);
-            setListAdapter(cheatAdapter);
-        }
+            updateUI();
+        });
     }
 
-    private Cheat[] getCheatsNow() {
+    private void updateUI() {
+        Needle.onMainThread().execute(() -> {
+            cheatAdapter = new CheatAdapter(getActivity(), R.layout.listrow_cheat_item, cheatsArrayList);
+            setListAdapter(cheatAdapter);
+        });
+    }
+
+    private List<Cheat> getCheatsNow() {
         try {
             if (member == null) {
                 cheats = Webservice.getCheatList(gameObj, 0, true);
@@ -161,11 +144,16 @@ public class CheatListFragment extends ListFragment {
             cheatsArrayList = new ArrayList<>();
 
             if (cheats != null) {
+                // TODO FIXME cheatsArrayList not needed anymore since cheats now NEW is also a arraylist
                 Collections.addAll(cheatsArrayList, cheats);
             } else {
-                Log.e("CheatsByGameListActivity()", "Webservice.getCheatList() == null");
+                Log.e(TAG, "Webservice.getCheatList() == null");
             }
 
+            // TODO FIXME setCheats anpassen für List Array
+            // TODO FIXME setCheats anpassen für List Array
+            // TODO FIXME setCheats anpassen für List Array
+            // TODO FIXME setCheats anpassen für List Array
             gameObj.setCheats(cheats);
 
             // Put game object to local storage for large games like Pokemon
@@ -230,12 +218,12 @@ public class CheatListFragment extends ListFragment {
     }
 
     /**
-     * Turns on activate-on-click mode. When this mode is on, list items will be
+     * Turns on activate-on-click mode. When this mode is on, list cheatList will be
      * given the 'activated' state when touched.
      */
     public void setActivateOnItemClick(boolean activateOnItemClick) {
         // When setting CHOICE_MODE_SINGLE, ListView will automatically
-        // give items the 'activated' state when touched.
+        // give cheatList the 'activated' state when touched.
         getListView().setChoiceMode(activateOnItemClick ? AbsListView.CHOICE_MODE_SINGLE : AbsListView.CHOICE_MODE_NONE);
     }
 
@@ -251,11 +239,11 @@ public class CheatListFragment extends ListFragment {
 
     private class CheatAdapter extends ArrayAdapter<Cheat> {
 
-        private final ArrayList<Cheat> items;
+        private final List<Cheat> cheatList;
 
-        public CheatAdapter(Context context, int textViewResourceId, ArrayList<Cheat> items) {
+        public CheatAdapter(Context context, int textViewResourceId, List<Cheat> items) {
             super(context, textViewResourceId, items);
-            this.items = items;
+            this.cheatList = items;
         }
 
         @Override
@@ -267,7 +255,7 @@ public class CheatListFragment extends ListFragment {
             }
 
             try {
-                Cheat cheat = items.get(position);
+                Cheat cheat = cheatList.get(position);
                 if (cheat != null) {
 
                     TextView tt = v.findViewById(R.id.cheat_title);

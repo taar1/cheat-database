@@ -381,14 +381,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (id == R.id.nav_gamesystems) {
             showGameSystemsFragment();
         } else if (id == R.id.nav_favorites) {
+            fragmentTransaction.addToBackStack(FavoriteGamesListFragment.class.getSimpleName());
+            fragmentManager.beginTransaction().replace(R.id.content_frame, FavoriteGamesListFragment.newInstance(), FavoriteGamesListFragment.class.getSimpleName()).commit();
+
             mToolbar.setTitle(R.string.favorites);
-            fragmentManager.beginTransaction().replace(R.id.content_frame, FavoriteGamesListFragment.builder().build()).commit();
             fab.setVisibility(View.VISIBLE);
         } else if (id == R.id.nav_members) {
-            mToolbar.setTitle(R.string.top_members_top_helping);
             fragmentTransaction.addToBackStack(TopMembersFragment.class.getSimpleName());
             fragmentManager.beginTransaction().replace(R.id.content_frame, TopMembersFragment.newInstance(), TopMembersFragment.class.getSimpleName()).commit();
 
+            mToolbar.setTitle(R.string.top_members_top_helping);
             fab.setVisibility(View.VISIBLE);
         } else if (id == R.id.nav_rate) {
             new RateAppDialog(this, new MainActivityCallbacks() {
@@ -399,8 +401,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             });
             return true;
         } else if (id == R.id.nav_submit) {
+            fragmentTransaction.addToBackStack(SubmitCheatFragment.class.getSimpleName());
+            fragmentManager.beginTransaction().replace(R.id.content_frame, SubmitCheatFragment.newInstance(), SubmitCheatFragment.class.getSimpleName()).commit();
+
             mToolbar.setTitle(R.string.submit_cheat_short);
-            fragmentManager.beginTransaction().replace(R.id.content_frame, SubmitCheatFragment.builder().build()).commit();
             fab.setVisibility(View.GONE);
         } else if (id == R.id.nav_contact) {
             showContactFormFragment();
