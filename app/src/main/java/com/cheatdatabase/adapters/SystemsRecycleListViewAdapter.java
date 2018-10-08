@@ -1,6 +1,5 @@
 package com.cheatdatabase.adapters;
 
-import android.content.Context;
 import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -17,40 +16,35 @@ import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.helpers.Tools;
 
-import org.androidannotations.annotations.EBean;
-import org.androidannotations.annotations.RootContext;
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
+import java.util.List;
 
-@EBean
 public class SystemsRecycleListViewAdapter extends RecyclerView.Adapter<SystemsRecycleListViewAdapter.ViewHolder> {
 
     private static final String TAG = SystemsRecycleListViewAdapter.class.getSimpleName();
 
-    private ArrayList<SystemPlatform> mSystemObjects;
+    private List<SystemPlatform> systemPlatformList;
     private Typeface latoFontBold;
     private Typeface latoFontLight;
     private SystemPlatform systemObj;
 
-    @RootContext
-    Context mContext;
-
-    public void init(ArrayList<SystemPlatform> systemPlatforms) {
-        mSystemObjects = systemPlatforms;
+    public SystemsRecycleListViewAdapter() {
+        systemPlatformList = new ArrayList<>();
     }
 
-    // Provide a reference to the views for each data item
-    // Complex data items may need more than one view per item, and
-    // you provide access to all the views for a data item in a view holder
-    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public void setSystemPlatforms(List<SystemPlatform> systemPlatforms) {
+        systemPlatformList = systemPlatforms;
+    }
 
+    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public TextView mSystemName;
         public TextView mSubtitle;
         public LinearLayout mLinearLayout;
-        public IMyViewHolderClicks mListener;
+        public OnSystemClickedListener mListener;
 
-        public ViewHolder(View v, IMyViewHolderClicks listener) {
+        public ViewHolder(View v, OnSystemClickedListener listener) {
             super(v);
             mListener = listener;
 
@@ -68,7 +62,7 @@ public class SystemsRecycleListViewAdapter extends RecyclerView.Adapter<SystemsR
 
     }
 
-    public interface IMyViewHolderClicks {
+    public interface OnSystemClickedListener {
         void onSystemClick(SystemsRecycleListViewAdapter.ViewHolder caller);
     }
 
@@ -83,12 +77,12 @@ public class SystemsRecycleListViewAdapter extends RecyclerView.Adapter<SystemsR
         final View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.systemlist_item, parent, false);
         v.setDrawingCacheEnabled(true);
 
-        return new ViewHolder(v, new IMyViewHolderClicks() {
+        return new ViewHolder(v, new OnSystemClickedListener() {
             @Override
             public void onSystemClick(ViewHolder caller) {
 
                 if (Reachability.reachability.isReachable) {
-                    EventBus.getDefault().post(new SystemListRecyclerViewClickEvent(mSystemObjects.get(caller.getAdapterPosition())));
+                    EventBus.getDefault().post(new SystemListRecyclerViewClickEvent(systemPlatformList.get(caller.getAdapterPosition())));
                 } else {
                     EventBus.getDefault().post(new SystemListRecyclerViewClickEvent(new Exception()));
                 }
@@ -99,7 +93,7 @@ public class SystemsRecycleListViewAdapter extends RecyclerView.Adapter<SystemsR
     // Replace the contents of a view (invoked by the layout manager)
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        systemObj = mSystemObjects.get(position);
+        systemObj = systemPlatformList.get(position);
 
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
@@ -122,7 +116,7 @@ public class SystemsRecycleListViewAdapter extends RecyclerView.Adapter<SystemsR
     // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
-        return mSystemObjects.size();
+        return systemPlatformList.size();
     }
 
 }

@@ -408,7 +408,7 @@ public class CheatForumActivity extends AppCompatActivity implements CheatListFr
                 showReportDialog();
                 return true;
             case R.id.action_submit_cheat:
-                Intent explicitIntent = new Intent(this, SubmitCheatActivity_.class);
+                Intent explicitIntent = new Intent(this, SubmitCheatActivity.class);
                 explicitIntent.putExtra("gameObj", gameObj);
                 startActivity(explicitIntent);
                 return true;

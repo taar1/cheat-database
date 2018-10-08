@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
@@ -33,12 +34,11 @@ import com.cheatdatabase.helpers.Tools;
 import com.cheatdatabase.helpers.Webservice;
 import com.google.gson.Gson;
 
-import org.androidannotations.annotations.Background;
-import org.androidannotations.annotations.UiThread;
 import org.greenrobot.eventbus.EventBus;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import needle.Needle;
 
 public class ContactFormFragment extends Fragment {
 
@@ -270,7 +270,6 @@ public class ContactFormFragment extends Fragment {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar buttons
         switch (item.getItemId()) {
             case R.id.action_send:
                 attemptSendForm();
@@ -281,25 +280,42 @@ public class ContactFormFragment extends Fragment {
         return false;
     }
 
-    @Background
     public void sendForm() {
-        Webservice.submitContactForm(mEmailView.getText().toString().trim(), mMessageView.getText().toString().trim());
-        actionAfterSendForm();
+        Needle.onBackgroundThread().execute(new Runnable() {
+            @Override
+            public void run() {
+                Webservice.submitContactForm(mEmailView.getText().toString().trim(), mMessageView.getText().toString().trim());
+                actionAfterSendForm();
+            }
+        });
+
     }
 
-    @UiThread
     public void actionAfterSendForm() {
-        View view = getActivity().getCurrentFocus();
-        if (view != null) {
-            InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-        }
-        Tools.showSnackbar(outerLayout, getActivity().getString(R.string.contactform_thanks));
-        forwardToMainView();
+        Needle.onMainThread().execute(new Runnable() {
+            @Override
+            public void run() {
+                View view = getActivity().getCurrentFocus();
+                if (view != null) {
+                    InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+                }
+                Tools.showSnackbar(outerLayout, getActivity().getString(R.string.contactform_thanks));
+                forwardToMainView();
+            }
+        });
+
     }
 
-    @UiThread(delay = 1500)
     public void forwardToMainView() {
-        EventBus.getDefault().post(new GenericEvent(GenericEvent.Action.CLICK_CHEATS_DRAWER));
+        Needle.onMainThread().execute((Runnable) () -> {
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    EventBus.getDefault().post(new GenericEvent(GenericEvent.Action.CLICK_CHEATS_DRAWER));
+                }
+            }, 1500);
+        });
     }
 }

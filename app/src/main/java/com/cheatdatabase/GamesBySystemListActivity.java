@@ -4,6 +4,8 @@ import android.app.AlertDialog;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -22,48 +24,38 @@ import com.cheatdatabase.events.GameListRecyclerViewClickEvent;
 import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.MyPrefs_;
 import com.cheatdatabase.helpers.Reachability;
-import com.cheatdatabase.helpers.Tools;
 import com.cheatdatabase.helpers.Webservice;
 import com.cheatdatabase.widgets.DividerDecoration;
 import com.facebook.ads.AdSize;
 import com.facebook.ads.AdView;
 import com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView;
 
-import org.androidannotations.annotations.AfterViews;
-import org.androidannotations.annotations.App;
 import org.androidannotations.annotations.Background;
 import org.androidannotations.annotations.Bean;
-import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.Extra;
 import org.androidannotations.annotations.UiThread;
-import org.androidannotations.annotations.ViewById;
 import org.androidannotations.annotations.sharedpreferences.Pref;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.TreeMap;
 
-@EActivity(R.layout.activity_game_list)
+import butterknife.BindView;
+
 public class GamesBySystemListActivity extends AppCompatActivity {
 
     private static final String TAG = GamesBySystemListActivity.class.getSimpleName();
-    private ArrayList<Game> gameArrayList;
+    private List<Game> gameArrayList;
 
-    @App
-    CheatDatabaseApplication app;
+    CheatDatabaseApplication cheatDatabaseApplication;
 
-    @Extra
-    SystemPlatform systemObj;
+    private SystemPlatform systemObj;
 
-    @Bean
-    Tools tools;
     @Bean
     GamesBySystemRecycleListViewAdapter gamesBySystemRecycleListViewAdapter;
-
-    @Pref
-    MyPrefs_ myPrefs;
 
     @BindView(R.id.my_recycler_view)
     FastScrollRecyclerView mRecyclerView;
@@ -73,17 +65,21 @@ public class GamesBySystemListActivity extends AppCompatActivity {
     Toolbar mToolbar;
     @BindView(R.id.item_list_empty_view)
     TextView mEmptyView;
-
     @BindView(R.id.banner_container)
     LinearLayout facebookBanner;
     private AdView adView;
 
-    @AfterViews
-    public void createView() {
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        systemObj = (SystemPlatform) getIntent().getSerializableExtra("systemObj");
+
+        setContentView(R.layout.activity_game_list);
+        setTitle(systemObj.getSystemName());
+
         init();
         mSwipeRefreshLayout.setRefreshing(true);
-
-        setTitle(systemObj.getSystemName());
 
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -105,6 +101,8 @@ public class GamesBySystemListActivity extends AppCompatActivity {
     }
 
     private void init() {
+        gamesBySystemRecycleListViewAdapter = new GamesBySystemRecycleListViewAdapter();
+
         adView = new AdView(this, Konstanten.FACEBOOK_AUDIENCE_NETWORK_NATIVE_BANNER_ID, AdSize.BANNER_HEIGHT_50);
         facebookBanner.addView(adView);
         adView.loadAd();
@@ -141,12 +139,12 @@ public class GamesBySystemListActivity extends AppCompatActivity {
         String achievementsEnabled;
         boolean isAchievementsEnabled = myPrefs.isAchievementsEnabled().getOr(true);
         if (isAchievementsEnabled) {
-            achievementsEnabled = app.ACHIEVEMENTS;
+            achievementsEnabled = cheatDatabaseApplication.ACHIEVEMENTS;
         } else {
-            achievementsEnabled = app.NO_ACHIEVEMENTS;
+            achievementsEnabled = cheatDatabaseApplication.NO_ACHIEVEMENTS;
         }
 
-        TreeMap<String, TreeMap<String, Game[]>> gamesBySystemInCache = app.getGamesBySystemCached();
+        TreeMap<String, TreeMap<String, Game[]>> gamesBySystemInCache = cheatDatabaseApplication.getGamesBySystemCached();
         TreeMap gameList = null;
         if (gamesBySystemInCache.containsKey(String.valueOf(systemObj.getSystemId()))) {
 
@@ -174,10 +172,10 @@ public class GamesBySystemListActivity extends AppCompatActivity {
             updatedGameListForCache.put(achievementsEnabled, gamesFound);
 
             String checkWhichSubKey;
-            if (achievementsEnabled.equalsIgnoreCase(app.ACHIEVEMENTS)) {
-                checkWhichSubKey = app.NO_ACHIEVEMENTS;
+            if (achievementsEnabled.equalsIgnoreCase(cheatDatabaseApplication.ACHIEVEMENTS)) {
+                checkWhichSubKey = cheatDatabaseApplication.NO_ACHIEVEMENTS;
             } else {
-                checkWhichSubKey = app.ACHIEVEMENTS;
+                checkWhichSubKey = cheatDatabaseApplication.ACHIEVEMENTS;
             }
 
             if ((gameList != null) && (gameList.containsKey(checkWhichSubKey))) {
@@ -186,7 +184,7 @@ public class GamesBySystemListActivity extends AppCompatActivity {
             }
 
             gamesBySystemInCache.put(String.valueOf(systemObj.getSystemId()), updatedGameListForCache);
-            app.setGamesBySystemCached(gamesBySystemInCache);
+            cheatDatabaseApplication.setGamesBySystemCached(gamesBySystemInCache);
         }
         Collections.addAll(gameArrayList, gamesFound);
         fillListWithGames();
@@ -251,8 +249,6 @@ public class GamesBySystemListActivity extends AppCompatActivity {
     @Subscribe
     public void onEvent(GameListRecyclerViewClickEvent result) {
         if (result.isSucceeded()) {
-            //CheatDatabaseApplication.tracker().send(new HitBuilders.EventBuilder("ui", "click").setLabel(result.getGame().getGameName()).build());
-
             CheatsByGameListActivity_.intent(this).gameObj(result.getGame()).start();
         } else {
             Toast.makeText(this, R.string.no_internet, Toast.LENGTH_SHORT).show();

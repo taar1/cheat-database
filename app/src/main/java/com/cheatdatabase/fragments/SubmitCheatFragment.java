@@ -3,8 +3,6 @@ package com.cheatdatabase.fragments;
 import android.app.Activity;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,23 +11,17 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.cheatdatabase.MainActivity;
 import com.cheatdatabase.R;
 import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.helpers.Tools;
 
-import org.androidannotations.annotations.AfterViews;
-import org.androidannotations.annotations.EFragment;
-import org.androidannotations.annotations.FragmentArg;
-import org.androidannotations.annotations.ViewById;
-
 import butterknife.BindView;
+import butterknife.ButterKnife;
 
-@EFragment(R.layout.activity_submit_cheat_game_selection)
 public class SubmitCheatFragment extends Fragment {
 
-    private Activity ca;
+    private Activity parentActivity;
     private Typeface latoFontLight;
     private Typeface latoFontBold;
 
@@ -40,37 +32,30 @@ public class SubmitCheatFragment extends Fragment {
     @BindView(R.id.search_button)
     Button mSearchButton;
 
-
-    @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return super.onCreateView(inflater, container, savedInstanceState);
-        ca = getActivity();
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.activity_submit_cheat_game_selection, container, false);
+        ButterKnife.bind(this, view);
 
+        parentActivity = getActivity();
         if (!Reachability.isRegistered()) {
-            Reachability.registerReachability(ca);
+            Reachability.registerReachability(parentActivity);
         }
 
-        latoFontLight = Tools.getFont(ca.getAssets(), Konstanten.FONT_LIGHT);
-        latoFontBold = Tools.getFont(ca.getAssets(), Konstanten.FONT_BOLD);
+        latoFontLight = Tools.getFont(parentActivity.getAssets(), Konstanten.FONT_LIGHT);
+        latoFontBold = Tools.getFont(parentActivity.getAssets(), Konstanten.FONT_BOLD);
 
         mTitle.setTypeface(latoFontBold);
         mSubtitle.setTypeface(latoFontLight);
         mSearchButton.setTypeface(latoFontBold);
-        mSearchButton.setOnClickListener(new OnClickListener() {
+        mSearchButton.setOnClickListener(v -> parentActivity.onSearchRequested());
 
-            @Override
-            public void onClick(View v) {
-                ca.onSearchRequested();
-            }
-
-        });
+        return view;
     }
-
 
     @Override
     public void onPause() {
-        Reachability.unregister(ca);
+        Reachability.unregister(parentActivity);
         super.onPause();
     }
 

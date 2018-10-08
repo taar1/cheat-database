@@ -34,7 +34,6 @@ import com.cheatdatabase.dialogs.RateAppDialog;
 import com.cheatdatabase.events.GenericEvent;
 import com.cheatdatabase.fragments.ContactFormFragment_;
 import com.cheatdatabase.fragments.FavoriteGamesListFragment;
-import com.cheatdatabase.fragments.FavoriteGamesListFragment_;
 import com.cheatdatabase.fragments.SubmitCheatFragment;
 import com.cheatdatabase.fragments.SubmitCheatFragment_;
 import com.cheatdatabase.fragments.SystemListFragment_;
@@ -93,28 +92,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private static final String REMOTE_CONFIG_IOS_ENABLED_KEY = "ios_enabled";
     private static final String REMOTE_CONFIG_ANDROID_ENABLED_KEY = "android_enabled";
     private android.support.v4.app.FragmentManager fragmentManager;
-    private FragmentTransaction ft;
+    private FragmentTransaction fragmentTransaction;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
         mFragmentId = getIntent().getIntExtra("mFragmentId", 0);
-
+        setContentView(R.layout.activity_main);
         init();
 
-        if (mToolbar != null) {
-            setSupportActionBar(mToolbar);
-        }
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeButtonEnabled(true);
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.app_icon_fox);
-
-        adView = new AdView(MainActivity.this, Konstanten.FACEBOOK_AUDIENCE_NETWORK_NATIVE_BANNER_ID, AdSize.BANNER_HEIGHT_50);
-        facebookBanner.addView(adView);
-        adView.loadAd();
-
-        fragmentManager.beginTransaction().replace(R.id.content_frame, SystemListFragment_.builder().build()).commit();
+        fragmentTransaction.replace(R.id.content_frame, SystemListFragment_.builder().build()).commit();
 
         actionBarDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, mToolbar, R.string.drawer_open, R.string.drawer_close);
         mDrawerLayout.addDrawerListener(actionBarDrawerToggle);
@@ -124,11 +111,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void init() {
-        settings = getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
+        settings = getSharedPreferences(Konstanten.PREFERENCES_FILE, MODE_PRIVATE);
         editor = settings.edit();
 
+        adView = new AdView(MainActivity.this, Konstanten.FACEBOOK_AUDIENCE_NETWORK_NATIVE_BANNER_ID, AdSize.BANNER_HEIGHT_50);
+        facebookBanner.addView(adView);
+        adView.loadAd();
+
+        if (mToolbar != null) {
+            setSupportActionBar(mToolbar);
+        }
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.app_icon_fox);
+
         fragmentManager = getSupportFragmentManager();
-        ft = fragmentManager.beginTransaction();
+        fragmentTransaction = fragmentManager.beginTransaction();
 
         TrackingUtils.getInstance().init(this);
 
@@ -150,7 +148,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 //        mFirebaseRemoteConfig.setDefaults(R.xml.remote_config_defaults);
 //
 //        long cacheExpiration = 604800; // 1 week in seconds.
-//        // If your app is using developer mode, cacheExpiration is set to 0, so each fetch will
+//        // If your cheatDatabaseApplication is using developer mode, cacheExpiration is set to 0, so each fetch will
 //        // retrieve values from the service.
 //        if (mFirebaseRemoteConfig.getInfo().getConfigSettings().isDeveloperModeEnabled()) {
 //            cacheExpiration = 0;
@@ -391,7 +389,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             fab.setVisibility(View.VISIBLE);
         } else if (id == R.id.nav_members) {
             mToolbar.setTitle(R.string.top_members_top_helping);
-            ft.addToBackStack(TopMembersFragment.class.getSimpleName());
+            fragmentTransaction.addToBackStack(TopMembersFragment.class.getSimpleName());
             fragmentManager.beginTransaction().replace(R.id.content_frame, TopMembersFragment.newInstance(), TopMembersFragment.class.getSimpleName()).commit();
 
             fab.setVisibility(View.VISIBLE);

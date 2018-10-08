@@ -44,9 +44,9 @@ public class MemberCheatRecycleListViewAdapter extends RecyclerView.Adapter<Memb
         public LinearLayout flagLayout;
         public ImageView screenshotFlag;
         public ImageView germanFlag;
-        public IMyViewHolderClicks mListener;
+        public OnCheatClickedListener mListener;
 
-        public ViewHolder(View v, IMyViewHolderClicks listener) {
+        public ViewHolder(View v, OnCheatClickedListener listener) {
             super(v);
             mListener = listener;
 
@@ -65,7 +65,7 @@ public class MemberCheatRecycleListViewAdapter extends RecyclerView.Adapter<Memb
         }
     }
 
-    public interface IMyViewHolderClicks {
+    public interface OnCheatClickedListener {
         void onCheatClick(MemberCheatRecycleListViewAdapter.ViewHolder caller);
     }
 
@@ -79,7 +79,7 @@ public class MemberCheatRecycleListViewAdapter extends RecyclerView.Adapter<Memb
         final View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.listrow_member_cheat_item, parent, false);
         v.setDrawingCacheEnabled(true);
 
-        return new ViewHolder(v, new IMyViewHolderClicks() {
+        return new ViewHolder(v, new OnCheatClickedListener() {
             @Override
             public void onCheatClick(ViewHolder caller) {
                 if (Reachability.reachability.isReachable) {

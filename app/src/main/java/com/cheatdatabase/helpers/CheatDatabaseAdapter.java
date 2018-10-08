@@ -13,10 +13,9 @@ import com.cheatdatabase.businessobjects.Game;
 import com.cheatdatabase.businessobjects.Screenshot;
 import com.cheatdatabase.businessobjects.SystemPlatform;
 
-import org.androidannotations.annotations.EBean;
-
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 /**
  * Database Adapter More Info:
@@ -25,7 +24,6 @@ import java.util.Calendar;
  *
  * @version 1.0
  */
-@EBean
 public class CheatDatabaseAdapter {
 
     // Member
@@ -293,7 +291,7 @@ public class CheatDatabaseAdapter {
         return null;
     }
 
-    public ArrayList<SystemPlatform> getAllSystemsAndCount() {
+    public List<SystemPlatform> getAllSystemsAndCount() {
 
         Cursor cur = mDb.query(DATABASE_TABLE_SYSTEMS, new String[]{SYS_SYSTEM_ID, SYS_SYSTEM_NAME, SYS_SYSTEM_GAMECOUNT, SYS_SYSTEM_CHEATCOUNT, SYS_SYSTEM_LASTMOD}, null, null, null, null, SYS_SYSTEM_NAME + " COLLATE NOCASE ASC;");
 
@@ -329,7 +327,7 @@ public class CheatDatabaseAdapter {
         return null;
     }
 
-    public int updateSystemsAndCount(ArrayList<SystemPlatform> systemsAndCount) {
+    public int updateSystemsAndCount(List<SystemPlatform> systemsAndCount) {
 
         int insertCount = 0;
         deleteSystemsAndCount();

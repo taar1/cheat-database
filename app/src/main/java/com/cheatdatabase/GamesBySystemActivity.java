@@ -4,6 +4,9 @@ import android.app.AlertDialog;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -20,9 +23,7 @@ import com.cheatdatabase.businessobjects.Game;
 import com.cheatdatabase.businessobjects.SystemPlatform;
 import com.cheatdatabase.events.GameListRecyclerViewClickEvent;
 import com.cheatdatabase.helpers.Konstanten;
-import com.cheatdatabase.helpers.MyPrefs_;
 import com.cheatdatabase.helpers.Reachability;
-import com.cheatdatabase.helpers.Tools;
 import com.cheatdatabase.helpers.Webservice;
 import com.cheatdatabase.widgets.DividerDecoration;
 import com.facebook.ads.AdSize;
@@ -30,39 +31,25 @@ import com.facebook.ads.AdView;
 import com.gc.materialdesign.views.ProgressBarCircularIndeterminate;
 import com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView;
 
-import org.androidannotations.annotations.AfterViews;
-import org.androidannotations.annotations.App;
-import org.androidannotations.annotations.Background;
-import org.androidannotations.annotations.Bean;
-import org.androidannotations.annotations.EActivity;
-import org.androidannotations.annotations.Extra;
-import org.androidannotations.annotations.UiThread;
-import org.androidannotations.annotations.ViewById;
-import org.androidannotations.annotations.sharedpreferences.Pref;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.TreeMap;
 
-@EActivity(R.layout.activity_game_list)
+import butterknife.BindView;
+import needle.Needle;
+
 public class GamesBySystemActivity extends AppCompatActivity {
 
     private static final String TAG = GamesBySystemActivity.class.getSimpleName();
-    private ArrayList<Game> gameArrayList;
-
-    @App
-    CheatDatabaseApplication app;
-    @Bean
-    Tools tools;
-    @Bean
-    GamesBySystemRecycleListViewAdapter mGamesBySystemRecycleListViewAdapter;
-    @Pref
-    MyPrefs_ myPrefs;
-
-    @Extra
-    SystemPlatform systemObj;
+    private List<Game> gameList;
+    private CheatDatabaseApplication cheatDatabaseApplication;
+    private GamesBySystemRecycleListViewAdapter mGamesBySystemRecycleListViewAdapter;
+    private SystemPlatform systemObj;
+    private SharedPreferences sharedPreferences;
 
     @BindView(R.id.my_recycler_view)
     FastScrollRecyclerView mRecyclerView;
@@ -74,22 +61,21 @@ public class GamesBySystemActivity extends AppCompatActivity {
     TextView mEmptyView;
     @BindView(R.id.items_list_load_progress)
     ProgressBarCircularIndeterminate mProgressView;
-
     @BindView(R.id.banner_container)
     LinearLayout facebookBanner;
     private AdView adView;
 
-    @AfterViews
-    public void createView() {
-        if (systemObj == null) {
-            finish();
-        }
 
-        init();
-        mSwipeRefreshLayout.setRefreshing(true);
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        systemObj = (SystemPlatform) getIntent().getSerializableExtra("systemObj");
 
+        setContentView(R.layout.activity_game_list);
         setTitle(systemObj.getSystemName());
+        init();
 
+        mSwipeRefreshLayout.setRefreshing(true);
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -114,6 +100,11 @@ public class GamesBySystemActivity extends AppCompatActivity {
     }
 
     private void init() {
+        sharedPreferences = getSharedPreferences(Konstanten.PREFERENCES_FILE, MODE_PRIVATE);
+
+        cheatDatabaseApplication = CheatDatabaseApplication.getCurrentAppInstance();
+        mGamesBySystemRecycleListViewAdapter = new GamesBySystemRecycleListViewAdapter(this);
+
         adView = new AdView(this, Konstanten.FACEBOOK_AUDIENCE_NETWORK_NATIVE_BANNER_ID, AdSize.BANNER_HEIGHT_50);
         facebookBanner.addView(adView);
         adView.loadAd();
@@ -133,107 +124,108 @@ public class GamesBySystemActivity extends AppCompatActivity {
         // Associate searchable configuration with the SearchView
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
-
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
 
         return super.onCreateOptionsMenu(menu);
     }
 
-    @Background
-    public void getGames(boolean forceLoadOnline) {
+    private void getGames(boolean forceLoadOnline) {
         Log.d(TAG, "getGames() System ID/NAME: " + systemObj.getSystemId() + "/" + systemObj.getSystemName());
 
-        gameArrayList = new ArrayList<>();
-        Game[] cachedGamesCollection;
-        Game[] gamesFound = null;
-        boolean isCached = false;
-        String achievementsEnabled;
-        boolean isAchievementsEnabled = myPrefs.isAchievementsEnabled().getOr(true);
-        if (isAchievementsEnabled) {
-            achievementsEnabled = app.ACHIEVEMENTS;
-        } else {
-            achievementsEnabled = app.NO_ACHIEVEMENTS;
-        }
+        Needle.onBackgroundThread().execute(new Runnable() {
+            @Override
+            public void run() {
+                gameList = new ArrayList<>();
+                Game[] cachedGamesCollection;
+                Game[] gamesFound = null;
+                boolean isCached = false;
+                String achievementsEnabled;
+                boolean isAchievementsEnabled = sharedPreferences.getBoolean("enable_achievements", true);
 
-        TreeMap<String, TreeMap<String, Game[]>> gamesBySystemInCache = app.getGamesBySystemCached();
-        TreeMap gameList = null;
-        if (gamesBySystemInCache.containsKey(String.valueOf(systemObj.getSystemId()))) {
+                if (isAchievementsEnabled) {
+                    achievementsEnabled = cheatDatabaseApplication.ACHIEVEMENTS;
+                } else {
+                    achievementsEnabled = cheatDatabaseApplication.NO_ACHIEVEMENTS;
+                }
 
-            gameList = gamesBySystemInCache.get(String.valueOf(systemObj.getSystemId()));
-            if (gameList != null) {
+                TreeMap<String, TreeMap<String, Game[]>> gamesBySystemInCache = cheatDatabaseApplication.getGamesBySystemCached();
+                TreeMap gameListTree = null;
+                if (gamesBySystemInCache.containsKey(String.valueOf(systemObj.getSystemId()))) {
 
-                if (gameList.containsKey(achievementsEnabled)) {
-                    cachedGamesCollection = (Game[]) gameList.get(achievementsEnabled);
+                    gameListTree = gamesBySystemInCache.get(String.valueOf(systemObj.getSystemId()));
+                    if (gameListTree != null) {
 
-                    if (cachedGamesCollection.length > 0) {
-                        gamesFound = cachedGamesCollection;
-                        isCached = true;
+                        if (gameListTree.containsKey(achievementsEnabled)) {
+                            cachedGamesCollection = (Game[]) gameListTree.get(achievementsEnabled);
+
+                            if (cachedGamesCollection.length > 0) {
+                                gamesFound = cachedGamesCollection;
+                                isCached = true;
+                            }
+                        }
                     }
                 }
+
+                // TODO FIXME java.lang.NullPointerException: Attempt to invoke virtual method 'boolean java.lang.String.equals(java.lang.Object)' on a null object reference
+                // TODO FIXME java.lang.NullPointerException: Attempt to invoke virtual method 'boolean java.lang.String.equals(java.lang.Object)' on a null object reference
+                // TODO FIXME java.lang.NullPointerException: Attempt to invoke virtual method 'boolean java.lang.String.equals(java.lang.Object)' on a null object reference
+                // TODO beim fast scrollen gibts den nullpointer
+                // TODO beim fast scrollen gibts den nullpointer
+                // TODO beim fast scrollen gibts den nullpointer
+
+                if (!isCached || forceLoadOnline) {
+                    gamesFound = Webservice.getGameListBySystemId(systemObj.getSystemId(), systemObj.getSystemName(), isAchievementsEnabled);
+                    while (gamesFound == null) {
+                        gamesFound = Webservice.getGameListBySystemId(systemObj.getSystemId(), systemObj.getSystemName(), isAchievementsEnabled);
+                    }
+
+                    TreeMap<String, Game[]> updatedGameListForCache = new TreeMap<>();
+                    updatedGameListForCache.put(achievementsEnabled, gamesFound);
+
+                    String checkWhichSubKey;
+                    if (achievementsEnabled.equalsIgnoreCase(cheatDatabaseApplication.ACHIEVEMENTS)) {
+                        checkWhichSubKey = cheatDatabaseApplication.NO_ACHIEVEMENTS;
+                    } else {
+                        checkWhichSubKey = cheatDatabaseApplication.ACHIEVEMENTS;
+                    }
+
+                    if ((gameListTree != null) && (gameListTree.containsKey(checkWhichSubKey))) {
+                        Game[] existingGamesInCache = (Game[]) gameListTree.get(checkWhichSubKey);
+                        updatedGameListForCache.put(checkWhichSubKey, existingGamesInCache);
+                    }
+
+                    gamesBySystemInCache.put(String.valueOf(systemObj.getSystemId()), updatedGameListForCache);
+                    cheatDatabaseApplication.setGamesBySystemCached(gamesBySystemInCache);
+                }
+                Collections.addAll(gameList, gamesFound);
+                updateUI();
             }
-        }
+        });
 
-        // TODO FIXME java.lang.NullPointerException: Attempt to invoke virtual method 'boolean java.lang.String.equals(java.lang.Object)' on a null object reference
-        // TODO FIXME java.lang.NullPointerException: Attempt to invoke virtual method 'boolean java.lang.String.equals(java.lang.Object)' on a null object reference
-        // TODO FIXME java.lang.NullPointerException: Attempt to invoke virtual method 'boolean java.lang.String.equals(java.lang.Object)' on a null object reference
-        // TODO FIXME java.lang.NullPointerException: Attempt to invoke virtual method 'boolean java.lang.String.equals(java.lang.Object)' on a null object reference
-        // TODO FIXME java.lang.NullPointerException: Attempt to invoke virtual method 'boolean java.lang.String.equals(java.lang.Object)' on a null object reference
-        // TODO beim fast scrollen gibts den nullpointer
-        // TODO beim fast scrollen gibts den nullpointer
-        // TODO beim fast scrollen gibts den nullpointer
-        // TODO beim fast scrollen gibts den nullpointer
-        // TODO beim fast scrollen gibts den nullpointer
-        // TODO beim fast scrollen gibts den nullpointer
-
-        if (!isCached || forceLoadOnline) {
-            gamesFound = Webservice.getGameListBySystemId(systemObj.getSystemId(), systemObj.getSystemName(), isAchievementsEnabled);
-            while (gamesFound == null) {
-                gamesFound = Webservice.getGameListBySystemId(systemObj.getSystemId(), systemObj.getSystemName(), isAchievementsEnabled);
-            }
-
-            TreeMap<String, Game[]> updatedGameListForCache = new TreeMap<>();
-            updatedGameListForCache.put(achievementsEnabled, gamesFound);
-
-            String checkWhichSubKey;
-            if (achievementsEnabled.equalsIgnoreCase(app.ACHIEVEMENTS)) {
-                checkWhichSubKey = app.NO_ACHIEVEMENTS;
-            } else {
-                checkWhichSubKey = app.ACHIEVEMENTS;
-            }
-
-            if ((gameList != null) && (gameList.containsKey(checkWhichSubKey))) {
-                Game[] existingGamesInCache = (Game[]) gameList.get(checkWhichSubKey);
-                updatedGameListForCache.put(checkWhichSubKey, existingGamesInCache);
-            }
-
-            gamesBySystemInCache.put(String.valueOf(systemObj.getSystemId()), updatedGameListForCache);
-            app.setGamesBySystemCached(gamesBySystemInCache);
-        }
-        Collections.addAll(gameArrayList, gamesFound);
-        fillListWithGames();
     }
 
-    @UiThread
-    public void fillListWithGames() {
-        try {
-            if (gameArrayList != null && gameArrayList.size() > 0) {
-                mGamesBySystemRecycleListViewAdapter.setGameList(gameArrayList);
-                mRecyclerView.setAdapter(mGamesBySystemRecycleListViewAdapter);
+    private void updateUI() {
+        Needle.onMainThread().execute(new Runnable() {
+            @Override
+            public void run() {
+                if (gameList != null && gameList.size() > 0) {
+                    mGamesBySystemRecycleListViewAdapter.setGameList(gameList);
+                    mRecyclerView.setAdapter(mGamesBySystemRecycleListViewAdapter);
 
-                mGamesBySystemRecycleListViewAdapter.notifyDataSetChanged();
-            } else {
-                error();
+                    mGamesBySystemRecycleListViewAdapter.notifyDataSetChanged();
+                } else {
+                    error();
+                }
+
+                mSwipeRefreshLayout.setRefreshing(false);
+                // mRecyclerView.hideLoading();
             }
-        } catch (Exception e) {
-            error();
-        }
+        });
 
-        mSwipeRefreshLayout.setRefreshing(false);
-//        mRecyclerView.hideLoading();
     }
 
     private void error() {
-        Log.e(TAG, "caught error: " + getPackageName() + "/" + getTitle());
+        Log.e(TAG, "Caught error: " + getPackageName() + "/" + getTitle());
         new AlertDialog.Builder(GamesBySystemActivity.this).setIcon(R.drawable.ic_action_warning).setTitle(getString(R.string.err)).setMessage(R.string.err_data_not_accessible).setNeutralButton(R.string.ok, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int whichButton) {

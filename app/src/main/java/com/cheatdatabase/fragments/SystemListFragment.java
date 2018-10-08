@@ -1,15 +1,21 @@
 package com.cheatdatabase.fragments;
 
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.cheatdatabase.GamesBySystemListActivity;
 import com.cheatdatabase.GamesBySystemListActivity_;
-import com.cheatdatabase.MainActivity;
 import com.cheatdatabase.R;
+import com.cheatdatabase.SubmitCheatActivity_;
 import com.cheatdatabase.adapters.SystemsRecycleListViewAdapter;
 import com.cheatdatabase.businessobjects.SystemPlatform;
 import com.cheatdatabase.events.RemoteConfigLoadedEvent;
@@ -20,47 +26,38 @@ import com.cheatdatabase.helpers.Webservice;
 import com.cheatdatabase.taskresults.GamesAndCheatsCountTaskResult;
 import com.google.gson.Gson;
 
-import org.androidannotations.annotations.AfterViews;
-import org.androidannotations.annotations.Background;
-import org.androidannotations.annotations.Bean;
-import org.androidannotations.annotations.EFragment;
-import org.androidannotations.annotations.FragmentArg;
-import org.androidannotations.annotations.UiThread;
-import org.androidannotations.annotations.ViewById;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.List;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
+import needle.Needle;
 
-@EFragment(R.layout.fragment_systemlist)
 public class SystemListFragment extends Fragment {
     private final String TAG = SystemListFragment.class.getSimpleName();
 
     private RecyclerView.LayoutManager mLayoutManager;
     private GamesAndCheatsCountTaskResult gamesAndCheatsCountTaskResult;
-    private ArrayList<SystemPlatform> systemGameandCheatCounterList = null;
+    private List<SystemPlatform> systemGameandCheatCounterList = null;
+    private SystemsRecycleListViewAdapter systemsRecycleListViewAdapter;
+    private CheatDatabaseAdapter db;
 
     @BindView(R.id.my_recycler_view)
-    RecyclerView mRecyclerView;
+    RecyclerView recyclerView;
     @BindView(R.id.swipe_refresh_layout)
     SwipeRefreshLayout mSwipeRefreshLayout;
 
-    @FragmentArg(MainActivity.DRAWER_ITEM_ID)
-    int mDrawerId;
-    @FragmentArg(MainActivity.DRAWER_ITEM_NAME)
-    String mDrawerName;
 
-    @Bean
-    SystemsRecycleListViewAdapter mSystemsRecycleListViewAdapter;
-    @Bean
-    CheatDatabaseAdapter db;
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_systemlist, container, false);
+        ButterKnife.bind(this, view);
 
-    @AfterViews
-    public void onCreateView() {
+        db = new CheatDatabaseAdapter(getActivity());
 
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -71,22 +68,23 @@ public class SystemListFragment extends Fragment {
 
         // use this setting to improve performance if you know that changes
         // in content do not change the layout size of the RecyclerView
-        mRecyclerView.setHasFixedSize(true);
+        recyclerView.setHasFixedSize(true);
 
         // use a linear layout manager
         mLayoutManager = new LinearLayoutManager(getActivity());
-        mRecyclerView.setLayoutManager(mLayoutManager);
+        recyclerView.setLayoutManager(mLayoutManager);
 
-        initAdapter(tools.getGameSystemsFromXml(getActivity()));
+        initAdapter(Tools.getGameSystemsFromXml(getActivity()));
 
         mSwipeRefreshLayout.setRefreshing(true);
         loadGamesAndCheatsCounterBackground();
     }
 
-    private void initAdapter(ArrayList<SystemPlatform> gameSystems) {
-        mSystemsRecycleListViewAdapter.init(gameSystems);
-        mRecyclerView.setAdapter(mSystemsRecycleListViewAdapter);
-        mSystemsRecycleListViewAdapter.notifyDataSetChanged();
+    private void initAdapter(List<SystemPlatform> gameSystems) {
+        systemsRecycleListViewAdapter = new SystemsRecycleListViewAdapter();
+        systemsRecycleListViewAdapter.setSystemPlatforms(gameSystems);
+        recyclerView.setAdapter(systemsRecycleListViewAdapter);
+        systemsRecycleListViewAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -101,20 +99,25 @@ public class SystemListFragment extends Fragment {
         super.onStop();
     }
 
-    @Subscribe
-    public void onEvent(GamesAndCheatsCountTaskResult result) {
-        mSwipeRefreshLayout.setRefreshing(false);
-        if (result.isSucceeded()) {
-            initAdapter(result.getSystemPlatforms());
-        } else {
-            Toast.makeText(getActivity(), R.string.no_internet, Toast.LENGTH_LONG).show();
-        }
-    }
+//    @Subscribe
+//    public void onEvent(GamesAndCheatsCountTaskResult result) {
+//        mSwipeRefreshLayout.setRefreshing(false);
+//        if (result.isSucceeded()) {
+//            initAdapter(result.getSystemPlatforms());
+//        } else {
+//            Toast.makeText(getActivity(), R.string.no_internet, Toast.LENGTH_LONG).show();
+//        }
+//    }
+
 
     @Subscribe
     public void onEvent(SystemListRecyclerViewClickEvent result) {
         if (result.isSucceeded()) {
-            GamesBySystemListActivity_.intent(getActivity()).systemObj(result.getSystemPlatform()).start();
+            // TODO FIXME systemPlatform parameter gibt evtl ein fehler....
+            Intent explicitIntent = new Intent(getActivity(), GamesBySystemListActivity.class);
+            explicitIntent.putExtra("systemObj", result.getSystemPlatform());
+            startActivity(explicitIntent);
+
         } else {
             Toast.makeText(getActivity(), R.string.no_internet, Toast.LENGTH_SHORT).show();
         }
@@ -131,84 +134,88 @@ public class SystemListFragment extends Fragment {
         // TODO vorher in MainActivity.java noch die remote config values in die sharedpreferences speichern, damit man von hier aus drauf zugreifen kann
         // TODO vorher in MainActivity.java noch die remote config values in die sharedpreferences speichern, damit man von hier aus drauf zugreifen kann
 
-        initAdapter(tools.getGameSystemsFromXml(getActivity()));
+        initAdapter(Tools.getGameSystemsFromXml(getActivity()));
         mSwipeRefreshLayout.setRefreshing(true);
         loadGamesAndCheatsCounterBackground();
     }
 
-    @Background
     public void loadGamesAndCheatsCounterBackground() {
-        db.open();
+        Needle.onBackgroundThread().execute(() -> {
+            db.open();
 
-        // SYSETM'S GAME COUNT WILL ONLY BE LOADED ONCE EVERY 24h
-        boolean getSystemsAndCountsFromWebservice = false;
+            // System Game count will only be updated every 24h
+            boolean getSystemsAndCountsFromWebservice = false;
 
-        ArrayList<SystemPlatform> systemsLocal = db.getAllSystemsAndCount();
-        if (systemsLocal == null || systemsLocal.size() == 0) {
-            getSystemsAndCountsFromWebservice = true;
-        } else {
-            // Check how old the database entries are. If over than 24 then
-            // load them again from the webservice.
-
-            long lastmod = systemsLocal.get(0).getLastModTimeStamp();
-            long now = System.currentTimeMillis();
-            long differenceInHours = (now - lastmod) / (1000 * 60 * 60);
-            long differenceInMins = (now - lastmod) / (1000 * 60);
-
-            Log.d(TAG, "NOW            : " + now);
-            Log.d(TAG, "LAST UPDATE    : " + lastmod);
-            Log.d(TAG, "DIFFERENCE in H: " + differenceInHours);
-            Log.d(TAG, "DIFFERENCE in M: " + differenceInMins);
-
-            if (differenceInHours > 23) {
-                Log.d(TAG, "DIFFERENCE MORE THAN 23 HOURS. LOADING VALUES FROM WEBSERVICE AGAIN");
+            List<SystemPlatform> systemsLocal = db.getAllSystemsAndCount();
+            if (systemsLocal == null || systemsLocal.size() == 0) {
                 getSystemsAndCountsFromWebservice = true;
-            }
-        }
+            } else {
+                // Check how old the database entries are. If over than 24 then
+                // load them again from the webservice.
 
-        Log.d(TAG, "getSystemsAndCountsFromWebservice: " + getSystemsAndCountsFromWebservice);
+                long lastmod = systemsLocal.get(0).getLastModTimeStamp();
+                long now = System.currentTimeMillis();
+                long differenceInHours = (now - lastmod) / (1000 * 60 * 60);
+                long differenceInMins = (now - lastmod) / (1000 * 60);
 
-        if (getSystemsAndCountsFromWebservice) {
-            try {
-                systemGameandCheatCounterList = Webservice.countGamesAndCheatsBySystem();
-                Log.d(TAG, "Webservice countGamesAndCheatsBySystem() USED");
+                Log.d(TAG, "NOW            : " + now);
+                Log.d(TAG, "LAST UPDATE    : " + lastmod);
+                Log.d(TAG, "DIFFERENCE in H: " + differenceInHours);
+                Log.d(TAG, "DIFFERENCE in M: " + differenceInMins);
 
-                // Update the local database
-                db.updateSystemsAndCount(systemGameandCheatCounterList);
-                Log.d(TAG, "SYSTEM VALUES FROM WEBSERVICE: " + new Gson().toJson(systemGameandCheatCounterList));
-
-                if ((systemGameandCheatCounterList == null) || systemGameandCheatCounterList.size() == 0) {
-                    db.deleteSystemsAndCount();
-                    gamesAndCheatsCountTaskResult = new GamesAndCheatsCountTaskResult(new Exception());
-                } else {
-                    // Sorting
-                    Collections.sort(systemGameandCheatCounterList, new Comparator<SystemPlatform>() {
-                        @Override
-                        public int compare(SystemPlatform system1, SystemPlatform system2) {
-                            return system1.getSystemName().compareTo(system2.getSystemName());
-                        }
-                    });
-
-                    gamesAndCheatsCountTaskResult = new GamesAndCheatsCountTaskResult(systemGameandCheatCounterList);
+                if (differenceInHours > 23) {
+                    Log.d(TAG, "DIFFERENCE MORE THAN 23 HOURS. LOADING VALUES FROM WEBSERVICE AGAIN");
+                    getSystemsAndCountsFromWebservice = true;
                 }
-            } catch (Exception e) {
-                //db.deleteSystemsAndCount();
-                Log.e(TAG, "Load game and cheats counters failed: " + e.getLocalizedMessage());
-                gamesAndCheatsCountTaskResult = new GamesAndCheatsCountTaskResult(new Exception());
             }
 
-        } else {
-            Log.d(TAG, "USED LOCAL DB DATA");
-            gamesAndCheatsCountTaskResult = new GamesAndCheatsCountTaskResult(systemsLocal);
-        }
+            Log.d(TAG, "getSystemsAndCountsFromWebservice: " + getSystemsAndCountsFromWebservice);
 
-        db.close();
-        updateUI();
+            if (getSystemsAndCountsFromWebservice) {
+                try {
+                    systemGameandCheatCounterList = Webservice.countGamesAndCheatsBySystem();
+                    Log.d(TAG, "Webservice countGamesAndCheatsBySystem() USED");
+
+                    // Update the local database
+                    db.updateSystemsAndCount(systemGameandCheatCounterList);
+                    Log.d(TAG, "SYSTEM VALUES FROM WEBSERVICE: " + new Gson().toJson(systemGameandCheatCounterList));
+
+                    if ((systemGameandCheatCounterList == null) || (systemGameandCheatCounterList.size() < 1)) {
+                        db.deleteSystemsAndCount();
+                    } else {
+                        // Sort the systems by name
+                        Collections.sort(systemGameandCheatCounterList, new Comparator<SystemPlatform>() {
+                            @Override
+                            public int compare(SystemPlatform system1, SystemPlatform system2) {
+                                return system1.getSystemName().compareTo(system2.getSystemName());
+                            }
+                        });
+
+                    }
+                } catch (Exception e) {
+                    //db.deleteSystemsAndCount();
+                    Log.e(TAG, "Load game and cheats counters failed: " + e.getLocalizedMessage());
+                }
+            } else {
+                systemGameandCheatCounterList = systemsLocal;
+            }
+
+            db.close();
+            updateUI();
+        });
     }
 
-    @UiThread
-    void updateUI() {
-        EventBus.getDefault().post(gamesAndCheatsCountTaskResult);
+    private void updateUI() {
+        Needle.onMainThread().execute(() -> {
+            mSwipeRefreshLayout.setRefreshing(false);
+
+            if ((systemGameandCheatCounterList == null) || (systemGameandCheatCounterList.size() < 1)) {
+                Toast.makeText(getActivity(), R.string.no_internet, Toast.LENGTH_LONG).show();
+            } else {
+                initAdapter(systemGameandCheatCounterList);
+            }
+        });
+
     }
 
 }

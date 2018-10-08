@@ -14,7 +14,6 @@ import com.cheatdatabase.businessobjects.SystemPlatform;
 import com.cheatdatabase.businessobjects.WelcomeMessage;
 import com.google.gson.Gson;
 
-import org.androidannotations.annotations.EBean;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -37,7 +36,6 @@ import java.util.Map;
 /**
  * REST Calls class.
  */
-@EBean
 public class Webservice {
 
     private static final String TAG = Webservice.class.getSimpleName();
@@ -383,9 +381,9 @@ public class Webservice {
      * @param cheatId
      * @return Array(String[Filename, Filegrüsse])
      */
-    public static ArrayList<String[]> getImageListByCheatId(int cheatId) {
+    public static List<String[]> getImageListByCheatId(int cheatId) {
         JSONArray jsonArray = null;
-        ArrayList<String[]> al = null;
+        List<String[]> al = null;
 
         try {
             String urlParameters = "cheatId=" + URLEncoder.encode(String.valueOf(cheatId), "UTF-8");
@@ -834,7 +832,7 @@ public class Webservice {
         SystemPlatform[] systems = null;
         Game[] games = null;
         Cheat[] cheats = null;
-        ArrayList<Game> temporaryGameList = new ArrayList<>();
+        List<Game> temporaryGameList = new ArrayList<>();
 
         JSONArray jArray = null;
 
@@ -901,7 +899,7 @@ public class Webservice {
             }
 
             Iterator<Map.Entry<Integer, String>> it1 = systemsHashMap.entrySet().iterator();
-            ArrayList<SystemPlatform> temporarySystemList = new ArrayList<>();
+            List<SystemPlatform> temporarySystemList = new ArrayList<>();
             while (it1.hasNext()) {
                 Map.Entry<Integer, String> pairs1 = it1.next();
                 int tmpSystemId = Integer.valueOf(pairs1.getKey().toString());
@@ -916,7 +914,7 @@ public class Webservice {
             }
 
             Iterator<Map.Entry<Integer, String>> it2 = gamesHashMap.entrySet().iterator();
-            ArrayList<Game> temporaryInnerGameList = new ArrayList<>();
+            List<Game> temporaryInnerGameList = new ArrayList<>();
             while (it2.hasNext()) {
                 Map.Entry<Integer, String> pairs2 = it2.next();
                 int tmpGameId = Integer.valueOf(pairs2.getKey().toString());
@@ -936,7 +934,7 @@ public class Webservice {
                     }
                 }
 
-                ArrayList<Cheat> matchingCheats = new ArrayList<>();
+                List<Cheat> matchingCheats = new ArrayList<>();
                 for (Cheat cheat : cheats) {
                     if (cheat.getGameId() == tmpGame.getGameId()) {
                         matchingCheats.add(cheat);
@@ -972,7 +970,7 @@ public class Webservice {
             for (int j2 = 0; j2 < systems.length; j2++) {
                 SystemPlatform ss = systems[j2];
 
-                ArrayList<Game> matchingGames = new ArrayList<>();
+                List<Game> matchingGames = new ArrayList<>();
 
                 for (Game game : games) {
                     if (ss.getSystemId() == game.getSystemId()) {
@@ -1082,7 +1080,7 @@ public class Webservice {
     public static List<Member> getMemberTop20() {
         String topMembers = executeGet(Konstanten.BASE_URL_ANDROID + "getMemberTop20.php");
 
-        ArrayList<Member> memberList = new ArrayList<>();
+        List<Member> memberList = new ArrayList<>();
 
         JSONArray membersArrayList;
         try {
@@ -1123,10 +1121,10 @@ public class Webservice {
      *
      * @return SystemPlatform[]
      */
-    public static ArrayList<SystemPlatform> countGamesAndCheatsBySystem() {
+    public static List<SystemPlatform> countGamesAndCheatsBySystem() {
         String gamesAndCheatCounter = executeGet(Konstanten.BASE_URL_ANDROID + "countGamesAndCheatsBySystem.php");
 
-        ArrayList<SystemPlatform> systems = new ArrayList<>();
+        List<SystemPlatform> systems = new ArrayList<>();
 
         JSONArray jArray;
         try {
@@ -1443,7 +1441,7 @@ public class Webservice {
         URL url;
         HttpURLConnection connection = null;
         try {
-            //Create connection
+            // Create connection
             url = new URL(targetURL);
             connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");

@@ -53,7 +53,7 @@ public class CheatDatabaseApplication extends Application implements Application
     }
 
     /**
-     * Get the current cineman app instance
+     * Get the current cineman cheatDatabaseApplication instance
      *
      * @return CheatDatabaseApplication
      */
