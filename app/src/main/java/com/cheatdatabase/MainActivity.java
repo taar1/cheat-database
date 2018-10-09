@@ -35,7 +35,7 @@ import com.cheatdatabase.events.GenericEvent;
 import com.cheatdatabase.fragments.ContactFormFragment_;
 import com.cheatdatabase.fragments.FavoriteGamesListFragment;
 import com.cheatdatabase.fragments.SubmitCheatFragment;
-import com.cheatdatabase.fragments.SubmitCheatFragment_;
+import com.cheatdatabase.fragments.SystemListFragment;
 import com.cheatdatabase.fragments.SystemListFragment_;
 import com.cheatdatabase.fragments.TopMembersFragment;
 import com.cheatdatabase.helpers.DistinctValues;
@@ -98,7 +98,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_main);
         init();
 
-        fragmentTransaction.replace(R.id.content_frame, SystemListFragment_.builder().build()).commit();
+        fragmentTransaction.replace(R.id.content_frame, SystemListFragment.newInstance(), SystemListFragment.class.getSimpleName()).commit();
 
         actionBarDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, mToolbar, R.string.drawer_open, R.string.drawer_close);
         mDrawerLayout.addDrawerListener(actionBarDrawerToggle);
@@ -183,7 +183,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @OnClick(R.id.add_new_cheat_button)
     void clickedAddNewCheatFloatingButton() {
         mToolbar.setTitle(R.string.submit_cheat_short);
-        fragmentManager.beginTransaction().replace(R.id.content_frame, SubmitCheatFragment_.builder().build()).commit();
+        fragmentTransaction.addToBackStack(SubmitCheatFragment.class.getSimpleName());
+        fragmentManager.beginTransaction().replace(R.id.content_frame, SubmitCheatFragment.newInstance(), SubmitCheatFragment.class.getSimpleName()).commit();
+
         fab.setVisibility(View.GONE);
     }
 

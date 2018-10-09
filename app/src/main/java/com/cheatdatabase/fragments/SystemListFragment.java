@@ -13,9 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.cheatdatabase.GamesBySystemListActivity;
-import com.cheatdatabase.GamesBySystemListActivity_;
 import com.cheatdatabase.R;
-import com.cheatdatabase.SubmitCheatActivity_;
 import com.cheatdatabase.adapters.SystemsRecycleListViewAdapter;
 import com.cheatdatabase.businessobjects.SystemPlatform;
 import com.cheatdatabase.events.RemoteConfigLoadedEvent;
@@ -50,6 +48,11 @@ public class SystemListFragment extends Fragment {
     RecyclerView recyclerView;
     @BindView(R.id.swipe_refresh_layout)
     SwipeRefreshLayout mSwipeRefreshLayout;
+
+    public static SystemListFragment newInstance() {
+        SystemListFragment systemListFragment = new SystemListFragment();
+        return systemListFragment;
+    }
 
 
     @Override

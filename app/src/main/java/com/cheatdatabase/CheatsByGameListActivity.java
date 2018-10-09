@@ -43,9 +43,6 @@ import com.gc.materialdesign.views.ProgressBarCircularIndeterminate;
 import com.google.gson.Gson;
 import com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView;
 
-import org.androidannotations.annotations.Background;
-import org.androidannotations.annotations.Click;
-import org.androidannotations.annotations.UiThread;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
@@ -410,30 +407,30 @@ public class CheatsByGameListActivity extends AppCompatActivity {
         }
     }
 
-    @Background
     void addCheatsToFavoritesTask(Game game) {
-        int returnValueCode;
-        CheatDatabaseAdapter dbAdapter = null;
-        try {
-            dbAdapter = new CheatDatabaseAdapter(CheatsByGameListActivity.this);
-            dbAdapter.open();
-            int retVal = dbAdapter.insertCheats(game);
-            if (retVal > 0) {
-                returnValueCode = R.string.add_favorites_ok;
-            } else {
+        Needle.onBackgroundThread().execute(() -> {
+            int returnValueCode;
+            CheatDatabaseAdapter dbAdapter = null;
+            try {
+                dbAdapter = new CheatDatabaseAdapter(CheatsByGameListActivity.this);
+                dbAdapter.open();
+                int retVal = dbAdapter.insertCheats(game);
+                if (retVal > 0) {
+                    returnValueCode = R.string.add_favorites_ok;
+                } else {
+                    returnValueCode = R.string.favorite_error;
+                }
+            } catch (Exception e) {
+                Log.e(TAG, e.getLocalizedMessage());
                 returnValueCode = R.string.favorite_error;
+            } finally {
+                dbAdapter.close();
             }
-        } catch (Exception e) {
-            Log.e(TAG, e.getLocalizedMessage());
-            returnValueCode = R.string.favorite_error;
-        } finally {
-            dbAdapter.close();
-        }
 
-        finishedAddingCheatsToFavorites(returnValueCode);
+            finishedAddingCheatsToFavorites(returnValueCode);
+        });
     }
 
-    @UiThread
     void finishedAddingCheatsToFavorites(int returnValueCode) {
         // TODO Favorite Icon animation abschalten
         Toast.makeText(CheatsByGameListActivity.this, returnValueCode, Toast.LENGTH_LONG).show();
