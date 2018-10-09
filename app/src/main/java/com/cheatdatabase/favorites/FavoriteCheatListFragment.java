@@ -141,10 +141,10 @@ public class FavoriteCheatListFragment extends ListFragment {
         @Override
         protected Void doInBackground(Game... params) {
 
-            if (params[0].getCheats() == null) {
+            if (params[0].getCheatList() == null) {
                 cheats = getCheatsNow();
             } else {
-                cheats = params[0].getCheats();
+                cheats = params[0].getCheatList();
             }
 
             return null;
@@ -174,10 +174,10 @@ public class FavoriteCheatListFragment extends ListFragment {
                 Log.e(TAG, "db.getAllFavoritedCheatsByGame() == null");
             }
 
-            gameObj.setCheats(cheats);
+            gameObj.setCheatList(cheats);
 
         } catch (Exception ex) {
-            Log.e(getClass().getName(), "Error executing getCheats()", ex);
+            Log.e(getClass().getName(), "Error executing getCheatList()", ex);
         }
 
         return cheats;

@@ -339,10 +339,10 @@ public class FavoriteCheatListActivity extends AppCompatActivity {
                 cheatsArrayList = new ArrayList<>();
 
                 if (gameObj != null) {
-                    if (gameObj.getCheats() == null) {
+                    if (gameObj.getCheatList() == null) {
                         Collections.addAll(cheatsArrayList, db.getAllFavoritedCheatsByGame(gameObj.getGameId()));
                     } else {
-                        Collections.addAll(cheatsArrayList, gameObj.getCheats());
+                        Collections.addAll(cheatsArrayList, gameObj.getCheatList());
                     }
 
                     Cheat[] cheats = new Cheat[cheatsArrayList.size()];
@@ -350,7 +350,7 @@ public class FavoriteCheatListActivity extends AppCompatActivity {
                         cheats[i] = cheatsArrayList.get(i);
                     }
 
-                    gameObj.setCheats(cheats);
+                    gameObj.setCheatList(cheats);
 
                     fillListWithCheats();
                 } else {

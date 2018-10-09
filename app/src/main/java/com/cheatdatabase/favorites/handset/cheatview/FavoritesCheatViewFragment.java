@@ -144,7 +144,7 @@ public class FavoritesCheatViewFragment extends Fragment implements OnClickListe
         try {
             ll = (LinearLayout) inflater.inflate(R.layout.fragment_cheat_detail_handset, container, false);
 
-            cheats = game.getCheats();
+            cheats = game.getCheatList();
             cheatObj = cheats[offset];
 
             new FetchCheatRatingOnlineBackgroundTask().execute();

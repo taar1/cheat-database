@@ -22,6 +22,7 @@ import com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -32,10 +33,14 @@ public class CheatsByGameRecycleListViewAdapter extends RecyclerView.Adapter<Che
 
     private static final String TAG = CheatsByGameRecycleListViewAdapter.class.getSimpleName();
 
-    private List<Cheat> cheatList;
     private Typeface latoFontBold;
     private Typeface latoFontLight;
+    private List<Cheat> cheatList;
     private Cheat cheatObj;
+
+    public CheatsByGameRecycleListViewAdapter() {
+        cheatList = new ArrayList<>();
+    }
 
     public void setCheats(List<Cheat> cheatList) {
         this.cheatList = cheatList;

@@ -124,7 +124,7 @@ public class CheatViewPageIndicatorActivity extends AppCompatActivity {
         pageSelected = intent.getIntExtra("selectedPage", 0);
         activePage = pageSelected;
 
-        for (Cheat cheat : gameObj.getCheats()) {
+        for (Cheat cheat : gameObj.getCheatList()) {
             cheatArray.add(cheat);
         }
 

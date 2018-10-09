@@ -16,7 +16,7 @@
     <string name="please_wait">Lütfen bekleyin…</string>
     <string name="retrieving_data">Veriye ulaşılıyor</string>
     <string name="cheat">İpucu</string>
-    <string name="cheats">İpuçları</string>
+    <string name="cheatList">İpuçları</string>
     <string name="game">game</string>
     <string name="games">games</string>
     <string name="no_internet">No Internet connection available. Try again a bit later.</string>
@@ -39,7 +39,7 @@
     <string name="error_nothing_found_text">Girdiğiniz kritere uygun bir oyun bulunamadı. Lütfen daha kısa kelimelerle tekrar deneyin.</string>
     <string name="button_closeNothingFoundPopup">Sorguyu daraltın</string>
     <string name="cheat_counter_headline">%s üzerinde ipucu mevcut ve giderek artıyor!</string>
-    <string name="total_cheats_unknown">Hundreds of thousands of cheats!</string>
+    <string name="total_cheats_unknown">Hundreds of thousands of cheatList!</string>
     <string name="new_cheats_title">Bu oyunlar için yeni ipuçları:</string>
     <string name="advanced_search">advanced / full text search</string>
     <string name="favorites">Favorilerim</string>
@@ -47,7 +47,7 @@
     <string name="goto_cheat">İpucu oluştur</string>
     <string name="goto_cheat_list">İpucunu gözden geçir</string>
     <string name="menu_fulltext_search_short">Full text search</string>
-    <string name="menu_fulltext_search_long">Full text search in listed cheats</string>
+    <string name="menu_fulltext_search_long">Full text search in listed cheatList</string>
     <string name="menu_server_status">Server status</string>
     <string name="menu_more_apps">More Apps from us</string>
     <string name="menu_pocketchange">Pocket Change Balance</string>
@@ -113,9 +113,9 @@
 		seçeneğini seçin. Favorilerinizden bir ipucunu silmek için ise oyun
 		menüsünden \"Favori Listemden Çıkart\" seçeneğini seçin..</string>
     <string name="add_favorites_ok">Cheats successfully added to your favorites.</string>
-    <string name="add_favorites_error">Some or all cheats are already in your favorites. The new ones have been added.</string>
+    <string name="add_favorites_error">Some or all cheatList are already in your favorites. The new ones have been added.</string>
     <string name="add_one_favorite">Add cheat to favorites</string>
-    <string name="add_all_favorites">Add all cheats to favorites</string>
+    <string name="add_all_favorites">Add all cheatList to favorites</string>
     <string name="favorite_adding">Adding favorites&#8230;</string>
     <string name="forum_goto">Foruma Git</string>
     <string name="forum_goto_online">Foruma Git (online)</string>
@@ -165,10 +165,10 @@
     <string name="fulltext_search_title">Full-text search</string>
     <string name="fulltext_search_titles_also">Search in cheat titles also</string>
     <string name="fulltext_search_systems">Choose systems</string>
-    <string name="fulltext_search_listed_cheats">Search through listed cheats</string>
-    <string name="fulltext_search_all_cheats">Search through all cheats</string>
+    <string name="fulltext_search_listed_cheats">Search through listed cheatList</string>
+    <string name="fulltext_search_all_cheats">Search through all cheatList</string>
     <string name="fulltext_search_results">Full-text search results</string>
-    <string name="fulltext_search_cheats">Search cheats</string>
+    <string name="fulltext_search_cheats">Search cheatList</string>
     <string name="fulltext_search_keywords">Keywords</string>
     <string name="fulltext_search_error_nosystem_selected">Please pick at least one system</string>
 
@@ -185,10 +185,10 @@
     <string name="meta_unknown">Unknown</string>
     <string name="meta_submission_date">Date of submission</string>
     <string name="meta_submitted_by">Submitted by</string>
-    <string name="meta_submission_total">Total submitted cheats by member</string>
+    <string name="meta_submission_total">Total submitted cheatList by member</string>
     <string name="meta_views_lifetime">Lifetime views</string>
     <string name="meta_views_today">Views today</string>
-    <string name="meta_show_all_cheats">Show all cheats</string>
+    <string name="meta_show_all_cheats">Show all cheatList</string>
     <string name="meta_rating_average">Average cheat rating by members</string>
     <string name="meta_return">Return to cheat</string>
     <string name="meta_average_rating1">%s out of 10</string>
@@ -200,7 +200,7 @@
     <string name="top_members_title">Members Top 20</string>
     <string name="top_members_visit_website">Visit %1$s\'s website</string>
     <string name="top_members_no_website">Member %s has no website</string>
-    <string name="top_members_cheats_count"># of cheats</string>
+    <string name="top_members_cheats_count"># of cheatList</string>
 
     <!-- SHARE CHEAT -->
     <string name="share_title">Share cheat</string>

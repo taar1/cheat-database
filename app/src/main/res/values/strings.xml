@@ -15,12 +15,12 @@
     <string name="showGameList">Game list</string>
     <string name="showCheatList">Cheat list</string>
     <string name="search_results">Results for search query</string>
-    <string name="no_cheats_title">No cheats available</string>
-    <string name="no_cheats_text">No cheats yet available in our database for this game. Please check back later.</string>
+    <string name="no_cheats_title">No cheatList available</string>
+    <string name="no_cheats_text">No cheatList yet available in our database for this game. Please check back later.</string>
     <string name="please_wait">Please wait</string>
     <string name="retrieving_data">Retrieving data</string>
     <string name="cheat">cheat</string>
-    <string name="cheats">cheats</string>
+    <string name="cheatList">cheatList</string>
     <string name="game">game</string>
     <string name="games">games</string>
     <string name="no_internet">No Internet connection available. Try again a bit later.</string>
@@ -36,15 +36,15 @@
     <string name="enterGame">Enter game title:</string>
     <string name="enter_game_hint">Game Title</string>
     <string name="game_platform">System</string>
-    <string name="button_searchCheats">Search for cheats</string>
+    <string name="button_searchCheats">Search for cheatList</string>
     <string name="cancel">Cancel</string>
     <string name="clearForm">Clear</string>
     <string name="error_nothing_found_title">Nothing found!</string>
     <string name="error_nothing_found_text">No game could be found with your search query %s. Please try again with less keywords.</string>
     <string name="button_closeNothingFoundPopup">Refine query</string>
-    <string name="cheat_counter_headline">Over %s cheats and counting!</string>
-    <string name="total_cheats_unknown">Hundreds of thousands of cheats!</string>
-    <string name="new_cheats_title">New cheats for these games:</string>
+    <string name="cheat_counter_headline">Over %s cheatList and counting!</string>
+    <string name="total_cheats_unknown">Hundreds of thousands of cheatList!</string>
+    <string name="new_cheats_title">New cheatList for these games:</string>
     <string name="advanced_search">advanced / full text search</string>
 
     <!-- MAIN MENU -->
@@ -55,7 +55,7 @@
     <string name="goto_cheat">To cheat</string>
     <string name="goto_cheat_list">To cheat overview</string>
     <string name="menu_fulltext_search_short">Full Text Search</string>
-    <string name="menu_fulltext_search_long">Full text search in listed cheats</string>
+    <string name="menu_fulltext_search_long">Full text search in listed cheatList</string>
     <string name="menu_server_status">Server status</string>
     <string name="menu_more_apps">More Apps from us</string>
     <string name="menu_pocketchange">Pocket Change Balance</string>
@@ -126,13 +126,13 @@
     <string name="goto_favorites">Go to your favorites</string>
     <string name="favorite_deleted">Cheat was removed from your favorites.</string>
     <string name="favorite_error">Cheat already exists in your favorites.</string>
-    <string name="favorite_empty">You have no favorites yet. Before you can access this view you have to add some cheats to your favorites.</string>
-    <string name="favorite_no_cheats">No cheats for this game in your favorites yet.</string>
-    <string name="favorites_welcome_text">This is the area where your favorites cheats will be displayed. If you want to add a cheat to your favorites just press the &#8220;Menu&#8221; button on a cheat view and chose &#8220;Add to your favorites&#8221; in the Menu. If you wish to remove a cheat from your favorites you can do so my selecting &#8220;Remove from your favorites&#8221; in the game menu.</string>
+    <string name="favorite_empty">You have no favorites yet. Before you can access this view you have to add some cheatList to your favorites.</string>
+    <string name="favorite_no_cheats">No cheatList for this game in your favorites yet.</string>
+    <string name="favorites_welcome_text">This is the area where your favorites cheatList will be displayed. If you want to add a cheat to your favorites just press the &#8220;Menu&#8221; button on a cheat view and chose &#8220;Add to your favorites&#8221; in the Menu. If you wish to remove a cheat from your favorites you can do so my selecting &#8220;Remove from your favorites&#8221; in the game menu.</string>
     <string name="add_favorites_ok">Cheats successfully added to your favorites.</string>
-    <string name="add_favorites_error">Some or all cheats are already in your favorites. The new ones have been added.</string>
+    <string name="add_favorites_error">Some or all cheatList are already in your favorites. The new ones have been added.</string>
     <string name="add_one_favorite">Add cheat to favorites</string>
-    <string name="add_all_favorites">Add all cheats to favorites</string>
+    <string name="add_all_favorites">Add all cheatList to favorites</string>
     <string name="favorite_adding">Adding favorites&#8230;&#8230;&#8230;</string>
 
     <!-- FORUM -->
@@ -154,16 +154,16 @@
     <string name="submit_cheat_your_title">Title of the Cheat</string>
     <string name="submit_cheat_your_body">Your Cheat Content</string>
     <string name="submit_cheat_review">Submit Cheat for Review</string>
-    <string name="cheat_submit_ok">Thanks for your submission! We will review the cheat and will inform you by email if we are going to add it to the database. By the way: You can edit or delete your submitted cheats via our website www.cheat-database.com.</string>
+    <string name="cheat_submit_ok">Thanks for your submission! We will review the cheat and will inform you by email if we are going to add it to the database. By the way: You can edit or delete your submitted cheatList via our website www.cheat-database.com.</string>
     <string name="cheat_submit_nok">There went something wrong submitting your cheat. Please try again.</string>
     <string name="submit_cheat_instructions_title">Information about submitting a cheat</string>
     <string name="submit_cheat_instructions_text"></string>
-    <string name="submit_cheat_guidelines">Please read our little author guidelines on how to write easy-to-understand cheats.\n\n- Use capital letters for character or object names. Always use a capital letter after a full stop.\n\n- Try not to make long sentences. Short sentences are easier to understand. Try not to use &#8220;then&#8221; to connect sentences either.\n\n- Don\'t use the &#8220;I&#8221; form, i.e. &#8220;I did&#8221; or &#8220;it helped me&#8221; etc. Use the third person for instructions.</string>
+    <string name="submit_cheat_guidelines">Please read our little author guidelines on how to write easy-to-understand cheatList.\n\n- Use capital letters for character or object names. Always use a capital letter after a full stop.\n\n- Try not to make long sentences. Short sentences are easier to understand. Try not to use &#8220;then&#8221; to connect sentences either.\n\n- Don\'t use the &#8220;I&#8221; form, i.e. &#8220;I did&#8221; or &#8220;it helped me&#8221; etc. Use the third person for instructions.</string>
     <string name="thanks">Thank you!</string>
     <string name="help">Help</string>
     <string name="fill_everything">Please fill out all fields.</string>
     <string name="submit_cheat_consent_title">Terms &amp; Conditions</string>
-    <string name="submit_cheat_consent_text">I hereby agree that my submitted cheat may be proofread and grammatically in order to meet our minimum quality requirement.\n\nBy submitting this cheat you will grant Cheat-Database the right to publish and use your submitted content via App and Website. The author will not gain any financial claims from Cheat-Database.\n\nAll your submitted cheats will be saved to your Cheat-Database member account. Once a cheat has been approved by us you will be notified by email.\n\nIf you want to make any changes to your cheats you can login with your login information on www.cheat-database.com via your computer. There you can add screenshots, edit the text or delete your cheats.</string>
+    <string name="submit_cheat_consent_text">I hereby agree that my submitted cheat may be proofread and grammatically in order to meet our minimum quality requirement.\n\nBy submitting this cheat you will grant Cheat-Database the right to publish and use your submitted content via App and Website. The author will not gain any financial claims from Cheat-Database.\n\nAll your submitted cheatList will be saved to your Cheat-Database member account. Once a cheat has been approved by us you will be notified by email.\n\nIf you want to make any changes to your cheatList you can login with your login information on www.cheat-database.com via your computer. There you can add screenshots, edit the text or delete your cheatList.</string>
     <string name="submit_cheat_title">Cheat Submission</string>
     <string name="submit_cheat_agree_terms_conditions">Agree with Terms &amp; Conditions</string>
     <string name="guidelines">Guidelines</string>
@@ -181,10 +181,10 @@
     <string name="fulltext_search_title">Full-text search</string>
     <string name="fulltext_search_titles_also">Search in cheat titles also</string>
     <string name="fulltext_search_systems">Choose systems</string>
-    <string name="fulltext_search_listed_cheats">Search through listed cheats</string>
-    <string name="fulltext_search_all_cheats">Search through all cheats</string>
+    <string name="fulltext_search_listed_cheats">Search through listed cheatList</string>
+    <string name="fulltext_search_all_cheats">Search through all cheatList</string>
     <string name="fulltext_search_results">Full-text search results</string>
-    <string name="fulltext_search_cheats">Search cheats</string>
+    <string name="fulltext_search_cheats">Search cheatList</string>
     <string name="fulltext_search_keywords">Keywords</string>
     <string name="fulltext_search_error_nosystem_selected">Please pick at least one system</string>
 
@@ -201,10 +201,10 @@
     <string name="meta_unknown">Unknown</string>
     <string name="meta_submission_date">Date of submission</string>
     <string name="meta_submitted_by">Submitted by</string>
-    <string name="meta_submission_total">Total submitted cheats by member</string>
+    <string name="meta_submission_total">Total submitted cheatList by member</string>
     <string name="meta_views_lifetime">Lifetime views</string>
     <string name="meta_views_today">Views today</string>
-    <string name="meta_show_all_cheats">Show all cheats</string>
+    <string name="meta_show_all_cheats">Show all cheatList</string>
     <string name="meta_rating_average">Average cheat rating by members</string>
     <string name="meta_return">Return to cheat</string>
     <string name="meta_average_rating1">%s out of 10</string>
@@ -217,7 +217,7 @@
     <string name="top_members_top_helping">Top Helping Members</string>
     <string name="top_members_visit_website">Visit %1$s\'s website</string>
     <string name="top_members_no_website">Member %s has no website</string>
-    <string name="top_members_cheats_count">Number of cheats</string>
+    <string name="top_members_cheats_count">Number of cheatList</string>
 
     <!-- SHARE CHEAT -->
     <string name="share_title">Share cheat</string>
@@ -250,7 +250,7 @@
     <string name="drawer_close">Close navigation drawer</string>
     <string name="action_websearch">Web search</string>
     <string name="list_games">Jump to System</string>
-    <string name="cheats_count">Number of cheats:</string>
+    <string name="cheats_count">Number of cheatList:</string>
 
     <!-- NEW VALUES FROM VERSION 2.0 -->
     <string name="title_cheat_list">Cheats</string>
@@ -268,12 +268,12 @@
     <string name="error_value_too_short">This value is too short</string>
     <string name="error_login_required">You need to be logged in to use this feature.</string>
     <string name="error_login_first">Please login first.</string>
-    <string name="error_login_to_rate">You have to be logged in to rate cheats.</string>
+    <string name="error_login_to_rate">You have to be logged in to rate cheatList.</string>
     <string name="rate_cheat_title">Rate cheat &#8220;%s&#8221; here</string>
     <string name="clear_search_history">Clear Search History</string>
     <string name="search_history_cleared">Search History cleared.</string>
     <string name="submit_cheat_instructions_activity_title">For which game would you like to submit a cheat?</string>
-    <string name="submit_cheat_instructions_activity_subtitle">To submit a cheat you first have to search the database for the game you want to submit a cheat for. In the game view you will find a button to submit a cheat for that game. Please note that you have to be logged in as a member in order to be able to submit cheats.</string>
+    <string name="submit_cheat_instructions_activity_subtitle">To submit a cheat you first have to search the database for the game you want to submit a cheat for. In the game view you will find a button to submit a cheat for that game. Please note that you have to be logged in as a member in order to be able to submit cheatList.</string>
     <string name="already_logged_in">You are already signed in with %s. Would you like to sign out?</string>
     <string name="sign_out">Sign Out</string>
     <string name="search_again">Search Again</string>
@@ -287,7 +287,7 @@
     <string name="err_username_too_short">The entered username is too short.</string>
     <string name="rate_why_title">Rate Cheat-Database now!</string>
     <string name="rate_us">Rate Cheat-Database</string>
-    <string name="rate_why_text">We would be thrilled to get a 5-stars from you. If you give a good rating this means more user downloading Cheat-Database. More users means more cheat submissions. More cheat submissions means more cheats for YOU!</string>
+    <string name="rate_why_text">We would be thrilled to get a 5-stars from you. If you give a good rating this means more user downloading Cheat-Database. More users means more cheat submissions. More cheat submissions means more cheatList for YOU!</string>
     <string name="system_overview">System Overview</string>
 
     <!-- GENERAL INFORMATION -->
@@ -326,7 +326,7 @@
 
     <string name="pref_enable_achievements_key">enable_achievements</string>
     <string name="pref_enable_achievements">Achievements &amp; Trophies</string>
-    <string name="pref_enable_achievements_summary">Filter Achievement &amp; Trophy cheats from the list.</string>
+    <string name="pref_enable_achievements_summary">Filter Achievement &amp; Trophy cheatList from the list.</string>
     <string name="enabled">Enabled</string>
     <string name="disabled">Disabled</string>
     <string name="new_feature">New feature</string>

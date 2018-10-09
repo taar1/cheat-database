@@ -18,7 +18,7 @@
     <string name="please_wait">Espera, por favor</string>
     <string name="retrieving_data">Recuperando datos</string>
     <string name="cheat">truco</string>
-    <string name="cheats">trucos</string>
+    <string name="cheatList">trucos</string>
     <string name="game">juego</string>
     <string name="games">juegos</string>
     <string name="no_internet">Sin conexión a Internet. Vuelve a intentar más adelante.</string>

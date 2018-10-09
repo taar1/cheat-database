@@ -12,11 +12,11 @@
     <string name="showCheatList">Cheat list</string>
     <string name="search_results">Resulta ng search query</string>
     <string name="no_cheats_title">Walang available cheat</string>
-    <string name="no_cheats_text">Wala pang available cheats sa database namin. Please check again later.</string>
+    <string name="no_cheats_text">Wala pang available cheatList sa database namin. Please check again later.</string>
     <string name="please_wait">Please wait</string>
     <string name="retrieving_data">Retrieving data</string>
     <string name="cheat">cheat</string>
-    <string name="cheats">cheats</string>
+    <string name="cheatList">cheatList</string>
     <string name="game">game</string>
     <string name="games">games</string>
     <string name="no_internet">Walang Internet connection available. Try again a bit later.</string>
@@ -32,15 +32,15 @@
     <string name="enterGame">Enter game title:</string>
     <string name="enter_game_hint">Game Title</string>
     <string name="game_platform">System</string>
-    <string name="button_searchCheats">Search ng cheats</string>
+    <string name="button_searchCheats">Search ng cheatList</string>
     <string name="cancel">Cancel</string>
     <string name="clearForm">Clear</string>
     <string name="error_nothing_found_title">Walang resulta!</string>
     <string name="error_nothing_found_text">Walang mahanap na game sa search query nyo. Please try again with less keywords.</string>
     <string name="button_closeNothingFoundPopup">Refine query</string>
-    <string name="cheat_counter_headline">Over %s cheats and padami pa!</string>
-    <string name="total_cheats_unknown">Libo libong cheats!</string>
-    <string name="new_cheats_title">Mga bagong cheats para sa games na ito:</string>
+    <string name="cheat_counter_headline">Over %s cheatList and padami pa!</string>
+    <string name="total_cheats_unknown">Libo libong cheatList!</string>
+    <string name="new_cheats_title">Mga bagong cheatList para sa games na ito:</string>
     <string name="advanced_search">advanced / full text search</string>
 
     <!-- MAIN MENU -->
@@ -49,7 +49,7 @@
     <string name="goto_cheat">To cheat</string>
     <string name="goto_cheat_list">To cheat overview</string>
     <string name="menu_fulltext_search_short">Full text search</string>
-    <string name="menu_fulltext_search_long">Full text search in listed cheats</string>
+    <string name="menu_fulltext_search_long">Full text search in listed cheatList</string>
     <string name="menu_server_status">Status ng server</string>
     <string name="menu_more_apps">More Apps from us</string>
     <string name="menu_pocketchange">Pocket Change Balance</string>
@@ -119,11 +119,11 @@
     <string name="favorite_error">Cheat already exists in your favorites.</string>
     <string name="favorite_empty">Wala pang napiling favorites. Bago ma access ang view na ito kailangan mo magdagdag ng favorite muna.</string>
     <string name="favorite_no_cheats">Wala pang cheat sa game na napili sa favorites.</string>
-    <string name="favorites_welcome_text">Dito nakadisplay ang cheats na paborito nyo. Pag gusto mo mag add ng cheat sa Favorites mo just press the \"Menu\" button on a cheat view and choose \"Add to your favorites\" in the Menu. Pag gusto mo alisin ang cheat sa favorites  mo just click  \"Remove from your favorites\" sa game menu.</string>
+    <string name="favorites_welcome_text">Dito nakadisplay ang cheatList na paborito nyo. Pag gusto mo mag add ng cheat sa Favorites mo just press the \"Menu\" button on a cheat view and choose \"Add to your favorites\" in the Menu. Pag gusto mo alisin ang cheat sa favorites  mo just click  \"Remove from your favorites\" sa game menu.</string>
     <string name="add_favorites_ok">Cheats successfully added sa favorites.</string>
-    <string name="add_favorites_error">Ang napiling cheats ay nasa favorites na. The new ones have been added.</string>
+    <string name="add_favorites_error">Ang napiling cheatList ay nasa favorites na. The new ones have been added.</string>
     <string name="add_one_favorite">Add cheat to favorites</string>
-    <string name="add_all_favorites">Add all cheats to favorites</string>
+    <string name="add_all_favorites">Add all cheatList to favorites</string>
     <string name="favorite_adding">Adding favorites&#8230;</string>
 
     <!-- FORUM -->
@@ -144,11 +144,11 @@
     <string name="submit_cheat_your_title">Cheat Title</string>
     <string name="submit_cheat_your_body">Your Cheat Content</string>
     <string name="submit_cheat_review">Submit cheat for review</string>
-    <string name="cheat_submit_ok">Salamat sa pag submit! We will review the cheat and will inform you by email if we are going to add it to the database. By the way: You can edit or delete your submitted cheats via our website www.cheat-database.com.</string>
+    <string name="cheat_submit_ok">Salamat sa pag submit! We will review the cheat and will inform you by email if we are going to add it to the database. By the way: You can edit or delete your submitted cheatList via our website www.cheat-database.com.</string>
     <string name="cheat_submit_nok">Meron mali sa pag submit ng  cheat. Please try again.</string>
     <string name="submit_cheat_instructions_title">Information sa pag submit ng cheat</string>
-    <string name="submit_cheat_instructions_text">Lahat ng na submit na cheat ay ma sisave sa Cheat-Database account. Once a cheat has been approved by us you will be notified by email about this.\n\nPag may gusto kayong baguhin sa cheats na submit nyo maglogin lang kayo sa www.cheat-database.com via sa computer nyo. Pwede din kayo mag add ng screenshots, edit the text or delete your own cheats.</string>
-    <string name="submit_cheat_guidelines">Thanks for submitting a cheat to us, we really appreciate your help! However, before you write a cheat, please read our short writing guidelines which makes your submitted cheats easier to understand for other readers.\n\n
+    <string name="submit_cheat_instructions_text">Lahat ng na submit na cheat ay ma sisave sa Cheat-Database account. Once a cheat has been approved by us you will be notified by email about this.\n\nPag may gusto kayong baguhin sa cheatList na submit nyo maglogin lang kayo sa www.cheat-database.com via sa computer nyo. Pwede din kayo mag add ng screenshots, edit the text or delete your own cheatList.</string>
+    <string name="submit_cheat_guidelines">Thanks for submitting a cheat to us, we really appreciate your help! However, before you write a cheat, please read our short writing guidelines which makes your submitted cheatList easier to understand for other readers.\n\n
 - Use capital letters for character or object names. Always use a capital letter after a full stop.\n\n
 - Try not to make long sentences. Short sentences are easier to understand. Try not to use \"then\" to connect sentences either.\n\n
 - Don\'t use \"I did\" or \"it helped me\" etc. in sentences. Use the third person for instructions.</string>
@@ -170,10 +170,10 @@
     <string name="fulltext_search_title">Full-text search</string>
     <string name="fulltext_search_titles_also">Search in cheat titles also</string>
     <string name="fulltext_search_systems">Choose systems</string>
-    <string name="fulltext_search_listed_cheats">Search through listed cheats</string>
-    <string name="fulltext_search_all_cheats">Search through all cheats</string>
+    <string name="fulltext_search_listed_cheats">Search through listed cheatList</string>
+    <string name="fulltext_search_all_cheats">Search through all cheatList</string>
     <string name="fulltext_search_results">Full-text search results</string>
-    <string name="fulltext_search_cheats">Search cheats</string>
+    <string name="fulltext_search_cheats">Search cheatList</string>
     <string name="fulltext_search_keywords">Keywords</string>
     <string name="fulltext_search_error_nosystem_selected">Please pick at least one system</string>
 
@@ -190,10 +190,10 @@
     <string name="meta_unknown">Unknown</string>
     <string name="meta_submission_date">Petsa ng pag sumbit</string>
     <string name="meta_submitted_by">Submitted by</string>
-    <string name="meta_submission_total">Total submitted cheats ng member</string>
+    <string name="meta_submission_total">Total submitted cheatList ng member</string>
     <string name="meta_views_lifetime">Lifetime views</string>
     <string name="meta_views_today">Views ngayon</string>
-    <string name="meta_show_all_cheats">Show all cheats</string>
+    <string name="meta_show_all_cheats">Show all cheatList</string>
     <string name="meta_rating_average">Average cheat rating by members</string>
     <string name="meta_return">Return to cheat</string>
     <string name="meta_average_rating1">%s out of 10</string>
@@ -205,7 +205,7 @@
     <string name="top_members_title">Members Top 20</string>
     <string name="top_members_visit_website">Visit %1$s\'s website</string>
     <string name="top_members_no_website">Member %s walang website</string>
-    <string name="top_members_cheats_count"># of cheats</string>
+    <string name="top_members_cheats_count"># of cheatList</string>
 
     <!-- SHARE CHEAT -->
     <string name="share_title">Share cheat</string>

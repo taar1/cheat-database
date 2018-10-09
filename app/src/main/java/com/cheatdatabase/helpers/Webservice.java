@@ -944,7 +944,7 @@ public class Webservice {
                 /*
                  * Dem Game-Object die korrekte Anzahl Cheat-Objekten zuweisen
                  */
-                tmpGame.createCheatCollection(matchingCheats.size());
+//                tmpGame.createCheatCollection(matchingCheats.size());
 
                 /*
                  * Die passenden Cheats dem Game-Objekt hinzufügen

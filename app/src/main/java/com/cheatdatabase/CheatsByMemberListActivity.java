@@ -162,7 +162,7 @@ public class CheatsByMemberListActivity extends AppCompatActivity {
         if (!Reachability.isRegistered()) {
             Reachability.registerReachability(this);
         }
-//        getCheats();
+//        getCheatList();
     }
 
     @Override

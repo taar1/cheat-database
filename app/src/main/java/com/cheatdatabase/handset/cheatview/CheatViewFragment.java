@@ -159,7 +159,7 @@ public class CheatViewFragment extends Fragment {
 
         outerLinearLayout = (LinearLayout) inflater.inflate(R.layout.fragment_cheat_detail_handset, container, false);
 
-        Collections.addAll(cheatList, game.getCheats());
+        Collections.addAll(cheatList, game.getCheatList());
         cheatObj = cheatList.get(offset);
 
 //        getCheatRatings();

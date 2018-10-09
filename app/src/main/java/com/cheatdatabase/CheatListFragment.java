@@ -118,10 +118,10 @@ public class CheatListFragment extends ListFragment {
      */
     private void getCheats() {
         Needle.onBackgroundThread().execute(() -> {
-            if ((gameObj == null) || (gameObj.getCheats() == null) || (gameObj.getCheats().length < 1)) {
+            if ((gameObj == null) || (gameObj.getCheatList() == null) || (gameObj.getCheatList().length < 1)) {
                 cheats = getCheatsNow();
             } else {
-                Collections.addAll(cheats, gameObj.getCheats());
+                Collections.addAll(cheats, gameObj.getCheatList());
             }
             updateUI();
         });
@@ -150,18 +150,18 @@ public class CheatListFragment extends ListFragment {
                 Log.e(TAG, "Webservice.getCheatList() == null");
             }
 
-            // TODO FIXME setCheats anpassen für List Array
-            // TODO FIXME setCheats anpassen für List Array
-            // TODO FIXME setCheats anpassen für List Array
-            // TODO FIXME setCheats anpassen für List Array
-            gameObj.setCheats(cheats);
+            // TODO FIXME setCheatList anpassen für List Array
+            // TODO FIXME setCheatList anpassen für List Array
+            // TODO FIXME setCheatList anpassen für List Array
+            // TODO FIXME setCheatList anpassen für List Array
+            gameObj.setCheatList(cheats);
 
             // Put game object to local storage for large games like Pokemon
             editor.putString(Konstanten.PREFERENCES_TEMP_GAME_OBJECT_VIEW, new Gson().toJson(gameObj));
             editor.commit();
 
         } catch (Exception ex) {
-            Log.e(getClass().getName(), "Error executing getCheats()", ex);
+            Log.e(getClass().getName(), "Error executing getCheatList()", ex);
         }
 
         return cheats;

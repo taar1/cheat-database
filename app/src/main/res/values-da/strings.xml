@@ -15,12 +15,12 @@
     <string name="showGameList">Spil-liste</string>
     <string name="showCheatList">Cheat-liste</string>
     <string name="search_results">Søgeresultater</string>
-    <string name="no_cheats_title">Ingen cheats fundet</string>
-    <string name="no_cheats_text">Til dette spil har vi ingen cheats i databasen endnu. Prøv venligst igen på et senere tidspunkt.</string>
+    <string name="no_cheats_title">Ingen cheatList fundet</string>
+    <string name="no_cheats_text">Til dette spil har vi ingen cheatList i databasen endnu. Prøv venligst igen på et senere tidspunkt.</string>
     <string name="please_wait">Vent venligst</string>
     <string name="retrieving_data">Henter data</string>
     <string name="cheat">cheat</string>
-    <string name="cheats">cheats</string>
+    <string name="cheatList">cheatList</string>
     <string name="game">spil</string>
     <string name="games">spil</string>
     <string name="no_internet">Ingen internetforbindelse. Prøv venligst igen senere.</string>
@@ -36,15 +36,15 @@
     <string name="enterGame">Søg på spiltitlen:</string>
     <string name="enter_game_hint">Spiltitlen</string>
     <string name="game_platform">system</string>
-    <string name="button_searchCheats">Søg cheats</string>
+    <string name="button_searchCheats">Søg cheatList</string>
     <string name="cancel">Afbryd</string>
     <string name="clearForm">Slet</string>
     <string name="error_nothing_found_title">Din søgning gav ingen resultater.</string>
     <string name="error_nothing_found_text">Ingen spil med disse søgeord blev fundet. Prøv venligst igen med færre eller andre søgeord.</string>
     <string name="button_closeNothingFoundPopup">Ret søgning</string>
-    <string name="cheat_counter_headline">Flere end %s cheats tilgængelige!</string>
-    <string name="total_cheats_unknown">Hundrede tusinde af cheats!</string>
-    <string name="new_cheats_title">Nye cheats til disse spil:</string>
+    <string name="cheat_counter_headline">Flere end %s cheatList tilgængelige!</string>
+    <string name="total_cheats_unknown">Hundrede tusinde af cheatList!</string>
+    <string name="new_cheats_title">Nye cheatList til disse spil:</string>
     <string name="advanced_search">Avanceret søgning</string>
 
     <!-- MAIN MENU -->
@@ -54,7 +54,7 @@
     <string name="goto_news">News</string>
     <string name="goto_cheat_list">Til cheat-listen</string>
     <string name="menu_fulltext_search_short">Fuldtekstsøgning</string>
-    <string name="menu_fulltext_search_long">Fuldtekstsøgning i de her cheats</string>
+    <string name="menu_fulltext_search_long">Fuldtekstsøgning i de her cheatList</string>
     <string name="menu_server_status">Server status</string>
     <string name="menu_more_apps">More Apps from us</string>
     <string name="menu_pocketchange">Pocket Change Balance</string>
@@ -126,12 +126,12 @@
     <string name="favorite_deleted">Cheaten er blevet fjernet fra favoritterne.</string>
     <string name="favorite_error">Cheaten kunne ikke blive tilføjet, fordi den allerede er en favorit.</string>
     <string name="favorite_empty">Der er ingen favoritter i listen endnu. Tilføj en cheat til listen først.</string>
-    <string name="favorite_no_cheats">Der er ingen cheats til dette spil i dine favoritter.</string>
+    <string name="favorite_no_cheats">Der er ingen cheatList til dette spil i dine favoritter.</string>
     <string name="favorites_welcome_text">I dette afsnit finder du dine favoritcheats. For at tilføje en cheat til listen, tryk på \"menu\"-knappen i cheatens detaljer og vælg \"Tilføj til favoritter\". For at fjerne en chat fra listen igen, vælg optionen \"Fjern fra favoritterne\".</string>
     <string name="add_favorites_ok">Cheats successfully added to your favorites.</string>
-    <string name="add_favorites_error">Some or all cheats are already in your favorites. The new ones have been added.</string>
+    <string name="add_favorites_error">Some or all cheatList are already in your favorites. The new ones have been added.</string>
     <string name="add_one_favorite">Add cheat to favorites</string>
-    <string name="add_all_favorites">Add all cheats to favorites</string>
+    <string name="add_all_favorites">Add all cheatList to favorites</string>
     <string name="favorite_adding">Adding favorites&#8230;</string>
 
     <!-- FORUM -->
@@ -153,11 +153,11 @@
     <string name="submit_cheat_your_title">Cheatens titel:</string>
     <string name="submit_cheat_your_body">Cheatens indhold:</string>
     <string name="submit_cheat_review">Afsend cheat til kontrol</string>
-    <string name="cheat_submit_ok">Tusind tak for din indsendelse! Vi kontrollerer cheaten og informerer dig via e-mail, hvis den bliver tilføjet til vores database. Du kan rette eller slette alle dine indsendte cheats på www.cheat-database.com.</string>
+    <string name="cheat_submit_ok">Tusind tak for din indsendelse! Vi kontrollerer cheaten og informerer dig via e-mail, hvis den bliver tilføjet til vores database. Du kan rette eller slette alle dine indsendte cheatList på www.cheat-database.com.</string>
     <string name="cheat_submit_nok">Der opstod en fejl. Prøv venligst igen.</string>
-    <string name="submit_cheat_instructions_title">Om indsendelse af cheats</string>
-    <string name="submit_cheat_instructions_text">Alle indsendte cheats bliver gemt på din brugerkonto. Når en cheat er blevet kontrolleret, bliver du informeret via e-mail.\n\nHvis du ønsker at redigere din cheat, kan du logge ind med en browser på www.cheat-database.com. I medlemsafsnittet kan du redigere dine cheats, tilføje screenshots eller fjerne cheaten fra databasen.</string>
-    <string name="submit_cheat_guidelines">Thanks for submitting a cheat to us, we really appreciate your help! However, before you write a cheat, please read our short writing guidelines which makes your submitted cheats easier to understand for other readers.\n\n
+    <string name="submit_cheat_instructions_title">Om indsendelse af cheatList</string>
+    <string name="submit_cheat_instructions_text">Alle indsendte cheatList bliver gemt på din brugerkonto. Når en cheat er blevet kontrolleret, bliver du informeret via e-mail.\n\nHvis du ønsker at redigere din cheat, kan du logge ind med en browser på www.cheat-database.com. I medlemsafsnittet kan du redigere dine cheatList, tilføje screenshots eller fjerne cheaten fra databasen.</string>
+    <string name="submit_cheat_guidelines">Thanks for submitting a cheat to us, we really appreciate your help! However, before you write a cheat, please read our short writing guidelines which makes your submitted cheatList easier to understand for other readers.\n\n
 - Use capital letters for character or object names. Always use a capital letter after a full stop.\n\n
 - Try not to make long sentences. Short sentences are easier to understand. Try not to use \"then\" to connect sentences either.\n\n
 - Don\'t use \"I did\" or \"it helped me\" etc. in sentences. Use the third person for instructions.</string>
@@ -184,10 +184,10 @@
     <string name="fulltext_search_title">Avanceret søgning</string>
     <string name="fulltext_search_titles_also">Søg også på titlen</string>
     <string name="fulltext_search_systems">Vælg systemet</string>
-    <string name="fulltext_search_listed_cheats">Søg i cheats i listen</string>
-    <string name="fulltext_search_all_cheats">Søg i alle cheats</string>
+    <string name="fulltext_search_listed_cheats">Søg i cheatList i listen</string>
+    <string name="fulltext_search_all_cheats">Søg i alle cheatList</string>
     <string name="fulltext_search_results">Resultater</string>
-    <string name="fulltext_search_cheats">Søg i cheats</string>
+    <string name="fulltext_search_cheats">Søg i cheatList</string>
     <string name="fulltext_search_keywords">Indtast søgeord</string>
     <string name="fulltext_search_error_nosystem_selected">Vælg mindst ét system</string>
 
@@ -204,10 +204,10 @@
     <string name="meta_unknown">Unknown</string>
     <string name="meta_submission_date">Date of submission</string>
     <string name="meta_submitted_by">Submitted by</string>
-    <string name="meta_submission_total">Total submitted cheats by member</string>
+    <string name="meta_submission_total">Total submitted cheatList by member</string>
     <string name="meta_views_lifetime">Lifetime views</string>
     <string name="meta_views_today">Views today</string>
-    <string name="meta_show_all_cheats">Show all cheats</string>
+    <string name="meta_show_all_cheats">Show all cheatList</string>
     <string name="meta_rating_average">Average cheat rating by members</string>
     <string name="meta_return">Return to cheat</string>
     <string name="meta_average_rating1">%s out of 10</string>
@@ -219,7 +219,7 @@
     <string name="top_members_title">Members Top 20</string>
     <string name="top_members_visit_website">Visit %1$s\'s website</string>
     <string name="top_members_no_website">Member %s has no website</string>
-    <string name="top_members_cheats_count"># of cheats</string>
+    <string name="top_members_cheats_count"># of cheatList</string>
 
     <!-- SHARE CHEAT -->
     <string name="share_title">Share cheat</string>

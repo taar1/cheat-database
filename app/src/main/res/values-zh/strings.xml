@@ -17,7 +17,7 @@
     <string name="please_wait">请稍等</string>
     <string name="retrieving_data">查找数据</string>
     <string name="cheat">秘籍</string>
-    <string name="cheats">秘籍</string>
+    <string name="cheatList">秘籍</string>
     <string name="game">游戏</string>
     <string name="games">游戏</string>
     <string name="no_internet">无可用的网络连接。请稍后重试。</string>
@@ -146,7 +146,7 @@
     <string name="cheat_submit_nok">秘籍提交过程中出现了一些问题。请稍后重试。</string>
     <string name="submit_cheat_instructions_title">关于秘籍提交的信息</string>
     <string name="submit_cheat_instructions_text">所有您提交的秘籍都保存在您ACheat-Database的账户上。一旦我们审核通过了这个秘籍，我们将发送Email通知您。\n\n如果您想对您秘籍做出更改，您可以使用电脑登陆访问www.cheat-database.com。然后您可以为您的秘籍添加截图，编辑文字或者删除您的秘籍。</string>
-    <string name="submit_cheat_guidelines">Thanks for submitting a cheat to us, we really appreciate your help! However, before you write a cheat, please read our short writing guidelines which makes your submitted cheats easier to understand for other readers.\n\n
+    <string name="submit_cheat_guidelines">Thanks for submitting a cheat to us, we really appreciate your help! However, before you write a cheat, please read our short writing guidelines which makes your submitted cheatList easier to understand for other readers.\n\n
 - Use capital letters for character or object names. Always use a capital letter after a full stop.\n\n
 - Try not to make long sentences. Short sentences are easier to understand. Try not to use \"then\" to connect sentences either.\n\n
 - Don\'t use \"I did\" or \"it helped me\" etc. in sentences. Use the third person for instructions.</string>

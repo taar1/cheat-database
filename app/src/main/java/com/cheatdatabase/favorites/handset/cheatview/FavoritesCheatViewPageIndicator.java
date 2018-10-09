@@ -120,7 +120,7 @@ public class FavoritesCheatViewPageIndicator extends AppCompatActivity implement
             pageSelected = intent.getIntExtra("position", 0);
 
             activePage = pageSelected;
-            cheatArray = gameObj.getCheats();
+            cheatArray = gameObj.getCheatList();
             visibleCheat = cheatArray[pageSelected];
 
             getSupportActionBar().setTitle(gameObj.getGameName());

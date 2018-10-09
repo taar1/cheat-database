@@ -16,7 +16,7 @@
     <string name="please_wait">請稍等</string>
     <string name="retrieving_data">搜尋資料</string>
     <string name="cheat">秘籍</string>
-    <string name="cheats">秘籍</string>
+    <string name="cheatList">秘籍</string>
     <string name="game">game</string>
     <string name="games">games</string>
     <string name="no_internet">無可用的網路連接。請稍後重試。</string>
@@ -48,7 +48,7 @@
     <string name="goto_cheat">轉到秘籍</string>
     <string name="goto_cheat_list">轉到秘籍檢視</string>
     <string name="menu_fulltext_search_short">Full text search</string>
-    <string name="menu_fulltext_search_long">Full text search in listed cheats</string>
+    <string name="menu_fulltext_search_long">Full text search in listed cheatList</string>
     <string name="menu_server_status">Server status</string>
     <string name="menu_more_apps">More Apps from us</string>
     <string name="menu_pocketchange">Pocket Change Balance</string>
@@ -117,9 +117,9 @@
     <string name="favorite_no_cheats">個人收藏中暫時還沒有這個遊戲的秘籍。</string>
     <string name="favorites_welcome_text">在這個區域將會顯示您收藏的秘籍。如果您想新增一個秘籍到收藏中，只需要在秘籍檢視介面按下Menu按鈕，然後在選單中選取\"新增到我的個人收藏\"。如果您想移除一個秘籍，則在剛剛的選單中選取\"從個人收藏中移除\" 。</string>
     <string name="add_favorites_ok">Cheats successfully added to your favorites.</string>
-    <string name="add_favorites_error">Some or all cheats are already in your favorites. The new ones have been added.</string>
+    <string name="add_favorites_error">Some or all cheatList are already in your favorites. The new ones have been added.</string>
     <string name="add_one_favorite">Add cheat to favorites</string>
-    <string name="add_all_favorites">Add all cheats to favorites</string>
+    <string name="add_all_favorites">Add all cheatList to favorites</string>
     <string name="favorite_adding">Adding favorites&#8230;</string>
 
     <!-- FORUM -->
@@ -144,7 +144,7 @@
     <string name="cheat_submit_nok">秘籍提交過程中出現了一些問題。請稍後重試。</string>
     <string name="submit_cheat_instructions_title">關於秘籍提交的訊息</string>
     <string name="submit_cheat_instructions_text">所有您提交的秘籍都儲存在您ACheat-Database的賬戶上。一旦我們審核通過了這個秘籍，我們將傳送Email通知您。\n\n如果您想對您秘籍做出變更，您可以使用電腦登陸存取www.cheat-database.com。然後您可以為您的秘籍新增截圖，編輯文字或者刪除您的秘籍。</string>
-    <string name="submit_cheat_guidelines">Thanks for submitting a cheat to us, we really appreciate your help! However, before you write a cheat, please read our short writing guidelines which makes your submitted cheats easier to understand for other readers.\n\n
+    <string name="submit_cheat_guidelines">Thanks for submitting a cheat to us, we really appreciate your help! However, before you write a cheat, please read our short writing guidelines which makes your submitted cheatList easier to understand for other readers.\n\n
 - Use capital letters for character or object names. Always use a capital letter after a full stop.\n\n
 - Try not to make long sentences. Short sentences are easier to understand. Try not to use \"then\" to connect sentences either.\n\n
 - Don\'t use \"I did\" or \"it helped me\" etc. in sentences. Use the third person for instructions.</string>
@@ -186,10 +186,10 @@
     <string name="meta_unknown">Unknown</string>
     <string name="meta_submission_date">Date of submission</string>
     <string name="meta_submitted_by">Submitted by</string>
-    <string name="meta_submission_total">Total submitted cheats by member</string>
+    <string name="meta_submission_total">Total submitted cheatList by member</string>
     <string name="meta_views_lifetime">Lifetime views</string>
     <string name="meta_views_today">Views today</string>
-    <string name="meta_show_all_cheats">Show all cheats</string>
+    <string name="meta_show_all_cheats">Show all cheatList</string>
     <string name="meta_rating_average">Average cheat rating by members</string>
     <string name="meta_return">Return to cheat</string>
     <string name="meta_average_rating1">%s out of 10</string>
@@ -201,7 +201,7 @@
     <string name="top_members_title">Members Top 20</string>
     <string name="top_members_visit_website">Visit %1$s\'s website</string>
     <string name="top_members_no_website">Member %s has no website</string>
-    <string name="top_members_cheats_count"># of cheats</string>
+    <string name="top_members_cheats_count"># of cheatList</string>
 
     <!-- SHARE CHEAT -->
     <string name="share_title">Share cheat</string>
