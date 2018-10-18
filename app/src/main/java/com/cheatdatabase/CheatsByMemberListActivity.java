@@ -75,13 +75,12 @@ public class CheatsByMemberListActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_member_cheat_list);
+        init();
 
         member = (Member) getIntent().getSerializableExtra("member");
         memberCheatRecycleListViewAdapter = new MemberCheatRecycleListViewAdapter();
 
-        init();
         mSwipeRefreshLayout.setRefreshing(true);
-
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
