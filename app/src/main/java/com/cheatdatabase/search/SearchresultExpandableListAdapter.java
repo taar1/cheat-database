@@ -1,18 +1,18 @@
 package com.cheatdatabase.search;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.CheckedTextView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.cheatdatabase.CheatsByGameListActivity_;
+import com.cheatdatabase.CheatsByGameListActivity;
 import com.cheatdatabase.R;
 import com.cheatdatabase.businessobjects.Game;
 import com.cheatdatabase.helpers.Group;
@@ -29,14 +29,14 @@ public class SearchresultExpandableListAdapter extends BaseExpandableListAdapter
     private Typeface latoFontRegular;
     private Typeface latoFontBold;
 
-    public SearchresultExpandableListAdapter(Activity act, SparseArray<Group> groups) {
-        activity = act;
+    public SearchresultExpandableListAdapter(Activity activity, SparseArray<Group> groups) {
+        this.activity = activity;
         this.groups = groups;
-        inflater = act.getLayoutInflater();
+        inflater = activity.getLayoutInflater();
 
-        latoFontLight = Tools.getFont(act.getAssets(), Konstanten.FONT_LIGHT);
-        latoFontRegular = Tools.getFont(act.getAssets(), Konstanten.FONT_REGULAR);
-        latoFontBold = Tools.getFont(act.getAssets(), Konstanten.FONT_BOLD);
+        latoFontLight = Tools.getFont(activity.getAssets(), Konstanten.FONT_LIGHT);
+        latoFontRegular = Tools.getFont(activity.getAssets(), Konstanten.FONT_REGULAR);
+        latoFontBold = Tools.getFont(activity.getAssets(), Konstanten.FONT_BOLD);
     }
 
     @Override
@@ -57,33 +57,30 @@ public class SearchresultExpandableListAdapter extends BaseExpandableListAdapter
             activity.finish();
         }
 
-        TextView textGameTitle = null;
-        TextView textCheatCounter = null;
+        TextView textGameTitle;
+        TextView textCheatCounter;
         if (convertView == null) {
             convertView = inflater.inflate(R.layout.gamesearch_listrow_details, null);
         }
-        textGameTitle = (TextView) convertView.findViewById(R.id.text_game_name);
+        textGameTitle = convertView.findViewById(R.id.text_game_name);
         textGameTitle.setText(gameObj.getGameName());
         textGameTitle.setTypeface(latoFontRegular);
 
         // TODO gleich machen wie bei gamesbystem mit: "10 Cheats" (nicht:
         // Anzahl Cheats: 10)
-        textCheatCounter = (TextView) convertView.findViewById(R.id.text_cheat_counter);
+        textCheatCounter = convertView.findViewById(R.id.text_cheat_counter);
         textCheatCounter.setText(R.string.cheats_count);
         textCheatCounter.setTypeface(latoFontLight);
         textCheatCounter.append(" " + gameObj.getCheatsCount());
-        convertView.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (Reachability.reachability.isReachable) {
-//                    Intent explicitIntent = new Intent(activity, CheatsByGameListActivity.class);
-//                    explicitIntent.putExtra("gameObj", gameObj);
-//                    activity.startActivity(explicitIntent);
+        convertView.setOnClickListener(v -> {
+            if (Reachability.reachability.isReachable) {
+                Intent explicitIntent = new Intent(activity, CheatsByGameListActivity.class);
+                explicitIntent.putExtra("gameObj", gameObj);
+                activity.startActivity(explicitIntent);
 
-                    CheatsByGameListActivity_.intent(activity).gameObj(gameObj).start();
-                } else {
-                    Toast.makeText(activity, R.string.no_internet, Toast.LENGTH_SHORT).show();
-                }
+//                    CheatsByGameListActivity_.intent(activity).gameObj(gameObj).start();
+            } else {
+                Toast.makeText(activity, R.string.no_internet, Toast.LENGTH_SHORT).show();
             }
         });
         return convertView;

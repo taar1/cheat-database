@@ -2,7 +2,7 @@ package com.cheatdatabase.taskresults;
 
 import com.cheatdatabase.businessobjects.SystemPlatform;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Dominik on 31.05.2015.
@@ -11,9 +11,9 @@ public class GamesAndCheatsCountTaskResult {
 
     private Exception mException;
     private boolean mSucceeded;
-    private ArrayList<SystemPlatform> systemPlatforms;
+    private List<SystemPlatform> systemPlatforms;
 
-    public GamesAndCheatsCountTaskResult(ArrayList<SystemPlatform> systemPlatforms) {
+    public GamesAndCheatsCountTaskResult(List<SystemPlatform> systemPlatforms) {
         mSucceeded = true;
         this.systemPlatforms = systemPlatforms;
     }
@@ -31,7 +31,7 @@ public class GamesAndCheatsCountTaskResult {
         return mException;
     }
 
-    public ArrayList<SystemPlatform> getSystemPlatforms() {
+    public List<SystemPlatform> getSystemPlatforms() {
         return systemPlatforms;
     }
 }

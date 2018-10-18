@@ -13,7 +13,7 @@ import android.view.Window;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.cheatdatabase.CheatsByMemberListActivity_;
+import com.cheatdatabase.CheatsByMemberListActivity;
 import com.cheatdatabase.R;
 import com.cheatdatabase.businessobjects.Cheat;
 import com.cheatdatabase.businessobjects.Member;
@@ -113,24 +113,24 @@ public class CheatMetaDialog extends Dialog implements OnClickListener {
         tvSubmissionDateText.setOnClickListener(this);
         tvSubmissionDateText.setTypeface(latoFontLight);
 
-        llRating = (LinearLayout) findViewById(R.id.llRating);
+        llRating = findViewById(R.id.llRating);
         llRating.setVisibility(View.GONE);
-        llSubmittedBy = (LinearLayout) findViewById(R.id.llSubmittedBy);
+        llSubmittedBy = findViewById(R.id.llSubmittedBy);
         llSubmittedBy.setVisibility(View.GONE);
-        llCountSubmissions = (LinearLayout) findViewById(R.id.llCountSubmissions);
+        llCountSubmissions = findViewById(R.id.llCountSubmissions);
         llCountSubmissions.setVisibility(View.GONE);
-        llCountSubmissions2 = (LinearLayout) findViewById(R.id.llCountSubmissions2);
+        llCountSubmissions2 = findViewById(R.id.llCountSubmissions2);
         llCountSubmissions2.setVisibility(View.GONE);
-        llMemberHomepage = (LinearLayout) findViewById(R.id.llMemberHomepage);
+        llMemberHomepage = findViewById(R.id.llMemberHomepage);
         llMemberHomepage.setVisibility(View.GONE);
 
-        llBuffer3 = (LinearLayout) findViewById(R.id.llBuffer3);
+        llBuffer3 = findViewById(R.id.llBuffer3);
         llBuffer3.setVisibility(View.GONE);
-        llBuffer4 = (LinearLayout) findViewById(R.id.llBuffer4);
+        llBuffer4 = findViewById(R.id.llBuffer4);
         llBuffer4.setVisibility(View.GONE);
-        llBuffer5 = (LinearLayout) findViewById(R.id.llBuffer5);
+        llBuffer5 = findViewById(R.id.llBuffer5);
         llBuffer5.setVisibility(View.GONE);
-        llBuffer6 = (LinearLayout) findViewById(R.id.llBuffer6);
+        llBuffer6 = findViewById(R.id.llBuffer6);
         llBuffer6.setVisibility(View.GONE);
     }
 
@@ -150,8 +150,6 @@ public class CheatMetaDialog extends Dialog implements OnClickListener {
                 cheat.setMember(metaCheat.getSubmittingMember());
             } catch (Exception e) {
                 // do nothing
-            } finally {
-                metaCheat = null;
             }
             return null;
         }
@@ -243,7 +241,7 @@ public class CheatMetaDialog extends Dialog implements OnClickListener {
     @Override
     public void onClick(View v) {
         if (v == tvTotalSubmissionShowAll) {
-            Intent explicitIntent = new Intent(context, CheatsByMemberListActivity_.class);
+            Intent explicitIntent = new Intent(context, CheatsByMemberListActivity.class);
             explicitIntent.putExtra("memberObj", member);
             context.startActivity(explicitIntent);
         } else if (v == tvMemberHomepageText) {

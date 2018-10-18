@@ -21,7 +21,11 @@ import com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class GamesBySystemRecycleListViewAdapter extends RecyclerView.Adapter<GamesBySystemRecycleListViewAdapter.ViewHolder> implements FastScrollRecyclerView.SectionedAdapter,
         FastScrollRecyclerView.MeasurableAdapter {
@@ -36,6 +40,7 @@ public class GamesBySystemRecycleListViewAdapter extends RecyclerView.Adapter<Ga
 
     public GamesBySystemRecycleListViewAdapter(Context context) {
         this.context = context;
+        gameList = new ArrayList<>();
     }
 
     public void setGameList(List<Game> gameList) {
@@ -43,20 +48,24 @@ public class GamesBySystemRecycleListViewAdapter extends RecyclerView.Adapter<Ga
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        public TextView gameName;
-        public TextView cheatCount;
+        @BindView(R.id.cheat_title)
+        TextView gameName;
+        @BindView(R.id.cheats_count)
+        TextView cheatCount;
+
         public OnGameItemClickListener onGameItemClickListener;
 
-        public ViewHolder(View v, OnGameItemClickListener listener) {
-            super(v);
+        public ViewHolder(View view, OnGameItemClickListener listener) {
+            super(view);
+            ButterKnife.bind(this, view);
             onGameItemClickListener = listener;
 
-            gameName = v.findViewById(R.id.cheat_title);
-            cheatCount = v.findViewById(R.id.cheats_count);
-            gameName.setTypeface(Tools.getFont(v.getContext().getAssets(), Konstanten.FONT_BOLD));
-            cheatCount.setTypeface(Tools.getFont(v.getContext().getAssets(), Konstanten.FONT_LIGHT));
+//            gameName = v.findViewById(R.id.cheat_title);
+//            cheatCount = v.findViewById(R.id.cheats_count);
+            gameName.setTypeface(Tools.getFont(view.getContext().getAssets(), Konstanten.FONT_BOLD));
+            cheatCount.setTypeface(Tools.getFont(view.getContext().getAssets(), Konstanten.FONT_LIGHT));
 
-            v.setOnClickListener(this);
+            view.setOnClickListener(this);
         }
 
         @Override
@@ -78,15 +87,12 @@ public class GamesBySystemRecycleListViewAdapter extends RecyclerView.Adapter<Ga
         final View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.listrow_game_item, parent, false);
         v.setDrawingCacheEnabled(true);
 
-        return new ViewHolder(v, new OnGameItemClickListener() {
-            @Override
-            public void onGameClick(ViewHolder caller) {
+        return new ViewHolder(v, caller -> {
 
-                if (Reachability.reachability.isReachable) {
-                    EventBus.getDefault().post(new GameListRecyclerViewClickEvent(gameList.get(caller.getAdapterPosition())));
-                } else {
-                    EventBus.getDefault().post(new GameListRecyclerViewClickEvent(new Exception()));
-                }
+            if (Reachability.reachability.isReachable) {
+                EventBus.getDefault().post(new GameListRecyclerViewClickEvent(gameList.get(caller.getAdapterPosition())));
+            } else {
+                EventBus.getDefault().post(new GameListRecyclerViewClickEvent(new Exception()));
             }
         });
     }

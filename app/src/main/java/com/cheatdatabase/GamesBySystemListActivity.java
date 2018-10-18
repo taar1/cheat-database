@@ -4,6 +4,8 @@ import android.app.AlertDialog;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -22,7 +24,6 @@ import com.cheatdatabase.businessobjects.Game;
 import com.cheatdatabase.businessobjects.SystemPlatform;
 import com.cheatdatabase.events.GameListRecyclerViewClickEvent;
 import com.cheatdatabase.helpers.Konstanten;
-import com.cheatdatabase.helpers.MyPrefs_;
 import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.helpers.Webservice;
 import com.cheatdatabase.widgets.DividerDecoration;
@@ -30,11 +31,6 @@ import com.facebook.ads.AdSize;
 import com.facebook.ads.AdView;
 import com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView;
 
-import org.androidannotations.annotations.Background;
-import org.androidannotations.annotations.Bean;
-import org.androidannotations.annotations.Extra;
-import org.androidannotations.annotations.UiThread;
-import org.androidannotations.annotations.sharedpreferences.Pref;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
@@ -44,6 +40,7 @@ import java.util.List;
 import java.util.TreeMap;
 
 import butterknife.BindView;
+import needle.Needle;
 
 public class GamesBySystemListActivity extends AppCompatActivity {
 
@@ -54,7 +51,6 @@ public class GamesBySystemListActivity extends AppCompatActivity {
 
     private SystemPlatform systemObj;
 
-    @Bean
     GamesBySystemRecycleListViewAdapter gamesBySystemRecycleListViewAdapter;
 
     @BindView(R.id.my_recycler_view)
@@ -69,6 +65,11 @@ public class GamesBySystemListActivity extends AppCompatActivity {
     LinearLayout facebookBanner;
     private AdView adView;
 
+    private SharedPreferences sharedPreferences;
+
+    public GamesBySystemListActivity() {
+        gamesBySystemRecycleListViewAdapter = new GamesBySystemRecycleListViewAdapter(this);
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -101,7 +102,9 @@ public class GamesBySystemListActivity extends AppCompatActivity {
     }
 
     private void init() {
-        gamesBySystemRecycleListViewAdapter = new GamesBySystemRecycleListViewAdapter();
+        sharedPreferences = getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
+
+        gamesBySystemRecycleListViewAdapter = new GamesBySystemRecycleListViewAdapter(this);
 
         adView = new AdView(this, Konstanten.FACEBOOK_AUDIENCE_NETWORK_NATIVE_BANNER_ID, AdSize.BANNER_HEIGHT_50);
         facebookBanner.addView(adView);
@@ -128,83 +131,88 @@ public class GamesBySystemListActivity extends AppCompatActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
-    @Background
-    public void getGames(boolean forceLoadOnline) {
+    private void getGames(boolean forceLoadOnline) {
         Log.d(TAG, "XXXXX getGames() System ID/NAME: " + systemObj.getSystemId() + "/" + systemObj.getSystemName());
 
-        gameArrayList = new ArrayList<>();
-        Game[] cachedGamesCollection;
-        Game[] gamesFound = null;
-        boolean isCached = false;
-        String achievementsEnabled;
-        boolean isAchievementsEnabled = myPrefs.isAchievementsEnabled().getOr(true);
-        if (isAchievementsEnabled) {
-            achievementsEnabled = cheatDatabaseApplication.ACHIEVEMENTS;
-        } else {
-            achievementsEnabled = cheatDatabaseApplication.NO_ACHIEVEMENTS;
-        }
+        Needle.onBackgroundThread().execute(() -> {
+            gameArrayList = new ArrayList<>();
+            Game[] cachedGamesCollection;
+            Game[] gamesFound = null;
+            boolean isCached = false;
+            String achievementsEnabled;
+            boolean isAchievementsEnabled = sharedPreferences.getBoolean("enable_achievements", true);
+            if (isAchievementsEnabled) {
+                achievementsEnabled = cheatDatabaseApplication.ACHIEVEMENTS;
+            } else {
+                achievementsEnabled = cheatDatabaseApplication.NO_ACHIEVEMENTS;
+            }
 
-        TreeMap<String, TreeMap<String, Game[]>> gamesBySystemInCache = cheatDatabaseApplication.getGamesBySystemCached();
-        TreeMap gameList = null;
-        if (gamesBySystemInCache.containsKey(String.valueOf(systemObj.getSystemId()))) {
+            TreeMap<String, TreeMap<String, Game[]>> gamesBySystemInCache = cheatDatabaseApplication.getGamesBySystemCached();
+            TreeMap gameList = null;
+            if (gamesBySystemInCache.containsKey(String.valueOf(systemObj.getSystemId()))) {
 
-            gameList = gamesBySystemInCache.get(String.valueOf(systemObj.getSystemId()));
-            if (gameList != null) {
+                gameList = gamesBySystemInCache.get(String.valueOf(systemObj.getSystemId()));
+                if (gameList != null) {
 
-                if (gameList.containsKey(achievementsEnabled)) {
-                    cachedGamesCollection = (Game[]) gameList.get(achievementsEnabled);
+                    if (gameList.containsKey(achievementsEnabled)) {
+                        cachedGamesCollection = (Game[]) gameList.get(achievementsEnabled);
 
-                    if (cachedGamesCollection.length > 0) {
-                        gamesFound = cachedGamesCollection;
-                        isCached = true;
+                        if (cachedGamesCollection.length > 0) {
+                            gamesFound = cachedGamesCollection;
+                            isCached = true;
+                        }
                     }
                 }
             }
-        }
 
-        if (!isCached || forceLoadOnline) {
-            gamesFound = Webservice.getGameListBySystemId(systemObj.getSystemId(), systemObj.getSystemName(), isAchievementsEnabled);
-            while (gamesFound == null) {
+            if (!isCached || forceLoadOnline) {
                 gamesFound = Webservice.getGameListBySystemId(systemObj.getSystemId(), systemObj.getSystemName(), isAchievementsEnabled);
+                while (gamesFound == null) {
+                    gamesFound = Webservice.getGameListBySystemId(systemObj.getSystemId(), systemObj.getSystemName(), isAchievementsEnabled);
+                }
+
+                TreeMap<String, Game[]> updatedGameListForCache = new TreeMap<>();
+                updatedGameListForCache.put(achievementsEnabled, gamesFound);
+
+                String checkWhichSubKey;
+                if (achievementsEnabled.equalsIgnoreCase(cheatDatabaseApplication.ACHIEVEMENTS)) {
+                    checkWhichSubKey = cheatDatabaseApplication.NO_ACHIEVEMENTS;
+                } else {
+                    checkWhichSubKey = cheatDatabaseApplication.ACHIEVEMENTS;
+                }
+
+                if ((gameList != null) && (gameList.containsKey(checkWhichSubKey))) {
+                    Game[] existingGamesInCache = (Game[]) gameList.get(checkWhichSubKey);
+                    updatedGameListForCache.put(checkWhichSubKey, existingGamesInCache);
+                }
+
+                gamesBySystemInCache.put(String.valueOf(systemObj.getSystemId()), updatedGameListForCache);
+                cheatDatabaseApplication.setGamesBySystemCached(gamesBySystemInCache);
             }
+            Collections.addAll(gameArrayList, gamesFound);
 
-            TreeMap<String, Game[]> updatedGameListForCache = new TreeMap<>();
-            updatedGameListForCache.put(achievementsEnabled, gamesFound);
-
-            String checkWhichSubKey;
-            if (achievementsEnabled.equalsIgnoreCase(cheatDatabaseApplication.ACHIEVEMENTS)) {
-                checkWhichSubKey = cheatDatabaseApplication.NO_ACHIEVEMENTS;
-            } else {
-                checkWhichSubKey = cheatDatabaseApplication.ACHIEVEMENTS;
-            }
-
-            if ((gameList != null) && (gameList.containsKey(checkWhichSubKey))) {
-                Game[] existingGamesInCache = (Game[]) gameList.get(checkWhichSubKey);
-                updatedGameListForCache.put(checkWhichSubKey, existingGamesInCache);
-            }
-
-            gamesBySystemInCache.put(String.valueOf(systemObj.getSystemId()), updatedGameListForCache);
-            cheatDatabaseApplication.setGamesBySystemCached(gamesBySystemInCache);
-        }
-        Collections.addAll(gameArrayList, gamesFound);
-        fillListWithGames();
+            fillListWithGames();
+        });
     }
 
-    @UiThread
-    public void fillListWithGames() {
-        try {
-            if (gameArrayList != null && gameArrayList.size() > 0) {
-                gamesBySystemRecycleListViewAdapter.setGameList(gameArrayList);
-                mRecyclerView.setAdapter(gamesBySystemRecycleListViewAdapter);
-                gamesBySystemRecycleListViewAdapter.notifyDataSetChanged();
-            } else {
+    private void fillListWithGames() {
+        Needle.onMainThread().execute(() -> {
+            try {
+                if (gameArrayList != null && gameArrayList.size() > 0) {
+                    gamesBySystemRecycleListViewAdapter.setGameList(gameArrayList);
+                    mRecyclerView.setAdapter(gamesBySystemRecycleListViewAdapter);
+                    gamesBySystemRecycleListViewAdapter.notifyDataSetChanged();
+                } else {
+                    error();
+                }
+            } catch (Exception e) {
                 error();
             }
-        } catch (Exception e) {
-            error();
-        }
 
-        mSwipeRefreshLayout.setRefreshing(false);
+            mSwipeRefreshLayout.setRefreshing(false);
+        });
+
+
     }
 
     private void error() {
@@ -249,7 +257,12 @@ public class GamesBySystemListActivity extends AppCompatActivity {
     @Subscribe
     public void onEvent(GameListRecyclerViewClickEvent result) {
         if (result.isSucceeded()) {
-            CheatsByGameListActivity_.intent(this).gameObj(result.getGame()).start();
+
+            Intent intent = new Intent(this, CheatsByGameListActivity.class);
+            intent.putExtra("gameObj", result.getGame());
+            startActivity(intent);
+
+//            CheatsByGameListActivity_.intent(this).gameObj(result.getGame()).start();
         } else {
             Toast.makeText(this, R.string.no_internet, Toast.LENGTH_SHORT).show();
         }

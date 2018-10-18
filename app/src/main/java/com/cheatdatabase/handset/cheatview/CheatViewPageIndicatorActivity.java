@@ -24,10 +24,9 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.cheatdatabase.CheatForumActivity;
-import com.cheatdatabase.LoginActivity_;
+import com.cheatdatabase.LoginActivity;
 import com.cheatdatabase.R;
 import com.cheatdatabase.SubmitCheatActivity;
-import com.cheatdatabase.SubmitCheatActivity_;
 import com.cheatdatabase.businessobjects.Cheat;
 import com.cheatdatabase.businessobjects.Game;
 import com.cheatdatabase.businessobjects.Member;
@@ -317,7 +316,7 @@ public class CheatViewPageIndicatorActivity extends AppCompatActivity {
                 finish();
                 return true;
             case R.id.action_submit_cheat:
-                explicitIntent = new Intent(CheatViewPageIndicatorActivity.this, SubmitCheatActivity_.class);
+                explicitIntent = new Intent(CheatViewPageIndicatorActivity.this, SubmitCheatActivity.class);
                 explicitIntent.putExtra("gameObj", gameObj);
                 startActivity(explicitIntent);
                 return true;
@@ -364,7 +363,7 @@ public class CheatViewPageIndicatorActivity extends AppCompatActivity {
                 }
                 return true;
             case R.id.action_login:
-                Intent loginIntent = new Intent(CheatViewPageIndicatorActivity.this, LoginActivity_.class);
+                Intent loginIntent = new Intent(CheatViewPageIndicatorActivity.this, LoginActivity.class);
                 startActivityForResult(loginIntent, Konstanten.LOGIN_REGISTER_OK_RETURN_CODE);
                 return true;
             case R.id.action_logout:

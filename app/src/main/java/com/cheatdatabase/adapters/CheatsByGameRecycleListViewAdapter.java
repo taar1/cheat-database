@@ -49,15 +49,15 @@ public class CheatsByGameRecycleListViewAdapter extends RecyclerView.Adapter<Che
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         @BindView(R.id.cheat_title)
-        private TextView mCheatTitle;
+        TextView mCheatTitle;
         @BindView(R.id.small_ratingbar)
-        private RatingBar mRatingBar;
+        RatingBar mRatingBar;
         @BindView(R.id.newaddition)
-        private ImageView mFlagNewAddition;
+        ImageView mFlagNewAddition;
         @BindView(R.id.screenshots)
-        private ImageView mFlagScreenshot;
+        ImageView mFlagScreenshot;
         @BindView(R.id.flag)
-        private ImageView mFlagGerman;
+        ImageView mFlagGerman;
 
         private OnCheatItemClickListener mListener;
 

@@ -199,7 +199,7 @@
     <string name="meta_show_all_cheats">Mostrar todos los trucos</string>
     <string name="meta_rating_average">Media de votos por los usuarios</string>
     <string name="meta_return">Volver al truco</string>
-    <string name="meta_average_rating1">%s de 10</string>
+    <string name="meta_average_rating1">%1$s de 10</string>
     <string name="meta_average_rating2">sobre %s votos</string>
     <string name="meta_member_homepage">sitio web</string>
     <string name="meta_info_retrieved">Información obtenida. Desliza a la izquierda para verla.</string>

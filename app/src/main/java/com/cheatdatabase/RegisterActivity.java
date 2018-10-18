@@ -8,7 +8,8 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.graphics.Typeface;
 import android.os.Build;
-import android.support.annotation.UiThread;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
@@ -27,18 +28,14 @@ import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.helpers.Tools;
 import com.cheatdatabase.helpers.Webservice;
 
-import org.androidannotations.annotations.AfterViews;
-import org.androidannotations.annotations.Background;
-import org.androidannotations.annotations.Bean;
-import org.androidannotations.annotations.Click;
-import org.androidannotations.annotations.EActivity;
-import org.androidannotations.annotations.ViewById;
+import butterknife.BindView;
+import butterknife.OnClick;
+import needle.Needle;
 
 /**
  * Activity which displays a login screen to the user, offering registration as
  * well.
  */
-@EActivity(R.layout.activity_register)
 public class RegisterActivity extends AppCompatActivity {
 
     /**
@@ -71,15 +68,16 @@ public class RegisterActivity extends AppCompatActivity {
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
 
-    @Bean
-    Tools tools;
-
     private Member member;
     private SharedPreferences settings;
     private Editor editor;
 
-    @AfterViews
-    void onCreate() {
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        setContentView(R.layout.activity_register);
+
         init();
 
         // Set up the login form.
@@ -114,10 +112,9 @@ public class RegisterActivity extends AppCompatActivity {
 
         });
 
-
     }
 
-    @Click(R.id.register_button)
+    @OnClick(R.id.register_button)
     void registerButtonClicked() {
         if (Reachability.reachability.isReachable) {
             attemptRegister();
@@ -134,8 +131,8 @@ public class RegisterActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
-        Typeface latoFontBold = tools.getFont(getAssets(), Konstanten.FONT_BOLD);
-        Typeface latoFontLight = tools.getFont(getAssets(), Konstanten.FONT_LIGHT);
+        Typeface latoFontBold = Tools.getFont(getAssets(), Konstanten.FONT_BOLD);
+        Typeface latoFontLight = Tools.getFont(getAssets(), Konstanten.FONT_LIGHT);
 
         mEmailView.setTypeface(latoFontLight);
         mUsernameView.setTypeface(latoFontLight);
@@ -256,34 +253,40 @@ public class RegisterActivity extends AppCompatActivity {
      * Represents an asynchronous registration task used to authenticate the
      * user.
      */
-    @Background
     void registerTask(String username, String email) {
-        boolean success = false;
-        member = Webservice.register(username, email);
-        if (member.getErrorCode() == 0) {
-            member.writeMemberData(member, settings);
+        Needle.onBackgroundThread().execute(() -> {
+            boolean success;
+            member = Webservice.register(username, email);
 
-            success = true;
-        } else {
-            success = false;
-        }
+            if (member.getErrorCode() == 0) {
+                member.writeMemberData(member, settings);
 
-        registerTaskFinished(success);
+                success = true;
+            } else {
+                success = false;
+            }
+
+            registerTaskFinished(success);
+        });
+
+
     }
 
-    @UiThread
     void registerTaskFinished(boolean success) {
-        showProgress(false);
+        Needle.onMainThread().execute(() -> {
+            showProgress(false);
 
-        if (success) {
-            // REGISTER_SUCCESS_RETURN_CODE = Register success
-            Intent returnIntent = new Intent();
-            returnIntent.putExtra("result", Konstanten.REGISTER_SUCCESS_RETURN_CODE);
-            setResult(RESULT_OK, returnIntent);
-            finish();
-        } else {
-            errorStuff();
-        }
+            if (success) {
+                // REGISTER_SUCCESS_RETURN_CODE = Register success
+                Intent returnIntent = new Intent();
+                returnIntent.putExtra("result", Konstanten.REGISTER_SUCCESS_RETURN_CODE);
+                setResult(RESULT_OK, returnIntent);
+                finish();
+            } else {
+                errorStuff();
+            }
+        });
+
     }
 
     private void errorStuff() {

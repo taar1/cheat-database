@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -266,7 +267,11 @@ public class GamesBySystemActivity extends AppCompatActivity {
     @Subscribe
     public void onEvent(GameListRecyclerViewClickEvent result) {
         if (result.isSucceeded()) {
-            CheatsByGameListActivity_.intent(this).gameObj(result.getGame()).start();
+            Intent intent = new Intent(this, CheatsByGameListActivity.class);
+            intent.putExtra("gameObj", result.getGame());
+            startActivity(intent);
+
+//            CheatsByGameListActivity_.intent(this).gameObj(result.getGame()).start();
         } else {
             Toast.makeText(this, R.string.no_internet, Toast.LENGTH_SHORT).show();
         }

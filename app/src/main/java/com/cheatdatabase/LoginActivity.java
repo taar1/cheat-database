@@ -8,6 +8,8 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.graphics.Typeface;
 import android.os.Build;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -31,20 +33,14 @@ import com.cheatdatabase.helpers.Tools;
 import com.cheatdatabase.helpers.Webservice;
 import com.google.gson.Gson;
 
-import org.androidannotations.annotations.AfterViews;
-import org.androidannotations.annotations.Background;
-import org.androidannotations.annotations.Bean;
-import org.androidannotations.annotations.Click;
-import org.androidannotations.annotations.EActivity;
-import org.androidannotations.annotations.OnActivityResult;
-import org.androidannotations.annotations.UiThread;
-import org.androidannotations.annotations.ViewById;
+import butterknife.BindView;
+import butterknife.OnClick;
+import needle.Needle;
 
 /**
  * Activity which displays a login screen to the user, offering registration as
  * well.
  */
-@EActivity(R.layout.activity_login)
 public class LoginActivity extends AppCompatActivity implements AlreadyLoggedInDialogListener {
 
     public static final String TAG = LoginActivity.class.getSimpleName();
@@ -85,15 +81,16 @@ public class LoginActivity extends AppCompatActivity implements AlreadyLoggedInD
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
 
-    @Bean
-    Tools tools;
-
     private Member member;
     private SharedPreferences settings;
     private Editor editor;
 
-    @AfterViews
-    protected void onCreateView() {
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_login);
+
         init();
 
         // Set up the login form.
@@ -147,8 +144,8 @@ public class LoginActivity extends AppCompatActivity implements AlreadyLoggedInD
 
         member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
 
-        Typeface latoFontBold = tools.getFont(getAssets(), Konstanten.FONT_BOLD);
-        Typeface latoFontLight = tools.getFont(getAssets(), Konstanten.FONT_LIGHT);
+        Typeface latoFontBold = Tools.getFont(getAssets(), Konstanten.FONT_BOLD);
+        Typeface latoFontLight = Tools.getFont(getAssets(), Konstanten.FONT_LIGHT);
 
         mEmailView.setTypeface(latoFontLight);
         mPasswordView.setTypeface(latoFontLight);
@@ -158,13 +155,13 @@ public class LoginActivity extends AppCompatActivity implements AlreadyLoggedInD
         mForgotPassword.setTypeface(latoFontLight);
     }
 
-    @Click(R.id.txt_send_login)
+    @OnClick(R.id.txt_send_login)
     void forgotPasswordClicked() {
-        Intent recoverIntent = new Intent(LoginActivity.this, RecoverActivity_.class);
+        Intent recoverIntent = new Intent(LoginActivity.this, RecoverActivity.class);
         startActivityForResult(recoverIntent, Konstanten.RECOVER_PASSWORD_ATTEMPT);
     }
 
-    @Click(R.id.login_button)
+    @OnClick(R.id.login_button)
     void loginButtonClicked() {
         if (Reachability.reachability.isReachable) {
             attemptLogin();
@@ -173,7 +170,7 @@ public class LoginActivity extends AppCompatActivity implements AlreadyLoggedInD
         }
     }
 
-    @Click(R.id.cancel_button)
+    @OnClick(R.id.cancel_button)
     void cancelButtonClicked() {
         finish();
     }
@@ -210,16 +207,16 @@ public class LoginActivity extends AppCompatActivity implements AlreadyLoggedInD
                 onBackPressed();
                 return true;
             case R.id.action_register:
-                Intent registerIntent = new Intent(LoginActivity.this, RegisterActivity_.class);
+                Intent registerIntent = new Intent(LoginActivity.this, RegisterActivity.class);
                 startActivityForResult(registerIntent, Konstanten.REGISTER_ATTEMPT);
                 return true;
             case R.id.action_forgot_password:
-                Intent recoverIntent = new Intent(LoginActivity.this, RecoverActivity_.class);
+                Intent recoverIntent = new Intent(LoginActivity.this, RecoverActivity.class);
                 startActivityForResult(recoverIntent, Konstanten.RECOVER_PASSWORD_ATTEMPT);
                 return true;
             case R.id.action_logout:
                 member = null;
-                tools.logout(LoginActivity.this, settings.edit());
+                Tools.logout(LoginActivity.this, settings.edit());
                 invalidateOptionsMenu();
                 return true;
             default:
@@ -276,7 +273,7 @@ public class LoginActivity extends AppCompatActivity implements AlreadyLoggedInD
             mLoginStatusMessageView.setText(R.string.login_progress_signing_in);
             showProgress(true);
 
-            loginBackgroundTask(mEmailView.getText().toString().trim(), mPasswordView.getText().toString().trim());
+            loginInBackground(mEmailView.getText().toString().trim(), mPasswordView.getText().toString().trim());
         }
     }
 
@@ -314,39 +311,40 @@ public class LoginActivity extends AppCompatActivity implements AlreadyLoggedInD
         }
     }
 
-    @Background
-    void loginBackgroundTask(String email, String password) {
+    private void loginInBackground(String email, String password) {
+        Needle.onBackgroundThread().execute(() -> {
+            boolean loginResult = false;
 
-        boolean loginResult = false;
-
-        member = Webservice.login(email, password);
-        if (member != null) {
-            if (member.getErrorCode() == 0) {
-                member.writeMemberData(member, settings);
-                loginResult = true;
+            member = Webservice.login(email, password);
+            if (member != null) {
+                if (member.getErrorCode() == 0) {
+                    member.writeMemberData(member, settings);
+                    loginResult = true;
+                } else {
+                    loginResult = false;
+                }
             } else {
                 loginResult = false;
             }
-        } else {
-            loginResult = false;
-        }
 
-        afterLogin(loginResult);
+            afterLogin(loginResult);
+        });
     }
 
-    @UiThread
-    public void afterLogin(boolean loginResult) {
-        showProgress(false);
+    private void afterLogin(boolean loginResult) {
+        Needle.onMainThread().execute(() -> {
+            showProgress(false);
 
-        if (loginResult) {
             // LOGIN_SUCCESS_RETURN_CODE = Login success
-            Intent returnIntent = new Intent();
-            returnIntent.putExtra("result", Konstanten.LOGIN_SUCCESS_RETURN_CODE);
-            setResult(Konstanten.LOGIN_SUCCESS_RETURN_CODE, returnIntent);
-            finish();
-        } else {
-            errorStuff();
-        }
+            if (loginResult) {
+                Intent returnIntent = new Intent();
+                returnIntent.putExtra("result", Konstanten.LOGIN_SUCCESS_RETURN_CODE);
+                setResult(Konstanten.LOGIN_SUCCESS_RETURN_CODE, returnIntent);
+                finish();
+            } else {
+                errorStuff();
+            }
+        });
     }
 
     private void errorStuff() {
@@ -397,8 +395,13 @@ public class LoginActivity extends AppCompatActivity implements AlreadyLoggedInD
 //        }
 //    }
 
-    @OnActivityResult(Konstanten.LOGIN_SUCCESS_RETURN_CODE)
-    void onResult(Intent data) {
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        // TODO FIXME dies noch genau testen...
+
         int intentReturnCode = data.getIntExtra("result", Konstanten.LOGIN_REGISTER_FAIL_RETURN_CODE);
 
         if (intentReturnCode == Konstanten.REGISTER_SUCCESS_RETURN_CODE) {
@@ -410,6 +413,20 @@ public class LoginActivity extends AppCompatActivity implements AlreadyLoggedInD
             Toast.makeText(LoginActivity.this, R.string.recover_login_success, Toast.LENGTH_LONG).show();
         }
     }
+
+//    @OnActivityResult(Konstanten.LOGIN_SUCCESS_RETURN_CODE)
+//    void onResult(Intent data) {
+//        int intentReturnCode = data.getIntExtra("result", Konstanten.LOGIN_REGISTER_FAIL_RETURN_CODE);
+//
+//        if (intentReturnCode == Konstanten.REGISTER_SUCCESS_RETURN_CODE) {
+//            Intent returnIntent = new Intent();
+//            returnIntent.putExtra("result", Konstanten.REGISTER_SUCCESS_RETURN_CODE);
+//            setResult(RESULT_OK, returnIntent);
+//            finish();
+//        } else if (intentReturnCode == Konstanten.RECOVER_PASSWORD_SUCCESS_RETURN_CODE) {
+//            Toast.makeText(LoginActivity.this, R.string.recover_login_success, Toast.LENGTH_LONG).show();
+//        }
+//    }
 
 
     @Override

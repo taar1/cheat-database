@@ -192,7 +192,7 @@
     <string name="meta_show_all_cheats">Show all cheatList</string>
     <string name="meta_rating_average">Average cheat rating by members</string>
     <string name="meta_return">Return to cheat</string>
-    <string name="meta_average_rating1">%s out of 10</string>
+    <string name="meta_average_rating1">%1$s out of 10</string>
     <string name="meta_average_rating2">based on %s votes</string>
     <string name="meta_member_homepage">website</string>
     <string name="meta_info_retrieved">Cheat meta info retrieved. Swipe left to view.</string>
