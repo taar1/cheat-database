@@ -1,12 +1,10 @@
 package com.cheatdatabase.businessobjects;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.util.Log;
 
-import java.io.Serializable;
-
-public class SystemPlatform implements Serializable {
-
-    private final String TAG = SystemPlatform.class.getSimpleName();
+public class SystemPlatform implements Parcelable {
 
     private int systemId;
     private int gameCount;
@@ -59,7 +57,7 @@ public class SystemPlatform implements Serializable {
             }
             return true;
         } catch (Exception e) {
-            Log.e(TAG, "SystemPlatform:addGame(): " + e.getMessage());
+            Log.e("SystemPlatform", "SystemPlatform:addGame(): " + e.getMessage());
             return false;
         }
     }
@@ -102,5 +100,15 @@ public class SystemPlatform implements Serializable {
 
     public void setLastModTimeStamp(long lastModTimeStamp) {
         this.lastModTimeStamp = lastModTimeStamp;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+
     }
 }

@@ -1,6 +1,7 @@
 package com.cheatdatabase.favorites.cheatview;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
@@ -14,7 +15,7 @@ import android.widget.Toast;
 
 import com.cheatdatabase.R;
 import com.cheatdatabase.businessobjects.Game;
-import com.cheatdatabase.favorites.FavoriteCheatListActivity_;
+import com.cheatdatabase.favorites.FavoriteCheatListActivity;
 import com.cheatdatabase.helpers.Group;
 import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Reachability;
@@ -53,17 +54,17 @@ public class FavoritesExpandableListAdapter extends BaseExpandableListAdapter {
     @Override
     public View getChildView(int groupPosition, final int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
         final Game children = (Game) getChild(groupPosition, childPosition);
-        TextView textGameTitle = null;
-        TextView textCheatCounter = null;
+        TextView textGameTitle;
+        TextView textCheatCounter;
         if (convertView == null) {
             convertView = inflater.inflate(R.layout.gamesearch_listrow_details, null);
         }
-        textGameTitle = (TextView) convertView.findViewById(R.id.text_game_name);
+        textGameTitle = convertView.findViewById(R.id.text_game_name);
         textGameTitle.setText(children.getGameName());
         textGameTitle.setTypeface(latoFontRegular);
 
         // TODO machen wie gamesbystem mit: "5 Cheats" (nicht: Anz. Cheats: 5
-        textCheatCounter = (TextView) convertView.findViewById(R.id.text_cheat_counter);
+        textCheatCounter = convertView.findViewById(R.id.text_cheat_counter);
         textCheatCounter.setText(R.string.cheats_count);
         textCheatCounter.setTypeface(latoFontLight);
         textCheatCounter.append(" " + children.getCheatsCount());
@@ -71,10 +72,11 @@ public class FavoritesExpandableListAdapter extends BaseExpandableListAdapter {
             @Override
             public void onClick(View v) {
                 if (Reachability.reachability.isReachable) {
-//                    Intent explicitIntent = new Intent(activity, FavoriteCheatListActivity_.class);
-//                    explicitIntent.putExtra("gameObj", children);
-//                    activity.startActivity(explicitIntent);
-                    FavoriteCheatListActivity_.intent(activity).gameObj(children).start();
+                    Intent explicitIntent = new Intent(activity, FavoriteCheatListActivity.class);
+                    explicitIntent.putExtra("gameObj", children);
+                    activity.startActivity(explicitIntent);
+
+//                    FavoriteCheatListActivity_.intent(activity).gameObj(children).start();
                 } else {
                     Toast.makeText(activity, R.string.no_internet, Toast.LENGTH_SHORT).show();
                 }

@@ -32,11 +32,10 @@ import com.appbrain.AppBrain;
 import com.cheatdatabase.businessobjects.Member;
 import com.cheatdatabase.dialogs.RateAppDialog;
 import com.cheatdatabase.events.GenericEvent;
-import com.cheatdatabase.fragments.ContactFormFragment_;
+import com.cheatdatabase.fragments.ContactFormFragment;
 import com.cheatdatabase.fragments.FavoriteGamesListFragment;
 import com.cheatdatabase.fragments.SubmitCheatFragment;
 import com.cheatdatabase.fragments.SystemListFragment;
-import com.cheatdatabase.fragments.SystemListFragment_;
 import com.cheatdatabase.fragments.TopMembersFragment;
 import com.cheatdatabase.helpers.DistinctValues;
 import com.cheatdatabase.helpers.Konstanten;
@@ -437,14 +436,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private void showContactFormFragment() {
         mToolbar.setTitle(R.string.contactform_title);
-        fragmentManager.beginTransaction().replace(R.id.content_frame, ContactFormFragment_.builder().build()).commit();
+        fragmentTransaction.addToBackStack(ContactFormFragment.class.getSimpleName());
+        fragmentManager.beginTransaction().replace(R.id.content_frame, ContactFormFragment.newInstance(), ContactFormFragment.class.getSimpleName()).commit();
+
         fab.setVisibility(View.GONE);
         mDrawerLayout.closeDrawers();
     }
 
     private void showGameSystemsFragment() {
         mToolbar.setTitle(R.string.app_name);
-        fragmentManager.beginTransaction().replace(R.id.content_frame, SystemListFragment_.builder().build()).commit();
+        fragmentTransaction.addToBackStack(SystemListFragment.class.getSimpleName());
+        fragmentManager.beginTransaction().replace(R.id.content_frame, SystemListFragment.newInstance(), SystemListFragment.class.getSimpleName()).commit();
+
         fab.setVisibility(View.VISIBLE);
         mDrawerLayout.closeDrawers();
     }

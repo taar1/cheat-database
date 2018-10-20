@@ -26,7 +26,7 @@ import android.widget.Toast;
 import com.cheatdatabase.CheatForumActivity;
 import com.cheatdatabase.LoginActivity;
 import com.cheatdatabase.R;
-import com.cheatdatabase.SubmitCheatActivity_;
+import com.cheatdatabase.SubmitCheatActivity;
 import com.cheatdatabase.businessobjects.Cheat;
 import com.cheatdatabase.businessobjects.Game;
 import com.cheatdatabase.businessobjects.Member;
@@ -237,12 +237,13 @@ public class MemberCheatViewPageIndicator extends AppCompatActivity {
             ViewPagerHelper.bind(magicIndicator, mPager);
             mPager.setCurrentItem(pageSelected);
 
-            FloatingActionButton fa = (FloatingActionButton) viewLayout.findViewById(R.id.add_new_cheat_button);
-            fa.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    SubmitCheatActivity_.intent(MemberCheatViewPageIndicator.this).gameObj(gameObj).start();
-                }
+            FloatingActionButton fa = viewLayout.findViewById(R.id.add_new_cheat_button);
+            fa.setOnClickListener(v -> {
+                Intent intent = new Intent(MemberCheatViewPageIndicator.this, SubmitCheatActivity.class);
+                intent.putExtra("gameObj", gameObj);
+                startActivity(intent);
+
+
             });
         } catch (Exception e2) {
             Log.e(TAG, "ERROR: " + getPackageName() + "/" + getTitle() + "... " + e2.getMessage());
@@ -315,7 +316,7 @@ public class MemberCheatViewPageIndicator extends AppCompatActivity {
                 onBackPressed();
                 return true;
             case R.id.action_submit_cheat:
-                explicitIntent = new Intent(MemberCheatViewPageIndicator.this, SubmitCheatActivity_.class);
+                explicitIntent = new Intent(MemberCheatViewPageIndicator.this, SubmitCheatActivity.class);
                 explicitIntent.putExtra("gameObj", gameObj);
                 startActivity(explicitIntent);
                 return true;

@@ -20,7 +20,7 @@ import java.util.Date;
  * @author Dominik Erbsland
  * @since 2010
  */
-public class Cheat extends Game implements Serializable, Parcelable {
+public class Cheat extends Game implements Parcelable {
 
     private String cheatTitle, cheatText, created, author;
     private Member submittingMember;
@@ -41,6 +41,37 @@ public class Cheat extends Game implements Serializable, Parcelable {
         this.languageId = languageId;
         this.walkthroughFormat = walkthroughFormat;
     }
+
+
+    protected Cheat(Parcel in) {
+        cheatTitle = in.readString();
+        cheatText = in.readString();
+        created = in.readString();
+        author = in.readString();
+        rating = in.readFloat();
+        memberRating = in.readFloat();
+        cheatId = in.readInt();
+        languageId = in.readInt();
+        views = in.readInt();
+        votes = in.readInt();
+        viewsLifetime = in.readInt();
+        viewsToday = in.readInt();
+        forumCount = in.readInt();
+        walkthroughFormat = in.readByte() != 0;
+        screenshots = in.readByte() != 0;
+    }
+
+    public static final Creator<Cheat> CREATOR = new Creator<Cheat>() {
+        @Override
+        public Cheat createFromParcel(Parcel in) {
+            return new Cheat(in);
+        }
+
+        @Override
+        public Cheat[] newArray(int size) {
+            return new Cheat[size];
+        }
+    };
 
     public Game getGame() {
         return new Game(getGameId(), getGameName(), getSystemId(), getSystemName());
@@ -251,6 +282,20 @@ public class Cheat extends Game implements Serializable, Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-
+        dest.writeString(cheatTitle);
+        dest.writeString(cheatText);
+        dest.writeString(created);
+        dest.writeString(author);
+        dest.writeFloat(rating);
+        dest.writeFloat(memberRating);
+        dest.writeInt(cheatId);
+        dest.writeInt(languageId);
+        dest.writeInt(views);
+        dest.writeInt(votes);
+        dest.writeInt(viewsLifetime);
+        dest.writeInt(viewsToday);
+        dest.writeInt(forumCount);
+        dest.writeByte((byte) (walkthroughFormat ? 1 : 0));
+        dest.writeByte((byte) (screenshots ? 1 : 0));
     }
 }

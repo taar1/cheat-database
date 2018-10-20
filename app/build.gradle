@@ -133,7 +133,7 @@ dependencies {
 //    annotationProcessor "org.androidannotations:androidannotations:$AAVersion"
 //    implementation "org.androidannotations:androidannotations-runtimeOnly:$AAVersion"
 //    implementation "org.androidannotations:ormlite:$AAVersion"
-    runtimeOnly 'com.github.hackware1993:MagicIndicator:1.5.0'
+    implementation 'com.github.hackware1993:MagicIndicator:1.5.0'
     implementation 'com.simplecityapps:recyclerview-fastscroll:1.0.18'
     implementation('com.crashlytics.sdk.android:crashlytics:2.9.5@aar') {
         transitive = true

@@ -417,18 +417,17 @@ public class CheatDatabaseAdapter {
     }
 
     /**
-     * Get all favotired cheats from one game.
-     *
+     * Get all favorited cheats from one game.
      * @param gameId
-     * @return Cheat[]
+     * @return
      */
-    public Cheat[] getAllFavoritedCheatsByGame(int gameId) {
+    public List<Cheat> getAllFavoritedCheatsByGame(int gameId) {
 
         int countRows = countFavoritedCheats(gameId);
         if (countRows == 0) {
             return null;
         } else {
-            Cheat[] favCheats = new Cheat[countRows];
+            List<Cheat> favCheats = new ArrayList<>();
 
             Cursor cur = mDb.query(DATABASE_TABLE_FAVORITES, new String[]{FAV_GAME_ID, FAV_GAMENAME, FAV_CHEAT_ID, FAV_CHEAT_TITLE, FAV_CHEAT_TEXT, FAV_LANGUAGE_ID, FAV_SYSTEM_ID, FAV_SYSTEM_NAME, FAV_WALKTHROUGH_FORMAT}, FAV_GAME_ID + "=" + gameId, null, FAV_CHEAT_ID, null, FAV_CHEAT_TITLE);
 
@@ -449,7 +448,7 @@ public class CheatDatabaseAdapter {
                             walkthroughFormat = true;
                         }
 
-                        favCheats[i] = new Cheat(gameId, gameName, cheatId, cheatTitle, cheatText, languageId, systemId, systemName, walkthroughFormat);
+                        favCheats.add(new Cheat(gameId, gameName, cheatId, cheatTitle, cheatText, languageId, systemId, systemName, walkthroughFormat));
                         i++;
                     } while (cur.moveToNext());
                 }

@@ -28,7 +28,7 @@ import android.widget.Toast;
 import com.cheatdatabase.CheatForumActivity;
 import com.cheatdatabase.LoginActivity;
 import com.cheatdatabase.R;
-import com.cheatdatabase.SubmitCheatActivity_;
+import com.cheatdatabase.SubmitCheatActivity;
 import com.cheatdatabase.businessobjects.Cheat;
 import com.cheatdatabase.businessobjects.Game;
 import com.cheatdatabase.businessobjects.Member;
@@ -59,6 +59,8 @@ import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.Simple
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import java.util.List;
+
 /**
  * Horizontal sliding gallery of cheats from a game.
  *
@@ -78,7 +80,7 @@ public class FavoritesCheatViewPageIndicator extends AppCompatActivity implement
     private int pageSelected;
 
     private Game gameObj;
-    private Cheat[] cheatArray;
+    private List<Cheat> cheatArray;
     private Cheat visibleCheat;
 
     private SharedPreferences settings;
@@ -121,7 +123,7 @@ public class FavoritesCheatViewPageIndicator extends AppCompatActivity implement
 
             activePage = pageSelected;
             cheatArray = gameObj.getCheatList();
-            visibleCheat = cheatArray[pageSelected];
+            visibleCheat = cheatArray.get(pageSelected);
 
             getSupportActionBar().setTitle(gameObj.getGameName());
             getSupportActionBar().setSubtitle(gameObj.getSystemName());
@@ -152,9 +154,9 @@ public class FavoritesCheatViewPageIndicator extends AppCompatActivity implement
 
     private void initialisePaging() {
 
-        final String[] cheatTitles = new String[cheatArray.length];
-        for (int i = 0; i < cheatArray.length; i++) {
-            cheatTitles[i] = cheatArray[i].getCheatTitle();
+        final String[] cheatTitles = new String[cheatArray.size()];
+        for (int i = 0; i < cheatArray.size(); i++) {
+            cheatTitles[i] = cheatArray.get(i).getCheatTitle();
         }
 
         try {
@@ -177,7 +179,7 @@ public class FavoritesCheatViewPageIndicator extends AppCompatActivity implement
                     activePage = position;
 
                     try {
-                        visibleCheat = cheatArray[position];
+                        visibleCheat = cheatArray.get(position);
                         invalidateOptionsMenu();
                     } catch (Exception e) {
                         Toast.makeText(FavoritesCheatViewPageIndicator.this, R.string.err_somethings_wrong, Toast.LENGTH_SHORT).show();
@@ -196,7 +198,7 @@ public class FavoritesCheatViewPageIndicator extends AppCompatActivity implement
             commonNavigator.setAdapter(new CommonNavigatorAdapter() {
                 @Override
                 public int getCount() {
-                    return cheatArray == null ? 0 : cheatArray.length;
+                    return cheatArray == null ? 0 : cheatArray.size();
                 }
 
                 @Override
@@ -231,7 +233,12 @@ public class FavoritesCheatViewPageIndicator extends AppCompatActivity implement
             fa.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    SubmitCheatActivity_.intent(FavoritesCheatViewPageIndicator.this).gameObj(gameObj).start();
+//                    SubmitCheatActivity_.intent(FavoritesCheatViewPageIndicator.this).gameObj(gameObj).start();
+
+                    Intent intent = new Intent(FavoritesCheatViewPageIndicator.this, SubmitCheatActivity.class);
+                    intent.putExtra("gameObj", gameObj);
+                    startActivity(intent);
+
                 }
             });
         } catch (Exception e2) {
@@ -305,7 +312,7 @@ public class FavoritesCheatViewPageIndicator extends AppCompatActivity implement
                 finish();
                 return true;
             case R.id.action_submit_cheat:
-                explicitIntent = new Intent(FavoritesCheatViewPageIndicator.this, SubmitCheatActivity_.class);
+                explicitIntent = new Intent(FavoritesCheatViewPageIndicator.this, SubmitCheatActivity.class);
                 explicitIntent.putExtra("gameObj", gameObj);
                 startActivity(explicitIntent);
                 return true;
@@ -404,13 +411,13 @@ public class FavoritesCheatViewPageIndicator extends AppCompatActivity implement
     @Subscribe
     public void onEvent(CheatRatingFinishedEvent result) {
         visibleCheat.setMemberRating(result.getRating());
-        cheatArray[activePage].setMemberRating(result.getRating());
+        cheatArray.get(activePage).setMemberRating(result.getRating());
         invalidateOptionsMenu();
         Toast.makeText(this, R.string.rating_inserted, Toast.LENGTH_SHORT).show();
     }
 
     public void setRating(int position, float rating) {
-        cheatArray[position].setMemberRating(rating);
+        cheatArray.get(position).setMemberRating(rating);
         invalidateOptionsMenu();
     }
 

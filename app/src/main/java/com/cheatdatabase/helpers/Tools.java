@@ -376,12 +376,12 @@ public class Tools {
         return gsList;
     }
 
-    public ArrayList<SystemPlatform> getSystemNamesFromXml(Activity activity) {
+    public List<SystemPlatform> getSystemNamesFromXml(Activity activity) {
         return getGameSystemsFromXml(activity);
     }
 
     public SystemPlatform getSystemObjectByName(Activity activity, String systemName) {
-        ArrayList<SystemPlatform> al = getGameSystemsFromXml(activity);
+        List<SystemPlatform> al = getGameSystemsFromXml(activity);
         for (int i = 0; i < al.size(); i++) {
             SystemPlatform sys = al.get(i);
             if (sys.getSystemName().equalsIgnoreCase(systemName)) {

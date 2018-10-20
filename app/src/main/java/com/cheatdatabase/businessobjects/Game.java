@@ -1,12 +1,14 @@
 package com.cheatdatabase.businessobjects;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.util.Log;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Game extends SystemPlatform implements Serializable {
+public class Game extends SystemPlatform implements Parcelable {
 
     private List<Cheat> cheatList;
     private int gameId, cheatsCount;
@@ -22,14 +24,37 @@ public class Game extends SystemPlatform implements Serializable {
         this.gameName = gameName;
     }
 
-//    /**
-//     * Legt die Anzahl Cheat-Objekte fest
-//     *
-//     * @param cheatsCount
-//     */
-//    public void createCheatCollection(int cheatsCount) {
-//        this.cheatList = new Cheat[cheatsCount];
-//    }
+    protected Game(Parcel in) {
+        cheatList = in.createTypedArrayList(Cheat.CREATOR);
+        gameId = in.readInt();
+        cheatsCount = in.readInt();
+        gameName = in.readString();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeTypedList(cheatList);
+        dest.writeInt(gameId);
+        dest.writeInt(cheatsCount);
+        dest.writeString(gameName);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<Game> CREATOR = new Creator<Game>() {
+        @Override
+        public Game createFromParcel(Parcel in) {
+            return new Game(in);
+        }
+
+        @Override
+        public Game[] newArray(int size) {
+            return new Game[size];
+        }
+    };
 
     public boolean addCheat(Cheat cheat) {
         try {

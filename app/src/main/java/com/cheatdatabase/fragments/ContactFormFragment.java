@@ -71,6 +71,11 @@ public class ContactFormFragment extends Fragment {
 
     private boolean isFormSent = false;
 
+    public static ContactFormFragment newInstance() {
+        ContactFormFragment contactFormFragment = new ContactFormFragment();
+        return contactFormFragment;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_contact_form, container, false);

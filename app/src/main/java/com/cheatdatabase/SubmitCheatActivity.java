@@ -224,7 +224,7 @@ public class SubmitCheatActivity extends AppCompatActivity {
     }
 
     private void login() {
-        Intent loginIntent = new Intent(SubmitCheatActivity.this, LoginActivity_.class);
+        Intent loginIntent = new Intent(SubmitCheatActivity.this, LoginActivity.class);
         startActivityForResult(loginIntent, Konstanten.LOGIN_REGISTER_OK_RETURN_CODE);
     }
 

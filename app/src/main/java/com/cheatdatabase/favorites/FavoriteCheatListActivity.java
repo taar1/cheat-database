@@ -47,7 +47,7 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -85,7 +85,7 @@ public class FavoriteCheatListActivity extends AppCompatActivity {
     private Cheat visibleCheat;
 
     private CheatDatabaseAdapter db;
-    private ArrayList<Cheat> cheatsArrayList;
+    private List<Cheat> cheatsArrayList;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -222,7 +222,7 @@ public class FavoriteCheatListActivity extends AppCompatActivity {
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         outState.putInt("position", lastPosition);
-        outState.putSerializable("gameObj", lastGameObj);
+        outState.putParcelable("gameObj", lastGameObj);
         super.onSaveInstanceState(outState);
     }
 
@@ -333,29 +333,17 @@ public class FavoriteCheatListActivity extends AppCompatActivity {
     }
 
     void getCheats() {
-        Needle.onBackgroundThread().execute(new Runnable() {
-            @Override
-            public void run() {
-                cheatsArrayList = new ArrayList<>();
+        Needle.onBackgroundThread().execute(() -> {
+            cheatsArrayList = new ArrayList<>();
 
-                if (gameObj != null) {
-                    if (gameObj.getCheatList() == null) {
-                        Collections.addAll(cheatsArrayList, db.getAllFavoritedCheatsByGame(gameObj.getGameId()));
-                    } else {
-                        Collections.addAll(cheatsArrayList, gameObj.getCheatList());
-                    }
-
-                    Cheat[] cheats = new Cheat[cheatsArrayList.size()];
-                    for (int i = 0; i < cheatsArrayList.size(); i++) {
-                        cheats[i] = cheatsArrayList.get(i);
-                    }
-
-                    gameObj.setCheatList(cheats);
-
-                    fillListWithCheats();
-                } else {
-                    error();
+            if (gameObj != null) {
+                if (gameObj.getCheatList() == null) {
+                    gameObj.setCheatList(db.getAllFavoritedCheatsByGame(gameObj.getGameId()));
                 }
+
+                fillListWithCheats();
+            } else {
+                error();
             }
         });
     }
