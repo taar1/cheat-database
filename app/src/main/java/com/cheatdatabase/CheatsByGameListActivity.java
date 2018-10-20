@@ -95,7 +95,7 @@ public class CheatsByGameListActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        gameObj = (Game) getIntent().getSerializableExtra("gameObj");
+        gameObj = (Game) getIntent().getParcelableExtra("gameObj");
 
         setContentView(R.layout.activity_cheat_list);
         setTitle(gameObj.getGameName());

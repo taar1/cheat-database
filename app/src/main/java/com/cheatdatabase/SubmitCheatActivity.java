@@ -67,7 +67,7 @@ public class SubmitCheatActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_submit_cheat_layout);
 
-        gameObj = (Game) getIntent().getSerializableExtra("gameObj");
+        gameObj = (Game) getIntent().getParcelableExtra("gameObj");
 
         init();
 

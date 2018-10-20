@@ -9,10 +9,11 @@ import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Tools;
 
 import java.io.File;
-import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Plain Cheat-Object holding various information for display.
@@ -25,7 +26,7 @@ public class Cheat extends Game implements Parcelable {
     private String cheatTitle, cheatText, created, author;
     private Member submittingMember;
     private float rating, memberRating;
-    private Screenshot[] screens;
+    private List<Screenshot> screenshotList;
     private int cheatId, languageId, views, votes, viewsLifetime, viewsToday, forumCount;
     private boolean walkthroughFormat, screenshots;
 
@@ -117,8 +118,8 @@ public class Cheat extends Game implements Parcelable {
         return rating;
     }
 
-    public Screenshot[] getScreens() {
-        return screens;
+    public List<Screenshot> getScreenshotList() {
+        return screenshotList;
     }
 
     public int getViews() {
@@ -239,8 +240,8 @@ public class Cheat extends Game implements Parcelable {
         this.rating = rating;
     }
 
-    public void setScreens(Screenshot[] screens) {
-        this.screens = screens;
+    public void setScreenshotList(Screenshot[] sl) {
+        Collections.addAll(screenshotList, sl);
     }
 
     public void setViews(int views) {

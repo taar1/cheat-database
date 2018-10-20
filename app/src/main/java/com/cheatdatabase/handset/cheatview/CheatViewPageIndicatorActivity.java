@@ -109,7 +109,7 @@ public class CheatViewPageIndicatorActivity extends AppCompatActivity {
 
         // Bei grossen Game Objekten (wie Pokemon Fire Red) muss das Objekt
         // aus dem SharedPreferences geholt werden (ansonsten Absturz)
-        gameObj = (Game) intent.getSerializableExtra("gameObj");
+        gameObj = (Game) intent.getParcelableExtra("gameObj");
         if (gameObj == null) {
             gameObj = new Gson().fromJson(settings.getString(Konstanten.PREFERENCES_TEMP_GAME_OBJECT_VIEW, null), Game.class);
         }

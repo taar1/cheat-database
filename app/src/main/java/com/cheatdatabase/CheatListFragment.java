@@ -28,7 +28,6 @@ import com.cheatdatabase.helpers.Webservice;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import needle.Needle;
@@ -37,8 +36,7 @@ public class CheatListFragment extends ListFragment {
     private static String TAG = CheatListFragment.class.getSimpleName();
 
     public Game gameObj;
-    private List<Cheat> cheatsArrayList;
-    private List<Cheat> cheats;
+    private List<Cheat> cheatList;
     private CheatAdapter cheatAdapter;
     private Typeface latoFontRegular;
     private CheatsByGameListActivity cheatsByGameListActivity;
@@ -91,8 +89,7 @@ public class CheatListFragment extends ListFragment {
      * fragment (e.g. upon screen orientation changes).
      */
     public CheatListFragment() {
-        cheatsArrayList = new ArrayList<>();
-        cheats = new ArrayList<>();
+        cheatList = new ArrayList<>();
     }
 
     @Override
@@ -109,19 +106,19 @@ public class CheatListFragment extends ListFragment {
             member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
         }
 
-        gameObj = (Game) cheatsByGameListActivity.getIntent().getSerializableExtra("gameObj");
+        gameObj = (Game) cheatsByGameListActivity.getIntent().getParcelableExtra("gameObj");
         getCheats();
     }
 
     /**
-     * Get cheats either from the object or load them online.
+     * Get cheatList either from the object or load them online.
      */
     private void getCheats() {
         Needle.onBackgroundThread().execute(() -> {
-            if ((gameObj == null) || (gameObj.getCheatList() == null) || (gameObj.getCheatList().length < 1)) {
-                cheats = getCheatsNow();
+            if ((gameObj == null) || (gameObj.getCheatList() == null) || (gameObj.getCheatList().size() < 1)) {
+                cheatList = getCheatsNow();
             } else {
-                Collections.addAll(cheats, gameObj.getCheatList());
+                cheatList = gameObj.getCheatList();
             }
             updateUI();
         });
@@ -129,7 +126,7 @@ public class CheatListFragment extends ListFragment {
 
     private void updateUI() {
         Needle.onMainThread().execute(() -> {
-            cheatAdapter = new CheatAdapter(getActivity(), R.layout.listrow_cheat_item, cheatsArrayList);
+            cheatAdapter = new CheatAdapter(getActivity(), R.layout.listrow_cheat_item, cheatList);
             setListAdapter(cheatAdapter);
         });
     }
@@ -137,24 +134,12 @@ public class CheatListFragment extends ListFragment {
     private List<Cheat> getCheatsNow() {
         try {
             if (member == null) {
-                cheats = Webservice.getCheatList(gameObj, 0, true);
+                cheatList = Webservice.getCheatList(gameObj, 0, true);
             } else {
-                cheats = Webservice.getCheatList(gameObj, member.getMid(), true);
-            }
-            cheatsArrayList = new ArrayList<>();
-
-            if (cheats != null) {
-                // TODO FIXME cheatsArrayList not needed anymore since cheats now NEW is also a arraylist
-                Collections.addAll(cheatsArrayList, cheats);
-            } else {
-                Log.e(TAG, "Webservice.getCheatList() == null");
+                cheatList = Webservice.getCheatList(gameObj, member.getMid(), true);
             }
 
-            // TODO FIXME setCheatList anpassen für List Array
-            // TODO FIXME setCheatList anpassen für List Array
-            // TODO FIXME setCheatList anpassen für List Array
-            // TODO FIXME setCheatList anpassen für List Array
-            gameObj.setCheatList(cheats);
+            gameObj.setCheatList(cheatList);
 
             // Put game object to local storage for large games like Pokemon
             editor.putString(Konstanten.PREFERENCES_TEMP_GAME_OBJECT_VIEW, new Gson().toJson(gameObj));
@@ -164,7 +149,7 @@ public class CheatListFragment extends ListFragment {
             Log.e(getClass().getName(), "Error executing getCheatList()", ex);
         }
 
-        return cheats;
+        return cheatList;
     }
 
     @Override

@@ -366,7 +366,7 @@ public class Tools {
     }
 
     public SystemPlatform[] getSystems(Activity activity) {
-        ArrayList<SystemPlatform> al = getGameSystemsFromXml(activity);
+        List<SystemPlatform> al = getGameSystemsFromXml(activity);
         SystemPlatform[] gsList = new SystemPlatform[al.size()];
 
         for (int i = 0; i < al.size(); i++) {

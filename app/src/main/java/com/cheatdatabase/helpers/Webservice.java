@@ -601,7 +601,7 @@ public class Webservice {
 
                     cheat.setHasScreenshots(true);
                 }
-                cheat.setScreens(screens);
+                cheat.setScreenshotList(screens);
 
                 cheat.setCheatId(cheatId);
                 cheat.setCheatTitle(cheatTitle.replaceAll("\\\\", ""));
@@ -672,7 +672,7 @@ public class Webservice {
 
                     cheat.setHasScreenshots(true);
                 }
-                cheat.setScreens(screens);
+                cheat.setScreenshotList(screens);
 
                 cheat.setCheatId(cheatId);
                 cheat.setCheatTitle(cheatTitle.replaceAll("\\\\", ""));
@@ -1042,7 +1042,7 @@ public class Webservice {
 
                     cheat.setHasScreenshots(true);
                 }
-                cheat.setScreens(screens);
+                cheat.setScreenshotList(screens);
 
                 cheat.setCheatId(cheatId);
                 cheat.setCheatTitle(cheatTitle);

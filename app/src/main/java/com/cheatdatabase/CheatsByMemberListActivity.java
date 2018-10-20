@@ -1,12 +1,10 @@
 package com.cheatdatabase;
 
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
-import android.support.annotation.MainThread;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -40,8 +38,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import needle.Needle;
-
-import static android.icu.lang.UCharacter.GraphemeClusterBreak.T;
 
 /**
  * Shows all cheats of one particular member.
@@ -77,16 +73,11 @@ public class CheatsByMemberListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_member_cheat_list);
         init();
 
-        member = (Member) getIntent().getSerializableExtra("member");
+        member = getIntent().getParcelableExtra("member");
         memberCheatRecycleListViewAdapter = new MemberCheatRecycleListViewAdapter();
 
         mSwipeRefreshLayout.setRefreshing(true);
-        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                getCheats();
-            }
-        });
+        mSwipeRefreshLayout.setOnRefreshListener(() -> getCheats());
 
         // use this setting to improve performance if you know that changes
         // in content do not change the layout size of the RecyclerView
@@ -119,40 +110,35 @@ public class CheatsByMemberListActivity extends AppCompatActivity {
     }
 
     void getCheats() {
-        Needle.onBackgroundThread().execute(new Runnable() {
-            @Override
-            public void run() {
-                cheatList = Webservice.getCheatsByMemberId(member.getMid());
+        Needle.onBackgroundThread().execute(() -> {
+            cheatList = Webservice.getCheatsByMemberId(member.getMid());
 
-                editor.putString(Konstanten.PREFERENCES_TEMP_CHEAT_ARRAY_OBJECT_VIEW, new Gson().toJson(cheatList));
-                editor.commit();
+            editor.putString(Konstanten.PREFERENCES_TEMP_CHEAT_ARRAY_OBJECT_VIEW, new Gson().toJson(cheatList));
+            editor.commit();
 
-                fillListWithCheats();
-            }
+            fillListWithCheats();
         });
 
     }
 
-    @MainThread
     void fillListWithCheats() {
-        // TODO FIXME @MainThread geht vielleicht nicht
-        // TODO FIXME @MainThread geht vielleicht nicht
-        // TODO FIXME @MainThread geht vielleicht nicht
-        try {
-            if (cheatList.size() > 0) {
-                memberCheatRecycleListViewAdapter.setCheatList(cheatList);
-                mRecyclerView.setAdapter(memberCheatRecycleListViewAdapter);
+        Needle.onMainThread().execute(() -> {
+            try {
+                if (cheatList.size() > 0) {
+                    memberCheatRecycleListViewAdapter.setCheatList(cheatList);
+                    mRecyclerView.setAdapter(memberCheatRecycleListViewAdapter);
 
-                memberCheatRecycleListViewAdapter.notifyDataSetChanged();
-            } else {
-                error(R.string.err_data_not_accessible);
+                    memberCheatRecycleListViewAdapter.notifyDataSetChanged();
+                } else {
+                    error(R.string.err_data_not_accessible);
+                }
+            } catch (Exception e) {
+                Log.e(TAG, e.getLocalizedMessage());
+                error(R.string.err_no_member_data);
             }
-        } catch (Exception e) {
-            Log.e(TAG, e.getLocalizedMessage());
-            error(R.string.err_no_member_data);
-        }
 
-        mSwipeRefreshLayout.setRefreshing(false);
+            mSwipeRefreshLayout.setRefreshing(false);
+        });
     }
 
     @Override
@@ -188,7 +174,7 @@ public class CheatsByMemberListActivity extends AppCompatActivity {
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putSerializable("member", member);
+        outState.putParcelable("member", member);
     }
 
     @Override
@@ -202,12 +188,7 @@ public class CheatsByMemberListActivity extends AppCompatActivity {
     }
 
     private void error(int msg) {
-        new AlertDialog.Builder(CheatsByMemberListActivity.this).setIcon(R.drawable.ic_action_warning).setTitle(getString(R.string.err)).setMessage(msg).setNeutralButton(R.string.ok, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int whichButton) {
-                finish();
-            }
-        }).create().show();
+        new AlertDialog.Builder(CheatsByMemberListActivity.this).setIcon(R.drawable.ic_action_warning).setTitle(getString(R.string.err)).setMessage(msg).setNeutralButton(R.string.ok, (dialog, whichButton) -> finish()).create().show();
     }
 
     @Subscribe

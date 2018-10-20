@@ -1,6 +1,5 @@
 package com.cheatdatabase.favorites.handset.cheatview;
 
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -19,8 +18,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.Gallery;
 import android.widget.ImageView;
@@ -48,9 +45,12 @@ import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
+import java.util.List;
+
+import needle.Needle;
 
 /**
- * List of all cheats for a game optimized for handsets.
+ * List of all cheatList for a game optimized for handsets.
  *
  * @author Dominik Erbsland
  * @version 1.0
@@ -67,19 +67,15 @@ public class FavoritesCheatViewFragment extends Fragment implements OnClickListe
     private int biggestHeight;
 
     private Cheat cheatObj;
-    private Cheat[] cheats;
+    private List<Cheat> cheatList;
     private Game game;
     private int offset;
-    public ArrayList<String[]> al_images;
-    private ImageView[] imageViews;
+    private List<ImageView> imageViewList;
     private ProgressBar progressBar;
     private Member member;
 
     private SharedPreferences settings;
     private Editor editor;
-
-    public AlertDialog.Builder builder;
-    public AlertDialog alert;
 
     private static final String KEY_CONTENT = "CheatViewFragment:Content";
     private static final String TAG = FavoritesCheatViewFragment.class.getSimpleName();
@@ -88,9 +84,8 @@ public class FavoritesCheatViewFragment extends Fragment implements OnClickListe
 
         FavoritesCheatViewFragment fragment = new FavoritesCheatViewFragment();
 
-        // Uebergebene Parameter ins Bundle Objekt eintragen
         Bundle args = new Bundle();
-        args.putSerializable("gameObj", game);
+        args.putParcelable("gameObj", game);
         args.putInt("offset", offset);
         fragment.setArguments(args);
 
@@ -109,6 +104,10 @@ public class FavoritesCheatViewFragment extends Fragment implements OnClickListe
     private Typeface latoFontLight;
     private FavoritesCheatViewPageIndicator ca;
     private ImageView reloadView;
+
+    public FavoritesCheatViewFragment() {
+        imageViewList = new ArrayList<>();
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -144,48 +143,43 @@ public class FavoritesCheatViewFragment extends Fragment implements OnClickListe
         try {
             ll = (LinearLayout) inflater.inflate(R.layout.fragment_cheat_detail_handset, container, false);
 
-            cheats = game.getCheatList();
-            cheatObj = cheats[offset];
+            cheatList = game.getCheatList();
+            cheatObj = cheatList.get(offset);
+            getCheatRating();
 
-            new FetchCheatRatingOnlineBackgroundTask().execute();
+            mainTable = ll.findViewById(R.id.table_cheat_list_main);
 
-            mainTable = (TableLayout) ll.findViewById(R.id.table_cheat_list_main);
-
-            tvTextBeforeTable = (TextView) ll.findViewById(R.id.text_cheat_before_table);
+            tvTextBeforeTable = ll.findViewById(R.id.text_cheat_before_table);
             tvTextBeforeTable.setOnClickListener(this);
             tvTextBeforeTable.setVisibility(View.VISIBLE);
             tvTextBeforeTable.setTypeface(latoFontLight);
 
-            tvCheatTitle = (TextView) ll.findViewById(R.id.text_cheat_title);
+            tvCheatTitle = ll.findViewById(R.id.text_cheat_title);
             tvCheatTitle.setTypeface(latoFontBold);
             tvCheatTitle.setText(cheatObj.getCheatTitle());
 
-            tvGalleryInfo = (TextView) ll.findViewById(R.id.gallery_info);
+            tvGalleryInfo = ll.findViewById(R.id.gallery_info);
             tvGalleryInfo.setVisibility(View.INVISIBLE);
             tvGalleryInfo.setTypeface(latoFontLight);
 
-            screenshotGallery = (Gallery) ll.findViewById(R.id.gallery);
+            screenshotGallery = ll.findViewById(R.id.gallery);
 
-            progressBar = (ProgressBar) ll.findViewById(R.id.progress_bar);
+            progressBar = ll.findViewById(R.id.progress_bar);
             progressBar.setVisibility(View.INVISIBLE);
 
-            tvCheatText = (TextView) ll.findViewById(R.id.cheat_content);
+            tvCheatText = ll.findViewById(R.id.cheat_content);
             tvCheatText.setTypeface(latoFontLight);
 
-            reloadView = (ImageView) ll.findViewById(R.id.reload);
+            reloadView = ll.findViewById(R.id.reload);
             if (Reachability.reachability.isReachable) {
                 getOnlineContent();
             } else {
                 reloadView.setVisibility(View.VISIBLE);
-                reloadView.setOnClickListener(new OnClickListener() {
-
-                    @Override
-                    public void onClick(View v) {
-                        if (Reachability.reachability.isReachable) {
-                            getOnlineContent();
-                        } else {
-                            Toast.makeText(ca, R.string.no_internet, Toast.LENGTH_SHORT).show();
-                        }
+                reloadView.setOnClickListener(v -> {
+                    if (Reachability.reachability.isReachable) {
+                        getOnlineContent();
+                    } else {
+                        Toast.makeText(ca, R.string.no_internet, Toast.LENGTH_SHORT).show();
                     }
                 });
                 Toast.makeText(ca, R.string.no_internet, Toast.LENGTH_SHORT).show();
@@ -206,10 +200,9 @@ public class FavoritesCheatViewFragment extends Fragment implements OnClickListe
          */
         if (cheatObj.isScreenshots()) {
             biggestHeight = 100;
-            imageViews = new ImageView[cheatObj.getScreens().length];
             progressBar.setVisibility(View.VISIBLE);
 
-            new LoadScreenshotsInBackgroundTask().execute();
+            loadScreenshots();
         } else {
             tvGalleryInfo.setVisibility(View.GONE);
             progressBar.setVisibility(View.GONE);
@@ -235,7 +228,7 @@ public class FavoritesCheatViewFragment extends Fragment implements OnClickListe
     private void getFragmentRelevantData() {
         Bundle arguments = getArguments();
         try {
-            game = (Game) arguments.getSerializable("gameObj");
+            game = arguments.getParcelable("gameObj");
             offset = arguments.getInt("offset");
         } catch (Exception e) {
             offset = 0;
@@ -246,16 +239,13 @@ public class FavoritesCheatViewFragment extends Fragment implements OnClickListe
 
     private void buildGallery() {
         screenshotGallery.setAdapter(new ImageAdapter(ca));
-        screenshotGallery.setOnItemClickListener(new OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-                Screenshot[] screens = cheatObj.getScreens();
-                Screenshot screenShot = screens[position];
+        screenshotGallery.setOnItemClickListener((parent, v, position, id) -> {
+            List<Screenshot> screens = cheatObj.getScreenshotList();
+            Screenshot screenShot = screens.get(position);
 
-                Uri uri = Uri.parse(Konstanten.SCREENSHOT_ROOT_WEBDIR + screenShot.getCheatId() + screenShot.getFilename());
-                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-                startActivity(intent);
-            }
+            Uri uri = Uri.parse(Konstanten.SCREENSHOT_ROOT_WEBDIR + screenShot.getCheatId() + screenShot.getFilename());
+            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+            startActivity(intent);
         });
 
     }
@@ -310,7 +300,7 @@ public class FavoritesCheatViewFragment extends Fragment implements OnClickListe
         String firstThColumn = "<b>" + th1[1].trim() + "</b>";
         String secondThColumn = "<b>" + th2[0].trim() + "</b>";
 
-		/* Create a new row to be added. */
+        /* Create a new row to be added. */
         TableRow trTh = new TableRow(ca);
         trTh.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
 
@@ -329,7 +319,7 @@ public class FavoritesCheatViewFragment extends Fragment implements OnClickListe
         tvSecondThCol.setTypeface(latoFontLight);
         trTh.addView(tvSecondThCol);
 
-		/* Add row to TableLayout. */
+        /* Add row to TableLayout. */
         mainTable.addView(trTh, new TableLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
 
         for (int i = 1; i < trs.length; i++) {
@@ -341,7 +331,7 @@ public class FavoritesCheatViewFragment extends Fragment implements OnClickListe
             String firstTdColumn = td1[1].replaceAll("<br>", "\n").trim();
             String secondTdColumn = td2[0].replaceAll("<br>", "\n").trim();
 
-			/* Create a new row to be added. */
+            /* Create a new row to be added. */
             TableRow trTd = new TableRow(ca);
             trTd.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
 
@@ -360,7 +350,7 @@ public class FavoritesCheatViewFragment extends Fragment implements OnClickListe
             tvSecondTdCol.setTypeface(latoFontLight);
             trTd.addView(tvSecondTdCol);
 
-			/* Add row to TableLayout. */
+            /* Add row to TableLayout. */
             mainTable.addView(trTd, new TableLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
         }
     }
@@ -396,7 +386,7 @@ public class FavoritesCheatViewFragment extends Fragment implements OnClickListe
         Log.d("onClick", "onClick");
         Bundle arguments = new Bundle();
         arguments.putInt("CHANGEME", 1);
-        arguments.putSerializable("cheatObj", cheatObj);
+        arguments.putParcelable("cheatObj", cheatObj);
     }
 
     private class FetchCheatTextTask extends AsyncTask<Void, Void, Void> {
@@ -423,60 +413,45 @@ public class FavoritesCheatViewFragment extends Fragment implements OnClickListe
         }
     }
 
-    private class FetchCheatRatingOnlineBackgroundTask extends AsyncTask<Void, Void, Void> {
-
-        float cheatRating;
-
-        @Override
-        protected Void doInBackground(Void... params) {
+    private void getCheatRating() {
+        Needle.onBackgroundThread().execute(() -> {
+            float cheatRating = 0;
             try {
                 cheatRating = Webservice.getCheatRatingByMemberId(member.getMid(), cheatObj.getCheatId());
             } catch (Exception e) {
-                cheatRating = 0;
             }
 
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void result) {
-            super.onPostExecute(result);
-
-            if (cheatRating > 0) {
-                editor.putFloat("c" + cheatObj.getCheatId(), cheatRating);
-                editor.commit();
-
-                ca.setRating(offset, cheatRating);
-
-                // ratingBar.setRating(cheatRating / 2);
-            }
-        }
+            setCheatRatingOnUI(cheatRating);
+        });
     }
 
-    private class LoadScreenshotsInBackgroundTask extends AsyncTask<Void, Void, Bitmap[]> {
-        Bitmap bms[];
+    private void setCheatRatingOnUI(float cheatRating) {
+        Needle.onMainThread().execute(() -> {
+            if (cheatRating > 0) {
+                editor.putFloat("c" + cheatObj.getCheatId(), cheatRating);
+                editor.apply();
 
-        @Override
-        protected Bitmap[] doInBackground(Void... params) {
+                ca.setRating(offset, cheatRating);
+            }
+        });
+    }
+
+    private void loadScreenshots() {
+        Needle.onBackgroundThread().execute(() -> {
+            List<Bitmap> bitmapList = new ArrayList<>();
+
             try {
-                Screenshot[] screens = cheatObj.getScreens();
+                List<Screenshot> screens = cheatObj.getScreenshotList();
 
-                String[] myRemoteImages = new String[screens.length];
-
-                for (int i = 0; i < screens.length; i++) {
-                    Screenshot s = screens[i];
+                for (int i = 0; i < screens.size(); i++) {
+                    Screenshot s = screens.get(i);
                     String filename = s.getCheatId() + s.getFilename();
-                    myRemoteImages[i] = Konstanten.SCREENSHOT_ROOT_WEBDIR + "image.php?width=150&image=/cheatpics/" + filename;
-                }
+                    String myRemoteUrl = Konstanten.SCREENSHOT_ROOT_WEBDIR + "image.php?width=150&image=/cheatpics/" + filename;
 
-                bms = new Bitmap[imageViews.length];
-                for (int i = 0; i < imageViews.length; i++) {
-
-					/*
-                     * Open a new URL and get the InputStream to load data from
-					 * it.
-					 */
-                    URL aURL = new URL(myRemoteImages[i]);
+                    /*
+                     * Open a new URL and get the InputStream to load data from it.
+                     */
+                    URL aURL = new URL(myRemoteUrl);
                     URLConnection conn = aURL.openConnection();
                     conn.connect();
                     InputStream is = conn.getInputStream();
@@ -487,7 +462,7 @@ public class FavoritesCheatViewFragment extends Fragment implements OnClickListe
                     bis.close();
                     is.close();
 
-                    bms[i] = bm;
+                    bitmapList.add(bm);
 
                     if (biggestHeight < bm.getHeight()) {
                         biggestHeight = bm.getHeight();
@@ -496,40 +471,40 @@ public class FavoritesCheatViewFragment extends Fragment implements OnClickListe
 
 
             } catch (IOException e) {
-                Log.e(TAG, "Remtoe Image Exception", e);
+                Log.e(TAG, "Remote Image Exception: " + e.getLocalizedMessage());
             }
 
-            return bms;
-        }
 
-        @Override
-        protected void onPostExecute(Bitmap[] bms) {
-            super.onPostExecute(bms);
+            updateUI(bitmapList);
+        });
+    }
 
-            /*
-             * Apply the Bitmap to the ImageView that will be returned.
-             */
-            for (int i = 0; i < imageViews.length; i++) {
-                imageViews[i] = new ImageView(ca);
-                imageViews[i].setScaleType(ImageView.ScaleType.MATRIX);
-                imageViews[i].setLayoutParams(new Gallery.LayoutParams(300, biggestHeight));
-                imageViews[i].setImageBitmap(bms[i]);
+    private void updateUI(List<Bitmap> bitmapList) {
+        Needle.onMainThread().execute(() -> {
+            // Apply the Bitmap to the ImageView that will be returned.
+            for (Bitmap bm : bitmapList) {
+                ImageView iv = new ImageView(ca);
+                iv.setScaleType(ImageView.ScaleType.MATRIX);
+                iv.setLayoutParams(new Gallery.LayoutParams(300, biggestHeight));
+                iv.setImageBitmap(bm);
+
+                imageViewList.add(iv);
             }
 
             progressBar.setVisibility(View.GONE);
-            if (cheatObj.getScreens().length <= 1) {
+            if (cheatObj.getScreenshotList().size() <= 1) {
                 tvGalleryInfo.setVisibility(View.GONE);
             } else {
                 tvGalleryInfo.setVisibility(View.VISIBLE);
             }
             buildGallery();
-        }
+        });
     }
 
     /**
      * Innere Klasse zum Anzeigen der Screenshot-Thumbnails
      * <p/>
-     * Copyright (c) 2010-2012<br>
+     * Copyright (c) 2010-2018<br>
      *
      * @author Dominik Erbsland
      * @version 1.0
@@ -544,8 +519,7 @@ public class FavoritesCheatViewFragment extends Fragment implements OnClickListe
 
         @Override
         public int getCount() {
-            return imageViews.length;
-            // return cheat.getScreens().length;
+            return imageViewList.size();
         }
 
         @Override
@@ -559,12 +533,11 @@ public class FavoritesCheatViewFragment extends Fragment implements OnClickListe
         }
 
         /**
-         * Returns a new ImageView to be displayed, depending on the position
-         * passed.
+         * Returns a new ImageView to be displayed, depending on the position passed.
          */
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            return imageViews[position];
+            return imageViewList.get(position);
         }
 
         /**

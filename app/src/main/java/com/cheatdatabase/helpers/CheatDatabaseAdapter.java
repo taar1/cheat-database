@@ -189,7 +189,7 @@ public class CheatDatabaseAdapter {
     }
 
     public void saveScreenshotsToSdCard(Cheat cheat) {
-        Screenshot[] screens = cheat.getScreens();
+        Screenshot[] screens = cheat.getScreenshotList();
         for (int j = 0; j < screens.length; j++) {
             Screenshot tmpScr = screens[j];
 

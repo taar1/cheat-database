@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.util.Log;
@@ -27,8 +26,9 @@ import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Tools;
 import com.google.gson.Gson;
 
-import java.util.ArrayList;
-import java.util.Collections;
+import java.util.List;
+
+import needle.Needle;
 
 /**
  * A list fragment representing a list of Favorites. This fragment also supports
@@ -68,9 +68,7 @@ public class FavoriteCheatListFragment extends ListFragment {
 
     private Game gameObj;
 
-    private ArrayList<Cheat> cheatsArrayList = new ArrayList<>();
-
-    private Cheat[] cheats;
+    private List<Cheat> cheatList;
 
     private Typeface latoFontRegular;
 
@@ -114,11 +112,17 @@ public class FavoriteCheatListFragment extends ListFragment {
 
         init();
 
-        gameObj = (Game) ca.getIntent().getSerializableExtra("gameObj");
+        gameObj = ca.getIntent().getParcelableExtra("gameObj");
         if (gameObj == null) {
-            new GetCheatsTask().execute(new Game());
+            getCheatsNow();
         } else {
-            new GetCheatsTask().execute(gameObj);
+            if (gameObj.getCheatList() == null) {
+                getCheatsNow();
+            } else {
+                cheatList = gameObj.getCheatList();
+                updateUI();
+            }
+
         }
     }
 
@@ -136,51 +140,28 @@ public class FavoriteCheatListFragment extends ListFragment {
         }
     }
 
-    private class GetCheatsTask extends AsyncTask<Game, Void, Void> {
+    private void getCheatsNow() {
+        Needle.onBackgroundThread().execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    cheatList = db.getAllFavoritedCheatsByGame(gameObj.getGameId());
 
-        @Override
-        protected Void doInBackground(Game... params) {
+                    gameObj.setCheatList(cheatList);
 
-            if (params[0].getCheatList() == null) {
-                cheats = getCheatsNow();
-            } else {
-                cheats = params[0].getCheatList();
+                    updateUI();
+                } catch (Exception ex) {
+                    Log.e(getClass().getName(), "Error executing getCheatList()", ex);
+                }
             }
-
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void result) {
-            super.onPostExecute(result);
-
-            cheatAdapter = new CheatAdapter(getActivity(), R.layout.listrow_cheat_item, cheatsArrayList);
-            setListAdapter(cheatAdapter);
-        }
+        });
     }
 
-    private Cheat[] getCheatsNow() {
-
-        try {
-            cheats = db.getAllFavoritedCheatsByGame(gameObj.getGameId());
-            cheatsArrayList = new ArrayList<>();
-
-            if (cheats != null) {
-//                for (int j = 0; j < cheats.length; j++) {
-//                    cheatsArrayList.add(cheats[j]);
-//                }
-                Collections.addAll(cheatsArrayList, cheats);
-            } else {
-                Log.e(TAG, "db.getAllFavoritedCheatsByGame() == null");
-            }
-
-            gameObj.setCheatList(cheats);
-
-        } catch (Exception ex) {
-            Log.e(getClass().getName(), "Error executing getCheatList()", ex);
-        }
-
-        return cheats;
+    private void updateUI() {
+        Needle.onMainThread().execute(() -> {
+            cheatAdapter = new CheatAdapter(getActivity(), R.layout.listrow_cheat_item, cheatList);
+            setListAdapter(cheatAdapter);
+        });
     }
 
     @Override
@@ -253,11 +234,11 @@ public class FavoriteCheatListFragment extends ListFragment {
 
     private class CheatAdapter extends ArrayAdapter<Cheat> {
 
-        private final ArrayList<Cheat> arr_cheats;
+        private final List<Cheat> cheatList1;
 
-        public CheatAdapter(Context context, int textViewResourceId, ArrayList<Cheat> items) {
-            super(context, textViewResourceId, items);
-            this.arr_cheats = items;
+        public CheatAdapter(Context context, int textViewResourceId, List<Cheat> cheatList) {
+            super(context, textViewResourceId, cheatList);
+            this.cheatList1 = cheatList;
         }
 
         @Override
@@ -269,16 +250,16 @@ public class FavoriteCheatListFragment extends ListFragment {
             }
 
             try {
-                Cheat cheat = arr_cheats.get(position);
+                Cheat cheat = cheatList1.get(position);
                 if (cheat != null) {
-                    TextView tt = (TextView) v.findViewById(R.id.cheat_title);
+                    TextView tt = v.findViewById(R.id.cheat_title);
                     tt.setText(cheat.getCheatTitle());
                     tt.setTypeface(latoFontRegular);
 
-                    ImageView flag_new = (ImageView) v.findViewById(R.id.newaddition);
+                    ImageView flag_new = v.findViewById(R.id.newaddition);
                     flag_new.setVisibility(View.GONE);
 
-                    ImageView flag_screenshots = (ImageView) v.findViewById(R.id.screenshots);
+                    ImageView flag_screenshots = v.findViewById(R.id.screenshots);
                     if (cheat.hasScreenshotOnSd()) {
                         flag_screenshots.setVisibility(View.VISIBLE);
                         flag_screenshots.setImageResource(R.drawable.flag_img);
@@ -286,7 +267,7 @@ public class FavoriteCheatListFragment extends ListFragment {
                         flag_screenshots.setVisibility(View.GONE);
                     }
 
-                    ImageView flag_german = (ImageView) v.findViewById(R.id.flag);
+                    ImageView flag_german = v.findViewById(R.id.flag);
                     if (cheat.getLanguageId() == 2) { // 2 = Deutsch
                         flag_german.setVisibility(View.VISIBLE);
                         flag_german.setImageResource(R.drawable.flag_german);

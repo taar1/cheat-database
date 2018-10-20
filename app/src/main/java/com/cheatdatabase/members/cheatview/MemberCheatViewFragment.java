@@ -170,7 +170,7 @@ public class MemberCheatViewFragment extends Fragment {
              */
             if (cheatObj.isScreenshots()) {
                 biggestHeight = 100; // setMemberList value
-                imageViews = new ImageView[cheatObj.getScreens().length];
+                imageViews = new ImageView[cheatObj.getScreenshotList().length];
                 progressBar.setVisibility(View.VISIBLE);
 
                 new LoadScreenshotsInBackgroundTask().execute();
@@ -223,7 +223,7 @@ public class MemberCheatViewFragment extends Fragment {
         screenshotGallery.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-                Screenshot[] screens = cheatObj.getScreens();
+                Screenshot[] screens = cheatObj.getScreenshotList();
                 Screenshot screenShot = screens[position];
 
                 Uri uri = Uri.parse(Konstanten.SCREENSHOT_ROOT_WEBDIR + screenShot.getCheatId() + screenShot.getFilename());
@@ -478,7 +478,7 @@ public class MemberCheatViewFragment extends Fragment {
         @Override
         protected Bitmap[] doInBackground(Void... params) {
             try {
-                Screenshot[] screens = cheatObj.getScreens();
+                Screenshot[] screens = cheatObj.getScreenshotList();
 
                 String[] myRemoteImages = new String[screens.length];
 
@@ -534,7 +534,7 @@ public class MemberCheatViewFragment extends Fragment {
             }
 
             progressBar.setVisibility(View.GONE);
-            if (cheatObj.getScreens().length <= 1) {
+            if (cheatObj.getScreenshotList().length <= 1) {
                 tvGalleryInfo.setVisibility(View.GONE);
             } else {
                 tvGalleryInfo.setVisibility(View.VISIBLE);
@@ -562,7 +562,7 @@ public class MemberCheatViewFragment extends Fragment {
         @Override
         public int getCount() {
             return imageViews.length;
-            // return cheat.getScreens().length;
+            // return cheat.getScreenshotList().length;
         }
 
         @Override

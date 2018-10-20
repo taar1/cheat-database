@@ -100,8 +100,8 @@ public class CheatForumActivity extends AppCompatActivity implements CheatListFr
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cheat_forum);
 
-        cheatObj = (Cheat) getIntent().getSerializableExtra("cheatObj");
-        gameObj = (Game) getIntent().getSerializableExtra("gameObj");
+        cheatObj = (Cheat) getIntent().getParcelableExtra("cheatObj");
+        gameObj = (Game) getIntent().getParcelableExtra("gameObj");
         if (cheatObj == null) {
             finish();
         }

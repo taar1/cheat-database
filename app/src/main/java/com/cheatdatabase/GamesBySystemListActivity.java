@@ -74,7 +74,7 @@ public class GamesBySystemListActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        systemObj = (SystemPlatform) getIntent().getSerializableExtra("systemObj");
+        systemObj = (SystemPlatform) getIntent().getParcelableExtra("systemObj");
 
         setContentView(R.layout.activity_game_list);
         setTitle(systemObj.getSystemName());

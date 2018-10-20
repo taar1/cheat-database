@@ -2,13 +2,15 @@ package com.cheatdatabase.businessobjects;
 
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 import com.cheatdatabase.helpers.Konstanten;
 import com.google.gson.Gson;
 
 import java.io.Serializable;
 
-public class Member implements Serializable {
+public class Member implements Parcelable {
 
     private String username, password, email, website, city, greeting;
     private int mid, errorCode, cheatSubmissionCount;
@@ -172,5 +174,15 @@ public class Member implements Serializable {
 
         editor.putString(Konstanten.MEMBER_OBJECT, new Gson().toJson(member));
         editor.commit();
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+
     }
 }

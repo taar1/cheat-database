@@ -118,7 +118,7 @@ public class FavoritesCheatViewPageIndicator extends AppCompatActivity implement
         init();
 
         try {
-            gameObj = (Game) intent.getSerializableExtra("gameObj");
+            gameObj = (Game) intent.getParcelableExtra("gameObj");
             pageSelected = intent.getIntExtra("position", 0);
 
             activePage = pageSelected;

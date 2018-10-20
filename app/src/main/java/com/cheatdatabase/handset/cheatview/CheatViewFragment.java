@@ -50,7 +50,6 @@ import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 //import org.androidannotations.annotations.Background;
@@ -159,7 +158,7 @@ public class CheatViewFragment extends Fragment {
 
         outerLinearLayout = (LinearLayout) inflater.inflate(R.layout.fragment_cheat_detail_handset, container, false);
 
-        Collections.addAll(cheatList, game.getCheatList());
+        cheatList = game.getCheatList();
         cheatObj = cheatList.get(offset);
 
 //        getCheatRatings();
@@ -191,15 +190,11 @@ public class CheatViewFragment extends Fragment {
             getOnlineContent();
         } else {
             reloadView.setVisibility(View.VISIBLE);
-            reloadView.setOnClickListener(new OnClickListener() {
-
-                @Override
-                public void onClick(View v) {
-                    if (Reachability.reachability.isReachable) {
-                        getOnlineContent();
-                    } else {
-                        Toast.makeText(cheatViewPageIndicatorActivity, R.string.no_internet, Toast.LENGTH_SHORT).show();
-                    }
+            reloadView.setOnClickListener(v -> {
+                if (Reachability.reachability.isReachable) {
+                    getOnlineContent();
+                } else {
+                    Toast.makeText(cheatViewPageIndicatorActivity, R.string.no_internet, Toast.LENGTH_SHORT).show();
                 }
             });
             Toast.makeText(cheatViewPageIndicatorActivity, R.string.no_internet, Toast.LENGTH_SHORT).show();
@@ -216,7 +211,7 @@ public class CheatViewFragment extends Fragment {
          */
         if (cheatObj.isScreenshots()) {
             biggestHeight = 100; // setMemberList value
-            imageViews = new ImageView[cheatObj.getScreens().length];
+            imageViews = new ImageView[cheatObj.getScreenshotList().length];
             progressBar.setVisibility(View.VISIBLE);
 
             getScreenshotsOnline();
@@ -259,7 +254,7 @@ public class CheatViewFragment extends Fragment {
         screenshotGallery.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-                Screenshot[] screens = cheatObj.getScreens();
+                Screenshot[] screens = cheatObj.getScreenshotList();
                 Screenshot screenShot = screens[position];
 
                 Uri uri = Uri.parse(Konstanten.SCREENSHOT_ROOT_WEBDIR + screenShot.getCheatId() + screenShot.getFilename());
@@ -452,7 +447,7 @@ public class CheatViewFragment extends Fragment {
 //        @Override
 //        protected Bitmap[] doInBackground(Void... params) {
 //            try {
-//                Screenshot[] screens = cheatObj.getScreens();
+//                Screenshot[] screens = cheatObj.getScreenshotList();
 //
 //                String[] myRemoteImages = new String[screens.length];
 //
@@ -508,7 +503,7 @@ public class CheatViewFragment extends Fragment {
 //            }
 //
 //            progressBar.setVisibility(View.GONE);
-//            if (cheatObj.getScreens().length <= 1) {
+//            if (cheatObj.getScreenshotList().length <= 1) {
 //                tvGalleryInfo.setVisibility(View.GONE);
 //            } else {
 //                tvGalleryInfo.setVisibility(View.VISIBLE);
@@ -522,7 +517,7 @@ public class CheatViewFragment extends Fragment {
         List<Bitmap> bitmapList = new ArrayList<>();
 
         try {
-            Screenshot[] screens = cheatObj.getScreens();
+            Screenshot[] screens = cheatObj.getScreenshotList();
 
             String[] myRemoteImages = new String[screens.length];
 
@@ -576,7 +571,7 @@ public class CheatViewFragment extends Fragment {
             imageViews[i].setImageBitmap(b);
         }
 
-        if (cheatObj.getScreens().length <= 1) {
+        if (cheatObj.getScreenshotList().length <= 1) {
             tvGalleryInfo.setVisibility(View.GONE);
         } else {
             tvGalleryInfo.setVisibility(View.VISIBLE);
@@ -604,7 +599,7 @@ public class CheatViewFragment extends Fragment {
         @Override
         public int getCount() {
             return imageViews.length;
-            // return cheat.getScreens().length;
+            // return cheat.getScreenshotList().length;
         }
 
         @Override
