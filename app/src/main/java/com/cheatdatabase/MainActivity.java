@@ -239,7 +239,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
 
             MenuItem searchItem = menu.findItem(R.id.search);
-            searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+            searchView = (SearchView) searchItem.getActionView();
             searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
         } catch (Exception e) {
             Log.e(TAG, e.getLocalizedMessage());
