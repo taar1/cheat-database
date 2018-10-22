@@ -452,16 +452,13 @@ public class MemberCheatViewFragment extends Fragment {
 //    }
 
     private void getCheatRating() {
-        Needle.onBackgroundThread().execute(new Runnable() {
-            @Override
-            public void run() {
-                float cheatRating = 0;
-                try {
-                    cheatRating = Webservice.getCheatRatingByMemberId(member.getMid(), cheatObj.getCheatId());
-                } catch (Exception e) {
-                }
-                updateRatingUI(cheatRating);
+        Needle.onBackgroundThread().execute(() -> {
+            float cheatRating = 0;
+            try {
+                cheatRating = Webservice.getCheatRatingByMemberId(member.getMid(), cheatObj.getCheatId());
+            } catch (Exception e) {
             }
+            updateRatingUI(cheatRating);
         });
     }
 
