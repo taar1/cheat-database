@@ -1,6 +1,5 @@
 package com.cheatdatabase.members.cheatview;
 
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -10,7 +9,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Html;
@@ -49,6 +47,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.ArrayList;
 import java.util.List;
 
 import needle.Needle;
@@ -68,44 +67,30 @@ public class MemberCheatViewFragment extends Fragment {
     private Cheat cheatObj;
     private List<Cheat> cheats;
     private int offset;
-    private ImageView[] imageViews;
+    private List<ImageView> imageViews;
     private ProgressBar progressBar;
     private Member member;
 
     private SharedPreferences settings;
     private Editor editor;
 
-    public AlertDialog.Builder builder;
-    public AlertDialog alert;
 
-    //    private String mContent = "???";
     private Typeface latoFontBold;
     private Typeface latoFontLight;
     private MemberCheatViewPageIndicator cheatViewPageIndicator;
 
     private static final String KEY_CONTENT = "MemberCheatViewFragment:Content";
 
-    public static MemberCheatViewFragment newInstance(String content, List<Cheat> cheats, int offset) {
+    public MemberCheatViewFragment() {
+        imageViews = new ArrayList<>();
+    }
 
+    public static MemberCheatViewFragment newInstance(List<Cheat> cheats, int offset) {
         MemberCheatViewFragment fragment = new MemberCheatViewFragment();
         fragment.cheats = cheats;
         fragment.offset = offset;
-
-//        Bundle arguments = new Bundle();
-//        arguments.putSerializable("cheatObj", cheats);
-//        arguments.putInt("offset", offset);
-//        fragment.setArguments(arguments);
-//
-//        StringBuilder builder = new StringBuilder();
-//        for (int i = 0; i < 20; i++) {
-//            builder.append(content).append(" ");
-//        }
-//        builder.deleteCharAt(builder.length() - 1);
-//        fragment.mContent = builder.toString();
-
         return fragment;
     }
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -141,7 +126,6 @@ public class MemberCheatViewFragment extends Fragment {
             member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
 
             cheatObj = cheats.get(offset);
-//            new FetchCheatRatingOnlineBackgroundTask().execute();
             getCheatRating();
 
             mainTable = ll.findViewById(R.id.table_cheat_list_main);
@@ -170,10 +154,9 @@ public class MemberCheatViewFragment extends Fragment {
              */
             if (cheatObj.isScreenshots()) {
                 biggestHeight = 100; // setMemberList value
-                imageViews = new ImageView[cheatObj.getScreenshotList().length];
                 progressBar.setVisibility(View.VISIBLE);
 
-                new LoadScreenshotsInBackgroundTask().execute();
+                loadScreenshots();
             } else {
                 tvGalleryInfo.setVisibility(View.INVISIBLE);
                 screenshotGallery.setVisibility(View.GONE);
@@ -223,15 +206,13 @@ public class MemberCheatViewFragment extends Fragment {
         screenshotGallery.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-                Screenshot[] screens = cheatObj.getScreenshotList();
-                Screenshot screenShot = screens[position];
+                Screenshot screenShot = cheatObj.getScreenshotList().get(position);
 
                 Uri uri = Uri.parse(Konstanten.SCREENSHOT_ROOT_WEBDIR + screenShot.getCheatId() + screenShot.getFilename());
                 Intent intent = new Intent(Intent.ACTION_VIEW, uri);
                 startActivity(intent);
             }
         });
-
     }
 
     private void populateView() {
@@ -252,7 +233,7 @@ public class MemberCheatViewFragment extends Fragment {
         mainTable.setHorizontalScrollBarEnabled(true);
 
         // Cheat Text oberhalb der Tabelle
-        String[] textBeforeTable = null;
+        String[] textBeforeTable;
 
         // Einige tabellarische Cheats beginnen direkt mit der Tabelle
         if (cheatObj.getCheatText().startsWith("<br><table")) {
@@ -468,31 +449,20 @@ public class MemberCheatViewFragment extends Fragment {
         }
     }
 
+    private void loadScreenshots() {
+        Needle.onBackgroundThread().execute(() -> {
+            List<Bitmap> bitmapList = new ArrayList<>();
 
-    private class LoadScreenshotsInBackgroundTask extends AsyncTask<Void, Void, Bitmap[]> {
-        Bitmap bms[];
-
-        @Override
-        protected Bitmap[] doInBackground(Void... params) {
             try {
-                Screenshot[] screens = cheatObj.getScreenshotList();
+                List<Screenshot> screens = cheatObj.getScreenshotList();
 
-                String[] myRemoteImages = new String[screens.length];
-
-                for (int i = 0; i < screens.length; i++) {
-                    Screenshot s = screens[i];
-                    String filename = s.getCheatId() + s.getFilename();
-                    myRemoteImages[i] = Konstanten.SCREENSHOT_ROOT_WEBDIR + "image.php?width=150&image=/cheatpics/" + filename;
-                }
-
-                bms = new Bitmap[imageViews.length];
-                for (int i = 0; i < imageViews.length; i++) {
+                for (Screenshot s : screens) {
+                    String screenUrl = Konstanten.SCREENSHOT_ROOT_WEBDIR + "image.php?width=150&image=/cheatpics/" + s.getCheatId() + s.getFilename();
 
                     /*
-                     * Open a new URL and get the InputStream to load data from
-                     * it.
+                     * Open a new URL and get the InputStream to load data from it.
                      */
-                    URL aURL = new URL(myRemoteImages[i]);
+                    URL aURL = new URL(screenUrl);
                     URLConnection conn = aURL.openConnection();
                     conn.connect();
                     InputStream is = conn.getInputStream();
@@ -503,50 +473,49 @@ public class MemberCheatViewFragment extends Fragment {
                     bis.close();
                     is.close();
 
-                    bms[i] = bm;
+                    bitmapList.add(bm);
 
                     if (biggestHeight < bm.getHeight()) {
                         biggestHeight = bm.getHeight();
                     }
                 }
             } catch (IOException e) {
-                Log.e(TAG, "Remtoe Image Exception", e);
+                Log.e(TAG, "Remote Image Exception", e);
             }
 
-            return bms;
+            prepareGallery(bitmapList);
+        });
+    }
+
+    private void prepareGallery(List<Bitmap> bitmapList) {
+        // Apply the Bitmap to the ImageView that will be returned.
+        for (Bitmap b : bitmapList) {
+            ImageView iv = new ImageView(cheatViewPageIndicator);
+            iv.setScaleType(ImageView.ScaleType.MATRIX);
+            iv.setLayoutParams(new Gallery.LayoutParams(300, biggestHeight));
+            iv.setImageBitmap(b);
+
+            imageViews.add(iv);
         }
 
-        @Override
-        protected void onPostExecute(Bitmap[] bms) {
-            super.onPostExecute(bms);
-
-            /*
-             * Apply the Bitmap to the ImageView that will be returned.
-             */
-            for (int i = 0; i < imageViews.length; i++) {
-                imageViews[i] = new ImageView(cheatViewPageIndicator);
-                imageViews[i].setScaleType(ImageView.ScaleType.MATRIX);
-                imageViews[i].setLayoutParams(new Gallery.LayoutParams(300, biggestHeight));
-                imageViews[i].setImageBitmap(bms[i]);
-            }
-
+        Needle.onMainThread().execute(() -> {
             progressBar.setVisibility(View.GONE);
-            if (cheatObj.getScreenshotList().length <= 1) {
+            if (cheatObj.getScreenshotList().size() <= 1) {
                 tvGalleryInfo.setVisibility(View.GONE);
             } else {
                 tvGalleryInfo.setVisibility(View.VISIBLE);
             }
             buildGallery();
-        }
+        });
     }
 
     /**
      * Innere Klasse zum Anzeigen der Screenshot-Thumbnails
      * <p/>
-     * Copyright (c) 2010-2012<br>
+     * Copyright (c) 2010-2018<br>
      *
      * @author Dominik Erbsland
-     * @version 1.0
+     * @version 1.1
      */
     public class ImageAdapter extends BaseAdapter {
 
@@ -558,8 +527,7 @@ public class MemberCheatViewFragment extends Fragment {
 
         @Override
         public int getCount() {
-            return imageViews.length;
-            // return cheat.getScreenshotList().length;
+            return imageViews.size();
         }
 
         @Override
@@ -578,7 +546,7 @@ public class MemberCheatViewFragment extends Fragment {
          */
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            return imageViews[position];
+            return imageViews.get(position);
         }
 
         /**

@@ -27,7 +27,8 @@ public class MemberCheatViewFragmentAdapter extends FragmentPagerAdapter {
         if (CONTENT == null) {
             CONTENT = new String[cheats.size()];
         }
-        return MemberCheatViewFragment.newInstance(CONTENT[position % CONTENT.length], cheats, position);
+//        return MemberCheatViewFragment.newInstance(CONTENT[position % CONTENT.length], cheats, position);
+        return MemberCheatViewFragment.newInstance(cheats, position);
     }
 
     @Override

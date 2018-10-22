@@ -189,12 +189,9 @@ public class CheatDatabaseAdapter {
     }
 
     public void saveScreenshotsToSdCard(Cheat cheat) {
-        Screenshot[] screens = cheat.getScreenshotList();
-        for (int j = 0; j < screens.length; j++) {
-            Screenshot tmpScr = screens[j];
-
+        for (Screenshot s : cheat.getScreenshotList()) {
             if (Tools.isSdWriteable()) {
-                tmpScr.saveToSd();
+                s.saveToSd();
             }
         }
     }
@@ -418,6 +415,7 @@ public class CheatDatabaseAdapter {
 
     /**
      * Get all favorited cheats from one game.
+     *
      * @param gameId
      * @return
      */

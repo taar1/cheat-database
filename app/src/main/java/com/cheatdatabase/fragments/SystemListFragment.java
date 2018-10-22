@@ -54,7 +54,6 @@ public class SystemListFragment extends Fragment {
         return systemListFragment;
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_systemlist, container, false);
@@ -81,6 +80,8 @@ public class SystemListFragment extends Fragment {
 
         mSwipeRefreshLayout.setRefreshing(true);
         loadGamesAndCheatsCounterBackground();
+
+        return view;
     }
 
     private void initAdapter(List<SystemPlatform> gameSystems) {

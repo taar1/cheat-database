@@ -380,7 +380,7 @@ public class Tools {
         return getGameSystemsFromXml(activity);
     }
 
-    public SystemPlatform getSystemObjectByName(Activity activity, String systemName) {
+    public static SystemPlatform getSystemObjectByName(Activity activity, String systemName) {
         List<SystemPlatform> al = getGameSystemsFromXml(activity);
         for (int i = 0; i < al.size(); i++) {
             SystemPlatform sys = al.get(i);

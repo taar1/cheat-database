@@ -16,6 +16,7 @@ import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.Tracker;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
+import java.util.List;
 import java.util.TreeMap;
 
 import io.fabric.sdk.android.Fabric;
@@ -27,7 +28,7 @@ public class CheatDatabaseApplication extends Application implements Application
     private static Context sAppContext;
 
     TreeMap<String, TreeMap<String, Game[]>> gamesBySystemCached = new TreeMap<>();
-    TreeMap<String, TreeMap<String, Cheat[]>> cheatsByGameCached = new TreeMap<>();
+    TreeMap<String, TreeMap<String, List<Cheat>>> cheatsByGameCached = new TreeMap<>();
 
     public final String ACHIEVEMENTS = "achievements";
     public final String NO_ACHIEVEMENTS = "noAchievements";
@@ -170,7 +171,7 @@ public class CheatDatabaseApplication extends Application implements Application
      *
      * @return
      */
-    public TreeMap<String, TreeMap<String, Cheat[]>> getCheatsByGameCached() {
+    public TreeMap<String, TreeMap<String, List<Cheat>>> getCheatsByGameCached() {
         return cheatsByGameCached;
     }
 
@@ -179,7 +180,7 @@ public class CheatDatabaseApplication extends Application implements Application
      *
      * @param cheatsByGameCached
      */
-    public void setCheatsByGameCached(TreeMap<String, TreeMap<String, Cheat[]>> cheatsByGameCached) {
+    public void setCheatsByGameCached(TreeMap<String, TreeMap<String, List<Cheat>>> cheatsByGameCached) {
         this.cheatsByGameCached = cheatsByGameCached;
     }
 }

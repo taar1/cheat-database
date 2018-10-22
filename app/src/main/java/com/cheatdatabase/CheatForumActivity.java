@@ -413,7 +413,7 @@ public class CheatForumActivity extends AppCompatActivity implements CheatListFr
                 startActivity(explicitIntent);
                 return true;
             case R.id.action_login:
-                Intent loginIntent = new Intent(this, LoginActivity_.class);
+                Intent loginIntent = new Intent(this, LoginActivity.class);
                 startActivityForResult(loginIntent, Konstanten.LOGIN_REGISTER_OK_RETURN_CODE);
                 return true;
             case R.id.action_logout:

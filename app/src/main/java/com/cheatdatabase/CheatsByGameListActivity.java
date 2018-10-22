@@ -59,7 +59,7 @@ public class CheatsByGameListActivity extends AppCompatActivity {
 
     private static String TAG = CheatsByGameListActivity.class.getSimpleName();
 
-    private SharedPreferences settings;
+    private SharedPreferences sharedPreferences;
     private Editor editor;
     private Member member;
 
@@ -139,11 +139,11 @@ public class CheatsByGameListActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
-        settings = getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
-        editor = settings.edit();
+        sharedPreferences = getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
+        editor = sharedPreferences.edit();
 
         if (member == null) {
-            member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
+            member = new Gson().fromJson(sharedPreferences.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
         }
     }
 
@@ -158,14 +158,15 @@ public class CheatsByGameListActivity extends AppCompatActivity {
                 List<Cheat> cheatsFound = null;
                 boolean isCached = false;
                 String achievementsEnabled;
-                boolean isAchievementsEnabled = myPrefs.isAchievementsEnabled().getOr(true);
+                boolean isAchievementsEnabled = sharedPreferences.getBoolean("enable_achievements", true);
+
                 if (isAchievementsEnabled) {
                     achievementsEnabled = app.ACHIEVEMENTS;
                 } else {
                     achievementsEnabled = app.NO_ACHIEVEMENTS;
                 }
 
-                TreeMap<String, TreeMap<String, Cheat[]>> cheatsByGameInCache = app.getCheatsByGameCached();
+                TreeMap<String, TreeMap<String, List<Cheat>>> cheatsByGameInCache = app.getCheatsByGameCached();
                 TreeMap cheatList = null;
                 if (cheatsByGameInCache.containsKey(String.valueOf(gameObj.getGameId()))) {
 
@@ -193,7 +194,7 @@ public class CheatsByGameListActivity extends AppCompatActivity {
                     }
                     gameObj.setCheatList(cheatsFound);
 
-                    TreeMap<String, Cheat[]> updatedCheatListForCache = new TreeMap<>();
+                    TreeMap<String, List<Cheat>> updatedCheatListForCache = new TreeMap<>();
                     updatedCheatListForCache.put(achievementsEnabled, cheatsFound);
 
                     String checkWhichSubKey;
@@ -204,7 +205,7 @@ public class CheatsByGameListActivity extends AppCompatActivity {
                     }
 
                     if ((cheatList != null) && (cheatList.containsKey(checkWhichSubKey))) {
-                        Cheat[] existingGamesInCache = (Cheat[]) cheatList.get(checkWhichSubKey);
+                        List<Cheat> existingGamesInCache = (List<Cheat>) cheatList.get(checkWhichSubKey);
                         updatedCheatListForCache.put(checkWhichSubKey, existingGamesInCache);
                     }
 
@@ -280,7 +281,7 @@ public class CheatsByGameListActivity extends AppCompatActivity {
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putSerializable("gameObj", gameObj);
+        outState.putParcelable("gameObj", gameObj);
     }
 
     public void showReportDialog() {
@@ -313,19 +314,26 @@ public class CheatsByGameListActivity extends AppCompatActivity {
             case android.R.id.home:
                 editor.remove(Konstanten.PREFERENCES_TEMP_GAME_OBJECT_VIEW);
                 editor.commit();
-                GamesBySystemListActivity_.intent(this).systemObj(Tools.getSystemObjectByName(CheatsByGameListActivity.this, Tools.getSystemNameById(this, gameObj.getSystemId()))).start();
+//                GamesBySystemListActivity_.intent(this)
+//                        .systemObj(Tools.getSystemObjectByName(CheatsByGameListActivity.this, Tools.getSystemNameById(this, gameObj.getSystemId())))
+//                        .start();
+
+                Intent intent = new Intent(this, GamesBySystemListActivity.class);
+                intent.putExtra("systemObj", Tools.getSystemObjectByName(CheatsByGameListActivity.this, Tools.getSystemNameById(this, gameObj.getSystemId())));
+                startActivity(intent);
+
                 return true;
             case R.id.action_add_to_favorites:
                 Toast.makeText(CheatsByGameListActivity.this, R.string.favorite_adding, Toast.LENGTH_SHORT).show();
                 addCheatsToFavoritesTask(gameObj);
                 return true;
             case R.id.action_submit_cheat:
-                Intent explicitIntent = new Intent(CheatsByGameListActivity.this, SubmitCheatActivity_.class);
+                Intent explicitIntent = new Intent(CheatsByGameListActivity.this, SubmitCheatActivity.class);
                 explicitIntent.putExtra("gameObj", gameObj);
                 startActivity(explicitIntent);
                 return true;
             case R.id.action_login:
-                Intent loginIntent = new Intent(CheatsByGameListActivity.this, LoginActivity_.class);
+                Intent loginIntent = new Intent(CheatsByGameListActivity.this, LoginActivity.class);
                 startActivityForResult(loginIntent, Konstanten.LOGIN_REGISTER_OK_RETURN_CODE);
                 return true;
             case R.id.action_logout:
@@ -396,7 +404,7 @@ public class CheatsByGameListActivity extends AppCompatActivity {
             int intentReturnCode = data.getIntExtra("result", Konstanten.LOGIN_REGISTER_FAIL_RETURN_CODE);
 
             if (requestCode == Konstanten.LOGIN_REGISTER_OK_RETURN_CODE) {
-                member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
+                member = new Gson().fromJson(sharedPreferences.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
                 invalidateOptionsMenu();
                 if ((member != null) && intentReturnCode == Konstanten.REGISTER_SUCCESS_RETURN_CODE) {
                     Toast.makeText(CheatsByGameListActivity.this, R.string.register_thanks, Toast.LENGTH_LONG).show();

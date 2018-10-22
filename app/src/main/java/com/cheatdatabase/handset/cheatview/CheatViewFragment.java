@@ -1,6 +1,5 @@
 package com.cheatdatabase.handset.cheatview;
 
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -19,8 +18,6 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.webkit.WebView;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.Gallery;
 import android.widget.ImageView;
@@ -52,6 +49,8 @@ import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
 
+import needle.Needle;
+
 //import org.androidannotations.annotations.Background;
 //import org.androidannotations.annotations.UiThread;
 
@@ -77,21 +76,19 @@ public class CheatViewFragment extends Fragment {
     private Game game;
     private String cheatTitle;
     private int offset;
-    private ImageView[] imageViews;
+    private List<ImageView> imageViews;
     private ProgressBar progressBar;
     private Member member;
 
     private SharedPreferences settings;
     private Editor editor;
 
-    public AlertDialog.Builder builder;
-    public AlertDialog alert;
-
     private static final String KEY_CONTENT = "CheatViewFragment:Content";
     private static final String TAG = CheatViewFragment.class.getSimpleName();
 
     public CheatViewFragment() {
         cheatList = new ArrayList<>();
+        imageViews = new ArrayList<>();
     }
 
     public static CheatViewFragment newInstance(String cheatTitle, Game gameObj, int offset) {
@@ -99,20 +96,6 @@ public class CheatViewFragment extends Fragment {
         cheatViewFragment.game = gameObj;
         cheatViewFragment.cheatTitle = cheatTitle;
         cheatViewFragment.offset = offset;
-
-        // Uebergebene Parameter ins Bundle Objekt eintragen
-//        Bundle args = new Bundle();
-//        args.putSerializable("gameObj", gameObj);
-//        args.putInt("offset", offset);
-//        cheatViewFragment.setArguments(args);
-//
-//        StringBuilder builder = new StringBuilder();
-//        for (int i = 0; i < 20; i++) {
-//            builder.append(cheatTitle).append(" ");
-//        }
-//        builder.deleteCharAt(builder.length() - 1);
-//        cheatViewFragment.mContent = builder.toString();
-
         return cheatViewFragment;
     }
 
@@ -153,9 +136,6 @@ public class CheatViewFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
-//        getFragmentRelevantData();
-
         outerLinearLayout = (LinearLayout) inflater.inflate(R.layout.fragment_cheat_detail_handset, container, false);
 
         cheatList = game.getCheatList();
@@ -211,7 +191,6 @@ public class CheatViewFragment extends Fragment {
          */
         if (cheatObj.isScreenshots()) {
             biggestHeight = 100; // setMemberList value
-            imageViews = new ImageView[cheatObj.getScreenshotList().length];
             progressBar.setVisibility(View.VISIBLE);
 
             getScreenshotsOnline();
@@ -237,30 +216,14 @@ public class CheatViewFragment extends Fragment {
         editor.commit();
     }
 
-//    private void getFragmentRelevantData() {
-//        Bundle arguments = getArguments();
-//        try {
-//            game = (Game) arguments.getSerializable("gameObj");
-//            offset = arguments.getInt("offset");
-//        } catch (Exception e) {
-//            offset = 0;
-//            // TODO message ausgeben, dass kein Game objekt besteht
-//            Log.e("Error", e.getLocalizedMessage());
-//        }
-//    }
-
     private void buildGallery() {
         screenshotGallery.setAdapter(new ImageAdapter(cheatViewPageIndicatorActivity));
-        screenshotGallery.setOnItemClickListener(new OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-                Screenshot[] screens = cheatObj.getScreenshotList();
-                Screenshot screenShot = screens[position];
+        screenshotGallery.setOnItemClickListener((parent, v, position, id) -> {
+            Screenshot screenShot = cheatObj.getScreenshotList().get(position);
 
-                Uri uri = Uri.parse(Konstanten.SCREENSHOT_ROOT_WEBDIR + screenShot.getCheatId() + screenShot.getFilename());
-                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-                startActivity(intent);
-            }
+            Uri uri = Uri.parse(Konstanten.SCREENSHOT_ROOT_WEBDIR + screenShot.getCheatId() + screenShot.getFilename());
+            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+            startActivity(intent);
         });
 
     }
@@ -512,81 +475,71 @@ public class CheatViewFragment extends Fragment {
 //        }
 //    }
 
-    //    @Background
     void getScreenshotsOnline() {
         List<Bitmap> bitmapList = new ArrayList<>();
 
-        try {
-            Screenshot[] screens = cheatObj.getScreenshotList();
+        Needle.onMainThread().execute(() -> {
+            try {
+                List<Screenshot> screens = cheatObj.getScreenshotList();
 
-            String[] myRemoteImages = new String[screens.length];
+                for (Screenshot s : screens) {
+                    String screenUrl = Konstanten.SCREENSHOT_ROOT_WEBDIR + "image.php?width=150&image=/cheatpics/" + s.getCheatId() + s.getFilename();
 
-            for (int i = 0; i < screens.length; i++) {
-                Screenshot s = screens[i];
-                String filename = s.getCheatId() + s.getFilename();
-                myRemoteImages[i] = Konstanten.SCREENSHOT_ROOT_WEBDIR + "image.php?width=150&image=/cheatpics/" + filename;
-            }
+                    // Open a new URL and get the InputStream to load data from it.
+                    URL aURL = new URL(screenUrl);
+                    URLConnection conn = aURL.openConnection();
+                    conn.connect();
+                    InputStream is = conn.getInputStream();
+                    /* Buffered is always good for a performance plus. */
+                    BufferedInputStream bis = new BufferedInputStream(is);
+                    /* Decode url-data to a bitmap. */
+                    Bitmap bm = BitmapFactory.decodeStream(bis);
+                    bis.close();
+                    is.close();
 
-            for (int i = 0; i < imageViews.length; i++) {
-                // Open a new URL and get the InputStream to load data from it.
-                URL aURL = new URL(myRemoteImages[i]);
-                URLConnection conn = aURL.openConnection();
-                conn.connect();
-                InputStream is = conn.getInputStream();
-                /* Buffered is always good for a performance plus. */
-                BufferedInputStream bis = new BufferedInputStream(is);
-                /* Decode url-data to a bitmap. */
-                Bitmap bm = BitmapFactory.decodeStream(bis);
-                bis.close();
-                is.close();
+                    bitmapList.add(bm);
 
-                bitmapList.add(bm);
-
-                if (biggestHeight < bm.getHeight()) {
-                    biggestHeight = bm.getHeight();
+                    if (biggestHeight < bm.getHeight()) {
+                        biggestHeight = bm.getHeight();
+                    }
                 }
+            } catch (IOException e) {
+                Log.e(TAG, "Remote Image Exception", e);
             }
-        } catch (IOException e) {
-            Log.e(TAG, "Remote Image Exception", e);
-        }
 
-        displayScreenshots(bitmapList);
+            displayScreenshots(bitmapList);
+        });
     }
 
-    //    @UiThread
     void displayScreenshots(List<Bitmap> bitmapList) {
-        // Apply the Bitmap to the ImageView that will be returned.
-//        for (int i = 0; i < imageViews.length; i++) {
-//            imageViews[i] = new ImageView(cheatViewPageIndicatorActivity);
-//            imageViews[i].setScaleType(ImageView.ScaleType.MATRIX);
-//            imageViews[i].setLayoutParams(new Gallery.LayoutParams(300, biggestHeight));
-//            imageViews[i].setImageBitmap(bms[i]);
-//        }
-
-        int i = 0;
         for (Bitmap b : bitmapList) {
-            imageViews[i] = new ImageView(cheatViewPageIndicatorActivity);
-            imageViews[i].setScaleType(ImageView.ScaleType.MATRIX);
-            imageViews[i].setLayoutParams(new Gallery.LayoutParams(300, biggestHeight));
-            imageViews[i].setImageBitmap(b);
+            ImageView iv = new ImageView(cheatViewPageIndicatorActivity);
+            iv.setScaleType(ImageView.ScaleType.MATRIX);
+            iv.setLayoutParams(new Gallery.LayoutParams(300, biggestHeight));
+            iv.setImageBitmap(b);
+
+            imageViews.add(iv);
         }
 
-        if (cheatObj.getScreenshotList().length <= 1) {
-            tvGalleryInfo.setVisibility(View.GONE);
-        } else {
-            tvGalleryInfo.setVisibility(View.VISIBLE);
-        }
+        Needle.onMainThread().execute(() -> {
+            if (cheatObj.getScreenshotList().size() <= 1) {
+                tvGalleryInfo.setVisibility(View.GONE);
+            } else {
+                tvGalleryInfo.setVisibility(View.VISIBLE);
+            }
 
-        buildGallery();
+            buildGallery();
+        });
+
     }
 
     /**
      * Innere Klasse zum Anzeigen der Screenshot-Thumbnails
      * <p/>
-     * Copyright (c) 2010-2012<br>
+     * Copyright (c) 2010-2018<br>
      *
      * @author Dominik Erbsland
-     * @version 1.0
+     * @version 1.1
      */
     public class ImageAdapter extends BaseAdapter {
 
@@ -598,8 +551,7 @@ public class CheatViewFragment extends Fragment {
 
         @Override
         public int getCount() {
-            return imageViews.length;
-            // return cheat.getScreenshotList().length;
+            return imageViews.size();
         }
 
         @Override
@@ -613,12 +565,11 @@ public class CheatViewFragment extends Fragment {
         }
 
         /**
-         * Returns a new ImageView to be displayed, depending on the position
-         * passed.
+         * Returns a new ImageView to be displayed, depending on the position passed.
          */
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            return imageViews[position];
+            return imageViews.get(position);
         }
 
         /**
