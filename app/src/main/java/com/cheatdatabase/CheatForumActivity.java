@@ -55,6 +55,7 @@ import java.util.Calendar;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import needle.Needle;
 
 /**
@@ -99,9 +100,10 @@ public class CheatForumActivity extends AppCompatActivity implements CheatListFr
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cheat_forum);
+        ButterKnife.bind(this);
 
-        cheatObj = (Cheat) getIntent().getParcelableExtra("cheatObj");
-        gameObj = (Game) getIntent().getParcelableExtra("gameObj");
+        cheatObj = getIntent().getParcelableExtra("cheatObj");
+        gameObj = getIntent().getParcelableExtra("gameObj");
         if (cheatObj == null) {
             finish();
         }

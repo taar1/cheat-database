@@ -15,7 +15,6 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -51,6 +50,7 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -93,8 +93,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mFragmentId = getIntent().getIntExtra("mFragmentId", 0);
         setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
+
+        mFragmentId = getIntent().getIntExtra("mFragmentId", 0);
+
         init();
 
         fragmentTransaction.replace(R.id.content_frame, SystemListFragment.newInstance(), SystemListFragment.class.getSimpleName()).commit();

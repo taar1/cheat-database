@@ -24,6 +24,7 @@ import com.cheatdatabase.helpers.Tools;
 import com.cheatdatabase.helpers.Webservice;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 import needle.Needle;
 
@@ -63,6 +64,7 @@ public class RecoverActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recover);
+        ButterKnife.bind(this);
 
         mEmail = getIntent().getStringExtra(EXTRA_EMAIL);
         mEmailView.setText(mEmail);

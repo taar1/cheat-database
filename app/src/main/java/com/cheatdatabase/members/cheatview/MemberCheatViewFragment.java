@@ -19,8 +19,6 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.webkit.WebView;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.Gallery;
 import android.widget.ImageView;
@@ -50,30 +48,40 @@ import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import needle.Needle;
 
 public class MemberCheatViewFragment extends Fragment {
     private static final String TAG = MemberCheatViewFragment.class.getSimpleName();
 
-    private TableLayout mainTable;
-    private LinearLayout ll;
-    private TextView tvCheatText;
-    private TextView tvTextBeforeTable;
-    private TextView tvCheatTitle;
-    private TextView tvGalleryInfo;
-    private Gallery screenshotGallery;
+    LinearLayout linearLayout;
+
+    @BindView(R.id.table_cheat_list_main)
+    TableLayout mainTable;
+    @BindView(R.id.cheat_content)
+    TextView tvCheatText;
+    @BindView(R.id.text_cheat_before_table)
+    TextView tvTextBeforeTable;
+    @BindView(R.id.text_cheat_title)
+    TextView tvCheatTitle;
+    @BindView(R.id.gallery_info)
+    TextView tvGalleryInfo;
+    @BindView(R.id.gallery)
+    Gallery screenshotGallery;
+    @BindView(R.id.progress_bar)
+    ProgressBar progressBar;
+
     private int biggestHeight;
 
     private Cheat cheatObj;
     private List<Cheat> cheats;
     private int offset;
     private List<ImageView> imageViews;
-    private ProgressBar progressBar;
     private Member member;
 
     private SharedPreferences settings;
     private Editor editor;
-
 
     private Typeface latoFontBold;
     private Typeface latoFontLight;
@@ -117,36 +125,31 @@ public class MemberCheatViewFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
 //        getFragmentRelevantData();
 
         try {
-            ll = (LinearLayout) inflater.inflate(R.layout.fragment_member_cheat_detail, container, false);
+            linearLayout = (LinearLayout) inflater.inflate(R.layout.fragment_member_cheat_detail, container, false);
+            ButterKnife.bind(this, linearLayout);
 
             member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
-
             cheatObj = cheats.get(offset);
+
             getCheatRating();
 
-            mainTable = ll.findViewById(R.id.table_cheat_list_main);
+//            mainTable = linearLayout.findViewById(R.id.table_cheat_list_main);
+//            tvTextBeforeTable = linearLayout.findViewById(R.id.text_cheat_before_table);
+//            tvCheatTitle = linearLayout.findViewById(R.id.text_cheat_title);
+//            tvGalleryInfo = linearLayout.findViewById(R.id.gallery_info);
+//            screenshotGallery = linearLayout.findViewById(R.id.gallery);
+//            progressBar = linearLayout.findViewById(R.id.progress_bar);
+//            tvCheatText = linearLayout.findViewById(R.id.cheat_content);
 
-            tvTextBeforeTable = ll.findViewById(R.id.text_cheat_before_table);
             tvTextBeforeTable.setVisibility(View.VISIBLE);
-
-            tvCheatTitle = ll.findViewById(R.id.text_cheat_title);
             tvCheatTitle.setTypeface(latoFontBold);
             tvCheatTitle.setText(cheatObj.getCheatTitle());
-
-            tvGalleryInfo = ll.findViewById(R.id.gallery_info);
             tvGalleryInfo.setVisibility(View.INVISIBLE);
             tvGalleryInfo.setTypeface(latoFontLight);
-
-            screenshotGallery = ll.findViewById(R.id.gallery);
-
-            progressBar = ll.findViewById(R.id.progress_bar);
             progressBar.setVisibility(View.INVISIBLE);
-
-            tvCheatText = ll.findViewById(R.id.cheat_content);
             tvCheatText.setTypeface(latoFontLight);
 
             /**
@@ -173,7 +176,6 @@ public class MemberCheatViewFragment extends Fragment {
                 // if ((isFromSearchResults == true) || (cheat.getFullCheatText() ==
                 // null) || (cheat.getFullCheatText().length() < 10)) {
                 progressBar.setVisibility(View.VISIBLE);
-//                new FetchCheatTextTask().execute();
                 getFullCheatText();
             } else {
                 progressBar.setVisibility(View.GONE);
@@ -186,7 +188,7 @@ public class MemberCheatViewFragment extends Fragment {
             Log.e(TAG, "BB: " + e.getMessage());
         }
 
-        return ll;
+        return linearLayout;
     }
 
 //    private void getFragmentRelevantData() {
@@ -203,15 +205,12 @@ public class MemberCheatViewFragment extends Fragment {
 
     private void buildGallery() {
         screenshotGallery.setAdapter(new ImageAdapter(cheatViewPageIndicator));
-        screenshotGallery.setOnItemClickListener(new OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-                Screenshot screenShot = cheatObj.getScreenshotList().get(position);
+        screenshotGallery.setOnItemClickListener((parent, v, position, id) -> {
+            Screenshot screenShot = cheatObj.getScreenshotList().get(position);
 
-                Uri uri = Uri.parse(Konstanten.SCREENSHOT_ROOT_WEBDIR + screenShot.getCheatId() + screenShot.getFilename());
-                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-                startActivity(intent);
-            }
+            Uri uri = Uri.parse(Konstanten.SCREENSHOT_ROOT_WEBDIR + screenShot.getCheatId() + screenShot.getFilename());
+            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+            startActivity(intent);
         });
     }
 

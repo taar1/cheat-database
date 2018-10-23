@@ -40,6 +40,7 @@ import java.util.List;
 import java.util.TreeMap;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import needle.Needle;
 
 public class GamesBySystemListActivity extends AppCompatActivity {
@@ -74,9 +75,10 @@ public class GamesBySystemListActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        systemObj = (SystemPlatform) getIntent().getParcelableExtra("systemObj");
-
+        ButterKnife.bind(this);
         setContentView(R.layout.activity_game_list);
+
+        systemObj = getIntent().getParcelableExtra("systemObj");
         setTitle(systemObj.getSystemName());
 
         init();

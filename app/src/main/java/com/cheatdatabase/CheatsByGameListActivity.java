@@ -52,6 +52,7 @@ import java.util.List;
 import java.util.TreeMap;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 import needle.Needle;
 
@@ -94,10 +95,10 @@ public class CheatsByGameListActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        gameObj = (Game) getIntent().getParcelableExtra("gameObj");
-
         setContentView(R.layout.activity_cheat_list);
+        ButterKnife.bind(this);
+
+        gameObj = getIntent().getParcelableExtra("gameObj");
         setTitle(gameObj.getGameName());
 
         init();

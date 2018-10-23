@@ -29,6 +29,7 @@ import com.cheatdatabase.helpers.Tools;
 import com.cheatdatabase.helpers.Webservice;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 import needle.Needle;
 
@@ -77,6 +78,7 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_register);
+        ButterKnife.bind(this);
 
         init();
 

@@ -27,6 +27,7 @@ import com.cheatdatabase.helpers.Webservice;
 import com.google.gson.Gson;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -66,8 +67,9 @@ public class SubmitCheatActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_submit_cheat_layout);
+        ButterKnife.bind(this);
 
-        gameObj = (Game) getIntent().getParcelableExtra("gameObj");
+        gameObj = getIntent().getParcelableExtra("gameObj");
 
         init();
 

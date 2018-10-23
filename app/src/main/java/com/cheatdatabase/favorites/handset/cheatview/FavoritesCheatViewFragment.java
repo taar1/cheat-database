@@ -8,14 +8,12 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.BaseAdapter;
@@ -47,6 +45,9 @@ import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import needle.Needle;
 
 /**
@@ -55,23 +56,33 @@ import needle.Needle;
  * @author Dominik Erbsland
  * @version 1.0
  */
-public class FavoritesCheatViewFragment extends Fragment implements OnClickListener {
+public class FavoritesCheatViewFragment extends Fragment {
 
-    private TableLayout mainTable;
-    private LinearLayout ll;
-    private TextView tvCheatText;
-    private TextView tvTextBeforeTable;
-    private TextView tvCheatTitle;
-    private TextView tvGalleryInfo;
-    private Gallery screenshotGallery;
+    LinearLayout linearLayout;
+
+    @BindView(R.id.table_cheat_list_main)
+    TableLayout mainTable;
+    @BindView(R.id.cheat_content)
+    TextView tvCheatText;
+    @BindView(R.id.text_cheat_before_table)
+    TextView tvTextBeforeTable;
+    @BindView(R.id.text_cheat_title)
+    TextView tvCheatTitle;
+    @BindView(R.id.gallery_info)
+    TextView tvGalleryInfo;
+    @BindView(R.id.gallery)
+    Gallery screenshotGallery;
+    @BindView(R.id.reload)
+    ImageView reloadView;
+    @BindView(R.id.progress_bar)
+    ProgressBar progressBar;
+
     private int biggestHeight;
-
     private Cheat cheatObj;
     private List<Cheat> cheatList;
     private Game game;
     private int offset;
     private List<ImageView> imageViewList;
-    private ProgressBar progressBar;
     private Member member;
 
     private SharedPreferences settings;
@@ -81,7 +92,6 @@ public class FavoritesCheatViewFragment extends Fragment implements OnClickListe
     private static final String TAG = FavoritesCheatViewFragment.class.getSimpleName();
 
     public static FavoritesCheatViewFragment newInstance(String content, Game game, int offset) {
-
         FavoritesCheatViewFragment fragment = new FavoritesCheatViewFragment();
 
         Bundle args = new Bundle();
@@ -103,7 +113,6 @@ public class FavoritesCheatViewFragment extends Fragment implements OnClickListe
     private Typeface latoFontBold;
     private Typeface latoFontLight;
     private FavoritesCheatViewPageIndicator ca;
-    private ImageView reloadView;
 
     public FavoritesCheatViewFragment() {
         imageViewList = new ArrayList<>();
@@ -137,59 +146,50 @@ public class FavoritesCheatViewFragment extends Fragment implements OnClickListe
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        linearLayout = (LinearLayout) inflater.inflate(R.layout.fragment_cheat_detail_handset, container, false);
+        ButterKnife.bind(this, linearLayout);
 
         getFragmentRelevantData();
 
-        try {
-            ll = (LinearLayout) inflater.inflate(R.layout.fragment_cheat_detail_handset, container, false);
+        cheatList = game.getCheatList();
+        cheatObj = cheatList.get(offset);
+        getCheatRating();
 
-            cheatList = game.getCheatList();
-            cheatObj = cheatList.get(offset);
-            getCheatRating();
+        tvCheatTitle.setText(cheatObj.getCheatTitle());
 
-            mainTable = ll.findViewById(R.id.table_cheat_list_main);
+        tvTextBeforeTable.setTypeface(latoFontLight);
+        tvCheatTitle.setTypeface(latoFontBold);
+        tvGalleryInfo.setTypeface(latoFontLight);
+        tvCheatText.setTypeface(latoFontLight);
 
-            tvTextBeforeTable = ll.findViewById(R.id.text_cheat_before_table);
-            tvTextBeforeTable.setOnClickListener(this);
-            tvTextBeforeTable.setVisibility(View.VISIBLE);
-            tvTextBeforeTable.setTypeface(latoFontLight);
+        tvTextBeforeTable.setVisibility(View.VISIBLE);
+        tvGalleryInfo.setVisibility(View.INVISIBLE);
+        progressBar.setVisibility(View.INVISIBLE);
 
-            tvCheatTitle = ll.findViewById(R.id.text_cheat_title);
-            tvCheatTitle.setTypeface(latoFontBold);
-            tvCheatTitle.setText(cheatObj.getCheatTitle());
-
-            tvGalleryInfo = ll.findViewById(R.id.gallery_info);
-            tvGalleryInfo.setVisibility(View.INVISIBLE);
-            tvGalleryInfo.setTypeface(latoFontLight);
-
-            screenshotGallery = ll.findViewById(R.id.gallery);
-
-            progressBar = ll.findViewById(R.id.progress_bar);
-            progressBar.setVisibility(View.INVISIBLE);
-
-            tvCheatText = ll.findViewById(R.id.cheat_content);
-            tvCheatText.setTypeface(latoFontLight);
-
-            reloadView = ll.findViewById(R.id.reload);
-            if (Reachability.reachability.isReachable) {
-                getOnlineContent();
-            } else {
-                reloadView.setVisibility(View.VISIBLE);
-                reloadView.setOnClickListener(v -> {
-                    if (Reachability.reachability.isReachable) {
-                        getOnlineContent();
-                    } else {
-                        Toast.makeText(ca, R.string.no_internet, Toast.LENGTH_SHORT).show();
-                    }
-                });
-                Toast.makeText(ca, R.string.no_internet, Toast.LENGTH_SHORT).show();
-            }
-
-        } catch (Exception e) {
-            Log.e(FavoritesCheatViewFragment.class.getName(), "BB: " + e.getMessage());
+        if (Reachability.reachability.isReachable) {
+            getOnlineContent();
+        } else {
+            reloadView.setVisibility(View.VISIBLE);
+            Toast.makeText(ca, R.string.no_internet, Toast.LENGTH_SHORT).show();
         }
 
-        return ll;
+        return linearLayout;
+    }
+
+    @OnClick(R.id.text_cheat_before_table)
+    void clickTextCheatBeforeTable() {
+        Bundle arguments = new Bundle();
+        arguments.putInt("CHANGEME", 1);
+        arguments.putParcelable("cheatObj", cheatObj);
+    }
+
+    @OnClick(R.id.reload)
+    void clickReload() {
+        if (Reachability.reachability.isReachable) {
+            getOnlineContent();
+        } else {
+            Toast.makeText(ca, R.string.no_internet, Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void getOnlineContent() {
@@ -216,7 +216,8 @@ public class FavoritesCheatViewFragment extends Fragment implements OnClickListe
          */
         if ((cheatObj.getCheatText() == null) || (cheatObj.getCheatText().length() < 10)) {
             progressBar.setVisibility(View.VISIBLE);
-            new FetchCheatTextTask().execute();
+
+            getCheatText();
         } else {
             populateView();
         }
@@ -232,7 +233,7 @@ public class FavoritesCheatViewFragment extends Fragment implements OnClickListe
             offset = arguments.getInt("offset");
         } catch (Exception e) {
             offset = 0;
-            // TODO message ausgeben, dass kein Game objekt besteht
+            // TODO display error message
             Log.e("Error", e.getLocalizedMessage());
         }
     }
@@ -266,15 +267,12 @@ public class FavoritesCheatViewFragment extends Fragment implements OnClickListe
     private void fillTableContent() {
 
         mainTable.setColumnShrinkable(0, true);
-        // mainTable.setColumnShrinkable(1, true);
-        mainTable.setOnClickListener(this);
         mainTable.setVisibility(View.VISIBLE);
 
         // Cheat-Text oberhalb der Tabelle
         String[] textBeforeTable = null;
 
-        // Einige tabellarische Cheats beginnen direkt mit der
-        // Tabelle
+        // Einige tabellarische Cheats beginnen direkt mit der Tabelle
         if (cheatObj.getCheatText().startsWith("<br><table")) {
             textBeforeTable = cheatObj.getCheatText().split("<br>");
             tvTextBeforeTable.setVisibility(View.GONE);
@@ -381,28 +379,12 @@ public class FavoritesCheatViewFragment extends Fragment implements OnClickListe
         // TODO update member rating
     }
 
-    @Override
-    public void onClick(View v) {
-        Log.d("onClick", "onClick");
-        Bundle arguments = new Bundle();
-        arguments.putInt("CHANGEME", 1);
-        arguments.putParcelable("cheatObj", cheatObj);
+    private void getCheatText() {
+        Needle.onBackgroundThread().execute(() -> setCheatText(Webservice.getCheatById(cheatObj.getCheatId())));
     }
 
-    private class FetchCheatTextTask extends AsyncTask<Void, Void, Void> {
-
-        String fullCheatText;
-
-        @Override
-        protected Void doInBackground(Void... params) {
-            fullCheatText = Webservice.getCheatById(cheatObj.getCheatId());
-
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void result) {
-            super.onPostExecute(result);
+    private void setCheatText(String fullCheatText) {
+        Needle.onMainThread().execute(() -> {
             if (fullCheatText.substring(0, 1).equalsIgnoreCase("2")) {
                 cheatObj.setWalkthroughFormat(true);
             }
@@ -410,7 +392,8 @@ public class FavoritesCheatViewFragment extends Fragment implements OnClickListe
             cheatObj.setCheatText(fullCheatText.substring(1));
 
             populateView();
-        }
+        });
+
     }
 
     private void getCheatRating() {

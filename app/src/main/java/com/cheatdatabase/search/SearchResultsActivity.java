@@ -41,30 +41,37 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 @SuppressLint("NewApi")
 public class SearchResultsActivity extends AppCompatActivity {
 
     SparseArray<Group> groups = new SparseArray<>();
 
-    private LinearLayout nothingFoundLayout;
-    private RelativeLayout somethingfoundLayout;
-    private Button searchButton;
-    private TextView nothingFoundText;
+    @BindView(R.id.nothingfound_layout)
+    LinearLayout nothingFoundLayout;
+    @BindView(R.id.somethingfound_layout)
+    RelativeLayout somethingfoundLayout;
+    @BindView(R.id.search_button)
+    Button searchButton;
+    @BindView(R.id.nothingfound_text)
+    TextView nothingFoundText;
+    @BindView(R.id.nothingfound_title)
+    TextView nothingFoundTitle;
+    @BindView(R.id.reload)
+    ImageView reloadView;
+    @BindView(R.id.listView)
+    ExpandableListView listView;
 
     private Game[] gamesFound;
     private String query;
-    private ExpandableListView listView;
     private SearchresultExpandableListAdapter adapter;
 
     protected final int STEP_ONE_COMPLETE = 1;
 
     private Typeface latoFontBold;
-
     private Typeface latoFontLight;
-
-    private TextView nothingFoundTitle;
-
-    private ImageView reloadView;
 
     private SharedPreferences settings;
     private Toolbar toolbar;
@@ -72,19 +79,14 @@ public class SearchResultsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ButterKnife.bind(this);
 
         init();
 
-        somethingfoundLayout = (RelativeLayout) findViewById(R.id.somethingfound_layout);
-        nothingFoundLayout = (LinearLayout) findViewById(R.id.nothingfound_layout);
-        searchButton = (Button) findViewById(R.id.search_button);
         searchButton.setTypeface(latoFontBold);
-        nothingFoundTitle = (TextView) findViewById(R.id.nothingfound_title);
-        nothingFoundText = (TextView) findViewById(R.id.nothingfound_text);
         nothingFoundTitle.setTypeface(latoFontBold);
         nothingFoundText.setTypeface(latoFontLight);
 
-        listView = (ExpandableListView) findViewById(R.id.listView);
         adapter = new SearchresultExpandableListAdapter(SearchResultsActivity.this, groups);
         listView.setAdapter(adapter);
 
@@ -141,7 +143,6 @@ public class SearchResultsActivity extends AppCompatActivity {
 
             getSupportActionBar().setTitle(getString(R.string.game_search_results_title, query.toUpperCase(Locale.ENGLISH).trim()));
 
-            reloadView = (ImageView) findViewById(R.id.reload);
             if (Reachability.reachability.isReachable) {
                 searchNow();
             } else {

@@ -37,6 +37,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import needle.Needle;
 
 /**
@@ -70,7 +71,9 @@ public class CheatsByMemberListActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ButterKnife.bind(this);
         setContentView(R.layout.activity_member_cheat_list);
+
         init();
 
         member = getIntent().getParcelableExtra("member");

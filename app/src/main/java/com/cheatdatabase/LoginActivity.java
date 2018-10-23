@@ -34,6 +34,7 @@ import com.cheatdatabase.helpers.Webservice;
 import com.google.gson.Gson;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 import needle.Needle;
 
@@ -90,6 +91,7 @@ public class LoginActivity extends AppCompatActivity implements AlreadyLoggedInD
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        ButterKnife.bind(this);
 
         init();
 

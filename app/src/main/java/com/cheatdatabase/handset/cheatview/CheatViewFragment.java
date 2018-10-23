@@ -49,6 +49,9 @@ import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import needle.Needle;
 
 //import org.androidannotations.annotations.Background;
@@ -62,22 +65,32 @@ import needle.Needle;
  */
 public class CheatViewFragment extends Fragment {
 
-    private TableLayout mainTable;
     private LinearLayout outerLinearLayout;
-    private TextView tvCheatText;
-    private TextView tvTextBeforeTable;
-    private TextView tvCheatTitle;
-    private TextView tvGalleryInfo;
-    private Gallery screenshotGallery;
-    private int biggestHeight;
 
+    @BindView(R.id.table_cheat_list_main)
+    TableLayout mainTable;
+    @BindView(R.id.cheat_content)
+    TextView tvCheatText;
+    @BindView(R.id.text_cheat_before_table)
+    TextView tvTextBeforeTable;
+    @BindView(R.id.text_cheat_title)
+    TextView tvCheatTitle;
+    @BindView(R.id.gallery_info)
+    TextView tvGalleryInfo;
+    @BindView(R.id.gallery)
+    Gallery screenshotGallery;
+    @BindView(R.id.progress_bar)
+    ProgressBar progressBar;
+    @BindView(R.id.reload)
+    ImageView reloadView;
+
+    private int biggestHeight;
     private Cheat cheatObj;
     private List<Cheat> cheatList;
     private Game game;
     private String cheatTitle;
     private int offset;
     private List<ImageView> imageViews;
-    private ProgressBar progressBar;
     private Member member;
 
     private SharedPreferences settings;
@@ -103,7 +116,6 @@ public class CheatViewFragment extends Fragment {
     private Typeface latoFontBold;
     private Typeface latoFontLight;
     private CheatViewPageIndicatorActivity cheatViewPageIndicatorActivity;
-    private ImageView reloadView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -137,50 +149,41 @@ public class CheatViewFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         outerLinearLayout = (LinearLayout) inflater.inflate(R.layout.fragment_cheat_detail_handset, container, false);
+        ButterKnife.bind(this, outerLinearLayout);
 
         cheatList = game.getCheatList();
         cheatObj = cheatList.get(offset);
 
 //        getCheatRatings();
 
-        mainTable = outerLinearLayout.findViewById(R.id.table_cheat_list_main);
-
-        tvTextBeforeTable = outerLinearLayout.findViewById(R.id.text_cheat_before_table);
-        tvTextBeforeTable.setVisibility(View.VISIBLE);
-        tvTextBeforeTable.setTypeface(latoFontLight);
-
-        tvCheatTitle = outerLinearLayout.findViewById(R.id.text_cheat_title);
-        tvCheatTitle.setTypeface(latoFontBold);
         tvCheatTitle.setText(cheatObj.getCheatTitle());
 
-        tvGalleryInfo = outerLinearLayout.findViewById(R.id.gallery_info);
+        tvTextBeforeTable.setVisibility(View.VISIBLE);
         tvGalleryInfo.setVisibility(View.INVISIBLE);
-        tvGalleryInfo.setTypeface(latoFontLight);
-
-        screenshotGallery = outerLinearLayout.findViewById(R.id.gallery);
-
-        progressBar = outerLinearLayout.findViewById(R.id.progress_bar);
         progressBar.setVisibility(View.INVISIBLE);
 
-        tvCheatText = outerLinearLayout.findViewById(R.id.cheat_content);
+        tvTextBeforeTable.setTypeface(latoFontLight);
+        tvCheatTitle.setTypeface(latoFontBold);
+        tvGalleryInfo.setTypeface(latoFontLight);
         tvCheatText.setTypeface(latoFontLight);
 
-        reloadView = outerLinearLayout.findViewById(R.id.reload);
         if (Reachability.reachability.isReachable) {
             getOnlineContent();
         } else {
             reloadView.setVisibility(View.VISIBLE);
-            reloadView.setOnClickListener(v -> {
-                if (Reachability.reachability.isReachable) {
-                    getOnlineContent();
-                } else {
-                    Toast.makeText(cheatViewPageIndicatorActivity, R.string.no_internet, Toast.LENGTH_SHORT).show();
-                }
-            });
             Toast.makeText(cheatViewPageIndicatorActivity, R.string.no_internet, Toast.LENGTH_SHORT).show();
         }
 
         return outerLinearLayout;
+    }
+
+    @OnClick(R.id.reload)
+    void clickReload() {
+        if (Reachability.reachability.isReachable) {
+            getOnlineContent();
+        } else {
+            Toast.makeText(cheatViewPageIndicatorActivity, R.string.no_internet, Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void getOnlineContent() {
@@ -365,117 +368,24 @@ public class CheatViewFragment extends Fragment {
         webview.loadDataWithBaseURL("", cheatObj.getCheatText(), "text/html", "UTF-8", "");
     }
 
-    //    @Background
-    void getCheatText() {
-        setCheatText(Webservice.getCheatById(cheatObj.getCheatId()));
+    private void getCheatText() {
+        Needle.onBackgroundThread().execute(() -> setCheatText(Webservice.getCheatById(cheatObj.getCheatId())));
     }
 
-    //    @UiThread
-    void setCheatText(String fullCheatText) {
-        if (fullCheatText.substring(0, 1).equalsIgnoreCase("2")) {
-            cheatObj.setWalkthroughFormat(true);
-        }
-        progressBar.setVisibility(View.GONE);
-        cheatObj.setCheatText(fullCheatText.substring(1));
+    private void setCheatText(String fullCheatText) {
+        Needle.onMainThread().execute(() -> {
+            if (fullCheatText.substring(0, 1).equalsIgnoreCase("2")) {
+                cheatObj.setWalkthroughFormat(true);
+            }
+            progressBar.setVisibility(View.GONE);
+            cheatObj.setCheatText(fullCheatText.substring(1));
 
-        populateView();
+            populateView();
+        });
+
     }
 
-//    //    @Background
-//    void getCheatRatings() {
-//        float cheatRating;
-//
-//        try {
-//            cheatRating = Webservice.getCheatRatingByMemberId(member.getMid(), cheatObj.getCheatId());
-//        } catch (Exception e) {
-//            cheatRating = 0;
-//        }
-//
-//        editor.putFloat("c" + cheatObj.getCheatId(), cheatRating);
-//        editor.commit();
-//
-//        setRating(cheatRating);
-//    }
-//
-//    //    @UiThread
-//    void setRating(float cheatRating) {
-//        if (cheatRating > 0) {
-//            cheatViewPageIndicatorActivity.setRating(offset, cheatRating);
-//        }
-//    }
-
-//    private class LoadScreenshotsInBackgroundTask extends AsyncTask<Void, Void, Bitmap[]> {
-//        Bitmap bms[];
-//
-//        @Override
-//        protected Bitmap[] doInBackground(Void... params) {
-//            try {
-//                Screenshot[] screens = cheatObj.getScreenshotList();
-//
-//                String[] myRemoteImages = new String[screens.length];
-//
-//                for (int i = 0; i < screens.length; i++) {
-//                    Screenshot s = screens[i];
-//                    String filename = s.getCheatId() + s.getFilename();
-//                    myRemoteImages[i] = Konstanten.SCREENSHOT_ROOT_WEBDIR + "image.php?width=150&image=/cheatpics/" + filename;
-//                }
-//
-//                bms = new Bitmap[imageViews.length];
-//                for (int i = 0; i < imageViews.length; i++) {
-//
-//                    /*
-//                     * Open a new URL and get the InputStream to load data from
-//                     * it.
-//                     */
-//                    URL aURL = new URL(myRemoteImages[i]);
-//                    URLConnection conn = aURL.openConnection();
-//                    conn.connect();
-//                    InputStream is = conn.getInputStream();
-//                    /* Buffered is always good for a performance plus. */
-//                    BufferedInputStream bis = new BufferedInputStream(is);
-//                    /* Decode url-data to a bitmap. */
-//                    Bitmap bm = BitmapFactory.decodeStream(bis);
-//                    bis.close();
-//                    is.close();
-//
-//                    bms[i] = bm;
-//
-//                    if (biggestHeight < bm.getHeight()) {
-//                        biggestHeight = bm.getHeight();
-//                    }
-//                }
-//            } catch (IOException e) {
-//                Log.e(TAG, "Remtoe Image Exception", e);
-//            }
-//
-//            return bms;
-//        }
-//
-//        @Override
-//        protected void onPostExecute(Bitmap[] bms) {
-//            super.onPostExecute(bms);
-//
-//            /*
-//             * Apply the Bitmap to the ImageView that will be returned.
-//             */
-//            for (int i = 0; i < imageViews.length; i++) {
-//                imageViews[i] = new ImageView(cheatViewPageIndicatorActivity);
-//                imageViews[i].setScaleType(ImageView.ScaleType.MATRIX);
-//                imageViews[i].setLayoutParams(new Gallery.LayoutParams(300, biggestHeight));
-//                imageViews[i].setImageBitmap(bms[i]);
-//            }
-//
-//            progressBar.setVisibility(View.GONE);
-//            if (cheatObj.getScreenshotList().length <= 1) {
-//                tvGalleryInfo.setVisibility(View.GONE);
-//            } else {
-//                tvGalleryInfo.setVisibility(View.VISIBLE);
-//            }
-//            buildGallery();
-//        }
-//    }
-
-    void getScreenshotsOnline() {
+    private void getScreenshotsOnline() {
         List<Bitmap> bitmapList = new ArrayList<>();
 
         Needle.onMainThread().execute(() -> {
