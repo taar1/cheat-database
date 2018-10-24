@@ -27,11 +27,8 @@ public class CheatDatabaseApplication extends Application implements Application
 
     private static Context sAppContext;
 
-    TreeMap<String, TreeMap<String, Game[]>> gamesBySystemCached = new TreeMap<>();
-    TreeMap<String, TreeMap<String, List<Cheat>>> cheatsByGameCached = new TreeMap<>();
-
-    public final String ACHIEVEMENTS = "achievements";
-    public final String NO_ACHIEVEMENTS = "noAchievements";
+    static TreeMap<String, TreeMap<String, Game[]>> gamesBySystemCached = new TreeMap<>();
+    static TreeMap<String, TreeMap<String, List<Cheat>>> cheatsByGameCached = new TreeMap<>();
 
     private static CheatDatabaseApplication currentApplicationInstance;
     private Tracker googleAnalyticsTracker;
@@ -153,17 +150,17 @@ public class CheatDatabaseApplication extends Application implements Application
      *
      * @return
      */
-    public TreeMap<String, TreeMap<String, Game[]>> getGamesBySystemCached() {
+    public static TreeMap<String, TreeMap<String, Game[]>> getGamesBySystemCached() {
         return gamesBySystemCached;
     }
 
     /**
      * Naming convention: systemId, "achievements/noAchievements", Game[]
      *
-     * @param gamesBySystemCached
+     * @param gamesBySystemCachedx
      */
-    public void setGamesBySystemCached(TreeMap<String, TreeMap<String, Game[]>> gamesBySystemCached) {
-        this.gamesBySystemCached = gamesBySystemCached;
+    public static void setGamesBySystemCached(TreeMap<String, TreeMap<String, Game[]>> gamesBySystemCachedx) {
+        gamesBySystemCached = gamesBySystemCachedx;
     }
 
     /**
@@ -178,9 +175,9 @@ public class CheatDatabaseApplication extends Application implements Application
     /**
      * Naming convention: gameId, "achievements/noAchievements", Cheat[]
      *
-     * @param cheatsByGameCached
+     * @param cheatsByGameCachedx
      */
-    public void setCheatsByGameCached(TreeMap<String, TreeMap<String, List<Cheat>>> cheatsByGameCached) {
-        this.cheatsByGameCached = cheatsByGameCached;
+    public void setCheatsByGameCached(TreeMap<String, TreeMap<String, List<Cheat>>> cheatsByGameCachedx) {
+        cheatsByGameCached = cheatsByGameCachedx;
     }
 }

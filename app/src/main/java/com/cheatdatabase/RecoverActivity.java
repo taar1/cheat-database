@@ -61,7 +61,7 @@ public class RecoverActivity extends AppCompatActivity {
     private int successMessage;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recover);
         ButterKnife.bind(this);

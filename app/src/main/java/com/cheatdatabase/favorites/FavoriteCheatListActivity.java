@@ -88,7 +88,7 @@ public class FavoriteCheatListActivity extends AppCompatActivity {
     private List<Cheat> cheatsArrayList;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         gameObj = (Game) getIntent().getParcelableExtra("gameObj");
 

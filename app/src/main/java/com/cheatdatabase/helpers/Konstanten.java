@@ -91,4 +91,7 @@ public class Konstanten {
     public final static int PURPLE_DARK = 0xFF420058;
     public final static int PURPLE_BRIGHT = 0xFF9900CC;
     public final static int RED_DARK = 0xFFAA0000;
+
+    public final static String ACHIEVEMENTS = "achievements";
+    public final static String NO_ACHIEVEMENTS = "noAchievements";
 }

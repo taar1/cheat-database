@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -93,7 +92,7 @@ public class CheatsByGameListActivity extends AppCompatActivity {
 
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cheat_list);
         ButterKnife.bind(this);
@@ -162,9 +161,9 @@ public class CheatsByGameListActivity extends AppCompatActivity {
                 boolean isAchievementsEnabled = sharedPreferences.getBoolean("enable_achievements", true);
 
                 if (isAchievementsEnabled) {
-                    achievementsEnabled = app.ACHIEVEMENTS;
+                    achievementsEnabled = Konstanten.ACHIEVEMENTS;
                 } else {
-                    achievementsEnabled = app.NO_ACHIEVEMENTS;
+                    achievementsEnabled = Konstanten.NO_ACHIEVEMENTS;
                 }
 
                 TreeMap<String, TreeMap<String, List<Cheat>>> cheatsByGameInCache = app.getCheatsByGameCached();
@@ -199,10 +198,10 @@ public class CheatsByGameListActivity extends AppCompatActivity {
                     updatedCheatListForCache.put(achievementsEnabled, cheatsFound);
 
                     String checkWhichSubKey;
-                    if (achievementsEnabled.equalsIgnoreCase(app.ACHIEVEMENTS)) {
-                        checkWhichSubKey = app.NO_ACHIEVEMENTS;
+                    if (achievementsEnabled.equalsIgnoreCase(Konstanten.ACHIEVEMENTS)) {
+                        checkWhichSubKey = Konstanten.NO_ACHIEVEMENTS;
                     } else {
-                        checkWhichSubKey = app.ACHIEVEMENTS;
+                        checkWhichSubKey = Konstanten.ACHIEVEMENTS;
                     }
 
                     if ((cheatList != null) && (cheatList.containsKey(checkWhichSubKey))) {

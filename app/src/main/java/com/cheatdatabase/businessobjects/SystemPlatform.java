@@ -31,6 +31,28 @@ public class SystemPlatform implements Parcelable {
 
     }
 
+    protected SystemPlatform(Parcel in) {
+        systemId = in.readInt();
+        gameCount = in.readInt();
+        cheatCount = in.readInt();
+        systemName = in.readString();
+        dateLocallyAdded = in.readString();
+        games = in.createTypedArray(Game.CREATOR);
+        lastModTimeStamp = in.readLong();
+    }
+
+    public static final Creator<SystemPlatform> CREATOR = new Creator<SystemPlatform>() {
+        @Override
+        public SystemPlatform createFromParcel(Parcel in) {
+            return new SystemPlatform(in);
+        }
+
+        @Override
+        public SystemPlatform[] newArray(int size) {
+            return new SystemPlatform[size];
+        }
+    };
+
     public int getCheatCount() {
         return cheatCount;
     }
@@ -109,6 +131,12 @@ public class SystemPlatform implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-
+        dest.writeInt(systemId);
+        dest.writeInt(gameCount);
+        dest.writeInt(cheatCount);
+        dest.writeString(systemName);
+        dest.writeString(dateLocallyAdded);
+        dest.writeTypedArray(games, flags);
+        dest.writeLong(lastModTimeStamp);
     }
 }

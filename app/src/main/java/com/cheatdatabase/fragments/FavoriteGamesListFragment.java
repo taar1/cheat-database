@@ -99,7 +99,7 @@ public class FavoriteGamesListFragment extends Fragment {
     }
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         parentActivity = getActivity();

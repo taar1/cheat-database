@@ -69,7 +69,7 @@ public class CheatsByMemberListActivity extends AppCompatActivity {
     private Editor editor;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
         setContentView(R.layout.activity_member_cheat_list);

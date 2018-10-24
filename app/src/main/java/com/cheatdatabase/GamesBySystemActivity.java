@@ -7,7 +7,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -69,7 +68,7 @@ public class GamesBySystemActivity extends AppCompatActivity {
 
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_list);
         ButterKnife.bind(this);
@@ -146,9 +145,9 @@ public class GamesBySystemActivity extends AppCompatActivity {
                 boolean isAchievementsEnabled = sharedPreferences.getBoolean("enable_achievements", true);
 
                 if (isAchievementsEnabled) {
-                    achievementsEnabled = cheatDatabaseApplication.ACHIEVEMENTS;
+                    achievementsEnabled = Konstanten.ACHIEVEMENTS;
                 } else {
-                    achievementsEnabled = cheatDatabaseApplication.NO_ACHIEVEMENTS;
+                    achievementsEnabled = Konstanten.NO_ACHIEVEMENTS;
                 }
 
                 TreeMap<String, TreeMap<String, Game[]>> gamesBySystemInCache = cheatDatabaseApplication.getGamesBySystemCached();
@@ -186,10 +185,10 @@ public class GamesBySystemActivity extends AppCompatActivity {
                     updatedGameListForCache.put(achievementsEnabled, gamesFound);
 
                     String checkWhichSubKey;
-                    if (achievementsEnabled.equalsIgnoreCase(cheatDatabaseApplication.ACHIEVEMENTS)) {
-                        checkWhichSubKey = cheatDatabaseApplication.NO_ACHIEVEMENTS;
+                    if (achievementsEnabled.equalsIgnoreCase(Konstanten.ACHIEVEMENTS)) {
+                        checkWhichSubKey = Konstanten.NO_ACHIEVEMENTS;
                     } else {
-                        checkWhichSubKey = cheatDatabaseApplication.ACHIEVEMENTS;
+                        checkWhichSubKey = Konstanten.ACHIEVEMENTS;
                     }
 
                     if ((gameListTree != null) && (gameListTree.containsKey(checkWhichSubKey))) {

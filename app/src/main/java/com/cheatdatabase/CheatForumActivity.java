@@ -97,7 +97,7 @@ public class CheatForumActivity extends AppCompatActivity implements CheatListFr
 
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cheat_forum);
         ButterKnife.bind(this);

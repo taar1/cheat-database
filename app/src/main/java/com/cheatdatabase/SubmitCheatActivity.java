@@ -64,7 +64,7 @@ public class SubmitCheatActivity extends AppCompatActivity {
     private Typeface latoFontLight;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_submit_cheat_layout);
         ButterKnife.bind(this);
