@@ -79,6 +79,7 @@ public class SearchResultsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_search_result);
         ButterKnife.bind(this);
 
         init();
@@ -94,7 +95,6 @@ public class SearchResultsActivity extends AppCompatActivity {
     }
 
     private void init() {
-        setContentView(R.layout.activity_search_result);
         if (!Reachability.isRegistered()) {
             Reachability.registerReachability(this);
         }

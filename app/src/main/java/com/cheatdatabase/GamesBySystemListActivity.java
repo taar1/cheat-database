@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.transition.Explode;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,6 +15,7 @@ import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
+import android.view.Window;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -67,10 +69,6 @@ public class GamesBySystemListActivity extends AppCompatActivity {
 
     private SharedPreferences sharedPreferences;
 
-    public GamesBySystemListActivity() {
-        gamesBySystemRecycleListViewAdapter = new GamesBySystemRecycleListViewAdapter(this);
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,12 +81,7 @@ public class GamesBySystemListActivity extends AppCompatActivity {
         init();
         mSwipeRefreshLayout.setRefreshing(true);
 
-        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                getGames(true);
-            }
-        });
+        mSwipeRefreshLayout.setOnRefreshListener(() -> getGames(true));
 
         // use this setting to improve performance if you know that changes
         // in content do not change the layout size of the RecyclerView
@@ -99,12 +92,12 @@ public class GamesBySystemListActivity extends AppCompatActivity {
 
         if (Reachability.reachability.isReachable) {
             getGames(false);
+        } else {
+            Toast.makeText(this, R.string.no_internet, Toast.LENGTH_SHORT).show();
         }
     }
 
     private void init() {
-        sharedPreferences = getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
-
         gamesBySystemRecycleListViewAdapter = new GamesBySystemRecycleListViewAdapter(this);
 
         adView = new AdView(this, Konstanten.FACEBOOK_AUDIENCE_NETWORK_NATIVE_BANNER_ID, AdSize.BANNER_HEIGHT_50);
@@ -116,6 +109,8 @@ public class GamesBySystemListActivity extends AppCompatActivity {
         }
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
+
+        sharedPreferences = getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
     }
 
     @Override
@@ -192,11 +187,11 @@ public class GamesBySystemListActivity extends AppCompatActivity {
             }
             Collections.addAll(gameArrayList, gamesFound);
 
-            fillListWithGames();
+            updateUI();
         });
     }
 
-    private void fillListWithGames() {
+    private void updateUI() {
         Needle.onMainThread().execute(() -> {
             try {
                 if (gameArrayList != null && gameArrayList.size() > 0) {
@@ -212,8 +207,6 @@ public class GamesBySystemListActivity extends AppCompatActivity {
 
             mSwipeRefreshLayout.setRefreshing(false);
         });
-
-
     }
 
     private void error() {
@@ -258,16 +251,29 @@ public class GamesBySystemListActivity extends AppCompatActivity {
     @Subscribe
     public void onEvent(GameListRecyclerViewClickEvent result) {
         if (result.isSucceeded()) {
-
             Intent intent = new Intent(this, CheatsByGameListActivity.class);
             intent.putExtra("gameObj", result.getGame());
             startActivity(intent);
-
-//            CheatsByGameListActivity_.intent(this).gameObj(result.getGame()).start();
         } else {
             Toast.makeText(this, R.string.no_internet, Toast.LENGTH_SHORT).show();
         }
     }
 
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelable("systemObj", systemObj);
+    }
 
+    @Override
+    public void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+
+        systemObj = savedInstanceState.getParcelable("systemObj");
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+    }
 }

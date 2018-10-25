@@ -38,7 +38,6 @@ import com.cheatdatabase.helpers.Webservice;
 import com.cheatdatabase.widgets.DividerDecoration;
 import com.facebook.ads.AdSize;
 import com.facebook.ads.AdView;
-import com.gc.materialdesign.views.ProgressBarCircularIndeterminate;
 import com.google.gson.Gson;
 import com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView;
 
@@ -66,7 +65,7 @@ public class CheatsByGameListActivity extends AppCompatActivity {
     private List<Cheat> cheatsArrayList;
     private Cheat visibleCheat;
 
-    CheatDatabaseApplication app;
+    CheatDatabaseApplication cheatDatabaseApplication;
 
     CheatsByGameRecycleListViewAdapter cheatsByGameRecycleListViewAdapter;
 
@@ -80,8 +79,6 @@ public class CheatsByGameListActivity extends AppCompatActivity {
     Toolbar mToolbar;
     @BindView(R.id.item_list_empty_view)
     TextView mEmptyView;
-    @BindView(R.id.items_list_load_progress)
-    ProgressBarCircularIndeterminate mProgressView;
 
     @BindView(R.id.banner_container)
     LinearLayout facebookBanner;
@@ -101,7 +98,6 @@ public class CheatsByGameListActivity extends AppCompatActivity {
         setTitle(gameObj.getGameName());
 
         init();
-
         mSwipeRefreshLayout.setRefreshing(true);
 
         getSupportActionBar().setTitle(gameObj.getGameName());
@@ -126,6 +122,8 @@ public class CheatsByGameListActivity extends AppCompatActivity {
     private void init() {
 //        db = new CheatDatabaseAdapter(this);
 //        db.open();
+
+        cheatDatabaseApplication = CheatDatabaseApplication.getCurrentAppInstance();
 
         cheatsByGameRecycleListViewAdapter = new CheatsByGameRecycleListViewAdapter();
 
@@ -166,7 +164,7 @@ public class CheatsByGameListActivity extends AppCompatActivity {
                     achievementsEnabled = Konstanten.NO_ACHIEVEMENTS;
                 }
 
-                TreeMap<String, TreeMap<String, List<Cheat>>> cheatsByGameInCache = app.getCheatsByGameCached();
+                TreeMap<String, TreeMap<String, List<Cheat>>> cheatsByGameInCache = cheatDatabaseApplication.getCheatsByGameCached();
                 TreeMap cheatList = null;
                 if (cheatsByGameInCache.containsKey(String.valueOf(gameObj.getGameId()))) {
 
@@ -210,7 +208,7 @@ public class CheatsByGameListActivity extends AppCompatActivity {
                     }
 
                     cheatsByGameInCache.put(String.valueOf(gameObj.getGameId()), updatedCheatListForCache);
-                    app.setCheatsByGameCached(cheatsByGameInCache);
+                    cheatDatabaseApplication.setCheatsByGameCached(cheatsByGameInCache);
                 }
 
 //        db.insertCheats(cheatsFound);
@@ -313,15 +311,8 @@ public class CheatsByGameListActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case android.R.id.home:
                 editor.remove(Konstanten.PREFERENCES_TEMP_GAME_OBJECT_VIEW);
-                editor.commit();
-//                GamesBySystemListActivity_.intent(this)
-//                        .systemObj(Tools.getSystemObjectByName(CheatsByGameListActivity.this, Tools.getSystemNameById(this, gameObj.getSystemId())))
-//                        .start();
-
-                Intent intent = new Intent(this, GamesBySystemListActivity.class);
-                intent.putExtra("systemObj", Tools.getSystemObjectByName(CheatsByGameListActivity.this, Tools.getSystemNameById(this, gameObj.getSystemId())));
-                startActivity(intent);
-
+                editor.apply();
+                finish();
                 return true;
             case R.id.action_add_to_favorites:
                 Toast.makeText(CheatsByGameListActivity.this, R.string.favorite_adding, Toast.LENGTH_SHORT).show();
@@ -459,7 +450,7 @@ public class CheatsByGameListActivity extends AppCompatActivity {
             Game lastGameObj = result.getCheat().getGame();
 
             editor.putInt(Konstanten.PREFERENCES_PAGE_SELECTED, result.getPosition());
-            editor.commit();
+            editor.apply();
 
             if (Reachability.reachability.isReachable) {
                 // Using local Preferences to pass data for large game objects
