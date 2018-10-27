@@ -45,7 +45,6 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.TreeMap;
 
@@ -210,7 +209,7 @@ public class CheatsByGameListActivity extends AppCompatActivity {
                     cheatDatabaseApplication.setCheatsByGameCached(cheatsByGameInCache);
                 }
 
-//        db.insertCheats(cheatsFound);
+//        db.insertFavoriteCheats(cheatsFound);
 //        Collections.addAll(cheatsArrayList, cheatsFound);
                 cheatsArrayList = cheatsFound;
                 updateUI();
@@ -412,7 +411,7 @@ public class CheatsByGameListActivity extends AppCompatActivity {
             try {
                 dbAdapter = new CheatDatabaseAdapter(CheatsByGameListActivity.this);
                 dbAdapter.open();
-                int retVal = dbAdapter.insertCheats(game);
+                int retVal = dbAdapter.insertFavoriteCheats(game);
                 if (retVal > 0) {
                     returnValueCode = R.string.add_favorites_ok;
                 } else {

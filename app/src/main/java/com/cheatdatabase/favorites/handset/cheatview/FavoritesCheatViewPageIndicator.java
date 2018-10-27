@@ -435,7 +435,7 @@ public class FavoritesCheatViewPageIndicator extends AppCompatActivity implement
 
     @Override
     public void onUndo(Parcelable token) {
-        db.insertCheat(visibleCheat);
+        db.insertFavoriteCheat(visibleCheat);
     }
 
 }

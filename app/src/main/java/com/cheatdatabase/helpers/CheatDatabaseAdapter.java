@@ -33,38 +33,38 @@ public class CheatDatabaseAdapter {
     public static final String KEY_ROWID = "_id";
     public static final String KEY_ONLINEMEMBERID = "mid";
 
-    // Favorites
-    public static final String FAV_GAME_ID = "game_id";
-    public static final String FAV_GAMENAME = "game_name";
-    public static final String FAV_CHEAT_ID = "cheat_id";
-    public static final String FAV_CHEAT_TITLE = "cheat_title";
-    public static final String FAV_CHEAT_TEXT = "cheat_text";
-    public static final String FAV_SYSTEM_ID = "system_id";
-    public static final String FAV_SYSTEM_NAME = "system_name";
-    public static final String FAV_LANGUAGE_ID = "language_id";
-    public static final String FAV_GAME_COUNT = "game_count";
-    public static final String FAV_WALKTHROUGH_FORMAT = "walkthrough_format";
-    // Local member who saved the favorite (for syncing online)
-    public static final String FAV_MEMBER_ID = "member_id";
+//    // Favorites
+//    public static final String FAV_GAME_ID = "game_id";
+//    public static final String FAV_GAMENAME = "game_name";
+//    public static final String FAV_CHEAT_ID = "cheat_id";
+//    public static final String FAV_CHEAT_TITLE = "cheat_title";
+//    public static final String FAV_CHEAT_TEXT = "cheat_text";
+//    public static final String FAV_SYSTEM_ID = "system_id";
+//    public static final String FAV_SYSTEM_NAME = "system_name";
+//    public static final String FAV_LANGUAGE_ID = "language_id";
+//    public static final String FAV_GAME_COUNT = "game_count";
+//    public static final String FAV_WALKTHROUGH_FORMAT = "walkthrough_format";
+//    // Local member who saved the favorite (for syncing online)
+//    public static final String FAV_MEMBER_ID = "member_id";
 
     // Search History
     public static final String KEY_SEARCHHISTORY_QUERY = "searchquery";
     public static final String KEY_SEARCHHISTORY_SEARCHTIME = "searchtime";
 
-    // Systems
-    private static final String DATABASE_TABLE_SYSTEMS = "systems";
-    private static final String SYS_SYSTEM_ID = "_id";
-    private static final String SYS_SYSTEM_NAME = "name";
-    private static final String SYS_SYSTEM_GAMECOUNT = "gamecount";
-    private static final String SYS_SYSTEM_CHEATCOUNT = "cheatcount";
-    private static final String SYS_SYSTEM_LASTMOD = "lastmod";
+//    // Systems
+//    private static final String DATABASE_TABLE_SYSTEMS = "systems";
+//    private static final String SYS_SYSTEM_ID = "_id";
+//    private static final String SYS_SYSTEM_NAME = "name";
+//    private static final String SYS_SYSTEM_GAMECOUNT = "gamecount";
+//    private static final String SYS_SYSTEM_CHEATCOUNT = "cheatcount";
+//    private static final String SYS_SYSTEM_LASTMOD = "lastmod";
 
-    private static final String DATABASE_NAME = "data";
+//    private static final String DATABASE_NAME = "data";
     // private static final String DATABASE_TABLE_MEMBERS = "members";
-    private static final String DATABASE_TABLE_FAVORITES = "favorites";
+//    private static final String DATABASE_TABLE_FAVORITES = "favorites";
     private static final String DATABASE_TABLE_SEARCHHISTORY = "searchhistory";
 
-    private static final int DATABASE_VERSION = 3; // From 30.06.2015
+//    private static final int DATABASE_VERSION = 3; // From 30.06.2015
 
     private static final String TAG = "CheatDbAdapter";
     /**
@@ -76,12 +76,22 @@ public class CheatDatabaseAdapter {
     // " text not null, " + KEY_PASSWORD + " text not null, " + KEY_EMAIL +
     // " text not null, " + KEY_ONLINEMEMBERID + " integer);";
 
-    private static final String DATABASE_CREATE_FAVORITES = "create table if not exists " + DATABASE_TABLE_FAVORITES + " (" + FAV_GAME_ID + " integer not null, " + FAV_GAMENAME + " text not null, " + FAV_CHEAT_ID + " integer not null unique, " + FAV_CHEAT_TITLE + " text not null, " + FAV_CHEAT_TEXT
-            + " integer not null, " + FAV_SYSTEM_ID + " integer not null, " + FAV_SYSTEM_NAME + " text not null, " + FAV_LANGUAGE_ID + " integer, " + FAV_WALKTHROUGH_FORMAT + " integer, " + FAV_MEMBER_ID + " integer);";
+//    private static final String DATABASE_CREATE_FAVORITES = "create table if not exists " + DATABASE_TABLE_FAVORITES + " ("
+//            + FAV_GAME_ID + " integer not null, "
+//            + FAV_GAMENAME + " text not null, "
+//            + FAV_CHEAT_ID + " integer not null unique, "
+//            + FAV_CHEAT_TITLE + " text not null, "
+//            + FAV_CHEAT_TEXT + " integer not null, "
+//            + FAV_SYSTEM_ID + " integer not null, "
+//            + FAV_SYSTEM_NAME + " text not null, "
+//            + FAV_LANGUAGE_ID + " integer, "
+//            + FAV_WALKTHROUGH_FORMAT + " integer, "
+//            + FAV_MEMBER_ID + " integer);";
+
     private static final String DATABASE_CREATE_SEARCHHISTORY = "create table " + DATABASE_TABLE_SEARCHHISTORY + " (" + KEY_ROWID + " integer primary key autoincrement, " + KEY_SEARCHHISTORY_QUERY + " text not null, " + KEY_SEARCHHISTORY_SEARCHTIME + " text not null);";
     // New Table from 30.06.2015
-    private static final String DATABASE_CREATE_SYSTEMS = "create table if not exists " + DATABASE_TABLE_SYSTEMS + " (" + SYS_SYSTEM_ID + " integer primary key, " + SYS_SYSTEM_NAME + " text not null, " + SYS_SYSTEM_GAMECOUNT + " integer not null, " + SYS_SYSTEM_CHEATCOUNT + " integer not null, " + SYS_SYSTEM_LASTMOD + " text not null);";
-    private final Context mCtx;
+//    private static final String DATABASE_CREATE_SYSTEMS = "create table if not exists " + DATABASE_TABLE_SYSTEMS + " (" + SYS_SYSTEM_ID + " integer primary key, " + SYS_SYSTEM_NAME + " text not null, " + SYS_SYSTEM_GAMECOUNT + " integer not null, " + SYS_SYSTEM_CHEATCOUNT + " integer not null, " + SYS_SYSTEM_LASTMOD + " text not null);";
+    private final Context context;
     private DatabaseHelper mDbHelper;
     private SQLiteDatabase mDb;
 
@@ -89,10 +99,10 @@ public class CheatDatabaseAdapter {
      * Constructor - takes the context to allow the database to be
      * opened/created
      *
-     * @param ctx the Context within which to work
+     * @param context the Context within which to work
      */
-    public CheatDatabaseAdapter(Context ctx) {
-        this.mCtx = ctx;
+    public CheatDatabaseAdapter(Context context) {
+        this.context = context;
     }
 
     /**
@@ -105,7 +115,7 @@ public class CheatDatabaseAdapter {
      * @throws android.database.SQLException if the database could be neither opened or created
      */
     public CheatDatabaseAdapter open() throws SQLException {
-        mDbHelper = new DatabaseHelper(mCtx);
+        mDbHelper = new DatabaseHelper(context);
         mDb = mDbHelper.getWritableDatabase();
         return this;
     }
@@ -114,179 +124,305 @@ public class CheatDatabaseAdapter {
         mDbHelper.close();
     }
 
-    /**
-     * Insert one cheat to the favorites.
-     *
-     * @param cheat
-     * @return
-     */
-    public int insertCheat(Cheat cheat) {
-        if (cheat == null) {
-            return 0;
-        } else {
-            if (cheat.isScreenshots()) {
-                saveScreenshotsToSdCard(cheat);
-            }
-
-            ContentValues initialValues = new ContentValues();
-            initialValues.put(FAV_GAME_ID, cheat.getGameId());
-            initialValues.put(FAV_GAMENAME, cheat.getGameName());
-            initialValues.put(FAV_CHEAT_ID, cheat.getCheatId());
-            initialValues.put(FAV_CHEAT_TITLE, cheat.getCheatTitle());
-            initialValues.put(FAV_CHEAT_TEXT, cheat.getCheatText());
-            initialValues.put(FAV_LANGUAGE_ID, cheat.getLanguageId());
-            initialValues.put(FAV_SYSTEM_ID, cheat.getSystemId());
-            initialValues.put(FAV_SYSTEM_NAME, cheat.getSystemName());
-            int walkthroughFormat = 0;
-            if (cheat.isWalkthroughFormat()) {
-                walkthroughFormat = 1;
-            }
-            initialValues.put(FAV_WALKTHROUGH_FORMAT, walkthroughFormat);
-
-            long retVal = mDb.insert(DATABASE_TABLE_FAVORITES, null, initialValues);
-            return Integer.parseInt(String.valueOf(retVal));
-        }
-    }
-
-    /**
-     * Insert a list of cheats to the favorites.
-     *
-     * @param cheats []
-     * @return
-     */
-    public int insertCheats(Cheat[] cheats) {
-        int retValInt = 0;
-        long retVal = 0;
-
-        for (int i = 0; i < cheats.length; i++) {
-            Cheat cheat = cheats[i];
-
-            if (cheat.isScreenshots()) {
-                saveScreenshotsToSdCard(cheat);
-            }
-
-            ContentValues initialValues = new ContentValues();
-            initialValues.put(FAV_GAME_ID, cheat.getGameId());
-            initialValues.put(FAV_GAMENAME, cheat.getGameName());
-            initialValues.put(FAV_CHEAT_ID, cheat.getCheatId());
-            initialValues.put(FAV_CHEAT_TITLE, cheat.getCheatTitle());
-            initialValues.put(FAV_CHEAT_TEXT, cheat.getCheatText());
-            initialValues.put(FAV_LANGUAGE_ID, cheat.getLanguageId());
-            initialValues.put(FAV_SYSTEM_ID, cheat.getSystemId());
-            initialValues.put(FAV_SYSTEM_NAME, cheat.getSystemName());
-            initialValues.put(FAV_MEMBER_ID, cheat.getSubmittingMember().getMid());
-            int walkthroughFormat = 0;
-            if (cheat.isWalkthroughFormat()) {
-                walkthroughFormat = 1;
-            }
-            initialValues.put(FAV_WALKTHROUGH_FORMAT, walkthroughFormat);
-
-            retVal = mDb.insert(DATABASE_TABLE_FAVORITES, null, initialValues);
-            retValInt = Integer.parseInt(String.valueOf(retVal));
-        }
-
-        return retValInt;
-    }
-
-    public void saveScreenshotsToSdCard(Cheat cheat) {
-        for (Screenshot s : cheat.getScreenshotList()) {
-            if (Tools.isSdWriteable()) {
-                s.saveToSd();
-            }
-        }
-    }
-
-    /**
-     * Add all cheats of a game to the favorites.
-     *
-     * @param game
-     * @return
-     */
-    public int insertCheats(Game game) {
-
-        int int_anzInserts = 0;
-
-        Cheat[] cheats = Webservice.getCheatsByGameId(game.getGameId(), game.getGameName());
-
-        for (int i = 0; i < cheats.length; i++) {
-            Cheat cheat = cheats[i];
-
-            if (cheat.isScreenshots()) {
-                saveScreenshotsToSdCard(cheat);
-            }
-
-            ContentValues initialValues = new ContentValues();
-            initialValues.put(FAV_GAME_ID, cheat.getGameId());
-            initialValues.put(FAV_GAMENAME, cheat.getGameName());
-            initialValues.put(FAV_CHEAT_ID, cheat.getCheatId());
-            initialValues.put(FAV_CHEAT_TITLE, cheat.getCheatTitle());
-            initialValues.put(FAV_CHEAT_TEXT, cheat.getCheatText());
-            initialValues.put(FAV_LANGUAGE_ID, cheat.getLanguageId());
-            initialValues.put(FAV_SYSTEM_ID, game.getSystemId());
-            initialValues.put(FAV_SYSTEM_NAME, game.getSystemName());
-            int walkthroughFormat = 0;
-            if (cheat.isWalkthroughFormat()) {
-                walkthroughFormat = 1;
-            }
-            initialValues.put(FAV_WALKTHROUGH_FORMAT, walkthroughFormat);
-
-            Long l_result = mDb.insert(DATABASE_TABLE_FAVORITES, null, initialValues);
-            if (l_result > -1) {
-                int_anzInserts++;
-            }
-        }
-
-        return int_anzInserts;
-    }
-
-    public boolean deleteCheat(Cheat cheat) {
-        return mDb.delete(DATABASE_TABLE_FAVORITES, FAV_CHEAT_ID + "=" + cheat.getCheatId(), null) > 0;
-    }
-
-    public boolean deleteCheats(Game game) {
-        return mDb.delete(DATABASE_TABLE_FAVORITES, FAV_GAME_ID + "=" + game.getGameId(), null) > 0;
-    }
-
-    /**
-     * Get all favorites from the database.
-     *
-     * @return Game[]
-     */
-    public Game[] getAllFavoritedGames() {
-
-        int countRows = countFavoritedGames();
-        if (countRows == 0) {
-            return null;
-        } else {
-            Cursor cur = mDb.query(DATABASE_TABLE_FAVORITES, new String[]{FAV_GAME_ID, FAV_GAMENAME, FAV_CHEAT_ID, FAV_CHEAT_TITLE, FAV_CHEAT_TEXT, FAV_SYSTEM_ID, FAV_SYSTEM_NAME, FAV_LANGUAGE_ID, FAV_WALKTHROUGH_FORMAT}, null, null, FAV_GAME_ID, null, FAV_GAMENAME);
-
-            Game[] favGames = new Game[countRows];
-
-            if (cur.moveToFirst()) {
-                if (cur.isFirst()) {
-                    int i = 0;
-                    do {
-                        int gameId = cur.getInt(cur.getColumnIndex(FAV_GAME_ID));
-                        String gameName = cur.getString(cur.getColumnIndex(FAV_GAMENAME));
-                        int systemId = cur.getInt(cur.getColumnIndex(FAV_SYSTEM_ID));
-                        String systemName = cur.getString(cur.getColumnIndex(FAV_SYSTEM_NAME));
-                        int numberOfFavoritedCheats = countFavoritedCheats(gameId);
-
-                        Game tempGame = new Game(gameId, gameName, systemId, systemName);
-                        tempGame.setCheatsCount(numberOfFavoritedCheats);
-
-                        favGames[i] = tempGame;
-                        i++;
-                    } while (cur.moveToNext());
-                }
-
-                cur.close();
-                return favGames;
-            }
-        }
-
-        return null;
-    }
+//    /**
+//     * Insert one cheat to the favorites.
+//     *
+//     * @param cheat
+//     * @return
+//     */
+//    public int insertFavoriteCheat(Cheat cheat) {
+//        if (cheat == null) {
+//            return 0;
+//        } else {
+//            if (cheat.isScreenshots()) {
+//                saveScreenshotsToSdCard(cheat);
+//            }
+//
+//            ContentValues initialValues = new ContentValues();
+//            initialValues.put(FAV_GAME_ID, cheat.getGameId());
+//            initialValues.put(FAV_GAMENAME, cheat.getGameName());
+//            initialValues.put(FAV_CHEAT_ID, cheat.getCheatId());
+//            initialValues.put(FAV_CHEAT_TITLE, cheat.getCheatTitle());
+//            initialValues.put(FAV_CHEAT_TEXT, cheat.getCheatText());
+//            initialValues.put(FAV_LANGUAGE_ID, cheat.getLanguageId());
+//            initialValues.put(FAV_SYSTEM_ID, cheat.getSystemId());
+//            initialValues.put(FAV_SYSTEM_NAME, cheat.getSystemName());
+//            int walkthroughFormat = 0;
+//            if (cheat.isWalkthroughFormat()) {
+//                walkthroughFormat = 1;
+//            }
+//            initialValues.put(FAV_WALKTHROUGH_FORMAT, walkthroughFormat);
+//
+//            long retVal = mDb.insert(DATABASE_TABLE_FAVORITES, null, initialValues);
+//            return Integer.parseInt(String.valueOf(retVal));
+//        }
+//    }
+//
+//
+//    /**
+//     * Insert a list of cheats to the favorites.
+//     *
+//     * @param cheats []
+//     * @return
+//     */
+//    public int insertFavoriteCheats(Cheat[] cheats) {
+//        int retValInt = 0;
+//        long retVal = 0;
+//
+//        for (int i = 0; i < cheats.length; i++) {
+//            Cheat cheat = cheats[i];
+//
+//            if (cheat.isScreenshots()) {
+//                saveScreenshotsToSdCard(cheat);
+//            }
+//
+//            ContentValues initialValues = new ContentValues();
+//            initialValues.put(FAV_GAME_ID, cheat.getGameId());
+//            initialValues.put(FAV_GAMENAME, cheat.getGameName());
+//            initialValues.put(FAV_CHEAT_ID, cheat.getCheatId());
+//            initialValues.put(FAV_CHEAT_TITLE, cheat.getCheatTitle());
+//            initialValues.put(FAV_CHEAT_TEXT, cheat.getCheatText());
+//            initialValues.put(FAV_LANGUAGE_ID, cheat.getLanguageId());
+//            initialValues.put(FAV_SYSTEM_ID, cheat.getSystemId());
+//            initialValues.put(FAV_SYSTEM_NAME, cheat.getSystemName());
+//            initialValues.put(FAV_MEMBER_ID, cheat.getSubmittingMember().getMid());
+//            int walkthroughFormat = 0;
+//            if (cheat.isWalkthroughFormat()) {
+//                walkthroughFormat = 1;
+//            }
+//            initialValues.put(FAV_WALKTHROUGH_FORMAT, walkthroughFormat);
+//
+//            retVal = mDb.insert(DATABASE_TABLE_FAVORITES, null, initialValues);
+//            retValInt = Integer.parseInt(String.valueOf(retVal));
+//        }
+//
+//        return retValInt;
+//    }
+//
+//    public void saveScreenshotsToSdCard(Cheat cheat) {
+//        for (Screenshot s : cheat.getScreenshotList()) {
+//            if (Tools.isSdWriteable()) {
+//                s.saveToSd();
+//            }
+//        }
+//    }
+//
+//    /**
+//     * Add all cheats of a game to the favorites.
+//     *
+//     * @param game
+//     * @return
+//     */
+//    public int insertFavoriteCheats(Game game) {
+//
+//        int int_anzInserts = 0;
+//
+//        Cheat[] cheats = Webservice.getCheatsByGameId(game.getGameId(), game.getGameName());
+//
+//        for (int i = 0; i < cheats.length; i++) {
+//            Cheat cheat = cheats[i];
+//
+//            if (cheat.isScreenshots()) {
+//                saveScreenshotsToSdCard(cheat);
+//            }
+//
+//            ContentValues initialValues = new ContentValues();
+//            initialValues.put(FAV_GAME_ID, cheat.getGameId());
+//            initialValues.put(FAV_GAMENAME, cheat.getGameName());
+//            initialValues.put(FAV_CHEAT_ID, cheat.getCheatId());
+//            initialValues.put(FAV_CHEAT_TITLE, cheat.getCheatTitle());
+//            initialValues.put(FAV_CHEAT_TEXT, cheat.getCheatText());
+//            initialValues.put(FAV_LANGUAGE_ID, cheat.getLanguageId());
+//            initialValues.put(FAV_SYSTEM_ID, game.getSystemId());
+//            initialValues.put(FAV_SYSTEM_NAME, game.getSystemName());
+//            int walkthroughFormat = 0;
+//            if (cheat.isWalkthroughFormat()) {
+//                walkthroughFormat = 1;
+//            }
+//            initialValues.put(FAV_WALKTHROUGH_FORMAT, walkthroughFormat);
+//
+//            Long l_result = mDb.insert(DATABASE_TABLE_FAVORITES, null, initialValues);
+//            if (l_result > -1) {
+//                int_anzInserts++;
+//            }
+//        }
+//
+//        return int_anzInserts;
+//    }
+//
+//    public boolean deleteCheat(Cheat cheat) {
+//        return mDb.delete(DATABASE_TABLE_FAVORITES, FAV_CHEAT_ID + "=" + cheat.getCheatId(), null) > 0;
+//    }
+//
+//    public boolean deleteCheats(Game game) {
+//        return mDb.delete(DATABASE_TABLE_FAVORITES, FAV_GAME_ID + "=" + game.getGameId(), null) > 0;
+//    }
+//
+//    /**
+//     * Get all favorites from the database.
+//     *
+//     * @return Game[]
+//     */
+//    public Game[] getAllFavoritedGames() {
+//
+//        int countRows = countFavoritedGames();
+//        if (countRows == 0) {
+//            return null;
+//        } else {
+//            Cursor cur = mDb.query(DATABASE_TABLE_FAVORITES, new String[]{FAV_GAME_ID, FAV_GAMENAME, FAV_CHEAT_ID, FAV_CHEAT_TITLE, FAV_CHEAT_TEXT, FAV_SYSTEM_ID, FAV_SYSTEM_NAME, FAV_LANGUAGE_ID, FAV_WALKTHROUGH_FORMAT}, null, null, FAV_GAME_ID, null, FAV_GAMENAME);
+//
+//            Game[] favGames = new Game[countRows];
+//
+//            if (cur.moveToFirst()) {
+//                if (cur.isFirst()) {
+//                    int i = 0;
+//                    do {
+//                        int gameId = cur.getInt(cur.getColumnIndex(FAV_GAME_ID));
+//                        String gameName = cur.getString(cur.getColumnIndex(FAV_GAMENAME));
+//                        int systemId = cur.getInt(cur.getColumnIndex(FAV_SYSTEM_ID));
+//                        String systemName = cur.getString(cur.getColumnIndex(FAV_SYSTEM_NAME));
+//                        int numberOfFavoritedCheats = countFavoritedCheats(gameId);
+//
+//                        Game tempGame = new Game(gameId, gameName, systemId, systemName);
+//                        tempGame.setCheatsCount(numberOfFavoritedCheats);
+//
+//                        favGames[i] = tempGame;
+//                        i++;
+//                    } while (cur.moveToNext());
+//                }
+//
+//                cur.close();
+//                return favGames;
+//            }
+//        }
+//
+//        return null;
+//    }
+//
+//    /**
+//     * Get one cheat from the favorites.
+//     *
+//     * @param cheatId
+//     * @return Cheat
+//     */
+//    public Cheat getFavoriteCheat(int cheatId) {
+//        Cursor cur = mDb.query(DATABASE_TABLE_FAVORITES, new String[]{FAV_GAME_ID, FAV_GAMENAME, FAV_CHEAT_ID, FAV_CHEAT_TITLE, FAV_CHEAT_TEXT, FAV_LANGUAGE_ID, FAV_SYSTEM_ID, FAV_SYSTEM_NAME, FAV_WALKTHROUGH_FORMAT}, FAV_CHEAT_ID + "=" + cheatId, null, null, null, null);
+//
+//        Cheat cheat = null;
+//
+//        if (cur.moveToFirst()) {
+//            int gameId = cur.getInt(cur.getColumnIndex(FAV_GAME_ID));
+//            String gameName = cur.getString(cur.getColumnIndex(FAV_GAMENAME));
+//            String cheatTitle = cur.getString(cur.getColumnIndex(FAV_CHEAT_TITLE));
+//            String cheatText = cur.getString(cur.getColumnIndex(FAV_CHEAT_TEXT));
+//            int languageId = cur.getInt(cur.getColumnIndex(FAV_LANGUAGE_ID));
+//            int systemId = cur.getInt(cur.getColumnIndex(FAV_SYSTEM_ID));
+//            String systemName = cur.getString(cur.getColumnIndex(FAV_SYSTEM_NAME));
+//            int walkthrough = cur.getInt(cur.getColumnIndex(FAV_WALKTHROUGH_FORMAT));
+//            boolean walkthroughFormat = false;
+//            if (walkthrough == 1) {
+//                walkthroughFormat = true;
+//            }
+//
+//            cheat = new Cheat(gameId, gameName, cheatId, cheatTitle, cheatText, languageId, systemId, systemName, walkthroughFormat);
+//            cur.close();
+//            return cheat;
+//        }
+//        cur.close();
+//        return null;
+//    }
+//
+//    public int countFavoritedGames() {
+//        return countRows(DATABASE_TABLE_FAVORITES, FAV_GAME_ID, null, FAV_GAME_ID);
+//    }
+//
+//    public int countFavoritedCheats(int gameId) {
+//        return countRows(DATABASE_TABLE_FAVORITES, FAV_GAME_ID, String.valueOf(gameId), FAV_CHEAT_ID);
+//    }
+//
+//    /**
+//     * Count rows in one table.
+//     *
+//     * @param sqlTable
+//     * @param columnToCount
+//     * @param columnValue
+//     * @param countBy
+//     * @return
+//     */
+//    public int countRows(String sqlTable, String columnToCount, String columnValue, String countBy) {
+//        Cursor mCursor;
+//        if (columnValue == null) {
+//            mCursor = mDb.query(sqlTable, new String[]{columnToCount}, null, null, countBy, null, null);
+//        } else {
+//            mCursor = mDb.query(sqlTable, new String[]{columnToCount}, columnToCount + "=" + columnValue, null, countBy, null, null);
+//        }
+//        int count = mCursor.getCount();
+//        mCursor.close();
+//        return count;
+//    }
+//
+//    /**
+//     * Get all favorited cheats from one game.
+//     *
+//     * @param gameId
+//     * @return
+//     */
+//    public List<Cheat> getAllFavoritedCheatsByGame(int gameId) {
+//
+//        int countRows = countFavoritedCheats(gameId);
+//        if (countRows == 0) {
+//            return null;
+//        } else {
+//            List<Cheat> favCheats = new ArrayList<>();
+//
+//            Cursor cur = mDb.query(DATABASE_TABLE_FAVORITES, new String[]{FAV_GAME_ID, FAV_GAMENAME, FAV_CHEAT_ID, FAV_CHEAT_TITLE, FAV_CHEAT_TEXT, FAV_LANGUAGE_ID, FAV_SYSTEM_ID, FAV_SYSTEM_NAME, FAV_WALKTHROUGH_FORMAT}, FAV_GAME_ID + "=" + gameId, null, FAV_CHEAT_ID, null, FAV_CHEAT_TITLE);
+//
+//            if (cur.moveToFirst()) {
+//                if (cur.isFirst()) {
+//                    int i = 0;
+//                    do {
+//                        String gameName = cur.getString(cur.getColumnIndex(FAV_GAMENAME));
+//                        int cheatId = cur.getInt(cur.getColumnIndex(FAV_CHEAT_ID));
+//                        String cheatTitle = cur.getString(cur.getColumnIndex(FAV_CHEAT_TITLE));
+//                        String cheatText = cur.getString(cur.getColumnIndex(FAV_CHEAT_TEXT));
+//                        int languageId = cur.getInt(cur.getColumnIndex(FAV_LANGUAGE_ID));
+//                        int systemId = cur.getInt(cur.getColumnIndex(FAV_SYSTEM_ID));
+//                        String systemName = cur.getString(cur.getColumnIndex(FAV_SYSTEM_NAME));
+//                        int walkthrough = cur.getInt(cur.getColumnIndex(FAV_WALKTHROUGH_FORMAT));
+//                        boolean walkthroughFormat = false;
+//                        if (walkthrough == 1) {
+//                            walkthroughFormat = true;
+//                        }
+//
+//                        favCheats.add(new Cheat(gameId, gameName, cheatId, cheatTitle, cheatText, languageId, systemId, systemName, walkthroughFormat));
+//                        i++;
+//                    } while (cur.moveToNext());
+//                }
+//
+//                cur.close();
+//                return favCheats;
+//            }
+//        }
+//        return null;
+//    }
+//
+//    /**
+//     * Get one cheat from the favorites.
+//     *
+//     * @param cheatId
+//     * @return
+//     * @throws android.database.SQLException
+//     */
+//    public Cursor fetchFavorite(long cheatId) throws SQLException {
+//
+//        Cursor mCursor =
+//
+//                mDb.query(true, DATABASE_TABLE_FAVORITES, new String[]{FAV_GAME_ID, FAV_GAMENAME, FAV_CHEAT_ID, FAV_CHEAT_TITLE, FAV_CHEAT_TEXT, FAV_SYSTEM_ID, FAV_SYSTEM_NAME}, FAV_CHEAT_ID + "=" + cheatId, null, null, null, null, null);
+//        if (mCursor != null) {
+//            mCursor.moveToFirst();
+//        }
+//        return mCursor;
+//    }
 
     public List<SystemPlatform> getAllSystemsAndCount() {
 
@@ -351,130 +487,6 @@ public class CheatDatabaseAdapter {
         mDb.delete(DATABASE_TABLE_SYSTEMS, null, null);
     }
 
-    /**
-     * Get one cheat from the favorites.
-     *
-     * @param cheatId
-     * @return Cheat
-     */
-    public Cheat getFavoriteCheat(int cheatId) {
-        Cursor cur = mDb.query(DATABASE_TABLE_FAVORITES, new String[]{FAV_GAME_ID, FAV_GAMENAME, FAV_CHEAT_ID, FAV_CHEAT_TITLE, FAV_CHEAT_TEXT, FAV_LANGUAGE_ID, FAV_SYSTEM_ID, FAV_SYSTEM_NAME, FAV_WALKTHROUGH_FORMAT}, FAV_CHEAT_ID + "=" + cheatId, null, null, null, null);
-
-        Cheat cheat = null;
-
-        if (cur.moveToFirst()) {
-            int gameId = cur.getInt(cur.getColumnIndex(FAV_GAME_ID));
-            String gameName = cur.getString(cur.getColumnIndex(FAV_GAMENAME));
-            String cheatTitle = cur.getString(cur.getColumnIndex(FAV_CHEAT_TITLE));
-            String cheatText = cur.getString(cur.getColumnIndex(FAV_CHEAT_TEXT));
-            int languageId = cur.getInt(cur.getColumnIndex(FAV_LANGUAGE_ID));
-            int systemId = cur.getInt(cur.getColumnIndex(FAV_SYSTEM_ID));
-            String systemName = cur.getString(cur.getColumnIndex(FAV_SYSTEM_NAME));
-            int walkthrough = cur.getInt(cur.getColumnIndex(FAV_WALKTHROUGH_FORMAT));
-            boolean walkthroughFormat = false;
-            if (walkthrough == 1) {
-                walkthroughFormat = true;
-            }
-
-            cheat = new Cheat(gameId, gameName, cheatId, cheatTitle, cheatText, languageId, systemId, systemName, walkthroughFormat);
-            cur.close();
-            return cheat;
-        }
-        cur.close();
-        return null;
-    }
-
-    public int countFavoritedGames() {
-        return countRows(DATABASE_TABLE_FAVORITES, FAV_GAME_ID, null, FAV_GAME_ID);
-    }
-
-    public int countFavoritedCheats(int gameId) {
-        return countRows(DATABASE_TABLE_FAVORITES, FAV_GAME_ID, String.valueOf(gameId), FAV_CHEAT_ID);
-    }
-
-    /**
-     * Count rows in one table.
-     *
-     * @param sqlTable
-     * @param columnToCount
-     * @param columnValue
-     * @param countBy
-     * @return
-     */
-    public int countRows(String sqlTable, String columnToCount, String columnValue, String countBy) {
-        Cursor mCursor;
-        if (columnValue == null) {
-            mCursor = mDb.query(sqlTable, new String[]{columnToCount}, null, null, countBy, null, null);
-        } else {
-            mCursor = mDb.query(sqlTable, new String[]{columnToCount}, columnToCount + "=" + columnValue, null, countBy, null, null);
-        }
-        int count = mCursor.getCount();
-        mCursor.close();
-        return count;
-    }
-
-    /**
-     * Get all favorited cheats from one game.
-     *
-     * @param gameId
-     * @return
-     */
-    public List<Cheat> getAllFavoritedCheatsByGame(int gameId) {
-
-        int countRows = countFavoritedCheats(gameId);
-        if (countRows == 0) {
-            return null;
-        } else {
-            List<Cheat> favCheats = new ArrayList<>();
-
-            Cursor cur = mDb.query(DATABASE_TABLE_FAVORITES, new String[]{FAV_GAME_ID, FAV_GAMENAME, FAV_CHEAT_ID, FAV_CHEAT_TITLE, FAV_CHEAT_TEXT, FAV_LANGUAGE_ID, FAV_SYSTEM_ID, FAV_SYSTEM_NAME, FAV_WALKTHROUGH_FORMAT}, FAV_GAME_ID + "=" + gameId, null, FAV_CHEAT_ID, null, FAV_CHEAT_TITLE);
-
-            if (cur.moveToFirst()) {
-                if (cur.isFirst()) {
-                    int i = 0;
-                    do {
-                        String gameName = cur.getString(cur.getColumnIndex(FAV_GAMENAME));
-                        int cheatId = cur.getInt(cur.getColumnIndex(FAV_CHEAT_ID));
-                        String cheatTitle = cur.getString(cur.getColumnIndex(FAV_CHEAT_TITLE));
-                        String cheatText = cur.getString(cur.getColumnIndex(FAV_CHEAT_TEXT));
-                        int languageId = cur.getInt(cur.getColumnIndex(FAV_LANGUAGE_ID));
-                        int systemId = cur.getInt(cur.getColumnIndex(FAV_SYSTEM_ID));
-                        String systemName = cur.getString(cur.getColumnIndex(FAV_SYSTEM_NAME));
-                        int walkthrough = cur.getInt(cur.getColumnIndex(FAV_WALKTHROUGH_FORMAT));
-                        boolean walkthroughFormat = false;
-                        if (walkthrough == 1) {
-                            walkthroughFormat = true;
-                        }
-
-                        favCheats.add(new Cheat(gameId, gameName, cheatId, cheatTitle, cheatText, languageId, systemId, systemName, walkthroughFormat));
-                        i++;
-                    } while (cur.moveToNext());
-                }
-
-                cur.close();
-                return favCheats;
-            }
-        }
-        return null;
-    }
-
-    /**
-     * Get one cheat from the favorites.
-     *
-     * @param cheatId
-     * @return
-     * @throws android.database.SQLException
-     */
-    public Cursor fetchFavorite(long cheatId) throws SQLException {
-
-        Cursor mCursor =
-
-                mDb.query(true, DATABASE_TABLE_FAVORITES, new String[]{FAV_GAME_ID, FAV_GAMENAME, FAV_CHEAT_ID, FAV_CHEAT_TITLE, FAV_CHEAT_TEXT, FAV_SYSTEM_ID, FAV_SYSTEM_NAME}, FAV_CHEAT_ID + "=" + cheatId, null, null, null, null, null);
-        if (mCursor != null) {
-            mCursor.moveToFirst();
-        }
-        return mCursor;
-    }
 
     /**
      * Inserts the last search query to the search history.
@@ -530,32 +542,73 @@ public class CheatDatabaseAdapter {
 
     }
 
-    private static class DatabaseHelper extends SQLiteOpenHelper {
-
-        DatabaseHelper(Context context) {
-            super(context, DATABASE_NAME, null, DATABASE_VERSION);
-        }
-
-        @Override
-        public void onCreate(SQLiteDatabase db) {
-            // db.execSQL(DATABASE_CREATE_MEMBER);
-            db.execSQL(DATABASE_CREATE_FAVORITES);
-            db.execSQL(DATABASE_CREATE_SEARCHHISTORY);
-            db.execSQL(DATABASE_CREATE_SYSTEMS);
-        }
-
-        @Override
-        public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-            Log.w(TAG, "Upgrading database from version " + oldVersion + " to " + newVersion + ", which will destroy all old data");
-            db.execSQL("DROP TABLE IF EXISTS " + DATABASE_TABLE_SEARCHHISTORY);
-            db.execSQL(DATABASE_CREATE_SEARCHHISTORY);
-
-//            db.execSQL("DROP TABLE IF EXISTS " + DATABASE_TABLE_FAVORITES);
+//    private static class DatabaseHelper2 extends SQLiteOpenHelper {
+//
+//        DatabaseHelper(Context context) {
+//            super(context, DATABASE_NAME, null, DATABASE_VERSION);
+//        }
+//
+//        @Override
+//        public void onCreate(SQLiteDatabase db) {
+//            // db.execSQL(DATABASE_CREATE_MEMBER);
+////            db.execSQL(DATABASE_CREATE_FAVORITES);
+//            db.execSQL(Favorite.CREATE_TABLE);
+//            db.execSQL(DATABASE_CREATE_SEARCHHISTORY);
+//            db.execSQL(DATABASE_CREATE_SYSTEMS);
+//        }
+//
+//        @Override
+//        public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+//            Log.w(TAG, "Upgrading database from version " + oldVersion + " to " + newVersion + ", which will destroy all old data");
+//            db.execSQL("DROP TABLE IF EXISTS " + Favorite.TABLE_NAME);
+//            db.execSQL("DROP TABLE IF EXISTS " + DATABASE_TABLE_SEARCHHISTORY);
 //            db.execSQL("DROP TABLE IF EXISTS " + DATABASE_TABLE_SYSTEMS);
-            db.execSQL(DATABASE_CREATE_FAVORITES);
-            db.execSQL(DATABASE_CREATE_SYSTEMS);
-            // onCreate(db);
-        }
-    }
+//            onCreate(db);
+//        }
+//
+//        public void saveScreenshotsToSdCard(Cheat cheat) {
+//            for (Screenshot s : cheat.getScreenshotList()) {
+//                if (Tools.isSdWriteable()) {
+//                    s.saveToSd();
+//                }
+//            }
+//        }
+//
+//        public long insertFavoriteCheatNew(Cheat cheat) {
+//            if (cheat == null) {
+//                return 0;
+//            } else {
+//                if (cheat.isScreenshots()) {
+//                    saveScreenshotsToSdCard(cheat);
+//                }
+//
+//                SQLiteDatabase db = this.getWritableDatabase();
+//
+//                ContentValues initialValues = new ContentValues();
+//                initialValues.put(Favorite.FAV_GAME_ID, cheat.getGameId());
+//                initialValues.put(Favorite.FAV_GAMENAME, cheat.getGameName());
+//                initialValues.put(Favorite.FAV_CHEAT_ID, cheat.getCheatId());
+//                initialValues.put(Favorite.FAV_CHEAT_TITLE, cheat.getCheatTitle());
+//                initialValues.put(Favorite.FAV_CHEAT_TEXT, cheat.getCheatText());
+//                initialValues.put(Favorite.FAV_LANGUAGE_ID, cheat.getLanguageId());
+//                initialValues.put(Favorite.FAV_SYSTEM_ID, cheat.getSystemId());
+//                initialValues.put(Favorite.FAV_SYSTEM_NAME, cheat.getSystemName());
+//                int walkthroughFormat = 0;
+//                if (cheat.isWalkthroughFormat()) {
+//                    walkthroughFormat = 1;
+//                }
+//                initialValues.put(Favorite.FAV_WALKTHROUGH_FORMAT, walkthroughFormat);
+//
+//                // insert row
+//                long id = db.insert(Favorite.TABLE_NAME, null, initialValues);
+//
+//                // close db connection
+//                db.close();
+//
+//                // return newly inserted row id
+//                return id;
+//            }
+//        }
+//    }
 
 }
