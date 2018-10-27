@@ -9,7 +9,7 @@
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/action_guidelines"
-        android:icon="@android:drawable/ic_menu_info_details"
+        android:icon="@drawable/ic_info_circle"
         android:title="@string/guidelines"
         app:showAsAction="ifRoom|withText" />
 

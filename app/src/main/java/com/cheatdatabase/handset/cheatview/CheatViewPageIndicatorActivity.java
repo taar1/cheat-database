@@ -342,17 +342,6 @@ public class CheatViewPageIndicatorActivity extends AppCompatActivity {
                 return true;
             case R.id.action_report:
                 showReportDialog();
-                // TODO FIXME bottom sheet fertigstellen
-//                new BottomSheet.Builder(this).title("title").darkTheme().sheet(R.menu.cheat_view_action_menu).listener(new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialog, int which) {
-//                        switch (which) {
-////                            case R.id.help:
-////                                q.toast("Help me!");
-////                                break;
-//                        }
-//                    }
-//                }).show();
                 return true;
             case R.id.action_metainfo:
                 if (Reachability.reachability.isReachable) {

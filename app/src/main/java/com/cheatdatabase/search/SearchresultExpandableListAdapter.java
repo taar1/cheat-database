@@ -77,8 +77,6 @@ public class SearchresultExpandableListAdapter extends BaseExpandableListAdapter
                 Intent explicitIntent = new Intent(activity, CheatsByGameListActivity.class);
                 explicitIntent.putExtra("gameObj", gameObj);
                 activity.startActivity(explicitIntent);
-
-//                    CheatsByGameListActivity_.intent(activity).gameObj(gameObj).start();
             } else {
                 Toast.makeText(activity, R.string.no_internet, Toast.LENGTH_SHORT).show();
             }

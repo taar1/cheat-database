@@ -1,5 +1,6 @@
 package com.cheatdatabase.fragments;
 
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -120,7 +121,7 @@ public class SystemListFragment extends Fragment {
             // TODO FIXME systemPlatform parameter gibt evtl ein fehler....
             Intent explicitIntent = new Intent(getActivity(), GamesBySystemListActivity.class);
             explicitIntent.putExtra("systemObj", result.getSystemPlatform());
-            startActivity(explicitIntent);
+            startActivity(explicitIntent, ActivityOptions.makeSceneTransitionAnimation(getActivity()).toBundle());
 
         } else {
             Toast.makeText(getActivity(), R.string.no_internet, Toast.LENGTH_SHORT).show();

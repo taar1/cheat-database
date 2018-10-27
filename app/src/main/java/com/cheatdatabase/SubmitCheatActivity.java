@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -87,30 +86,23 @@ public class SubmitCheatActivity extends AppCompatActivity {
 
                 if (Reachability.reachability.isReachable) {
 
-                    new Thread(new Runnable() {
-                        @Override
-                        public void run() {
-                            if (Webservice.hasMemberPermissions(member)) {
+                    new Thread(() -> {
+                        if (Webservice.hasMemberPermissions(member)) {
 
-                                Webservice.insertCheat(member.getMid(), gameObj.getGameId(), cheatTitle.getText().toString().trim(), cheatText.getText().toString().trim());
-                                runOnUiThread(new Runnable() {
+                            Webservice.insertCheat(member.getMid(), gameObj.getGameId(), cheatTitle.getText().toString().trim(), cheatText.getText().toString().trim());
+                            runOnUiThread(() -> {
+                                try {
+                                    cheatTitle.setText("");
+                                    cheatText.setText("");
 
-                                    @Override
-                                    public void run() {
-                                        try {
-                                            cheatTitle.setText("");
-                                            cheatText.setText("");
+                                    showAlertDialog(R.string.thanks, R.string.cheat_submit_ok);
+                                } catch (Exception e) {
+                                    showAlertDialog(R.string.err, R.string.cheat_submit_nok);
+                                }
+                            });
 
-                                            showAlertDialog(R.string.thanks, R.string.cheat_submit_ok);
-                                        } catch (Exception e) {
-                                            showAlertDialog(R.string.err, R.string.cheat_submit_nok);
-                                        }
-                                    }
-                                });
-
-                            } else {
-                                showAlertDialog(R.string.err, R.string.member_banned);
-                            }
+                        } else {
+                            showAlertDialog(R.string.err, R.string.member_banned);
                         }
                     }).start();
                 } else {
@@ -193,11 +185,9 @@ public class SubmitCheatActivity extends AppCompatActivity {
     private void showAlertDialog(int title, int text) {
         AlertDialog.Builder builder = new AlertDialog.Builder(SubmitCheatActivity.this);
         builder.setMessage(text).setTitle(title);
-        builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int id) {
-                dialog.dismiss();
-            }
+        builder.setPositiveButton(R.string.ok, (dialog, id) -> {
+            dialog.dismiss();
+            finish();
         });
         builder.create();
         builder.show();
@@ -230,28 +220,6 @@ public class SubmitCheatActivity extends AppCompatActivity {
         startActivityForResult(loginIntent, Konstanten.LOGIN_REGISTER_OK_RETURN_CODE);
     }
 
-//    @OnActivityResult(Konstanten.LOGIN_SUCCESS_RETURN_CODE)
-//    void onResult(int resultCode, Intent data_login) {
-//        member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
-//        changeSubmitButtonText();
-//
-//        invalidateOptionsMenu();
-//        if (member != null) {
-//            Toast.makeText(SubmitCheatActivity.this, R.string.login_ok, Toast.LENGTH_LONG).show();
-//        }
-//    }
-//
-//    @OnActivityResult(Konstanten.REGISTER_SUCCESS_RETURN_CODE)
-//    void onResult(int resultCode) {
-//        member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
-//        changeSubmitButtonText();
-//
-//        invalidateOptionsMenu();
-//        if (member != null) {
-//            Toast.makeText(SubmitCheatActivity.this, R.string.register_thanks, Toast.LENGTH_LONG).show();
-//        }
-//    }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -271,27 +239,5 @@ public class SubmitCheatActivity extends AppCompatActivity {
         changeSubmitButtonText();
         invalidateOptionsMenu();
     }
-
-    //    @Override
-//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//
-//        if (resultCode == RESULT_OK) {
-//            // Return result code. Login success, Register success etc.
-//            int intentReturnCode = data.getIntExtra("result", Konstanten.LOGIN_REGISTER_FAIL_RETURN_CODE);
-//
-//            if (requestCode == Konstanten.LOGIN_REGISTER_OK_RETURN_CODE) {
-//                member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
-//                changeSubmitButtonText();
-//
-//                invalidateOptionsMenu();
-//                if ((member != null) && intentReturnCode == Konstanten.REGISTER_SUCCESS_RETURN_CODE) {
-//                    Toast.makeText(SubmitCheatActivity.this, R.string.register_thanks, Toast.LENGTH_LONG).show();
-//                } else if ((member != null) && intentReturnCode == Konstanten.LOGIN_SUCCESS_RETURN_CODE) {
-//                    Toast.makeText(SubmitCheatActivity.this, R.string.login_ok, Toast.LENGTH_LONG).show();
-//                }
-//            }
-//        }
-//    }
 
 }

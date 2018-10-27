@@ -25,11 +25,11 @@ public class SubmitCheatFragment extends Fragment {
     private Typeface latoFontBold;
 
     @BindView(R.id.title)
-    TextView mTitle;
+    TextView title;
     @BindView(R.id.subtitle)
-    TextView mSubtitle;
+    TextView subtitle;
     @BindView(R.id.search_button)
-    Button mSearchButton;
+    Button searchButton;
 
     public static SubmitCheatFragment newInstance() {
         SubmitCheatFragment submitCheatFragment = new SubmitCheatFragment();
@@ -49,10 +49,10 @@ public class SubmitCheatFragment extends Fragment {
         latoFontLight = Tools.getFont(parentActivity.getAssets(), Konstanten.FONT_LIGHT);
         latoFontBold = Tools.getFont(parentActivity.getAssets(), Konstanten.FONT_BOLD);
 
-        mTitle.setTypeface(latoFontBold);
-        mSubtitle.setTypeface(latoFontLight);
-        mSearchButton.setTypeface(latoFontBold);
-        mSearchButton.setOnClickListener(v -> parentActivity.onSearchRequested());
+        title.setTypeface(latoFontBold);
+        subtitle.setTypeface(latoFontLight);
+        searchButton.setTypeface(latoFontBold);
+        searchButton.setOnClickListener(v -> parentActivity.onSearchRequested());
 
         return view;
     }

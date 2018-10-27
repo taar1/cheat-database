@@ -152,7 +152,7 @@ public class CheatsByGameListActivity extends AppCompatActivity {
             @Override
             public void run() {
                 cheatsArrayList = new ArrayList<>();
-                Cheat[] cachedCheatsCollection;
+                List<Cheat> cachedCheatsCollection;
                 List<Cheat> cheatsFound = null;
                 boolean isCached = false;
                 String achievementsEnabled;
@@ -172,11 +172,10 @@ public class CheatsByGameListActivity extends AppCompatActivity {
                     if (cheatList != null) {
 
                         if (cheatList.containsKey(achievementsEnabled)) {
-                            cachedCheatsCollection = (Cheat[]) cheatList.get(achievementsEnabled);
+                            cachedCheatsCollection = (List<Cheat>) cheatList.get(achievementsEnabled);
 
-                            if (cachedCheatsCollection.length > 0) {
-                                Collections.addAll(cheatsFound, cachedCheatsCollection);
-//                        cheatsFound = cachedCheatsCollection;
+                            if (cachedCheatsCollection.size() > 0) {
+                                cheatsFound = cachedCheatsCollection;
                                 gameObj.setCheatList(cheatsFound);
                                 isCached = true;
                             }
