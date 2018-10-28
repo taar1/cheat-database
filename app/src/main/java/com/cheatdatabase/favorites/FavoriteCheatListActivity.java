@@ -9,7 +9,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.MainThread;
-import android.support.annotation.Nullable;
 import android.support.v4.app.NavUtils;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -33,7 +32,7 @@ import com.cheatdatabase.dialogs.RateCheatMaterialDialog;
 import com.cheatdatabase.events.CheatListRecyclerViewClickEvent;
 import com.cheatdatabase.events.CheatRatingFinishedEvent;
 import com.cheatdatabase.favorites.handset.cheatview.FavoritesCheatViewPageIndicator;
-import com.cheatdatabase.helpers.CheatDatabaseAdapter;
+import com.cheatdatabase.helpers.DatabaseHelper;
 import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.widgets.DividerDecoration;
@@ -84,7 +83,6 @@ public class FavoriteCheatListActivity extends AppCompatActivity {
     private Game lastGameObj;
     private Cheat visibleCheat;
 
-    private CheatDatabaseAdapter db;
     private List<Cheat> cheatsArrayList;
 
     @Override
@@ -144,9 +142,6 @@ public class FavoriteCheatListActivity extends AppCompatActivity {
 
         settings = getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
         editor = settings.edit();
-
-        db = new CheatDatabaseAdapter(this);
-        db.open();
 
         if (member == null) {
             member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
@@ -338,6 +333,7 @@ public class FavoriteCheatListActivity extends AppCompatActivity {
 
             if (gameObj != null) {
                 if (gameObj.getCheatList() == null) {
+                    DatabaseHelper db = new DatabaseHelper(this);
                     gameObj.setCheatList(db.getAllFavoritedCheatsByGame(gameObj.getGameId()));
                 }
 

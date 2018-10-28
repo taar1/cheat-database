@@ -22,7 +22,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "data";
     private static final int DATABASE_VERSION = 3; // From 30.06.2015
 
-    DatabaseHelper(Context context) {
+    public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
@@ -50,7 +50,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
-    public long insertFavoriteCheatNew(Cheat cheat) {
+    public long insertFavoriteCheat(Cheat cheat) {
         if (cheat == null) {
             return 0;
         } else {
@@ -123,7 +123,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return id;
     }
 
-    public long insertFavoriteCheats(Game game) {
+    public int insertFavoriteCheats(Game game) {
         long id = 0;
 
         SQLiteDatabase db = this.getWritableDatabase();
@@ -160,7 +160,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
 
         // return newly inserted row id
-        return id;
+        return Integer.parseInt(String.valueOf(id));
     }
 
     public boolean deleteFavoritedCheat(Cheat cheat) {
@@ -208,6 +208,55 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         cur.close();
         return null;
     }
+
+    public List<Cheat> getAllFavoritedCheatsByGame(int gameId) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        int countRows = countFavoritedCheats(gameId);
+        if (countRows == 0) {
+            return null;
+        } else {
+            List<Cheat> favCheats = new ArrayList<>();
+
+            Cursor cur = db.query(Favorite.TABLE_NAME, new String[]{
+                    Favorite.FAV_GAME_ID,
+                    Favorite.FAV_GAMENAME,
+                    Favorite.FAV_CHEAT_ID,
+                    Favorite.FAV_CHEAT_TITLE,
+                    Favorite.FAV_CHEAT_TEXT,
+                    Favorite.FAV_LANGUAGE_ID,
+                    Favorite.FAV_SYSTEM_ID,
+                    Favorite.FAV_SYSTEM_NAME,
+                    Favorite.FAV_WALKTHROUGH_FORMAT},
+                    Favorite.FAV_GAME_ID + "=" + gameId, null, Favorite.FAV_CHEAT_ID, null, Favorite.FAV_CHEAT_TITLE);
+
+            if (cur.moveToFirst()) {
+                if (cur.isFirst()) {
+                    do {
+                        String gameName = cur.getString(cur.getColumnIndex(Favorite.FAV_GAMENAME));
+                        int cheatId = cur.getInt(cur.getColumnIndex(Favorite.FAV_CHEAT_ID));
+                        String cheatTitle = cur.getString(cur.getColumnIndex(Favorite.FAV_CHEAT_TITLE));
+                        String cheatText = cur.getString(cur.getColumnIndex(Favorite.FAV_CHEAT_TEXT));
+                        int languageId = cur.getInt(cur.getColumnIndex(Favorite.FAV_LANGUAGE_ID));
+                        int systemId = cur.getInt(cur.getColumnIndex(Favorite.FAV_SYSTEM_ID));
+                        String systemName = cur.getString(cur.getColumnIndex(Favorite.FAV_SYSTEM_NAME));
+                        int walkthrough = cur.getInt(cur.getColumnIndex(Favorite.FAV_WALKTHROUGH_FORMAT));
+                        boolean walkthroughFormat = false;
+                        if (walkthrough == 1) {
+                            walkthroughFormat = true;
+                        }
+
+                        favCheats.add(new Cheat(gameId, gameName, cheatId, cheatTitle, cheatText, languageId, systemId, systemName, walkthroughFormat));
+                    } while (cur.moveToNext());
+                }
+
+                cur.close();
+                db.close();
+                return favCheats;
+            }
+        }
+        return null;
+    }
+
 
     public List<Game> getAllFavoritedGames() {
         SQLiteDatabase db = this.getReadableDatabase();
@@ -261,6 +310,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
         int count = mCursor.getCount();
         mCursor.close();
+        db.close();
         return count;
     }
 

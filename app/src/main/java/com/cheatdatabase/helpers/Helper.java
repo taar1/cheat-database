@@ -71,15 +71,13 @@ public class Helper extends Activity {
     }
 
     public static void addFavorite(Context context, Cheat visibleCheat) {
-        CheatDatabaseAdapter db = new CheatDatabaseAdapter(context);
-        db.open();
+        DatabaseHelper db = new DatabaseHelper(context);
 
         if (db.insertFavoriteCheat(visibleCheat) > 0) {
             Toast.makeText(context, R.string.add_favorite_ok, Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(context, R.string.favorite_error, Toast.LENGTH_SHORT).show();
         }
-        db.close();
     }
 
     /**

@@ -21,7 +21,7 @@ import com.cheatdatabase.R;
 import com.cheatdatabase.businessobjects.Cheat;
 import com.cheatdatabase.businessobjects.Game;
 import com.cheatdatabase.businessobjects.Member;
-import com.cheatdatabase.helpers.CheatDatabaseAdapter;
+import com.cheatdatabase.helpers.DatabaseHelper;
 import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Tools;
 import com.google.gson.Gson;
@@ -61,8 +61,6 @@ public class FavoriteCheatListFragment extends ListFragment {
     private int mActivatedPosition = ListView.INVALID_POSITION;
 
     private FavoriteCheatListActivity ca;
-
-    private CheatDatabaseAdapter db;
 
     private SharedPreferences settings;
 
@@ -132,9 +130,6 @@ public class FavoriteCheatListFragment extends ListFragment {
 
         settings = ca.getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
 
-        db = new CheatDatabaseAdapter(ca);
-        db.open();
-
         if (member == null) {
             member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
         }
@@ -144,6 +139,7 @@ public class FavoriteCheatListFragment extends ListFragment {
         Needle.onBackgroundThread().execute(new Runnable() {
             @Override
             public void run() {
+                DatabaseHelper db = new DatabaseHelper(getActivity());
                 try {
                     cheatList = db.getAllFavoritedCheatsByGame(gameObj.getGameId());
 

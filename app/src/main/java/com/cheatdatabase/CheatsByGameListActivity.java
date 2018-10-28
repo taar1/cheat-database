@@ -30,7 +30,7 @@ import com.cheatdatabase.dialogs.ReportCheatMaterialDialog;
 import com.cheatdatabase.events.CheatListRecyclerViewClickEvent;
 import com.cheatdatabase.events.CheatRatingFinishedEvent;
 import com.cheatdatabase.handset.cheatview.CheatViewPageIndicatorActivity;
-import com.cheatdatabase.helpers.CheatDatabaseAdapter;
+import com.cheatdatabase.helpers.DatabaseHelper;
 import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.helpers.Tools;
@@ -83,10 +83,6 @@ public class CheatsByGameListActivity extends AppCompatActivity {
     LinearLayout facebookBanner;
     private AdView adView;
 
-    // TODO die cheats noch in die SQLITE db eintragen
-//    private CheatDatabaseAdapter db;
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -119,9 +115,6 @@ public class CheatsByGameListActivity extends AppCompatActivity {
     }
 
     private void init() {
-//        db = new CheatDatabaseAdapter(this);
-//        db.open();
-
         cheatDatabaseApplication = CheatDatabaseApplication.getCurrentAppInstance();
 
         cheatsByGameRecycleListViewAdapter = new CheatsByGameRecycleListViewAdapter();
@@ -407,11 +400,9 @@ public class CheatsByGameListActivity extends AppCompatActivity {
     void addCheatsToFavoritesTask(Game game) {
         Needle.onBackgroundThread().execute(() -> {
             int returnValueCode;
-            CheatDatabaseAdapter dbAdapter = null;
+            DatabaseHelper db = new DatabaseHelper(this);
             try {
-                dbAdapter = new CheatDatabaseAdapter(CheatsByGameListActivity.this);
-                dbAdapter.open();
-                int retVal = dbAdapter.insertFavoriteCheats(game);
+                int retVal = db.insertFavoriteCheats(game);
                 if (retVal > 0) {
                     returnValueCode = R.string.add_favorites_ok;
                 } else {
@@ -420,8 +411,6 @@ public class CheatsByGameListActivity extends AppCompatActivity {
             } catch (Exception e) {
                 Log.e(TAG, e.getLocalizedMessage());
                 returnValueCode = R.string.favorite_error;
-            } finally {
-                dbAdapter.close();
             }
 
             finishedAddingCheatsToFavorites(returnValueCode);

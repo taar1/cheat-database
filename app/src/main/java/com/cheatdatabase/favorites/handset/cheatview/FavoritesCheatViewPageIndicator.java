@@ -36,7 +36,7 @@ import com.cheatdatabase.dialogs.CheatMetaDialog;
 import com.cheatdatabase.dialogs.RateCheatMaterialDialog;
 import com.cheatdatabase.dialogs.ReportCheatMaterialDialog;
 import com.cheatdatabase.events.CheatRatingFinishedEvent;
-import com.cheatdatabase.helpers.CheatDatabaseAdapter;
+import com.cheatdatabase.helpers.DatabaseHelper;
 import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.helpers.Tools;
@@ -100,7 +100,6 @@ public class FavoritesCheatViewPageIndicator extends AppCompatActivity implement
 
     private ShareActionProvider mShare;
 
-    private CheatDatabaseAdapter db;
     private Toolbar mToolbar;
 
     private LinearLayout facebookBanner;
@@ -138,9 +137,6 @@ public class FavoritesCheatViewPageIndicator extends AppCompatActivity implement
     private void init() {
         settings = getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
         editor = settings.edit();
-
-        db = new CheatDatabaseAdapter(this);
-        db.open();
 
         mToolbar = Tools.initToolbarBase(this, mToolbar);
 
@@ -330,7 +326,8 @@ public class FavoritesCheatViewPageIndicator extends AppCompatActivity implement
                 }
                 return true;
             case R.id.action_remove_from_favorites:
-                db.deleteCheat(visibleCheat);
+                DatabaseHelper db = new DatabaseHelper(this);
+                db.deleteFavoritedCheat(visibleCheat);
                 mUndoBarController.showUndoBar(false, getString(R.string.remove_favorite_neutral_ok), null);
                 return true;
             case R.id.action_report:
@@ -435,6 +432,7 @@ public class FavoritesCheatViewPageIndicator extends AppCompatActivity implement
 
     @Override
     public void onUndo(Parcelable token) {
+        DatabaseHelper db = new DatabaseHelper(this);
         db.insertFavoriteCheat(visibleCheat);
     }
 
