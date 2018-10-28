@@ -17,7 +17,6 @@ public class Favorite {
     // Local member who saved the favorite (for syncing online)
     public static final String FAV_MEMBER_ID = "member_id";
 
-
     private int id;
     private String gameName;
     private int cheatId;

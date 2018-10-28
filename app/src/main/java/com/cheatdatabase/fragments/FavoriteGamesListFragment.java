@@ -5,7 +5,6 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.util.SparseArray;
@@ -25,7 +24,7 @@ import android.widget.Toast;
 import com.cheatdatabase.R;
 import com.cheatdatabase.businessobjects.Game;
 import com.cheatdatabase.favorites.cheatview.FavoritesExpandableListAdapter;
-import com.cheatdatabase.helpers.CheatDatabaseAdapter;
+import com.cheatdatabase.helpers.DatabaseHelper;
 import com.cheatdatabase.helpers.Group;
 import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Tools;
@@ -47,9 +46,9 @@ public class FavoriteGamesListFragment extends Fragment {
     private FavoritesExpandableListAdapter adapter;
 
     protected final int STEP_ONE_COMPLETE = 1;
-    private Game[] gamesFound;
+    private List<Game> gamesFound;
 
-    private CheatDatabaseAdapter db;
+    private DatabaseHelper db;
 
     private Activity parentActivity;
 
@@ -78,9 +77,7 @@ public class FavoriteGamesListFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_favorites_main_list, container, false);
         ButterKnife.bind(this, view);
 
-        db = new CheatDatabaseAdapter(parentActivity);
-        db.open();
-
+        db = new DatabaseHelper(getActivity());
         adapter = new FavoritesExpandableListAdapter(parentActivity, groups);
 
         // TODO FIXME CONTEXT MENU DOES NOT WORK YET
@@ -123,16 +120,10 @@ public class FavoriteGamesListFragment extends Fragment {
     }
 
     public void createData() {
-
-        // If nothing found then display a message.
         if (gamesFound == null) {
-//            nothingFoundText.setText(R.string.favorite_empty);
-//
-//            somethingfoundLayout.setVisibility(View.GONE);
-//            nothingFoundLayout.setVisibility(View.VISIBLE);
-            updateUI();
+            handleEmptyState();
         } else {
-            if ((gamesFound != null) && (gamesFound.length > 0)) {
+            if ((gamesFound != null) && (gamesFound.size() > 0)) {
                 Set<String> systems = new HashSet<>();
                 // Get system names
                 for (Game game : gamesFound) {
@@ -164,7 +155,7 @@ public class FavoriteGamesListFragment extends Fragment {
 
     }
 
-    public void updateUI() {
+    public void handleEmptyState() {
         Needle.onMainThread().execute(() -> {
             nothingFoundText.setText(R.string.favorite_empty);
             somethingfoundLayout.setVisibility(View.GONE);
@@ -204,7 +195,7 @@ public class FavoriteGamesListFragment extends Fragment {
         int child = ExpandableListView.getPackedPositionChild(info.packedPosition);
 
         if (type == ExpandableListView.PACKED_POSITION_TYPE_CHILD) {
-            selectedGame = gamesFound[Integer.parseInt(String.valueOf(info.id))];
+            selectedGame = gamesFound.get(Integer.parseInt(String.valueOf(info.id)));
 
             menu.setHeaderTitle("\"" + selectedGame.getGameName() + "\"");
             menu.add(0, REMOVE_FROM_FAVORITES, 1, R.string.remove_favorite);
@@ -236,7 +227,7 @@ public class FavoriteGamesListFragment extends Fragment {
      * Deletes a game from the local favorites database table.
      */
     private void removeFavorite() {
-        if (db.deleteCheats(selectedGame)) {
+        if (db.deleteFavoritedCheats(selectedGame)) {
             Toast.makeText(parentActivity, getString(R.string.remove_favorites_ok), Toast.LENGTH_SHORT).show();
 
             // TODO liste neu laden

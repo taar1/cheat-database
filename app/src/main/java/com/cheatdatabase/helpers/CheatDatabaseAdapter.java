@@ -26,12 +26,14 @@ import java.util.List;
  */
 public class CheatDatabaseAdapter {
 
+    private static final String TAG = "CheatDbAdapter";
+
     // Member
-    public static final String KEY_USERNAME = "username";
-    public static final String KEY_PASSWORD = "password";
-    public static final String KEY_EMAIL = "email";
-    public static final String KEY_ROWID = "_id";
-    public static final String KEY_ONLINEMEMBERID = "mid";
+//    public static final String KEY_USERNAME = "username";
+//    public static final String KEY_PASSWORD = "password";
+//    public static final String KEY_EMAIL = "email";
+//    public static final String KEY_ROWID = "_id";
+//    public static final String KEY_ONLINEMEMBERID = "mid";
 
 //    // Favorites
 //    public static final String FAV_GAME_ID = "game_id";
@@ -48,8 +50,8 @@ public class CheatDatabaseAdapter {
 //    public static final String FAV_MEMBER_ID = "member_id";
 
     // Search History
-    public static final String KEY_SEARCHHISTORY_QUERY = "searchquery";
-    public static final String KEY_SEARCHHISTORY_SEARCHTIME = "searchtime";
+//    public static final String KEY_SEARCHHISTORY_QUERY = "searchquery";
+//    public static final String KEY_SEARCHHISTORY_SEARCHTIME = "searchtime";
 
 //    // Systems
 //    private static final String DATABASE_TABLE_SYSTEMS = "systems";
@@ -62,11 +64,10 @@ public class CheatDatabaseAdapter {
 //    private static final String DATABASE_NAME = "data";
     // private static final String DATABASE_TABLE_MEMBERS = "members";
 //    private static final String DATABASE_TABLE_FAVORITES = "favorites";
-    private static final String DATABASE_TABLE_SEARCHHISTORY = "searchhistory";
+//    private static final String DATABASE_TABLE_SEARCHHISTORY = "searchhistory";
 
 //    private static final int DATABASE_VERSION = 3; // From 30.06.2015
 
-    private static final String TAG = "CheatDbAdapter";
     /**
      * Database creation sql statement
      */
@@ -88,7 +89,7 @@ public class CheatDatabaseAdapter {
 //            + FAV_WALKTHROUGH_FORMAT + " integer, "
 //            + FAV_MEMBER_ID + " integer);";
 
-    private static final String DATABASE_CREATE_SEARCHHISTORY = "create table " + DATABASE_TABLE_SEARCHHISTORY + " (" + KEY_ROWID + " integer primary key autoincrement, " + KEY_SEARCHHISTORY_QUERY + " text not null, " + KEY_SEARCHHISTORY_SEARCHTIME + " text not null);";
+//    private static final String DATABASE_CREATE_SEARCHHISTORY = "create table " + DATABASE_TABLE_SEARCHHISTORY + " (" + KEY_ROWID + " integer primary key autoincrement, " + KEY_SEARCHHISTORY_QUERY + " text not null, " + KEY_SEARCHHISTORY_SEARCHTIME + " text not null);";
     // New Table from 30.06.2015
 //    private static final String DATABASE_CREATE_SYSTEMS = "create table if not exists " + DATABASE_TABLE_SYSTEMS + " (" + SYS_SYSTEM_ID + " integer primary key, " + SYS_SYSTEM_NAME + " text not null, " + SYS_SYSTEM_GAMECOUNT + " integer not null, " + SYS_SYSTEM_CHEATCOUNT + " integer not null, " + SYS_SYSTEM_LASTMOD + " text not null);";
     private final Context context;
@@ -250,11 +251,11 @@ public class CheatDatabaseAdapter {
 //        return int_anzInserts;
 //    }
 //
-//    public boolean deleteCheat(Cheat cheat) {
+//    public boolean deleteFavoritedCheat(Cheat cheat) {
 //        return mDb.delete(DATABASE_TABLE_FAVORITES, FAV_CHEAT_ID + "=" + cheat.getCheatId(), null) > 0;
 //    }
 //
-//    public boolean deleteCheats(Game game) {
+//    public boolean deleteFavoritedCheats(Game game) {
 //        return mDb.delete(DATABASE_TABLE_FAVORITES, FAV_GAME_ID + "=" + game.getGameId(), null) > 0;
 //    }
 //
@@ -423,125 +424,125 @@ public class CheatDatabaseAdapter {
 //        }
 //        return mCursor;
 //    }
-
-    public List<SystemPlatform> getAllSystemsAndCount() {
-
-        Cursor cur = mDb.query(DATABASE_TABLE_SYSTEMS, new String[]{SYS_SYSTEM_ID, SYS_SYSTEM_NAME, SYS_SYSTEM_GAMECOUNT, SYS_SYSTEM_CHEATCOUNT, SYS_SYSTEM_LASTMOD}, null, null, null, null, SYS_SYSTEM_NAME + " COLLATE NOCASE ASC;");
-
-        ArrayList<SystemPlatform> systems = null;
-
-        if (cur.moveToFirst()) {
-            if (cur.isFirst()) {
-                systems = new ArrayList<>();
-                do {
-                    int systemId = cur.getInt(cur.getColumnIndex(SYS_SYSTEM_ID));
-                    String systemName = cur.getString(cur.getColumnIndex(SYS_SYSTEM_NAME));
-                    int gameCount = cur.getInt(cur.getColumnIndex(SYS_SYSTEM_GAMECOUNT));
-                    int cheatCount = cur.getInt(cur.getColumnIndex(SYS_SYSTEM_CHEATCOUNT));
-                    String lastMod = cur.getString(cur.getColumnIndex(SYS_SYSTEM_LASTMOD));
-
-                    SystemPlatform sysPla = new SystemPlatform();
-                    sysPla.setSystemId(systemId);
-                    sysPla.setSystemName(systemName);
-                    sysPla.setGameCount(gameCount);
-                    sysPla.setCheatCount(cheatCount);
-                    sysPla.setLastModTimeStamp(Long.parseLong(lastMod));
-
-                    systems.add(sysPla);
-
-                } while (cur.moveToNext());
-            }
-
-
-            cur.close();
-            return systems;
-        }
-
-        return null;
-    }
-
-    public int updateSystemsAndCount(List<SystemPlatform> systemsAndCount) {
-
-        int insertCount = 0;
-        deleteSystemsAndCount();
-
-        for (SystemPlatform sysPla : systemsAndCount) {
-
-            ContentValues initialValues = new ContentValues();
-            initialValues.put(SYS_SYSTEM_ID, sysPla.getSystemId());
-            initialValues.put(SYS_SYSTEM_NAME, sysPla.getSystemName());
-            initialValues.put(SYS_SYSTEM_GAMECOUNT, sysPla.getGameCount());
-            initialValues.put(SYS_SYSTEM_CHEATCOUNT, sysPla.getCheatCount());
-            initialValues.put(SYS_SYSTEM_LASTMOD, sysPla.getLastModTimeStamp());
-
-            Long l_result = mDb.insert(DATABASE_TABLE_SYSTEMS, null, initialValues);
-            if (l_result > -1) {
-                insertCount++;
-            }
-        }
-
-        return insertCount;
-    }
-
-    public void deleteSystemsAndCount() {
-        mDb.delete(DATABASE_TABLE_SYSTEMS, null, null);
-    }
-
-
-    /**
-     * Inserts the last search query to the search history.
-     *
-     * @param query
-     * @return
-     */
-    public int insertSearchQuery(String query) {
-
-        // http://alvinalexander.com/java/java-timestamp-example-current-time-now
-        Calendar calendar = Calendar.getInstance();
-        java.util.Date now = calendar.getTime();
-        java.sql.Timestamp currentTimestamp = new java.sql.Timestamp(now.getTime());
-
-        ContentValues initialValues = new ContentValues();
-        initialValues.put(KEY_SEARCHHISTORY_QUERY, query.trim());
-        initialValues.put(KEY_SEARCHHISTORY_SEARCHTIME, currentTimestamp.toString());
-
-        long retVal = mDb.insert(DATABASE_TABLE_SEARCHHISTORY, null, initialValues);
-        return Integer.parseInt(String.valueOf(retVal));
-    }
-
-    /**
-     * Gets the latest search queries done by the user.
-     *
-     * @param historyLength
-     * @return
-     */
-    public String[] getSearchHistory(int historyLength) {
-
-        String[] searchHistory = new String[historyLength];
-
-        Cursor cur = mDb.query(DATABASE_CREATE_SEARCHHISTORY, new String[]{KEY_ROWID, KEY_SEARCHHISTORY_QUERY, KEY_SEARCHHISTORY_SEARCHTIME}, null, null, null, null, KEY_ROWID + " DESC", historyLength + "");
-
-        if (cur.moveToFirst()) {
-            if (cur.isFirst()) {
-                int i = 0;
-                do {
-                    String searchQuery = cur.getString(cur.getColumnIndex(KEY_SEARCHHISTORY_QUERY));
-                    // String searchTime =
-                    // cur.getString(cur.getColumnIndex(KEY_SEARCHHISTORY_SEARCHTIME));
-                    // String rowId =
-                    // cur.getString(cur.getColumnIndex(KEY_ROWID));
-
-                    searchHistory[i] = searchQuery;
-                    i++;
-                } while (cur.moveToNext());
-            }
-
-            cur.close();
-        }
-        return searchHistory;
-
-    }
-
+//
+//    public List<SystemPlatform> getAllSystemsAndCount() {
+//
+//        Cursor cur = mDb.query(DATABASE_TABLE_SYSTEMS, new String[]{SYS_SYSTEM_ID, SYS_SYSTEM_NAME, SYS_SYSTEM_GAMECOUNT, SYS_SYSTEM_CHEATCOUNT, SYS_SYSTEM_LASTMOD}, null, null, null, null, SYS_SYSTEM_NAME + " COLLATE NOCASE ASC;");
+//
+//        ArrayList<SystemPlatform> systems = null;
+//
+//        if (cur.moveToFirst()) {
+//            if (cur.isFirst()) {
+//                systems = new ArrayList<>();
+//                do {
+//                    int systemId = cur.getInt(cur.getColumnIndex(SYS_SYSTEM_ID));
+//                    String systemName = cur.getString(cur.getColumnIndex(SYS_SYSTEM_NAME));
+//                    int gameCount = cur.getInt(cur.getColumnIndex(SYS_SYSTEM_GAMECOUNT));
+//                    int cheatCount = cur.getInt(cur.getColumnIndex(SYS_SYSTEM_CHEATCOUNT));
+//                    String lastMod = cur.getString(cur.getColumnIndex(SYS_SYSTEM_LASTMOD));
+//
+//                    SystemPlatform sysPla = new SystemPlatform();
+//                    sysPla.setSystemId(systemId);
+//                    sysPla.setSystemName(systemName);
+//                    sysPla.setGameCount(gameCount);
+//                    sysPla.setCheatCount(cheatCount);
+//                    sysPla.setLastModTimeStamp(Long.parseLong(lastMod));
+//
+//                    systems.add(sysPla);
+//
+//                } while (cur.moveToNext());
+//            }
+//
+//
+//            cur.close();
+//            return systems;
+//        }
+//
+//        return null;
+//    }
+//
+//    public int updateSystemsAndCount(List<SystemPlatform> systemsAndCount) {
+//
+//        int insertCount = 0;
+//        deleteSystemsAndCount();
+//
+//        for (SystemPlatform sysPla : systemsAndCount) {
+//
+//            ContentValues initialValues = new ContentValues();
+//            initialValues.put(SYS_SYSTEM_ID, sysPla.getSystemId());
+//            initialValues.put(SYS_SYSTEM_NAME, sysPla.getSystemName());
+//            initialValues.put(SYS_SYSTEM_GAMECOUNT, sysPla.getGameCount());
+//            initialValues.put(SYS_SYSTEM_CHEATCOUNT, sysPla.getCheatCount());
+//            initialValues.put(SYS_SYSTEM_LASTMOD, sysPla.getLastModTimeStamp());
+//
+//            Long l_result = mDb.insert(DATABASE_TABLE_SYSTEMS, null, initialValues);
+//            if (l_result > -1) {
+//                insertCount++;
+//            }
+//        }
+//
+//        return insertCount;
+//    }
+//
+//    public void deleteSystemsAndCount() {
+//        mDb.delete(DATABASE_TABLE_SYSTEMS, null, null);
+//    }
+//
+//
+//    /**
+//     * Inserts the last search query to the search history.
+//     *
+//     * @param query
+//     * @return
+//     */
+//    public int insertSearchQuery(String query) {
+//
+//        // http://alvinalexander.com/java/java-timestamp-example-current-time-now
+//        Calendar calendar = Calendar.getInstance();
+//        java.util.Date now = calendar.getTime();
+//        java.sql.Timestamp currentTimestamp = new java.sql.Timestamp(now.getTime());
+//
+//        ContentValues initialValues = new ContentValues();
+//        initialValues.put(KEY_SEARCHHISTORY_QUERY, query.trim());
+//        initialValues.put(KEY_SEARCHHISTORY_SEARCHTIME, currentTimestamp.toString());
+//
+//        long retVal = mDb.insert(DATABASE_TABLE_SEARCHHISTORY, null, initialValues);
+//        return Integer.parseInt(String.valueOf(retVal));
+//    }
+//
+//    /**
+//     * Gets the latest search queries done by the user.
+//     *
+//     * @param historyLength
+//     * @return
+//     */
+//    public String[] getSearchHistory(int historyLength) {
+//
+//        String[] searchHistory = new String[historyLength];
+//
+//        Cursor cur = mDb.query(DATABASE_CREATE_SEARCHHISTORY, new String[]{KEY_ROWID, KEY_SEARCHHISTORY_QUERY, KEY_SEARCHHISTORY_SEARCHTIME}, null, null, null, null, KEY_ROWID + " DESC", historyLength + "");
+//
+//        if (cur.moveToFirst()) {
+//            if (cur.isFirst()) {
+//                int i = 0;
+//                do {
+//                    String searchQuery = cur.getString(cur.getColumnIndex(KEY_SEARCHHISTORY_QUERY));
+//                    // String searchTime =
+//                    // cur.getString(cur.getColumnIndex(KEY_SEARCHHISTORY_SEARCHTIME));
+//                    // String rowId =
+//                    // cur.getString(cur.getColumnIndex(KEY_ROWID));
+//
+//                    searchHistory[i] = searchQuery;
+//                    i++;
+//                } while (cur.moveToNext());
+//            }
+//
+//            cur.close();
+//        }
+//        return searchHistory;
+//
+//    }
+//
 //    private static class DatabaseHelper2 extends SQLiteOpenHelper {
 //
 //        DatabaseHelper(Context context) {
