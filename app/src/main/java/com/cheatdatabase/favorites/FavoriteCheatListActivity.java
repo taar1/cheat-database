@@ -38,7 +38,6 @@ import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.widgets.DividerDecoration;
 import com.facebook.ads.AdSize;
 import com.facebook.ads.AdView;
-import com.gc.materialdesign.views.ProgressBarCircularIndeterminate;
 import com.google.gson.Gson;
 import com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView;
 
@@ -49,6 +48,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 import needle.Needle;
 
@@ -68,8 +68,6 @@ public class FavoriteCheatListActivity extends AppCompatActivity {
     Toolbar mToolbar;
     @BindView(R.id.item_list_empty_view)
     TextView mEmptyView;
-    @BindView(R.id.items_list_load_progress)
-    ProgressBarCircularIndeterminate mProgressView;
 
     @BindView(R.id.banner_container)
     LinearLayout facebookBanner;
@@ -88,9 +86,10 @@ public class FavoriteCheatListActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        gameObj = (Game) getIntent().getParcelableExtra("gameObj");
-
         setContentView(R.layout.activity_cheat_list);
+        ButterKnife.bind(this);
+
+        gameObj = getIntent().getParcelableExtra("gameObj");
         setTitle(gameObj.getGameName());
 
         init();
@@ -116,12 +115,9 @@ public class FavoriteCheatListActivity extends AppCompatActivity {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         mRecyclerView.addItemDecoration(new DividerDecoration(this));
         mRecyclerView.getItemAnimator().setRemoveDuration(50);
-//        mRecyclerView.setEmptyView(mEmptyView);
-//        mRecyclerView.setLoadingView(mProgressView);
         mRecyclerView.setHasFixedSize(true);
 
         if (Reachability.reachability.isReachable) {
-//            mRecyclerView.showLoading();
             getCheats();
         } else {
             Toast.makeText(this, R.string.no_internet, Toast.LENGTH_SHORT).show();
@@ -297,8 +293,6 @@ public class FavoriteCheatListActivity extends AppCompatActivity {
             this.visibleCheat = result.getCheat();
             this.lastGameObj = result.getCheat().getGame();
 
-            // editor.putString(Konstanten.PREFERENCES_TEMP_GAME_OBJECT_VIEW,
-            // new Gson().toJson(gameObj));
             editor.putInt(Konstanten.PREFERENCES_PAGE_SELECTED, result.getPosition());
             editor.commit();
 
@@ -331,6 +325,9 @@ public class FavoriteCheatListActivity extends AppCompatActivity {
         Needle.onBackgroundThread().execute(() -> {
             cheatsArrayList = new ArrayList<>();
 
+            // TODO FIXME hier crasht es noch
+            // TODO FIXME hier crasht es noch
+            // TODO FIXME hier crasht es noch
             if (gameObj != null) {
                 if (gameObj.getCheatList() == null) {
                     DatabaseHelper db = new DatabaseHelper(this);
@@ -346,23 +343,23 @@ public class FavoriteCheatListActivity extends AppCompatActivity {
 
     @MainThread
     public void fillListWithCheats() {
-        // TODO FIXME schauen ob man das in eine Needle packen muss
+        Needle.onMainThread().execute(() -> {
+            try {
+                if (cheatsArrayList != null && cheatsArrayList.size() > 0) {
+                    cheatsByGameRecycleListViewAdapter.setCheats(cheatsArrayList);
+                    mRecyclerView.setAdapter(cheatsByGameRecycleListViewAdapter);
 
-        try {
-            if (cheatsArrayList != null && cheatsArrayList.size() > 0) {
-                cheatsByGameRecycleListViewAdapter.setCheats(cheatsArrayList);
-                mRecyclerView.setAdapter(cheatsByGameRecycleListViewAdapter);
-
-                cheatsByGameRecycleListViewAdapter.notifyDataSetChanged();
-            } else {
+                    cheatsByGameRecycleListViewAdapter.notifyDataSetChanged();
+                } else {
+                    error();
+                }
+            } catch (Exception e) {
+                Log.e(TAG, "XXXXX ERR: " + e.getLocalizedMessage());
                 error();
             }
-        } catch (Exception e) {
-            error();
-        }
 
-        mSwipeRefreshLayout.setRefreshing(false);
-//        mRecyclerView.hideLoading();
+            mSwipeRefreshLayout.setRefreshing(false);
+        });
     }
 
     private void error() {

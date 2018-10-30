@@ -78,6 +78,7 @@ public class FavoriteGamesListFragment extends Fragment {
         ButterKnife.bind(this, view);
 
         db = new DatabaseHelper(getActivity());
+        gamesFound = db.getAllFavoritedGames();
         adapter = new FavoritesExpandableListAdapter(parentActivity, groups);
 
         // TODO FIXME CONTEXT MENU DOES NOT WORK YET

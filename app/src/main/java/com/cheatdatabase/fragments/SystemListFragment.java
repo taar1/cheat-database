@@ -19,7 +19,7 @@ import com.cheatdatabase.adapters.SystemsRecycleListViewAdapter;
 import com.cheatdatabase.businessobjects.SystemPlatform;
 import com.cheatdatabase.events.RemoteConfigLoadedEvent;
 import com.cheatdatabase.events.SystemListRecyclerViewClickEvent;
-import com.cheatdatabase.helpers.CheatDatabaseAdapter;
+import com.cheatdatabase.helpers.DatabaseHelper;
 import com.cheatdatabase.helpers.Tools;
 import com.cheatdatabase.helpers.Webservice;
 import com.cheatdatabase.taskresults.GamesAndCheatsCountTaskResult;
@@ -43,7 +43,6 @@ public class SystemListFragment extends Fragment {
     private GamesAndCheatsCountTaskResult gamesAndCheatsCountTaskResult;
     private List<SystemPlatform> systemGameandCheatCounterList = null;
     private SystemsRecycleListViewAdapter systemsRecycleListViewAdapter;
-    private CheatDatabaseAdapter db;
 
     @BindView(R.id.my_recycler_view)
     RecyclerView recyclerView;
@@ -59,8 +58,6 @@ public class SystemListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_systemlist, container, false);
         ButterKnife.bind(this, view);
-
-        db = new CheatDatabaseAdapter(getActivity());
 
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -146,7 +143,7 @@ public class SystemListFragment extends Fragment {
 
     public void loadGamesAndCheatsCounterBackground() {
         Needle.onBackgroundThread().execute(() -> {
-            db.open();
+            DatabaseHelper db = new DatabaseHelper(getActivity());
 
             // System Game count will only be updated every 24h
             boolean getSystemsAndCountsFromWebservice = false;
@@ -198,14 +195,12 @@ public class SystemListFragment extends Fragment {
 
                     }
                 } catch (Exception e) {
-                    //db.deleteSystemsAndCount();
                     Log.e(TAG, "Load game and cheats counters failed: " + e.getLocalizedMessage());
                 }
             } else {
                 systemGameandCheatCounterList = systemsLocal;
             }
 
-            db.close();
             updateUI();
         });
     }

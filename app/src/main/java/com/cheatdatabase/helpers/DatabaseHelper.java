@@ -250,7 +250,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 }
 
                 cur.close();
-                db.close();
                 return favCheats;
             }
         }
@@ -310,7 +309,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
         int count = mCursor.getCount();
         mCursor.close();
-        db.close();
         return count;
     }
 
@@ -384,7 +382,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             }
 
             cur.close();
-            db.close();
             return systems;
         }
 

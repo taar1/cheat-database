@@ -252,6 +252,8 @@ public class GamesBySystemListActivity extends AppCompatActivity {
     public void onEvent(GameListRecyclerViewClickEvent result) {
         if (result.isSucceeded()) {
             Intent intent = new Intent(this, CheatsByGameListActivity.class);
+
+            Game ggg = result.getGame();
             intent.putExtra("gameObj", result.getGame());
             startActivity(intent);
         } else {

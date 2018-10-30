@@ -124,6 +124,10 @@ public class CheatViewPageIndicatorActivity extends AppCompatActivity {
         activePage = pageSelected;
 
         for (Cheat cheat : gameObj.getCheatList()) {
+            cheat.setGameId(gameObj.getGameId());
+            cheat.setGameName(gameObj.getGameName());
+            cheat.setSystemId(gameObj.getSystemId());
+            cheat.setSystemName(gameObj.getSystemName());
             cheatArray.add(cheat);
         }
 

@@ -4,14 +4,16 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Game extends SystemPlatform implements Parcelable {
+public class Game implements Parcelable {
 
+    private int systemId;
+    private String systemName;
     private List<Cheat> cheatList;
-    private int gameId, cheatsCount;
+    private int gameId;
+    private int cheatsCount;
     private String gameName;
 
     public Game() {
@@ -19,12 +21,16 @@ public class Game extends SystemPlatform implements Parcelable {
     }
 
     public Game(int gameId, String gameName, int systemId, String systemName) {
-        super(systemId, systemName);
+//        super(systemId, systemName);
         this.gameId = gameId;
         this.gameName = gameName;
+        this.systemId = systemId;
+        this.systemName = systemName;
     }
 
     protected Game(Parcel in) {
+        systemId = in.readInt();
+        systemName = in.readString();
         cheatList = in.createTypedArrayList(Cheat.CREATOR);
         gameId = in.readInt();
         cheatsCount = in.readInt();
@@ -33,6 +39,8 @@ public class Game extends SystemPlatform implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(systemId);
+        dest.writeString(systemName);
         dest.writeTypedList(cheatList);
         dest.writeInt(gameId);
         dest.writeInt(cheatsCount);
@@ -112,4 +120,19 @@ public class Game extends SystemPlatform implements Parcelable {
         this.gameName = gameName;
     }
 
+    public int getSystemId() {
+        return systemId;
+    }
+
+    public String getSystemName() {
+        return systemName;
+    }
+
+    public void setSystemId(int systemId) {
+        this.systemId = systemId;
+    }
+
+    public void setSystemName(String systemName) {
+        this.systemName = systemName;
+    }
 }

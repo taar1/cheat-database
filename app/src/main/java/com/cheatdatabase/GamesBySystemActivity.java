@@ -89,14 +89,10 @@ public class GamesBySystemActivity extends AppCompatActivity {
         // in content do not change the layout size of the RecyclerView
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         mRecyclerView.addItemDecoration(new DividerDecoration(this));
-//        mRecyclerView.getItemAnimator().setRemoveDuration(50);
-//        mRecyclerView.setEmptyView(mEmptyView);
-//        mRecyclerView.setLoadingView(mProgressView);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.showScrollbar();
 
         if (Reachability.reachability.isReachable) {
-//            mRecyclerView.showLoading();
             getGames(false);
         }
     }
@@ -134,74 +130,64 @@ public class GamesBySystemActivity extends AppCompatActivity {
     private void getGames(boolean forceLoadOnline) {
         Log.d(TAG, "getGames() System ID/NAME: " + systemObj.getSystemId() + "/" + systemObj.getSystemName());
 
-        Needle.onBackgroundThread().execute(new Runnable() {
-            @Override
-            public void run() {
-                gameList = new ArrayList<>();
-                Game[] cachedGamesCollection;
-                Game[] gamesFound = null;
-                boolean isCached = false;
-                String achievementsEnabled;
-                boolean isAchievementsEnabled = sharedPreferences.getBoolean("enable_achievements", true);
+        Needle.onBackgroundThread().execute(() -> {
+            gameList = new ArrayList<>();
+            Game[] cachedGamesCollection;
+            Game[] gamesFound = null;
+            boolean isCached = false;
+            String achievementsEnabled;
+            boolean isAchievementsEnabled = sharedPreferences.getBoolean("enable_achievements", true);
 
-                if (isAchievementsEnabled) {
-                    achievementsEnabled = Konstanten.ACHIEVEMENTS;
-                } else {
-                    achievementsEnabled = Konstanten.NO_ACHIEVEMENTS;
-                }
+            if (isAchievementsEnabled) {
+                achievementsEnabled = Konstanten.ACHIEVEMENTS;
+            } else {
+                achievementsEnabled = Konstanten.NO_ACHIEVEMENTS;
+            }
 
-                TreeMap<String, TreeMap<String, Game[]>> gamesBySystemInCache = cheatDatabaseApplication.getGamesBySystemCached();
-                TreeMap gameListTree = null;
-                if (gamesBySystemInCache.containsKey(String.valueOf(systemObj.getSystemId()))) {
+            TreeMap<String, TreeMap<String, Game[]>> gamesBySystemInCache = cheatDatabaseApplication.getGamesBySystemCached();
+            TreeMap gameListTree = null;
+            if (gamesBySystemInCache.containsKey(String.valueOf(systemObj.getSystemId()))) {
 
-                    gameListTree = gamesBySystemInCache.get(String.valueOf(systemObj.getSystemId()));
-                    if (gameListTree != null) {
+                gameListTree = gamesBySystemInCache.get(String.valueOf(systemObj.getSystemId()));
+                if (gameListTree != null) {
 
-                        if (gameListTree.containsKey(achievementsEnabled)) {
-                            cachedGamesCollection = (Game[]) gameListTree.get(achievementsEnabled);
+                    if (gameListTree.containsKey(achievementsEnabled)) {
+                        cachedGamesCollection = (Game[]) gameListTree.get(achievementsEnabled);
 
-                            if (cachedGamesCollection.length > 0) {
-                                gamesFound = cachedGamesCollection;
-                                isCached = true;
-                            }
+                        if (cachedGamesCollection.length > 0) {
+                            gamesFound = cachedGamesCollection;
+                            isCached = true;
                         }
                     }
                 }
-
-                // TODO FIXME java.lang.NullPointerException: Attempt to invoke virtual method 'boolean java.lang.String.equals(java.lang.Object)' on a null object reference
-                // TODO FIXME java.lang.NullPointerException: Attempt to invoke virtual method 'boolean java.lang.String.equals(java.lang.Object)' on a null object reference
-                // TODO FIXME java.lang.NullPointerException: Attempt to invoke virtual method 'boolean java.lang.String.equals(java.lang.Object)' on a null object reference
-                // TODO beim fast scrollen gibts den nullpointer
-                // TODO beim fast scrollen gibts den nullpointer
-                // TODO beim fast scrollen gibts den nullpointer
-
-                if (!isCached || forceLoadOnline) {
-                    gamesFound = Webservice.getGameListBySystemId(systemObj.getSystemId(), systemObj.getSystemName(), isAchievementsEnabled);
-                    while (gamesFound == null) {
-                        gamesFound = Webservice.getGameListBySystemId(systemObj.getSystemId(), systemObj.getSystemName(), isAchievementsEnabled);
-                    }
-
-                    TreeMap<String, Game[]> updatedGameListForCache = new TreeMap<>();
-                    updatedGameListForCache.put(achievementsEnabled, gamesFound);
-
-                    String checkWhichSubKey;
-                    if (achievementsEnabled.equalsIgnoreCase(Konstanten.ACHIEVEMENTS)) {
-                        checkWhichSubKey = Konstanten.NO_ACHIEVEMENTS;
-                    } else {
-                        checkWhichSubKey = Konstanten.ACHIEVEMENTS;
-                    }
-
-                    if ((gameListTree != null) && (gameListTree.containsKey(checkWhichSubKey))) {
-                        Game[] existingGamesInCache = (Game[]) gameListTree.get(checkWhichSubKey);
-                        updatedGameListForCache.put(checkWhichSubKey, existingGamesInCache);
-                    }
-
-                    gamesBySystemInCache.put(String.valueOf(systemObj.getSystemId()), updatedGameListForCache);
-                    cheatDatabaseApplication.setGamesBySystemCached(gamesBySystemInCache);
-                }
-                Collections.addAll(gameList, gamesFound);
-                updateUI();
             }
+
+            if (!isCached || forceLoadOnline) {
+                gamesFound = Webservice.getGameListBySystemId(systemObj.getSystemId(), systemObj.getSystemName(), isAchievementsEnabled);
+                while (gamesFound == null) {
+                    gamesFound = Webservice.getGameListBySystemId(systemObj.getSystemId(), systemObj.getSystemName(), isAchievementsEnabled);
+                }
+
+                TreeMap<String, Game[]> updatedGameListForCache = new TreeMap<>();
+                updatedGameListForCache.put(achievementsEnabled, gamesFound);
+
+                String checkWhichSubKey;
+                if (achievementsEnabled.equalsIgnoreCase(Konstanten.ACHIEVEMENTS)) {
+                    checkWhichSubKey = Konstanten.NO_ACHIEVEMENTS;
+                } else {
+                    checkWhichSubKey = Konstanten.ACHIEVEMENTS;
+                }
+
+                if ((gameListTree != null) && (gameListTree.containsKey(checkWhichSubKey))) {
+                    Game[] existingGamesInCache = (Game[]) gameListTree.get(checkWhichSubKey);
+                    updatedGameListForCache.put(checkWhichSubKey, existingGamesInCache);
+                }
+
+                gamesBySystemInCache.put(String.valueOf(systemObj.getSystemId()), updatedGameListForCache);
+                cheatDatabaseApplication.setGamesBySystemCached(gamesBySystemInCache);
+            }
+            Collections.addAll(gameList, gamesFound);
+            updateUI();
         });
 
     }
