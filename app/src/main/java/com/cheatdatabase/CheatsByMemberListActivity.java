@@ -22,6 +22,7 @@ import com.cheatdatabase.businessobjects.Member;
 import com.cheatdatabase.events.CheatListRecyclerViewClickEvent;
 import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Reachability;
+import com.cheatdatabase.helpers.Tools;
 import com.cheatdatabase.helpers.Webservice;
 import com.cheatdatabase.members.cheatview.MemberCheatViewPageIndicator;
 import com.cheatdatabase.widgets.DividerDecoration;
@@ -71,12 +72,12 @@ public class CheatsByMemberListActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ButterKnife.bind(this);
         setContentView(R.layout.activity_member_cheat_list);
-
-        init();
+        ButterKnife.bind(this);
 
         member = getIntent().getParcelableExtra("member");
+        init();
+
         memberCheatRecycleListViewAdapter = new MemberCheatRecycleListViewAdapter();
 
         mSwipeRefreshLayout.setRefreshing(true);
@@ -97,6 +98,11 @@ public class CheatsByMemberListActivity extends AppCompatActivity {
     }
 
     private void init() {
+        mToolbar = Tools.initToolbarBase(this, mToolbar);
+
+        SharedPreferences settings = getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
+        editor = settings.edit();
+
         adView = new AdView(this, Konstanten.FACEBOOK_AUDIENCE_NETWORK_NATIVE_BANNER_ID, AdSize.BANNER_HEIGHT_50);
         facebookBanner.addView(adView);
         adView.loadAd();
@@ -108,8 +114,6 @@ public class CheatsByMemberListActivity extends AppCompatActivity {
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setTitle(getString(R.string.members_cheats_title, member.getUsername()));
 
-        SharedPreferences settings = getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
-        editor = settings.edit();
     }
 
     void getCheats() {

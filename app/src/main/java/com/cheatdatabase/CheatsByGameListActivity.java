@@ -16,7 +16,6 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -70,6 +69,8 @@ public class CheatsByGameListActivity extends AppCompatActivity {
 
     Game gameObj;
 
+    @BindView(R.id.outer_layout)
+    LinearLayout outerLayout;
     @BindView(R.id.my_recycler_view)
     FastScrollRecyclerView mRecyclerView;
     @BindView(R.id.swipe_refresh_layout)
@@ -306,7 +307,7 @@ public class CheatsByGameListActivity extends AppCompatActivity {
                 finish();
                 return true;
             case R.id.action_add_to_favorites:
-                Toast.makeText(CheatsByGameListActivity.this, R.string.favorite_adding, Toast.LENGTH_SHORT).show();
+                Tools.showSnackbar(outerLayout, getString(R.string.favorite_adding));
                 addCheatsToFavoritesTask(gameObj);
                 return true;
             case R.id.action_submit_cheat:
@@ -399,35 +400,26 @@ public class CheatsByGameListActivity extends AppCompatActivity {
 
     void addCheatsToFavoritesTask(Game game) {
         Needle.onBackgroundThread().execute(() -> {
-            int returnValueCode;
+            String text;
             DatabaseHelper db = new DatabaseHelper(this);
             try {
                 int retVal = db.insertFavoriteCheats(game);
                 if (retVal > 0) {
-                    returnValueCode = R.string.add_favorites_ok;
+                    text = getApplicationContext().getString(R.string.add_favorites_ok);
                 } else {
-                    returnValueCode = R.string.favorite_error;
+                    text = getApplicationContext().getString(R.string.favorite_error);
                 }
             } catch (Exception e) {
                 Log.e(TAG, e.getLocalizedMessage());
-                returnValueCode = R.string.favorite_error;
+                text = getApplicationContext().getString(R.string.favorite_error);
             }
 
-            finishedAddingCheatsToFavorites(returnValueCode);
+            finishedAddingCheatsToFavorites(text);
         });
     }
 
-    void finishedAddingCheatsToFavorites(int returnValueCode) {
-        // TODO Favorite Icon animation abschalten
-        Toast.makeText(CheatsByGameListActivity.this, returnValueCode, Toast.LENGTH_LONG).show();
-    }
-
-    public void highlightRatingIcon(ImageButton btnRateCheat, boolean highlight) {
-        if (highlight) {
-            btnRateCheat.setImageResource(R.drawable.ic_action_star);
-        } else {
-            btnRateCheat.setImageResource(R.drawable.ic_action_not_important);
-        }
+    void finishedAddingCheatsToFavorites(String text) {
+        Tools.showSnackbar(outerLayout, text);
     }
 
     @Subscribe

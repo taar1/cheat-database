@@ -59,6 +59,9 @@ import org.greenrobot.eventbus.Subscribe;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * Swipe through cheats horizontally with this CheatViewPageIndicatorActivity.
  *
@@ -70,6 +73,14 @@ public class CheatViewPageIndicatorActivity extends AppCompatActivity {
     private static final String TAG = CheatViewPageIndicatorActivity.class.getSimpleName();
 
     private Intent intent;
+
+
+    @BindView(R.id.outer_layout)
+    LinearLayout outerLayout;
+    @BindView(R.id.toolbar)
+    Toolbar mToolbar;
+    @BindView(R.id.banner_container)
+    LinearLayout facebookBanner;
 
     private View viewLayout;
     private int pageSelected;
@@ -90,10 +101,8 @@ public class CheatViewPageIndicatorActivity extends AppCompatActivity {
 
     private int activePage;
 
-    private Toolbar mToolbar;
     private ShareActionProvider mShare;
 
-    private LinearLayout facebookBanner;
     private AdView adView;
 
     @Override
@@ -104,6 +113,7 @@ public class CheatViewPageIndicatorActivity extends AppCompatActivity {
         LayoutInflater inflater = LayoutInflater.from(this);
         viewLayout = inflater.inflate(intent.getIntExtra("layoutResourceId", R.layout.activity_cheatview_pager), null);
         setContentView(viewLayout);
+        ButterKnife.bind(this);
 
         init();
 
@@ -152,7 +162,6 @@ public class CheatViewPageIndicatorActivity extends AppCompatActivity {
 
         mToolbar = Tools.initToolbarBase(this, mToolbar);
 
-        facebookBanner = findViewById(R.id.banner_container);
         adView = new AdView(this, Konstanten.FACEBOOK_AUDIENCE_NETWORK_NATIVE_BANNER_ID, AdSize.BANNER_HEIGHT_50);
         facebookBanner.addView(adView);
         adView.loadAd();
@@ -338,11 +347,8 @@ public class CheatViewPageIndicatorActivity extends AppCompatActivity {
                 }
                 return true;
             case R.id.action_add_to_favorites:
-                // background task?
-                // TODO if cheat already in favorites, change the icon/action to
-                // remove cheat from favorites
-                Toast.makeText(CheatViewPageIndicatorActivity.this, R.string.favorite_adding, Toast.LENGTH_SHORT).show();
-                Helper.addFavorite(CheatViewPageIndicatorActivity.this, visibleCheat);
+                Tools.showSnackbar(outerLayout, getString(R.string.favorite_adding));
+                Helper.addFavorite(this, outerLayout, visibleCheat);
                 return true;
             case R.id.action_report:
                 showReportDialog();

@@ -20,7 +20,12 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cheatdatabase.CheatForumActivity;
@@ -60,6 +65,9 @@ import org.greenrobot.eventbus.Subscribe;
 import java.lang.reflect.Type;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * Horizontal sliding through cheats submitted by member.
  *
@@ -69,6 +77,15 @@ import java.util.List;
 public class MemberCheatViewPageIndicator extends AppCompatActivity {
 
     private final String TAG = MemberCheatViewPageIndicator.class.getName();
+
+    @BindView(R.id.outer_layout)
+    LinearLayout outerLayout;
+    @BindView(R.id.toolbar)
+    Toolbar mToolbar;
+    @BindView(R.id.banner_container)
+    LinearLayout facebookBanner;
+
+
 
     private Intent intent;
 
@@ -84,7 +101,6 @@ public class MemberCheatViewPageIndicator extends AppCompatActivity {
 
     private Member member;
 
-    public AlertDialog.Builder builder;
 
     private MemberCheatViewFragmentAdapter mAdapter;
     private ViewPager mPager;
@@ -92,9 +108,7 @@ public class MemberCheatViewPageIndicator extends AppCompatActivity {
     private int activePage;
 
     private ShareActionProvider mShare;
-    private Toolbar mToolbar;
 
-    private LinearLayout facebookBanner;
     private AdView adView;
 
 
@@ -106,17 +120,33 @@ public class MemberCheatViewPageIndicator extends AppCompatActivity {
         LayoutInflater inflater = LayoutInflater.from(this);
         viewLayout = inflater.inflate(R.layout.activity_cheatview_pager, null);
         setContentView(viewLayout);
+        ButterKnife.bind(this);
 
         init();
 
-        // TODO prüfen ob das so korrekt funktioniert
-        // TODO prüfen ob das so korrekt funktioniert
+        // TODO FIXME FAVORITEN ANZEIGEN GEHT NOCH NICHT (EINZELNER)
+        // TODO FIXME FAVORITEN ANZEIGEN GEHT NOCH NICHT (EINZELNER)
+        // TODO FIXME FAVORITEN ANZEIGEN GEHT NOCH NICHT (EINZELNER)
+        // TODO FIXME FAVORITEN ANZEIGEN GEHT NOCH NICHT (EINZELNER)
+        // TODO FIXME FAVORITEN ANZEIGEN GEHT NOCH NICHT (EINZELNER)
+        // TODO FIXME FAVORITEN ANZEIGEN GEHT NOCH NICHT (EINZELNER)
+        // TODO FIXME FAVORITEN ANZEIGEN GEHT NOCH NICHT (EINZELNER)
+        // TODO FIXME FAVORITEN ANZEIGEN GEHT NOCH NICHT (EINZELNER)
+        // TODO FIXME FAVORITEN ANZEIGEN GEHT NOCH NICHT (EINZELNER)
+        // TODO FIXME FAVORITEN ANZEIGEN GEHT NOCH NICHT (EINZELNER)
+        // TODO FIXME FAVORITEN ANZEIGEN GEHT NOCH NICHT (EINZELNER)
+        // TODO FIXME FAVORITEN ANZEIGEN GEHT NOCH NICHT (EINZELNER)
+        // TODO FIXME FAVORITEN ANZEIGEN GEHT NOCH NICHT (EINZELNER)
+        // TODO FIXME FAVORITEN ANZEIGEN GEHT NOCH NICHT (EINZELNER)
+        // TODO FIXME FAVORITEN ANZEIGEN GEHT NOCH NICHT (EINZELNER)
+        // TODO FIXME FAVORITEN ANZEIGEN GEHT NOCH NICHT (EINZELNER)
+
+
         Type type = new TypeToken<List<Cheat>>() {
         }.getType();
         cheatList = new Gson().fromJson(sharedPreferences.getString(Konstanten.PREFERENCES_TEMP_CHEAT_ARRAY_OBJECT_VIEW, null), type);
 
         if ((cheatList == null) || (cheatList.size() < 1)) {
-//            cheatList = new Gson().fromJson(intent.getStringExtra("cheatList"), type);
             cheatList = intent.getParcelableArrayListExtra("cheatList");
         }
         pageSelected = intent.getIntExtra("selectedPage", 0);
@@ -143,7 +173,6 @@ public class MemberCheatViewPageIndicator extends AppCompatActivity {
 
         mToolbar = Tools.initToolbarBase(this, mToolbar);
 
-        facebookBanner = findViewById(R.id.banner_container);
         adView = new AdView(this, Konstanten.FACEBOOK_AUDIENCE_NETWORK_NATIVE_BANNER_ID, AdSize.BANNER_HEIGHT_50);
         facebookBanner.addView(adView);
         adView.loadAd();
@@ -327,13 +356,12 @@ public class MemberCheatViewPageIndicator extends AppCompatActivity {
                 explicitIntent = new Intent(MemberCheatViewPageIndicator.this, CheatForumActivity.class);
                 explicitIntent.putExtra("gameObj", gameObj);
                 explicitIntent.putExtra("cheatObj", visibleCheat);
-
                 explicitIntent.putExtra("cheatList", new Gson().toJson(cheatList));
                 startActivity(explicitIntent);
                 return true;
             case R.id.action_add_to_favorites:
-                Toast.makeText(MemberCheatViewPageIndicator.this, R.string.favorite_adding, Toast.LENGTH_SHORT).show();
-                Helper.addFavorite(MemberCheatViewPageIndicator.this, visibleCheat);
+                Tools.showSnackbar(outerLayout, getString(R.string.favorite_adding));
+                Helper.addFavorite(this, outerLayout, visibleCheat);
                 return true;
             case R.id.action_report:
                 showReportDialog();

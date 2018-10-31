@@ -10,6 +10,9 @@
         <item name="colorControlNormal">#fff</item>
         <item name="colorControlHighlight">#3fff</item>
         <item name="android:navigationBarColor">@color/action_bar</item>
+
+        <!-- Star Rating Bar Color -->
+        <item name="colorControlActivated">@color/gold</item>
     </style>
 
     <style name="GameTitle">
@@ -20,6 +23,7 @@
 
     <style name="CheatTitlePhone">
         <item name="android:textColor">#FFFFFF</item>
+
         <item name="android:textSize">22sp</item>
     </style>
 
@@ -238,4 +242,8 @@
         <item name="android:background">@color/color_primary_dark</item>
     </style>
 
+    <!--<style name="RedRatingBar" parent="Theme.AppCompat">-->
+    <!--<item name="colorControlNormal">@color/rating_inactive</item>-->
+    <!--<item name="colorControlActivated">@color/colorPrimary</item>-->
+    <!--</style>-->
 </resources>

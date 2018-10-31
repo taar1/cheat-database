@@ -20,7 +20,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.cheatdatabase.R;
 import com.cheatdatabase.SubmitCheatActivity;
@@ -35,6 +34,7 @@ import com.cheatdatabase.favorites.handset.cheatview.FavoritesCheatViewPageIndic
 import com.cheatdatabase.helpers.DatabaseHelper;
 import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Reachability;
+import com.cheatdatabase.helpers.Tools;
 import com.cheatdatabase.widgets.DividerDecoration;
 import com.facebook.ads.AdSize;
 import com.facebook.ads.AdView;
@@ -60,6 +60,8 @@ public class FavoriteCheatListActivity extends AppCompatActivity {
 
     private CheatsByGameRecycleListViewAdapter cheatsByGameRecycleListViewAdapter;
 
+    @BindView(R.id.outer_layout)
+    LinearLayout outerLayout;
     @BindView(R.id.my_recycler_view)
     FastScrollRecyclerView mRecyclerView;
     @BindView(R.id.swipe_refresh_layout)
@@ -120,7 +122,7 @@ public class FavoriteCheatListActivity extends AppCompatActivity {
         if (Reachability.reachability.isReachable) {
             getCheats();
         } else {
-            Toast.makeText(this, R.string.no_internet, Toast.LENGTH_SHORT).show();
+            Tools.showSnackbar(outerLayout, getString(R.string.no_internet));
         }
 
     }
@@ -217,45 +219,18 @@ public class FavoriteCheatListActivity extends AppCompatActivity {
         super.onSaveInstanceState(outState);
     }
 
-//    @Override
-//    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-//        getIntent().putExtra("position", savedInstanceState.getInt("position"));
-//        getIntent().putExtra("gameObj", savedInstanceState.getSerializable("gameObj"));
-//        super.onRestoreInstanceState(savedInstanceState);
-//    }
-
     public void showRatingDialog() {
         if ((member == null) || (member.getMid() == 0)) {
-            Toast.makeText(this, R.string.error_login_required, Toast.LENGTH_LONG).show();
+            Tools.showSnackbar(outerLayout, getString(R.string.error_login_required));
         } else {
             new RateCheatMaterialDialog(this, visibleCheat, member);
         }
     }
 
-//    @Override
-//    public void onFinishRateCheatDialog(int selectedRating) {
-//        visibleCheat.setMemberRating(selectedRating);
-//        favoritesDetailsFragment.updateMemberCheatRating(selectedRating);
-//
-//        // FIXME make the star to highlighton all fragments
-//        favoritesDetailsFragment.highlightRatingIcon(true);
-//        favoritesCheatMetaFragment.highlightRatingIcon(true);
-//        favoritesCheatForumFragment.highlightRatingIcon(true);
-//
-//        Toast.makeText(this, R.string.rating_inserted, Toast.LENGTH_SHORT).show();
-//    }
-
     @Subscribe
     public void onEvent(CheatRatingFinishedEvent result) {
         visibleCheat.setMemberRating(result.getRating());
-//        favoritesDetailsFragment.updateMemberCheatRating(result.getRating());
-//
-//        // FIXME make the star to highlighton all fragments
-//        favoritesDetailsFragment.highlightRatingIcon(true);
-//        favoritesCheatMetaFragment.highlightRatingIcon(true);
-//        favoritesCheatForumFragment.highlightRatingIcon(true);
-
-        Toast.makeText(this, R.string.rating_inserted, Toast.LENGTH_SHORT).show();
+        Tools.showSnackbar(outerLayout, getString(R.string.rating_inserted));
     }
 
     @Override
@@ -306,11 +281,10 @@ public class FavoriteCheatListActivity extends AppCompatActivity {
                 explicitIntent.putExtra("layoutResourceId", R.layout.activity_cheatview_pager);
                 startActivity(explicitIntent);
             } else {
-                Toast.makeText(this, R.string.no_internet, Toast.LENGTH_SHORT).show();
+                Tools.showSnackbar(outerLayout, getString(R.string.no_internet));
             }
-
         } else {
-            Toast.makeText(this, R.string.no_internet, Toast.LENGTH_SHORT).show();
+            Tools.showSnackbar(outerLayout, getString(R.string.no_internet));
         }
     }
 

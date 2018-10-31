@@ -28,6 +28,32 @@ public class Member implements Parcelable {
         this.banned = banned;
     }
 
+    protected Member(Parcel in) {
+        username = in.readString();
+        password = in.readString();
+        email = in.readString();
+        website = in.readString();
+        city = in.readString();
+        greeting = in.readString();
+        mid = in.readInt();
+        errorCode = in.readInt();
+        cheatSubmissionCount = in.readInt();
+        banned = in.readByte() != 0;
+        avatar = in.readParcelable(Bitmap.class.getClassLoader());
+    }
+
+    public static final Creator<Member> CREATOR = new Creator<Member>() {
+        @Override
+        public Member createFromParcel(Parcel in) {
+            return new Member(in);
+        }
+
+        @Override
+        public Member[] newArray(int size) {
+            return new Member[size];
+        }
+    };
+
     public Bitmap getAvatar() {
         return avatar;
     }
@@ -183,6 +209,16 @@ public class Member implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-
+        dest.writeString(username);
+        dest.writeString(password);
+        dest.writeString(email);
+        dest.writeString(website);
+        dest.writeString(city);
+        dest.writeString(greeting);
+        dest.writeInt(mid);
+        dest.writeInt(errorCode);
+        dest.writeInt(cheatSubmissionCount);
+        dest.writeByte((byte) (banned ? 1 : 0));
+        dest.writeParcelable(avatar, flags);
     }
 }

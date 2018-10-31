@@ -41,6 +41,8 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import needle.Needle;
+
 /**
  * Tools. Copyright (c) 2010, 2011<br>
  *
@@ -509,11 +511,14 @@ public class Tools {
     }
 
     public static void showSnackbar(View fromView, String message) {
-        if ((message != null) && (fromView != null)) {
-            Snackbar snackbar = Snackbar.make(fromView, message, Snackbar.LENGTH_LONG);
-            snackbar.setText(message);
-            snackbar.show();
-        }
+        Needle.onMainThread().execute(() -> {
+            if ((message != null) && (fromView != null)) {
+                Snackbar snackbar = Snackbar.make(fromView, message, Snackbar.LENGTH_LONG);
+                snackbar.setText(message);
+                snackbar.show();
+            }
+        });
+
     }
 
     public static void showKeyboard(Context context, View view) {

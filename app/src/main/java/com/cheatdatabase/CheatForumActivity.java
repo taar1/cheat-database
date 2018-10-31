@@ -9,7 +9,6 @@ import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.support.annotation.Nullable;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
@@ -68,6 +67,8 @@ public class CheatForumActivity extends AppCompatActivity implements CheatListFr
     private Cheat cheatObj;
     private Game gameObj;
 
+    @BindView(R.id.outer_layout)
+    LinearLayout outerLayout;
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
     @BindView(R.id.llForumMain)
@@ -396,8 +397,8 @@ public class CheatForumActivity extends AppCompatActivity implements CheatListFr
                 showRatingDialog();
                 return true;
             case R.id.action_add_to_favorites:
-                Toast.makeText(this, R.string.favorite_adding, Toast.LENGTH_SHORT).show();
-                Helper.addFavorite(this, cheatObj);
+                Tools.showSnackbar(outerLayout, getString(R.string.favorite_adding));
+                Helper.addFavorite(this, outerLayout, cheatObj);
                 return true;
             case R.id.action_share:
                 Helper.shareCheat(cheatObj, this);

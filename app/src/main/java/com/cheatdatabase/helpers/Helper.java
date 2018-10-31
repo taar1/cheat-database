@@ -11,6 +11,7 @@ import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.pm.Signature;
 import android.util.Base64;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import com.cheatdatabase.R;
@@ -70,13 +71,13 @@ public class Helper extends Activity {
         }
     }
 
-    public static void addFavorite(Context context, Cheat visibleCheat) {
+    public static void addFavorite(Context context, View parentView, Cheat visibleCheat) {
         DatabaseHelper db = new DatabaseHelper(context);
 
         if (db.insertFavoriteCheat(visibleCheat) > 0) {
-            Toast.makeText(context, R.string.add_favorite_ok, Toast.LENGTH_SHORT).show();
+            Tools.showSnackbar(parentView, context.getString(R.string.add_favorite_ok));
         } else {
-            Toast.makeText(context, R.string.favorite_error, Toast.LENGTH_SHORT).show();
+            Tools.showSnackbar(parentView, context.getString(R.string.favorite_error));
         }
     }
 
