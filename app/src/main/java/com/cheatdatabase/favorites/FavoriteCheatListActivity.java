@@ -8,7 +8,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.annotation.MainThread;
 import android.support.v4.app.NavUtils;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -289,34 +288,32 @@ public class FavoriteCheatListActivity extends AppCompatActivity {
     }
 
     @OnClick(R.id.add_new_cheat_button)
-    void clickAddNewCheat() {
+    private void clickAddNewCheat() {
         Intent explicitIntent = new Intent(FavoriteCheatListActivity.this, SubmitCheatActivity.class);
         explicitIntent.putExtra("gameObj", gameObj);
         startActivity(explicitIntent);
     }
 
-    void getCheats() {
+    private void getCheats() {
         Needle.onBackgroundThread().execute(() -> {
             cheatsArrayList = new ArrayList<>();
 
-            // TODO FIXME hier crasht es noch
-            // TODO FIXME hier crasht es noch
-            // TODO FIXME hier crasht es noch
             if (gameObj != null) {
                 if (gameObj.getCheatList() == null) {
                     DatabaseHelper db = new DatabaseHelper(this);
                     gameObj.setCheatList(db.getAllFavoritedCheatsByGame(gameObj.getGameId()));
                 }
 
-                fillListWithCheats();
+                cheatsArrayList = gameObj.getCheatList();
+
+                updateUI();
             } else {
                 error();
             }
         });
     }
 
-    @MainThread
-    public void fillListWithCheats() {
+    private void updateUI() {
         Needle.onMainThread().execute(() -> {
             try {
                 if (cheatsArrayList != null && cheatsArrayList.size() > 0) {
@@ -328,7 +325,7 @@ public class FavoriteCheatListActivity extends AppCompatActivity {
                     error();
                 }
             } catch (Exception e) {
-                Log.e(TAG, "XXXXX ERR: " + e.getLocalizedMessage());
+                Log.e(TAG, e.getLocalizedMessage());
                 error();
             }
 
