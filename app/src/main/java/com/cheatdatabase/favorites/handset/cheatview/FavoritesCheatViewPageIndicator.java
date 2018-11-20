@@ -117,7 +117,7 @@ public class FavoritesCheatViewPageIndicator extends AppCompatActivity implement
         init();
 
         try {
-            gameObj = (Game) intent.getParcelableExtra("gameObj");
+            gameObj = intent.getParcelableExtra("gameObj");
             pageSelected = intent.getIntExtra("position", 0);
 
             activePage = pageSelected;
@@ -203,12 +203,7 @@ public class FavoritesCheatViewPageIndicator extends AppCompatActivity implement
                     clipPagerTitleView.setText(cheatTitles[index]);
                     clipPagerTitleView.setNormalColor(Color.parseColor("#88ffffff")); // White transparent
                     clipPagerTitleView.setSelectedColor(Color.WHITE);
-                    clipPagerTitleView.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            mPager.setCurrentItem(index);
-                        }
-                    });
+                    clipPagerTitleView.setOnClickListener(v -> mPager.setCurrentItem(index));
                     return clipPagerTitleView;
                 }
 
@@ -226,16 +221,10 @@ public class FavoritesCheatViewPageIndicator extends AppCompatActivity implement
             mPager.setCurrentItem(pageSelected);
 
             FloatingActionButton fa = viewLayout.findViewById(R.id.add_new_cheat_button);
-            fa.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-//                    SubmitCheatActivity_.intent(FavoritesCheatViewPageIndicator.this).gameObj(gameObj).start();
-
-                    Intent intent = new Intent(FavoritesCheatViewPageIndicator.this, SubmitCheatActivity.class);
-                    intent.putExtra("gameObj", gameObj);
-                    startActivity(intent);
-
-                }
+            fa.setOnClickListener(v -> {
+                Intent intent = new Intent(FavoritesCheatViewPageIndicator.this, SubmitCheatActivity.class);
+                intent.putExtra("gameObj", gameObj);
+                startActivity(intent);
             });
         } catch (Exception e2) {
             Log.e(TAG, "ERROR: " + getPackageName() + "/" + getTitle() + "... " + e2.getMessage());

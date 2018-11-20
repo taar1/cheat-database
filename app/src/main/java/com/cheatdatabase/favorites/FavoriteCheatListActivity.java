@@ -288,7 +288,7 @@ public class FavoriteCheatListActivity extends AppCompatActivity {
     }
 
     @OnClick(R.id.add_new_cheat_button)
-    private void clickAddNewCheat() {
+    void clickAddNewCheat() {
         Intent explicitIntent = new Intent(FavoriteCheatListActivity.this, SubmitCheatActivity.class);
         explicitIntent.putExtra("gameObj", gameObj);
         startActivity(explicitIntent);

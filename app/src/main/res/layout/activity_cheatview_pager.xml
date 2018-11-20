@@ -6,21 +6,6 @@
 
     <include layout="@layout/toolbar" />
 
-    <LinearLayout
-        android:id="@+id/undobar"
-        style="@style/UndoBar"
-        android:visibility="gone">
-
-        <TextView
-            android:id="@+id/undobar_message"
-            style="@style/UndoBarMessage"
-            android:textIsSelectable="false" />
-
-        <Button
-            android:id="@+id/undobar_button"
-            style="@style/UndoBarButton" />
-    </LinearLayout>
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -39,14 +24,29 @@
             android:layout_below="@id/magic_indicator"
             android:paddingBottom="52dp" />
 
+        <LinearLayout
+            android:id="@+id/undobar"
+            style="@style/UndoBar"
+            android:layout_above="@id/pager"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/undobar_message"
+                style="@style/UndoBarMessage"
+                android:textIsSelectable="false" />
+
+            <Button
+                android:id="@+id/undobar_button"
+                style="@style/UndoBarButton" />
+        </LinearLayout>
+
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/add_new_cheat_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginRight="20dp"
+            android:layout_marginEnd="20dp"
             android:layout_marginBottom="72dp"
             android:alpha="0.8"
             android:src="@drawable/ic_add_black_48dp" />

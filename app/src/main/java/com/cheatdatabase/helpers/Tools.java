@@ -332,12 +332,11 @@ public class Tools {
 
     /**
      * Get Systems from xml/systems.xml
-     *
      * @param activity
      * @return
      */
     public static List<SystemPlatform> getGameSystemsFromXml(Activity activity) {
-        ArrayList<SystemPlatform> al = new ArrayList<>();
+        ArrayList<SystemPlatform> platformArrayList = new ArrayList<>();
 
         try {
             XmlResourceParser xrp = activity.getResources().getXml(R.xml.systems);
@@ -352,10 +351,8 @@ public class Tools {
                         gs.setSystemId(Integer.parseInt(systemId));
                         gs.setSystemName(systemName);
 
-                        al.add(gs);
+                        platformArrayList.add(gs);
                     }
-                } else if (xrp.getEventType() == XmlPullParser.END_TAG) {
-                } else if (xrp.getEventType() == XmlPullParser.TEXT) {
                 }
                 xrp.next();
             }
@@ -363,8 +360,7 @@ public class Tools {
             e.printStackTrace();
         }
 
-        return al;
-
+        return platformArrayList;
     }
 
     public SystemPlatform[] getSystems(Activity activity) {

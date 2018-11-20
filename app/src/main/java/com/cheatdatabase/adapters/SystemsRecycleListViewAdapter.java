@@ -19,6 +19,7 @@ import com.cheatdatabase.helpers.Tools;
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class SystemsRecycleListViewAdapter extends RecyclerView.Adapter<SystemsRecycleListViewAdapter.ViewHolder> {
@@ -36,15 +37,17 @@ public class SystemsRecycleListViewAdapter extends RecyclerView.Adapter<SystemsR
 
     public void setSystemPlatforms(List<SystemPlatform> systemPlatforms) {
         systemPlatformList = systemPlatforms;
+
+        Collections.sort(systemPlatformList, (system1, system2) -> system1.getSystemName().toLowerCase().compareTo(system2.getSystemName().toLowerCase()));
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        public TextView mSystemName;
-        public TextView mSubtitle;
-        public LinearLayout mLinearLayout;
-        public OnSystemClickedListener mListener;
+        TextView mSystemName;
+        TextView mSubtitle;
+        LinearLayout mLinearLayout;
+        OnSystemClickedListener mListener;
 
-        public ViewHolder(View v, OnSystemClickedListener listener) {
+        ViewHolder(View v, OnSystemClickedListener listener) {
             super(v);
             mListener = listener;
 

@@ -108,16 +108,13 @@ public class FavoriteGamesListFragment extends Fragment {
 
     private void loadGames() {
 
-        new Thread(() -> {
-            gamesFound = db.getAllFavoritedGames();
+        gamesFound = db.getAllFavoritedGames();
 
-            Message msg = Message.obtain();
-            msg.what = STEP_ONE_COMPLETE;
-            handler.sendMessage(msg);
+        Message msg = Message.obtain();
+        msg.what = STEP_ONE_COMPLETE;
+        handler.sendMessage(msg);
 
-            createData();
-        }).start();
-
+        createData();
     }
 
     public void createData() {
@@ -128,7 +125,9 @@ public class FavoriteGamesListFragment extends Fragment {
                 Set<String> systems = new HashSet<>();
                 // Get system names
                 for (Game game : gamesFound) {
-                    systems.add(game.getSystemName());
+                    if ((game.getSystemName() != null) && (game.getSystemName().length() > 0)) {
+                        systems.add(game.getSystemName());
+                    }
                 }
 
                 // Sort system names
@@ -144,9 +143,11 @@ public class FavoriteGamesListFragment extends Fragment {
 
                     // Fill each group with the game names
                     for (Game game : gamesFound) {
-                        if (game.getSystemName().equalsIgnoreCase(systemsSorted.get(i))) {
-                            group.children.add(game.getGameName());
-                            group.gameChildren.add(game);
+                        if ((game.getSystemName() != null) && (game.getSystemName().length() > 0)) {
+                            if (game.getSystemName().equalsIgnoreCase(systemsSorted.get(i))) {
+                                group.children.add(game.getGameName());
+                                group.gameChildren.add(game);
+                            }
                         }
                     }
                     groups.append(i, group);

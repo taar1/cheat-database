@@ -29,7 +29,6 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import butterknife.BindView;
@@ -50,8 +49,7 @@ public class SystemListFragment extends Fragment {
     SwipeRefreshLayout mSwipeRefreshLayout;
 
     public static SystemListFragment newInstance() {
-        SystemListFragment systemListFragment = new SystemListFragment();
-        return systemListFragment;
+        return new SystemListFragment();
     }
 
     @Override
@@ -186,13 +184,7 @@ public class SystemListFragment extends Fragment {
                         db.deleteSystemsAndCount();
                     } else {
                         // Sort the systems by name
-                        Collections.sort(systemGameandCheatCounterList, new Comparator<SystemPlatform>() {
-                            @Override
-                            public int compare(SystemPlatform system1, SystemPlatform system2) {
-                                return system1.getSystemName().compareTo(system2.getSystemName());
-                            }
-                        });
-
+                        Collections.sort(systemGameandCheatCounterList, (system1, system2) -> system1.getSystemName().toLowerCase().compareTo(system2.getSystemName().toLowerCase()));
                     }
                 } catch (Exception e) {
                     Log.e(TAG, "Load game and cheats counters failed: " + e.getLocalizedMessage());
