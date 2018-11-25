@@ -10,7 +10,6 @@
         <item name="windowActionBar">false</item>
 
         <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
-        <item name="android:preferenceStyle">@style/PreferenceThemeOverlay.v14.Material</item>
     </style>
 
 </resources>
