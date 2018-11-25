@@ -1,6 +1,6 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <PreferenceCategory android:title="Benachrichtigungen">
+    <!--<PreferenceCategory android:title="Benachrichtigungen">-->
 
         <android.support.v7.preference.SwitchPreferenceCompat
             android:defaultValue="true"
@@ -8,6 +8,6 @@
             android:summary="@string/pref_enable_achievements_summary"
             android:title="@string/pref_enable_achievements" />
 
-    </PreferenceCategory>
+    <!--</PreferenceCategory>-->
 
 </PreferenceScreen>

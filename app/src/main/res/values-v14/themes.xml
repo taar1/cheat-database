@@ -8,6 +8,9 @@
         <!-- API 14 theme customizations can go here. -->
         <item name="windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
+
+        <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
+        <item name="android:preferenceStyle">@style/PreferenceThemeOverlay.v14.Material</item>
     </style>
 
 </resources>

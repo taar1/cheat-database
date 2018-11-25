@@ -8,6 +8,9 @@
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:windowNoTitle">true</item>
         <item name="android:backgroundDimEnabled">false</item>
+
+        <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
+        <item name="android:preferenceStyle">@style/PreferenceThemeOverlay.v14.Material</item>
     </style>
     <!--OGURY ADS END-->
 
@@ -15,6 +18,9 @@
     <style name="BlueRatingBar" parent="Theme.AppCompat">
         <item name="colorControlNormal">#757575</item>
         <item name="colorControlActivated">#0068bf</item>
+
+        <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
+        <item name="android:preferenceStyle">@style/PreferenceThemeOverlay.v14.Material</item>
     </style>
 
 </resources>

@@ -153,6 +153,7 @@ public class CheatViewPageIndicatorActivity extends AppCompatActivity {
     }
 
     private void init() {
+        Log.d(TAG, "XXXXX init()");
         if (!Reachability.isRegistered()) {
             Reachability.registerReachability(this);
         }
@@ -278,6 +279,7 @@ public class CheatViewPageIndicatorActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        Log.d(TAG, "XXXXX onCreateOptionsMenu()");
         if ((visibleCheat != null) && (visibleCheat.getMemberRating() > 0)) {
             getMenuInflater().inflate(R.menu.handset_cheatview_rating_on_menu, menu);
         } else {
@@ -314,11 +316,25 @@ public class CheatViewPageIndicatorActivity extends AppCompatActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        super.onPrepareOptionsMenu(menu);
+        MenuItem item = menu.findItem(R.id.action_share);
+        mShare = (ShareActionProvider) MenuItemCompat.getActionProvider(item);
+
+        // TODO FIXME bei walkthroughs das share feature geht nicht. mShare ist NULL....
+        // TODO FIXME bei walkthroughs das share feature geht nicht. mShare ist NULL....
+        // TODO FIXME bei walkthroughs das share feature geht nicht. mShare ist NULL....
+        // TODO FIXME bei walkthroughs das share feature geht nicht. mShare ist NULL....
+        // TODO FIXME bei walkthroughs das share feature geht nicht. mShare ist NULL....
+
+        return true;
+
+    }
+
     // Call to update the share intent
     private void setShareIntent(Intent shareIntent) {
-        if (mShare != null) {
-            mShare.setShareIntent(shareIntent);
-        }
+        mShare.setShareIntent(shareIntent);
     }
 
     @Override

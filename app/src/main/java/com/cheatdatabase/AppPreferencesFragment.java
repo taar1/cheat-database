@@ -12,7 +12,7 @@ public class AppPreferencesFragment extends PreferenceFragmentCompat {
 
 
 
-        Toast.makeText(getActivity(), "enable_achievements: " + getPreferenceScreen().getSharedPreferences().getBoolean("enable_achievements", false), Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getActivity(), "enable_achievements: " + getPreferenceScreen().getSharedPreferences().getBoolean("enable_achievements", false), Toast.LENGTH_SHORT).show();
     }
 
 }

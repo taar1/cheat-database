@@ -182,7 +182,7 @@
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/action_settings"
             android:parentActivityName=".MainActivity"
-            android:theme="@style/Theme.AppCompat.DayNight.DarkActionBar">
+            android:theme="@style/Theme.Navyblue">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.cheatdatabase.MainActivity" />

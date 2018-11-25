@@ -3,11 +3,12 @@ package com.cheatdatabase;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 
 import com.cheatdatabase.helpers.Konstanten;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class AppPreferencesActivity extends AppCompatActivity {
@@ -15,16 +16,19 @@ public class AppPreferencesActivity extends AppCompatActivity {
     private final static String TAG = AppPreferencesActivity.class.getSimpleName();
     private SharedPreferences sharedPreferences;
 
+    @BindView(R.id.toolbar)
+    Toolbar mToolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_app_settings);
         ButterKnife.bind(this);
 
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true);
-        }
+        setSupportActionBar(mToolbar);
+        getSupportActionBar().setTitle(R.string.action_settings);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
 
         sharedPreferences = getSharedPreferences(Konstanten.PREFERENCES_FILE, Context.MODE_PRIVATE);
 //        editor = settings.edit();

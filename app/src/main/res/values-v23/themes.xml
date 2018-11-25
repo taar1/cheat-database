@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!-- MATERIAL DESIGN THEME FOR ANDROID 6 MARSHMALLOW -->
-    <!-- http://antonioleiva.com/material-design-everywhere/ -->
     <style name="Theme.Navyblue" parent="AppThemeBase">
-        <!-- <item name="android:windowNoTitle">true</item> not working anymore in Android 6 -->
         <item name="windowActionBar">false</item>
         <item name="android:windowContentTransitions">true</item>
         <item name="android:windowAllowEnterTransitionOverlap">true</item>
@@ -16,6 +13,9 @@
         <item name="android:colorPrimaryDark">@color/color_primary_dark</item>
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
         <item name="android:windowTranslucentStatus">false</item>
+
+        <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
+        <item name="android:preferenceStyle">@style/PreferenceThemeOverlay.v14.Material</item>
     </style>
 
 </resources>
