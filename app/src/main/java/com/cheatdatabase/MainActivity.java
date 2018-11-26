@@ -354,7 +354,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     public interface MainActivityCallbacks {
-        void showContactFormFrament();
+        void showContactFormFragment();
     }
 
     @Override
@@ -398,7 +398,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else if (id == R.id.nav_rate) {
             new RateAppDialog(this, new MainActivityCallbacks() {
                 @Override
-                public void showContactFormFrament() {
+                public void showContactFormFragment() {
                     showContactFormFragment();
                 }
             });

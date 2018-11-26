@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import com.cheatdatabase.adapters.GamesBySystemRecycleListViewAdapter;
 import com.cheatdatabase.businessobjects.Game;
+import com.cheatdatabase.businessobjects.Member;
 import com.cheatdatabase.businessobjects.SystemPlatform;
 import com.cheatdatabase.events.GameListRecyclerViewClickEvent;
 import com.cheatdatabase.helpers.Konstanten;
@@ -29,6 +30,7 @@ import com.cheatdatabase.widgets.DividerDecoration;
 import com.facebook.ads.AdSize;
 import com.facebook.ads.AdView;
 import com.gc.materialdesign.views.ProgressBarCircularIndeterminate;
+import com.google.gson.Gson;
 import com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView;
 
 import org.greenrobot.eventbus.EventBus;
@@ -51,6 +53,7 @@ public class GamesBySystemActivity extends AppCompatActivity {
     private GamesBySystemRecycleListViewAdapter mGamesBySystemRecycleListViewAdapter;
     private SystemPlatform systemObj;
     private SharedPreferences sharedPreferences;
+    private Member member;
 
     @BindView(R.id.my_recycler_view)
     FastScrollRecyclerView mRecyclerView;
@@ -112,10 +115,21 @@ public class GamesBySystemActivity extends AppCompatActivity {
         }
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
+
+        if (member == null) {
+            member = new Gson().fromJson(sharedPreferences.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
+        }
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        menu.clear();
+        if (member != null) {
+            getMenuInflater().inflate(R.menu.signout_menu, menu);
+        } else {
+            getMenuInflater().inflate(R.menu.signin_menu, menu);
+        }
+
         // Search
         getMenuInflater().inflate(R.menu.search_menu, menu);
 
@@ -126,6 +140,27 @@ public class GamesBySystemActivity extends AppCompatActivity {
 
         return super.onCreateOptionsMenu(menu);
     }
+
+
+    @Override
+    public boolean onPrepareOptionsMenu(final Menu menu) {
+        menu.clear();
+        if (member == null) {
+            getMenuInflater().inflate(R.menu.signin_menu, menu);
+        } else {
+            getMenuInflater().inflate(R.menu.signout_menu, menu);
+        }
+
+        getMenuInflater().inflate(R.menu.search_menu, menu);
+
+        // Associate searchable configuration with the SearchView
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+
+        return super.onPrepareOptionsMenu(menu);
+    }
+
 
     private void getGames(boolean forceLoadOnline) {
         Log.d(TAG, "getGames() System ID/NAME: " + systemObj.getSystemId() + "/" + systemObj.getSystemName());
@@ -230,6 +265,7 @@ public class GamesBySystemActivity extends AppCompatActivity {
         }
     }
 
+
     @Override
     protected void onStart() {
         super.onStart();
@@ -257,11 +293,22 @@ public class GamesBySystemActivity extends AppCompatActivity {
             Intent intent = new Intent(this, CheatsByGameListActivity.class);
             intent.putExtra("gameObj", result.getGame());
             startActivity(intent);
-
-//            CheatsByGameListActivity_.intent(this).gameObj(result.getGame()).start();
         } else {
             Toast.makeText(this, R.string.no_internet, Toast.LENGTH_SHORT).show();
         }
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        member = new Gson().fromJson(sharedPreferences.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
+
+        if (requestCode == Konstanten.LOGIN_REGISTER_OK_RETURN_CODE) {
+            if (resultCode == Konstanten.LOGIN_SUCCESS_RETURN_CODE) {
+                Toast.makeText(this, R.string.login_ok, Toast.LENGTH_LONG).show();
+            } else if (resultCode == Konstanten.REGISTER_SUCCESS_RETURN_CODE) {
+                Toast.makeText(this, R.string.register_thanks, Toast.LENGTH_LONG).show();
+            }
+        }
+    }
 }

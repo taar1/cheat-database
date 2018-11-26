@@ -141,73 +141,70 @@ public class CheatsByGameListActivity extends AppCompatActivity {
     public void getCheats(boolean forceLoadOnline) {
         Log.d(TAG, "get cheats by game: " + gameObj.getGameName() + " / " + gameObj.getGameId());
 
-        Needle.onBackgroundThread().execute(new Runnable() {
-            @Override
-            public void run() {
-                cheatsArrayList = new ArrayList<>();
-                List<Cheat> cachedCheatsCollection;
-                List<Cheat> cheatsFound = null;
-                boolean isCached = false;
-                String achievementsEnabled;
-                boolean isAchievementsEnabled = sharedPreferences.getBoolean("enable_achievements", true);
+        Needle.onBackgroundThread().execute(() -> {
+            cheatsArrayList = new ArrayList<>();
+            List<Cheat> cachedCheatsCollection;
+            List<Cheat> cheatsFound = null;
+            boolean isCached = false;
+            String achievementsEnabled;
+            boolean isAchievementsEnabled = sharedPreferences.getBoolean("enable_achievements", true);
 
-                if (isAchievementsEnabled) {
-                    achievementsEnabled = Konstanten.ACHIEVEMENTS;
-                } else {
-                    achievementsEnabled = Konstanten.NO_ACHIEVEMENTS;
-                }
+            if (isAchievementsEnabled) {
+                achievementsEnabled = Konstanten.ACHIEVEMENTS;
+            } else {
+                achievementsEnabled = Konstanten.NO_ACHIEVEMENTS;
+            }
 
-                TreeMap<String, TreeMap<String, List<Cheat>>> cheatsByGameInCache = cheatDatabaseApplication.getCheatsByGameCached();
-                TreeMap cheatList = null;
-                if (cheatsByGameInCache.containsKey(String.valueOf(gameObj.getGameId()))) {
+            TreeMap<String, TreeMap<String, List<Cheat>>> cheatsByGameInCache = cheatDatabaseApplication.getCheatsByGameCached();
+            TreeMap cheatList = null;
+            if (cheatsByGameInCache.containsKey(String.valueOf(gameObj.getGameId()))) {
 
-                    cheatList = cheatsByGameInCache.get(String.valueOf(gameObj.getGameId()));
-                    if (cheatList != null) {
+                cheatList = cheatsByGameInCache.get(String.valueOf(gameObj.getGameId()));
+                if (cheatList != null) {
 
-                        if (cheatList.containsKey(achievementsEnabled)) {
-                            cachedCheatsCollection = (List<Cheat>) cheatList.get(achievementsEnabled);
+                    if (cheatList.containsKey(achievementsEnabled)) {
+                        cachedCheatsCollection = (List<Cheat>) cheatList.get(achievementsEnabled);
 
-                            if (cachedCheatsCollection.size() > 0) {
-                                cheatsFound = cachedCheatsCollection;
-                                gameObj.setCheatList(cheatsFound);
-                                isCached = true;
-                            }
+                        if (cachedCheatsCollection.size() > 0) {
+                            cheatsFound = cachedCheatsCollection;
+                            gameObj.setCheatList(cheatsFound);
+                            isCached = true;
                         }
                     }
                 }
+            }
 
-                if (!isCached || forceLoadOnline) {
-                    if (member == null) {
-                        cheatsFound = Webservice.getCheatList(gameObj, 0, isAchievementsEnabled);
-                    } else {
-                        cheatsFound = Webservice.getCheatList(gameObj, member.getMid(), isAchievementsEnabled);
-                    }
-                    gameObj.setCheatList(cheatsFound);
-
-                    TreeMap<String, List<Cheat>> updatedCheatListForCache = new TreeMap<>();
-                    updatedCheatListForCache.put(achievementsEnabled, cheatsFound);
-
-                    String checkWhichSubKey;
-                    if (achievementsEnabled.equalsIgnoreCase(Konstanten.ACHIEVEMENTS)) {
-                        checkWhichSubKey = Konstanten.NO_ACHIEVEMENTS;
-                    } else {
-                        checkWhichSubKey = Konstanten.ACHIEVEMENTS;
-                    }
-
-                    if ((cheatList != null) && (cheatList.containsKey(checkWhichSubKey))) {
-                        List<Cheat> existingGamesInCache = (List<Cheat>) cheatList.get(checkWhichSubKey);
-                        updatedCheatListForCache.put(checkWhichSubKey, existingGamesInCache);
-                    }
-
-                    cheatsByGameInCache.put(String.valueOf(gameObj.getGameId()), updatedCheatListForCache);
-                    cheatDatabaseApplication.setCheatsByGameCached(cheatsByGameInCache);
+            if (!isCached || forceLoadOnline) {
+                if (member == null) {
+                    cheatsFound = Webservice.getCheatList(gameObj, 0, isAchievementsEnabled);
+                } else {
+                    cheatsFound = Webservice.getCheatList(gameObj, member.getMid(), isAchievementsEnabled);
                 }
+                gameObj.setCheatList(cheatsFound);
+
+                TreeMap<String, List<Cheat>> updatedCheatListForCache = new TreeMap<>();
+                updatedCheatListForCache.put(achievementsEnabled, cheatsFound);
+
+                String checkWhichSubKey;
+                if (achievementsEnabled.equalsIgnoreCase(Konstanten.ACHIEVEMENTS)) {
+                    checkWhichSubKey = Konstanten.NO_ACHIEVEMENTS;
+                } else {
+                    checkWhichSubKey = Konstanten.ACHIEVEMENTS;
+                }
+
+                if ((cheatList != null) && (cheatList.containsKey(checkWhichSubKey))) {
+                    List<Cheat> existingGamesInCache = (List<Cheat>) cheatList.get(checkWhichSubKey);
+                    updatedCheatListForCache.put(checkWhichSubKey, existingGamesInCache);
+                }
+
+                cheatsByGameInCache.put(String.valueOf(gameObj.getGameId()), updatedCheatListForCache);
+                cheatDatabaseApplication.setCheatsByGameCached(cheatsByGameInCache);
+            }
 
 //        db.insertFavoriteCheats(cheatsFound);
 //        Collections.addAll(cheatsArrayList, cheatsFound);
-                cheatsArrayList = cheatsFound;
-                updateUI();
-            }
+            cheatsArrayList = cheatsFound;
+            updateUI();
         });
 
 
@@ -381,19 +378,13 @@ public class CheatsByGameListActivity extends AppCompatActivity {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        member = new Gson().fromJson(sharedPreferences.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
 
-        if (resultCode == RESULT_OK) {
-            // Return result code. Login success, Register success etc.
-            int intentReturnCode = data.getIntExtra("result", Konstanten.LOGIN_REGISTER_FAIL_RETURN_CODE);
-
-            if (requestCode == Konstanten.LOGIN_REGISTER_OK_RETURN_CODE) {
-                member = new Gson().fromJson(sharedPreferences.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
-                invalidateOptionsMenu();
-                if ((member != null) && intentReturnCode == Konstanten.REGISTER_SUCCESS_RETURN_CODE) {
-                    Toast.makeText(CheatsByGameListActivity.this, R.string.register_thanks, Toast.LENGTH_LONG).show();
-                } else if ((member != null) && intentReturnCode == Konstanten.LOGIN_SUCCESS_RETURN_CODE) {
-                    Toast.makeText(CheatsByGameListActivity.this, R.string.login_ok, Toast.LENGTH_LONG).show();
-                }
+        if (requestCode == Konstanten.LOGIN_REGISTER_OK_RETURN_CODE) {
+            if (resultCode == Konstanten.LOGIN_SUCCESS_RETURN_CODE) {
+                Toast.makeText(this, R.string.login_ok, Toast.LENGTH_LONG).show();
+            } else if (resultCode == Konstanten.REGISTER_SUCCESS_RETURN_CODE) {
+                Toast.makeText(this, R.string.register_thanks, Toast.LENGTH_LONG).show();
             }
         }
     }

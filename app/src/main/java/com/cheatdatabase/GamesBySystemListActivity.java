@@ -7,7 +7,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.transition.Explode;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,21 +14,24 @@ import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
-import android.view.Window;
+import android.view.MenuItem;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cheatdatabase.adapters.GamesBySystemRecycleListViewAdapter;
 import com.cheatdatabase.businessobjects.Game;
+import com.cheatdatabase.businessobjects.Member;
 import com.cheatdatabase.businessobjects.SystemPlatform;
 import com.cheatdatabase.events.GameListRecyclerViewClickEvent;
 import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Reachability;
+import com.cheatdatabase.helpers.Tools;
 import com.cheatdatabase.helpers.Webservice;
 import com.cheatdatabase.widgets.DividerDecoration;
 import com.facebook.ads.AdSize;
 import com.facebook.ads.AdView;
+import com.google.gson.Gson;
 import com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView;
 
 import org.greenrobot.eventbus.EventBus;
@@ -68,6 +70,8 @@ public class GamesBySystemListActivity extends AppCompatActivity {
     private AdView adView;
 
     private SharedPreferences sharedPreferences;
+    private SharedPreferences.Editor editor;
+    private Member member;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,20 +115,70 @@ public class GamesBySystemListActivity extends AppCompatActivity {
         getSupportActionBar().setHomeButtonEnabled(true);
 
         sharedPreferences = getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
+        editor = sharedPreferences.edit();
+
+        if (member == null) {
+            member = new Gson().fromJson(sharedPreferences.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
+        }
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        menu.clear();
+        if (member != null) {
+            getMenuInflater().inflate(R.menu.signout_menu, menu);
+        } else {
+            getMenuInflater().inflate(R.menu.signin_menu, menu);
+        }
+
         // Search
         getMenuInflater().inflate(R.menu.search_menu, menu);
 
         // Associate searchable configuration with the SearchView
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
-
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
 
         return super.onCreateOptionsMenu(menu);
+    }
+
+
+    @Override
+    public boolean onPrepareOptionsMenu(final Menu menu) {
+        menu.clear();
+        if (member == null) {
+            getMenuInflater().inflate(R.menu.signin_menu, menu);
+        } else {
+            getMenuInflater().inflate(R.menu.signout_menu, menu);
+        }
+
+        getMenuInflater().inflate(R.menu.search_menu, menu);
+
+        // Associate searchable configuration with the SearchView
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action buttons
+        switch (item.getItemId()) {
+            case R.id.action_login:
+                Intent loginIntent = new Intent(GamesBySystemListActivity.this, LoginActivity.class);
+                startActivityForResult(loginIntent, Konstanten.LOGIN_REGISTER_OK_RETURN_CODE);
+                return true;
+            case R.id.action_logout:
+                member = null;
+                Tools.logout(GamesBySystemListActivity.this, editor);
+                invalidateOptionsMenu();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     private void getGames(boolean forceLoadOnline) {
@@ -278,4 +332,19 @@ public class GamesBySystemListActivity extends AppCompatActivity {
 //    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 //        super.onActivityResult(requestCode, resultCode, data);
 //    }
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        member = new Gson().fromJson(sharedPreferences.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
+
+        if (requestCode == Konstanten.LOGIN_REGISTER_OK_RETURN_CODE) {
+            if (resultCode == Konstanten.LOGIN_SUCCESS_RETURN_CODE) {
+                Toast.makeText(this, R.string.login_ok, Toast.LENGTH_LONG).show();
+            } else if (resultCode == Konstanten.REGISTER_SUCCESS_RETURN_CODE) {
+                Toast.makeText(this, R.string.register_thanks, Toast.LENGTH_LONG).show();
+            }
+        }
+    }
 }
