@@ -2,7 +2,6 @@ package com.cheatdatabase;
 
 import android.os.Bundle;
 import android.support.v7.preference.PreferenceFragmentCompat;
-import android.widget.Toast;
 
 public class AppPreferencesFragment extends PreferenceFragmentCompat {
 

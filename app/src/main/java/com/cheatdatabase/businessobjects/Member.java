@@ -8,8 +8,6 @@ import android.os.Parcelable;
 import com.cheatdatabase.helpers.Konstanten;
 import com.google.gson.Gson;
 
-import java.io.Serializable;
-
 public class Member implements Parcelable {
 
     private String username, password, email, website, city, greeting;
