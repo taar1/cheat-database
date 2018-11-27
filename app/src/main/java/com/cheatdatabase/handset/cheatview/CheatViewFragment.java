@@ -196,7 +196,7 @@ public class CheatViewFragment extends Fragment {
             biggestHeight = 100; // setMemberList value
             progressBar.setVisibility(View.VISIBLE);
 
-            getScreenshotsOnline();
+            getScreenshotsOnline(cheatObj);
         } else {
             tvGalleryInfo.setVisibility(View.GONE);
             progressBar.setVisibility(View.GONE);
@@ -385,32 +385,34 @@ public class CheatViewFragment extends Fragment {
 
     }
 
-    private void getScreenshotsOnline() {
+    private void getScreenshotsOnline(Cheat cheat) {
         List<Bitmap> bitmapList = new ArrayList<>();
 
         Needle.onMainThread().execute(() -> {
             try {
-                List<Screenshot> screens = cheatObj.getScreenshotList();
+                List<Screenshot> screens = cheat.getScreenshotList();
 
-                for (Screenshot s : screens) {
-                    String screenUrl = Konstanten.SCREENSHOT_ROOT_WEBDIR + "image.php?width=150&image=/cheatpics/" + s.getCheatId() + s.getFilename();
+                if (screens != null) {
+                    for (Screenshot s : screens) {
+                        String screenUrl = Konstanten.SCREENSHOT_ROOT_WEBDIR + "image.php?width=150&image=/cheatpics/" + s.getCheatId() + s.getFilename();
 
-                    // Open a new URL and get the InputStream to load data from it.
-                    URL aURL = new URL(screenUrl);
-                    URLConnection conn = aURL.openConnection();
-                    conn.connect();
-                    InputStream is = conn.getInputStream();
-                    /* Buffered is always good for a performance plus. */
-                    BufferedInputStream bis = new BufferedInputStream(is);
-                    /* Decode url-data to a bitmap. */
-                    Bitmap bm = BitmapFactory.decodeStream(bis);
-                    bis.close();
-                    is.close();
+                        // Open a new URL and get the InputStream to load data from it.
+                        URL aURL = new URL(screenUrl);
+                        URLConnection conn = aURL.openConnection();
+                        conn.connect();
+                        InputStream is = conn.getInputStream();
+                        /* Buffered is always good for a performance plus. */
+                        BufferedInputStream bis = new BufferedInputStream(is);
+                        /* Decode url-data to a bitmap. */
+                        Bitmap bm = BitmapFactory.decodeStream(bis);
+                        bis.close();
+                        is.close();
 
-                    bitmapList.add(bm);
+                        bitmapList.add(bm);
 
-                    if (biggestHeight < bm.getHeight()) {
-                        biggestHeight = bm.getHeight();
+                        if (biggestHeight < bm.getHeight()) {
+                            biggestHeight = bm.getHeight();
+                        }
                     }
                 }
             } catch (IOException e) {
@@ -432,7 +434,7 @@ public class CheatViewFragment extends Fragment {
         }
 
         Needle.onMainThread().execute(() -> {
-            if (cheatObj.getScreenshotList().size() <= 1) {
+            if ((cheatObj.getScreenshotList() == null) || (cheatObj.getScreenshotList().size() <= 1)) {
                 tvGalleryInfo.setVisibility(View.GONE);
             } else {
                 tvGalleryInfo.setVisibility(View.VISIBLE);

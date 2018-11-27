@@ -10,6 +10,7 @@ import com.cheatdatabase.helpers.Tools;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
@@ -241,6 +242,9 @@ public class Cheat extends Game implements Parcelable {
     }
 
     public void setScreenshotList(Screenshot[] sl) {
+        if (screenshotList == null) {
+            screenshotList = new ArrayList<>();
+        }
         Collections.addAll(screenshotList, sl);
     }
 
