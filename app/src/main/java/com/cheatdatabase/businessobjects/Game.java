@@ -29,6 +29,7 @@ public class Game implements Parcelable {
     }
 
     protected Game(Parcel in) {
+        // Attention: The order of writing and reading the parcel MUST match.
         cheatList = in.createTypedArrayList(Cheat.CREATOR);
         systemId = in.readInt();
         systemName = in.readString();
@@ -39,6 +40,7 @@ public class Game implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        // Attention: The order of writing and reading the parcel MUST match.
         dest.writeTypedList(cheatList);
         dest.writeInt(systemId);
         dest.writeString(systemName);

@@ -46,6 +46,7 @@ public class Cheat extends Game implements Parcelable {
 
 
     protected Cheat(Parcel in) {
+        // Attention: The order of writing and reading the parcel MUST match.
         screenshots = in.readByte() != 0;
         in.readTypedList(screenshotList, Screenshot.CREATOR);
         cheatTitle = in.readString();
@@ -62,7 +63,27 @@ public class Cheat extends Game implements Parcelable {
         viewsToday = in.readInt();
         forumCount = in.readInt();
         walkthroughFormat = in.readByte() != 0;
+    }
 
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        // Attention: The order of writing and reading the parcel MUST match.
+        dest.writeByte((byte) (screenshots ? 1 : 0));
+        dest.writeTypedList(screenshotList);
+        dest.writeString(cheatTitle);
+        dest.writeString(cheatText);
+        dest.writeString(created);
+        dest.writeString(author);
+        dest.writeFloat(rating);
+        dest.writeFloat(memberRating);
+        dest.writeInt(cheatId);
+        dest.writeInt(languageId);
+        dest.writeInt(views);
+        dest.writeInt(votes);
+        dest.writeInt(viewsLifetime);
+        dest.writeInt(viewsToday);
+        dest.writeInt(forumCount);
+        dest.writeByte((byte) (walkthroughFormat ? 1 : 0));
     }
 
     public static final Creator<Cheat> CREATOR = new Creator<Cheat>() {
@@ -287,23 +308,5 @@ public class Cheat extends Game implements Parcelable {
         return 0;
     }
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeByte((byte) (screenshots ? 1 : 0));
-        dest.writeTypedList(screenshotList);
-        dest.writeString(cheatTitle);
-        dest.writeString(cheatText);
-        dest.writeString(created);
-        dest.writeString(author);
-        dest.writeFloat(rating);
-        dest.writeFloat(memberRating);
-        dest.writeInt(cheatId);
-        dest.writeInt(languageId);
-        dest.writeInt(views);
-        dest.writeInt(votes);
-        dest.writeInt(viewsLifetime);
-        dest.writeInt(viewsToday);
-        dest.writeInt(forumCount);
-        dest.writeByte((byte) (walkthroughFormat ? 1 : 0));
-    }
+
 }

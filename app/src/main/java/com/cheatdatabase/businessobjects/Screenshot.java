@@ -36,9 +36,18 @@ public class Screenshot implements Parcelable {
     }
 
     protected Screenshot(Parcel in) {
+        // Attention: The order of writing and reading the parcel MUST match.
         kbyteSize = in.readString();
         filename = in.readString();
         cheatId = in.readInt();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        // Attention: The order of writing and reading the parcel MUST match.
+        dest.writeString(kbyteSize);
+        dest.writeString(filename);
+        dest.writeInt(cheatId);
     }
 
     public static final Creator<Screenshot> CREATOR = new Creator<Screenshot>() {
@@ -121,10 +130,5 @@ public class Screenshot implements Parcelable {
         return 0;
     }
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(kbyteSize);
-        dest.writeString(filename);
-        dest.writeInt(cheatId);
-    }
+
 }
