@@ -1,6 +1,8 @@
 package com.cheatdatabase.businessobjects;
 
 import android.os.Environment;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.util.Log;
 
 import com.cheatdatabase.helpers.Konstanten;
@@ -17,8 +19,9 @@ import java.net.URL;
  *
  * @author erbsland
  */
-public class Screenshot implements Serializable {
-    private String kbyteSize, filename;
+public class Screenshot implements Parcelable {
+    private String kbyteSize;
+    private String filename;
     private int cheatId;
 
     public Screenshot() {
@@ -31,6 +34,24 @@ public class Screenshot implements Serializable {
         this.filename = filename;
         this.cheatId = cheatId;
     }
+
+    protected Screenshot(Parcel in) {
+        kbyteSize = in.readString();
+        filename = in.readString();
+        cheatId = in.readInt();
+    }
+
+    public static final Creator<Screenshot> CREATOR = new Creator<Screenshot>() {
+        @Override
+        public Screenshot createFromParcel(Parcel in) {
+            return new Screenshot(in);
+        }
+
+        @Override
+        public Screenshot[] newArray(int size) {
+            return new Screenshot[size];
+        }
+    };
 
     public String getKbyteSize() {
         return kbyteSize;
@@ -95,4 +116,15 @@ public class Screenshot implements Serializable {
         }
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(kbyteSize);
+        dest.writeString(filename);
+        dest.writeInt(cheatId);
+    }
 }

@@ -27,7 +27,7 @@ public class Cheat extends Game implements Parcelable {
     private String cheatTitle, cheatText, created, author;
     private Member submittingMember;
     private float rating, memberRating;
-    private List<Screenshot> screenshotList;
+    private List<Screenshot> screenshotList = new ArrayList<>();
     private int cheatId, languageId, views, votes, viewsLifetime, viewsToday, forumCount;
     private boolean walkthroughFormat, screenshots;
 
@@ -46,6 +46,8 @@ public class Cheat extends Game implements Parcelable {
 
 
     protected Cheat(Parcel in) {
+        screenshots = in.readByte() != 0;
+        in.readTypedList(screenshotList, Screenshot.CREATOR);
         cheatTitle = in.readString();
         cheatText = in.readString();
         created = in.readString();
@@ -60,7 +62,7 @@ public class Cheat extends Game implements Parcelable {
         viewsToday = in.readInt();
         forumCount = in.readInt();
         walkthroughFormat = in.readByte() != 0;
-        screenshots = in.readByte() != 0;
+
     }
 
     public static final Creator<Cheat> CREATOR = new Creator<Cheat>() {
@@ -287,6 +289,8 @@ public class Cheat extends Game implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeByte((byte) (screenshots ? 1 : 0));
+        dest.writeTypedList(screenshotList);
         dest.writeString(cheatTitle);
         dest.writeString(cheatText);
         dest.writeString(created);
@@ -301,6 +305,5 @@ public class Cheat extends Game implements Parcelable {
         dest.writeInt(viewsToday);
         dest.writeInt(forumCount);
         dest.writeByte((byte) (walkthroughFormat ? 1 : 0));
-        dest.writeByte((byte) (screenshots ? 1 : 0));
     }
 }

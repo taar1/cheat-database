@@ -29,9 +29,9 @@ public class Game implements Parcelable {
     }
 
     protected Game(Parcel in) {
+        cheatList = in.createTypedArrayList(Cheat.CREATOR);
         systemId = in.readInt();
         systemName = in.readString();
-        cheatList = in.createTypedArrayList(Cheat.CREATOR);
         gameId = in.readInt();
         cheatsCount = in.readInt();
         gameName = in.readString();
@@ -39,9 +39,9 @@ public class Game implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeTypedList(cheatList);
         dest.writeInt(systemId);
         dest.writeString(systemName);
-        dest.writeTypedList(cheatList);
         dest.writeInt(gameId);
         dest.writeInt(cheatsCount);
         dest.writeString(gameName);

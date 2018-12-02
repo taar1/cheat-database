@@ -72,13 +72,6 @@
       <sourceFolder url="file://$MODULE_DIR$/src/googlePlayFlavor/java" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/googlePlayFlavor/rs" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/googlePlayFlavor/shaders" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/testGooglePlayFlavor/res" type="java-test-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/src/testGooglePlayFlavor/resources" type="java-test-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/src/testGooglePlayFlavor/assets" type="java-test-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/src/testGooglePlayFlavor/aidl" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/testGooglePlayFlavor/java" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/testGooglePlayFlavor/rs" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/testGooglePlayFlavor/shaders" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/androidTestGooglePlayFlavor/res" type="java-test-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/androidTestGooglePlayFlavor/resources" type="java-test-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/androidTestGooglePlayFlavor/assets" type="java-test-resource" />
@@ -86,6 +79,13 @@
       <sourceFolder url="file://$MODULE_DIR$/src/androidTestGooglePlayFlavor/java" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/androidTestGooglePlayFlavor/rs" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/androidTestGooglePlayFlavor/shaders" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/testGooglePlayFlavor/res" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/testGooglePlayFlavor/resources" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/testGooglePlayFlavor/assets" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/testGooglePlayFlavor/aidl" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/testGooglePlayFlavor/java" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/testGooglePlayFlavor/rs" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/testGooglePlayFlavor/shaders" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/debug/res" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/debug/resources" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/debug/assets" type="java-resource" />
@@ -135,7 +135,10 @@
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/builds" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/check-libraries" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/check-manifest" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/checkAmazonFlavorDebugClasspath" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/checkAmazonFlavorReleaseClasspath" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/checkGooglePlayFlavorDebugClasspath" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/checkGooglePlayFlavorReleaseClasspath" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/compatible_screen_manifest" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/incremental" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/incremental-classes" />
@@ -147,6 +150,7 @@
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/instant_run_split_apk_resources" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/javac" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/jniLibs" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/lint_jar" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/manifest-checker" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/merged_assets" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/merged_manifests" />
@@ -163,6 +167,7 @@
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/symbols" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/transforms" />
       <excludeFolder url="file://$MODULE_DIR$/build/outputs" />
+      <excludeFolder url="file://$MODULE_DIR$/build/reports" />
       <excludeFolder url="file://$MODULE_DIR$/build/tmp" />
     </content>
     <orderEntry type="jdk" jdkName="Android API 28 Platform" jdkType="Android SDK" />

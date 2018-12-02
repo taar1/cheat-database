@@ -133,6 +133,13 @@ public class CheatViewPageIndicatorActivity extends AppCompatActivity {
         pageSelected = intent.getIntExtra("selectedPage", 0);
         activePage = pageSelected;
 
+        // TODO FIXME gameObj GAME NAME etc. ist NULL
+        // TODO FIXME gameObj GAME NAME etc. ist NULL
+        // TODO FIXME gameObj GAME NAME etc. ist NULL
+        // TODO FIXME gameObj GAME NAME etc. ist NULL
+        // TODO FIXME gameObj GAME NAME etc. ist NULL
+        // TODO FIXME gameObj GAME NAME etc. ist NULL
+
         for (Cheat cheat : gameObj.getCheatList()) {
             cheat.setGameId(gameObj.getGameId());
             cheat.setGameName(gameObj.getGameName());

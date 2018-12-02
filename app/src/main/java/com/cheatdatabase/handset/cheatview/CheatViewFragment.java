@@ -388,7 +388,7 @@ public class CheatViewFragment extends Fragment {
     private void getScreenshotsOnline(Cheat cheat) {
         List<Bitmap> bitmapList = new ArrayList<>();
 
-        Needle.onMainThread().execute(() -> {
+        Needle.onBackgroundThread().execute(() -> {
             try {
                 List<Screenshot> screens = cheat.getScreenshotList();
 
@@ -436,8 +436,10 @@ public class CheatViewFragment extends Fragment {
         Needle.onMainThread().execute(() -> {
             if ((cheatObj.getScreenshotList() == null) || (cheatObj.getScreenshotList().size() <= 1)) {
                 tvGalleryInfo.setVisibility(View.GONE);
+                progressBar.setVisibility(View.VISIBLE);
             } else {
                 tvGalleryInfo.setVisibility(View.VISIBLE);
+                progressBar.setVisibility(View.GONE);
             }
 
             buildGallery();
