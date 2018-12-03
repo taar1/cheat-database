@@ -35,6 +35,10 @@
             android:id="@+id/nav_contact"
             android:icon="@drawable/ic_drawer_contact"
             android:title="@string/contactform_title" />
+        <item
+            android:id="@+id/nav_terms_of_use"
+            android:icon="@drawable/ic_arrow_right"
+            android:title="@string/privacy_policy" />
     </group>
     <group
         android:id="@+id/nav_group_settings"

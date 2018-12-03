@@ -1,6 +1,8 @@
 package com.cheatdatabase.businessobjects;
 
 import android.os.Environment;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.util.Log;
 
 import com.cheatdatabase.helpers.Konstanten;
@@ -8,22 +10,18 @@ import com.cheatdatabase.helpers.Konstanten;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
-import java.io.Serializable;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
 /**
- * Screenshot-Objekt eines Cheats.
+ * Screenshot attached to a Cheat.
  *
  * @author erbsland
  */
-public class Screenshot implements Serializable {
-    private String kbyteSize, filename;
+public class Screenshot implements Parcelable {
+    private String kbyteSize;
+    private String filename;
     private int cheatId;
-
-    public Screenshot() {
-
-    }
 
     public Screenshot(String kbyteSize, String filename, int cheatId) {
         super();
@@ -31,6 +29,26 @@ public class Screenshot implements Serializable {
         this.filename = filename;
         this.cheatId = cheatId;
     }
+
+    protected Screenshot(Parcel in) {
+        kbyteSize = in.readString();
+        filename = in.readString();
+        cheatId = in.readInt();
+    }
+
+    public static final Creator<Screenshot> CREATOR = new Creator<Screenshot>() {
+        @Override
+        public Screenshot createFromParcel(Parcel in) {
+            return new Screenshot(in);
+        }
+
+        @Override
+        public Screenshot[] newArray(int size) {
+            return new Screenshot[size];
+        }
+    };
+
+
 
     public String getKbyteSize() {
         return kbyteSize;
@@ -95,4 +113,15 @@ public class Screenshot implements Serializable {
         }
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(kbyteSize);
+        parcel.writeString(filename);
+        parcel.writeInt(cheatId);
+    }
 }

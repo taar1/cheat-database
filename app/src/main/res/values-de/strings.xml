@@ -330,4 +330,6 @@
         <item quantity="other">Einträge</item>
     </plurals>
 
+    <string name="privacy_policy">Datenschutzrichtlinie</string>
+
 </resources>

@@ -45,25 +45,47 @@ public class Cheat extends Game implements Parcelable {
     }
 
 
+//    protected Cheat(Parcel in) {
+//        cheatTitle = in.readString();
+//        cheatText = in.readString();
+//        created = in.readString();
+//        author = in.readString();
+//        rating = in.readFloat();
+//        memberRating = in.readFloat();
+//        cheatId = in.readInt();
+//        languageId = in.readInt();
+//        views = in.readInt();
+//        votes = in.readInt();
+//        viewsLifetime = in.readInt();
+//        viewsToday = in.readInt();
+//        forumCount = in.readInt();
+//        walkthroughFormat = in.readByte() != 0;
+//        screenshots = in.readByte() != 0;
+//    }
+
     protected Cheat(Parcel in) {
-        cheatTitle = in.readString();
-        cheatText = in.readString();
-        created = in.readString();
-        author = in.readString();
-        rating = in.readFloat();
-        memberRating = in.readFloat();
-        cheatId = in.readInt();
-        languageId = in.readInt();
-        views = in.readInt();
-        votes = in.readInt();
-        viewsLifetime = in.readInt();
-        viewsToday = in.readInt();
-        forumCount = in.readInt();
-        walkthroughFormat = in.readByte() != 0;
-        screenshots = in.readByte() != 0;
+        submittingMember = (Member) in.readValue(Member.class.getClassLoader());
+        if (in.readByte() == 0x01) {
+            screenshotList = new ArrayList<Screenshot>();
+            in.readList(screenshotList, Screenshot.class.getClassLoader());
+        } else {
+            screenshotList = null;
+        }
     }
 
-    public static final Creator<Cheat> CREATOR = new Creator<Cheat>() {
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeValue(submittingMember);
+        if (screenshotList == null) {
+            dest.writeByte((byte) (0x00));
+        } else {
+            dest.writeByte((byte) (0x01));
+            dest.writeList(screenshotList);
+        }
+    }
+
+    @SuppressWarnings("unused")
+    public static final Parcelable.Creator<Cheat> CREATOR = new Parcelable.Creator<Cheat>() {
         @Override
         public Cheat createFromParcel(Parcel in) {
             return new Cheat(in);
@@ -74,6 +96,18 @@ public class Cheat extends Game implements Parcelable {
             return new Cheat[size];
         }
     };
+
+//    public static final Creator<Cheat> CREATOR = new Creator<Cheat>() {
+//        @Override
+//        public Cheat createFromParcel(Parcel in) {
+//            return new Cheat(in);
+//        }
+//
+//        @Override
+//        public Cheat[] newArray(int size) {
+//            return new Cheat[size];
+//        }
+//    };
 
     public Game getGame() {
         return new Game(getGameId(), getGameName(), getSystemId(), getSystemName());
@@ -280,27 +314,27 @@ public class Cheat extends Game implements Parcelable {
         this.forumCount = forumCount;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(cheatTitle);
-        dest.writeString(cheatText);
-        dest.writeString(created);
-        dest.writeString(author);
-        dest.writeFloat(rating);
-        dest.writeFloat(memberRating);
-        dest.writeInt(cheatId);
-        dest.writeInt(languageId);
-        dest.writeInt(views);
-        dest.writeInt(votes);
-        dest.writeInt(viewsLifetime);
-        dest.writeInt(viewsToday);
-        dest.writeInt(forumCount);
-        dest.writeByte((byte) (walkthroughFormat ? 1 : 0));
-        dest.writeByte((byte) (screenshots ? 1 : 0));
-    }
+//    @Override
+//    public int describeContents() {
+//        return 0;
+//    }
+//
+//    @Override
+//    public void writeToParcel(Parcel dest, int flags) {
+//        dest.writeString(cheatTitle);
+//        dest.writeString(cheatText);
+//        dest.writeString(created);
+//        dest.writeString(author);
+//        dest.writeFloat(rating);
+//        dest.writeFloat(memberRating);
+//        dest.writeInt(cheatId);
+//        dest.writeInt(languageId);
+//        dest.writeInt(views);
+//        dest.writeInt(votes);
+//        dest.writeInt(viewsLifetime);
+//        dest.writeInt(viewsToday);
+//        dest.writeInt(forumCount);
+//        dest.writeByte((byte) (walkthroughFormat ? 1 : 0));
+//        dest.writeByte((byte) (screenshots ? 1 : 0));
+//    }
 }

@@ -423,6 +423,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 Tools.showSnackbar(mDrawerLayout, getResources().getString(R.string.err_other_problem));
             }
             mDrawerLayout.closeDrawers();
+        } else if (id == R.id.nav_terms_of_use) {
+            Uri uri = Uri.parse("https://www.freeprivacypolicy.com/privacy/view/1ac30e371af5decb7631a29e7eed2d15");
+            Intent intentMoreApps = new Intent(Intent.ACTION_VIEW, uri);
+            if (intentMoreApps.resolveActivity(getPackageManager()) != null) {
+                startActivity(intentMoreApps);
+            }
+            mDrawerLayout.closeDrawers();
         } else {
             showGameSystemsFragment();
         }
