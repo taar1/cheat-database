@@ -12,8 +12,8 @@ apply plugin: 'io.fabric'
 
 String APK_ID = "com.cheatdatabase"
 String APK_NAME = "Cheat-Database"
-int VERSION_CODE = 38
-String VERSION_NAME = "2.2.5"
+int VERSION_CODE = 40
+String VERSION_NAME = "2.2.6"
 
 android {
     compileSdkVersion 28
@@ -109,7 +109,6 @@ repositories {
 
 ext {
     supportVersion = '27.1.0'
-    AAVersion = '4.4.0'
 }
 
 dependencies {
@@ -130,9 +129,6 @@ dependencies {
     implementation 'com.squareup.picasso:picasso:2.71828'
     implementation 'com.appbrain:appbrain-applift-sdk:+'
     implementation 'org.greenrobot:eventbus:3.1.1'
-//    annotationProcessor "org.androidannotations:androidannotations:$AAVersion"
-//    implementation "org.androidannotations:androidannotations-runtimeOnly:$AAVersion"
-//    implementation "org.androidannotations:ormlite:$AAVersion"
     implementation 'com.github.hackware1993:MagicIndicator:1.5.0'
     implementation 'com.simplecityapps:recyclerview-fastscroll:1.0.18'
     implementation('com.crashlytics.sdk.android:crashlytics:2.9.5@aar') {

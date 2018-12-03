@@ -10,11 +10,12 @@ import com.cheatdatabase.helpers.Konstanten;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
+import java.io.Serializable;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
 /**
- * Screenshot attached to a Cheat.
+ * Screenshot-Objekt eines Cheats.
  *
  * @author erbsland
  */
@@ -22,6 +23,10 @@ public class Screenshot implements Parcelable {
     private String kbyteSize;
     private String filename;
     private int cheatId;
+
+    public Screenshot() {
+
+    }
 
     public Screenshot(String kbyteSize, String filename, int cheatId) {
         super();
@@ -31,9 +36,18 @@ public class Screenshot implements Parcelable {
     }
 
     protected Screenshot(Parcel in) {
+        // Attention: The order of writing and reading the parcel MUST match.
         kbyteSize = in.readString();
         filename = in.readString();
         cheatId = in.readInt();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        // Attention: The order of writing and reading the parcel MUST match.
+        dest.writeString(kbyteSize);
+        dest.writeString(filename);
+        dest.writeInt(cheatId);
     }
 
     public static final Creator<Screenshot> CREATOR = new Creator<Screenshot>() {
@@ -47,8 +61,6 @@ public class Screenshot implements Parcelable {
             return new Screenshot[size];
         }
     };
-
-
 
     public String getKbyteSize() {
         return kbyteSize;
@@ -118,10 +130,5 @@ public class Screenshot implements Parcelable {
         return 0;
     }
 
-    @Override
-    public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeString(kbyteSize);
-        parcel.writeString(filename);
-        parcel.writeInt(cheatId);
-    }
+
 }
