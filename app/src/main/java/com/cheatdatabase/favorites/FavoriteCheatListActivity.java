@@ -2,13 +2,11 @@ package com.cheatdatabase.favorites;
 
 import android.app.AlertDialog;
 import android.app.SearchManager;
-import android.app.TaskStackBuilder;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.v4.app.NavUtils;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -149,19 +147,7 @@ public class FavoriteCheatListActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                // Dominik: This is actually not needed because I am saving the
-                // selected Fragment ID in the local storage.
-                Intent upIntent = NavUtils.getParentActivityIntent(this);
-                if (NavUtils.shouldUpRecreateTask(this, upIntent)) {
-                    // This activity is NOT part of this app's task, so create a new
-                    // task when navigating up, with a synthesized back stack.
-                    // Add all of this activity's parents to the back stack
-                    TaskStackBuilder.create(this).addNextIntentWithParentStack(upIntent).startActivities();
-                } else {
-                    // This activity is part of this app's task, so simply
-                    // navigate up to the logical parent activity.
-                    NavUtils.navigateUpTo(this, upIntent);
-                }
+                onBackPressed();
                 return true;
         }
         return super.onOptionsItemSelected(item);

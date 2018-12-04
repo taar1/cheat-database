@@ -8,18 +8,14 @@ import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.util.SparseArray;
-import android.view.ContextMenu;
-import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
-import android.widget.ExpandableListView.ExpandableListContextMenuInfo;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.cheatdatabase.R;
 import com.cheatdatabase.businessobjects.Game;
@@ -77,12 +73,13 @@ public class FavoriteGamesListFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_favorites_main_list, container, false);
         ButterKnife.bind(this, view);
 
+
+        Log.d("XXXXX", "XXXXX onCreateView XXXXX");
+
         db = new DatabaseHelper(getActivity());
         gamesFound = db.getAllFavoritedGames();
         adapter = new FavoritesExpandableListAdapter(parentActivity, groups);
 
-        // TODO FIXME CONTEXT MENU DOES NOT WORK YET
-        // Update action bar menu items?
         setHasOptionsMenu(true);
 
         nothingFoundTitle.setTypeface(latoFontBold);
@@ -107,7 +104,6 @@ public class FavoriteGamesListFragment extends Fragment {
     }
 
     private void loadGames() {
-
         gamesFound = db.getAllFavoritedGames();
 
         Message msg = Message.obtain();
@@ -184,58 +180,16 @@ public class FavoriteGamesListFragment extends Fragment {
         }
     };
 
-    // TODO FIXME CONTEXT MENU IS NOT WORKING YET...
-    private Game selectedGame;
-
     @Override
-    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
-        super.onCreateContextMenu(menu, v, menuInfo);
-
-        ExpandableListContextMenuInfo info = (ExpandableListContextMenuInfo) menuInfo;
-        int type = ExpandableListView.getPackedPositionType(info.packedPosition);
-        int group = ExpandableListView.getPackedPositionGroup(info.packedPosition);
-        int child = ExpandableListView.getPackedPositionChild(info.packedPosition);
-
-        if (type == ExpandableListView.PACKED_POSITION_TYPE_CHILD) {
-            selectedGame = gamesFound.get(Integer.parseInt(String.valueOf(info.id)));
-
-            menu.setHeaderTitle("\"" + selectedGame.getGameName() + "\"");
-            menu.add(0, REMOVE_FROM_FAVORITES, 1, R.string.remove_favorite);
-        }
-    }
-
-    @Override
-    public boolean onContextItemSelected(MenuItem item) {
-        ExpandableListContextMenuInfo info = (ExpandableListContextMenuInfo) item.getMenuInfo();
-
-        // TODO: CONTEXT MENU CLICK NOT WORKING YET
-        int groupPos = 0, childPos = 0;
-
-        int type = ExpandableListView.getPackedPositionType(info.packedPosition);
-        if (type == ExpandableListView.PACKED_POSITION_TYPE_CHILD) {
-            groupPos = ExpandableListView.getPackedPositionGroup(info.packedPosition);
-            childPos = ExpandableListView.getPackedPositionChild(info.packedPosition);
-        }
-
+    public boolean onOptionsItemSelected(MenuItem item) {
+        Log.d("XXXXX", "XXXXX laskdjaölskdhasöldjaölsdjaölsdjasdf XXXXX");
         switch (item.getItemId()) {
-            case REMOVE_FROM_FAVORITES:
-                removeFavorite();
+            case android.R.id.home:
+
                 return true;
-        }
-        return super.onContextItemSelected(item);
-    }
 
-    /**
-     * Deletes a game from the local favorites database table.
-     */
-    private void removeFavorite() {
-        if (db.deleteFavoritedCheats(selectedGame)) {
-            Toast.makeText(parentActivity, getString(R.string.remove_favorites_ok), Toast.LENGTH_SHORT).show();
-
-            // TODO liste neu laden
-            gamesFound = db.getAllFavoritedGames();
-        } else {
-            Toast.makeText(parentActivity, R.string.remove_favorites_nok, Toast.LENGTH_SHORT).show();
+            default:
+                return super.onOptionsItemSelected(item);
         }
     }
 

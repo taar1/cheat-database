@@ -23,9 +23,12 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.webkit.WebView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.MaterialDialog;
+import com.afollestad.materialdialogs.Theme;
 import com.appbrain.AppBrain;
 import com.cheatdatabase.businessobjects.Member;
 import com.cheatdatabase.dialogs.RateAppDialog;
@@ -314,18 +317,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
-//    @OnActivityResult(Konstanten.LOGIN_SUCCESS_RETURN_CODE)
-//    void onResult(int resultCode, Intent data) {
-//        member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
-//        Toast.makeText(MainActivity.this, R.string.login_ok, Toast.LENGTH_LONG).show();
-//    }
-//
-//    @OnActivityResult(Konstanten.REGISTER_SUCCESS_RETURN_CODE)
-//    void onResult(int resultCode) {
-//        member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
-//        Toast.makeText(MainActivity.this, R.string.register_thanks, Toast.LENGTH_LONG).show();
-//    }
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -424,12 +415,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
             mDrawerLayout.closeDrawers();
         } else if (id == R.id.nav_terms_of_use) {
-            Uri uri = Uri.parse("https://www.freeprivacypolicy.com/privacy/view/1ac30e371af5decb7631a29e7eed2d15");
-            Intent intentMoreApps = new Intent(Intent.ACTION_VIEW, uri);
-            if (intentMoreApps.resolveActivity(getPackageManager()) != null) {
-                startActivity(intentMoreApps);
-            }
             mDrawerLayout.closeDrawers();
+
+            MaterialDialog md = new MaterialDialog.Builder(this)
+                    .customView(R.layout.layout_cheat_content_table, true)
+                    .theme(Theme.DARK)
+                    .positiveText(R.string.close)
+                    .cancelable(true)
+                    .show();
+
+            View dialogView = md.getCustomView();
+            WebView webview = dialogView.findViewById(R.id.webview);
+            webview.loadUrl("https://www.freeprivacypolicy.com/privacy/view/1ac30e371af5decb7631a29e7eed2d15");
         } else {
             showGameSystemsFragment();
         }

@@ -75,8 +75,6 @@ public class FavoritesExpandableListAdapter extends BaseExpandableListAdapter {
                     Intent explicitIntent = new Intent(activity, FavoriteCheatListActivity.class);
                     explicitIntent.putExtra("gameObj", children);
                     activity.startActivity(explicitIntent);
-
-//                    FavoriteCheatListActivity_.intent(activity).gameObj(children).start();
                 } else {
                     Toast.makeText(activity, R.string.no_internet, Toast.LENGTH_SHORT).show();
                 }
