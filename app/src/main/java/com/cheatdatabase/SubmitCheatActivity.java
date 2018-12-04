@@ -38,19 +38,14 @@ public class SubmitCheatActivity extends AppCompatActivity {
 
     @BindView(R.id.text_cheat_submission_title)
     TextView textCheatTitle;
-
     @BindView(R.id.edit_cheat_title)
     EditText cheatTitle;
-
     @BindView(R.id.edit_cheat_text)
     EditText cheatText;
-
     @BindView(R.id.checkbox_terms)
     CheckBox checkBoxTerms;
-
     @BindView(R.id.send_button)
     Button sendButton;
-
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
 
@@ -180,13 +175,14 @@ public class SubmitCheatActivity extends AppCompatActivity {
         }
     }
 
-
     private void showAlertDialog(int title, int text) {
         AlertDialog.Builder builder = new AlertDialog.Builder(SubmitCheatActivity.this);
         builder.setMessage(text).setTitle(title);
         builder.setPositiveButton(R.string.ok, (dialog, id) -> {
             dialog.dismiss();
-            finish();
+            if (title == R.string.thanks) {
+                finish();
+            }
         });
         builder.create();
         builder.show();
