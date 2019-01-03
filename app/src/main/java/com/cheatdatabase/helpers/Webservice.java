@@ -456,10 +456,6 @@ public class Webservice {
         return cheats;
     }
 
-    public static String serverStatus() {
-        return executeGet("http://www.e-nature.ch/android/serverstatus");
-    }
-
     /**
      * Holt alle initialen Informationen und speichert sie ins Flat-File: -
      * Totale Anzahl Cheats - 3 neuste Cheats - Anzahl Games pro System
