@@ -8,17 +8,19 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.SearchView;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
+import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.cheatdatabase.adapters.CheatsByGameRecycleListViewAdapter;
 import com.cheatdatabase.businessobjects.Cheat;
@@ -90,29 +92,36 @@ public class CheatsByGameListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_cheat_list);
         ButterKnife.bind(this);
 
-        gameObj = getIntent().getParcelableExtra("gameObj");
-        setTitle(gameObj.getGameName());
-
         init();
-        mSwipeRefreshLayout.setRefreshing(true);
 
-        getSupportActionBar().setTitle(gameObj.getGameName());
-        getSupportActionBar().setSubtitle(gameObj.getSystemName());
+        gameObj = getIntent().getParcelableExtra("gameObj");
 
-        mSwipeRefreshLayout.setOnRefreshListener(() -> getCheats(true));
+        if (gameObj != null) {
+            setTitle(gameObj.getGameName());
 
-        // use this setting to improve performance if you know that changes
-        // in content do not change the layout size of the RecyclerView
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        mRecyclerView.addItemDecoration(new DividerDecoration(this));
-        mRecyclerView.getItemAnimator().setRemoveDuration(50);
-        mRecyclerView.setHasFixedSize(true);
+            mSwipeRefreshLayout.setRefreshing(true);
 
-        if (Reachability.reachability.isReachable) {
-            getCheats(false);
+            getSupportActionBar().setTitle(gameObj.getGameName());
+            getSupportActionBar().setSubtitle(gameObj.getSystemName());
+
+            mSwipeRefreshLayout.setOnRefreshListener(() -> getCheats(true));
+
+            // use this setting to improve performance if you know that changes
+            // in content do not change the layout size of the RecyclerView
+            mRecyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
+            mRecyclerView.addItemDecoration(new DividerDecoration(this));
+            mRecyclerView.getItemAnimator().setRemoveDuration(50);
+            mRecyclerView.setHasFixedSize(true);
+
+            if (Reachability.reachability.isReachable) {
+                getCheats(false);
+            } else {
+                Toast.makeText(this, R.string.no_internet, Toast.LENGTH_SHORT).show();
+            }
         } else {
-            Toast.makeText(this, R.string.no_internet, Toast.LENGTH_SHORT).show();
+            finish();
         }
+
     }
 
     private void init() {
@@ -155,59 +164,62 @@ public class CheatsByGameListActivity extends AppCompatActivity {
                 achievementsEnabled = Konstanten.NO_ACHIEVEMENTS;
             }
 
-            TreeMap<String, TreeMap<String, List<Cheat>>> cheatsByGameInCache = cheatDatabaseApplication.getCheatsByGameCached();
-            TreeMap cheatList = null;
-            if (cheatsByGameInCache.containsKey(String.valueOf(gameObj.getGameId()))) {
 
-                cheatList = cheatsByGameInCache.get(String.valueOf(gameObj.getGameId()));
-                if (cheatList != null) {
+            try {
+                TreeMap<String, TreeMap<String, List<Cheat>>> cheatsByGameInCache = cheatDatabaseApplication.getCheatsByGameCached();
+                TreeMap cheatList = null;
+                if (cheatsByGameInCache.containsKey(String.valueOf(gameObj.getGameId()))) {
 
-                    if (cheatList.containsKey(achievementsEnabled)) {
-                        cachedCheatsCollection = (List<Cheat>) cheatList.get(achievementsEnabled);
+                    cheatList = cheatsByGameInCache.get(String.valueOf(gameObj.getGameId()));
+                    if (cheatList != null) {
 
-                        if (cachedCheatsCollection.size() > 0) {
-                            cheatsFound = cachedCheatsCollection;
-                            gameObj.setCheatList(cheatsFound);
-                            isCached = true;
+                        if (cheatList.containsKey(achievementsEnabled)) {
+                            cachedCheatsCollection = (List<Cheat>) cheatList.get(achievementsEnabled);
+
+                            if ((cachedCheatsCollection != null) && (cachedCheatsCollection.size() > 0)) {
+                                cheatsFound = cachedCheatsCollection;
+                                gameObj.setCheatList(cheatsFound);
+                                isCached = true;
+                            }
                         }
                     }
                 }
+
+                if (!isCached || forceLoadOnline) {
+                    if (member == null) {
+                        cheatsFound = Webservice.getCheatList(gameObj, 0, isAchievementsEnabled);
+                    } else {
+                        cheatsFound = Webservice.getCheatList(gameObj, member.getMid(), isAchievementsEnabled);
+                    }
+                    gameObj.setCheatList(cheatsFound);
+
+                    TreeMap<String, List<Cheat>> updatedCheatListForCache = new TreeMap<>();
+                    updatedCheatListForCache.put(achievementsEnabled, cheatsFound);
+
+                    String checkWhichSubKey;
+                    if (achievementsEnabled.equalsIgnoreCase(Konstanten.ACHIEVEMENTS)) {
+                        checkWhichSubKey = Konstanten.NO_ACHIEVEMENTS;
+                    } else {
+                        checkWhichSubKey = Konstanten.ACHIEVEMENTS;
+                    }
+
+                    if ((cheatList != null) && (cheatList.containsKey(checkWhichSubKey))) {
+                        List<Cheat> existingGamesInCache = (List<Cheat>) cheatList.get(checkWhichSubKey);
+                        updatedCheatListForCache.put(checkWhichSubKey, existingGamesInCache);
+                    }
+
+                    cheatsByGameInCache.put(String.valueOf(gameObj.getGameId()), updatedCheatListForCache);
+                    cheatDatabaseApplication.setCheatsByGameCached(cheatsByGameInCache);
+                }
+
+                cheatsArrayList = cheatsFound;
+                updateUI();
+            } catch (NullPointerException e) {
+                Toast.makeText(this, R.string.err_data_not_accessible, Toast.LENGTH_LONG).show();
+                finish();
             }
 
-            if (!isCached || forceLoadOnline) {
-                if (member == null) {
-                    cheatsFound = Webservice.getCheatList(gameObj, 0, isAchievementsEnabled);
-                } else {
-                    cheatsFound = Webservice.getCheatList(gameObj, member.getMid(), isAchievementsEnabled);
-                }
-                gameObj.setCheatList(cheatsFound);
-
-                TreeMap<String, List<Cheat>> updatedCheatListForCache = new TreeMap<>();
-                updatedCheatListForCache.put(achievementsEnabled, cheatsFound);
-
-                String checkWhichSubKey;
-                if (achievementsEnabled.equalsIgnoreCase(Konstanten.ACHIEVEMENTS)) {
-                    checkWhichSubKey = Konstanten.NO_ACHIEVEMENTS;
-                } else {
-                    checkWhichSubKey = Konstanten.ACHIEVEMENTS;
-                }
-
-                if ((cheatList != null) && (cheatList.containsKey(checkWhichSubKey))) {
-                    List<Cheat> existingGamesInCache = (List<Cheat>) cheatList.get(checkWhichSubKey);
-                    updatedCheatListForCache.put(checkWhichSubKey, existingGamesInCache);
-                }
-
-                cheatsByGameInCache.put(String.valueOf(gameObj.getGameId()), updatedCheatListForCache);
-                cheatDatabaseApplication.setCheatsByGameCached(cheatsByGameInCache);
-            }
-
-//        db.insertFavoriteCheats(cheatsFound);
-//        Collections.addAll(cheatsArrayList, cheatsFound);
-            cheatsArrayList = cheatsFound;
-            updateUI();
         });
-
-
     }
 
     public void updateUI() {
@@ -227,8 +239,6 @@ public class CheatsByGameListActivity extends AppCompatActivity {
 
             mSwipeRefreshLayout.setRefreshing(false);
         });
-
-
     }
 
     private void error() {
@@ -421,11 +431,6 @@ public class CheatsByGameListActivity extends AppCompatActivity {
 
             editor.putInt(Konstanten.PREFERENCES_PAGE_SELECTED, result.getPosition());
             editor.apply();
-
-            // TODO FIXME hier geht die screenshot liste verloren beim übergeben...
-            // TODO FIXME hier geht die screenshot liste verloren beim übergeben...
-            // TODO FIXME hier geht die screenshot liste verloren beim übergeben...
-            // TODO FIXME hier geht die screenshot liste verloren beim übergeben...
 
             if (Reachability.reachability.isReachable) {
                 // Using local Preferences to pass data for large game objects

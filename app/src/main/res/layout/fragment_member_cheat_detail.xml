@@ -55,7 +55,7 @@
                 android:maxWidth="250dp"
                 android:padding="5dp"
                 android:textAppearance="@style/NormalText"
-                android:textIsSelectable="true" />
+                android:textIsSelectable="false" />
 
             <ProgressBar
                 android:id="@+id/progress_bar"

@@ -37,7 +37,7 @@
             android:title="@string/contactform_title" />
         <item
             android:id="@+id/nav_terms_of_use"
-            android:icon="@drawable/ic_arrow_right"
+            android:icon="@drawable/ic_drawer_settings"
             android:title="@string/privacy_policy" />
     </group>
     <group

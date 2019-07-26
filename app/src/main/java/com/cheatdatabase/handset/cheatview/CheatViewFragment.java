@@ -1,5 +1,6 @@
 package com.cheatdatabase.handset.cheatview;
 
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -9,7 +10,6 @@ import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -28,6 +28,8 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.fragment.app.Fragment;
+
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.Theme;
 import com.cheatdatabase.R;
@@ -35,6 +37,7 @@ import com.cheatdatabase.businessobjects.Cheat;
 import com.cheatdatabase.businessobjects.Game;
 import com.cheatdatabase.businessobjects.Member;
 import com.cheatdatabase.businessobjects.Screenshot;
+import com.cheatdatabase.callbacks.GalleryLoadingCallback;
 import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.helpers.Tools;
@@ -54,14 +57,11 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import needle.Needle;
 
-//import org.androidannotations.annotations.Background;
-//import org.androidannotations.annotations.UiThread;
-
 /**
  * List of Cheats from a Game.
  *
  * @author Dominik Erbsland
- * @version 1.0
+ * @version 1.1
  */
 public class CheatViewFragment extends Fragment {
 
@@ -196,10 +196,21 @@ public class CheatViewFragment extends Fragment {
             biggestHeight = 100; // setMemberList value
             progressBar.setVisibility(View.VISIBLE);
 
-            getScreenshotsOnline(cheatObj);
+            getScreenshotsOnline(cheatObj, new GalleryLoadingCallback() {
+                @Override
+                public void success(List<Bitmap> bitmapList) {
+                    progressBar.setVisibility(View.GONE);
+                    displayScreenshotsInGallery(bitmapList);
+                }
+
+                @Override
+                public void fail(Exception e) {
+                    progressBar.setVisibility(View.GONE);
+                }
+            });
         } else {
-            tvGalleryInfo.setVisibility(View.GONE);
             progressBar.setVisibility(View.GONE);
+            tvGalleryInfo.setVisibility(View.GONE);
             screenshotGallery.setVisibility(View.GONE);
         }
 
@@ -219,17 +230,6 @@ public class CheatViewFragment extends Fragment {
         editor.commit();
     }
 
-    private void buildGallery() {
-        screenshotGallery.setAdapter(new ImageAdapter(cheatViewPageIndicatorActivity));
-        screenshotGallery.setOnItemClickListener((parent, v, position, id) -> {
-            Screenshot screenShot = cheatObj.getScreenshotList().get(position);
-
-            Uri uri = Uri.parse(Konstanten.SCREENSHOT_ROOT_WEBDIR + screenShot.getCheatId() + screenShot.getFilename());
-            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-            startActivity(intent);
-        });
-
-    }
 
     private void populateView() {
         try {
@@ -373,20 +373,19 @@ public class CheatViewFragment extends Fragment {
     }
 
     private void setCheatText(String fullCheatText) {
-        Needle.onMainThread().execute(() -> {
+        if (fullCheatText != null && fullCheatText.length() > 1) {
             if (fullCheatText.substring(0, 1).equalsIgnoreCase("2")) {
                 cheatObj.setWalkthroughFormat(true);
             }
-            progressBar.setVisibility(View.GONE);
             cheatObj.setCheatText(fullCheatText.substring(1));
 
-            populateView();
-        });
-
+            Needle.onMainThread().execute(() -> populateView());
+        }
     }
 
-    private void getScreenshotsOnline(Cheat cheat) {
+    private void getScreenshotsOnline(Cheat cheat, GalleryLoadingCallback callback) {
         List<Bitmap> bitmapList = new ArrayList<>();
+        progressBar.setVisibility(View.VISIBLE);
 
         Needle.onBackgroundThread().execute(() -> {
             try {
@@ -415,15 +414,18 @@ public class CheatViewFragment extends Fragment {
                         }
                     }
                 }
+
+                Needle.onMainThread().execute(() -> callback.success(bitmapList));
             } catch (IOException e) {
                 Log.e(TAG, "Remote Image Exception", e);
+                Needle.onMainThread().execute(() -> callback.fail(e));
             }
-
-            displayScreenshots(bitmapList);
         });
     }
 
-    void displayScreenshots(List<Bitmap> bitmapList) {
+    void displayScreenshotsInGallery(List<Bitmap> bitmapList) {
+        imageViews = new ArrayList<>();
+
         for (Bitmap b : bitmapList) {
             ImageView iv = new ImageView(cheatViewPageIndicatorActivity);
             iv.setScaleType(ImageView.ScaleType.MATRIX);
@@ -433,24 +435,29 @@ public class CheatViewFragment extends Fragment {
             imageViews.add(iv);
         }
 
-        Needle.onMainThread().execute(() -> {
-            if ((cheatObj.getScreenshotList() == null) || (cheatObj.getScreenshotList().size() <= 1)) {
-                tvGalleryInfo.setVisibility(View.GONE);
-                progressBar.setVisibility(View.VISIBLE);
-            } else {
-                tvGalleryInfo.setVisibility(View.VISIBLE);
-                progressBar.setVisibility(View.GONE);
-            }
+        if ((cheatObj.getScreenshotList() == null) || (cheatObj.getScreenshotList().size() <= 1)) {
+            tvGalleryInfo.setVisibility(View.GONE);
+        } else {
+            tvGalleryInfo.setVisibility(View.VISIBLE);
+        }
 
-            buildGallery();
-        });
+        try {
+            screenshotGallery.setAdapter(new ImageAdapter(cheatViewPageIndicatorActivity));
+            screenshotGallery.setOnItemClickListener((parent, v, position, id) -> {
+                Screenshot screenShot = cheatObj.getScreenshotList().get(position);
 
+                Uri uri = Uri.parse(Konstanten.SCREENSHOT_ROOT_WEBDIR + screenShot.getCheatId() + screenShot.getFilename());
+                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                startActivity(intent);
+            });
+        } catch (ActivityNotFoundException ignored) {
+        }
     }
 
     /**
-     * Innere Klasse zum Anzeigen der Screenshot-Thumbnails
+     * Inner class to display gallery thumbnails
      * <p/>
-     * Copyright (c) 2010-2018<br>
+     * Copyright (c) 2010-2019<br>
      *
      * @author Dominik Erbsland
      * @version 1.1

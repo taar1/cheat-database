@@ -4,11 +4,11 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.DividerItemDecoration;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.fragment.app.Fragment;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -36,7 +36,7 @@ import needle.Needle;
 /**
  * Show Top 20 helping memberList in a list.
  *
- * @author Dominik
+ * @author Dominik Erbsland
  */
 public class TopMembersFragment extends Fragment {
     private static final String TAG = TopMembersFragment.class.getSimpleName();
@@ -80,12 +80,7 @@ public class TopMembersFragment extends Fragment {
 
         setHasOptionsMenu(true);
 
-        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                loadMembersInBackground();
-            }
-        });
+        mSwipeRefreshLayout.setOnRefreshListener(() -> loadMembersInBackground());
 
         if (Reachability.reachability.isReachable) {
             layoutManager = new LinearLayoutManager(getActivity());
@@ -157,34 +152,28 @@ public class TopMembersFragment extends Fragment {
             mSwipeRefreshLayout.setRefreshing(true);
         }
 
-        Needle.onBackgroundThread().execute(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    memberList = Webservice.getMemberTop20();
-                } catch (Exception e) {
-                    Log.e(TAG, e.getLocalizedMessage());
-                }
-                notifyAdapter();
+        Needle.onBackgroundThread().execute(() -> {
+            try {
+                memberList = Webservice.getMemberTop20();
+            } catch (Exception e) {
+                Log.e(TAG, e.getLocalizedMessage());
             }
+            notifyAdapter();
         });
 
     }
 
     public void notifyAdapter() {
-        Needle.onMainThread().execute(new Runnable() {
-            @Override
-            public void run() {
-                mSwipeRefreshLayout.setRefreshing(true);
+        Needle.onMainThread().execute(() -> {
+            mSwipeRefreshLayout.setRefreshing(true);
 
-                if (memberList != null && memberList.size() > 0) {
-                    mTopMembersListViewAdapter.setMemberList(memberList);
-                    mTopMembersListViewAdapter.notifyDataSetChanged();
-                } else {
-                    handleEmptyViewState();
-                }
-                mSwipeRefreshLayout.setRefreshing(false);
+            if (memberList != null && memberList.size() > 0) {
+                mTopMembersListViewAdapter.setMemberList(memberList);
+                mTopMembersListViewAdapter.notifyDataSetChanged();
+            } else {
+                handleEmptyViewState();
             }
+            mSwipeRefreshLayout.setRefreshing(false);
         });
     }
 

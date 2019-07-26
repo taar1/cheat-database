@@ -10,15 +10,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.SearchRecentSuggestions;
-import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.NavigationView;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.SearchView;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -26,6 +17,15 @@ import android.view.View;
 import android.webkit.WebView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
+import androidx.appcompat.widget.Toolbar;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.Theme;
@@ -46,6 +46,8 @@ import com.cheatdatabase.helpers.TrackingUtils;
 import com.cheatdatabase.search.SearchSuggestionProvider;
 import com.facebook.ads.AdSize;
 import com.facebook.ads.AdView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.navigation.NavigationView;
 import com.google.gson.Gson;
 
 import org.greenrobot.eventbus.EventBus;
@@ -89,7 +91,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private static final String REMOTE_CONFIG_HACKS_ENABLED_KEY = "hacks_enabled";
     private static final String REMOTE_CONFIG_IOS_ENABLED_KEY = "ios_enabled";
     private static final String REMOTE_CONFIG_ANDROID_ENABLED_KEY = "android_enabled";
-    private android.support.v4.app.FragmentManager fragmentManager;
+    private FragmentManager fragmentManager;
     private FragmentTransaction fragmentTransaction;
 
     @Override
@@ -190,7 +192,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         fragmentTransaction.addToBackStack(SubmitCheatFragment.class.getSimpleName());
         fragmentManager.beginTransaction().replace(R.id.content_frame, SubmitCheatFragment.newInstance(), SubmitCheatFragment.class.getSimpleName()).commit();
 
-        fab.setVisibility(View.GONE);
+        fab.hide();
     }
 
     @Override
@@ -379,13 +381,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             fragmentManager.beginTransaction().replace(R.id.content_frame, FavoriteGamesListFragment.newInstance(), FavoriteGamesListFragment.class.getSimpleName()).commit();
 
             mToolbar.setTitle(R.string.favorites);
-            fab.setVisibility(View.VISIBLE);
+            fab.show();
         } else if (id == R.id.nav_members) {
             fragmentTransaction.addToBackStack(TopMembersFragment.class.getSimpleName());
             fragmentManager.beginTransaction().replace(R.id.content_frame, TopMembersFragment.newInstance(), TopMembersFragment.class.getSimpleName()).commit();
 
             mToolbar.setTitle(R.string.top_members_top_helping);
-            fab.setVisibility(View.VISIBLE);
+            fab.show();
         } else if (id == R.id.nav_rate) {
             new RateAppDialog(this, new MainActivityCallbacks() {
                 @Override
@@ -399,7 +401,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             fragmentManager.beginTransaction().replace(R.id.content_frame, SubmitCheatFragment.newInstance(), SubmitCheatFragment.class.getSimpleName()).commit();
 
             mToolbar.setTitle(R.string.submit_cheat_short);
-            fab.setVisibility(View.GONE);
+            fab.hide();
         } else if (id == R.id.nav_contact) {
             showContactFormFragment();
         } else if (id == R.id.nav_settings) {
@@ -445,7 +447,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         fragmentTransaction.addToBackStack(ContactFormFragment.class.getSimpleName());
         fragmentManager.beginTransaction().replace(R.id.content_frame, ContactFormFragment.newInstance(), ContactFormFragment.class.getSimpleName()).commit();
 
-        fab.setVisibility(View.GONE);
+        fab.hide();
         mDrawerLayout.closeDrawers();
     }
 
@@ -454,7 +456,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         fragmentTransaction.addToBackStack(SystemListFragment.class.getSimpleName());
         fragmentManager.beginTransaction().replace(R.id.content_frame, SystemListFragment.newInstance(), SystemListFragment.class.getSimpleName()).commit();
 
-        fab.setVisibility(View.VISIBLE);
+        fab.show();
         mDrawerLayout.closeDrawers();
     }
 }

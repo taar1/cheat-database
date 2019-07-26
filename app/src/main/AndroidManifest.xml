@@ -194,8 +194,7 @@
 
         <!-- AppBrain SDK -->
         <activity
-            android:name="com.appbrain.AppBrainActivity"
-            android:configChanges="keyboard|keyboardHidden|orientation" />
+            android:name="com.appbrain.AppBrainActivity" />
 
         <service android:name="com.appbrain.AppBrainService" />
 

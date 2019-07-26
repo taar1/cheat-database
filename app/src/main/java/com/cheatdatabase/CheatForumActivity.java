@@ -9,11 +9,11 @@ import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.support.v4.view.MenuItemCompat;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.SearchView;
-import android.support.v7.widget.ShareActionProvider;
-import android.support.v7.widget.Toolbar;
+import androidx.core.view.MenuItemCompat;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
+import androidx.appcompat.widget.ShareActionProvider;
+import androidx.appcompat.widget.Toolbar;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
@@ -350,7 +350,7 @@ public class CheatForumActivity extends AppCompatActivity implements CheatListFr
         MenuItem item = menu.findItem(R.id.action_share);
 
         // Sharing
-        mShare = (android.support.v7.widget.ShareActionProvider) MenuItemCompat.getActionProvider(item);
+        mShare = (androidx.appcompat.widget.ShareActionProvider) MenuItemCompat.getActionProvider(item);
         setShareText(cheatObj);
 
         // Search

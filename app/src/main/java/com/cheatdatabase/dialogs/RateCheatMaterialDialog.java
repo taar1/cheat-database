@@ -2,7 +2,7 @@ package com.cheatdatabase.dialogs;
 
 import android.app.Activity;
 import android.os.AsyncTask;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import android.util.Log;
 import android.view.View;
 import android.widget.RatingBar;

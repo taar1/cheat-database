@@ -44,7 +44,7 @@
             android:layout_height="match_parent"
             android:layout_margin="10dp">
 
-            <android.support.design.widget.TextInputLayout
+            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/email_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -52,7 +52,7 @@
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
-                <android.support.design.widget.TextInputEditText
+                <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -62,12 +62,12 @@
                     android:singleLine="true">
 
                     <requestFocus />
-                </android.support.design.widget.TextInputEditText>
+                </com.google.android.material.textfield.TextInputEditText>
 
-            </android.support.design.widget.TextInputLayout>
+            </com.google.android.material.textfield.TextInputLayout>
 
 
-            <android.support.design.widget.TextInputLayout
+            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/textbox_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -76,7 +76,7 @@
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
-                <android.support.design.widget.TextInputEditText
+                <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/form_message"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -86,7 +86,7 @@
                     android:inputType="textMultiLine"
                     android:minHeight="240dp" />
 
-            </android.support.design.widget.TextInputLayout>
+            </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
                 android:id="@+id/emailaddress"

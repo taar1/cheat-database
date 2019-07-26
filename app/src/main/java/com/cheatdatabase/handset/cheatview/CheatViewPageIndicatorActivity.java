@@ -8,13 +8,6 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v4.view.MenuItemCompat;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.SearchView;
-import android.support.v7.widget.ShareActionProvider;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -22,6 +15,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
+import androidx.appcompat.widget.ShareActionProvider;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.MenuItemCompat;
+import androidx.viewpager.widget.ViewPager;
 
 import com.cheatdatabase.CheatForumActivity;
 import com.cheatdatabase.LoginActivity;
@@ -40,6 +40,7 @@ import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.helpers.Tools;
 import com.facebook.ads.AdSize;
 import com.facebook.ads.AdView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
 
 import net.lucode.hackware.magicindicator.MagicIndicator;
@@ -73,7 +74,6 @@ public class CheatViewPageIndicatorActivity extends AppCompatActivity {
     private static final String TAG = CheatViewPageIndicatorActivity.class.getSimpleName();
 
     private Intent intent;
-
 
     @BindView(R.id.outer_layout)
     LinearLayout outerLayout;
@@ -123,9 +123,7 @@ public class CheatViewPageIndicatorActivity extends AppCompatActivity {
         if (gameObj == null) {
             gameObj = new Gson().fromJson(settings.getString(Konstanten.PREFERENCES_TEMP_GAME_OBJECT_VIEW, null), Game.class);
         }
-        if (gameObj == null) {
-            finish();
-        }
+
 
         editor.putString(Konstanten.PREFERENCES_TEMP_GAME_OBJECT_VIEW, new Gson().toJson(gameObj));
         editor.apply();
@@ -133,34 +131,31 @@ public class CheatViewPageIndicatorActivity extends AppCompatActivity {
         pageSelected = intent.getIntExtra("selectedPage", 0);
         activePage = pageSelected;
 
-        // TODO FIXME gameObj GAME NAME etc. ist NULL
-        // TODO FIXME gameObj GAME NAME etc. ist NULL
-        // TODO FIXME gameObj GAME NAME etc. ist NULL
-        // TODO FIXME gameObj GAME NAME etc. ist NULL
-        // TODO FIXME gameObj GAME NAME etc. ist NULL
-        // TODO FIXME gameObj GAME NAME etc. ist NULL
 
-        for (Cheat cheat : gameObj.getCheatList()) {
-            cheat.setGameId(gameObj.getGameId());
-            cheat.setGameName(gameObj.getGameName());
-            cheat.setSystemId(gameObj.getSystemId());
-            cheat.setSystemName(gameObj.getSystemName());
-            cheatArray.add(cheat);
-        }
-
-        if ((cheatArray == null) || (cheatArray.size() < 1)) {
+        if (gameObj == null) {
             finish();
+        } else {
+            for (Cheat cheat : gameObj.getCheatList()) {
+                cheat.setGameId(gameObj.getGameId());
+                cheat.setGameName(gameObj.getGameName());
+                cheat.setSystemId(gameObj.getSystemId());
+                cheat.setSystemName(gameObj.getSystemName());
+                cheatArray.add(cheat);
+            }
+
+            if ((cheatArray == null) || (cheatArray.size() < 1)) {
+                finish();
+            }
+            visibleCheat = cheatArray.get(pageSelected);
+
+            getSupportActionBar().setTitle(gameObj.getGameName());
+            getSupportActionBar().setSubtitle(gameObj.getSystemName());
+
+            initialisePaging();
         }
-        visibleCheat = cheatArray.get(pageSelected);
-
-        getSupportActionBar().setTitle(gameObj.getGameName());
-        getSupportActionBar().setSubtitle(gameObj.getSystemName());
-
-        initialisePaging();
     }
 
     private void init() {
-        Log.d(TAG, "XXXXX init()");
         if (!Reachability.isRegistered()) {
             Reachability.registerReachability(this);
         }
@@ -286,7 +281,6 @@ public class CheatViewPageIndicatorActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        Log.d(TAG, "XXXXX onCreateOptionsMenu()");
         if ((visibleCheat != null) && (visibleCheat.getMemberRating() > 0)) {
             getMenuInflater().inflate(R.menu.handset_cheatview_rating_on_menu, menu);
         } else {

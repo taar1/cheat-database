@@ -5,8 +5,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
@@ -14,6 +12,9 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.cheatdatabase.businessobjects.Game;
 import com.cheatdatabase.businessobjects.Member;
@@ -27,6 +28,7 @@ import com.google.gson.Gson;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import needle.Needle;
 
 /**
  * Liste mit allen Cheats eines Games.
@@ -176,18 +178,19 @@ public class SubmitCheatActivity extends AppCompatActivity {
     }
 
     private void showAlertDialog(int title, int text) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(SubmitCheatActivity.this);
-        builder.setMessage(text).setTitle(title);
-        builder.setPositiveButton(R.string.ok, (dialog, id) -> {
-            dialog.dismiss();
-            if (title == R.string.thanks) {
-                finish();
-            }
+        Needle.onMainThread().execute(() -> {
+            AlertDialog.Builder builder = new AlertDialog.Builder(SubmitCheatActivity.this);
+            builder.setMessage(text).setTitle(title);
+            builder.setPositiveButton(R.string.ok, (dialog, id) -> {
+                dialog.dismiss();
+                if (title == R.string.thanks) {
+                    finish();
+                }
+            });
+            builder.create();
+            builder.show();
         });
-        builder.create();
-        builder.show();
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

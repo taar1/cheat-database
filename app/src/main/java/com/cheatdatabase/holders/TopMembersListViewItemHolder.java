@@ -3,7 +3,7 @@ package com.cheatdatabase.holders;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.net.Uri;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;

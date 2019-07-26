@@ -58,7 +58,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:textAppearance="@style/NormalText"
-                android:textIsSelectable="true" />
+                android:textIsSelectable="false" />
 
             <ProgressBar
                 android:id="@+id/progress_bar"
