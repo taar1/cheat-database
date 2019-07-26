@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 
 import com.cheatdatabase.R;
 import com.cheatdatabase.businessobjects.Member;
+import com.cheatdatabase.fragments.TopMembersFragment;
 import com.cheatdatabase.holders.TopMembersListViewItemHolder;
 
 import java.util.ArrayList;
@@ -14,9 +15,12 @@ import java.util.List;
 
 public class TopMembersListViewAdapter extends RecyclerView.Adapter<TopMembersListViewItemHolder> {
     private List<Member> memberList;
+    private TopMembersFragment.TopMemberListItemClickListener topMemberListItemClickListener;
 
-    public TopMembersListViewAdapter() {
+    public TopMembersListViewAdapter(TopMembersFragment.TopMemberListItemClickListener topMemberListItemClickListener) {
         memberList = new ArrayList<>();
+
+        this.topMemberListItemClickListener = topMemberListItemClickListener;
     }
 
     @Override
@@ -28,6 +32,7 @@ public class TopMembersListViewAdapter extends RecyclerView.Adapter<TopMembersLi
     public void onBindViewHolder(TopMembersListViewItemHolder holder, final int position) {
         TopMembersListViewItemHolder topMembersListViewItemHolder = holder;
         topMembersListViewItemHolder.updateUI(memberList.get(position));
+        topMembersListViewItemHolder.setClickListener(topMemberListItemClickListener);
     }
 
     public void setMemberList(List<Member> members) {

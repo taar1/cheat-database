@@ -4,11 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import androidx.fragment.app.Fragment;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -20,6 +15,13 @@ import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
+import com.cheatdatabase.CheatsByMemberListActivity;
 import com.cheatdatabase.R;
 import com.cheatdatabase.adapters.TopMembersListViewAdapter;
 import com.cheatdatabase.businessobjects.Member;
@@ -61,7 +63,9 @@ public class TopMembersFragment extends Fragment {
     public TopMembersFragment() {
         memberList = new ArrayList<>();
         parentActivity = getActivity();
-        mTopMembersListViewAdapter = new TopMembersListViewAdapter();
+        mTopMembersListViewAdapter = new TopMembersListViewAdapter(member -> {
+            clickedOnMember(member);
+        });
     }
 
     public static TopMembersFragment newInstance() {
@@ -189,6 +193,20 @@ public class TopMembersFragment extends Fragment {
             mSwipeRefreshLayout.setVisibility(View.VISIBLE);
             emptyView.setVisibility(View.GONE);
         }
+    }
+
+    private void clickedOnMember(Member member) {
+        if (Reachability.reachability.isReachable) {
+            Intent intent = new Intent(getActivity(), CheatsByMemberListActivity.class);
+            intent.putExtra("member", member);
+            getActivity().startActivity(intent);
+        } else {
+            Toast.makeText(getActivity(), R.string.no_internet, Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public interface TopMemberListItemClickListener {
+        void clickedOnMember(Member member);
     }
 
 }

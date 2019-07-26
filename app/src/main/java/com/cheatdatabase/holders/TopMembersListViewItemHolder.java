@@ -3,17 +3,16 @@ package com.cheatdatabase.holders;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.net.Uri;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.cheatdatabase.CheatDatabaseApplication;
-import com.cheatdatabase.CheatsByMemberListActivity;
 import com.cheatdatabase.R;
 import com.cheatdatabase.businessobjects.Member;
+import com.cheatdatabase.fragments.TopMembersFragment;
 import com.cheatdatabase.helpers.Konstanten;
-import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.helpers.Tools;
 import com.squareup.picasso.Picasso;
 
@@ -37,6 +36,7 @@ public class TopMembersListViewItemHolder extends RecyclerView.ViewHolder {
     private final Typeface fontBold;
     private final Typeface fontLight;
     private Member member;
+    private TopMembersFragment.TopMemberListItemClickListener topMemberListItemClickListener;
 
     public TopMembersListViewItemHolder(View view) {
         super(view);
@@ -86,12 +86,10 @@ public class TopMembersListViewItemHolder extends RecyclerView.ViewHolder {
 
     @OnClick({R.id.member_name, R.id.cheat_count, R.id.avatar})
     void showMemberCheatList() {
-        if (Reachability.reachability.isReachable) {
-            Intent explicitIntent = new Intent(CheatDatabaseApplication.getAppContext(), CheatsByMemberListActivity.class);
-            explicitIntent.putExtra("member", member);
-            CheatDatabaseApplication.getAppContext().startActivity(explicitIntent);
-        } else {
-            Toast.makeText(CheatDatabaseApplication.getAppContext(), R.string.no_internet, Toast.LENGTH_SHORT).show();
-        }
+        topMemberListItemClickListener.clickedOnMember(member);
+    }
+
+    public void setClickListener(TopMembersFragment.TopMemberListItemClickListener topMemberListItemClickListener) {
+        this.topMemberListItemClickListener = topMemberListItemClickListener;
     }
 }
