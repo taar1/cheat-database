@@ -5,15 +5,17 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.appcompat.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.cheatdatabase.adapters.MemberCheatRecycleListViewAdapter;
 import com.cheatdatabase.businessobjects.Cheat;
@@ -75,24 +77,28 @@ public class CheatsByMemberListActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         member = getIntent().getParcelableExtra("member");
-        init();
+        if (member != null) {
+            init();
 
-        memberCheatRecycleListViewAdapter = new MemberCheatRecycleListViewAdapter();
+            memberCheatRecycleListViewAdapter = new MemberCheatRecycleListViewAdapter();
 
-        mSwipeRefreshLayout.setRefreshing(true);
-        mSwipeRefreshLayout.setOnRefreshListener(() -> getCheats());
+            mSwipeRefreshLayout.setRefreshing(true);
+            mSwipeRefreshLayout.setOnRefreshListener(() -> getCheats());
 
-        // use this setting to improve performance if you know that changes
-        // in content do not change the layout size of the RecyclerView
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        mRecyclerView.addItemDecoration(new DividerDecoration(this));
-        mRecyclerView.getItemAnimator().setRemoveDuration(50);
-        mRecyclerView.setHasFixedSize(true);
+            // use this setting to improve performance if you know that changes
+            // in content do not change the layout size of the RecyclerView
+            mRecyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
+            mRecyclerView.addItemDecoration(new DividerDecoration(this));
+            mRecyclerView.getItemAnimator().setRemoveDuration(50);
+            mRecyclerView.setHasFixedSize(true);
 
-        if (Reachability.reachability.isReachable) {
-            getCheats();
+            if (Reachability.reachability.isReachable) {
+                getCheats();
+            } else {
+                Toast.makeText(this, R.string.no_internet, Toast.LENGTH_SHORT).show();
+            }
         } else {
-            Toast.makeText(this, R.string.no_internet, Toast.LENGTH_SHORT).show();
+            finish();
         }
     }
 
@@ -130,7 +136,7 @@ public class CheatsByMemberListActivity extends AppCompatActivity {
     void fillListWithCheats() {
         Needle.onMainThread().execute(() -> {
             try {
-                if (cheatList.size() > 0) {
+                if ((cheatList != null) && (cheatList.size() > 0)) {
                     memberCheatRecycleListViewAdapter.setCheatList(cheatList);
                     mRecyclerView.setAdapter(memberCheatRecycleListViewAdapter);
 
