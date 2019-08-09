@@ -111,21 +111,10 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4caff62e-c62f-40ca-acf0-73c680b13375" name="Default" comment="Crashlytics Bug Fixes&#10;Version update to 2.3 (release version)">
+    <list default="true" id="4caff62e-c62f-40ca-acf0-73c680b13375" name="Default" comment="Crashlytics Bug Fixes&#10;&#10;Version 2.4-preRelease">
       <change beforePath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/CheatForumActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/CheatForumActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/CheatsByGameListActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/CheatsByGameListActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/GamesBySystemActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/GamesBySystemActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/GamesBySystemListActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/GamesBySystemListActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/MainActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/SubmitCheatActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/SubmitCheatActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/dialogs/RateAppDialog.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/dialogs/RateAppDialog.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/favorites/FavoriteCheatListActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/favorites/FavoriteCheatListActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/favorites/handset/cheatview/FavoritesCheatViewPageIndicator.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/favorites/handset/cheatview/FavoritesCheatViewPageIndicator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/members/cheatview/MemberCheatViewPageIndicator.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/members/cheatview/MemberCheatViewPageIndicator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout-xlarge/activity_member_cheatlist.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout-xlarge/activity_member_cheatlist.xml" afterDir="false" />
     </list>
     <ignored path="Cheat-Database.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -241,6 +230,15 @@
           </provider>
         </entry>
       </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/build.gradle">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="450">
+              <caret line="30" column="15" lean-forward="true" selection-start-line="30" selection-start-column="15" selection-end-line="30" selection-end-column="15" />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/CheatsByGameListActivity.java">
           <provider selected="true" editor-type-id="text-editor">
@@ -266,11 +264,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/SubmitCheatActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="209">
-              <caret line="187" column="30" lean-forward="true" selection-start-line="187" selection-start-column="30" selection-end-line="187" selection-end-column="30" />
+            <state relative-caret-position="804">
+              <caret line="116" selection-start-line="116" selection-end-line="116" />
               <folding>
                 <element signature="e#7503#7514#0" expanded="true" />
                 <element signature="e#7599#7614#0" expanded="true" />
@@ -417,7 +415,6 @@
         <option value="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/holders/TopMembersListViewItemHolder.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/fragments/TopMembersFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/CheatsByMemberListActivity.java" />
-        <option value="$PROJECT_DIR$/app/build.gradle" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout-xlarge/activity_member_cheatlist.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/GamesBySystemActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/GamesBySystemListActivity.java" />
@@ -429,6 +426,7 @@
         <option value="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/MainActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/dialogs/RateAppDialog.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/SubmitCheatActivity.java" />
+        <option value="$PROJECT_DIR$/app/build.gradle" />
       </list>
     </option>
   </component>
@@ -996,20 +994,6 @@
       <option name="presentableId" value="Default" />
       <updated>1487274191999</updated>
     </task>
-    <task id="LOCAL-00005" summary="Try to implement MoPub latest version">
-      <created>1535313569497</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1535313569497</updated>
-    </task>
-    <task id="LOCAL-00006" summary="Implement Facebook Ads">
-      <created>1536179025371</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1536179025371</updated>
-    </task>
     <task id="LOCAL-00007" summary="Switch to Facebook Ads (Audience Network)&#10;UNTESTED, PRE-RELEASE">
       <created>1536265714902</created>
       <option name="number" value="00007" />
@@ -1339,7 +1323,21 @@
       <option name="project" value="LOCAL" />
       <updated>1564327179876</updated>
     </task>
-    <option name="localTasksCounter" value="54" />
+    <task id="LOCAL-00054" summary="Crashlytics Bug Fixes&#10;&#10;Version 2.4-preRelease">
+      <created>1565359176385</created>
+      <option name="number" value="00054" />
+      <option name="presentableId" value="LOCAL-00054" />
+      <option name="project" value="LOCAL" />
+      <updated>1565359176386</updated>
+    </task>
+    <task id="LOCAL-00055" summary="Crashlytics Bug Fixes&#10;&#10;Version 2.4-preRelease">
+      <created>1565360097658</created>
+      <option name="number" value="00055" />
+      <option name="presentableId" value="LOCAL-00055" />
+      <option name="project" value="LOCAL" />
+      <updated>1565360097658</updated>
+    </task>
+    <option name="localTasksCounter" value="56" />
     <servers />
   </component>
   <component name="TodoView">
@@ -1361,7 +1359,7 @@
       <window_info id="Capture Tool" order="3" />
       <window_info id="Designer" order="4" />
       <window_info id="Favorites" order="5" side_tool="true" />
-      <window_info content_ui="combo" id="Project" order="6" sideWeight="0.44279945" visible="true" weight="0.19368131" />
+      <window_info active="true" content_ui="combo" id="Project" order="6" sideWeight="0.44279945" visible="true" weight="0.19368131" />
       <window_info id="Structure" order="7" sideWeight="0.55720055" side_tool="true" visible="true" weight="0.19368131" />
       <window_info id="Nl-Palette" order="8" />
       <window_info id="Resources Explorer" order="9" />
@@ -1380,7 +1378,7 @@
       <window_info anchor="bottom" id="Terminal" order="12" weight="0.32901135" />
       <window_info anchor="bottom" id="Messages" order="13" weight="0.34756097" />
       <window_info anchor="bottom" id="Logcat" order="14" weight="0.3505245" />
-      <window_info active="true" anchor="bottom" id="Build" order="15" visible="true" weight="0.3505245" />
+      <window_info anchor="bottom" id="Build" order="15" visible="true" weight="0.3505245" />
       <window_info anchor="bottom" id="Android Monitor" order="16" weight="0.53356683" />
       <window_info anchor="bottom" id="Gradle Console" order="17" sideWeight="0.5021322" side_tool="true" weight="0.3337029" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
@@ -1420,7 +1418,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
-    <MESSAGE value="Navigation Drawer move to XML" />
     <MESSAGE value="Implement Facebook Ads" />
     <MESSAGE value="Switch to Facebook Ads (Audience Network)&#10;UNTESTED, PRE-RELEASE" />
     <MESSAGE value="Update to version 2.2.0&#10;removed MoPub ad classes (AdColony, Facebook Ads)" />
@@ -1445,7 +1442,8 @@
     <MESSAGE value="Fix Crash bei Cheats mit Screenshots." />
     <MESSAGE value="Crashlytics Bug Fixes" />
     <MESSAGE value="Crashlytics Bug Fixes&#10;Version update to 2.3 (release version)" />
-    <option name="LAST_COMMIT_MESSAGE" value="Crashlytics Bug Fixes&#10;Version update to 2.3 (release version)" />
+    <MESSAGE value="Crashlytics Bug Fixes&#10;&#10;Version 2.4-preRelease" />
+    <option name="LAST_COMMIT_MESSAGE" value="Crashlytics Bug Fixes&#10;&#10;Version 2.4-preRelease" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1819,13 +1817,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/build.gradle">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="15" column="37" selection-start-line="15" selection-start-column="37" selection-end-line="15" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/CheatForumActivity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="465">
@@ -1936,12 +1927,19 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/SubmitCheatActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="209">
-          <caret line="187" column="30" lean-forward="true" selection-start-line="187" selection-start-column="30" selection-end-line="187" selection-end-column="30" />
+        <state relative-caret-position="804">
+          <caret line="116" selection-start-line="116" selection-end-line="116" />
           <folding>
             <element signature="e#7503#7514#0" expanded="true" />
             <element signature="e#7599#7614#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/build.gradle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="450">
+          <caret line="30" column="15" lean-forward="true" selection-start-line="30" selection-start-column="15" selection-end-line="30" selection-end-column="15" />
         </state>
       </provider>
     </entry>
