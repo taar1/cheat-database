@@ -115,7 +115,6 @@ public class SubmitCheatActivity extends AppCompatActivity {
         }
     }
 
-
     private void init() {
         if (mToolbar != null) {
             setSupportActionBar(mToolbar);
