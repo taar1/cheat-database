@@ -1,9 +1,7 @@
 package com.cheatdatabase;
 
-import android.app.AlertDialog;
 import android.app.SearchManager;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -242,13 +240,8 @@ public class CheatsByGameListActivity extends AppCompatActivity {
     }
 
     private void error() {
-        Log.e(TAG, "Error: " + getPackageName() + "/" + getTitle());
-        new AlertDialog.Builder(CheatsByGameListActivity.this).setIcon(R.drawable.ic_action_warning).setTitle(getString(R.string.err)).setMessage(R.string.err_data_not_accessible).setNeutralButton(R.string.ok, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int whichButton) {
-                finish();
-            }
-        }).create().show();
+        Toast.makeText(this, R.string.err_data_not_accessible, Toast.LENGTH_LONG).show();
+        finish();
     }
 
     @Override

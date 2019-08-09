@@ -7,13 +7,6 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.graphics.Color;
 import android.os.Bundle;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import androidx.core.view.MenuItemCompat;
-import androidx.viewpager.widget.ViewPager;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.SearchView;
-import androidx.appcompat.widget.ShareActionProvider;
-import androidx.appcompat.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -21,6 +14,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
+import androidx.appcompat.widget.ShareActionProvider;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.MenuItemCompat;
+import androidx.viewpager.widget.ViewPager;
 
 import com.cheatdatabase.CheatForumActivity;
 import com.cheatdatabase.LoginActivity;
@@ -39,6 +39,7 @@ import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.helpers.Tools;
 import com.facebook.ads.AdSize;
 import com.facebook.ads.AdView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -80,7 +81,6 @@ public class MemberCheatViewPageIndicator extends AppCompatActivity {
     LinearLayout facebookBanner;
 
 
-
     private Intent intent;
 
     private View viewLayout;
@@ -118,24 +118,6 @@ public class MemberCheatViewPageIndicator extends AppCompatActivity {
 
         init();
 
-        // TODO FIXME FAVORITEN ANZEIGEN GEHT NOCH NICHT (EINZELNER)
-        // TODO FIXME FAVORITEN ANZEIGEN GEHT NOCH NICHT (EINZELNER)
-        // TODO FIXME FAVORITEN ANZEIGEN GEHT NOCH NICHT (EINZELNER)
-        // TODO FIXME FAVORITEN ANZEIGEN GEHT NOCH NICHT (EINZELNER)
-        // TODO FIXME FAVORITEN ANZEIGEN GEHT NOCH NICHT (EINZELNER)
-        // TODO FIXME FAVORITEN ANZEIGEN GEHT NOCH NICHT (EINZELNER)
-        // TODO FIXME FAVORITEN ANZEIGEN GEHT NOCH NICHT (EINZELNER)
-        // TODO FIXME FAVORITEN ANZEIGEN GEHT NOCH NICHT (EINZELNER)
-        // TODO FIXME FAVORITEN ANZEIGEN GEHT NOCH NICHT (EINZELNER)
-        // TODO FIXME FAVORITEN ANZEIGEN GEHT NOCH NICHT (EINZELNER)
-        // TODO FIXME FAVORITEN ANZEIGEN GEHT NOCH NICHT (EINZELNER)
-        // TODO FIXME FAVORITEN ANZEIGEN GEHT NOCH NICHT (EINZELNER)
-        // TODO FIXME FAVORITEN ANZEIGEN GEHT NOCH NICHT (EINZELNER)
-        // TODO FIXME FAVORITEN ANZEIGEN GEHT NOCH NICHT (EINZELNER)
-        // TODO FIXME FAVORITEN ANZEIGEN GEHT NOCH NICHT (EINZELNER)
-        // TODO FIXME FAVORITEN ANZEIGEN GEHT NOCH NICHT (EINZELNER)
-
-
         Type type = new TypeToken<List<Cheat>>() {
         }.getType();
         cheatList = new Gson().fromJson(sharedPreferences.getString(Konstanten.PREFERENCES_TEMP_CHEAT_ARRAY_OBJECT_VIEW, null), type);
@@ -143,6 +125,11 @@ public class MemberCheatViewPageIndicator extends AppCompatActivity {
         if ((cheatList == null) || (cheatList.size() < 1)) {
             cheatList = intent.getParcelableArrayListExtra("cheatList");
         }
+        if ((cheatList == null) || (cheatList.size() < 1)) {
+            Toast.makeText(this, R.string.err_somethings_wrong, Toast.LENGTH_LONG).show();
+            finish();
+        }
+
         pageSelected = intent.getIntExtra("selectedPage", 0);
         activePage = pageSelected;
 

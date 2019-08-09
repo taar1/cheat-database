@@ -7,18 +7,19 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.appcompat.widget.SearchView;
-import androidx.appcompat.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
+import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.cheatdatabase.R;
 import com.cheatdatabase.SubmitCheatActivity;
@@ -91,6 +92,12 @@ public class FavoriteCheatListActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         gameObj = getIntent().getParcelableExtra("gameObj");
+
+        if (gameObj == null) {
+            Toast.makeText(this, R.string.err_somethings_wrong, Toast.LENGTH_LONG).show();
+            finish();
+        }
+
         setTitle(gameObj.getGameName());
 
         init();

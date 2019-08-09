@@ -7,19 +7,19 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.appcompat.widget.SearchView;
-import androidx.appcompat.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
+import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.cheatdatabase.adapters.GamesBySystemRecycleListViewAdapter;
 import com.cheatdatabase.businessobjects.Game;
@@ -82,11 +82,16 @@ public class GamesBySystemListActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         systemObj = getIntent().getParcelableExtra("systemObj");
+        if (systemObj == null) {
+            Toast.makeText(this, R.string.err_somethings_wrong, Toast.LENGTH_LONG).show();
+            finish();
+        }
+
         setTitle(systemObj.getSystemName());
 
         init();
-        mSwipeRefreshLayout.setRefreshing(true);
 
+        mSwipeRefreshLayout.setRefreshing(true);
         mSwipeRefreshLayout.setOnRefreshListener(() -> getGames(true));
 
         // use this setting to improve performance if you know that changes

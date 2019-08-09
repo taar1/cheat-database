@@ -347,7 +347,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     public interface MainActivityCallbacks {
-        void showContactFormFragment();
+        void showContactFormFragmentCallback();
     }
 
     @Override
@@ -389,12 +389,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             mToolbar.setTitle(R.string.top_members_top_helping);
             fab.show();
         } else if (id == R.id.nav_rate) {
-            new RateAppDialog(this, new MainActivityCallbacks() {
-                @Override
-                public void showContactFormFragment() {
-                    showContactFormFragment();
-                }
-            });
+            new RateAppDialog(this, () -> showContactFormFragment());
             return true;
         } else if (id == R.id.nav_submit) {
             fragmentTransaction.addToBackStack(SubmitCheatFragment.class.getSimpleName());

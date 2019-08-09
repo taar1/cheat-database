@@ -1,10 +1,10 @@
 package com.cheatdatabase;
 
-import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
@@ -16,6 +16,8 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.afollestad.materialdialogs.MaterialDialog;
+import com.afollestad.materialdialogs.Theme;
 import com.cheatdatabase.businessobjects.Game;
 import com.cheatdatabase.businessobjects.Member;
 import com.cheatdatabase.dialogs.PlainInformationDialog;
@@ -28,7 +30,6 @@ import com.google.gson.Gson;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import needle.Needle;
 
 /**
  * Liste mit allen Cheats eines Games.
@@ -65,6 +66,10 @@ public class SubmitCheatActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         gameObj = getIntent().getParcelableExtra("gameObj");
+        if (gameObj == null) {
+            Toast.makeText(SubmitCheatActivity.this, R.string.err_somethings_wrong, Toast.LENGTH_LONG).show();
+            finish();
+        }
 
         init();
 
@@ -178,18 +183,20 @@ public class SubmitCheatActivity extends AppCompatActivity {
     }
 
     private void showAlertDialog(int title, int text) {
-        Needle.onMainThread().execute(() -> {
-            AlertDialog.Builder builder = new AlertDialog.Builder(SubmitCheatActivity.this);
-            builder.setMessage(text).setTitle(title);
-            builder.setPositiveButton(R.string.ok, (dialog, id) -> {
-                dialog.dismiss();
-                if (title == R.string.thanks) {
-                    finish();
-                }
-            });
-            builder.create();
-            builder.show();
-        });
+        new MaterialDialog.Builder(SubmitCheatActivity.this)
+                .title(title)
+                .content(text)
+                .positiveText(R.string.ok)
+                .onPositive((dialog, which) -> {
+                    if (title == R.string.thanks) {
+                        Handler handler = new Handler();
+                        handler.postDelayed(() -> {
+                            finish();
+                        }, 100);
+                    }
+                })
+                .theme(Theme.DARK)
+                .show();
     }
 
     @Override

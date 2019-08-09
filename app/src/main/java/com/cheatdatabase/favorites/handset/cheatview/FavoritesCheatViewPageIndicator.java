@@ -388,7 +388,7 @@ public class FavoritesCheatViewPageIndicator extends AppCompatActivity implement
 
     public void showRatingDialog() {
         if ((member == null) || (member.getMid() == 0)) {
-            Toast.makeText(this, R.string.error_login_required, Toast.LENGTH_LONG).show();
+            Toast.makeText(this, R.string.error_login_to_rate, Toast.LENGTH_LONG).show();
         } else {
             new RateCheatMaterialDialog(this, visibleCheat, member);
         }

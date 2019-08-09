@@ -9,11 +9,6 @@ import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import androidx.core.view.MenuItemCompat;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.SearchView;
-import androidx.appcompat.widget.ShareActionProvider;
-import androidx.appcompat.widget.Toolbar;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
@@ -29,6 +24,12 @@ import android.widget.ScrollView;
 import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
+import androidx.appcompat.widget.ShareActionProvider;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.MenuItemCompat;
 
 import com.cheatdatabase.businessobjects.Cheat;
 import com.cheatdatabase.businessobjects.ForumPost;
@@ -105,7 +106,9 @@ public class CheatForumActivity extends AppCompatActivity implements CheatListFr
 
         cheatObj = getIntent().getParcelableExtra("cheatObj");
         gameObj = getIntent().getParcelableExtra("gameObj");
+
         if (cheatObj == null) {
+            Toast.makeText(this, R.string.err_somethings_wrong, Toast.LENGTH_LONG).show();
             finish();
         }
 
@@ -171,8 +174,8 @@ public class CheatForumActivity extends AppCompatActivity implements CheatListFr
         if (mToolbar != null) {
             setSupportActionBar(mToolbar);
         }
-        getSupportActionBar().setTitle(cheatObj.getGameName());
-        getSupportActionBar().setSubtitle(cheatObj.getSystemName());
+        getSupportActionBar().setTitle((gameObj.getGameName() != null ? gameObj.getGameName() : ""));
+        getSupportActionBar().setSubtitle((gameObj.getSystemName() != null ? gameObj.getSystemName() : ""));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
     }

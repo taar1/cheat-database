@@ -113,7 +113,7 @@ public class RateAppDialog {
                 .onPositive(new MaterialDialog.SingleButtonCallback() {
                     @Override
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                        mainActivityCallbacks.showContactFormFragment();
+                        mainActivityCallbacks.showContactFormFragmentCallback();
                     }
                 })
                 .onNegative(new MaterialDialog.SingleButtonCallback() {
