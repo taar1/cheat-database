@@ -96,40 +96,40 @@ public class FavoriteCheatListActivity extends AppCompatActivity {
         if (gameObj == null) {
             Toast.makeText(this, R.string.err_somethings_wrong, Toast.LENGTH_LONG).show();
             finish();
-        }
-
-        setTitle(gameObj.getGameName());
-
-        init();
-
-        cheatsByGameRecycleListViewAdapter = new CheatsByGameRecycleListViewAdapter();
-
-        mSwipeRefreshLayout.setRefreshing(true);
-
-        getSupportActionBar().setTitle(gameObj.getGameName());
-        getSupportActionBar().setSubtitle(gameObj.getSystemName());
-
-        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-//                mRecyclerView.showLoading();
-                getCheats();
-            }
-        });
-
-
-        // use this setting to improve performance if you know that changes
-        // in content do not change the layout size of the RecyclerView
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
-        mRecyclerView.addItemDecoration(new DividerDecoration(this));
-        mRecyclerView.getItemAnimator().setRemoveDuration(50);
-        mRecyclerView.setHasFixedSize(true);
-
-        if (Reachability.reachability.isReachable) {
-            getCheats();
         } else {
-            Tools.showSnackbar(outerLayout, getString(R.string.no_internet));
+            setTitle(gameObj.getGameName());
+
+            init();
+
+            cheatsByGameRecycleListViewAdapter = new CheatsByGameRecycleListViewAdapter();
+
+            mSwipeRefreshLayout.setRefreshing(true);
+
+            getSupportActionBar().setTitle(gameObj.getGameName());
+            getSupportActionBar().setSubtitle(gameObj.getSystemName());
+
+            mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+                @Override
+                public void onRefresh() {
+                    getCheats();
+                }
+            });
+
+
+            // use this setting to improve performance if you know that changes
+            // in content do not change the layout size of the RecyclerView
+            mRecyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
+            mRecyclerView.addItemDecoration(new DividerDecoration(this));
+            mRecyclerView.getItemAnimator().setRemoveDuration(50);
+            mRecyclerView.setHasFixedSize(true);
+
+            if (Reachability.reachability.isReachable) {
+                getCheats();
+            } else {
+                Tools.showSnackbar(outerLayout, getString(R.string.no_internet));
+            }
         }
+
 
     }
 

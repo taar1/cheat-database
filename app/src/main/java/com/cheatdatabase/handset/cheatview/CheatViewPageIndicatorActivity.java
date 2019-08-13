@@ -124,7 +124,6 @@ public class CheatViewPageIndicatorActivity extends AppCompatActivity {
             gameObj = new Gson().fromJson(settings.getString(Konstanten.PREFERENCES_TEMP_GAME_OBJECT_VIEW, null), Game.class);
         }
 
-
         editor.putString(Konstanten.PREFERENCES_TEMP_GAME_OBJECT_VIEW, new Gson().toJson(gameObj));
         editor.apply();
 
@@ -405,7 +404,10 @@ public class CheatViewPageIndicatorActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        EventBus.getDefault().register(this);
+        try {
+            EventBus.getDefault().register(this);
+        } catch (NullPointerException e) {
+        }
     }
 
     @Override

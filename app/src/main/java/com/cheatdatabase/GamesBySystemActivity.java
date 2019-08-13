@@ -55,6 +55,7 @@ public class GamesBySystemActivity extends AppCompatActivity {
     private SystemPlatform systemObj;
     private SharedPreferences sharedPreferences;
     private Member member;
+    private AdView adView;
 
     @BindView(R.id.my_recycler_view)
     FastScrollRecyclerView mRecyclerView;
@@ -66,8 +67,6 @@ public class GamesBySystemActivity extends AppCompatActivity {
     TextView mEmptyView;
     @BindView(R.id.banner_container)
     LinearLayout facebookBanner;
-    private AdView adView;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,26 +75,31 @@ public class GamesBySystemActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         systemObj = getIntent().getParcelableExtra("systemObj");
-        setTitle(systemObj.getSystemName());
-        init();
+        if (systemObj == null) {
+            Toast.makeText(this, R.string.err_somethings_wrong, Toast.LENGTH_LONG).show();
+            finish();
+        } else {
+            setTitle((systemObj.getSystemName() != null ? systemObj.getSystemName() : ""));
+            init();
 
-        mSwipeRefreshLayout.setRefreshing(true);
-        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                getGames(true);
+            mSwipeRefreshLayout.setRefreshing(true);
+            mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+                @Override
+                public void onRefresh() {
+                    getGames(true);
+                }
+            });
+
+            // use this setting to improve performance if you know that changes
+            // in content do not change the layout size of the RecyclerView
+            mRecyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
+            mRecyclerView.addItemDecoration(new DividerDecoration(this));
+            mRecyclerView.setHasFixedSize(true);
+            mRecyclerView.showScrollbar();
+
+            if (Reachability.reachability.isReachable) {
+                getGames(false);
             }
-        });
-
-        // use this setting to improve performance if you know that changes
-        // in content do not change the layout size of the RecyclerView
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
-        mRecyclerView.addItemDecoration(new DividerDecoration(this));
-        mRecyclerView.setHasFixedSize(true);
-        mRecyclerView.showScrollbar();
-
-        if (Reachability.reachability.isReachable) {
-            getGames(false);
         }
     }
 

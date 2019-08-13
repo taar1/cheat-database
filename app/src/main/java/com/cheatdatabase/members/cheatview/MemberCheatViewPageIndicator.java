@@ -125,27 +125,36 @@ public class MemberCheatViewPageIndicator extends AppCompatActivity {
         if ((cheatList == null) || (cheatList.size() < 1)) {
             cheatList = intent.getParcelableArrayListExtra("cheatList");
         }
+
         if ((cheatList == null) || (cheatList.size() < 1)) {
-            Toast.makeText(this, R.string.err_somethings_wrong, Toast.LENGTH_LONG).show();
-            finish();
+            handleNullPointerException();
+        } else {
+            pageSelected = intent.getIntExtra("selectedPage", 0);
+            activePage = pageSelected;
+
+            try {
+                visibleCheat = cheatList.get(pageSelected);
+
+                gameObj = new Game();
+                gameObj.setCheat(visibleCheat);
+                gameObj.setGameId(visibleCheat.getGameId());
+                gameObj.setGameName(visibleCheat.getGameName());
+                gameObj.setSystemId(visibleCheat.getSystemId());
+                gameObj.setSystemName(visibleCheat.getSystemName());
+
+                getSupportActionBar().setTitle(visibleCheat.getGameName());
+                getSupportActionBar().setSubtitle(visibleCheat.getSystemName());
+
+                initialisePaging();
+            } catch (NullPointerException e) {
+                handleNullPointerException();
+            }
         }
+    }
 
-        pageSelected = intent.getIntExtra("selectedPage", 0);
-        activePage = pageSelected;
-
-        visibleCheat = cheatList.get(pageSelected);
-
-        gameObj = new Game();
-        gameObj.setCheat(visibleCheat);
-        gameObj.setGameId(visibleCheat.getGameId());
-        gameObj.setGameName(visibleCheat.getGameName());
-        gameObj.setSystemId(visibleCheat.getSystemId());
-        gameObj.setSystemName(visibleCheat.getSystemName());
-
-        getSupportActionBar().setTitle(visibleCheat.getGameName());
-        getSupportActionBar().setSubtitle(visibleCheat.getSystemName());
-
-        initialisePaging();
+    private void handleNullPointerException() {
+        Toast.makeText(this, R.string.err_somethings_wrong, Toast.LENGTH_LONG).show();
+        finish();
     }
 
     private void init() {

@@ -52,11 +52,13 @@ public class GamesBySystemListActivity extends AppCompatActivity {
 
     private static final String TAG = GamesBySystemListActivity.class.getSimpleName();
     private List<Game> gameArrayList;
+    private SystemPlatform systemObj;
+    private AdView adView;
+    private SharedPreferences sharedPreferences;
+    private SharedPreferences.Editor editor;
+    private Member member;
 
     CheatDatabaseApplication cheatDatabaseApplication;
-
-    private SystemPlatform systemObj;
-
     GamesBySystemRecycleListViewAdapter gamesBySystemRecycleListViewAdapter;
 
     @BindView(R.id.my_recycler_view)
@@ -69,11 +71,6 @@ public class GamesBySystemListActivity extends AppCompatActivity {
     TextView mEmptyView;
     @BindView(R.id.banner_container)
     LinearLayout facebookBanner;
-    private AdView adView;
-
-    private SharedPreferences sharedPreferences;
-    private SharedPreferences.Editor editor;
-    private Member member;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,26 +82,26 @@ public class GamesBySystemListActivity extends AppCompatActivity {
         if (systemObj == null) {
             Toast.makeText(this, R.string.err_somethings_wrong, Toast.LENGTH_LONG).show();
             finish();
-        }
-
-        setTitle(systemObj.getSystemName());
-
-        init();
-
-        mSwipeRefreshLayout.setRefreshing(true);
-        mSwipeRefreshLayout.setOnRefreshListener(() -> getGames(true));
-
-        // use this setting to improve performance if you know that changes
-        // in content do not change the layout size of the RecyclerView
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
-        mRecyclerView.addItemDecoration(new DividerDecoration(this));
-        mRecyclerView.getItemAnimator().setRemoveDuration(50);
-        mRecyclerView.setHasFixedSize(true);
-
-        if (Reachability.reachability.isReachable) {
-            getGames(false);
         } else {
-            Toast.makeText(this, R.string.no_internet, Toast.LENGTH_SHORT).show();
+            setTitle((systemObj.getSystemName() != null ? systemObj.getSystemName() : ""));
+
+            init();
+
+            mSwipeRefreshLayout.setRefreshing(true);
+            mSwipeRefreshLayout.setOnRefreshListener(() -> getGames(true));
+
+            // use this setting to improve performance if you know that changes
+            // in content do not change the layout size of the RecyclerView
+            mRecyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
+            mRecyclerView.addItemDecoration(new DividerDecoration(this));
+            mRecyclerView.getItemAnimator().setRemoveDuration(50);
+            mRecyclerView.setHasFixedSize(true);
+
+            if (Reachability.reachability.isReachable) {
+                getGames(false);
+            } else {
+                Toast.makeText(this, R.string.no_internet, Toast.LENGTH_SHORT).show();
+            }
         }
     }
 

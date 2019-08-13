@@ -107,41 +107,33 @@ public class CheatForumActivity extends AppCompatActivity implements CheatListFr
         cheatObj = getIntent().getParcelableExtra("cheatObj");
         gameObj = getIntent().getParcelableExtra("gameObj");
 
-        if (cheatObj == null) {
+        if (cheatObj == null || gameObj == null) {
             Toast.makeText(this, R.string.err_somethings_wrong, Toast.LENGTH_LONG).show();
             finish();
-        }
-
-        init();
-
-        tvCheatTitle.setText(cheatObj.getCheatTitle() + " (" + getString(R.string.forum) + ")");
-        tvCheatTitle.setTypeface(latoFontBold);
-
-        tvEmpty.setTypeface(latoFontLight);
-
-        if (Reachability.reachability.isReachable) {
-            reloadView.setVisibility(View.GONE);
-            loadForumAsync();
         } else {
-            reloadView.setVisibility(View.VISIBLE);
-            reloadView.setOnClickListener(new OnClickListener() {
+            init();
 
-                @Override
-                public void onClick(View v) {
+            tvCheatTitle.setText(cheatObj.getCheatTitle() + " (" + getString(R.string.forum) + ")");
+            tvCheatTitle.setTypeface(latoFontBold);
+
+            tvEmpty.setTypeface(latoFontLight);
+
+            if (Reachability.reachability.isReachable) {
+                reloadView.setVisibility(View.GONE);
+                loadForumAsync();
+            } else {
+                reloadView.setVisibility(View.VISIBLE);
+                reloadView.setOnClickListener(v -> {
                     if (Reachability.reachability.isReachable) {
                         loadForumAsync();
                     } else {
                         Toast.makeText(CheatForumActivity.this, R.string.no_internet, Toast.LENGTH_SHORT).show();
                     }
-                }
-            });
-            Toast.makeText(CheatForumActivity.this, R.string.no_internet, Toast.LENGTH_SHORT).show();
-        }
+                });
+                Toast.makeText(CheatForumActivity.this, R.string.no_internet, Toast.LENGTH_SHORT).show();
+            }
 
-        postButton.setOnClickListener(new OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
+            postButton.setOnClickListener(v -> {
                 if (Reachability.reachability.isReachable) {
                     if (editText.getText().toString().trim().length() > 0) {
                         submitPost();
@@ -151,8 +143,8 @@ public class CheatForumActivity extends AppCompatActivity implements CheatListFr
                 } else {
                     Toast.makeText(CheatForumActivity.this, R.string.no_internet, Toast.LENGTH_SHORT).show();
                 }
-            }
-        });
+            });
+        }
     }
 
     private void init() {

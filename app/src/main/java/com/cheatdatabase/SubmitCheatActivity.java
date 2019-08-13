@@ -69,11 +69,11 @@ public class SubmitCheatActivity extends AppCompatActivity {
         if (gameObj == null) {
             Toast.makeText(SubmitCheatActivity.this, R.string.err_somethings_wrong, Toast.LENGTH_LONG).show();
             finish();
+        } else {
+            init();
+
+            changeSubmitButtonText();
         }
-
-        init();
-
-        changeSubmitButtonText();
     }
 
     @OnClick(R.id.send_button)
@@ -121,8 +121,8 @@ public class SubmitCheatActivity extends AppCompatActivity {
         }
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
-        getSupportActionBar().setTitle(gameObj.getGameName());
-        getSupportActionBar().setSubtitle(gameObj.getSystemName());
+        getSupportActionBar().setTitle((gameObj.getGameName() != null ? gameObj.getGameName() : ""));
+        getSupportActionBar().setSubtitle((gameObj.getSystemName() != null ? gameObj.getSystemName() : ""));
 
         settings = getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
 
