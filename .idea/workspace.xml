@@ -111,16 +111,7 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4caff62e-c62f-40ca-acf0-73c680b13375" name="Default" comment="RELEASE VERSION 2.4">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/CheatForumActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/CheatForumActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/GamesBySystemActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/GamesBySystemActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/GamesBySystemListActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/GamesBySystemListActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/SubmitCheatActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/SubmitCheatActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/favorites/FavoriteCheatListActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/favorites/FavoriteCheatListActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/handset/cheatview/CheatViewPageIndicatorActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/handset/cheatview/CheatViewPageIndicatorActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/members/cheatview/MemberCheatViewPageIndicator.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/members/cheatview/MemberCheatViewPageIndicator.java" afterDir="false" />
-    </list>
+    <list default="true" id="4caff62e-c62f-40ca-acf0-73c680b13375" name="Default" comment="Bug Fixes for upcoming version 2.4.1" />
     <ignored path="Cheat-Database.iws" />
     <ignored path=".idea/workspace.xml" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -281,8 +272,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/fragments/TopMembersFragment.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="396">
-              <caret line="92" column="63" selection-start-line="92" selection-start-column="63" selection-end-line="92" selection-end-column="63" />
+            <state relative-caret-position="423">
+              <caret line="114" column="38" lean-forward="true" selection-start-line="114" selection-start-column="38" selection-end-line="114" selection-end-column="38" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#3382#3402#0" expanded="true" />
@@ -1037,13 +1028,6 @@
       <option name="presentableId" value="Default" />
       <updated>1487274191999</updated>
     </task>
-    <task id="LOCAL-00008" summary="Update to version 2.2.0&#10;removed MoPub ad classes (AdColony, Facebook Ads)">
-      <created>1536611030217</created>
-      <option name="number" value="00008" />
-      <option name="presentableId" value="LOCAL-00008" />
-      <option name="project" value="LOCAL" />
-      <updated>1536611030218</updated>
-    </task>
     <task id="LOCAL-00009" summary="Crashlytics Bug Fix">
       <created>1536647148381</created>
       <option name="number" value="00009" />
@@ -1380,7 +1364,14 @@
       <option name="project" value="LOCAL" />
       <updated>1565360444205</updated>
     </task>
-    <option name="localTasksCounter" value="57" />
+    <task id="LOCAL-00057" summary="Bug Fixes for upcoming version 2.4.1">
+      <created>1565705982422</created>
+      <option name="number" value="00057" />
+      <option name="presentableId" value="LOCAL-00057" />
+      <option name="project" value="LOCAL" />
+      <updated>1565705982423</updated>
+    </task>
+    <option name="localTasksCounter" value="58" />
     <servers />
   </component>
   <component name="TodoView">
@@ -1461,7 +1452,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
-    <MESSAGE value="Switch to Facebook Ads (Audience Network)&#10;UNTESTED, PRE-RELEASE" />
     <MESSAGE value="Update to version 2.2.0&#10;removed MoPub ad classes (AdColony, Facebook Ads)" />
     <MESSAGE value="Crashlytics Bug Fix" />
     <MESSAGE value="Bug Fixes" />
@@ -1486,7 +1476,8 @@
     <MESSAGE value="Crashlytics Bug Fixes&#10;Version update to 2.3 (release version)" />
     <MESSAGE value="Crashlytics Bug Fixes&#10;&#10;Version 2.4-preRelease" />
     <MESSAGE value="RELEASE VERSION 2.4" />
-    <option name="LAST_COMMIT_MESSAGE" value="RELEASE VERSION 2.4" />
+    <MESSAGE value="Bug Fixes for upcoming version 2.4.1" />
+    <option name="LAST_COMMIT_MESSAGE" value="Bug Fixes for upcoming version 2.4.1" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1970,8 +1961,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/fragments/TopMembersFragment.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="396">
-          <caret line="92" column="63" selection-start-line="92" selection-start-column="63" selection-end-line="92" selection-end-column="63" />
+        <state relative-caret-position="423">
+          <caret line="114" column="38" lean-forward="true" selection-start-line="114" selection-start-column="38" selection-end-line="114" selection-end-column="38" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#3382#3402#0" expanded="true" />
