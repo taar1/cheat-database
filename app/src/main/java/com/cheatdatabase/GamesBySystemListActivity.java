@@ -30,6 +30,7 @@ import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.helpers.Tools;
 import com.cheatdatabase.helpers.Webservice;
+import com.cheatdatabase.listeners.OnGameListItemSelectedListener;
 import com.cheatdatabase.widgets.DividerDecoration;
 import com.facebook.ads.AdSize;
 import com.facebook.ads.AdView;
@@ -48,9 +49,11 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import needle.Needle;
 
-public class GamesBySystemListActivity extends AppCompatActivity {
+public class GamesBySystemListActivity extends AppCompatActivity implements OnGameListItemSelectedListener {
 
     private static final String TAG = GamesBySystemListActivity.class.getSimpleName();
+    private static final int AD_POSITION = 4;
+
     private List<Game> gameArrayList;
     private SystemPlatform systemObj;
     private AdView adView;
@@ -106,7 +109,7 @@ public class GamesBySystemListActivity extends AppCompatActivity {
     }
 
     private void init() {
-        gamesBySystemRecycleListViewAdapter = new GamesBySystemRecycleListViewAdapter(this);
+        gamesBySystemRecycleListViewAdapter = new GamesBySystemRecycleListViewAdapter(this, this);
 
         adView = new AdView(this, Konstanten.FACEBOOK_AUDIENCE_NETWORK_NATIVE_BANNER_ID, AdSize.BANNER_HEIGHT_50);
         facebookBanner.addView(adView);
@@ -350,5 +353,18 @@ public class GamesBySystemListActivity extends AppCompatActivity {
                 Toast.makeText(this, R.string.register_thanks, Toast.LENGTH_LONG).show();
             }
         }
+    }
+
+
+    @Override
+    public void onGameListItemSelected(Game game) {
+        if (Reachability.reachability.isReachable) {
+
+        }
+
+        // TODO
+//        Intent intent = new Intent(this, TheatreDetailActivity.class);
+//        intent.putExtra("theatre", theatre);
+//        startActivity(intent);
     }
 }

@@ -114,7 +114,6 @@ public class SystemListFragment extends Fragment {
     @Subscribe
     public void onEvent(SystemListRecyclerViewClickEvent result) {
         if (result.isSucceeded()) {
-            // TODO FIXME systemPlatform parameter gibt evtl ein fehler....
             Intent explicitIntent = new Intent(getActivity(), GamesBySystemListActivity.class);
             explicitIntent.putExtra("systemObj", result.getSystemPlatform());
             startActivity(explicitIntent, ActivityOptions.makeSceneTransitionAnimation(getActivity()).toBundle());

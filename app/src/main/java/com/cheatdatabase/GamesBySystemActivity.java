@@ -29,9 +29,11 @@ import com.cheatdatabase.events.GameListRecyclerViewClickEvent;
 import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.helpers.Webservice;
+import com.cheatdatabase.listeners.OnGameListItemSelectedListener;
 import com.cheatdatabase.widgets.DividerDecoration;
 import com.facebook.ads.AdSize;
 import com.facebook.ads.AdView;
+import com.facebook.ads.NativeAd;
 import com.google.gson.Gson;
 import com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView;
 
@@ -47,9 +49,11 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import needle.Needle;
 
-public class GamesBySystemActivity extends AppCompatActivity {
+public class GamesBySystemActivity extends AppCompatActivity implements OnGameListItemSelectedListener {
 
     private static final String TAG = GamesBySystemActivity.class.getSimpleName();
+    private static final int AD_POSITION = 4;
+
     private List<Game> gameList;
     private CheatDatabaseApplication cheatDatabaseApplication;
     private GamesBySystemRecycleListViewAdapter mGamesBySystemRecycleListViewAdapter;
@@ -57,6 +61,7 @@ public class GamesBySystemActivity extends AppCompatActivity {
     private SharedPreferences sharedPreferences;
     private Member member;
     private AdView facebookAdView;
+    private NativeAd facebookNativeAd;
 
     @BindView(R.id.my_recycler_view)
     FastScrollRecyclerView mRecyclerView;
@@ -68,6 +73,7 @@ public class GamesBySystemActivity extends AppCompatActivity {
     TextView mEmptyView;
     @BindView(R.id.banner_container)
     LinearLayout bannerContainerFacebook;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,12 +90,7 @@ public class GamesBySystemActivity extends AppCompatActivity {
             init();
 
             mSwipeRefreshLayout.setRefreshing(true);
-            mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-                @Override
-                public void onRefresh() {
-                    getGames(true);
-                }
-            });
+            mSwipeRefreshLayout.setOnRefreshListener(() -> getGames(true));
 
             // use this setting to improve performance if you know that changes
             // in content do not change the layout size of the RecyclerView
@@ -108,7 +109,7 @@ public class GamesBySystemActivity extends AppCompatActivity {
         sharedPreferences = getSharedPreferences(Konstanten.PREFERENCES_FILE, MODE_PRIVATE);
 
         cheatDatabaseApplication = CheatDatabaseApplication.getCurrentAppInstance();
-        mGamesBySystemRecycleListViewAdapter = new GamesBySystemRecycleListViewAdapter(this);
+        mGamesBySystemRecycleListViewAdapter = new GamesBySystemRecycleListViewAdapter(this, this);
 
         facebookAdView = new AdView(this, Konstanten.FACEBOOK_AUDIENCE_NETWORK_NATIVE_BANNER_ID, AdSize.BANNER_HEIGHT_50);
         bannerContainerFacebook.addView(facebookAdView);
@@ -125,6 +126,55 @@ public class GamesBySystemActivity extends AppCompatActivity {
             member = new Gson().fromJson(sharedPreferences.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
         }
     }
+
+//    private void initInMobiNativeAds() {
+//        private final List<InMobiNative> mNativeAds = new ArrayList<>();
+//        NativeAdEventListenerExt nae = new NativeAdEventListenerExt();
+//        InMobiNative nativeAd = new InMobiNative(GamesBySystemActivity.this, Konstanten.INMOBI_RECYCLERVIEW_LIST_ITEM_PLACEMENT_ID, nae);
+//        nativeAd.load();
+//        mNativeAds.add(nativeAd);
+//    }
+
+//    private void initFacebookAudienceNativeAds() {
+//        // Instantiate an NativeAd object.
+//        // NOTE: the placement ID will eventually identify this as your App, you can ignore it for
+//        // now, while you are testing and replace it later when you have signed up.
+//        // While you are using this temporary code you will only get test ads and if you release
+//        // your code like this to the Google Play your users will not receive ads (you will get a no fill error).
+//        facebookNativeAd = new NativeAd(this, "YOUR_PLACEMENT_ID");
+//        facebookNativeAd.setAdListener(new AdListener() {
+//            @Override
+//            public void onError(Ad ad, AdError adError) {
+//
+//            }
+//
+//            @Override
+//            public void onAdLoaded(Ad ad) {
+//                // Render the Native Ad Template
+//                View adView = NativeAdView.render(GamesBySystemActivity.this, facebookNativeAd);
+//                LinearLayout nativeAdContainer = (LinearLayout) findViewById(R.id.native_ad_container);
+//                // Add the Native Ad View to your ad container.
+//                // The recommended dimensions for the ad container are:
+//                // Width: 280dp - 500dp
+//                // Height: 250dp - 500dp
+//                // The template, however, will adapt to the supplied dimensions.
+//                nativeAdContainer.addView(adView, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 800));
+//            }
+//
+//            @Override
+//            public void onAdClicked(Ad ad) {
+//
+//            }
+//
+//            @Override
+//            public void onLoggingImpression(Ad ad) {
+//
+//            }
+//        });
+//
+//        // Initiate a request to load an ad.
+//        facebookNativeAd.loadAd();
+//    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -233,21 +283,17 @@ public class GamesBySystemActivity extends AppCompatActivity {
     }
 
     private void updateUI() {
-        Needle.onMainThread().execute(new Runnable() {
-            @Override
-            public void run() {
-                if (gameList != null && gameList.size() > 0) {
-                    mGamesBySystemRecycleListViewAdapter.setGameList(gameList);
-                    mRecyclerView.setAdapter(mGamesBySystemRecycleListViewAdapter);
+        Needle.onMainThread().execute(() -> {
+            if (gameList != null && gameList.size() > 0) {
+                mGamesBySystemRecycleListViewAdapter.setGameList(gameList);
+                mRecyclerView.setAdapter(mGamesBySystemRecycleListViewAdapter);
 
-                    mGamesBySystemRecycleListViewAdapter.notifyDataSetChanged();
-                } else {
-                    error();
-                }
-
-                mSwipeRefreshLayout.setRefreshing(false);
-                // mRecyclerView.hideLoading();
+                mGamesBySystemRecycleListViewAdapter.notifyDataSetChanged();
+            } else {
+                error();
             }
+
+            mSwipeRefreshLayout.setRefreshing(false);
         });
 
     }
@@ -315,5 +361,16 @@ public class GamesBySystemActivity extends AppCompatActivity {
                 Toast.makeText(this, R.string.register_thanks, Toast.LENGTH_LONG).show();
             }
         }
+    }
+
+
+    @Override
+    public void onGameListItemSelected(Game game) {
+        if (Reachability.reachability.isReachable) {
+
+        }
+//        Intent intent = new Intent(this, TheatreDetailActivity.class);
+//        intent.putExtra("theatre", theatre);
+//        startActivity(intent);
     }
 }

@@ -5,7 +5,7 @@
     android:padding="@dimen/outer_padding_listview_item">
 
     <TextView
-        android:id="@+id/cheat_title"
+        android:id="@+id/game_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="start"
@@ -14,7 +14,7 @@
         android:textIsSelectable="false" />
 
     <TextView
-        android:id="@+id/cheats_count"
+        android:id="@+id/cheat_count"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_gravity="start"

@@ -1,120 +1,140 @@
 package com.cheatdatabase.adapters;
 
 import android.content.Context;
-import android.graphics.Typeface;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.recyclerview.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.cheatdatabase.R;
 import com.cheatdatabase.businessobjects.Game;
-import com.cheatdatabase.events.GameListRecyclerViewClickEvent;
-import com.cheatdatabase.helpers.Konstanten;
-import com.cheatdatabase.helpers.Reachability;
-import com.cheatdatabase.helpers.Tools;
+import com.cheatdatabase.holders.GamesBySystemListViewItemHolder;
+import com.cheatdatabase.listeners.OnGameListItemSelectedListener;
+import com.cheatdatabase.listitems.GameListItem;
+import com.cheatdatabase.listitems.ListItem;
 import com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView;
-
-import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-
-public class GamesBySystemRecycleListViewAdapter extends RecyclerView.Adapter<GamesBySystemRecycleListViewAdapter.ViewHolder> implements FastScrollRecyclerView.SectionedAdapter,
+public class GamesBySystemRecycleListViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements FastScrollRecyclerView.SectionedAdapter,
         FastScrollRecyclerView.MeasurableAdapter {
 
     private static final String TAG = GamesBySystemRecycleListViewAdapter.class.getSimpleName();
 
     private List<Game> gameList;
-    private Typeface latoFontBold;
-    private Typeface latoFontLight;
+    private List<ListItem> listItems;
+    //    private Typeface latoFontBold;
+//    private Typeface latoFontLight;
     private Game gameObj;
     private Context context;
+    private final OnGameListItemSelectedListener listener;
 
-    public GamesBySystemRecycleListViewAdapter(Context context) {
+    public GamesBySystemRecycleListViewAdapter(Context context, OnGameListItemSelectedListener listener) {
         this.context = context;
+        this.listener = listener;
         gameList = new ArrayList<>();
+
+//        latoFontBold = Tools.getFont(context.getAssets(), Konstanten.FONT_BOLD);
+//        latoFontLight = Tools.getFont(context.getAssets(), Konstanten.FONT_LIGHT);
     }
 
     public void setGameList(List<Game> gameList) {
         this.gameList = gameList;
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        @BindView(R.id.cheat_title)
-        TextView gameName;
-        @BindView(R.id.cheats_count)
-        TextView cheatCount;
+//    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+//        @BindView(R.id.cheat_title)
+//        TextView gameName;
+//        @BindView(R.id.cheats_count)
+//        TextView cheatCount;
+//
+//        public OnGameItemClickListener onGameItemClickListener;
+//
+//        public ViewHolder(View view, OnGameItemClickListener listener) {
+//            super(view);
+//            ButterKnife.bind(this, view);
+//            onGameItemClickListener = listener;
+//
+//            gameName.setTypeface(Tools.getFont(view.getContext().getAssets(), Konstanten.FONT_BOLD));
+//            cheatCount.setTypeface(Tools.getFont(view.getContext().getAssets(), Konstanten.FONT_LIGHT));
+//
+//            view.setOnClickListener(this);
+//        }
+//
+//        @Override
+//        public void onClick(View v) {
+//            onGameItemClickListener.onGameClick(this);
+//        }
+//    }
 
-        public OnGameItemClickListener onGameItemClickListener;
-
-        public ViewHolder(View view, OnGameItemClickListener listener) {
-            super(view);
-            ButterKnife.bind(this, view);
-            onGameItemClickListener = listener;
-
-//            gameName = v.findViewById(R.id.cheat_title);
-//            cheatCount = v.findViewById(R.id.cheats_count);
-            gameName.setTypeface(Tools.getFont(view.getContext().getAssets(), Konstanten.FONT_BOLD));
-            cheatCount.setTypeface(Tools.getFont(view.getContext().getAssets(), Konstanten.FONT_LIGHT));
-
-            view.setOnClickListener(this);
-        }
-
-        @Override
-        public void onClick(View v) {
-            onGameItemClickListener.onGameClick(this);
-        }
+    @Override
+    public int getItemViewType(int position) {
+        return listItems.get(position).getType();
     }
 
-    public interface OnGameItemClickListener {
-        void onGameClick(GamesBySystemRecycleListViewAdapter.ViewHolder caller);
+//    public interface OnGameItemClickListener {
+//        void onGameClick(GamesBySystemRecycleListViewAdapter.ViewHolder caller);
+//    }
+
+    @Override
+    public RecyclerView.ViewHolder onCreateViewHolder(final ViewGroup parent, int viewType) {
+
+        if (viewType == ListItem.TYPE_GAME) {
+            final View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.listrow_game_item, parent, false);
+            itemView.setDrawingCacheEnabled(true);
+
+            return new GamesBySystemListViewItemHolder(itemView, context);
+
+//            return new ViewHolder(v, caller -> {
+//
+//                if (Reachability.reachability.isReachable) {
+//                    EventBus.getDefault().post(new GameListRecyclerViewClickEvent(gameList.get(caller.getAdapterPosition())));
+//                } else {
+//                    EventBus.getDefault().post(new GameListRecyclerViewClickEvent(new Exception()));
+//                }
+//            });
+        }
+//        else if (viewType == ListItem.TYPE_FACEBOOK_NATIVE_AD) {
+//            // TODO
+//        }
+
+        return null;
     }
 
     @Override
-    public GamesBySystemRecycleListViewAdapter.ViewHolder onCreateViewHolder(final ViewGroup parent, int viewType) {
-        latoFontBold = Tools.getFont(parent.getContext().getAssets(), Konstanten.FONT_BOLD);
-        latoFontLight = Tools.getFont(parent.getContext().getAssets(), Konstanten.FONT_LIGHT);
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+        int type = getItemViewType(position);
 
-        // create a new view
-        final View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.listrow_game_item, parent, false);
-        v.setDrawingCacheEnabled(true);
+        if (type == ListItem.TYPE_GAME) {
+            final GameListItem gameListItem = (GameListItem) listItems.get(position);
+            GamesBySystemListViewItemHolder gamesBySystemListViewItemHolder = (GamesBySystemListViewItemHolder) holder;
+            gamesBySystemListViewItemHolder.setGame(gameObj);
+            gamesBySystemListViewItemHolder.view.setOnClickListener(v -> listener.onGameListItemSelected(gameListItem.getGame()));
 
-        return new ViewHolder(v, caller -> {
-
-            if (Reachability.reachability.isReachable) {
-                EventBus.getDefault().post(new GameListRecyclerViewClickEvent(gameList.get(caller.getAdapterPosition())));
-            } else {
-                EventBus.getDefault().post(new GameListRecyclerViewClickEvent(new Exception()));
-            }
-        });
-    }
-
-    @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
-        gameObj = gameList.get(position);
-
-        holder.gameName.setText(gameObj.getGameName());
-        holder.gameName.setTypeface(latoFontBold);
-
-        try {
-            if (gameObj.getCheatsCount() > 0) {
-                holder.cheatCount.setVisibility(View.VISIBLE);
-                holder.cheatCount.setText(gameObj.getCheatsCount() + " " + context.getResources().getQuantityString(R.plurals.entries, gameObj.getCheatsCount()));
-                holder.cheatCount.setTypeface(latoFontLight);
-            } else {
-                holder.cheatCount.setVisibility(View.GONE);
-            }
-        } catch (Exception e) {
-            Log.e(TAG, e.getLocalizedMessage());
+        } else if (type == ListItem.TYPE_FACEBOOK_NATIVE_AD) {
+            // TODO
         }
+
+//        gameObj = gameList.get(position);
+//
+//        holder.gameName.setText(gameObj.getGameName());
+//        holder.gameName.setTypeface(latoFontBold);
+//
+//        try {
+//            if (gameObj.getCheatsCount() > 0) {
+//                holder.cheatCount.setVisibility(View.VISIBLE);
+//                holder.cheatCount.setText(gameObj.getCheatsCount() + " " + context.getResources().getQuantityString(R.plurals.entries, gameObj.getCheatsCount()));
+//                holder.cheatCount.setTypeface(latoFontLight);
+//            } else {
+//                holder.cheatCount.setVisibility(View.GONE);
+//            }
+//        } catch (Exception e) {
+//            Log.e(TAG, e.getLocalizedMessage());
+//        }
     }
 
     // Return the size of your dataset (invoked by the layout manager)

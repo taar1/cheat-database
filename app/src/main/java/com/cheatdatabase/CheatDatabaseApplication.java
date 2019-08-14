@@ -12,6 +12,7 @@ import com.cheatdatabase.businessobjects.Game;
 import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.TrackingUtils;
 import com.crashlytics.android.Crashlytics;
+import com.facebook.ads.AudienceNetworkAds;
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.Tracker;
 import com.google.firebase.analytics.FirebaseAnalytics;
@@ -83,6 +84,10 @@ public class CheatDatabaseApplication extends Application implements Application
 
         // Set the connectivity manager
         connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        // Facebook Native Ads
+        // Initialize the Audience Network SDK
+        AudienceNetworkAds.initialize(this);
 
         // Init InMobi Ads
         JSONObject consentObject = new JSONObject();
