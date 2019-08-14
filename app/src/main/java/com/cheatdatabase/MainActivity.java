@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -49,9 +50,15 @@ import com.facebook.ads.AdView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.gson.Gson;
+import com.inmobi.ads.InMobiBanner;
+import com.inmobi.sdk.InMobiSdk;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.Random;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -63,16 +70,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private int mFragmentId;
 
-    @BindView(R.id.toolbar)
-    Toolbar mToolbar;
-    @BindView(R.id.drawer_layout)
-    DrawerLayout mDrawerLayout;
-    @BindView(R.id.nav_view)
-    NavigationView navigationView;
-    @BindView(R.id.add_new_cheat_button)
-    FloatingActionButton fab;
-    @BindView(R.id.banner_container)
-    LinearLayout facebookBanner;
     private AdView adView;
 
     private ActionBarDrawerToggle actionBarDrawerToggle;
@@ -85,14 +82,26 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private SearchManager searchManager;
     private SearchView searchView;
 
-//    private FirebaseRemoteConfig mFirebaseRemoteConfig;
-
-    // Remote Config keys
-    private static final String REMOTE_CONFIG_HACKS_ENABLED_KEY = "hacks_enabled";
-    private static final String REMOTE_CONFIG_IOS_ENABLED_KEY = "ios_enabled";
-    private static final String REMOTE_CONFIG_ANDROID_ENABLED_KEY = "android_enabled";
     private FragmentManager fragmentManager;
     private FragmentTransaction fragmentTransaction;
+
+    @BindView(R.id.toolbar)
+    Toolbar mToolbar;
+    @BindView(R.id.drawer_layout)
+    DrawerLayout mDrawerLayout;
+    @BindView(R.id.nav_view)
+    NavigationView navigationView;
+    @BindView(R.id.add_new_cheat_button)
+    FloatingActionButton fab;
+    @BindView(R.id.mixed_banner_container)
+    LinearLayout mixedBannerContainer;
+    @BindView(R.id.banner_container_facebook)
+    LinearLayout bannerContainerFacebook;
+    @BindView(R.id.banner_container_inmobi)
+    LinearLayout bannerContainerInmobi;
+    @BindView(R.id.inmobi_banner)
+    InMobiBanner inMobiBanner;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,6 +112,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mFragmentId = getIntent().getIntExtra("mFragmentId", 0);
 
         init();
+        prepareAdBanner();
 
         fragmentTransaction.replace(R.id.content_frame, SystemListFragment.newInstance(), SystemListFragment.class.getSimpleName()).commit();
 
@@ -116,10 +126,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void init() {
         settings = getSharedPreferences(Konstanten.PREFERENCES_FILE, MODE_PRIVATE);
         editor = settings.edit();
-
-        adView = new AdView(MainActivity.this, Konstanten.FACEBOOK_AUDIENCE_NETWORK_NATIVE_BANNER_ID, AdSize.BANNER_HEIGHT_50);
-        facebookBanner.addView(adView);
-        adView.loadAd();
 
         if (mToolbar != null) {
             setSupportActionBar(mToolbar);
@@ -136,54 +142,35 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         AppBrain.init(this);
     }
 
-    private void testCrash() {
-        throw new RuntimeException("This is a crash");
+    /**
+     * Display either InMobi or Facebook Audience Network banner (randomly)
+     */
+    private void prepareAdBanner() {
+        Random r = new Random();
+        int randomNumber = r.nextInt((1 - 0) + 1) + 0;
+
+        if( randomNumber == 0 ) {
+            Log.d(TAG, "Banner: Using InMobi Version: " + InMobiSdk.getVersion());
+
+            inMobiBanner.setEnableAutoRefresh(true);
+            inMobiBanner.load(this);
+
+            bannerContainerFacebook.setVisibility(View.GONE);
+            bannerContainerInmobi.setVisibility(View.VISIBLE);
+        } else {
+            Log.d(TAG, "Banner: Using Facebook Audience Network");
+
+            bannerContainerInmobi.setVisibility(View.GONE);
+            bannerContainerFacebook.setVisibility(View.VISIBLE);
+
+            adView = new AdView(MainActivity.this, Konstanten.FACEBOOK_AUDIENCE_NETWORK_NATIVE_BANNER_ID, AdSize.BANNER_HEIGHT_50);
+            bannerContainerFacebook.addView(adView);
+            adView.loadAd();
+        }
     }
 
-    // https://firebase.google.com/docs/remote-config/use-config-android
-    private void remoteConfigStuff() {
-//        mFirebaseRemoteConfig = FirebaseRemoteConfig.getInstance();
-//        FirebaseRemoteConfigSettings configSettings = new FirebaseRemoteConfigSettings.Builder()
-//                .setDeveloperModeEnabled(BuildConfig.DEBUG)
-//                .build();
-//        mFirebaseRemoteConfig.setConfigSettings(configSettings);
-//
-//        mFirebaseRemoteConfig.setDefaults(R.xml.remote_config_defaults);
-//
-//        long cacheExpiration = 604800; // 1 week in seconds.
-//        // If your cheatDatabaseApplication is using developer mode, cacheExpiration is set to 0, so each fetch will
-//        // retrieve values from the service.
-//        if (mFirebaseRemoteConfig.getInfo().getConfigSettings().isDeveloperModeEnabled()) {
-//            cacheExpiration = 0;
-//        }
-//
-//        mFirebaseRemoteConfig.fetch(cacheExpiration)
-//                .addOnCompleteListener(this, new OnCompleteListener<Void>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task<Void> task) {
-//                        if (task.isSuccessful()) {
-//                            Log.d(TAG, "XXXXX Fetch Succeeded");
-//                            Log.d(TAG, "XXXXX2: " + mFirebaseRemoteConfig.getBoolean(REMOTE_CONFIG_HACKS_ENABLED_KEY));
-//
-//                            // TODO die remote config noch in den sharedpreferences speichern, damit man später drauf zugreifen kann
-//                            // TODO die remote config noch in den sharedpreferences speichern, damit man später drauf zugreifen kann
-//                            // TODO die remote config noch in den sharedpreferences speichern, damit man später drauf zugreifen kann
-//                            // TODO die remote config noch in den sharedpreferences speichern, damit man später drauf zugreifen kann
-//                            // TODO die remote config noch in den sharedpreferences speichern, damit man später drauf zugreifen kann
-//                            // TODO die remote config noch in den sharedpreferences speichern, damit man später drauf zugreifen kann
-//
-//                            // After config data is successfully fetched, it must be activated before newly fetched
-//                            // values are returned.
-//                            mFirebaseRemoteConfig.activateFetched();
-//                            Log.d(TAG, "XXXXX3: " + mFirebaseRemoteConfig.getBoolean(REMOTE_CONFIG_HACKS_ENABLED_KEY));
-//
-//                            // Tell SystemListFragment that the remote config has been loaded and reload the recyclerlistview
-//                            EventBus.getDefault().post(new RemoteConfigLoadedEvent());
-//                        } else {
-//                            Log.d(TAG, "XXXXX Fetch Failed");
-//                        }
-//                    }
-//                });
+    private void testCrash() {
+        throw new RuntimeException("This is a crash");
     }
 
     @OnClick(R.id.add_new_cheat_button)

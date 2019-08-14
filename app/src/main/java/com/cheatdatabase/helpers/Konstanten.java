@@ -2,8 +2,8 @@ package com.cheatdatabase.helpers;
 
 public class Konstanten {
 
-    public final static String CURRENT_VERSION = "2.2.3";
-    public final static int DEFAULT_TOTAL_CHEATS = 150000;
+    public final static String CURRENT_VERSION = "2.4.1";
+    public final static int DEFAULT_TOTAL_CHEATS = 161000;
 
     // URL Konstanten
     public final static String BASE_URL = "https://www.cheat-database.com/";
@@ -75,6 +75,18 @@ public class Konstanten {
     public final static String AMAZON_RELEASE_ID = "amzn1.devportal.apprelease.a4e1dfeddc7143f581aaea7999f9f1b7";
     public final static String OGURY_API_KEY = "264890";
     public final static String FACEBOOK_AUDIENCE_NETWORK_NATIVE_BANNER_ID = "148040821872637_2083092671700766";
+
+    //public final static String INMOBI_APP_ID = "4028cba631d63df10132325b781205a2";
+    public final static String INMOBI_CHEATDATABASE_APP_ID = "1489144176729570";
+
+    public final static String INMOBI_BANNER_PLACEMENT_ID = "1431977578836721";
+    public final static String INMOBI_BANNER_SITE_ID = "1d5e79641a5441fb9887745cdcf005ec";
+
+    public final static String INMOBI_RECYCLERVIEW_LIST_ITEM_PLACEMENT_ID = "1563695474851";
+    public final static String INMOBI_RECYCLERVIEW_LIST_ITEM_SITE_ID = "4f8d0ce7ac55411b8852f1da5bd52590";
+
+    public final static String INMOBI_FULLSCREEN_PLACEMENT_ID = "1566307508743";
+    public final static String INMOBI_FULLSCREEN_SITE_ID = "e41d5fd5b0c5494fb178afb7f7698fb4";
 
     // SD CARD SETTINGS
     public final static String APP_PATH_SD_CARD = "/Android/data/com.cheatdatabase/files/";

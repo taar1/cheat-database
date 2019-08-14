@@ -12,7 +12,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="@string/placeholder"
         android:textColor="@color/white"
         android:textSize="20sp"
         android:visibility="gone" />
@@ -21,11 +20,12 @@
         android:id="@+id/swipe_refresh_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingBottom="52dp">
+        android:layout_weight="100">
 
         <include layout="@layout/include_fastscroll_recyclerview" />
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <include layout="@layout/adview_facebook" />
+
 </LinearLayout>

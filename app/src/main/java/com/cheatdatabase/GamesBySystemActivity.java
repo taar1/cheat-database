@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -55,7 +56,7 @@ public class GamesBySystemActivity extends AppCompatActivity {
     private SystemPlatform systemObj;
     private SharedPreferences sharedPreferences;
     private Member member;
-    private AdView adView;
+    private AdView facebookAdView;
 
     @BindView(R.id.my_recycler_view)
     FastScrollRecyclerView mRecyclerView;
@@ -66,7 +67,7 @@ public class GamesBySystemActivity extends AppCompatActivity {
     @BindView(R.id.item_list_empty_view)
     TextView mEmptyView;
     @BindView(R.id.banner_container)
-    LinearLayout facebookBanner;
+    LinearLayout bannerContainerFacebook;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,9 +110,10 @@ public class GamesBySystemActivity extends AppCompatActivity {
         cheatDatabaseApplication = CheatDatabaseApplication.getCurrentAppInstance();
         mGamesBySystemRecycleListViewAdapter = new GamesBySystemRecycleListViewAdapter(this);
 
-        adView = new AdView(this, Konstanten.FACEBOOK_AUDIENCE_NETWORK_NATIVE_BANNER_ID, AdSize.BANNER_HEIGHT_50);
-        facebookBanner.addView(adView);
-        adView.loadAd();
+        facebookAdView = new AdView(this, Konstanten.FACEBOOK_AUDIENCE_NETWORK_NATIVE_BANNER_ID, AdSize.BANNER_HEIGHT_50);
+        bannerContainerFacebook.addView(facebookAdView);
+        bannerContainerFacebook.setBackgroundColor(Color.GREEN);
+        facebookAdView.loadAd();
 
         if (mToolbar != null) {
             setSupportActionBar(mToolbar);
@@ -284,8 +286,8 @@ public class GamesBySystemActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
-        if (adView != null) {
-            adView.destroy();
+        if (facebookAdView != null) {
+            facebookAdView.destroy();
         }
         super.onDestroy();
     }

@@ -4,9 +4,9 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_alignParentBottom="true"
-    android:layout_gravity="bottom"
+    android:layout_gravity="top"
     android:layout_weight="1"
-    android:background="@android:color/transparent"
+    android:background="@color/red"
     android:gravity="top"
     android:minHeight="50dp"
     android:orientation="vertical" />

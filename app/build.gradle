@@ -13,7 +13,7 @@ apply plugin: 'io.fabric'
 String APK_ID = "com.cheatdatabase"
 String APK_NAME = "Cheat-Database"
 int VERSION_CODE = 43
-String VERSION_NAME = "2.4"
+String VERSION_NAME = "2.4.1-preRelease"
 
 android {
     compileSdkVersion 28
@@ -89,12 +89,6 @@ android {
     }
 }
 
-//configurations.all {
-//    resolutionStrategy.dependencySubstitution {
-//        substitute module('org.apache.commons:commons-io:1.3.2') with module('commons-io:commons-io:1.3.2')
-//    }
-//}
-
 repositories {
     maven { url "https://dl.bintray.com/drummer-aidan/maven/" }
     maven { url 'http://swisscodemonkeys.github.io/appbrain-sdk/maven' }
@@ -104,7 +98,6 @@ repositories {
     maven { url 'https://jitpack.io' }
     jcenter()
     mavenCentral()
-//    maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' }
 }
 
 ext {
@@ -140,6 +133,14 @@ dependencies {
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.1.0'
     implementation 'de.hdodenhof:circleimageview:3.0.0'
     api 'com.appbrain:appbrain-sdk:15.00'
+
+    // INMOBI ADS START
+    implementation 'com.inmobi.monetization:inmobi-ads:8.1.3'
+    implementation 'com.google.android.gms:play-services-basement:17.1.0'
+    implementation 'com.google.android.gms:play-services-ads-identifier:17.0.0'
+    implementation 'com.google.android.gms:play-services-location:17.0.0'
+    implementation 'com.android.support:customtabs:28.0.0'
+    // INMOBI ADS END
 }
 
 apply plugin: "com.google.gms.google-services"

@@ -56,6 +56,19 @@ public class CheatsByGameListActivity extends AppCompatActivity {
 
     private static String TAG = CheatsByGameListActivity.class.getSimpleName();
 
+    @BindView(R.id.outer_layout)
+    LinearLayout outerLayout;
+    @BindView(R.id.my_recycler_view)
+    FastScrollRecyclerView mRecyclerView;
+    @BindView(R.id.swipe_refresh_layout)
+    SwipeRefreshLayout mSwipeRefreshLayout;
+    @BindView(R.id.toolbar)
+    Toolbar mToolbar;
+    @BindView(R.id.item_list_empty_view)
+    TextView mEmptyView;
+    @BindView(R.id.banner_container)
+    LinearLayout facebookBanner;
+
     private SharedPreferences sharedPreferences;
     private Editor editor;
     private Member member;
@@ -69,19 +82,6 @@ public class CheatsByGameListActivity extends AppCompatActivity {
 
     Game gameObj;
 
-    @BindView(R.id.outer_layout)
-    LinearLayout outerLayout;
-    @BindView(R.id.my_recycler_view)
-    FastScrollRecyclerView mRecyclerView;
-    @BindView(R.id.swipe_refresh_layout)
-    SwipeRefreshLayout mSwipeRefreshLayout;
-    @BindView(R.id.toolbar)
-    Toolbar mToolbar;
-    @BindView(R.id.item_list_empty_view)
-    TextView mEmptyView;
-
-    @BindView(R.id.banner_container)
-    LinearLayout facebookBanner;
     private AdView adView;
 
     @Override
