@@ -85,7 +85,7 @@ public class GamesBySystemRecycleListViewAdapter extends RecyclerView.Adapter<Re
 
     @Override
     public int getItemViewType(int position) {
-        Log.d(TAG, "XXXXX ADAPTER getItemViewType()");
+        Log.d(TAG, "XXXXX ADAPTER getItemViewType(): " + listItems.get(position).getType());
         return listItems.get(position).getType();
     }
 
@@ -98,9 +98,12 @@ public class GamesBySystemRecycleListViewAdapter extends RecyclerView.Adapter<Re
         Log.d(TAG, "XXXXX ADAPTER onCreateViewHolder()");
 
         if (viewType == ListItem.TYPE_GAME) {
+            Log.d(TAG, "XXXXX ADAPTER onCreateViewHolder() GAME");
+
             final View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.listrow_game_item, parent, false);
             itemView.setDrawingCacheEnabled(true);
 
+            Log.d(TAG, "XXXXX ADAPTER onCreateViewHolder() RETURNS GAME");
             return new GamesBySystemListViewItemHolder(itemView, context);
 
 //            return new ViewHolder(v, caller -> {
@@ -116,6 +119,7 @@ public class GamesBySystemRecycleListViewAdapter extends RecyclerView.Adapter<Re
 //            // TODO
 //        }
 
+        Log.d(TAG, "XXXXX ADAPTER onCreateViewHolder() RETURNS NULL");
         return null;
     }
 
@@ -154,7 +158,7 @@ public class GamesBySystemRecycleListViewAdapter extends RecyclerView.Adapter<Re
 
     @Override
     public int getItemCount() {
-        Log.d(TAG, "XXXXX ADAPTER getItemCount(): " + listItems.size());
+        //Log.d(TAG, "XXXXX ADAPTER getItemCount(): " + listItems.size());
         return listItems.size();
     }
 
@@ -193,7 +197,11 @@ public class GamesBySystemRecycleListViewAdapter extends RecyclerView.Adapter<Re
         int j = 0;
         final List<ListItem> newListItems = new ArrayList<>();
 
+        Log.d(TAG, "XXXXX updateGameListAndInjectAds gameList: " + gameList.size());
         for (Game game : gameList) {
+
+
+            Log.d(TAG, "XXXXX ADD GAME TO LIST: " + game.getGameName());
             GameListItem gameListItem = new GameListItem();
             gameListItem.setGame(game);
             newListItems.add(gameListItem);
@@ -202,6 +210,15 @@ public class GamesBySystemRecycleListViewAdapter extends RecyclerView.Adapter<Re
                 // TODO inject ad here to newListItems
             }
             j++;
+        }
+
+        // TODO FIXME irgendwas stimmt hier nicht, die list size ist 40 (bei C64) aber danach loopt es nur 2x...
+        // TODO FIXME irgendwas stimmt hier nicht, die list size ist 40 (bei C64) aber danach loopt es nur 2x...
+        // TODO FIXME irgendwas stimmt hier nicht, die list size ist 40 (bei C64) aber danach loopt es nur 2x...
+        // TODO FIXME irgendwas stimmt hier nicht, die list size ist 40 (bei C64) aber danach loopt es nur 2x...
+        Log.d(TAG, "XXXXX LIST ITEM SIZE: " + newListItems.size());
+        for (ListItem li : newListItems) {
+            Log.d(TAG, "XXXXX LIST ITEM TYPE: " + li.getType());
         }
 
         Needle.onMainThread().execute(() -> {
