@@ -1,6 +1,7 @@
 package com.cheatdatabase.adapters;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +21,8 @@ import com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
+import needle.Needle;
+
 public class GamesBySystemRecycleListViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements FastScrollRecyclerView.SectionedAdapter,
         FastScrollRecyclerView.MeasurableAdapter {
 
@@ -33,16 +36,25 @@ public class GamesBySystemRecycleListViewAdapter extends RecyclerView.Adapter<Re
     private Context context;
     private final OnGameListItemSelectedListener listener;
 
+    private final int injectAdAfterEveryPosition = 10;
+
     public GamesBySystemRecycleListViewAdapter(Context context, OnGameListItemSelectedListener listener) {
+        Log.d(TAG, "XXXXX ADAPTER GamesBySystemRecycleListViewAdapter()");
         this.context = context;
         this.listener = listener;
         gameList = new ArrayList<>();
+        listItems = new ArrayList<>();
 
 //        latoFontBold = Tools.getFont(context.getAssets(), Konstanten.FONT_BOLD);
 //        latoFontLight = Tools.getFont(context.getAssets(), Konstanten.FONT_LIGHT);
+
+        // TODO FIXME try out if this is needed or not....
+        filterList("");
     }
 
     public void setGameList(List<Game> gameList) {
+        Log.d(TAG, "XXXXX ADAPTER setGameList: " + gameList.size());
+
         this.gameList = gameList;
     }
 
@@ -73,6 +85,7 @@ public class GamesBySystemRecycleListViewAdapter extends RecyclerView.Adapter<Re
 
     @Override
     public int getItemViewType(int position) {
+        Log.d(TAG, "XXXXX ADAPTER getItemViewType()");
         return listItems.get(position).getType();
     }
 
@@ -82,6 +95,7 @@ public class GamesBySystemRecycleListViewAdapter extends RecyclerView.Adapter<Re
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(final ViewGroup parent, int viewType) {
+        Log.d(TAG, "XXXXX ADAPTER onCreateViewHolder()");
 
         if (viewType == ListItem.TYPE_GAME) {
             final View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.listrow_game_item, parent, false);
@@ -108,6 +122,7 @@ public class GamesBySystemRecycleListViewAdapter extends RecyclerView.Adapter<Re
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         int type = getItemViewType(position);
+        Log.d(TAG, "XXXXX ADAPTER onBindViewHolder()");
 
         if (type == ListItem.TYPE_GAME) {
             final GameListItem gameListItem = (GameListItem) listItems.get(position);
@@ -137,17 +152,23 @@ public class GamesBySystemRecycleListViewAdapter extends RecyclerView.Adapter<Re
 //        }
     }
 
-    // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
-        return gameList.size();
+        Log.d(TAG, "XXXXX ADAPTER getItemCount(): " + listItems.size());
+        return listItems.size();
     }
 
     // Display the first letter of the game during fast scrolling
     @NonNull
     @Override
     public String getSectionName(int position) {
-        return gameList.get(position).getGameName().substring(0, 1).toUpperCase();
+        Log.d(TAG, "XXXXX ADAPTER getSectionName()");
+        int type = getItemViewType(position);
+        if (type == ListItem.TYPE_GAME) {
+            return gameList.get(position).getGameName().substring(0, 1).toUpperCase();
+        } else {
+            return "Ad";
+        }
     }
 
     // Height of the scroll-bar at the right screen side
@@ -156,4 +177,37 @@ public class GamesBySystemRecycleListViewAdapter extends RecyclerView.Adapter<Re
         return 100;
     }
 
+    public void filterList(String filter) {
+        Log.d(TAG, "XXXXX ADAPTER filterList()");
+
+        if ((filter != null) && (filter.trim().length() > 2)) {
+            // TODO filter the list and update gameList with filtered List
+        }
+
+        updateGameListAndInjectAds();
+    }
+
+    private void updateGameListAndInjectAds() {
+        Log.d(TAG, "XXXXX ADAPTER updateGameListAndInjectAds()");
+
+        int j = 0;
+        final List<ListItem> newListItems = new ArrayList<>();
+
+        for (Game game : gameList) {
+            GameListItem gameListItem = new GameListItem();
+            gameListItem.setGame(game);
+            newListItems.add(gameListItem);
+
+            if (j % injectAdAfterEveryPosition == 0) {
+                // TODO inject ad here to newListItems
+            }
+            j++;
+        }
+
+        Needle.onMainThread().execute(() -> {
+            listItems.clear();
+            listItems.addAll(newListItems);
+            notifyDataSetChanged();
+        });
+    }
 }

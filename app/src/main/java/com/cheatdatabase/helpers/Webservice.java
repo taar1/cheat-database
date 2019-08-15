@@ -12,6 +12,7 @@ import com.cheatdatabase.businessobjects.Member;
 import com.cheatdatabase.businessobjects.Screenshot;
 import com.cheatdatabase.businessobjects.SystemPlatform;
 import com.cheatdatabase.businessobjects.WelcomeMessage;
+import com.cheatdatabase.callbacks.RepositoryEntityListCallback;
 import com.google.gson.Gson;
 
 import org.json.JSONArray;
@@ -32,6 +33,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+
+import needle.Needle;
 
 /**
  * REST Calls class.
@@ -1222,48 +1225,52 @@ public class Webservice {
     }
 
     /**
-     * Holt saemtliche Games von einem System und liefert sie als String-Arrays
-     * in einer ArrayList zurück.
-     *
+     * Loags all games from a system.
      * @param systemId
-     * @return Game[]
+     * @param systemName
+     * @param isAchievementsEnabled
+     * @param callback
      */
-    public static Game[] getGameListBySystemId(int systemId, String systemName, boolean isAchievementsEnabled) {
-        Game[] games = null;
-        JSONArray jArray;
+    public static void getGameListBySystemId(int systemId, String systemName, boolean isAchievementsEnabled, final RepositoryEntityListCallback<Game> callback) {
 
-        String achievementsEnabled = (isAchievementsEnabled ? "1" : "0");
+        Needle.onBackgroundThread().execute(() -> {
+            List<Game> gameList = new ArrayList<>();
+            JSONArray jArray;
 
-        try {
-            String urlParameters = "systemId=" + URLEncoder.encode(String.valueOf(systemId), "UTF-8") + "&achievementsEnabled=" + URLEncoder.encode(achievementsEnabled, "UTF-8");
-            String responseString = excutePost(Konstanten.BASE_URL_ANDROID + "getGamesBySystemId.php", urlParameters);
+            String achievementsEnabled = (isAchievementsEnabled ? "1" : "0");
 
-            jArray = new JSONArray(responseString);
-            games = new Game[jArray.length()];
+            try {
+                String urlParameters = "systemId=" + URLEncoder.encode(String.valueOf(systemId), "UTF-8") + "&achievementsEnabled=" + URLEncoder.encode(achievementsEnabled, "UTF-8");
+                String responseString = excutePost(Konstanten.BASE_URL_ANDROID + "getGamesBySystemId.php", urlParameters);
 
-            for (int i = 0; i < jArray.length(); i++) {
+                jArray = new JSONArray(responseString);
 
-                JSONObject jsonObject = jArray.getJSONObject(i);
+                for (int i = 0; i < jArray.length(); i++) {
+                    JSONObject jsonObject = jArray.getJSONObject(i);
 
-                int gameId = jsonObject.getInt("id");
-                String gameName = jsonObject.getString("name");
-                int cheatCount = jsonObject.getInt("cnt");
+                    int gameId = jsonObject.getInt("id");
+                    String gameName = jsonObject.getString("name");
+                    int cheatCount = jsonObject.getInt("cnt");
 
-                Game game = new Game();
-                game.setGameId(gameId);
-                game.setGameName(gameName.replaceAll("\\\\", ""));
-                game.setCheatsCount(cheatCount);
-                game.setSystemId(systemId);
-                game.setSystemName(systemName);
+                    Game game = new Game();
+                    game.setGameId(gameId);
+                    game.setGameName(gameName.replaceAll("\\\\", ""));
+                    game.setCheatsCount(cheatCount);
+                    game.setSystemId(systemId);
+                    game.setSystemName(systemName);
 
-                games[i] = game;
+                    gameList.add(game);
+                }
+                callback.onSuccess(gameList);
+
+            } catch (JSONException | UnsupportedEncodingException e) {
+                Log.e(TAG, "getGameListBySystemId | UnsupportedEncodingException: " + e);
+                callback.onFailure(e);
             }
+        });
 
-        } catch (JSONException | UnsupportedEncodingException e) {
-            Log.e(TAG, "getGameListBySystemId | UnsupportedEncodingException: " + e);
-        }
 
-        return games;
+
     }
 
     /**

@@ -32,7 +32,7 @@ public class CheatDatabaseApplication extends Application implements Application
 
     private static Context sAppContext;
 
-    static TreeMap<String, TreeMap<String, Game[]>> gamesBySystemCached = new TreeMap<>();
+    static TreeMap<String, TreeMap<String, List<Game>>> gamesBySystemCached = new TreeMap<>();
     static TreeMap<String, TreeMap<String, List<Cheat>>> cheatsByGameCached = new TreeMap<>();
 
     private static CheatDatabaseApplication currentApplicationInstance;
@@ -174,7 +174,7 @@ public class CheatDatabaseApplication extends Application implements Application
      *
      * @return
      */
-    public static TreeMap<String, TreeMap<String, Game[]>> getGamesBySystemCached() {
+    public static TreeMap<String, TreeMap<String, List<Game>>> getGamesBySystemCached() {
         return gamesBySystemCached;
     }
 
@@ -183,7 +183,7 @@ public class CheatDatabaseApplication extends Application implements Application
      *
      * @param gamesBySystemCachedx
      */
-    public static void setGamesBySystemCached(TreeMap<String, TreeMap<String, Game[]>> gamesBySystemCachedx) {
+    public static void setGamesBySystemCached(TreeMap<String, TreeMap<String, List<Game>>> gamesBySystemCachedx) {
         gamesBySystemCached = gamesBySystemCachedx;
     }
 

@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -25,6 +26,7 @@ import com.cheatdatabase.adapters.GamesBySystemRecycleListViewAdapter;
 import com.cheatdatabase.businessobjects.Game;
 import com.cheatdatabase.businessobjects.Member;
 import com.cheatdatabase.businessobjects.SystemPlatform;
+import com.cheatdatabase.callbacks.RepositoryEntityListCallback;
 import com.cheatdatabase.events.GameListRecyclerViewClickEvent;
 import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Reachability;
@@ -41,7 +43,6 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.TreeMap;
 
@@ -54,18 +55,18 @@ public class GamesBySystemListActivity extends AppCompatActivity implements OnGa
     private static final String TAG = GamesBySystemListActivity.class.getSimpleName();
     private static final int AD_POSITION = 4;
 
-    private List<Game> gameArrayList;
+    private List<Game> gameList;
+    private CheatDatabaseApplication cheatDatabaseApplication;
+    private GamesBySystemRecycleListViewAdapter gamesBySystemRecycleListViewAdapter;
     private SystemPlatform systemObj;
-    private AdView adView;
+    private Member member;
+    private AdView facebookAdView;
+
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
-    private Member member;
-
-    CheatDatabaseApplication cheatDatabaseApplication;
-    GamesBySystemRecycleListViewAdapter gamesBySystemRecycleListViewAdapter;
 
     @BindView(R.id.my_recycler_view)
-    FastScrollRecyclerView mRecyclerView;
+    FastScrollRecyclerView recyclerView;
     @BindView(R.id.swipe_refresh_layout)
     SwipeRefreshLayout mSwipeRefreshLayout;
     @BindView(R.id.toolbar)
@@ -73,10 +74,26 @@ public class GamesBySystemListActivity extends AppCompatActivity implements OnGa
     @BindView(R.id.item_list_empty_view)
     TextView mEmptyView;
     @BindView(R.id.banner_container)
-    LinearLayout facebookBanner;
+    LinearLayout bannerContainerFacebook;
+
+    @Override
+    protected void onStart() {
+        Log.d(TAG, "XXXXX onStart()");
+
+        super.onStart();
+        EventBus.getDefault().register(this);
+
+        if (Reachability.reachability.isReachable) {
+            loadGames(false);
+        } else {
+            Toast.makeText(this, R.string.no_internet, Toast.LENGTH_SHORT).show();
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.d(TAG, "XXXXX onCreate()");
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_list);
         ButterKnife.bind(this);
@@ -87,42 +104,38 @@ public class GamesBySystemListActivity extends AppCompatActivity implements OnGa
             finish();
         } else {
             setTitle((systemObj.getSystemName() != null ? systemObj.getSystemName() : ""));
-
             init();
 
             mSwipeRefreshLayout.setRefreshing(true);
-            mSwipeRefreshLayout.setOnRefreshListener(() -> getGames(true));
+            mSwipeRefreshLayout.setOnRefreshListener(() -> loadGames(true));
 
-            // use this setting to improve performance if you know that changes
-            // in content do not change the layout size of the RecyclerView
-            mRecyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
-            mRecyclerView.addItemDecoration(new DividerDecoration(this));
-            mRecyclerView.getItemAnimator().setRemoveDuration(50);
-            mRecyclerView.setHasFixedSize(true);
+            gamesBySystemRecycleListViewAdapter = new GamesBySystemRecycleListViewAdapter(this, this);
+            recyclerView.setAdapter(gamesBySystemRecycleListViewAdapter);
 
-            if (Reachability.reachability.isReachable) {
-                getGames(false);
-            } else {
-                Toast.makeText(this, R.string.no_internet, Toast.LENGTH_SHORT).show();
-            }
+            recyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
+            recyclerView.addItemDecoration(new DividerDecoration(this));
+            recyclerView.getItemAnimator().setRemoveDuration(50);
+            recyclerView.setHasFixedSize(true);
+            recyclerView.showScrollbar();
         }
     }
 
     private void init() {
-        gamesBySystemRecycleListViewAdapter = new GamesBySystemRecycleListViewAdapter(this, this);
+        sharedPreferences = getSharedPreferences(Konstanten.PREFERENCES_FILE, MODE_PRIVATE);
+        editor = sharedPreferences.edit();
 
-        adView = new AdView(this, Konstanten.FACEBOOK_AUDIENCE_NETWORK_NATIVE_BANNER_ID, AdSize.BANNER_HEIGHT_50);
-        facebookBanner.addView(adView);
-        adView.loadAd();
+        cheatDatabaseApplication = CheatDatabaseApplication.getCurrentAppInstance();
+
+        facebookAdView = new AdView(this, Konstanten.FACEBOOK_AUDIENCE_NETWORK_NATIVE_BANNER_ID, AdSize.BANNER_HEIGHT_50);
+        bannerContainerFacebook.addView(facebookAdView);
+        bannerContainerFacebook.setBackgroundColor(Color.RED);
+        facebookAdView.loadAd();
 
         if (mToolbar != null) {
             setSupportActionBar(mToolbar);
         }
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
-
-        sharedPreferences = getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
-        editor = sharedPreferences.edit();
 
         if (member == null) {
             member = new Gson().fromJson(sharedPreferences.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
@@ -188,96 +201,133 @@ public class GamesBySystemListActivity extends AppCompatActivity implements OnGa
         }
     }
 
-    private void getGames(boolean forceLoadOnline) {
-        Log.d(TAG, "XXXXX getGames() System ID/NAME: " + systemObj.getSystemId() + "/" + systemObj.getSystemName());
+    private void loadGames(boolean forceLoadOnline) {
+        Log.d(TAG, "XXXXX loadGames() System ID/NAME: " + systemObj.getSystemId() + "/" + systemObj.getSystemName());
 
-        Needle.onBackgroundThread().execute(() -> {
-            gameArrayList = new ArrayList<>();
-            Game[] cachedGamesCollection;
-            Game[] gamesFound = null;
-            boolean isCached = false;
-            String achievementsEnabled;
-            boolean isAchievementsEnabled = sharedPreferences.getBoolean("enable_achievements", true);
-            if (isAchievementsEnabled) {
-                achievementsEnabled = Konstanten.ACHIEVEMENTS;
-            } else {
-                achievementsEnabled = Konstanten.NO_ACHIEVEMENTS;
-            }
+//        final List<ListItem> newListItems = new ArrayList<>();
 
-            TreeMap<String, TreeMap<String, Game[]>> gamesBySystemInCache = cheatDatabaseApplication.getGamesBySystemCached();
-            TreeMap gameList = null;
-            if (gamesBySystemInCache.containsKey(String.valueOf(systemObj.getSystemId()))) {
+        // TODO eine GameListItem liste erstellen und verwenden damit man einen ListItem type unterschied machen kann (game list item & native ad item)
+        // TODO eine GameListItem liste erstellen und verwenden damit man einen ListItem type unterschied machen kann (game list item & native ad item)
 
-                gameList = gamesBySystemInCache.get(String.valueOf(systemObj.getSystemId()));
-                if (gameList != null) {
+        gameList = new ArrayList<>();
+        List<Game> cachedGamesCollection;
+        boolean isCached = false;
+        String achievementsEnabled;
+        boolean isAchievementsEnabled = sharedPreferences.getBoolean("enable_achievements", true);
 
-                    if (gameList.containsKey(achievementsEnabled)) {
-                        cachedGamesCollection = (Game[]) gameList.get(achievementsEnabled);
+        if (isAchievementsEnabled) {
+            achievementsEnabled = Konstanten.ACHIEVEMENTS;
+        } else {
+            achievementsEnabled = Konstanten.NO_ACHIEVEMENTS;
+        }
 
-                        if (cachedGamesCollection.length > 0) {
-                            gamesFound = cachedGamesCollection;
-                            isCached = true;
-                        }
+        Log.d(TAG, "XXXXX loadGames() 01");
+
+        TreeMap gameListTree = null;
+        TreeMap<String, TreeMap<String, List<Game>>> gamesBySystemInCache = cheatDatabaseApplication.getGamesBySystemCached();
+        if (gamesBySystemInCache.containsKey(String.valueOf(systemObj.getSystemId()))) {
+
+            gameListTree = gamesBySystemInCache.get(String.valueOf(systemObj.getSystemId()));
+            if (gameListTree != null) {
+
+                if (gameListTree.containsKey(achievementsEnabled)) {
+                    cachedGamesCollection = (List<Game>) gameListTree.get(achievementsEnabled);
+
+                    if (cachedGamesCollection.size() > 0) {
+                        gameList = cachedGamesCollection;
+                        isCached = true;
                     }
                 }
             }
+        }
 
-            if (!isCached || forceLoadOnline) {
-                gamesFound = Webservice.getGameListBySystemId(systemObj.getSystemId(), systemObj.getSystemName(), isAchievementsEnabled);
-                while (gamesFound == null) {
-                    gamesFound = Webservice.getGameListBySystemId(systemObj.getSystemId(), systemObj.getSystemName(), isAchievementsEnabled);
+        Log.d(TAG, "XXXXX loadGames() 02 isCached: " + isCached);
+        Log.d(TAG, "XXXXX loadGames() 02 gameList: " + gameList.size());
+
+        if (!isCached || forceLoadOnline || gameList.size() == 0) {
+            gameList = new ArrayList<>();
+            TreeMap finalGameListTree = gameListTree;
+
+            // TODO FIXME hier das CALLBACK List<Game> irgendwie noch fixen
+            // TODO FIXME hier das CALLBACK List<Game> irgendwie noch fixen
+            // TODO FIXME hier das CALLBACK List<Game> irgendwie noch fixen
+            // TODO FIXME hier das CALLBACK List<Game> irgendwie noch fixen
+
+            Log.d(TAG, "XXXXX loadGames() 022");
+
+            Webservice.getGameListBySystemId(systemObj.getSystemId(), systemObj.getSystemName(), isAchievementsEnabled, new RepositoryEntityListCallback<Game>() {
+                @Override
+                public void onSuccess(List<Game> gameEntityList) {
+                    Log.d(TAG, "XXXXX loadGames() 03");
+
+                    TreeMap<String, List<Game>> updatedGameListForCache = new TreeMap<>();
+                    updatedGameListForCache.put(achievementsEnabled, gameList);
+
+                    Log.d(TAG, "XXXXX loadGames() 03 1");
+
+                    String checkWhichSubKey;
+                    if (achievementsEnabled.equalsIgnoreCase(Konstanten.ACHIEVEMENTS)) {
+                        checkWhichSubKey = Konstanten.NO_ACHIEVEMENTS;
+                    } else {
+                        checkWhichSubKey = Konstanten.ACHIEVEMENTS;
+                    }
+
+                    Log.d(TAG, "XXXXX loadGames() 03 2");
+
+                    if ((finalGameListTree != null) && (finalGameListTree.containsKey(checkWhichSubKey))) {
+                        List<Game> existingGamesInCache = (List<Game>) finalGameListTree.get(checkWhichSubKey);
+                        updatedGameListForCache.put(checkWhichSubKey, existingGamesInCache);
+                    }
+
+                    Log.d(TAG, "XXXXX loadGames() 03 3");
+                    gamesBySystemInCache.put(String.valueOf(systemObj.getSystemId()), updatedGameListForCache);
+                    cheatDatabaseApplication.setGamesBySystemCached(gamesBySystemInCache);
+
+                    Log.d(TAG, "XXXXX loadGames() 03 4");
+                    gameList = gameEntityList;
+
+//                    for (Game game : gameList) {
+//                        Log.d(TAG, "XXXXX Games: " + game.getGameName());
+//                    }
+
+                    updateUI();
                 }
 
-                TreeMap<String, Game[]> updatedGameListForCache = new TreeMap<>();
-                updatedGameListForCache.put(achievementsEnabled, gamesFound);
-
-                String checkWhichSubKey;
-                if (achievementsEnabled.equalsIgnoreCase(Konstanten.ACHIEVEMENTS)) {
-                    checkWhichSubKey = Konstanten.NO_ACHIEVEMENTS;
-                } else {
-                    checkWhichSubKey = Konstanten.ACHIEVEMENTS;
+                @Override
+                public void onFailure(Exception e) {
+                    Log.d(TAG, "XXXXX loadGames() 04");
+                    error();
                 }
+            });
 
-                if ((gameList != null) && (gameList.containsKey(checkWhichSubKey))) {
-                    Game[] existingGamesInCache = (Game[]) gameList.get(checkWhichSubKey);
-                    updatedGameListForCache.put(checkWhichSubKey, existingGamesInCache);
-                }
+        }
 
-                gamesBySystemInCache.put(String.valueOf(systemObj.getSystemId()), updatedGameListForCache);
-                cheatDatabaseApplication.setGamesBySystemCached(gamesBySystemInCache);
-            }
-            Collections.addAll(gameArrayList, gamesFound);
 
-            updateUI();
-        });
     }
 
     private void updateUI() {
-        Needle.onMainThread().execute(() -> {
-            try {
-                if (gameArrayList != null && gameArrayList.size() > 0) {
-                    gamesBySystemRecycleListViewAdapter.setGameList(gameArrayList);
-                    mRecyclerView.setAdapter(gamesBySystemRecycleListViewAdapter);
-                    gamesBySystemRecycleListViewAdapter.notifyDataSetChanged();
-                } else {
-                    error();
-                }
-            } catch (Exception e) {
-                error();
-            }
+        if (gameList != null && gameList.size() > 0) {
+            gamesBySystemRecycleListViewAdapter.setGameList(gameList);
+            gamesBySystemRecycleListViewAdapter.filterList("");
 
-            mSwipeRefreshLayout.setRefreshing(false);
-        });
+            //gamesBySystemRecycleListViewAdapter.notifyDataSetChanged();
+        } else {
+            error();
+        }
+
+        mSwipeRefreshLayout.setRefreshing(false);
     }
 
     private void error() {
-        Log.e(TAG, "caught error: " + getPackageName() + "/" + getTitle());
-        new AlertDialog.Builder(GamesBySystemListActivity.this).setIcon(R.drawable.ic_action_warning).setTitle(getString(R.string.err)).setMessage(R.string.err_data_not_accessible).setNeutralButton(R.string.ok, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int whichButton) {
-                finish();
-            }
-        }).create().show();
+        Needle.onMainThread().execute(() -> {
+            Log.e(TAG, "Caught error: " + getPackageName() + "/" + getTitle());
+            new AlertDialog.Builder(GamesBySystemListActivity.this).setIcon(R.drawable.ic_action_warning).setTitle(getString(R.string.err)).setMessage(R.string.err_data_not_accessible).setNeutralButton(R.string.ok, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int whichButton) {
+                    finish();
+                }
+            }).create().show();
+        });
     }
 
     @Override
@@ -288,11 +338,6 @@ public class GamesBySystemListActivity extends AppCompatActivity implements OnGa
         }
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        EventBus.getDefault().register(this);
-    }
 
     @Override
     protected void onStop() {
@@ -303,8 +348,8 @@ public class GamesBySystemListActivity extends AppCompatActivity implements OnGa
 
     @Override
     protected void onDestroy() {
-        if (adView != null) {
-            adView.destroy();
+        if (facebookAdView != null) {
+            facebookAdView.destroy();
         }
         super.onDestroy();
     }
@@ -313,8 +358,6 @@ public class GamesBySystemListActivity extends AppCompatActivity implements OnGa
     public void onEvent(GameListRecyclerViewClickEvent result) {
         if (result.isSucceeded()) {
             Intent intent = new Intent(this, CheatsByGameListActivity.class);
-
-            Game ggg = result.getGame();
             intent.putExtra("gameObj", result.getGame());
             startActivity(intent);
         } else {
