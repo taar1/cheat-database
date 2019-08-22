@@ -6,6 +6,7 @@ public abstract class ListItem {
     public static final int TYPE_CHEAT = 2;
     public static final int TYPE_FACEBOOK_NATIVE_AD = 3;
     public static final int TYPE_INMOBI_NATIVE_AD = 4;
+    public static final int TYPE_BLANK = 5;
 
     abstract public int getType();
 }

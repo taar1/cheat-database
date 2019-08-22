@@ -5,6 +5,8 @@ public class Konstanten {
     public final static String CURRENT_VERSION = "2.4.1";
     public final static int DEFAULT_TOTAL_CHEATS = 161000;
 
+    public static final int INJECT_AD_AFTER_EVERY_POSITION = 20;
+
     // URL Konstanten
     public final static String BASE_URL = "https://www.cheat-database.com/";
     public final static String BASE_URL_ANDROID = "https://www.cheat-database.com/android/json/";
@@ -106,4 +108,5 @@ public class Konstanten {
 
     public final static String ACHIEVEMENTS = "achievements";
     public final static String NO_ACHIEVEMENTS = "noAchievements";
+
 }

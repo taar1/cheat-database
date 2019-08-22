@@ -28,9 +28,10 @@ public class GamesBySystemListViewItemHolder extends RecyclerView.ViewHolder {
 
     public GamesBySystemListViewItemHolder(View view, Context context) {
         super(view);
+        ButterKnife.bind(this, view);
+
         this.view = view;
         this.context = context;
-        ButterKnife.bind(this, view);
 
         gameName.setTypeface(Tools.getFont(view.getContext().getAssets(), Konstanten.FONT_BOLD));
         cheatCount.setTypeface(Tools.getFont(view.getContext().getAssets(), Konstanten.FONT_LIGHT));

@@ -7,13 +7,15 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cheatdatabase.R;
 import com.cheatdatabase.businessobjects.Game;
+import com.cheatdatabase.helpers.Konstanten;
+import com.cheatdatabase.holders.BlankWhiteListViewItemHolder;
 import com.cheatdatabase.holders.GamesBySystemListViewItemHolder;
 import com.cheatdatabase.listeners.OnGameListItemSelectedListener;
+import com.cheatdatabase.listitems.BlankListItem;
 import com.cheatdatabase.listitems.GameListItem;
 import com.cheatdatabase.listitems.ListItem;
 import com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView;
@@ -35,8 +37,6 @@ public class GamesBySystemRecycleListViewAdapter extends RecyclerView.Adapter<Re
     private Game gameObj;
     private Context context;
     private final OnGameListItemSelectedListener listener;
-
-    private final int injectAdAfterEveryPosition = 10;
 
     public GamesBySystemRecycleListViewAdapter(Context context, OnGameListItemSelectedListener listener) {
         Log.d(TAG, "XXXXX ADAPTER GamesBySystemRecycleListViewAdapter()");
@@ -100,7 +100,7 @@ public class GamesBySystemRecycleListViewAdapter extends RecyclerView.Adapter<Re
         if (viewType == ListItem.TYPE_GAME) {
             Log.d(TAG, "XXXXX ADAPTER onCreateViewHolder() GAME");
 
-            final View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.listrow_game_item, parent, false);
+            final View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.listrow_gamebysystem_item, parent, false);
             itemView.setDrawingCacheEnabled(true);
 
             Log.d(TAG, "XXXXX ADAPTER onCreateViewHolder() RETURNS GAME");
@@ -114,10 +114,9 @@ public class GamesBySystemRecycleListViewAdapter extends RecyclerView.Adapter<Re
 //                    EventBus.getDefault().post(new GameListRecyclerViewClickEvent(new Exception()));
 //                }
 //            });
+        } else if (viewType == ListItem.TYPE_BLANK) {
+            return new BlankWhiteListViewItemHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.listrow_blankwhite_item, parent, false));
         }
-//        else if (viewType == ListItem.TYPE_FACEBOOK_NATIVE_AD) {
-//            // TODO
-//        }
 
         Log.d(TAG, "XXXXX ADAPTER onCreateViewHolder() RETURNS NULL");
         return null;
@@ -126,16 +125,19 @@ public class GamesBySystemRecycleListViewAdapter extends RecyclerView.Adapter<Re
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         int type = getItemViewType(position);
-        Log.d(TAG, "XXXXX ADAPTER onBindViewHolder()");
+        Log.d(TAG, "XXXXX ADAPTER onBindViewHolder() TYPE: " + type);
 
         if (type == ListItem.TYPE_GAME) {
             final GameListItem gameListItem = (GameListItem) listItems.get(position);
             GamesBySystemListViewItemHolder gamesBySystemListViewItemHolder = (GamesBySystemListViewItemHolder) holder;
-            gamesBySystemListViewItemHolder.setGame(gameObj);
+            gamesBySystemListViewItemHolder.setGame(gameListItem.getGame());
             gamesBySystemListViewItemHolder.view.setOnClickListener(v -> listener.onGameListItemSelected(gameListItem.getGame()));
 
         } else if (type == ListItem.TYPE_FACEBOOK_NATIVE_AD) {
             // TODO
+        } else if (type == ListItem.TYPE_BLANK) {
+            // TODO
+            BlankWhiteListViewItemHolder blankWhiteListViewItemHolder = (BlankWhiteListViewItemHolder) holder;
         }
 
 //        gameObj = gameList.get(position);
@@ -177,7 +179,7 @@ public class GamesBySystemRecycleListViewAdapter extends RecyclerView.Adapter<Re
 
     // Height of the scroll-bar at the right screen side
     @Override
-    public int getViewTypeHeight(RecyclerView recyclerView, @Nullable RecyclerView.ViewHolder viewHolder, int viewType) {
+    public int getViewTypeHeight(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, int viewType) {
         return 100;
     }
 
@@ -206,19 +208,12 @@ public class GamesBySystemRecycleListViewAdapter extends RecyclerView.Adapter<Re
             gameListItem.setGame(game);
             newListItems.add(gameListItem);
 
-            if (j % injectAdAfterEveryPosition == 0) {
-                // TODO inject ad here to newListItems
+            // TODO inject ad here to newListItems
+
+            if (j % Konstanten.INJECT_AD_AFTER_EVERY_POSITION == Konstanten.INJECT_AD_AFTER_EVERY_POSITION - 1) {
+                newListItems.add(new BlankListItem());
             }
             j++;
-        }
-
-        // TODO FIXME irgendwas stimmt hier nicht, die list size ist 40 (bei C64) aber danach loopt es nur 2x...
-        // TODO FIXME irgendwas stimmt hier nicht, die list size ist 40 (bei C64) aber danach loopt es nur 2x...
-        // TODO FIXME irgendwas stimmt hier nicht, die list size ist 40 (bei C64) aber danach loopt es nur 2x...
-        // TODO FIXME irgendwas stimmt hier nicht, die list size ist 40 (bei C64) aber danach loopt es nur 2x...
-        Log.d(TAG, "XXXXX LIST ITEM SIZE: " + newListItems.size());
-        for (ListItem li : newListItems) {
-            Log.d(TAG, "XXXXX LIST ITEM TYPE: " + li.getType());
         }
 
         Needle.onMainThread().execute(() -> {

@@ -78,8 +78,6 @@ public class GamesBySystemListActivity extends AppCompatActivity implements OnGa
 
     @Override
     protected void onStart() {
-        Log.d(TAG, "XXXXX onStart()");
-
         super.onStart();
         EventBus.getDefault().register(this);
 
@@ -92,8 +90,6 @@ public class GamesBySystemListActivity extends AppCompatActivity implements OnGa
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Log.d(TAG, "XXXXX onCreate()");
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_list);
         ButterKnife.bind(this);
@@ -221,8 +217,6 @@ public class GamesBySystemListActivity extends AppCompatActivity implements OnGa
             achievementsEnabled = Konstanten.NO_ACHIEVEMENTS;
         }
 
-        Log.d(TAG, "XXXXX loadGames() 01");
-
         TreeMap gameListTree = null;
         TreeMap<String, TreeMap<String, List<Game>>> gamesBySystemInCache = cheatDatabaseApplication.getGamesBySystemCached();
         if (gamesBySystemInCache.containsKey(String.valueOf(systemObj.getSystemId()))) {
@@ -253,17 +247,11 @@ public class GamesBySystemListActivity extends AppCompatActivity implements OnGa
             // TODO FIXME hier das CALLBACK List<Game> irgendwie noch fixen
             // TODO FIXME hier das CALLBACK List<Game> irgendwie noch fixen
 
-            Log.d(TAG, "XXXXX loadGames() 022");
-
             Webservice.getGameListBySystemId(systemObj.getSystemId(), systemObj.getSystemName(), isAchievementsEnabled, new RepositoryEntityListCallback<Game>() {
                 @Override
                 public void onSuccess(List<Game> gameEntityList) {
-                    Log.d(TAG, "XXXXX loadGames() 03");
-
                     TreeMap<String, List<Game>> updatedGameListForCache = new TreeMap<>();
                     updatedGameListForCache.put(achievementsEnabled, gameList);
-
-                    Log.d(TAG, "XXXXX loadGames() 03 1");
 
                     String checkWhichSubKey;
                     if (achievementsEnabled.equalsIgnoreCase(Konstanten.ACHIEVEMENTS)) {
@@ -272,18 +260,14 @@ public class GamesBySystemListActivity extends AppCompatActivity implements OnGa
                         checkWhichSubKey = Konstanten.ACHIEVEMENTS;
                     }
 
-                    Log.d(TAG, "XXXXX loadGames() 03 2");
-
                     if ((finalGameListTree != null) && (finalGameListTree.containsKey(checkWhichSubKey))) {
                         List<Game> existingGamesInCache = (List<Game>) finalGameListTree.get(checkWhichSubKey);
                         updatedGameListForCache.put(checkWhichSubKey, existingGamesInCache);
                     }
 
-                    Log.d(TAG, "XXXXX loadGames() 03 3");
                     gamesBySystemInCache.put(String.valueOf(systemObj.getSystemId()), updatedGameListForCache);
                     cheatDatabaseApplication.setGamesBySystemCached(gamesBySystemInCache);
 
-                    Log.d(TAG, "XXXXX loadGames() 03 4");
                     gameList = gameEntityList;
 
 //                    for (Game game : gameList) {
@@ -295,7 +279,6 @@ public class GamesBySystemListActivity extends AppCompatActivity implements OnGa
 
                 @Override
                 public void onFailure(Exception e) {
-                    Log.d(TAG, "XXXXX loadGames() 04");
                     error();
                 }
             });
