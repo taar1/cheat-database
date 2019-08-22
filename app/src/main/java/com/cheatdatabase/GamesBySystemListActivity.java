@@ -270,10 +270,6 @@ public class GamesBySystemListActivity extends AppCompatActivity implements OnGa
 
                     gameList = gameEntityList;
 
-//                    for (Game game : gameList) {
-//                        Log.d(TAG, "XXXXX Games: " + game.getGameName());
-//                    }
-
                     updateUI();
                 }
 
@@ -320,7 +316,6 @@ public class GamesBySystemListActivity extends AppCompatActivity implements OnGa
             Reachability.registerReachability(this);
         }
     }
-
 
     @Override
     protected void onStop() {
@@ -381,9 +376,18 @@ public class GamesBySystemListActivity extends AppCompatActivity implements OnGa
         }
     }
 
-
     @Override
     public void onGameListItemSelected(Game game) {
+        Log.d(TAG, "XXXXX XXXXX onGameListItemSelected");
+
+        // TODO hier noch den click abfangen und zur gamelist activity gehen
+        // TODO hier noch den click abfangen und zur gamelist activity gehen
+        // TODO hier noch den click abfangen und zur gamelist activity gehen
+        // TODO hier noch den click abfangen und zur gamelist activity gehen
+        // TODO hier noch den click abfangen und zur gamelist activity gehen
+        // TODO hier noch den click abfangen und zur gamelist activity gehen
+        // TODO hier noch den click abfangen und zur gamelist activity gehen
+
         if (Reachability.reachability.isReachable) {
 
         }

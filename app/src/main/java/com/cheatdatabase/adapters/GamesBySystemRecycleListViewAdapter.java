@@ -168,12 +168,13 @@ public class GamesBySystemRecycleListViewAdapter extends RecyclerView.Adapter<Re
     @NonNull
     @Override
     public String getSectionName(int position) {
-        Log.d(TAG, "XXXXX ADAPTER getSectionName()");
+        // What will be displayed at the right side when fast scroll is used (normally the first letter of the game)
         int type = getItemViewType(position);
         if (type == ListItem.TYPE_GAME) {
             return gameList.get(position).getGameName().substring(0, 1).toUpperCase();
         } else {
-            return "Ad";
+            // When we show an ad or something else we show blank
+            return "";
         }
     }
 
@@ -202,15 +203,17 @@ public class GamesBySystemRecycleListViewAdapter extends RecyclerView.Adapter<Re
         Log.d(TAG, "XXXXX updateGameListAndInjectAds gameList: " + gameList.size());
         for (Game game : gameList) {
 
-
             Log.d(TAG, "XXXXX ADD GAME TO LIST: " + game.getGameName());
             GameListItem gameListItem = new GameListItem();
             gameListItem.setGame(game);
             newListItems.add(gameListItem);
 
             // TODO inject ad here to newListItems
+            // TODO inject ad here to newListItems
+            // TODO inject ad here to newListItems
 
             if (j % Konstanten.INJECT_AD_AFTER_EVERY_POSITION == Konstanten.INJECT_AD_AFTER_EVERY_POSITION - 1) {
+                // TODO replace BlankListItem with AdView...
                 newListItems.add(new BlankListItem());
             }
             j++;
