@@ -2,12 +2,24 @@
 <resources>
 
     <!-- UNIQUE NEWS -->
+    <plurals name="set_cheats">
+        <item quantity="one">Cheat</item>
+        <item quantity="other">Cheats</item>
+    </plurals>
+    <plurals name="set_games">
+        <item quantity="one">Game</item>
+        <item quantity="other">Games</item>
+    </plurals>
+    <plurals name="entries">
+        <item quantity="one">Entry</item>
+        <item quantity="other">Entries</item>
+    </plurals>
     <string name="news_welcome">New in this version</string>
+
+    <!-- VARIOUS -->
     <string name="news_title">News</string>
     <string name="welcome">Welcome to Cheat-Database!</string>
     <string name="news_text_static">Thanks so much for using Cheat-Database.</string>
-
-    <!-- VARIOUS -->
     <string name="app_name">Cheat-Database</string>
     <string name="app_label">Cheat-Database</string>
     <string name="title_item_detail">Item Detail</string>
@@ -25,14 +37,14 @@
     <string name="games">games</string>
     <string name="no_internet">No Internet connection available. Try again a bit later.</string>
     <string name="search_hint">Search a game</string>
-    <string name="splash_screen">Loading Cheat-Database&#8230;&#8230;&#8230;</string>
-    <string name="members_cheats_title">%s\'s Tricks</string>
-    <string name="placeholder">Placeholder</string>
 
     <!-- ADS TEXT -->
-    <string name="lead_bolt_text">Our App recommendations ></string>
+    <string name="splash_screen">Loading Cheat-Database&#8230;&#8230;&#8230;</string>
 
     <!-- MAIN SCREEN -->
+    <string name="members_cheats_title">%s\'s Tricks</string>
+    <string name="placeholder">Placeholder</string>
+    <string name="lead_bolt_text">Our App recommendations ></string>
     <string name="enterGame">Enter game title:</string>
     <string name="enter_game_hint">Game Title</string>
     <string name="game_platform">System</string>
@@ -43,11 +55,11 @@
     <string name="error_nothing_found_text">No game could be found with your search query %s. Please try again with less keywords.</string>
     <string name="button_closeNothingFoundPopup">Refine query</string>
     <string name="cheat_counter_headline">Over %s cheatList and counting!</string>
+
+    <!-- MAIN MENU -->
     <string name="total_cheats_unknown">Hundreds of thousands of cheatList!</string>
     <string name="new_cheats_title">New cheatList for these games:</string>
     <string name="advanced_search">advanced / full text search</string>
-
-    <!-- MAIN MENU -->
     <string name="favorites">Favorites</string>
     <string name="goto_main_screen">Home</string>
     <string name="goto_news">News</string>
@@ -56,24 +68,24 @@
     <string name="goto_cheat_list">To cheat overview</string>
     <string name="menu_fulltext_search_short">Full Text Search</string>
     <string name="menu_fulltext_search_long">Full text search in listed cheatList</string>
-    <string name="menu_server_status">Server status</string>
-    <string name="menu_more_apps">More Apps from us</string>
-    <string name="menu_pocketchange">Pocket Change Balance</string>
 
     <!-- REPORT CHEAT -->
-    <string name="report_cheat_title">Report Cheat</string>
-    <string name="thanks_for_reporting">Thank you for your report. If we get enough (individual) reports we will consider removing this cheat from the database.</string>
+    <string name="menu_server_status">Server status</string>
+    <string name="menu_more_apps">More Apps from us</string>
 
     <!-- RATE CHEAT -->
+    <string name="menu_pocketchange">Pocket Change Balance</string>
+    <string name="report_cheat_title">Report Cheat</string>
+    <string name="thanks_for_reporting">Thank you for your report. If we get enough (individual) reports we will consider removing this cheat from the database.</string>
     <string name="rate_cheat_plain">Rate</string>
     <string name="rate_cheat">Rate Cheat</string>
     <string name="rate_cheat_here">Rate this cheat here</string>
     <string name="rating_your">Your cheat rating:</string>
+
+    <!-- REGISTER MEMBER -->
     <string name="rating_inserted">Thank you! Your rating has been registered.</string>
     <string name="rating_updated">Thank you! Your rating has been updated.</string>
     <string name="rating_processing">Your rating is being processed&#8230;</string>
-
-    <!-- REGISTER MEMBER -->
     <string name="register_title">Register here</string>
     <string name="username">Username</string>
     <string name="password">Password</string>
@@ -81,11 +93,11 @@
     <string name="register_thanks">Registration successful. Thank you!</string>
     <string name="register">Register</string>
     <string name="register_account">Register New Account</string>
+
+    <!-- LOGIN MEMBER -->
     <string name="register_instead">Register instead</string>
     <string name="register_login">Login / Register</string>
     <string name="login">Login</string>
-
-    <!-- LOGIN MEMBER -->
     <string name="login_title">Login here</string>
     <string name="login_instead">Login instead</string>
     <string name="username_email">Username or E-Mail</string>
@@ -95,11 +107,11 @@
     <string name="logout">Logout</string>
     <string name="logout_ok">Logout successful.</string>
     <string name="login_forgot">Forgot login data</string>
+
+    <!-- ERROR MESSAGES -->
     <string name="login_forgot_password">Forgot password?</string>
     <string name="login_send_password">Send login data by email</string>
     <string name="login_sent_ok">Login data has been sent to you via email</string>
-
-    <!-- ERROR MESSAGES -->
     <string name="err">Error</string>
     <string name="err_username_length">Username must be at least 6 characters long.</string>
     <string name="err_username_used">This username is already being used.</string>
@@ -110,11 +122,11 @@
     <string name="err_email_user_not_found">No user found with this email address.</string>
     <string name="err_data_not_accessible">Requested data could not be retrieved. Please try again a bit later.</string>
     <string name="err_sd_not_accessible">SD card not accessible at the moment.</string>
+
+    <!-- FAVORITES -->
     <string name="err_saving_to_sd">Saving to SD card failed.</string>
     <string name="err_no_member_data">Error: No member data could be found.</string>
     <string name="err_somethings_wrong">Something just went wrong. Please try again.</string>
-
-    <!-- FAVORITES -->
     <string name="my_favorites">Your favorites</string>
     <string name="add_favorite">Add to your favorites</string>
     <string name="add_favorite_ok">Cheat successfully added to your favorites.</string>
@@ -131,11 +143,11 @@
     <string name="favorites_welcome_text">This is the area where your favorites cheatList will be displayed. If you want to add a cheat to your favorites just press the &#8220;Menu&#8221; button on a cheat view and chose &#8220;Add to your favorites&#8221; in the Menu. If you wish to remove a cheat from your favorites you can do so my selecting &#8220;Remove from your favorites&#8221; in the game menu.</string>
     <string name="add_favorites_ok">Cheats successfully added to your favorites.</string>
     <string name="add_favorites_error">Some or all cheatList are already in your favorites. The new ones have been added.</string>
+
+    <!-- FORUM -->
     <string name="add_one_favorite">Add cheat to favorites</string>
     <string name="add_all_favorites">Add all cheatList to favorites</string>
     <string name="favorite_adding">Adding favorites&#8230;&#8230;&#8230;</string>
-
-    <!-- FORUM -->
     <string name="forum" translatable="false">Forum</string>
     <string name="forum_goto">Go to forum</string>
     <string name="forum_goto_online">Go to forum (online)</string>
@@ -144,11 +156,11 @@
     <string name="forum_submit_ok">Submission successful.</string>
     <string name="forum_yet_empty">The forum for this cheat is yet empty. Be the first to write something. Tip: Favorite this cheat so you can come back to the forum easier.</string>
     <string name="forum_hint">Your message</string>
+
+    <!-- SUBMIT CHEAT -->
     <string name="forum_amount_posts">Forum (%1$d %2$s)</string>
     <string name="forum_single_post">post</string>
     <string name="forum_many_posts">posts</string>
-
-    <!-- SUBMIT CHEAT -->
     <string name="submit_cheat_short">Submit a Cheat</string>
     <string name="submit_cheat_long">Submit a Cheat for this Game</string>
     <string name="submit_cheat_your_title">Title of the Cheat</string>
@@ -165,38 +177,38 @@
     <string name="submit_cheat_consent_title">Terms &amp; Conditions</string>
     <string name="submit_cheat_consent_text">I hereby agree that my submitted cheat may be proofread and grammatically in order to meet our minimum quality requirement.\n\nBy submitting this cheat you will grant Cheat-Database the right to publish and use your submitted content via App and Website. The author will not gain any financial claims from Cheat-Database.\n\nAll your submitted cheatList will be saved to your Cheat-Database member account. Once a cheat has been approved by us you will be notified by email.\n\nIf you want to make any changes to your cheatList you can login with your login information on www.cheat-database.com via your computer. There you can add screenshots, edit the text or delete your cheatList.</string>
     <string name="submit_cheat_title">Cheat Submission</string>
+
+    <!-- CRASHREPORT -->
     <string name="submit_cheat_agree_terms_conditions">Agree with Terms &amp; Conditions</string>
     <string name="guidelines">Guidelines</string>
     <string name="submit_cheat_error_accept_conditions">Please accept the Terms &amp; Conditions by clicking the check box above the submit button.</string>
-
-    <!-- CRASHREPORT -->
     <string name="crashreport_submit">Submit crash report</string>
     <string name="crashreport_your_device">Your device model</string>
     <string name="crashreport_when_crashed">When did the application crash?</string>
     <string name="crashreport_missing_devicemodel">Please enter the model of your phone.</string>
+    <!-- FULL-TEXT SEARCH -->
     <string name="crashreport_missing_email">Please enter your email address so we can contact you if we need further information about the crash.</string>
     <string name="crashreport_missing_crashreport">Please provide us with a detailed description of where you clicked just before the app crashed.</string>
     <string name="crashreport_thanks">Thank you for your crash report! If we need any further information about the crash we may contact you by email.</string>
-    <!-- FULL-TEXT SEARCH -->
     <string name="fulltext_search_title">Full-text search</string>
     <string name="fulltext_search_titles_also">Search in cheat titles also</string>
     <string name="fulltext_search_systems">Choose systems</string>
     <string name="fulltext_search_listed_cheats">Search through listed cheatList</string>
     <string name="fulltext_search_all_cheats">Search through all cheatList</string>
     <string name="fulltext_search_results">Full-text search results</string>
-    <string name="fulltext_search_cheats">Search cheatList</string>
-    <string name="fulltext_search_keywords">Keywords</string>
-    <string name="fulltext_search_error_nosystem_selected">Please pick at least one system</string>
 
     <!-- CONTEXT MENU -->
-    <string name="context_menu_title">Context Menu</string>
-    <string name="context_menu_copied">Cheat copied to clipboard.</string>
+    <string name="fulltext_search_cheats">Search cheatList</string>
+    <string name="fulltext_search_keywords">Keywords</string>
 
     <!-- NOTIFICATIONS -->
-    <string name="notify_rotate_device">Rotate your device if the cheat is not being displayed properly.</string>
-    <string name="fullscreen_mode_exit">Double tap to exit full screen mode</string>
+    <string name="fulltext_search_error_nosystem_selected">Please pick at least one system</string>
+    <string name="context_menu_title">Context Menu</string>
 
     <!-- CHEAT META -->
+    <string name="context_menu_copied">Cheat copied to clipboard.</string>
+    <string name="notify_rotate_device">Rotate your device if the cheat is not being displayed properly.</string>
+    <string name="fullscreen_mode_exit">Double tap to exit full screen mode</string>
     <string name="meta_info">Meta Info</string>
     <string name="meta_unknown">Unknown</string>
     <string name="meta_submission_date">Date of submission</string>
@@ -208,28 +220,28 @@
     <string name="meta_rating_average">Average cheat rating by members</string>
     <string name="meta_return">Return to cheat</string>
     <string name="meta_average_rating1">%1$s out of 10</string>
+
+    <!-- TOP MEMBERS -->
     <string name="meta_average_rating2">based on %s votes</string>
     <string name="meta_member_homepage">website</string>
     <string name="meta_info_retrieved">Cheat meta info retrieved. Swipe left to view.</string>
-
-    <!-- TOP MEMBERS -->
     <string name="top_members_title">Members Top 20</string>
     <string name="top_members_top_helping">Top Helping Members</string>
+
+    <!-- SHARE CHEAT -->
     <string name="top_members_visit_website">Visit %1$s\'s website</string>
     <string name="top_members_no_website">Member %s has no website</string>
     <string name="top_members_cheats_count">Number of cheatList</string>
-
-    <!-- SHARE CHEAT -->
     <string name="share_title">Share cheat</string>
     <string name="share_error_no_client">There are no email clients installed.</string>
-    <string name="share_email_subject">I just found this cheat for %s</string>
-    <string name="share_email_body">I just found this cheat on Cheat-Database for Android. Click the link below to check it out:</string>
-    <string name="share_download_cheatdatabase">Download Cheat-Database for Android here:</string>
 
     <!-- NEW STRINGS -->
-    <string name="slide_gallery">Slide left/right for more images</string>
+    <string name="share_email_subject">I just found this cheat for %s</string>
 
     <!-- FACEBOOK STUFF -->
+    <string name="share_email_body">I just found this cheat on Cheat-Database for Android. Click the link below to check it out:</string>
+    <string name="share_download_cheatdatabase">Download Cheat-Database for Android here:</string>
+    <string name="slide_gallery">Slide left/right for more images</string>
     <string name="success">Success</string>
     <string name="successfully_posted_post">Cheat has successfully been posted.</string>
     <string name="error">Error</string>
@@ -248,11 +260,11 @@
     <string name="hello_world">Hello world!</string>
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
+
+    <!-- NEW VALUES FROM VERSION 2.0 -->
     <string name="action_websearch">Web search</string>
     <string name="list_games">Jump to System</string>
     <string name="cheats_count">Number of cheatList:</string>
-
-    <!-- NEW VALUES FROM VERSION 2.0 -->
     <string name="title_cheat_list">Cheats</string>
     <string name="title_cheat_detail">Cheat Detail</string>
     <string name="title_cheat_details">Cheat Details</string>
@@ -286,12 +298,13 @@
     <string name="recover_login_success">Login data successfully recovered. Check your email.</string>
     <string name="err_username_too_short">The entered username is too short.</string>
     <string name="rate_why_title">Rate Cheat-Database now!</string>
+
+    <!-- GENERAL INFORMATION -->
     <string name="rate_us">Rate Cheat-Database</string>
     <string name="rate_why_text">We would be thrilled to get a 5-stars from you. If you give a good rating this means more user downloading Cheat-Database. More users means more cheat submissions. More cheat submissions means more cheatList for YOU!</string>
     <string name="system_overview">System Overview</string>
-
-    <!-- GENERAL INFORMATION -->
     <string name="facebook_app_id" translatable="false">148040821872637</string>
+
     <string name="facebook_app_secret" translatable="false">5491bc37cc41561439d96c514d201bcb</string>
     <string name="title_favorite_list">Favorites</string>
     <string name="title_favorite_detail">Favorite Detail</string>
@@ -301,20 +314,11 @@
     <string name="undo">Undo</string>
 
     <string name="remove_favorite_neutral_ok">Favorite deleted.</string>
+
     <string name="remove_favorite_areyousure">Remove this cheat from favorites?</string>
     <string name="confirm">Confirm</string>
 
-    <plurals name="set_cheats">
-        <item quantity="one">Cheat</item>
-        <item quantity="other">Cheats</item>
-    </plurals>
-
-    <plurals name="set_games">
-        <item quantity="one">Game</item>
-        <item quantity="other">Games</item>
-    </plurals>
     <string name="title_activity_second">SecondActivity</string>
-
     <string name="rate_us_title">Rate us</string>
     <string name="rate_us_text">Do you like Cheat-Database? Please let us know!</string>
     <string name="rate_us_submit">Submit rating</string>
@@ -322,20 +326,16 @@
     <string name="bad_rating_ouch">Ouch!</string>
     <string name="bad_rating_text">That didn\'t go as expected.\n\nWould you mind telling us why you rated Cheat-Database with %1$d stars? We would love to hear your thoughts so we can improve the app accordingly.</string>
     <string name="submit_feedback">Submit feedback</string>
-    <string name="no_thanks">No thanks</string>
 
+    <string name="no_thanks">No thanks</string>
     <string name="pref_enable_achievements_key">enable_achievements</string>
     <string name="pref_enable_achievements">Achievements &amp; Trophies</string>
     <string name="pref_enable_achievements_summary">Filter Achievement &amp; Trophy cheatList from the list.</string>
     <string name="enabled">Enabled</string>
     <string name="disabled">Disabled</string>
     <string name="new_feature">New feature</string>
-    <string name="disable_achievements_text">We know that many of you don\'t like the <b>Achievements and Trophies</b> tips. That\'s why we\'ve added the option to filter them out. Just click on <b>Settings</b> in the <b>drawer menu</b> where you will find an option to disable or enable them. <b>By default Achievements and Trophies are shown</b>. If you don\'t want them to see quickly head to the settings to disable them.\n\nIf there is any feature missing please use the feedback form to send us a feature request.</string>
 
-    <plurals name="entries">
-        <item quantity="one">Entry</item>
-        <item quantity="other">Entries</item>
-    </plurals>
+    <string name="disable_achievements_text">We know that many of you don\'t like the <b>Achievements and Trophies</b> tips. That\'s why we\'ve added the option to filter them out. Just click on <b>Settings</b> in the <b>drawer menu</b> where you will find an option to disable or enable them. <b>By default Achievements and Trophies are shown</b>. If you don\'t want them to see quickly head to the settings to disable them.\n\nIf there is any feature missing please use the feedback form to send us a feature request.</string>
 
     <string name="privacy_policy">Privacy Policy</string>
 </resources>

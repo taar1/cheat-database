@@ -1,5 +1,6 @@
 package com.cheatdatabase.adapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,10 +14,13 @@ import com.cheatdatabase.R;
 import com.cheatdatabase.businessobjects.Game;
 import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.holders.BlankWhiteListViewItemHolder;
+import com.cheatdatabase.holders.FacebookNativeAdListViewItemHolder;
 import com.cheatdatabase.holders.GamesBySystemListViewItemHolder;
+import com.cheatdatabase.holders.InMobiNativeAdListViewItemHolder;
 import com.cheatdatabase.listeners.OnGameListItemSelectedListener;
-import com.cheatdatabase.listitems.BlankListItem;
+import com.cheatdatabase.listitems.FacebookNativeAdListItem;
 import com.cheatdatabase.listitems.GameListItem;
+import com.cheatdatabase.listitems.InMobiNativeAdsListItem;
 import com.cheatdatabase.listitems.ListItem;
 import com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView;
 
@@ -38,7 +42,7 @@ public class GamesBySystemRecycleListViewAdapter extends RecyclerView.Adapter<Re
     private Context context;
     private final OnGameListItemSelectedListener listener;
 
-    public GamesBySystemRecycleListViewAdapter(Context context, OnGameListItemSelectedListener listener) {
+    public GamesBySystemRecycleListViewAdapter(Activity context, OnGameListItemSelectedListener listener) {
         Log.d(TAG, "XXXXX ADAPTER GamesBySystemRecycleListViewAdapter()");
         this.context = context;
         this.listener = listener;
@@ -53,8 +57,6 @@ public class GamesBySystemRecycleListViewAdapter extends RecyclerView.Adapter<Re
     }
 
     public void setGameList(List<Game> gameList) {
-        Log.d(TAG, "XXXXX ADAPTER setGameList: " + gameList.size());
-
         this.gameList = gameList;
     }
 
@@ -85,7 +87,7 @@ public class GamesBySystemRecycleListViewAdapter extends RecyclerView.Adapter<Re
 
     @Override
     public int getItemViewType(int position) {
-        Log.d(TAG, "XXXXX ADAPTER getItemViewType(): " + listItems.get(position).getType());
+//        Log.d(TAG, "XXXXX ADAPTER getItemViewType(): " + listItems.get(position).getType());
         return listItems.get(position).getType();
     }
 
@@ -95,15 +97,11 @@ public class GamesBySystemRecycleListViewAdapter extends RecyclerView.Adapter<Re
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(final ViewGroup parent, int viewType) {
-        Log.d(TAG, "XXXXX ADAPTER onCreateViewHolder()");
 
         if (viewType == ListItem.TYPE_GAME) {
-            Log.d(TAG, "XXXXX ADAPTER onCreateViewHolder() GAME");
-
             final View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.listrow_gamebysystem_item, parent, false);
             itemView.setDrawingCacheEnabled(true);
 
-            Log.d(TAG, "XXXXX ADAPTER onCreateViewHolder() RETURNS GAME");
             return new GamesBySystemListViewItemHolder(itemView, context);
 
 //            return new ViewHolder(v, caller -> {
@@ -116,25 +114,39 @@ public class GamesBySystemRecycleListViewAdapter extends RecyclerView.Adapter<Re
 //            });
         } else if (viewType == ListItem.TYPE_BLANK) {
             return new BlankWhiteListViewItemHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.listrow_blankwhite_item, parent, false));
+        } else if (viewType == ListItem.TYPE_FACEBOOK_NATIVE_AD) {
+            return new FacebookNativeAdListViewItemHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.listrow_facebook_native_ad_recyclerview_item, parent, false), context);
         }
 
-        Log.d(TAG, "XXXXX ADAPTER onCreateViewHolder() RETURNS NULL");
         return null;
     }
+
+//    private void createStrands() {
+//        for (int position : mAdPositions) {
+//            final InMobiNative nativeStrand = new InMobiNative(context, Konstanten.INMOBI_RECYCLERVIEW_LIST_ITEM_PLACEMENT_ID, new StrandAdListener(position));
+//
+//            mStrands.add(nativeStrand);
+//        }
+//    }
+
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         int type = getItemViewType(position);
-        Log.d(TAG, "XXXXX ADAPTER onBindViewHolder() TYPE: " + type);
+//        Log.d(TAG, "XXXXX ADAPTER onBindViewHolder() TYPE: " + type);
 
         if (type == ListItem.TYPE_GAME) {
             final GameListItem gameListItem = (GameListItem) listItems.get(position);
             GamesBySystemListViewItemHolder gamesBySystemListViewItemHolder = (GamesBySystemListViewItemHolder) holder;
             gamesBySystemListViewItemHolder.setGame(gameListItem.getGame());
             gamesBySystemListViewItemHolder.view.setOnClickListener(v -> listener.onGameListItemSelected(gameListItem.getGame()));
-
         } else if (type == ListItem.TYPE_FACEBOOK_NATIVE_AD) {
             // TODO
+            final FacebookNativeAdListItem facebookNativeAdListItem = (FacebookNativeAdListItem) listItems.get(position);
+            FacebookNativeAdListViewItemHolder facebookNativeAdListViewItemHolder = (FacebookNativeAdListViewItemHolder) holder;
+        } else if (type == ListItem.TYPE_INMOBI_NATIVE_AD) {
+            final InMobiNativeAdsListItem inMobiNativeAdsListItem = (InMobiNativeAdsListItem) listItems.get(position);
+            InMobiNativeAdListViewItemHolder inMobiNativeAdListViewItemHolder = (InMobiNativeAdListViewItemHolder) holder;
         } else if (type == ListItem.TYPE_BLANK) {
             // TODO
             BlankWhiteListViewItemHolder blankWhiteListViewItemHolder = (BlankWhiteListViewItemHolder) holder;
@@ -184,9 +196,8 @@ public class GamesBySystemRecycleListViewAdapter extends RecyclerView.Adapter<Re
         return 100;
     }
 
+    // Filter List by search qord (not implemented yet)
     public void filterList(String filter) {
-        Log.d(TAG, "XXXXX ADAPTER filterList()");
-
         if ((filter != null) && (filter.trim().length() > 2)) {
             // TODO filter the list and update gameList with filtered List
         }
@@ -195,15 +206,10 @@ public class GamesBySystemRecycleListViewAdapter extends RecyclerView.Adapter<Re
     }
 
     private void updateGameListAndInjectAds() {
-        Log.d(TAG, "XXXXX ADAPTER updateGameListAndInjectAds()");
-
         int j = 0;
         final List<ListItem> newListItems = new ArrayList<>();
 
-        Log.d(TAG, "XXXXX updateGameListAndInjectAds gameList: " + gameList.size());
         for (Game game : gameList) {
-
-            Log.d(TAG, "XXXXX ADD GAME TO LIST: " + game.getGameName());
             GameListItem gameListItem = new GameListItem();
             gameListItem.setGame(game);
             newListItems.add(gameListItem);
@@ -214,7 +220,8 @@ public class GamesBySystemRecycleListViewAdapter extends RecyclerView.Adapter<Re
 
             if (j % Konstanten.INJECT_AD_AFTER_EVERY_POSITION == Konstanten.INJECT_AD_AFTER_EVERY_POSITION - 1) {
                 // TODO replace BlankListItem with AdView...
-                newListItems.add(new BlankListItem());
+                newListItems.add(new FacebookNativeAdListItem());
+//                newListItems.add(new BlankListItem());
             }
             j++;
         }

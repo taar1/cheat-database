@@ -77,6 +77,7 @@ public class Konstanten {
     public final static String AMAZON_RELEASE_ID = "amzn1.devportal.apprelease.a4e1dfeddc7143f581aaea7999f9f1b7";
     public final static String OGURY_API_KEY = "264890";
     public final static String FACEBOOK_AUDIENCE_NETWORK_NATIVE_BANNER_ID = "148040821872637_2083092671700766";
+    public final static String FACEBOOK_AUDIENCE_NETWORK_NATIVE_AD_IN_RECYCLER_VIEW = "148040821872637_2645622672114427";
 
     //public final static String INMOBI_APP_ID = "4028cba631d63df10132325b781205a2";
     public final static String INMOBI_CHEATDATABASE_APP_ID = "1489144176729570";

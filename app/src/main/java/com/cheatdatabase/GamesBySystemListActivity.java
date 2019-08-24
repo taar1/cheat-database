@@ -124,7 +124,6 @@ public class GamesBySystemListActivity extends AppCompatActivity implements OnGa
 
         facebookAdView = new AdView(this, Konstanten.FACEBOOK_AUDIENCE_NETWORK_NATIVE_BANNER_ID, AdSize.BANNER_HEIGHT_50);
         bannerContainerFacebook.addView(facebookAdView);
-        bannerContainerFacebook.setBackgroundColor(Color.RED);
         facebookAdView.loadAd();
 
         if (mToolbar != null) {
@@ -280,8 +279,6 @@ public class GamesBySystemListActivity extends AppCompatActivity implements OnGa
             });
 
         }
-
-
     }
 
     private void updateUI() {
