@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -27,7 +26,6 @@ import com.cheatdatabase.businessobjects.Game;
 import com.cheatdatabase.businessobjects.Member;
 import com.cheatdatabase.businessobjects.SystemPlatform;
 import com.cheatdatabase.callbacks.RepositoryEntityListCallback;
-import com.cheatdatabase.events.GameListRecyclerViewClickEvent;
 import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.helpers.Tools;
@@ -40,7 +38,6 @@ import com.google.gson.Gson;
 import com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView;
 
 import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -79,7 +76,6 @@ public class GamesBySystemListActivity extends AppCompatActivity implements OnGa
     @Override
     protected void onStart() {
         super.onStart();
-        EventBus.getDefault().register(this);
 
         if (Reachability.reachability.isReachable) {
             loadGames(false);
@@ -329,17 +325,6 @@ public class GamesBySystemListActivity extends AppCompatActivity implements OnGa
         super.onDestroy();
     }
 
-    @Subscribe
-    public void onEvent(GameListRecyclerViewClickEvent result) {
-        if (result.isSucceeded()) {
-            Intent intent = new Intent(this, CheatsByGameListActivity.class);
-            intent.putExtra("gameObj", result.getGame());
-            startActivity(intent);
-        } else {
-            Toast.makeText(this, R.string.no_internet, Toast.LENGTH_SHORT).show();
-        }
-    }
-
 //    @Override
 //    protected void onSaveInstanceState(Bundle outState) {
 //        super.onSaveInstanceState(outState);
@@ -375,23 +360,14 @@ public class GamesBySystemListActivity extends AppCompatActivity implements OnGa
 
     @Override
     public void onGameListItemSelected(Game game) {
-        Log.d(TAG, "XXXXX XXXXX onGameListItemSelected");
-
-        // TODO hier noch den click abfangen und zur gamelist activity gehen
-        // TODO hier noch den click abfangen und zur gamelist activity gehen
-        // TODO hier noch den click abfangen und zur gamelist activity gehen
-        // TODO hier noch den click abfangen und zur gamelist activity gehen
-        // TODO hier noch den click abfangen und zur gamelist activity gehen
-        // TODO hier noch den click abfangen und zur gamelist activity gehen
-        // TODO hier noch den click abfangen und zur gamelist activity gehen
+        Log.d(TAG, "XXXXX onGameListItemSelected");
 
         if (Reachability.reachability.isReachable) {
-
+            Intent intent = new Intent(this, CheatsByGameListActivity.class);
+            intent.putExtra("gameObj", game);
+            startActivity(intent);
+        } else {
+            Toast.makeText(this, R.string.no_internet, Toast.LENGTH_SHORT).show();
         }
-
-        // TODO
-//        Intent intent = new Intent(this, TheatreDetailActivity.class);
-//        intent.putExtra("theatre", theatre);
-//        startActivity(intent);
     }
 }
