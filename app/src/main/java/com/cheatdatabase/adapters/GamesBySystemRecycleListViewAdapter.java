@@ -16,11 +16,9 @@ import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.holders.BlankWhiteListViewItemHolder;
 import com.cheatdatabase.holders.FacebookNativeAdListViewItemHolder;
 import com.cheatdatabase.holders.GamesBySystemListViewItemHolder;
-import com.cheatdatabase.holders.InMobiNativeAdListViewItemHolder;
 import com.cheatdatabase.listeners.OnGameListItemSelectedListener;
 import com.cheatdatabase.listitems.FacebookNativeAdListItem;
 import com.cheatdatabase.listitems.GameListItem;
-import com.cheatdatabase.listitems.InMobiNativeAdsListItem;
 import com.cheatdatabase.listitems.ListItem;
 import com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView;
 
@@ -144,10 +142,12 @@ public class GamesBySystemRecycleListViewAdapter extends RecyclerView.Adapter<Re
             // TODO
             final FacebookNativeAdListItem facebookNativeAdListItem = (FacebookNativeAdListItem) listItems.get(position);
             FacebookNativeAdListViewItemHolder facebookNativeAdListViewItemHolder = (FacebookNativeAdListViewItemHolder) holder;
-        } else if (type == ListItem.TYPE_INMOBI_NATIVE_AD) {
-            final InMobiNativeAdsListItem inMobiNativeAdsListItem = (InMobiNativeAdsListItem) listItems.get(position);
-            InMobiNativeAdListViewItemHolder inMobiNativeAdListViewItemHolder = (InMobiNativeAdListViewItemHolder) holder;
-        } else if (type == ListItem.TYPE_BLANK) {
+        }
+//        else if (type == ListItem.TYPE_INMOBI_NATIVE_AD) {
+//            final InMobiNativeAdsListItem inMobiNativeAdsListItem = (InMobiNativeAdsListItem) listItems.get(position);
+//            InMobiNativeAdListViewItemHolder inMobiNativeAdListViewItemHolder = (InMobiNativeAdListViewItemHolder) holder;
+//        }
+        else if (type == ListItem.TYPE_BLANK) {
             // TODO
             BlankWhiteListViewItemHolder blankWhiteListViewItemHolder = (BlankWhiteListViewItemHolder) holder;
         }
