@@ -20,6 +20,7 @@ import com.cheatdatabase.listeners.OnGameListItemSelectedListener;
 import com.cheatdatabase.listitems.FacebookNativeAdListItem;
 import com.cheatdatabase.listitems.GameListItem;
 import com.cheatdatabase.listitems.ListItem;
+import com.facebook.ads.NativeAdsManager;
 import com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView;
 
 import java.util.ArrayList;
@@ -39,6 +40,12 @@ public class GamesBySystemRecycleListViewAdapter extends RecyclerView.Adapter<Re
     private Game gameObj;
     private Context context;
     private final OnGameListItemSelectedListener listener;
+
+    // TODO FIXME hier den adsmanager einbauen wie hier: https://github.com/fbsamples/audience-network/blob/master/samples/android/AdUnitsSample/AdUnitsSample/src/main/java/com/facebook/samples/AdUnitsSample/adapters/NativeAdRecyclerAdapter.java
+    // TODO FIXME hier den adsmanager einbauen wie hier: https://github.com/fbsamples/audience-network/blob/master/samples/android/AdUnitsSample/AdUnitsSample/src/main/java/com/facebook/samples/AdUnitsSample/adapters/NativeAdRecyclerAdapter.java
+    // TODO FIXME hier den adsmanager einbauen wie hier: https://github.com/fbsamples/audience-network/blob/master/samples/android/AdUnitsSample/AdUnitsSample/src/main/java/com/facebook/samples/AdUnitsSample/adapters/NativeAdRecyclerAdapter.java
+    // TODO FIXME hier den adsmanager einbauen wie hier: https://github.com/fbsamples/audience-network/blob/master/samples/android/AdUnitsSample/AdUnitsSample/src/main/java/com/facebook/samples/AdUnitsSample/adapters/NativeAdRecyclerAdapter.java
+    private NativeAdsManager mNativeAdsManager;
 
     public GamesBySystemRecycleListViewAdapter(Activity context, OnGameListItemSelectedListener listener) {
         Log.d(TAG, "XXXXX ADAPTER GamesBySystemRecycleListViewAdapter()");

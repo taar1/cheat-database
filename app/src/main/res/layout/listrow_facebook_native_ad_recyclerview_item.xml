@@ -6,6 +6,13 @@
     android:orientation="vertical"
     android:padding="@dimen/outer_padding_listview_item">
 
+    <com.facebook.ads.MediaView
+        android:id="@+id/native_ad_media"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/red"
+        android:gravity="center" />
+
     <com.facebook.ads.NativeAdLayout
         android:id="@+id/native_ad_container"
         android:layout_width="250dp"

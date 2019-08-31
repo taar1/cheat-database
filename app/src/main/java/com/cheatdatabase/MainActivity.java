@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -55,8 +54,6 @@ import com.inmobi.sdk.InMobiSdk;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.Random;
 
@@ -149,7 +146,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Random r = new Random();
         int randomNumber = r.nextInt((1 - 0) + 1) + 0;
 
-        if( randomNumber == 0 ) {
+        if (randomNumber == 0) {
             Log.d(TAG, "Banner: Using InMobi Version: " + InMobiSdk.getVersion());
 
             inMobiBanner.setEnableAutoRefresh(true);

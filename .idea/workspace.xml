@@ -6,7 +6,8 @@
     </shared>
   </component>
   <component name="AndroidLogFilters">
-    <option name="TOOL_WINDOW_LOG_LEVEL" value="error" />
+    <option name="TOOL_WINDOW_CUSTOM_FILTER" value="YYYYY" />
+    <option name="TOOL_WINDOW_LOG_LEVEL" value="verbose" />
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="No Filters" />
     <option name="TOOL_WINDOW_REGEXP_FILTER" value="false" />
   </component>
@@ -112,10 +113,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4caff62e-c62f-40ca-acf0-73c680b13375" name="Default" comment="Facebook Audience Network Native Ads Implementation">
+      <change beforePath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/GamesBySystemListActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/GamesBySystemListActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/events/GameListRecyclerViewClickEvent.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/listitems/FacebookNativeAdListItem.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/listitems/FacebookNativeAdListItem.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/app.iml" beforeDir="false" afterPath="$PROJECT_DIR$/app/app.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/MainActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/adapters/GamesBySystemRecycleListViewAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/adapters/GamesBySystemRecycleListViewAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/holders/FacebookNativeAdListViewItemHolder.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/holders/FacebookNativeAdListViewItemHolder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/listrow_facebook_native_ad_recyclerview_item.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/listrow_facebook_native_ad_recyclerview_item.xml" afterDir="false" />
     </list>
     <ignored path="Cheat-Database.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -195,33 +200,21 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="600">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/AppPreferencesActivity.java">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/GamesBySystemListActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="204">
-              <caret line="21" column="13" selection-start-line="21" selection-start-column="13" selection-end-line="21" selection-end-column="13" />
+            <state relative-caret-position="870">
+              <caret line="103" column="54" selection-start-line="103" selection-start-column="54" selection-end-line="103" selection-end-column="54" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/GamesBySystemListActivity.java">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/adapters/GamesBySystemRecycleListViewAdapter.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="200">
-              <caret line="78" selection-start-line="78" selection-end-line="78" />
+            <state relative-caret-position="409">
+              <caret line="49" column="58" selection-start-line="49" selection-start-column="58" selection-end-line="49" selection-end-column="58" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#3049#3069#0" expanded="true" />
-                <element signature="e#3448#3477#0" expanded="true" />
-                <element signature="e#11229#11230#0" expanded="true" />
-                <element signature="e#11276#11277#0" expanded="true" />
-                <element signature="e#11950#11973#0" expanded="true" />
-                <element signature="e#11986#12018#0" expanded="true" />
-                <element signature="e#12037#12048#0" expanded="true" />
-                <element signature="e#12193#12194#0" expanded="true" />
-                <element signature="e#12241#12242#0" expanded="true" />
-                <element signature="e#14258#14275#0" expanded="true" />
-                <element signature="e#14421#14445#0" expanded="true" />
-                <element signature="e#15504#15524#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -230,8 +223,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/holders/FacebookNativeAdListViewItemHolder.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="449">
-              <caret line="64" column="39" selection-start-line="64" selection-start-column="34" selection-end-line="64" selection-end-column="39" />
+            <state relative-caret-position="145">
+              <caret line="53" column="104" selection-start-line="53" selection-start-column="41" selection-end-line="53" selection-end-column="104" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -243,17 +236,18 @@
         <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/listrow_facebook_native_ad_recyclerview_item.xml">
           <provider editor-type-id="android-designer2" />
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="272">
-              <caret line="16" column="15" selection-start-line="16" selection-start-column="15" selection-end-line="16" selection-end-column="15" />
+            <state relative-caret-position="315">
+              <caret line="21" column="41" selection-start-line="21" selection-start-column="41" selection-end-line="21" selection-end-column="41" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/build.gradle">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/native_ad_layout_1.xml">
+          <provider editor-type-id="android-designer2" />
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="137">
-              <caret line="129" column="4" selection-start-line="129" selection-start-column="4" selection-end-line="129" selection-end-column="68" />
+            <state relative-caret-position="585">
+              <caret line="39" column="33" selection-start-line="39" selection-start-column="33" selection-end-line="39" selection-end-column="33" />
             </state>
           </provider>
         </entry>
@@ -267,17 +261,12 @@
         <option value="layoutResourceFile_vertical" />
         <option value="Interface" />
         <option value="Class" />
+        <option value="valueResourceFile" />
       </list>
     </option>
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>layout</find>
-      <find>topmember</find>
-      <find>000</find>
-      <find>000000</find>
-      <find>gamesBySystemListViewItemHolder</find>
-      <find>tem.TYPE_GAME</find>
       <find>listItems</find>
       <find>TYPE_FACEBOOK_NATIVE_AD</find>
       <find>getSectionName</find>
@@ -302,6 +291,12 @@
       <find>face</find>
       <find>onGameListItemSelected</find>
       <find>GameListRecyclerViewClickEvent</find>
+      <find>audi</find>
+      <find>MediaView</find>
+      <find>nativeAdLayout</find>
+      <find>ad_choices_container</find>
+      <find>148040821872637_2645622672114427</find>
+      <find>native_ad_container</find>
     </findStrings>
     <replaceStrings>
       <replace>//CheatDatabaseApplication.tracker()</replace>
@@ -357,8 +352,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/members/cheatview/MemberCheatViewPageIndicator.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/handset/cheatview/CheatViewPageIndicatorActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/CheatForumActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/LoginActivity.java" />
         <option value="$PROJECT_DIR$/app/proguard-rules.pro" />
@@ -367,7 +360,6 @@
         <option value="$PROJECT_DIR$/app/src/main/res/layout/adview_inmobi_banner_layout.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/adview_banner_container.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/adview_mixed_banner_container.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/MainActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/CheatsByGameListActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/include_fastscroll_recyclerview.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_game_list.xml" />
@@ -402,20 +394,23 @@
         <option value="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/ads/InMobiNativeAdsListener.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/listitems/FacebookAdListItem.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/helpers/Konstanten.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/adapters/GamesBySystemRecycleListViewAdapter.java" />
-        <option value="$PROJECT_DIR$/app/build.gradle" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/holders/FacebookNativeAdListViewItemHolder.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/listrow_facebook_native_ad_recyclerview_item.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/listitems/FacebookNativeAdListItem.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/GamesBySystemListActivity.java" />
+        <option value="$PROJECT_DIR$/app/build.gradle" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/listrow_facebook_native_ad_recyclerview_item.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/values/native_ad_layout_1.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout-v17/native_ad_layout_1.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/MainActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/holders/FacebookNativeAdListViewItemHolder.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/adapters/GamesBySystemRecycleListViewAdapter.java" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="263" />
-    <option name="y" value="32" />
-    <option name="width" value="1962" />
-    <option name="height" value="1320" />
+  <component name="ProjectFrameBounds">
+    <option name="x" value="103" />
+    <option name="y" value="113" />
+    <option name="width" value="2213" />
+    <option name="height" value="1226" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="1" id="Add" />
@@ -427,6 +422,17 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="cheat-database" type="b2602c69:ProjectViewProjectNode" />
+              <item name="cheat-database" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
       <pane id="PackagesPane">
         <subPane>
           <expand>
@@ -518,11 +524,6 @@
             <path>
               <item name="cheat-database" type="1abcf292:AndroidViewProjectNode" />
               <item name="app" type="feadf853:AndroidModuleNode" />
-              <item name="manifests" type="f94875db:AndroidManifestsGroupNode" />
-            </path>
-            <path>
-              <item name="cheat-database" type="1abcf292:AndroidViewProjectNode" />
-              <item name="app" type="feadf853:AndroidModuleNode" />
               <item name="java" type="edd41e36:AndroidSourceTypeNode" />
             </path>
             <path>
@@ -543,13 +544,6 @@
               <item name="app" type="feadf853:AndroidModuleNode" />
               <item name="java" type="edd41e36:AndroidSourceTypeNode" />
               <item name="cheatdatabase" type="cbb59c9e:AndroidPsiDirectoryNode" />
-              <item name="events" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="cheat-database" type="1abcf292:AndroidViewProjectNode" />
-              <item name="app" type="feadf853:AndroidModuleNode" />
-              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
-              <item name="cheatdatabase" type="cbb59c9e:AndroidPsiDirectoryNode" />
               <item name="helpers" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -558,13 +552,6 @@
               <item name="java" type="edd41e36:AndroidSourceTypeNode" />
               <item name="cheatdatabase" type="cbb59c9e:AndroidPsiDirectoryNode" />
               <item name="holders" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="cheat-database" type="1abcf292:AndroidViewProjectNode" />
-              <item name="app" type="feadf853:AndroidModuleNode" />
-              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
-              <item name="cheatdatabase" type="cbb59c9e:AndroidPsiDirectoryNode" />
-              <item name="listeners" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="cheat-database" type="1abcf292:AndroidViewProjectNode" />
@@ -588,22 +575,11 @@
               <item name="cheat-database" type="1abcf292:AndroidViewProjectNode" />
               <item name="app" type="feadf853:AndroidModuleNode" />
               <item name="res" type="d4f16f75:AndroidResFolderNode" />
-              <item name="xml" type="ddeffd01:AndroidResFolderTypeNode" />
+              <item name="values" type="ddeffd01:AndroidResFolderTypeNode" />
             </path>
             <path>
               <item name="cheat-database" type="1abcf292:AndroidViewProjectNode" />
               <item name="Gradle Scripts" type="ae0cef3a:AndroidBuildScriptsGroupNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
-      <pane id="ProjectPane">
-        <subPane>
-          <expand>
-            <path>
-              <item name="cheat-database" type="b2602c69:ProjectViewProjectNode" />
-              <item name="cheat-database" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -645,16 +621,23 @@
     <option name="LAST_EDITED_BUILD_TYPE" value="debug" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
-      <recent name="com.cheatdatabase.adapters" />
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/app/src/main/res/layout" />
+      <recent name="$PROJECT_DIR$/app/libs" />
+      <recent name="$PROJECT_DIR$/app/src/main/res/layout-xlarge-land" />
+      <recent name="$PROJECT_DIR$/app/src/main/res/xml" />
+      <recent name="C:\Users\taar1\Development\Android\GitHub\cheat-database\app\libs" />
     </key>
     <key name="android.template.packageName">
       <recent name="com.cheatdatabase.ads" />
       <recent name="com.cheatdatabase" />
       <recent name="com.cheatdatabase.fragments" />
     </key>
-    <key name="android.template.parentActivityClass">
-      <recent name="" />
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/app/src/main/res/layout-v17" />
+    </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="com.cheatdatabase.adapters" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="com.cheatdatabase.holders" />
@@ -663,12 +646,8 @@
       <recent name="com.cheatdatabase.dialogs" />
       <recent name="com.cheatdatabase.events" />
     </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/app/src/main/res/layout" />
-      <recent name="$PROJECT_DIR$/app/libs" />
-      <recent name="$PROJECT_DIR$/app/src/main/res/layout-xlarge-land" />
-      <recent name="$PROJECT_DIR$/app/src/main/res/xml" />
-      <recent name="C:\Users\taar1\Development\Android\GitHub\cheat-database\app\libs" />
+    <key name="android.template.parentActivityClass">
+      <recent name="" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -1362,7 +1341,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="-7" width="2062" height="1126" extended-state="6" />
+    <frame x="74" y="144" width="2213" height="1226" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Image Layers" order="0" />
@@ -1371,7 +1350,7 @@
       <window_info id="Capture Tool" order="3" />
       <window_info id="Designer" order="4" />
       <window_info id="Favorites" order="5" side_tool="true" />
-      <window_info content_ui="combo" id="Project" order="6" sideWeight="0.49911818" visible="true" weight="0.23676324" />
+      <window_info content_ui="combo" id="Project" order="6" sideWeight="0.49911818" visible="true" weight="0.2086596" />
       <window_info id="Structure" order="7" sideWeight="0.50088185" side_tool="true" weight="0.2179289" />
       <window_info id="Nl-Palette" order="8" />
       <window_info id="Resources Explorer" order="9" />
@@ -1389,8 +1368,8 @@
       <window_info anchor="bottom" id="Version Control" order="11" weight="0.31834215" />
       <window_info anchor="bottom" id="Terminal" order="12" weight="0.32804233" />
       <window_info anchor="bottom" id="Messages" order="13" weight="0.34756097" />
-      <window_info active="true" anchor="bottom" id="Logcat" order="14" sideWeight="0.49954212" visible="true" weight="0.3470825" />
-      <window_info anchor="bottom" id="Build" order="15" weight="0.30482897" />
+      <window_info active="true" anchor="bottom" id="Logcat" order="14" sideWeight="0.49954212" visible="true" weight="0.34656084" />
+      <window_info anchor="bottom" id="Build" order="15" weight="0.3042328" />
       <window_info anchor="bottom" id="Android Monitor" order="16" weight="0.53356683" />
       <window_info anchor="bottom" id="Gradle Console" order="17" sideWeight="0.5021322" side_tool="true" weight="0.3337029" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
@@ -1548,15 +1527,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/c758846ba07819573f9b0bf0b9898451/jars/classes.jar!/com/inmobi/ads/InMobiNative.class" />
-    <entry file="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/c758846ba07819573f9b0bf0b9898451/jars/classes.jar!/com/inmobi/ads/listeners/NativeAdEventListener.class" />
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/listitems/CheatListItem.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="21" lean-forward="true" selection-start-line="21" selection-end-line="21" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/listitems/SystemPlatformListItem.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="285">
@@ -1593,24 +1563,14 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
-      <provider editor-type-id="android-manifest" />
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1853">
           <caret line="109" column="49" selection-start-line="109" selection-start-column="49" selection-end-line="109" selection-end-column="49" />
         </state>
       </provider>
+      <provider editor-type-id="android-manifest" />
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/GamesBySystemActivity.java" />
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/MainActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="532">
-          <caret line="114" column="18" selection-start-line="114" selection-start-column="18" selection-end-line="114" selection-end-column="18" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/CheatListFragment.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-736">
@@ -1740,18 +1700,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/adapters/GamesBySystemRecycleListViewAdapter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="265">
-          <caret line="136" column="62" selection-start-line="136" selection-start-column="62" selection-end-line="136" selection-end-column="62" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#2302#2303#0" expanded="true" />
-            <element signature="e#2342#2343#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/AppCompatPreferenceActivity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="255">
@@ -1810,35 +1758,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/build.gradle">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="137">
-          <caret line="129" column="4" selection-start-line="129" selection-start-column="4" selection-end-line="129" selection-end-column="68" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/listrow_facebook_native_ad_recyclerview_item.xml">
-      <provider editor-type-id="android-designer2" />
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="16" column="15" selection-start-line="16" selection-start-column="15" selection-end-line="16" selection-end-column="15" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/helpers/Konstanten.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="446">
           <caret line="93" column="23" selection-start-line="93" selection-start-column="23" selection-end-line="93" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/holders/FacebookNativeAdListViewItemHolder.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="449">
-          <caret line="64" column="39" selection-start-line="64" selection-start-column="34" selection-end-line="64" selection-end-column="39" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1856,31 +1779,71 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/events/GameListRecyclerViewClickEvent.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/events/GameListRecyclerViewClickEvent.java" />
+    <entry file="file://$USER_HOME$/Desktop/device-2019-08-27-092052.png" />
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/GamesBySystemListActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="7" column="13" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
+        <state relative-caret-position="870">
+          <caret line="103" column="54" selection-start-line="103" selection-start-column="54" selection-end-line="103" selection-end-column="54" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/GamesBySystemListActivity.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout-v17/native_ad_layout_1.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="200">
-          <caret line="78" selection-start-line="78" selection-end-line="78" />
+        <state relative-caret-position="1020">
+          <caret line="68" column="40" lean-forward="true" selection-start-line="68" selection-start-column="40" selection-end-line="68" selection-end-column="40" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/native_ad_layout_1.xml">
+      <provider editor-type-id="android-designer2" />
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="585">
+          <caret line="39" column="33" selection-start-line="39" selection-start-column="33" selection-end-line="39" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/listrow_facebook_native_ad_recyclerview_item.xml">
+      <provider editor-type-id="android-designer2" />
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="315">
+          <caret line="21" column="41" selection-start-line="21" selection-start-column="41" selection-end-line="21" selection-end-column="41" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/MainActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="513">
+          <caret line="109" lean-forward="true" selection-start-line="109" selection-end-line="109" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#3049#3069#0" expanded="true" />
-            <element signature="e#3448#3477#0" expanded="true" />
-            <element signature="e#11229#11230#0" expanded="true" />
-            <element signature="e#11276#11277#0" expanded="true" />
-            <element signature="e#11950#11973#0" expanded="true" />
-            <element signature="e#11986#12018#0" expanded="true" />
-            <element signature="e#12037#12048#0" expanded="true" />
-            <element signature="e#12193#12194#0" expanded="true" />
-            <element signature="e#12241#12242#0" expanded="true" />
-            <element signature="e#14258#14275#0" expanded="true" />
-            <element signature="e#14421#14445#0" expanded="true" />
-            <element signature="e#15504#15524#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/build.gradle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="330">
+          <caret line="22" column="35" lean-forward="true" selection-start-line="22" selection-start-column="35" selection-end-line="22" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/holders/FacebookNativeAdListViewItemHolder.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="145">
+          <caret line="53" column="104" selection-start-line="53" selection-start-column="41" selection-end-line="53" selection-end-column="104" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/adapters/GamesBySystemRecycleListViewAdapter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="409">
+          <caret line="49" column="58" selection-start-line="49" selection-start-column="58" selection-end-line="49" selection-end-column="58" />
+          <folding>
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
