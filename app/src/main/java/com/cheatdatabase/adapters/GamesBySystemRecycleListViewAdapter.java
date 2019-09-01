@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.cheatdatabase.R;
 import com.cheatdatabase.businessobjects.Game;
 import com.cheatdatabase.helpers.Konstanten;
+import com.cheatdatabase.holders.AdHolder;
 import com.cheatdatabase.holders.BlankWhiteListViewItemHolder;
 import com.cheatdatabase.holders.FacebookNativeAdListViewItemHolder;
 import com.cheatdatabase.holders.GamesBySystemListViewItemHolder;
@@ -20,6 +21,7 @@ import com.cheatdatabase.listeners.OnGameListItemSelectedListener;
 import com.cheatdatabase.listitems.FacebookNativeAdListItem;
 import com.cheatdatabase.listitems.GameListItem;
 import com.cheatdatabase.listitems.ListItem;
+import com.facebook.ads.NativeAdLayout;
 import com.facebook.ads.NativeAdsManager;
 import com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView;
 
@@ -47,9 +49,11 @@ public class GamesBySystemRecycleListViewAdapter extends RecyclerView.Adapter<Re
     // TODO FIXME hier den adsmanager einbauen wie hier: https://github.com/fbsamples/audience-network/blob/master/samples/android/AdUnitsSample/AdUnitsSample/src/main/java/com/facebook/samples/AdUnitsSample/adapters/NativeAdRecyclerAdapter.java
     private NativeAdsManager mNativeAdsManager;
 
-    public GamesBySystemRecycleListViewAdapter(Activity context, OnGameListItemSelectedListener listener) {
+    public GamesBySystemRecycleListViewAdapter(Activity context, NativeAdsManager
+            nativeAdsManager, OnGameListItemSelectedListener listener) {
         Log.d(TAG, "XXXXX ADAPTER GamesBySystemRecycleListViewAdapter()");
         this.context = context;
+        this.mNativeAdsManager = nativeAdsManager;
         this.listener = listener;
         gameList = new ArrayList<>();
         listItems = new ArrayList<>();
@@ -120,7 +124,10 @@ public class GamesBySystemRecycleListViewAdapter extends RecyclerView.Adapter<Re
         } else if (viewType == ListItem.TYPE_BLANK) {
             return new BlankWhiteListViewItemHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.listrow_blankwhite_item, parent, false));
         } else if (viewType == ListItem.TYPE_FACEBOOK_NATIVE_AD) {
-            return new FacebookNativeAdListViewItemHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.listrow_facebook_native_ad_recyclerview_item, parent, false), context);
+
+            NativeAdLayout inflatedView = (NativeAdLayout) LayoutInflater.from(parent.getContext()).inflate(R.layout.native_ad_unit, parent, false);
+            return new AdHolder(inflatedView);
+            //return new FacebookNativeAdListViewItemHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.listrow_facebook_native_ad_recyclerview_item, parent, false), context);
         }
 
         return null;
