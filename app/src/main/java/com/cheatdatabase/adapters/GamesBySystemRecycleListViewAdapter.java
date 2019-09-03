@@ -13,14 +13,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.cheatdatabase.R;
 import com.cheatdatabase.businessobjects.Game;
 import com.cheatdatabase.helpers.Konstanten;
-import com.cheatdatabase.holders.AdHolder;
 import com.cheatdatabase.holders.BlankWhiteListViewItemHolder;
-import com.cheatdatabase.holders.FacebookNativeAdListViewItemHolder;
+import com.cheatdatabase.holders.FacebookNativeAdHolder;
 import com.cheatdatabase.holders.GamesBySystemListViewItemHolder;
 import com.cheatdatabase.listeners.OnGameListItemSelectedListener;
 import com.cheatdatabase.listitems.FacebookNativeAdListItem;
 import com.cheatdatabase.listitems.GameListItem;
 import com.cheatdatabase.listitems.ListItem;
+import com.facebook.ads.AdOptionsView;
+import com.facebook.ads.NativeAd;
 import com.facebook.ads.NativeAdLayout;
 import com.facebook.ads.NativeAdsManager;
 import com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView;
@@ -37,29 +38,17 @@ public class GamesBySystemRecycleListViewAdapter extends RecyclerView.Adapter<Re
 
     private List<Game> gameList;
     private List<ListItem> listItems;
-    //    private Typeface latoFontBold;
-//    private Typeface latoFontLight;
-    private Game gameObj;
     private Context context;
     private final OnGameListItemSelectedListener listener;
 
-    // TODO FIXME hier den adsmanager einbauen wie hier: https://github.com/fbsamples/audience-network/blob/master/samples/android/AdUnitsSample/AdUnitsSample/src/main/java/com/facebook/samples/AdUnitsSample/adapters/NativeAdRecyclerAdapter.java
-    // TODO FIXME hier den adsmanager einbauen wie hier: https://github.com/fbsamples/audience-network/blob/master/samples/android/AdUnitsSample/AdUnitsSample/src/main/java/com/facebook/samples/AdUnitsSample/adapters/NativeAdRecyclerAdapter.java
-    // TODO FIXME hier den adsmanager einbauen wie hier: https://github.com/fbsamples/audience-network/blob/master/samples/android/AdUnitsSample/AdUnitsSample/src/main/java/com/facebook/samples/AdUnitsSample/adapters/NativeAdRecyclerAdapter.java
-    // TODO FIXME hier den adsmanager einbauen wie hier: https://github.com/fbsamples/audience-network/blob/master/samples/android/AdUnitsSample/AdUnitsSample/src/main/java/com/facebook/samples/AdUnitsSample/adapters/NativeAdRecyclerAdapter.java
     private NativeAdsManager mNativeAdsManager;
 
-    public GamesBySystemRecycleListViewAdapter(Activity context, NativeAdsManager
-            nativeAdsManager, OnGameListItemSelectedListener listener) {
-        Log.d(TAG, "XXXXX ADAPTER GamesBySystemRecycleListViewAdapter()");
+    public GamesBySystemRecycleListViewAdapter(Activity context, NativeAdsManager nativeAdsManager, OnGameListItemSelectedListener listener) {
         this.context = context;
         this.mNativeAdsManager = nativeAdsManager;
         this.listener = listener;
         gameList = new ArrayList<>();
         listItems = new ArrayList<>();
-
-//        latoFontBold = Tools.getFont(context.getAssets(), Konstanten.FONT_BOLD);
-//        latoFontLight = Tools.getFont(context.getAssets(), Konstanten.FONT_LIGHT);
 
         // TODO FIXME try out if this is needed or not....
         filterList("");
@@ -69,40 +58,10 @@ public class GamesBySystemRecycleListViewAdapter extends RecyclerView.Adapter<Re
         this.gameList = gameList;
     }
 
-//    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-//        @BindView(R.id.cheat_title)
-//        TextView gameName;
-//        @BindView(R.id.cheats_count)
-//        TextView cheatCount;
-//
-//        public OnGameItemClickListener onGameItemClickListener;
-//
-//        public ViewHolder(View view, OnGameItemClickListener listener) {
-//            super(view);
-//            ButterKnife.bind(this, view);
-//            onGameItemClickListener = listener;
-//
-//            gameName.setTypeface(Tools.getFont(view.getContext().getAssets(), Konstanten.FONT_BOLD));
-//            cheatCount.setTypeface(Tools.getFont(view.getContext().getAssets(), Konstanten.FONT_LIGHT));
-//
-//            view.setOnClickListener(this);
-//        }
-//
-//        @Override
-//        public void onClick(View v) {
-//            onGameItemClickListener.onGameClick(this);
-//        }
-//    }
-
     @Override
     public int getItemViewType(int position) {
-//        Log.d(TAG, "XXXXX ADAPTER getItemViewType(): " + listItems.get(position).getType());
         return listItems.get(position).getType();
     }
-
-//    public interface OnGameItemClickListener {
-//        void onGameClick(GamesBySystemRecycleListViewAdapter.ViewHolder caller);
-//    }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(final ViewGroup parent, int viewType) {
@@ -110,42 +69,21 @@ public class GamesBySystemRecycleListViewAdapter extends RecyclerView.Adapter<Re
         if (viewType == ListItem.TYPE_GAME) {
             final View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.listrow_gamebysystem_item, parent, false);
             itemView.setDrawingCacheEnabled(true);
-
             return new GamesBySystemListViewItemHolder(itemView, context);
-
-//            return new ViewHolder(v, caller -> {
-//
-//                if (Reachability.reachability.isReachable) {
-//                    EventBus.getDefault().post(new GameListRecyclerViewClickEvent(gameList.get(caller.getAdapterPosition())));
-//                } else {
-//                    EventBus.getDefault().post(new GameListRecyclerViewClickEvent(new Exception()));
-//                }
-//            });
         } else if (viewType == ListItem.TYPE_BLANK) {
             return new BlankWhiteListViewItemHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.listrow_blankwhite_item, parent, false));
         } else if (viewType == ListItem.TYPE_FACEBOOK_NATIVE_AD) {
-
             NativeAdLayout inflatedView = (NativeAdLayout) LayoutInflater.from(parent.getContext()).inflate(R.layout.native_ad_unit, parent, false);
-            return new AdHolder(inflatedView);
-            //return new FacebookNativeAdListViewItemHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.listrow_facebook_native_ad_recyclerview_item, parent, false), context);
+            return new FacebookNativeAdHolder(inflatedView);
         }
 
         return null;
     }
 
-//    private void createStrands() {
-//        for (int position : mAdPositions) {
-//            final InMobiNative nativeStrand = new InMobiNative(context, Konstanten.INMOBI_RECYCLERVIEW_LIST_ITEM_PLACEMENT_ID, new StrandAdListener(position));
-//
-//            mStrands.add(nativeStrand);
-//        }
-//    }
-
-
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         int type = getItemViewType(position);
-//        Log.d(TAG, "XXXXX ADAPTER onBindViewHolder() TYPE: " + type);
+        Log.d(TAG, "XXXXX ADAPTER onBindViewHolder() TYPE: " + type);
 
         if (type == ListItem.TYPE_GAME) {
             final GameListItem gameListItem = (GameListItem) listItems.get(position);
@@ -153,40 +91,38 @@ public class GamesBySystemRecycleListViewAdapter extends RecyclerView.Adapter<Re
             gamesBySystemListViewItemHolder.setGame(gameListItem.getGame());
             gamesBySystemListViewItemHolder.view.setOnClickListener(v -> listener.onGameListItemSelected(gameListItem.getGame()));
         } else if (type == ListItem.TYPE_FACEBOOK_NATIVE_AD) {
-            // TODO
-            final FacebookNativeAdListItem facebookNativeAdListItem = (FacebookNativeAdListItem) listItems.get(position);
-            FacebookNativeAdListViewItemHolder facebookNativeAdListViewItemHolder = (FacebookNativeAdListViewItemHolder) holder;
-        }
-//        else if (type == ListItem.TYPE_INMOBI_NATIVE_AD) {
-//            final InMobiNativeAdsListItem inMobiNativeAdsListItem = (InMobiNativeAdsListItem) listItems.get(position);
-//            InMobiNativeAdListViewItemHolder inMobiNativeAdListViewItemHolder = (InMobiNativeAdListViewItemHolder) holder;
-//        }
-        else if (type == ListItem.TYPE_BLANK) {
-            // TODO
+            NativeAd ad = mNativeAdsManager.nextNativeAd();
+
+            FacebookNativeAdHolder facebookNativeAdHolder = (FacebookNativeAdHolder) holder;
+            facebookNativeAdHolder.adChoicesContainer.removeAllViews();
+
+            if (ad != null) {
+                facebookNativeAdHolder.tvAdTitle.setText(ad.getAdvertiserName());
+                facebookNativeAdHolder.tvAdBody.setText(ad.getAdBodyText());
+                facebookNativeAdHolder.tvAdSocialContext.setText(ad.getAdSocialContext());
+                facebookNativeAdHolder.tvAdSponsoredLabel.setText("Sponsored");
+                facebookNativeAdHolder.btnAdCallToAction.setText(ad.getAdCallToAction());
+                facebookNativeAdHolder.btnAdCallToAction.setVisibility(ad.hasCallToAction() ? View.VISIBLE : View.INVISIBLE);
+                AdOptionsView adOptionsView = new AdOptionsView(context, ad, facebookNativeAdHolder.nativeAdLayout);
+                facebookNativeAdHolder.adChoicesContainer.addView(adOptionsView, 0);
+
+                List<View> clickableViews = new ArrayList<>();
+                clickableViews.add(facebookNativeAdHolder.ivAdIcon);
+                clickableViews.add(facebookNativeAdHolder.mvAdMedia);
+                clickableViews.add(facebookNativeAdHolder.btnAdCallToAction);
+                ad.registerViewForInteraction(
+                        facebookNativeAdHolder.nativeAdLayout,
+                        facebookNativeAdHolder.mvAdMedia,
+                        facebookNativeAdHolder.ivAdIcon,
+                        clickableViews);
+            }
+        } else if (type == ListItem.TYPE_BLANK) {
             BlankWhiteListViewItemHolder blankWhiteListViewItemHolder = (BlankWhiteListViewItemHolder) holder;
         }
-
-//        gameObj = gameList.get(position);
-//
-//        holder.gameName.setText(gameObj.getGameName());
-//        holder.gameName.setTypeface(latoFontBold);
-//
-//        try {
-//            if (gameObj.getCheatsCount() > 0) {
-//                holder.cheatCount.setVisibility(View.VISIBLE);
-//                holder.cheatCount.setText(gameObj.getCheatsCount() + " " + context.getResources().getQuantityString(R.plurals.entries, gameObj.getCheatsCount()));
-//                holder.cheatCount.setTypeface(latoFontLight);
-//            } else {
-//                holder.cheatCount.setVisibility(View.GONE);
-//            }
-//        } catch (Exception e) {
-//            Log.e(TAG, e.getLocalizedMessage());
-//        }
     }
 
     @Override
     public int getItemCount() {
-        //Log.d(TAG, "XXXXX ADAPTER getItemCount(): " + listItems.size());
         return listItems.size();
     }
 
@@ -216,10 +152,10 @@ public class GamesBySystemRecycleListViewAdapter extends RecyclerView.Adapter<Re
             // TODO filter the list and update gameList with filtered List
         }
 
-        updateGameListAndInjectAds();
+        updateGameListAndInjectFacebookAds();
     }
 
-    private void updateGameListAndInjectAds() {
+    private void updateGameListAndInjectFacebookAds() {
         int j = 0;
         final List<ListItem> newListItems = new ArrayList<>();
 
@@ -228,14 +164,8 @@ public class GamesBySystemRecycleListViewAdapter extends RecyclerView.Adapter<Re
             gameListItem.setGame(game);
             newListItems.add(gameListItem);
 
-            // TODO inject ad here to newListItems
-            // TODO inject ad here to newListItems
-            // TODO inject ad here to newListItems
-
             if (j % Konstanten.INJECT_AD_AFTER_EVERY_POSITION == Konstanten.INJECT_AD_AFTER_EVERY_POSITION - 1) {
-                // TODO replace BlankListItem with AdView...
                 newListItems.add(new FacebookNativeAdListItem());
-//                newListItems.add(new BlankListItem());
             }
             j++;
         }

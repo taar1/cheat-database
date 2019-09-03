@@ -34,6 +34,8 @@ import com.cheatdatabase.listeners.OnGameListItemSelectedListener;
 import com.cheatdatabase.widgets.DividerDecoration;
 import com.facebook.ads.AdSize;
 import com.facebook.ads.AdView;
+import com.facebook.ads.NativeAd;
+import com.facebook.ads.NativeAdsManager;
 import com.google.gson.Gson;
 import com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView;
 
@@ -90,6 +92,9 @@ public class GamesBySystemListActivity extends AppCompatActivity implements OnGa
         setContentView(R.layout.activity_game_list);
         ButterKnife.bind(this);
 
+        NativeAdsManager nativeAdsManager = new NativeAdsManager(this, Konstanten.FACEBOOK_AUDIENCE_NETWORK_NATIVE_AD_IN_RECYCLER_VIEW, 5);
+        nativeAdsManager.loadAds(NativeAd.MediaCacheFlag.ALL);
+
         systemObj = getIntent().getParcelableExtra("systemObj");
         if (systemObj == null) {
             Toast.makeText(this, R.string.err_somethings_wrong, Toast.LENGTH_LONG).show();
@@ -101,7 +106,7 @@ public class GamesBySystemListActivity extends AppCompatActivity implements OnGa
             mSwipeRefreshLayout.setRefreshing(true);
             mSwipeRefreshLayout.setOnRefreshListener(() -> loadGames(true));
 
-            gamesBySystemRecycleListViewAdapter = new GamesBySystemRecycleListViewAdapter(this, this);
+            gamesBySystemRecycleListViewAdapter = new GamesBySystemRecycleListViewAdapter(this, nativeAdsManager, this);
             recyclerView.setAdapter(gamesBySystemRecycleListViewAdapter);
 
             recyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
@@ -195,11 +200,6 @@ public class GamesBySystemListActivity extends AppCompatActivity implements OnGa
     private void loadGames(boolean forceLoadOnline) {
         Log.d(TAG, "XXXXX loadGames() System ID/NAME: " + systemObj.getSystemId() + "/" + systemObj.getSystemName());
 
-//        final List<ListItem> newListItems = new ArrayList<>();
-
-        // TODO eine GameListItem liste erstellen und verwenden damit man einen ListItem type unterschied machen kann (game list item & native ad item)
-        // TODO eine GameListItem liste erstellen und verwenden damit man einen ListItem type unterschied machen kann (game list item & native ad item)
-
         gameList = new ArrayList<>();
         List<Game> cachedGamesCollection;
         boolean isCached = false;
@@ -229,9 +229,6 @@ public class GamesBySystemListActivity extends AppCompatActivity implements OnGa
                 }
             }
         }
-
-        Log.d(TAG, "XXXXX loadGames() 02 isCached: " + isCached);
-        Log.d(TAG, "XXXXX loadGames() 02 gameList: " + gameList.size());
 
         if (!isCached || forceLoadOnline || gameList.size() == 0) {
             gameList = new ArrayList<>();
@@ -370,4 +367,6 @@ public class GamesBySystemListActivity extends AppCompatActivity implements OnGa
             Toast.makeText(this, R.string.no_internet, Toast.LENGTH_SHORT).show();
         }
     }
+
+
 }
