@@ -34,9 +34,12 @@ import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.helpers.Tools;
 import com.cheatdatabase.helpers.Webservice;
+import com.cheatdatabase.listeners.OnCheatListItemSelectedListener;
 import com.cheatdatabase.widgets.DividerDecoration;
 import com.facebook.ads.AdSize;
 import com.facebook.ads.AdView;
+import com.facebook.ads.NativeAd;
+import com.facebook.ads.NativeAdsManager;
 import com.google.gson.Gson;
 import com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView;
 
@@ -52,14 +55,26 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import needle.Needle;
 
-public class CheatsByGameListActivity extends AppCompatActivity {
+public class CheatsByGameListActivity extends AppCompatActivity implements OnCheatListItemSelectedListener {
 
     private static String TAG = CheatsByGameListActivity.class.getSimpleName();
+
+    private SharedPreferences sharedPreferences;
+    private Editor editor;
+    private Member member;
+    private List<Cheat> cheatList;
+    private Cheat visibleCheat;
+
+    private CheatDatabaseApplication cheatDatabaseApplication;
+    private CheatsByGameRecycleListViewAdapter cheatsByGameRecycleListViewAdapter;
+
+    private Game gameObj;
+    private AdView facebookAdView;
 
     @BindView(R.id.outer_layout)
     LinearLayout outerLayout;
     @BindView(R.id.my_recycler_view)
-    FastScrollRecyclerView mRecyclerView;
+    FastScrollRecyclerView recyclerView;
     @BindView(R.id.swipe_refresh_layout)
     SwipeRefreshLayout mSwipeRefreshLayout;
     @BindView(R.id.toolbar)
@@ -67,22 +82,18 @@ public class CheatsByGameListActivity extends AppCompatActivity {
     @BindView(R.id.item_list_empty_view)
     TextView mEmptyView;
     @BindView(R.id.banner_container)
-    LinearLayout facebookBanner;
+    LinearLayout bannerContainerFacebook;
 
-    private SharedPreferences sharedPreferences;
-    private Editor editor;
-    private Member member;
+    @Override
+    protected void onStart() {
+        super.onStart();
 
-    private List<Cheat> cheatsArrayList;
-    private Cheat visibleCheat;
-
-    CheatDatabaseApplication cheatDatabaseApplication;
-
-    CheatsByGameRecycleListViewAdapter cheatsByGameRecycleListViewAdapter;
-
-    Game gameObj;
-
-    private AdView adView;
+        if (Reachability.reachability.isReachable) {
+            loadCheats(false);
+        } else {
+            Toast.makeText(this, R.string.no_internet, Toast.LENGTH_SHORT).show();
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,46 +101,43 @@ public class CheatsByGameListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_cheat_list);
         ButterKnife.bind(this);
 
-        init();
+        NativeAdsManager nativeAdsManager = new NativeAdsManager(this, Konstanten.FACEBOOK_AUDIENCE_NETWORK_NATIVE_AD_IN_RECYCLER_VIEW, 5);
+        nativeAdsManager.loadAds(NativeAd.MediaCacheFlag.ALL);
 
         gameObj = getIntent().getParcelableExtra("gameObj");
-
-        if (gameObj != null) {
-            setTitle(gameObj.getGameName());
+        if (gameObj == null) {
+            Toast.makeText(this, R.string.err_somethings_wrong, Toast.LENGTH_LONG).show();
+            finish();
+        } else {
+            setTitle((gameObj.getGameName() != null ? gameObj.getGameName() : ""));
+            init();
 
             mSwipeRefreshLayout.setRefreshing(true);
+            mSwipeRefreshLayout.setOnRefreshListener(() -> loadCheats(true));
+
+            cheatsByGameRecycleListViewAdapter = new CheatsByGameRecycleListViewAdapter(this, nativeAdsManager, this);
+            recyclerView.setAdapter(cheatsByGameRecycleListViewAdapter);
 
             getSupportActionBar().setTitle(gameObj.getGameName());
             getSupportActionBar().setSubtitle(gameObj.getSystemName());
 
-            mSwipeRefreshLayout.setOnRefreshListener(() -> getCheats(true));
-
-            // use this setting to improve performance if you know that changes
-            // in content do not change the layout size of the RecyclerView
-            mRecyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
-            mRecyclerView.addItemDecoration(new DividerDecoration(this));
-            mRecyclerView.getItemAnimator().setRemoveDuration(50);
-            mRecyclerView.setHasFixedSize(true);
-
-            if (Reachability.reachability.isReachable) {
-                getCheats(false);
-            } else {
-                Toast.makeText(this, R.string.no_internet, Toast.LENGTH_SHORT).show();
-            }
-        } else {
-            finish();
+            recyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
+            recyclerView.addItemDecoration(new DividerDecoration(this));
+            recyclerView.getItemAnimator().setRemoveDuration(50);
+            recyclerView.setHasFixedSize(true);
+            recyclerView.showScrollbar();
         }
-
     }
 
     private void init() {
+        sharedPreferences = getSharedPreferences(Konstanten.PREFERENCES_FILE, MODE_PRIVATE);
+        editor = sharedPreferences.edit();
+
         cheatDatabaseApplication = CheatDatabaseApplication.getCurrentAppInstance();
 
-        cheatsByGameRecycleListViewAdapter = new CheatsByGameRecycleListViewAdapter();
-
-        adView = new AdView(this, Konstanten.FACEBOOK_AUDIENCE_NETWORK_NATIVE_BANNER_ID, AdSize.BANNER_HEIGHT_50);
-        facebookBanner.addView(adView);
-        adView.loadAd();
+        facebookAdView = new AdView(this, Konstanten.FACEBOOK_AUDIENCE_NETWORK_NATIVE_BANNER_ID, AdSize.BANNER_HEIGHT_50);
+        bannerContainerFacebook.addView(facebookAdView);
+        facebookAdView.loadAd();
 
         if (mToolbar != null) {
             setSupportActionBar(mToolbar);
@@ -137,19 +145,105 @@ public class CheatsByGameListActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
-        sharedPreferences = getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
-        editor = sharedPreferences.edit();
-
         if (member == null) {
             member = new Gson().fromJson(sharedPreferences.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
         }
     }
 
-    public void getCheats(boolean forceLoadOnline) {
-        Log.d(TAG, "get cheats by game: " + gameObj.getGameName() + " / " + gameObj.getGameId());
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        menu.clear();
+        getMenuInflater().inflate(R.menu.cheats_by_game_menu, menu);
+
+        if (member != null) {
+            getMenuInflater().inflate(R.menu.signout_menu, menu);
+        } else {
+            getMenuInflater().inflate(R.menu.signin_menu, menu);
+        }
+
+        // Search
+        getMenuInflater().inflate(R.menu.search_menu, menu);
+
+        // Associate searchable configuration with the SearchView
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(final Menu menu) {
+        menu.clear();
+        if (member == null) {
+            getMenuInflater().inflate(R.menu.signin_menu, menu);
+        } else {
+            getMenuInflater().inflate(R.menu.signout_menu, menu);
+        }
+
+        getMenuInflater().inflate(R.menu.cheats_by_game_menu, menu);
+        getMenuInflater().inflate(R.menu.search_menu, menu);
+
+        // Associate searchable configuration with the SearchView
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action buttons
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                editor.remove(Konstanten.PREFERENCES_TEMP_GAME_OBJECT_VIEW);
+                editor.apply();
+                finish();
+                return true;
+            case R.id.action_add_to_favorites:
+                Tools.showSnackbar(outerLayout, getString(R.string.favorite_adding));
+                addCheatsToFavoritesTask(gameObj);
+                return true;
+            case R.id.action_submit_cheat:
+                Intent explicitIntent = new Intent(CheatsByGameListActivity.this, SubmitCheatActivity.class);
+                explicitIntent.putExtra("gameObj", gameObj);
+                startActivity(explicitIntent);
+                return true;
+            case R.id.action_login:
+                Intent loginIntent = new Intent(CheatsByGameListActivity.this, LoginActivity.class);
+                startActivityForResult(loginIntent, Konstanten.LOGIN_REGISTER_OK_RETURN_CODE);
+                return true;
+            case R.id.action_logout:
+                member = null;
+                Tools.logout(CheatsByGameListActivity.this, editor);
+                invalidateOptionsMenu();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    // TODO CheatsByGameListActivity mit GamesBySystemListActivity vergleichen und CheatsBy... entsprechend zu GamesBy... anpassen.
+    // TODO CheatsByGameListActivity mit GamesBySystemListActivity vergleichen und CheatsBy... entsprechend zu GamesBy... anpassen.
+    // TODO CheatsByGameListActivity mit GamesBySystemListActivity vergleichen und CheatsBy... entsprechend zu GamesBy... anpassen.
+    // TODO CheatsByGameListActivity mit GamesBySystemListActivity vergleichen und CheatsBy... entsprechend zu GamesBy... anpassen.
+    // TODO CheatsByGameListActivity mit GamesBySystemListActivity vergleichen und CheatsBy... entsprechend zu GamesBy... anpassen.
+    // TODO CheatsByGameListActivity mit GamesBySystemListActivity vergleichen und CheatsBy... entsprechend zu GamesBy... anpassen.
+    // TODO CheatsByGameListActivity mit GamesBySystemListActivity vergleichen und CheatsBy... entsprechend zu GamesBy... anpassen.
+    // TODO CheatsByGameListActivity mit GamesBySystemListActivity vergleichen und CheatsBy... entsprechend zu GamesBy... anpassen.
+    // TODO CheatsByGameListActivity mit GamesBySystemListActivity vergleichen und CheatsBy... entsprechend zu GamesBy... anpassen.
+    // TODO CheatsByGameListActivity mit GamesBySystemListActivity vergleichen und CheatsBy... entsprechend zu GamesBy... anpassen.
+    // TODO CheatsByGameListActivity mit GamesBySystemListActivity vergleichen und CheatsBy... entsprechend zu GamesBy... anpassen.
+    // TODO CheatsByGameListActivity mit GamesBySystemListActivity vergleichen und CheatsBy... entsprechend zu GamesBy... anpassen.
+    // TODO CheatsByGameListActivity mit GamesBySystemListActivity vergleichen und CheatsBy... entsprechend zu GamesBy... anpassen.
+    // TODO CheatsByGameListActivity mit GamesBySystemListActivity vergleichen und CheatsBy... entsprechend zu GamesBy... anpassen.
+
+    private void loadCheats(boolean forceLoadOnline) {
+        Log.d(TAG, "XXXXX loadCheats() by game: " + gameObj.getGameName() + " / " + gameObj.getGameId());
 
         Needle.onBackgroundThread().execute(() -> {
-            cheatsArrayList = new ArrayList<>();
+            cheatList = new ArrayList<>();
             List<Cheat> cachedCheatsCollection;
             List<Cheat> cheatsFound = null;
             boolean isCached = false;
@@ -210,7 +304,7 @@ public class CheatsByGameListActivity extends AppCompatActivity {
                     cheatDatabaseApplication.setCheatsByGameCached(cheatsByGameInCache);
                 }
 
-                cheatsArrayList = cheatsFound;
+                this.cheatList = cheatsFound;
                 updateUI();
             } catch (NullPointerException e) {
                 Toast.makeText(this, R.string.err_data_not_accessible, Toast.LENGTH_LONG).show();
@@ -223,9 +317,8 @@ public class CheatsByGameListActivity extends AppCompatActivity {
     public void updateUI() {
         Needle.onMainThread().execute(() -> {
             try {
-                if (cheatsArrayList != null && cheatsArrayList.size() > 0) {
-                    cheatsByGameRecycleListViewAdapter.setCheats(cheatsArrayList);
-                    mRecyclerView.setAdapter(cheatsByGameRecycleListViewAdapter);
+                if (cheatList != null && cheatList.size() > 0) {
+                    cheatsByGameRecycleListViewAdapter.setCheats(cheatList);
 
                     cheatsByGameRecycleListViewAdapter.notifyDataSetChanged();
                 } else {
@@ -244,14 +337,6 @@ public class CheatsByGameListActivity extends AppCompatActivity {
         finish();
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        EventBus.getDefault().register(this);
-        if (!Reachability.isRegistered()) {
-            Reachability.registerReachability(this);
-        }
-    }
 
     @Override
     protected void onStop() {
@@ -262,8 +347,8 @@ public class CheatsByGameListActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
-        if (adView != null) {
-            adView.destroy();
+        if (facebookAdView != null) {
+            facebookAdView.destroy();
         }
         super.onDestroy();
     }
@@ -297,37 +382,7 @@ public class CheatsByGameListActivity extends AppCompatActivity {
         Toast.makeText(this, R.string.rating_inserted, Toast.LENGTH_SHORT).show();
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action buttons
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                editor.remove(Konstanten.PREFERENCES_TEMP_GAME_OBJECT_VIEW);
-                editor.apply();
-                finish();
-                return true;
-            case R.id.action_add_to_favorites:
-                Tools.showSnackbar(outerLayout, getString(R.string.favorite_adding));
-                addCheatsToFavoritesTask(gameObj);
-                return true;
-            case R.id.action_submit_cheat:
-                Intent explicitIntent = new Intent(CheatsByGameListActivity.this, SubmitCheatActivity.class);
-                explicitIntent.putExtra("gameObj", gameObj);
-                startActivity(explicitIntent);
-                return true;
-            case R.id.action_login:
-                Intent loginIntent = new Intent(CheatsByGameListActivity.this, LoginActivity.class);
-                startActivityForResult(loginIntent, Konstanten.LOGIN_REGISTER_OK_RETURN_CODE);
-                return true;
-            case R.id.action_logout:
-                member = null;
-                Tools.logout(CheatsByGameListActivity.this, editor);
-                invalidateOptionsMenu();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
+
 
     @OnClick(R.id.add_new_cheat_button)
     void addNewCheat() {
@@ -337,46 +392,7 @@ public class CheatsByGameListActivity extends AppCompatActivity {
     }
 
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.cheats_by_game_menu, menu);
 
-        if (member != null) {
-            getMenuInflater().inflate(R.menu.signout_menu, menu);
-        } else {
-            getMenuInflater().inflate(R.menu.signin_menu, menu);
-        }
-
-        // Search
-        getMenuInflater().inflate(R.menu.search_menu, menu);
-
-        // Associate searchable configuration with the SearchView
-        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onPrepareOptionsMenu(final Menu menu) {
-        menu.clear();
-        if (member == null) {
-            getMenuInflater().inflate(R.menu.signin_menu, menu);
-        } else {
-            getMenuInflater().inflate(R.menu.signout_menu, menu);
-        }
-
-        getMenuInflater().inflate(R.menu.cheats_by_game_menu, menu);
-        getMenuInflater().inflate(R.menu.search_menu, menu);
-
-        // Associate searchable configuration with the SearchView
-        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-
-        return super.onPrepareOptionsMenu(menu);
-    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {

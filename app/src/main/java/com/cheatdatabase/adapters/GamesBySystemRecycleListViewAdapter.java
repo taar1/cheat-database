@@ -64,6 +64,11 @@ public class GamesBySystemRecycleListViewAdapter extends RecyclerView.Adapter<Re
     }
 
     @Override
+    public int getItemCount() {
+        return listItems.size();
+    }
+
+    @Override
     public RecyclerView.ViewHolder onCreateViewHolder(final ViewGroup parent, int viewType) {
 
         if (viewType == ListItem.TYPE_GAME) {
@@ -121,10 +126,6 @@ public class GamesBySystemRecycleListViewAdapter extends RecyclerView.Adapter<Re
         }
     }
 
-    @Override
-    public int getItemCount() {
-        return listItems.size();
-    }
 
     // Display the first letter of the game during fast scrolling
     @NonNull

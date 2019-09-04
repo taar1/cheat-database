@@ -52,7 +52,6 @@ import needle.Needle;
 public class GamesBySystemListActivity extends AppCompatActivity implements OnGameListItemSelectedListener {
 
     private static final String TAG = GamesBySystemListActivity.class.getSimpleName();
-    private static final int AD_POSITION = 4;
 
     private List<Game> gameList;
     private CheatDatabaseApplication cheatDatabaseApplication;
@@ -138,7 +137,6 @@ public class GamesBySystemListActivity extends AppCompatActivity implements OnGa
         }
     }
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         menu.clear();
@@ -158,7 +156,6 @@ public class GamesBySystemListActivity extends AppCompatActivity implements OnGa
 
         return super.onCreateOptionsMenu(menu);
     }
-
 
     @Override
     public boolean onPrepareOptionsMenu(final Menu menu) {
@@ -233,11 +230,6 @@ public class GamesBySystemListActivity extends AppCompatActivity implements OnGa
         if (!isCached || forceLoadOnline || gameList.size() == 0) {
             gameList = new ArrayList<>();
             TreeMap finalGameListTree = gameListTree;
-
-            // TODO FIXME hier das CALLBACK List<Game> irgendwie noch fixen
-            // TODO FIXME hier das CALLBACK List<Game> irgendwie noch fixen
-            // TODO FIXME hier das CALLBACK List<Game> irgendwie noch fixen
-            // TODO FIXME hier das CALLBACK List<Game> irgendwie noch fixen
 
             Webservice.getGameListBySystemId(systemObj.getSystemId(), systemObj.getSystemName(), isAchievementsEnabled, new RepositoryEntityListCallback<Game>() {
                 @Override

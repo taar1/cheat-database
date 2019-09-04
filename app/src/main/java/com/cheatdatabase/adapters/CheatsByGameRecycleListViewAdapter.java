@@ -1,170 +1,176 @@
 package com.cheatdatabase.adapters;
 
-import android.graphics.Typeface;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.recyclerview.widget.RecyclerView;
+import android.app.Activity;
+import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.RatingBar;
-import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.cheatdatabase.R;
 import com.cheatdatabase.businessobjects.Cheat;
-import com.cheatdatabase.events.CheatListRecyclerViewClickEvent;
 import com.cheatdatabase.helpers.Konstanten;
-import com.cheatdatabase.helpers.Reachability;
-import com.cheatdatabase.helpers.Tools;
+import com.cheatdatabase.holders.CheatsByGameListViewItemHolder;
+import com.cheatdatabase.holders.FacebookNativeAdHolder;
+import com.cheatdatabase.listeners.OnCheatListItemSelectedListener;
+import com.cheatdatabase.listitems.CheatListItem;
+import com.cheatdatabase.listitems.FacebookNativeAdListItem;
+import com.cheatdatabase.listitems.ListItem;
+import com.facebook.ads.AdOptionsView;
+import com.facebook.ads.NativeAd;
+import com.facebook.ads.NativeAdLayout;
+import com.facebook.ads.NativeAdsManager;
 import com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView;
-
-import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
+import needle.Needle;
 
-public class CheatsByGameRecycleListViewAdapter extends RecyclerView.Adapter<CheatsByGameRecycleListViewAdapter.ViewHolder> implements FastScrollRecyclerView.SectionedAdapter,
+public class CheatsByGameRecycleListViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements FastScrollRecyclerView.SectionedAdapter,
         FastScrollRecyclerView.MeasurableAdapter {
 
     private static final String TAG = CheatsByGameRecycleListViewAdapter.class.getSimpleName();
 
-    private Typeface latoFontBold;
-    private Typeface latoFontLight;
     private List<Cheat> cheatList;
-    private Cheat cheatObj;
+    private List<ListItem> listItems;
+    private Context context;
 
-    public CheatsByGameRecycleListViewAdapter() {
+    private OnCheatListItemSelectedListener listener;
+
+    private NativeAdsManager mNativeAdsManager;
+
+    public CheatsByGameRecycleListViewAdapter(Activity context, NativeAdsManager nativeAdsManager, OnCheatListItemSelectedListener listener) {
+        this.context = context;
+        this.mNativeAdsManager = nativeAdsManager;
+        this.listener = listener;
         cheatList = new ArrayList<>();
+        listItems = new ArrayList<>();
+
+        // TODO at some point implement a cheat filter function
+        filterList("");
     }
 
     public void setCheats(List<Cheat> cheatList) {
         this.cheatList = cheatList;
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-
-        @BindView(R.id.cheat_title)
-        TextView mCheatTitle;
-        @BindView(R.id.small_ratingbar)
-        RatingBar mRatingBar;
-        @BindView(R.id.newaddition)
-        ImageView mFlagNewAddition;
-        @BindView(R.id.screenshots)
-        ImageView mFlagScreenshot;
-        @BindView(R.id.flag)
-        ImageView mFlagGerman;
-
-        private OnCheatItemClickListener mListener;
-
-        public ViewHolder(View view, OnCheatItemClickListener listener) {
-            super(view);
-            ButterKnife.bind(this, view);
-            mListener = listener;
-
-            mCheatTitle.setTypeface(Tools.getFont(view.getContext().getAssets(), Konstanten.FONT_REGULAR));
-
-//            mCheatTitle = view.findViewById(R.id.cheat_title);
-//            mRatingBar = view.findViewById(R.id.small_ratingbar);
-//            mFlagNewAddition = view.findViewById(R.id.newaddition);
-//            mFlagScreenshot = view.findViewById(R.id.screenshots);
-//            mFlagGerman = view.findViewById(R.id.flag);
-
-            mFlagNewAddition.setImageResource(R.drawable.flag_new);
-            mFlagScreenshot.setImageResource(R.drawable.flag_img);
-            mFlagGerman.setImageResource(R.drawable.flag_german);
-
-            view.setOnClickListener(this);
-        }
-
-        @Override
-        public void onClick(View v) {
-            mListener.onCheatClick(this);
-        }
-
-    }
-
-    public interface OnCheatItemClickListener {
-        void onCheatClick(CheatsByGameRecycleListViewAdapter.ViewHolder caller);
-    }
-
-    // Create new views (invoked by the layout manager)
     @Override
-    public CheatsByGameRecycleListViewAdapter.ViewHolder onCreateViewHolder(final ViewGroup parent, int viewType) {
-
-        latoFontBold = Tools.getFont(parent.getContext().getAssets(), Konstanten.FONT_BOLD);
-        latoFontLight = Tools.getFont(parent.getContext().getAssets(), Konstanten.FONT_LIGHT);
-
-        // create a new view
-        final View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.listrow_cheat_item, parent, false);
-        v.setDrawingCacheEnabled(true);
-
-        return new ViewHolder(v, new OnCheatItemClickListener() {
-            @Override
-            public void onCheatClick(ViewHolder caller) {
-                if (Reachability.reachability.isReachable) {
-
-                    Log.d(TAG, "caller.getAdapterPosition(): " + caller.getAdapterPosition());
-                    Log.d(TAG, "Cheat Title: " + cheatList.get(caller.getAdapterPosition()).getCheatTitle());
-
-                    EventBus.getDefault().post(new CheatListRecyclerViewClickEvent(cheatList.get(caller.getAdapterPosition()), caller.getAdapterPosition()));
-                } else {
-                    EventBus.getDefault().post(new CheatListRecyclerViewClickEvent(new Exception()));
-                }
-            }
-        });
+    public int getItemViewType(int position) {
+        return listItems.get(position).getType();
     }
 
-    // Replace the contents of a view (invoked by the layout manager)
-    @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
-        cheatObj = cheatList.get(position);
-
-        holder.mCheatTitle.setText(cheatObj.getCheatTitle());
-        holder.mCheatTitle.setTypeface(latoFontBold);
-
-        holder.mRatingBar.setRating(cheatObj.getRatingAverage() / 2);
-
-        if (cheatObj.getDayAge() < Konstanten.CHEAT_DAY_AGE_SHOW_NEWADDITION_ICON) {
-            holder.mFlagNewAddition.setVisibility(View.VISIBLE);
-        } else {
-            holder.mFlagNewAddition.setVisibility(View.GONE);
-        }
-
-        if (cheatObj.isScreenshots()) {
-            holder.mFlagScreenshot.setVisibility(View.VISIBLE);
-        } else {
-            holder.mFlagScreenshot.setVisibility(View.GONE);
-        }
-
-        if (cheatObj.getLanguageId() == 2) { // 2 = German
-            holder.mFlagGerman.setVisibility(View.VISIBLE);
-        } else {
-            holder.mFlagGerman.setVisibility(View.GONE);
-        }
-    }
-
-    // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
-        return cheatList.size();
+        return listItems.size();
     }
 
-    // Display the first letter of the cheat during fast scrolling
+    @Override
+    public RecyclerView.ViewHolder onCreateViewHolder(final ViewGroup parent, int viewType) {
+
+        if (viewType == ListItem.TYPE_CHEAT) {
+            final View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.listrow_cheat_item, parent, false);
+            itemView.setDrawingCacheEnabled(true);
+            return new CheatsByGameListViewItemHolder(itemView, context);
+        } else if (viewType == ListItem.TYPE_FACEBOOK_NATIVE_AD) {
+            NativeAdLayout inflatedView = (NativeAdLayout) LayoutInflater.from(parent.getContext()).inflate(R.layout.native_ad_unit, parent, false);
+            return new FacebookNativeAdHolder(inflatedView);
+        }
+
+        return null;
+    }
+
+    @Override
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+        int type = getItemViewType(position);
+        Log.d(TAG, "XXXXX ADAPTER onBindViewHolder() TYPE: " + type);
+
+        if (type == ListItem.TYPE_CHEAT) {
+            final CheatListItem cheatListItem = (CheatListItem) listItems.get(position);
+            CheatsByGameListViewItemHolder cheatsByGameListViewItemHolder = (CheatsByGameListViewItemHolder) holder;
+            cheatsByGameListViewItemHolder.setCheat(cheatListItem.getCheat());
+            cheatsByGameListViewItemHolder.view.setOnClickListener(v -> listener.onCheatListItemSelected(cheatListItem.getCheat()));
+        } else if (type == ListItem.TYPE_FACEBOOK_NATIVE_AD) {
+            NativeAd ad = mNativeAdsManager.nextNativeAd();
+
+            FacebookNativeAdHolder facebookNativeAdHolder = (FacebookNativeAdHolder) holder;
+            facebookNativeAdHolder.adChoicesContainer.removeAllViews();
+
+            if (ad != null) {
+                facebookNativeAdHolder.tvAdTitle.setText(ad.getAdvertiserName());
+                facebookNativeAdHolder.tvAdBody.setText(ad.getAdBodyText());
+                facebookNativeAdHolder.tvAdSocialContext.setText(ad.getAdSocialContext());
+                facebookNativeAdHolder.tvAdSponsoredLabel.setText("Sponsored");
+                facebookNativeAdHolder.btnAdCallToAction.setText(ad.getAdCallToAction());
+                facebookNativeAdHolder.btnAdCallToAction.setVisibility(ad.hasCallToAction() ? View.VISIBLE : View.INVISIBLE);
+                AdOptionsView adOptionsView = new AdOptionsView(context, ad, facebookNativeAdHolder.nativeAdLayout);
+                facebookNativeAdHolder.adChoicesContainer.addView(adOptionsView, 0);
+
+                List<View> clickableViews = new ArrayList<>();
+                clickableViews.add(facebookNativeAdHolder.ivAdIcon);
+                clickableViews.add(facebookNativeAdHolder.mvAdMedia);
+                clickableViews.add(facebookNativeAdHolder.btnAdCallToAction);
+                ad.registerViewForInteraction(
+                        facebookNativeAdHolder.nativeAdLayout,
+                        facebookNativeAdHolder.mvAdMedia,
+                        facebookNativeAdHolder.ivAdIcon,
+                        clickableViews);
+            }
+        }
+    }
+
+    // Display the first letter of the game during fast scrolling
     @NonNull
     @Override
     public String getSectionName(int position) {
-        return cheatList.get(position).getCheatTitle().substring(0, 1).toUpperCase();
+        // What will be displayed at the right side when fast scroll is used (normally the first letter of the game)
+        int type = getItemViewType(position);
+        if (type == ListItem.TYPE_CHEAT) {
+            return cheatList.get(position).getGameName().substring(0, 1).toUpperCase();
+        } else {
+            // When we show an ad or something else we show blank
+            return "";
+        }
     }
 
     // Height of the scroll-bar at the right screen side
     @Override
-    public int getViewTypeHeight(RecyclerView recyclerView, @Nullable RecyclerView.ViewHolder viewHolder, int viewType) {
+    public int getViewTypeHeight(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, int viewType) {
         return 100;
+    }
+
+    // Filter List by search qord (not implemented yet)
+    public void filterList(String filter) {
+        if ((filter != null) && (filter.trim().length() > 2)) {
+            // TODO filter the list and update gameList with filtered List
+        }
+
+        updateCheatListAndInjectFacebookAds();
+    }
+
+    private void updateCheatListAndInjectFacebookAds() {
+        int j = 0;
+        final List<ListItem> newListItems = new ArrayList<>();
+
+        for (Cheat cheat : cheatList) {
+            CheatListItem cheatListItem = new CheatListItem();
+            cheatListItem.setCheat(cheat);
+            newListItems.add(cheatListItem);
+
+            if (j % Konstanten.INJECT_AD_AFTER_EVERY_POSITION == Konstanten.INJECT_AD_AFTER_EVERY_POSITION - 1) {
+                newListItems.add(new FacebookNativeAdListItem());
+            }
+            j++;
+        }
+
+        Needle.onMainThread().execute(() -> {
+            listItems.clear();
+            listItems.addAll(newListItems);
+            notifyDataSetChanged();
+        });
     }
 
 }

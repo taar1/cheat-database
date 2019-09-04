@@ -24,8 +24,6 @@ public class GamesBySystemListViewItemHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.cheat_count)
     TextView cheatCount;
 
-//    public GamesBySystemRecycleListViewAdapter.OnGameItemClickListener onGameItemClickListener;
-
     public GamesBySystemListViewItemHolder(View view, Context context) {
         super(view);
         ButterKnife.bind(this, view);
@@ -35,14 +33,7 @@ public class GamesBySystemListViewItemHolder extends RecyclerView.ViewHolder {
 
         gameName.setTypeface(Tools.getFont(view.getContext().getAssets(), Konstanten.FONT_BOLD));
         cheatCount.setTypeface(Tools.getFont(view.getContext().getAssets(), Konstanten.FONT_LIGHT));
-
-//        view.setOnClickListener(this);
     }
-
-//    @Override
-//    public void onClick(View v) {
-//        onGameItemClickListener.onGameClick(this);
-//    }
 
     public Game getGame() {
         return game;
