@@ -54,7 +54,7 @@ public class CheatsByGameRecycleListViewAdapter extends RecyclerView.Adapter<Rec
         filterList("");
     }
 
-    public void setCheats(List<Cheat> cheatList) {
+    public void setCheatList(List<Cheat> cheatList) {
         this.cheatList = cheatList;
     }
 
@@ -92,7 +92,7 @@ public class CheatsByGameRecycleListViewAdapter extends RecyclerView.Adapter<Rec
             final CheatListItem cheatListItem = (CheatListItem) listItems.get(position);
             CheatsByGameListViewItemHolder cheatsByGameListViewItemHolder = (CheatsByGameListViewItemHolder) holder;
             cheatsByGameListViewItemHolder.setCheat(cheatListItem.getCheat());
-            cheatsByGameListViewItemHolder.view.setOnClickListener(v -> listener.onCheatListItemSelected(cheatListItem.getCheat()));
+            cheatsByGameListViewItemHolder.view.setOnClickListener(v -> listener.onCheatListItemSelected(cheatListItem.getCheat(), position));
         } else if (type == ListItem.TYPE_FACEBOOK_NATIVE_AD) {
             NativeAd ad = mNativeAdsManager.nextNativeAd();
 

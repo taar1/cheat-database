@@ -282,12 +282,7 @@ public class GamesBySystemListActivity extends AppCompatActivity implements OnGa
     private void error() {
         Needle.onMainThread().execute(() -> {
             Log.e(TAG, "Caught error: " + getPackageName() + "/" + getTitle());
-            new AlertDialog.Builder(GamesBySystemListActivity.this).setIcon(R.drawable.ic_action_warning).setTitle(getString(R.string.err)).setMessage(R.string.err_data_not_accessible).setNeutralButton(R.string.ok, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int whichButton) {
-                    finish();
-                }
-            }).create().show();
+            new AlertDialog.Builder(GamesBySystemListActivity.this).setIcon(R.drawable.ic_action_warning).setTitle(getString(R.string.err)).setMessage(R.string.err_data_not_accessible).setNeutralButton(R.string.ok, (dialog, whichButton) -> finish()).create().show();
         });
     }
 

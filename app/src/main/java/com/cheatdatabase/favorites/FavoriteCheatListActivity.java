@@ -101,7 +101,13 @@ public class FavoriteCheatListActivity extends AppCompatActivity {
 
             init();
 
-            cheatsByGameRecycleListViewAdapter = new CheatsByGameRecycleListViewAdapter();
+            // TODO FIXME
+            // TODO FIXME
+            // TODO FIXME
+            // TODO FIXME
+            // TODO FIXME
+            // TODO FIXME
+            //cheatsByGameRecycleListViewAdapter = new CheatsByGameRecycleListViewAdapter();
 
             mSwipeRefreshLayout.setRefreshing(true);
 
@@ -312,7 +318,7 @@ public class FavoriteCheatListActivity extends AppCompatActivity {
         Needle.onMainThread().execute(() -> {
             try {
                 if (cheatsArrayList != null && cheatsArrayList.size() > 0) {
-                    cheatsByGameRecycleListViewAdapter.setCheats(cheatsArrayList);
+                    cheatsByGameRecycleListViewAdapter.setCheatList(cheatsArrayList);
                     mRecyclerView.setAdapter(cheatsByGameRecycleListViewAdapter);
 
                     cheatsByGameRecycleListViewAdapter.notifyDataSetChanged();

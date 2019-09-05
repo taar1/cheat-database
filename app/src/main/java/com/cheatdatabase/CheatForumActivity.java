@@ -14,7 +14,6 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
 import android.widget.EditText;
@@ -61,7 +60,7 @@ import needle.Needle;
 /**
  * Displaying the forum of one cheat.
  */
-public class CheatForumActivity extends AppCompatActivity implements CheatListFragment.CheatListClickCallbacks {
+public class CheatForumActivity extends AppCompatActivity {
 
     private static String TAG = CheatForumActivity.class.getSimpleName();
 
@@ -517,11 +516,6 @@ public class CheatForumActivity extends AppCompatActivity implements CheatListFr
         });
 
 
-    }
-
-    @Override
-    public void onItemSelected(int position) {
-        // TODO Auto-generated method stub
     }
 
 }

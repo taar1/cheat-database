@@ -1,5 +1,6 @@
 package com.cheatdatabase;
 
+import android.app.AlertDialog;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
@@ -24,10 +25,7 @@ import com.cheatdatabase.adapters.CheatsByGameRecycleListViewAdapter;
 import com.cheatdatabase.businessobjects.Cheat;
 import com.cheatdatabase.businessobjects.Game;
 import com.cheatdatabase.businessobjects.Member;
-import com.cheatdatabase.dialogs.RateCheatMaterialDialog;
-import com.cheatdatabase.dialogs.ReportCheatMaterialDialog;
-import com.cheatdatabase.events.CheatListRecyclerViewClickEvent;
-import com.cheatdatabase.events.CheatRatingFinishedEvent;
+import com.cheatdatabase.callbacks.RepositoryEntityListCallback;
 import com.cheatdatabase.handset.cheatview.CheatViewPageIndicatorActivity;
 import com.cheatdatabase.helpers.DatabaseHelper;
 import com.cheatdatabase.helpers.Konstanten;
@@ -44,7 +42,6 @@ import com.google.gson.Gson;
 import com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView;
 
 import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -224,69 +221,56 @@ public class CheatsByGameListActivity extends AppCompatActivity implements OnChe
         }
     }
 
-    // TODO CheatsByGameListActivity mit GamesBySystemListActivity vergleichen und CheatsBy... entsprechend zu GamesBy... anpassen.
-    // TODO CheatsByGameListActivity mit GamesBySystemListActivity vergleichen und CheatsBy... entsprechend zu GamesBy... anpassen.
-    // TODO CheatsByGameListActivity mit GamesBySystemListActivity vergleichen und CheatsBy... entsprechend zu GamesBy... anpassen.
-    // TODO CheatsByGameListActivity mit GamesBySystemListActivity vergleichen und CheatsBy... entsprechend zu GamesBy... anpassen.
-    // TODO CheatsByGameListActivity mit GamesBySystemListActivity vergleichen und CheatsBy... entsprechend zu GamesBy... anpassen.
-    // TODO CheatsByGameListActivity mit GamesBySystemListActivity vergleichen und CheatsBy... entsprechend zu GamesBy... anpassen.
-    // TODO CheatsByGameListActivity mit GamesBySystemListActivity vergleichen und CheatsBy... entsprechend zu GamesBy... anpassen.
-    // TODO CheatsByGameListActivity mit GamesBySystemListActivity vergleichen und CheatsBy... entsprechend zu GamesBy... anpassen.
-    // TODO CheatsByGameListActivity mit GamesBySystemListActivity vergleichen und CheatsBy... entsprechend zu GamesBy... anpassen.
-    // TODO CheatsByGameListActivity mit GamesBySystemListActivity vergleichen und CheatsBy... entsprechend zu GamesBy... anpassen.
-    // TODO CheatsByGameListActivity mit GamesBySystemListActivity vergleichen und CheatsBy... entsprechend zu GamesBy... anpassen.
-    // TODO CheatsByGameListActivity mit GamesBySystemListActivity vergleichen und CheatsBy... entsprechend zu GamesBy... anpassen.
-    // TODO CheatsByGameListActivity mit GamesBySystemListActivity vergleichen und CheatsBy... entsprechend zu GamesBy... anpassen.
-    // TODO CheatsByGameListActivity mit GamesBySystemListActivity vergleichen und CheatsBy... entsprechend zu GamesBy... anpassen.
-
     private void loadCheats(boolean forceLoadOnline) {
         Log.d(TAG, "XXXXX loadCheats() by game: " + gameObj.getGameName() + " / " + gameObj.getGameId());
 
-        Needle.onBackgroundThread().execute(() -> {
-            cheatList = new ArrayList<>();
-            List<Cheat> cachedCheatsCollection;
-            List<Cheat> cheatsFound = null;
-            boolean isCached = false;
-            String achievementsEnabled;
-            boolean isAchievementsEnabled = sharedPreferences.getBoolean("enable_achievements", true);
+        cheatList = new ArrayList<>();
+        List<Cheat> cachedCheatsCollection;
+        List<Cheat> cheatsFound = null;
+        boolean isCached = false;
+        String achievementsEnabled;
+        boolean isAchievementsEnabled = sharedPreferences.getBoolean("enable_achievements", true);
 
-            if (isAchievementsEnabled) {
-                achievementsEnabled = Konstanten.ACHIEVEMENTS;
-            } else {
-                achievementsEnabled = Konstanten.NO_ACHIEVEMENTS;
-            }
+        if (isAchievementsEnabled) {
+            achievementsEnabled = Konstanten.ACHIEVEMENTS;
+        } else {
+            achievementsEnabled = Konstanten.NO_ACHIEVEMENTS;
+        }
 
+        TreeMap<String, TreeMap<String, List<Cheat>>> cheatsByGameInCache = cheatDatabaseApplication.getCheatsByGameCached();
+        TreeMap cheatListTree = null;
+        if (cheatsByGameInCache.containsKey(String.valueOf(gameObj.getGameId()))) {
 
-            try {
-                TreeMap<String, TreeMap<String, List<Cheat>>> cheatsByGameInCache = cheatDatabaseApplication.getCheatsByGameCached();
-                TreeMap cheatList = null;
-                if (cheatsByGameInCache.containsKey(String.valueOf(gameObj.getGameId()))) {
+            cheatListTree = cheatsByGameInCache.get(String.valueOf(gameObj.getGameId()));
+            if (cheatListTree != null) {
 
-                    cheatList = cheatsByGameInCache.get(String.valueOf(gameObj.getGameId()));
-                    if (cheatList != null) {
+                if (cheatListTree.containsKey(achievementsEnabled)) {
+                    cachedCheatsCollection = (List<Cheat>) cheatListTree.get(achievementsEnabled);
 
-                        if (cheatList.containsKey(achievementsEnabled)) {
-                            cachedCheatsCollection = (List<Cheat>) cheatList.get(achievementsEnabled);
-
-                            if ((cachedCheatsCollection != null) && (cachedCheatsCollection.size() > 0)) {
-                                cheatsFound = cachedCheatsCollection;
-                                gameObj.setCheatList(cheatsFound);
-                                isCached = true;
-                            }
-                        }
+                    if ((cachedCheatsCollection != null) && (cachedCheatsCollection.size() > 0)) {
+                        cheatsFound = cachedCheatsCollection;
+                        gameObj.setCheatList(cheatsFound);
+                        isCached = true;
                     }
                 }
+            }
+        }
 
-                if (!isCached || forceLoadOnline) {
-                    if (member == null) {
-                        cheatsFound = Webservice.getCheatList(gameObj, 0, isAchievementsEnabled);
-                    } else {
-                        cheatsFound = Webservice.getCheatList(gameObj, member.getMid(), isAchievementsEnabled);
-                    }
-                    gameObj.setCheatList(cheatsFound);
+        if (!isCached || forceLoadOnline) {
+            int memberId = 0;
+            if (member != null) {
+                memberId = member.getMid();
+            }
+
+            TreeMap finalCheatListTree = cheatListTree;
+
+            Webservice.getCheatList(gameObj, memberId, isAchievementsEnabled, new RepositoryEntityListCallback<Cheat>() {
+                @Override
+                public void onSuccess(List<Cheat> cheatEntityList) {
+                    gameObj.setCheatList(cheatEntityList);
 
                     TreeMap<String, List<Cheat>> updatedCheatListForCache = new TreeMap<>();
-                    updatedCheatListForCache.put(achievementsEnabled, cheatsFound);
+                    updatedCheatListForCache.put(achievementsEnabled, cheatEntityList);
 
                     String checkWhichSubKey;
                     if (achievementsEnabled.equalsIgnoreCase(Konstanten.ACHIEVEMENTS)) {
@@ -295,48 +279,57 @@ public class CheatsByGameListActivity extends AppCompatActivity implements OnChe
                         checkWhichSubKey = Konstanten.ACHIEVEMENTS;
                     }
 
-                    if ((cheatList != null) && (cheatList.containsKey(checkWhichSubKey))) {
-                        List<Cheat> existingGamesInCache = (List<Cheat>) cheatList.get(checkWhichSubKey);
+                    if ((finalCheatListTree != null) && (finalCheatListTree.containsKey(checkWhichSubKey))) {
+                        List<Cheat> existingGamesInCache = (List<Cheat>) finalCheatListTree.get(checkWhichSubKey);
                         updatedCheatListForCache.put(checkWhichSubKey, existingGamesInCache);
                     }
 
                     cheatsByGameInCache.put(String.valueOf(gameObj.getGameId()), updatedCheatListForCache);
                     cheatDatabaseApplication.setCheatsByGameCached(cheatsByGameInCache);
+
+                    cheatList = cheatEntityList;
+
+                    updateUI();
                 }
 
-                this.cheatList = cheatsFound;
-                updateUI();
-            } catch (NullPointerException e) {
-                Toast.makeText(this, R.string.err_data_not_accessible, Toast.LENGTH_LONG).show();
-                finish();
-            }
+                @Override
+                public void onFailure(Exception e) {
 
-        });
+                }
+            });
+
+
+        }
+
     }
 
-    public void updateUI() {
-        Needle.onMainThread().execute(() -> {
-            try {
-                if (cheatList != null && cheatList.size() > 0) {
-                    cheatsByGameRecycleListViewAdapter.setCheats(cheatList);
+    private void updateUI() {
+        if (cheatList != null && cheatList.size() > 0) {
+            cheatsByGameRecycleListViewAdapter.setCheatList(cheatList);
+            cheatsByGameRecycleListViewAdapter.filterList("");
 
-                    cheatsByGameRecycleListViewAdapter.notifyDataSetChanged();
-                } else {
-                    error();
-                }
-            } catch (Exception e) {
-                error();
-            }
+//            cheatsByGameRecycleListViewAdapter.notifyDataSetChanged();
+        } else {
+            error();
+        }
 
-            mSwipeRefreshLayout.setRefreshing(false);
-        });
+        mSwipeRefreshLayout.setRefreshing(false);
     }
 
     private void error() {
-        Toast.makeText(this, R.string.err_data_not_accessible, Toast.LENGTH_LONG).show();
-        finish();
+        Needle.onMainThread().execute(() -> {
+            Log.e(TAG, "Caught error: " + getPackageName() + "/" + getTitle());
+            new AlertDialog.Builder(CheatsByGameListActivity.this).setIcon(R.drawable.ic_action_warning).setTitle(getString(R.string.err)).setMessage(R.string.err_data_not_accessible).setNeutralButton(R.string.ok, (dialog, whichButton) -> finish()).create().show();
+        });
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (!Reachability.isRegistered()) {
+            Reachability.registerReachability(this);
+        }
+    }
 
     @Override
     protected void onStop() {
@@ -353,36 +346,34 @@ public class CheatsByGameListActivity extends AppCompatActivity implements OnChe
         super.onDestroy();
     }
 
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putParcelable("gameObj", gameObj);
-    }
-
-    public void showReportDialog() {
-        if ((member == null) || (member.getMid() == 0)) {
-            Toast.makeText(this, R.string.error_login_required, Toast.LENGTH_LONG).show();
-        } else {
-            new ReportCheatMaterialDialog(this, visibleCheat, member);
-        }
-    }
-
-
-    public void showRatingDialog() {
-        if ((member == null) || (member.getMid() == 0)) {
-            Toast.makeText(this, R.string.error_login_required, Toast.LENGTH_LONG).show();
-        } else {
-            new RateCheatMaterialDialog(this, visibleCheat, member);
-        }
-    }
-
-    @Subscribe
-    public void onEvent(CheatRatingFinishedEvent result) {
-        visibleCheat.setMemberRating(result.getRating());
-        Toast.makeText(this, R.string.rating_inserted, Toast.LENGTH_SHORT).show();
-    }
-
-
+//    @Override
+//    protected void onSaveInstanceState(Bundle outState) {
+//        super.onSaveInstanceState(outState);
+//        outState.putParcelable("gameObj", gameObj);
+//    }
+//
+//    public void showReportDialog() {
+//        if ((member == null) || (member.getMid() == 0)) {
+//            Toast.makeText(this, R.string.error_login_required, Toast.LENGTH_LONG).show();
+//        } else {
+//            new ReportCheatMaterialDialog(this, visibleCheat, member);
+//        }
+//    }
+//
+//
+//    public void showRatingDialog() {
+//        if ((member == null) || (member.getMid() == 0)) {
+//            Toast.makeText(this, R.string.error_login_required, Toast.LENGTH_LONG).show();
+//        } else {
+//            new RateCheatMaterialDialog(this, visibleCheat, member);
+//        }
+//    }
+//
+//    @Subscribe
+//    public void onEvent(CheatRatingFinishedEvent result) {
+//        visibleCheat.setMemberRating(result.getRating());
+//        Toast.makeText(this, R.string.rating_inserted, Toast.LENGTH_SHORT).show();
+//    }
 
     @OnClick(R.id.add_new_cheat_button)
     void addNewCheat() {
@@ -390,8 +381,6 @@ public class CheatsByGameListActivity extends AppCompatActivity implements OnChe
         explicitIntent.putExtra("gameObj", gameObj);
         startActivity(explicitIntent);
     }
-
-
 
 
     @Override
@@ -432,30 +421,49 @@ public class CheatsByGameListActivity extends AppCompatActivity implements OnChe
         Tools.showSnackbar(outerLayout, text);
     }
 
-    @Subscribe
-    public void onEvent(CheatListRecyclerViewClickEvent result) {
-        if (result.isSucceeded()) {
-            this.visibleCheat = result.getCheat();
-            Game lastGameObj = result.getCheat().getGame();
+//    @Subscribe
+//    public void onEvent(CheatListRecyclerViewClickEvent result) {
+//        if (result.isSucceeded()) {
+//            this.visibleCheat = result.getCheat();
+//            Game lastGameObj = result.getCheat().getGame();
+//
+//            editor.putInt(Konstanten.PREFERENCES_PAGE_SELECTED, result.getPosition());
+//            editor.apply();
+//
+//            if (Reachability.reachability.isReachable) {
+//                // Using local Preferences to pass data for large game objects
+//                // (instead of intent) such as Pokemon
+//                Intent explicitIntent = new Intent(CheatsByGameListActivity.this, CheatViewPageIndicatorActivity.class);
+//                explicitIntent.putExtra("gameObj", gameObj);
+//                explicitIntent.putExtra("selectedPage", result.getPosition());
+//                explicitIntent.putExtra("layoutResourceId", R.layout.activity_cheatview_pager);
+//                startActivity(explicitIntent);
+//            } else {
+//                Toast.makeText(this, R.string.no_internet, Toast.LENGTH_SHORT).show();
+//            }
+//        } else {
+//            Toast.makeText(this, R.string.no_internet, Toast.LENGTH_SHORT).show();
+//        }
+//    }
 
-            editor.putInt(Konstanten.PREFERENCES_PAGE_SELECTED, result.getPosition());
-            editor.apply();
 
-            if (Reachability.reachability.isReachable) {
-                // Using local Preferences to pass data for large game objects
-                // (instead of intent) such as Pokemon
-                Intent explicitIntent = new Intent(CheatsByGameListActivity.this, CheatViewPageIndicatorActivity.class);
-                explicitIntent.putExtra("gameObj", gameObj);
-                explicitIntent.putExtra("selectedPage", result.getPosition());
-                explicitIntent.putExtra("layoutResourceId", R.layout.activity_cheatview_pager);
-                startActivity(explicitIntent);
-            } else {
-                Toast.makeText(this, R.string.no_internet, Toast.LENGTH_SHORT).show();
-            }
+    @Override
+    public void onCheatListItemSelected(Cheat cheat, int position) {
+        this.visibleCheat = cheat;
+
+        editor.putInt(Konstanten.PREFERENCES_PAGE_SELECTED, position);
+        editor.apply();
+
+        if (Reachability.reachability.isReachable) {
+            // Using local Preferences to pass data for large game objects
+            // (instead of intent) such as Pokemon
+            Intent explicitIntent = new Intent(CheatsByGameListActivity.this, CheatViewPageIndicatorActivity.class);
+            explicitIntent.putExtra("gameObj", gameObj);
+            explicitIntent.putExtra("selectedPage", position);
+            explicitIntent.putExtra("layoutResourceId", R.layout.activity_cheatview_pager);
+            startActivity(explicitIntent);
         } else {
             Toast.makeText(this, R.string.no_internet, Toast.LENGTH_SHORT).show();
         }
     }
-
-
 }

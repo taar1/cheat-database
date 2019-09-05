@@ -631,15 +631,14 @@ public class Webservice {
      * @param memberId
      * @return
      */
-    public static List<Cheat> getCheatList(Game game, int memberId, boolean isAchievementsEnabled) {
+    public static void getCheatList(Game game, int memberId, boolean isAchievementsEnabled, final RepositoryEntityListCallback<Cheat> callback) {
         String systemString = getCheatListAsString(game.getGameId(), memberId, isAchievementsEnabled);
 
-        List<Cheat> cheats = null;
+        List<Cheat> cheatList = new ArrayList<>();
         JSONArray jArray;
 
         try {
             jArray = new JSONArray(systemString);
-            cheats = new ArrayList<>();
 
             for (int i = 0; i < jArray.length(); i++) {
 
@@ -695,14 +694,16 @@ public class Webservice {
                 member.setMid(memberId);
                 cheat.setMember(member);
 
-                cheats.add(cheat);
+                cheatList.add(cheat);
             }
+
+            callback.onSuccess(cheatList);
 
         } catch (JSONException e) {
             Log.e(TAG, "JSONException: " + e.getLocalizedMessage());
+            callback.onFailure(e);
         }
 
-        return cheats;
     }
 
     /**
@@ -1226,6 +1227,7 @@ public class Webservice {
 
     /**
      * Loags all games from a system.
+     *
      * @param systemId
      * @param systemName
      * @param isAchievementsEnabled
@@ -1268,7 +1270,6 @@ public class Webservice {
                 callback.onFailure(e);
             }
         });
-
 
 
     }
