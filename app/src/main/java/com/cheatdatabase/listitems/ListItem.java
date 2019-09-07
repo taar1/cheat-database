@@ -7,6 +7,7 @@ public abstract class ListItem {
     public static final int TYPE_FACEBOOK_NATIVE_AD = 3;
     public static final int TYPE_INMOBI_NATIVE_AD = 4;
     public static final int TYPE_BLANK = 5;
+    public static final int TYPE_UKON_NO_CHIKARA = 6;
 
     abstract public int getType();
 }

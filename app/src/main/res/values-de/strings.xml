@@ -331,5 +331,8 @@
     </plurals>
 
     <string name="privacy_policy">Datenschutzrichtlinie</string>
+    <string name="ukon_ad_title">Verabschiede dich von deinem Kater.</string>
+    <string name="ukon_ad_subtitle">Jetzt auf ukon.ch bestellen - Versandkostenfrei!</string>
+    <string name="ukon_url">http://www.ukon.ch?lang=de</string>
 
 </resources>

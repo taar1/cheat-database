@@ -294,13 +294,10 @@ public class CheatsByGameListActivity extends AppCompatActivity implements OnChe
 
                 @Override
                 public void onFailure(Exception e) {
-
+                    Toast.makeText(CheatsByGameListActivity.this, R.string.err_somethings_wrong, Toast.LENGTH_LONG).show();
                 }
             });
-
-
         }
-
     }
 
     private void updateUI() {

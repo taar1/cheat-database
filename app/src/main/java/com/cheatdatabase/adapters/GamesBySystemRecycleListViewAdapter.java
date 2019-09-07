@@ -2,6 +2,8 @@ package com.cheatdatabase.adapters;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,10 +18,12 @@ import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.holders.BlankWhiteListViewItemHolder;
 import com.cheatdatabase.holders.FacebookNativeAdHolder;
 import com.cheatdatabase.holders.GamesBySystemListViewItemHolder;
+import com.cheatdatabase.holders.UkonAdListViewItemHolder;
 import com.cheatdatabase.listeners.OnGameListItemSelectedListener;
 import com.cheatdatabase.listitems.FacebookNativeAdListItem;
 import com.cheatdatabase.listitems.GameListItem;
 import com.cheatdatabase.listitems.ListItem;
+import com.cheatdatabase.listitems.UkonAdListItem;
 import com.facebook.ads.AdOptionsView;
 import com.facebook.ads.NativeAd;
 import com.facebook.ads.NativeAdLayout;
@@ -80,6 +84,9 @@ public class GamesBySystemRecycleListViewAdapter extends RecyclerView.Adapter<Re
         } else if (viewType == ListItem.TYPE_FACEBOOK_NATIVE_AD) {
             NativeAdLayout inflatedView = (NativeAdLayout) LayoutInflater.from(parent.getContext()).inflate(R.layout.native_ad_unit, parent, false);
             return new FacebookNativeAdHolder(inflatedView);
+        } else if (viewType == ListItem.TYPE_UKON_NO_CHIKARA) {
+            final View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.ukon_custom_ad, parent, false);
+            return new UkonAdListViewItemHolder(itemView, context);
         }
 
         return null;
@@ -121,8 +128,13 @@ public class GamesBySystemRecycleListViewAdapter extends RecyclerView.Adapter<Re
                         facebookNativeAdHolder.ivAdIcon,
                         clickableViews);
             }
-        } else if (type == ListItem.TYPE_BLANK) {
-            BlankWhiteListViewItemHolder blankWhiteListViewItemHolder = (BlankWhiteListViewItemHolder) holder;
+        } else if (type == ListItem.TYPE_UKON_NO_CHIKARA) {
+            UkonAdListViewItemHolder ukonAdListViewItemHolder = (UkonAdListViewItemHolder) holder;
+            ukonAdListViewItemHolder.view.setOnClickListener(v -> {
+                Uri uri = Uri.parse(context.getString(R.string.ukon_url));
+                Intent intentMoreApps = new Intent(Intent.ACTION_VIEW, uri);
+                context.startActivity(intentMoreApps);
+            });
         }
     }
 
@@ -158,6 +170,7 @@ public class GamesBySystemRecycleListViewAdapter extends RecyclerView.Adapter<Re
 
     private void updateGameListAndInjectFacebookAds() {
         int j = 0;
+        boolean hasUkonAdAlreadyShown = false;
         final List<ListItem> newListItems = new ArrayList<>();
 
         for (Game game : gameList) {
@@ -166,8 +179,15 @@ public class GamesBySystemRecycleListViewAdapter extends RecyclerView.Adapter<Re
             newListItems.add(gameListItem);
 
             if (j % Konstanten.INJECT_AD_AFTER_EVERY_POSITION == Konstanten.INJECT_AD_AFTER_EVERY_POSITION - 1) {
-                newListItems.add(new FacebookNativeAdListItem());
+
+                if (!hasUkonAdAlreadyShown) {
+                    newListItems.add(new UkonAdListItem());
+                    hasUkonAdAlreadyShown = true;
+                } else {
+                    newListItems.add(new FacebookNativeAdListItem());
+                }
             }
+
             j++;
         }
 

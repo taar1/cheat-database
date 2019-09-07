@@ -30,9 +30,6 @@ public class GamesBySystemListViewItemHolder extends RecyclerView.ViewHolder {
 
         this.view = view;
         this.context = context;
-
-        gameName.setTypeface(Tools.getFont(view.getContext().getAssets(), Konstanten.FONT_BOLD));
-        cheatCount.setTypeface(Tools.getFont(view.getContext().getAssets(), Konstanten.FONT_LIGHT));
     }
 
     public Game getGame() {

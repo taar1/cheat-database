@@ -632,77 +632,78 @@ public class Webservice {
      * @return
      */
     public static void getCheatList(Game game, int memberId, boolean isAchievementsEnabled, final RepositoryEntityListCallback<Cheat> callback) {
-        String systemString = getCheatListAsString(game.getGameId(), memberId, isAchievementsEnabled);
 
-        List<Cheat> cheatList = new ArrayList<>();
-        JSONArray jArray;
+        Needle.onBackgroundThread().execute(() -> {
+            String systemString = getCheatListAsString(game.getGameId(), memberId, isAchievementsEnabled);
 
-        try {
-            jArray = new JSONArray(systemString);
+            List<Cheat> cheatList = new ArrayList<>();
+            JSONArray jArray;
 
-            for (int i = 0; i < jArray.length(); i++) {
+            try {
+                jArray = new JSONArray(systemString);
 
-                JSONObject jsonObject = jArray.getJSONObject(i);
+                for (int i = 0; i < jArray.length(); i++) {
 
-                int cheatId = jsonObject.getInt("id");
-                String cheatTitle = jsonObject.getString("title");
-                String cheatText = jsonObject.getString("cheat");
-                int language = jsonObject.getInt("lang");
-                int cheatFormat = jsonObject.getInt("format");
-                String rating = jsonObject.getString("rating");
-                String memberRating = jsonObject.getString("member_rating");
-                String created = jsonObject.getString("created");
-                int forumCount = jsonObject.getInt("forum_count");
+                    JSONObject jsonObject = jArray.getJSONObject(i);
 
-                Cheat cheat = new Cheat();
+                    int cheatId = jsonObject.getInt("id");
+                    String cheatTitle = jsonObject.getString("title");
+                    String cheatText = jsonObject.getString("cheat");
+                    int language = jsonObject.getInt("lang");
+                    int cheatFormat = jsonObject.getInt("format");
+                    String rating = jsonObject.getString("rating");
+                    String memberRating = jsonObject.getString("member_rating");
+                    String created = jsonObject.getString("created");
+                    int forumCount = jsonObject.getInt("forum_count");
 
-                /*
-                 * Screenshot-Informationen auslesen
-                 */
-                JSONArray screenshots = jsonObject.getJSONArray("screenshots");
-                Screenshot[] screens = new Screenshot[screenshots.length()];
-                for (int j = 0; j < screenshots.length(); j++) {
-                    JSONArray screenshot = screenshots.getJSONArray(j);
-                    String filename = screenshot.getString(0);
-                    String filesize_kb = screenshot.getString(1);
+                    Cheat cheat = new Cheat();
 
-                    screens[j] = new Screenshot(filesize_kb, filename, cheatId);
+                    // Screenshot-Informationen auslesen
+                    JSONArray screenshots = jsonObject.getJSONArray("screenshots");
+                    Screenshot[] screens = new Screenshot[screenshots.length()];
+                    for (int j = 0; j < screenshots.length(); j++) {
+                        JSONArray screenshot = screenshots.getJSONArray(j);
+                        String filename = screenshot.getString(0);
+                        String filesize_kb = screenshot.getString(1);
 
-                    cheat.setHasScreenshots(true);
+                        screens[j] = new Screenshot(filesize_kb, filename, cheatId);
+
+                        cheat.setHasScreenshots(true);
+                    }
+                    cheat.setScreenshotList(screens);
+
+                    cheat.setCheatId(cheatId);
+                    cheat.setCheatTitle(cheatTitle.replaceAll("\\\\", ""));
+                    cheat.setCheatText(cheatText.replaceAll("\\\\", ""));
+                    cheat.setLanguageId(language);
+                    cheat.setRatingAverage(Float.parseFloat(rating));
+                    cheat.setMemberRating(Float.parseFloat(memberRating));
+                    cheat.setGameId(game.getGameId());
+                    cheat.setGameName(game.getGameName());
+                    if (cheatFormat == 2) {
+                        cheat.setWalkthroughFormat(true);
+                    } else {
+                        cheat.setWalkthroughFormat(false);
+                    }
+                    cheat.setSystemId(game.getSystemId());
+                    cheat.setSystemName(game.getSystemName());
+                    cheat.setCreated(created);
+                    cheat.setForumCount(forumCount);
+
+                    Member member = new Member();
+                    member.setMid(memberId);
+                    cheat.setMember(member);
+
+                    cheatList.add(cheat);
                 }
-                cheat.setScreenshotList(screens);
 
-                cheat.setCheatId(cheatId);
-                cheat.setCheatTitle(cheatTitle.replaceAll("\\\\", ""));
-                cheat.setCheatText(cheatText.replaceAll("\\\\", ""));
-                cheat.setLanguageId(language);
-                cheat.setRatingAverage(Float.parseFloat(rating));
-                cheat.setMemberRating(Float.parseFloat(memberRating));
-                cheat.setGameId(game.getGameId());
-                cheat.setGameName(game.getGameName());
-                if (cheatFormat == 2) {
-                    cheat.setWalkthroughFormat(true);
-                } else {
-                    cheat.setWalkthroughFormat(false);
-                }
-                cheat.setSystemId(game.getSystemId());
-                cheat.setSystemName(game.getSystemName());
-                cheat.setCreated(created);
-                cheat.setForumCount(forumCount);
+                callback.onSuccess(cheatList);
 
-                Member member = new Member();
-                member.setMid(memberId);
-                cheat.setMember(member);
-
-                cheatList.add(cheat);
+            } catch (JSONException e) {
+                Log.e(TAG, "JSONException: " + e.getLocalizedMessage());
+                callback.onFailure(e);
             }
-
-            callback.onSuccess(cheatList);
-
-        } catch (JSONException e) {
-            Log.e(TAG, "JSONException: " + e.getLocalizedMessage());
-            callback.onFailure(e);
-        }
+        });
 
     }
 

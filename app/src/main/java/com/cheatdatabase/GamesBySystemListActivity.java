@@ -344,8 +344,6 @@ public class GamesBySystemListActivity extends AppCompatActivity implements OnGa
 
     @Override
     public void onGameListItemSelected(Game game) {
-        Log.d(TAG, "XXXXX onGameListItemSelected");
-
         if (Reachability.reachability.isReachable) {
             Intent intent = new Intent(this, CheatsByGameListActivity.class);
             intent.putExtra("gameObj", game);
