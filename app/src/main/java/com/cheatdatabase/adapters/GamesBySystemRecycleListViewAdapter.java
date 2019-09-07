@@ -170,7 +170,7 @@ public class GamesBySystemRecycleListViewAdapter extends RecyclerView.Adapter<Re
 
     private void updateGameListAndInjectFacebookAds() {
         int j = 0;
-        boolean hasUkonAdAlreadyShown = false;
+        int adCounter = 0;
         final List<ListItem> newListItems = new ArrayList<>();
 
         for (Game game : gameList) {
@@ -180,12 +180,13 @@ public class GamesBySystemRecycleListViewAdapter extends RecyclerView.Adapter<Re
 
             if (j % Konstanten.INJECT_AD_AFTER_EVERY_POSITION == Konstanten.INJECT_AD_AFTER_EVERY_POSITION - 1) {
 
-                if (!hasUkonAdAlreadyShown) {
+                if (adCounter == 1) {
                     newListItems.add(new UkonAdListItem());
-                    hasUkonAdAlreadyShown = true;
                 } else {
                     newListItems.add(new FacebookNativeAdListItem());
                 }
+
+                adCounter++;
             }
 
             j++;

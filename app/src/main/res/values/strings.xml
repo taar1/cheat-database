@@ -338,7 +338,7 @@
     <string name="disable_achievements_text">We know that many of you don\'t like the <b>Achievements and Trophies</b> tips. That\'s why we\'ve added the option to filter them out. Just click on <b>Settings</b> in the <b>drawer menu</b> where you will find an option to disable or enable them. <b>By default Achievements and Trophies are shown</b>. If you don\'t want them to see quickly head to the settings to disable them.\n\nIf there is any feature missing please use the feedback form to send us a feature request.</string>
 
     <string name="privacy_policy">Privacy Policy</string>
-    <string name="ukon_ad_title">Say Goodbye to Your Hangover.</string>
+    <string name="ukon_ad_title">Say Goodbye to Your Hangover</string>
     <string name="ukon_ad_subtitle">Shop now at ukon.ch - Worldwide Free Shipping!</string>
-    <string name="ukon_url">http://www.ukon.ch?lang=en</string>
+    <string name="ukon_url">http://www.ukon.ch/?lang=en</string>
 </resources>
