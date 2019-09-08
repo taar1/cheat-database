@@ -43,8 +43,18 @@ public class CheatsByGameRecycleListViewAdapter extends RecyclerView.Adapter<Rec
 
     private NativeAdsManager mNativeAdsManager;
 
-    public CheatsByGameRecycleListViewAdapter(Activity context, NativeAdsManager nativeAdsManager, OnCheatListItemSelectedListener listener) {
-        this.context = context;
+    public CheatsByGameRecycleListViewAdapter(Activity activity, OnCheatListItemSelectedListener listener) {
+        this.context = activity;
+        this.listener = listener;
+        cheatList = new ArrayList<>();
+        listItems = new ArrayList<>();
+
+        // TODO at some point implement a cheat filter function
+        filterList("");
+    }
+
+    public CheatsByGameRecycleListViewAdapter(Activity activity, NativeAdsManager nativeAdsManager, OnCheatListItemSelectedListener listener) {
+        this.context = activity;
         this.mNativeAdsManager = nativeAdsManager;
         this.listener = listener;
         cheatList = new ArrayList<>();
@@ -94,30 +104,32 @@ public class CheatsByGameRecycleListViewAdapter extends RecyclerView.Adapter<Rec
             cheatsByGameListViewItemHolder.setCheat(cheatListItem.getCheat());
             cheatsByGameListViewItemHolder.view.setOnClickListener(v -> listener.onCheatListItemSelected(cheatListItem.getCheat(), position));
         } else if (type == ListItem.TYPE_FACEBOOK_NATIVE_AD) {
-            NativeAd ad = mNativeAdsManager.nextNativeAd();
+            if (mNativeAdsManager != null) {
+                NativeAd ad = mNativeAdsManager.nextNativeAd();
 
-            FacebookNativeAdHolder facebookNativeAdHolder = (FacebookNativeAdHolder) holder;
-            facebookNativeAdHolder.adChoicesContainer.removeAllViews();
+                FacebookNativeAdHolder facebookNativeAdHolder = (FacebookNativeAdHolder) holder;
+                facebookNativeAdHolder.adChoicesContainer.removeAllViews();
 
-            if (ad != null) {
-                facebookNativeAdHolder.tvAdTitle.setText(ad.getAdvertiserName());
-                facebookNativeAdHolder.tvAdBody.setText(ad.getAdBodyText());
-                facebookNativeAdHolder.tvAdSocialContext.setText(ad.getAdSocialContext());
-                facebookNativeAdHolder.tvAdSponsoredLabel.setText("Sponsored");
-                facebookNativeAdHolder.btnAdCallToAction.setText(ad.getAdCallToAction());
-                facebookNativeAdHolder.btnAdCallToAction.setVisibility(ad.hasCallToAction() ? View.VISIBLE : View.INVISIBLE);
-                AdOptionsView adOptionsView = new AdOptionsView(context, ad, facebookNativeAdHolder.nativeAdLayout);
-                facebookNativeAdHolder.adChoicesContainer.addView(adOptionsView, 0);
+                if (ad != null) {
+                    facebookNativeAdHolder.tvAdTitle.setText(ad.getAdvertiserName());
+                    facebookNativeAdHolder.tvAdBody.setText(ad.getAdBodyText());
+                    facebookNativeAdHolder.tvAdSocialContext.setText(ad.getAdSocialContext());
+                    facebookNativeAdHolder.tvAdSponsoredLabel.setText("Sponsored");
+                    facebookNativeAdHolder.btnAdCallToAction.setText(ad.getAdCallToAction());
+                    facebookNativeAdHolder.btnAdCallToAction.setVisibility(ad.hasCallToAction() ? View.VISIBLE : View.INVISIBLE);
+                    AdOptionsView adOptionsView = new AdOptionsView(context, ad, facebookNativeAdHolder.nativeAdLayout);
+                    facebookNativeAdHolder.adChoicesContainer.addView(adOptionsView, 0);
 
-                List<View> clickableViews = new ArrayList<>();
-                clickableViews.add(facebookNativeAdHolder.ivAdIcon);
-                clickableViews.add(facebookNativeAdHolder.mvAdMedia);
-                clickableViews.add(facebookNativeAdHolder.btnAdCallToAction);
-                ad.registerViewForInteraction(
-                        facebookNativeAdHolder.nativeAdLayout,
-                        facebookNativeAdHolder.mvAdMedia,
-                        facebookNativeAdHolder.ivAdIcon,
-                        clickableViews);
+                    List<View> clickableViews = new ArrayList<>();
+                    clickableViews.add(facebookNativeAdHolder.ivAdIcon);
+                    clickableViews.add(facebookNativeAdHolder.mvAdMedia);
+                    clickableViews.add(facebookNativeAdHolder.btnAdCallToAction);
+                    ad.registerViewForInteraction(
+                            facebookNativeAdHolder.nativeAdLayout,
+                            facebookNativeAdHolder.mvAdMedia,
+                            facebookNativeAdHolder.ivAdIcon,
+                            clickableViews);
+                }
             }
         }
     }

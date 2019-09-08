@@ -18,16 +18,12 @@ import com.cheatdatabase.GamesBySystemListActivity;
 import com.cheatdatabase.R;
 import com.cheatdatabase.adapters.SystemsRecycleListViewAdapter;
 import com.cheatdatabase.businessobjects.SystemPlatform;
-import com.cheatdatabase.events.RemoteConfigLoadedEvent;
-import com.cheatdatabase.events.SystemListRecyclerViewClickEvent;
 import com.cheatdatabase.helpers.DatabaseHelper;
 import com.cheatdatabase.helpers.Tools;
 import com.cheatdatabase.helpers.Webservice;
-import com.cheatdatabase.taskresults.GamesAndCheatsCountTaskResult;
+import com.cheatdatabase.listeners.OnSystemListItemSelectedListener;
+import com.cheatdatabase.widgets.DividerDecoration;
 import com.google.gson.Gson;
-
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
 
 import java.util.Collections;
 import java.util.List;
@@ -36,12 +32,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import needle.Needle;
 
-public class SystemListFragment extends Fragment {
+public class SystemListFragment extends Fragment implements OnSystemListItemSelectedListener {
     private final String TAG = SystemListFragment.class.getSimpleName();
 
-    private RecyclerView.LayoutManager mLayoutManager;
-    private GamesAndCheatsCountTaskResult gamesAndCheatsCountTaskResult;
-    private List<SystemPlatform> systemGameandCheatCounterList = null;
+    private List<SystemPlatform> systemGameandCheatCounterList;
     private SystemsRecycleListViewAdapter systemsRecycleListViewAdapter;
 
     @BindView(R.id.my_recycler_view)
@@ -58,20 +52,7 @@ public class SystemListFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_systemlist, container, false);
         ButterKnife.bind(this, view);
 
-        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                loadGamesAndCheatsCounterBackground();
-            }
-        });
-
-        // use this setting to improve performance if you know that changes
-        // in content do not change the layout size of the RecyclerView
-        recyclerView.setHasFixedSize(true);
-
-        // use a linear layout manager
-        mLayoutManager = new LinearLayoutManager(getActivity());
-        recyclerView.setLayoutManager(mLayoutManager);
+        mSwipeRefreshLayout.setOnRefreshListener(() -> loadGamesAndCheatsCounterBackground());
 
         initAdapter(Tools.getGameSystemsFromXml(getActivity()));
 
@@ -82,64 +63,19 @@ public class SystemListFragment extends Fragment {
     }
 
     private void initAdapter(List<SystemPlatform> gameSystems) {
-        systemsRecycleListViewAdapter = new SystemsRecycleListViewAdapter();
+        systemsRecycleListViewAdapter = new SystemsRecycleListViewAdapter(this);
         systemsRecycleListViewAdapter.setSystemPlatforms(gameSystems);
         recyclerView.setAdapter(systemsRecycleListViewAdapter);
-        systemsRecycleListViewAdapter.notifyDataSetChanged();
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false));
+        recyclerView.addItemDecoration(new DividerDecoration(getActivity()));
+        recyclerView.getItemAnimator().setRemoveDuration(50);
+        recyclerView.setHasFixedSize(true);
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        EventBus.getDefault().register(this);
-    }
+    private void loadGamesAndCheatsCounterBackground() {
+        Log.d(TAG, "XXXXX loadGamesAndCheatsCounterBackground()");
 
-    @Override
-    public void onStop() {
-        EventBus.getDefault().unregister(this);
-        super.onStop();
-    }
-
-//    @Subscribe
-//    public void onEvent(GamesAndCheatsCountTaskResult result) {
-//        mSwipeRefreshLayout.setRefreshing(false);
-//        if (result.isSucceeded()) {
-//            initAdapter(result.getSystemPlatforms());
-//        } else {
-//            Toast.makeText(getActivity(), R.string.no_internet, Toast.LENGTH_LONG).show();
-//        }
-//    }
-
-
-    @Subscribe
-    public void onEvent(SystemListRecyclerViewClickEvent result) {
-        if (result.isSucceeded()) {
-            Intent explicitIntent = new Intent(getActivity(), GamesBySystemListActivity.class);
-            explicitIntent.putExtra("systemObj", result.getSystemPlatform());
-            startActivity(explicitIntent, ActivityOptions.makeSceneTransitionAnimation(getActivity()).toBundle());
-
-        } else {
-            Toast.makeText(getActivity(), R.string.no_internet, Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    @Subscribe
-    public void onEvent(RemoteConfigLoadedEvent event) {
-        Log.d(TAG, "XXXXX RemoteConfigLoadedEvent FIRED");
-        // TODO bei getGameSystemsFromXml() die REMOTE CONFIG verwenden
-        // TODO: mFirebaseRemoteConfig.getBoolean(REMOTE_CONFIG_HACKS_ENABLED_KEY)
-        // TODO vorher in MainActivity.java noch die remote config values in die sharedpreferences speichern, damit man von hier aus drauf zugreifen kann
-        // TODO vorher in MainActivity.java noch die remote config values in die sharedpreferences speichern, damit man von hier aus drauf zugreifen kann
-        // TODO vorher in MainActivity.java noch die remote config values in die sharedpreferences speichern, damit man von hier aus drauf zugreifen kann
-        // TODO vorher in MainActivity.java noch die remote config values in die sharedpreferences speichern, damit man von hier aus drauf zugreifen kann
-        // TODO vorher in MainActivity.java noch die remote config values in die sharedpreferences speichern, damit man von hier aus drauf zugreifen kann
-
-        initAdapter(Tools.getGameSystemsFromXml(getActivity()));
-        mSwipeRefreshLayout.setRefreshing(true);
-        loadGamesAndCheatsCounterBackground();
-    }
-
-    public void loadGamesAndCheatsCounterBackground() {
         Needle.onBackgroundThread().execute(() -> {
             DatabaseHelper db = new DatabaseHelper(getActivity());
 
@@ -199,19 +135,22 @@ public class SystemListFragment extends Fragment {
 
     private void updateUI() {
         Needle.onMainThread().execute(() -> {
-            try {
-                mSwipeRefreshLayout.setRefreshing(false);
+            systemsRecycleListViewAdapter.setSystemPlatforms(systemGameandCheatCounterList);
 
-                if ((systemGameandCheatCounterList == null) || (systemGameandCheatCounterList.size() < 1)) {
-                    Toast.makeText(getActivity(), R.string.no_internet, Toast.LENGTH_LONG).show();
-                } else {
-                    initAdapter(systemGameandCheatCounterList);
-                }
-            } catch (NullPointerException ignored) {
+            mSwipeRefreshLayout.setRefreshing(false);
+
+            if ((systemGameandCheatCounterList == null) || (systemGameandCheatCounterList.size() < 1)) {
+                Toast.makeText(getActivity(), R.string.no_internet, Toast.LENGTH_LONG).show();
             }
 
         });
 
     }
 
+    @Override
+    public void onSystemListItemSelected(SystemPlatform systemPlatform) {
+        Intent explicitIntent = new Intent(getActivity(), GamesBySystemListActivity.class);
+        explicitIntent.putExtra("systemObj", systemPlatform);
+        startActivity(explicitIntent, ActivityOptions.makeSceneTransitionAnimation(getActivity()).toBundle());
+    }
 }

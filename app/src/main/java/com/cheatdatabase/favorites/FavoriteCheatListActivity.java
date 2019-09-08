@@ -27,14 +27,13 @@ import com.cheatdatabase.adapters.CheatsByGameRecycleListViewAdapter;
 import com.cheatdatabase.businessobjects.Cheat;
 import com.cheatdatabase.businessobjects.Game;
 import com.cheatdatabase.businessobjects.Member;
-import com.cheatdatabase.dialogs.RateCheatMaterialDialog;
-import com.cheatdatabase.events.CheatListRecyclerViewClickEvent;
 import com.cheatdatabase.events.CheatRatingFinishedEvent;
 import com.cheatdatabase.favorites.handset.cheatview.FavoritesCheatViewPageIndicator;
 import com.cheatdatabase.helpers.DatabaseHelper;
 import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.helpers.Tools;
+import com.cheatdatabase.listeners.OnCheatListItemSelectedListener;
 import com.cheatdatabase.widgets.DividerDecoration;
 import com.facebook.ads.AdSize;
 import com.facebook.ads.AdView;
@@ -52,7 +51,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import needle.Needle;
 
-public class FavoriteCheatListActivity extends AppCompatActivity {
+public class FavoriteCheatListActivity extends AppCompatActivity implements OnCheatListItemSelectedListener {
 
     private final String TAG = this.getClass().getSimpleName();
 
@@ -60,22 +59,7 @@ public class FavoriteCheatListActivity extends AppCompatActivity {
 
     private CheatsByGameRecycleListViewAdapter cheatsByGameRecycleListViewAdapter;
 
-    @BindView(R.id.outer_layout)
-    LinearLayout outerLayout;
-    @BindView(R.id.my_recycler_view)
-    FastScrollRecyclerView mRecyclerView;
-    @BindView(R.id.swipe_refresh_layout)
-    SwipeRefreshLayout mSwipeRefreshLayout;
-    @BindView(R.id.toolbar)
-    Toolbar mToolbar;
-    @BindView(R.id.item_list_empty_view)
-    TextView mEmptyView;
-
-    @BindView(R.id.banner_container)
-    LinearLayout facebookBanner;
-    private AdView adView;
-
-    private SharedPreferences settings;
+    private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
     private Member member;
 
@@ -84,6 +68,29 @@ public class FavoriteCheatListActivity extends AppCompatActivity {
     private Cheat visibleCheat;
 
     private List<Cheat> cheatsArrayList;
+    private AdView facebookAdView;
+
+    @BindView(R.id.outer_layout)
+    LinearLayout outerLayout;
+    @BindView(R.id.my_recycler_view)
+    FastScrollRecyclerView recyclerView;
+    @BindView(R.id.swipe_refresh_layout)
+    SwipeRefreshLayout mSwipeRefreshLayout;
+    @BindView(R.id.toolbar)
+    Toolbar mToolbar;
+    @BindView(R.id.item_list_empty_view)
+    TextView mEmptyView;
+    @BindView(R.id.banner_container)
+    LinearLayout bannerContainerFacebook;
+
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+
+        loadCheats();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,57 +99,36 @@ public class FavoriteCheatListActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         gameObj = getIntent().getParcelableExtra("gameObj");
-
         if (gameObj == null) {
             Toast.makeText(this, R.string.err_somethings_wrong, Toast.LENGTH_LONG).show();
             finish();
         } else {
-            setTitle(gameObj.getGameName());
-
+            setTitle((gameObj.getGameName() != null ? gameObj.getGameName() : ""));
             init();
 
-            // TODO FIXME
-            // TODO FIXME
-            // TODO FIXME
-            // TODO FIXME
-            // TODO FIXME
-            // TODO FIXME
-            //cheatsByGameRecycleListViewAdapter = new CheatsByGameRecycleListViewAdapter();
-
             mSwipeRefreshLayout.setRefreshing(true);
+            mSwipeRefreshLayout.setOnRefreshListener(() -> loadCheats());
+
+            cheatsByGameRecycleListViewAdapter = new CheatsByGameRecycleListViewAdapter(this, this);
+            recyclerView.setAdapter(cheatsByGameRecycleListViewAdapter);
 
             getSupportActionBar().setTitle(gameObj.getGameName());
             getSupportActionBar().setSubtitle(gameObj.getSystemName());
 
-            mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-                @Override
-                public void onRefresh() {
-                    getCheats();
-                }
-            });
-
-
-            // use this setting to improve performance if you know that changes
-            // in content do not change the layout size of the RecyclerView
-            mRecyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
-            mRecyclerView.addItemDecoration(new DividerDecoration(this));
-            mRecyclerView.getItemAnimator().setRemoveDuration(50);
-            mRecyclerView.setHasFixedSize(true);
-
-            if (Reachability.reachability.isReachable) {
-                getCheats();
-            } else {
-                Tools.showSnackbar(outerLayout, getString(R.string.no_internet));
-            }
+            recyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
+            recyclerView.addItemDecoration(new DividerDecoration(this));
+            recyclerView.getItemAnimator().setRemoveDuration(50);
+            recyclerView.setHasFixedSize(true);
         }
-
-
     }
 
     private void init() {
-        adView = new AdView(this, Konstanten.FACEBOOK_AUDIENCE_NETWORK_NATIVE_BANNER_ID, AdSize.BANNER_HEIGHT_50);
-        facebookBanner.addView(adView);
-        adView.loadAd();
+        sharedPreferences = getSharedPreferences(Konstanten.PREFERENCES_FILE, MODE_PRIVATE);
+        editor = sharedPreferences.edit();
+
+        facebookAdView = new AdView(this, Konstanten.FACEBOOK_AUDIENCE_NETWORK_NATIVE_BANNER_ID, AdSize.BANNER_HEIGHT_50);
+        bannerContainerFacebook.addView(facebookAdView);
+        facebookAdView.loadAd();
 
         if (mToolbar != null) {
             setSupportActionBar(mToolbar);
@@ -150,26 +136,14 @@ public class FavoriteCheatListActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
-        settings = getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
-        editor = settings.edit();
-
         if (member == null) {
-            member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
+            member = new Gson().fromJson(sharedPreferences.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
         }
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                onBackPressed();
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        menu.clear();
         getMenuInflater().inflate(R.menu.cheats_by_game_menu, menu);
 
         if (member != null) {
@@ -192,8 +166,7 @@ public class FavoriteCheatListActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-
+    public boolean onPrepareOptionsMenu(final Menu menu) {
         menu.clear();
         if (member == null) {
             getMenuInflater().inflate(R.menu.signin_menu, menu);
@@ -211,91 +184,17 @@ public class FavoriteCheatListActivity extends AppCompatActivity {
         return super.onPrepareOptionsMenu(menu);
     }
 
-    // Save the position of the last element
     @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        outState.putInt("position", lastPosition);
-        outState.putParcelable("gameObj", lastGameObj);
-        super.onSaveInstanceState(outState);
-    }
-
-    public void showRatingDialog() {
-        if ((member == null) || (member.getMid() == 0)) {
-            Tools.showSnackbar(outerLayout, getString(R.string.error_login_required));
-        } else {
-            new RateCheatMaterialDialog(this, visibleCheat, member);
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
         }
+        return super.onOptionsItemSelected(item);
     }
 
-    @Subscribe
-    public void onEvent(CheatRatingFinishedEvent result) {
-        visibleCheat.setMemberRating(result.getRating());
-        Tools.showSnackbar(outerLayout, getString(R.string.rating_inserted));
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        if (!Reachability.isRegistered()) {
-            Reachability.registerReachability(this);
-        }
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        EventBus.getDefault().register(this);
-    }
-
-    @Override
-    protected void onStop() {
-        EventBus.getDefault().unregister(this);
-        Reachability.unregister(this);
-        super.onStop();
-    }
-
-    @Override
-    protected void onDestroy() {
-        if (adView != null) {
-            adView.destroy();
-        }
-        super.onDestroy();
-    }
-
-    @Subscribe
-    public void onEvent(CheatListRecyclerViewClickEvent result) {
-        if (result.isSucceeded()) {
-            this.visibleCheat = result.getCheat();
-            this.lastGameObj = result.getCheat().getGame();
-
-            editor.putInt(Konstanten.PREFERENCES_PAGE_SELECTED, result.getPosition());
-            editor.commit();
-
-            if (Reachability.reachability.isReachable) {
-                // Using local Preferences to pass data for large game objects
-                // (instead of intent) such as Pokemon
-
-                Intent explicitIntent = new Intent(this, FavoritesCheatViewPageIndicator.class);
-                explicitIntent.putExtra("gameObj", gameObj);
-                explicitIntent.putExtra("position", result.getPosition());
-                explicitIntent.putExtra("layoutResourceId", R.layout.activity_cheatview_pager);
-                startActivity(explicitIntent);
-            } else {
-                Tools.showSnackbar(outerLayout, getString(R.string.no_internet));
-            }
-        } else {
-            Tools.showSnackbar(outerLayout, getString(R.string.no_internet));
-        }
-    }
-
-    @OnClick(R.id.add_new_cheat_button)
-    void clickAddNewCheat() {
-        Intent explicitIntent = new Intent(FavoriteCheatListActivity.this, SubmitCheatActivity.class);
-        explicitIntent.putExtra("gameObj", gameObj);
-        startActivity(explicitIntent);
-    }
-
-    private void getCheats() {
+    private void loadCheats() {
         Needle.onBackgroundThread().execute(() -> {
             cheatsArrayList = new ArrayList<>();
 
@@ -319,8 +218,7 @@ public class FavoriteCheatListActivity extends AppCompatActivity {
             try {
                 if (cheatsArrayList != null && cheatsArrayList.size() > 0) {
                     cheatsByGameRecycleListViewAdapter.setCheatList(cheatsArrayList);
-                    mRecyclerView.setAdapter(cheatsByGameRecycleListViewAdapter);
-
+                    cheatsByGameRecycleListViewAdapter.filterList("");
                     cheatsByGameRecycleListViewAdapter.notifyDataSetChanged();
                 } else {
                     error();
@@ -334,15 +232,84 @@ public class FavoriteCheatListActivity extends AppCompatActivity {
         });
     }
 
-    private void error() {
-        Log.e(TAG, "caught error: " + getPackageName() + "/" + getTitle());
-        new AlertDialog.Builder(this).setIcon(R.drawable.ic_action_warning).setTitle(getString(R.string.err)).setMessage(R.string.err_data_not_accessible).setNeutralButton(R.string.ok, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int whichButton) {
-                finish();
-            }
-        }).create().show();
+    // Save the position of the last element
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putInt("position", lastPosition);
+        outState.putParcelable("gameObj", lastGameObj);
+        super.onSaveInstanceState(outState);
     }
 
+    @Subscribe
+    public void onEvent(CheatRatingFinishedEvent result) {
+        visibleCheat.setMemberRating(result.getRating());
+        Tools.showSnackbar(outerLayout, getString(R.string.rating_inserted));
+    }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (!Reachability.isRegistered()) {
+            Reachability.registerReachability(this);
+        }
+    }
+
+    @Override
+    protected void onStop() {
+        EventBus.getDefault().unregister(this);
+        Reachability.unregister(this);
+        super.onStop();
+    }
+
+    @Override
+    protected void onDestroy() {
+        if (facebookAdView != null) {
+            facebookAdView.destroy();
+        }
+        super.onDestroy();
+    }
+
+    @OnClick(R.id.add_new_cheat_button)
+    void addNewCheat() {
+        Intent explicitIntent = new Intent(FavoriteCheatListActivity.this, SubmitCheatActivity.class);
+        explicitIntent.putExtra("gameObj", gameObj);
+        startActivity(explicitIntent);
+    }
+
+    private void error() {
+        Log.e(TAG, "Caught error: " + getPackageName() + "/" + getTitle());
+
+        Needle.onMainThread().execute(() -> {
+            new AlertDialog.Builder(this).setIcon(R.drawable.ic_action_warning).setTitle(getString(R.string.err)).setMessage(R.string.err_data_not_accessible).setNeutralButton(R.string.ok, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int whichButton) {
+                    finish();
+                }
+            }).create().show();
+        });
+    }
+
+    @Override
+    public void onCheatListItemSelected(Cheat cheat, int position) {
+        this.visibleCheat = cheat;
+        this.lastGameObj = cheat.getGame();
+
+        editor.putInt(Konstanten.PREFERENCES_PAGE_SELECTED, position);
+        editor.commit();
+
+        if (Reachability.reachability.isReachable) {
+            // Using local Preferences to pass data for large game objects
+            // (instead of intent) such as Pokemon
+
+            Intent explicitIntent = new Intent(this, FavoritesCheatViewPageIndicator.class);
+            explicitIntent.putExtra("gameObj", gameObj);
+            explicitIntent.putExtra("position", position);
+            explicitIntent.putExtra("layoutResourceId", R.layout.activity_cheatview_pager);
+            startActivity(explicitIntent);
+        } else {
+            Tools.showSnackbar(outerLayout, getString(R.string.no_internet));
+        }
+
+
+    }
 }

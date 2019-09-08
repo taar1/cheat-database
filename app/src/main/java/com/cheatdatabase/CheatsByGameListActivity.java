@@ -191,7 +191,6 @@ public class CheatsByGameListActivity extends AppCompatActivity implements OnChe
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action buttons
         switch (item.getItemId()) {
             case android.R.id.home:
                 editor.remove(Konstanten.PREFERENCES_TEMP_GAME_OBJECT_VIEW);
@@ -304,8 +303,6 @@ public class CheatsByGameListActivity extends AppCompatActivity implements OnChe
         if (cheatList != null && cheatList.size() > 0) {
             cheatsByGameRecycleListViewAdapter.setCheatList(cheatList);
             cheatsByGameRecycleListViewAdapter.filterList("");
-
-//            cheatsByGameRecycleListViewAdapter.notifyDataSetChanged();
         } else {
             error();
         }
@@ -343,42 +340,12 @@ public class CheatsByGameListActivity extends AppCompatActivity implements OnChe
         super.onDestroy();
     }
 
-//    @Override
-//    protected void onSaveInstanceState(Bundle outState) {
-//        super.onSaveInstanceState(outState);
-//        outState.putParcelable("gameObj", gameObj);
-//    }
-//
-//    public void showReportDialog() {
-//        if ((member == null) || (member.getMid() == 0)) {
-//            Toast.makeText(this, R.string.error_login_required, Toast.LENGTH_LONG).show();
-//        } else {
-//            new ReportCheatMaterialDialog(this, visibleCheat, member);
-//        }
-//    }
-//
-//
-//    public void showRatingDialog() {
-//        if ((member == null) || (member.getMid() == 0)) {
-//            Toast.makeText(this, R.string.error_login_required, Toast.LENGTH_LONG).show();
-//        } else {
-//            new RateCheatMaterialDialog(this, visibleCheat, member);
-//        }
-//    }
-//
-//    @Subscribe
-//    public void onEvent(CheatRatingFinishedEvent result) {
-//        visibleCheat.setMemberRating(result.getRating());
-//        Toast.makeText(this, R.string.rating_inserted, Toast.LENGTH_SHORT).show();
-//    }
-
     @OnClick(R.id.add_new_cheat_button)
     void addNewCheat() {
         Intent explicitIntent = new Intent(CheatsByGameListActivity.this, SubmitCheatActivity.class);
         explicitIntent.putExtra("gameObj", gameObj);
         startActivity(explicitIntent);
     }
-
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -417,32 +384,6 @@ public class CheatsByGameListActivity extends AppCompatActivity implements OnChe
     void finishedAddingCheatsToFavorites(String text) {
         Tools.showSnackbar(outerLayout, text);
     }
-
-//    @Subscribe
-//    public void onEvent(CheatListRecyclerViewClickEvent result) {
-//        if (result.isSucceeded()) {
-//            this.visibleCheat = result.getCheat();
-//            Game lastGameObj = result.getCheat().getGame();
-//
-//            editor.putInt(Konstanten.PREFERENCES_PAGE_SELECTED, result.getPosition());
-//            editor.apply();
-//
-//            if (Reachability.reachability.isReachable) {
-//                // Using local Preferences to pass data for large game objects
-//                // (instead of intent) such as Pokemon
-//                Intent explicitIntent = new Intent(CheatsByGameListActivity.this, CheatViewPageIndicatorActivity.class);
-//                explicitIntent.putExtra("gameObj", gameObj);
-//                explicitIntent.putExtra("selectedPage", result.getPosition());
-//                explicitIntent.putExtra("layoutResourceId", R.layout.activity_cheatview_pager);
-//                startActivity(explicitIntent);
-//            } else {
-//                Toast.makeText(this, R.string.no_internet, Toast.LENGTH_SHORT).show();
-//            }
-//        } else {
-//            Toast.makeText(this, R.string.no_internet, Toast.LENGTH_SHORT).show();
-//        }
-//    }
-
 
     @Override
     public void onCheatListItemSelected(Cheat cheat, int position) {

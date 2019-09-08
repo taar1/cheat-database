@@ -1,125 +1,80 @@
 package com.cheatdatabase.adapters;
 
-import android.graphics.Typeface;
-import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
-import android.widget.TextView;
+
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.cheatdatabase.R;
 import com.cheatdatabase.businessobjects.SystemPlatform;
-import com.cheatdatabase.events.SystemListRecyclerViewClickEvent;
-import com.cheatdatabase.helpers.Konstanten;
-import com.cheatdatabase.helpers.Reachability;
-import com.cheatdatabase.helpers.Tools;
-
-import org.greenrobot.eventbus.EventBus;
+import com.cheatdatabase.holders.SystemListViewItemHolder;
+import com.cheatdatabase.listeners.OnSystemListItemSelectedListener;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class SystemsRecycleListViewAdapter extends RecyclerView.Adapter<SystemsRecycleListViewAdapter.ViewHolder> {
+import needle.Needle;
+
+public class SystemsRecycleListViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private static final String TAG = SystemsRecycleListViewAdapter.class.getSimpleName();
 
-    private List<SystemPlatform> systemPlatformList;
-    private Typeface latoFontBold;
-    private Typeface latoFontLight;
-    private SystemPlatform systemObj;
+    private List<SystemPlatform> systemList;
+    private OnSystemListItemSelectedListener listener;
 
-    public SystemsRecycleListViewAdapter() {
-        systemPlatformList = new ArrayList<>();
+
+    public SystemsRecycleListViewAdapter(OnSystemListItemSelectedListener listener) {
+        this.listener = listener;
+        systemList = new ArrayList<>();
+
+        filterList("");
     }
+
+
+    @Override
+    public int getItemCount() {
+        return systemList.size();
+    }
+
+
+    @Override
+    public RecyclerView.ViewHolder onCreateViewHolder(final ViewGroup parent, int viewType) {
+        final View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.systemlist_item, parent, false);
+        return new SystemListViewItemHolder(itemView);
+    }
+
+    @Override
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+        int type = getItemViewType(position);
+        Log.d(TAG, "XXXXX ADAPTER onBindViewHolder() TYPE: " + type);
+
+        SystemListViewItemHolder systemListViewItemHolder = (SystemListViewItemHolder) holder;
+        systemListViewItemHolder.setSystemPlatform(systemList.get(position));
+        systemListViewItemHolder.view.setOnClickListener(v -> listener.onSystemListItemSelected(systemList.get(position)));
+    }
+
 
     public void setSystemPlatforms(List<SystemPlatform> systemPlatforms) {
-        systemPlatformList = systemPlatforms;
+        systemList = systemPlatforms;
 
-        Collections.sort(systemPlatformList, (system1, system2) -> system1.getSystemName().toLowerCase().compareTo(system2.getSystemName().toLowerCase()));
-    }
+        Collections.sort(systemList, (system1, system2) -> system1.getSystemName().toLowerCase().compareTo(system2.getSystemName().toLowerCase()));
 
-    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        TextView mSystemName;
-        TextView mSubtitle;
-        LinearLayout mLinearLayout;
-        OnSystemClickedListener mListener;
-
-        ViewHolder(View v, OnSystemClickedListener listener) {
-            super(v);
-            mListener = listener;
-
-            mLinearLayout = v.findViewById(R.id.ll);
-            mSystemName = v.findViewById(R.id.system_name);
-            mSubtitle = v.findViewById(R.id.subtitle);
-
-            v.setOnClickListener(this);
+        for (SystemPlatform sp : systemList) {
+            Log.d(TAG, "XXXXX SP: " + sp.getSystemName());
         }
 
-        @Override
-        public void onClick(View v) {
-            mListener.onSystemClick(this);
-        }
-
-    }
-
-    public interface OnSystemClickedListener {
-        void onSystemClick(SystemsRecycleListViewAdapter.ViewHolder caller);
-    }
-
-    // Create new views (invoked by the layout manager)
-    @Override
-    public SystemsRecycleListViewAdapter.ViewHolder onCreateViewHolder(final ViewGroup parent, int viewType) {
-
-        latoFontBold = Tools.getFont(parent.getContext().getAssets(), Konstanten.FONT_BOLD);
-        latoFontLight = Tools.getFont(parent.getContext().getAssets(), Konstanten.FONT_LIGHT);
-
-        // create a new view
-        final View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.systemlist_item, parent, false);
-        v.setDrawingCacheEnabled(true);
-
-        return new ViewHolder(v, new OnSystemClickedListener() {
-            @Override
-            public void onSystemClick(ViewHolder caller) {
-
-                if (Reachability.reachability.isReachable) {
-                    EventBus.getDefault().post(new SystemListRecyclerViewClickEvent(systemPlatformList.get(caller.getAdapterPosition())));
-                } else {
-                    EventBus.getDefault().post(new SystemListRecyclerViewClickEvent(new Exception()));
-                }
-            }
+        Needle.onMainThread().execute(() -> {
+            notifyDataSetChanged();
         });
     }
 
-    // Replace the contents of a view (invoked by the layout manager)
-    @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
-        systemObj = systemPlatformList.get(position);
-
-        // - get element from your dataset at this position
-        // - replace the contents of the view with that element
-        holder.mSystemName.setText(systemObj.getSystemName());
-        holder.mSystemName.setTypeface(latoFontBold);
-
-        try {
-            if (systemObj.getGameCount() > 0) {
-                holder.mSubtitle.setVisibility(View.VISIBLE);
-                holder.mSubtitle.setText(systemObj.getGameCount() + " Games");
-                holder.mSubtitle.setTypeface(latoFontLight);
-            } else {
-                holder.mSubtitle.setVisibility(View.GONE);
-            }
-        } catch (Exception e) {
-            Log.e(TAG, e.getLocalizedMessage());
+    // Filter List by search qord (not implemented yet)
+    public void filterList(String filter) {
+        if ((filter != null) && (filter.trim().length() > 2)) {
+            // TODO filter the list and update gameList with filtered List
         }
     }
-
-    // Return the size of your dataset (invoked by the layout manager)
-    @Override
-    public int getItemCount() {
-        return systemPlatformList.size();
-    }
-
 }

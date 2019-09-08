@@ -10,13 +10,6 @@ import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.os.Parcelable;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import androidx.core.view.MenuItemCompat;
-import androidx.viewpager.widget.ViewPager;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.SearchView;
-import androidx.appcompat.widget.ShareActionProvider;
-import androidx.appcompat.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -24,6 +17,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
+import androidx.appcompat.widget.ShareActionProvider;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.MenuItemCompat;
+import androidx.viewpager.widget.ViewPager;
 
 import com.cheatdatabase.CheatForumActivity;
 import com.cheatdatabase.LoginActivity;
@@ -43,6 +43,7 @@ import com.cheatdatabase.helpers.Tools;
 import com.cheatdatabase.helpers.UndoBarController;
 import com.facebook.ads.AdSize;
 import com.facebook.ads.AdView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
 
 import net.lucode.hackware.magicindicator.MagicIndicator;
