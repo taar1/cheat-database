@@ -307,7 +307,7 @@ public class CheatsByGameListActivity extends AppCompatActivity implements OnChe
             error();
         }
 
-        mSwipeRefreshLayout.setRefreshing(false);
+        Needle.onMainThread().execute(() -> mSwipeRefreshLayout.setRefreshing(false));
     }
 
     private void error() {
