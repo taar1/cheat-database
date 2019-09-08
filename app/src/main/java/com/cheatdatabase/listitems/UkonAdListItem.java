@@ -5,4 +5,9 @@ public class UkonAdListItem extends ListItem {
     public int getType() {
         return ListItem.TYPE_UKON_NO_CHIKARA;
     }
+
+    @Override
+    public String getTitle() {
+        return "";
+    }
 }

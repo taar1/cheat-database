@@ -5,4 +5,9 @@ public class FacebookNativeAdListItem extends ListItem {
     public int getType() {
         return ListItem.TYPE_FACEBOOK_NATIVE_AD;
     }
+
+    @Override
+    public String getTitle() {
+        return "";
+    }
 }

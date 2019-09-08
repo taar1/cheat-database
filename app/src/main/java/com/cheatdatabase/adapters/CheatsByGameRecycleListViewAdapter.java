@@ -141,7 +141,7 @@ public class CheatsByGameRecycleListViewAdapter extends RecyclerView.Adapter<Rec
         // What will be displayed at the right side when fast scroll is used (normally the first letter of the game)
         int type = getItemViewType(position);
         if (type == ListItem.TYPE_CHEAT) {
-            return cheatList.get(position).getGameName().substring(0, 1).toUpperCase();
+            return listItems.get(position).getTitle().toUpperCase();
         } else {
             // When we show an ad or something else we show blank
             return "";

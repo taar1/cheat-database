@@ -18,4 +18,9 @@ public class CheatListItem extends ListItem {
     public int getType() {
         return ListItem.TYPE_CHEAT;
     }
+
+    @Override
+    public String getTitle() {
+        return cheat.getCheatTitle().substring(0, 1);
+    }
 }

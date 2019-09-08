@@ -10,4 +10,5 @@ public abstract class ListItem {
     public static final int TYPE_UKON_NO_CHIKARA = 6;
 
     abstract public int getType();
+    abstract public String getTitle();
 }

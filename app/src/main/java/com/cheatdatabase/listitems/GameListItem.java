@@ -18,4 +18,9 @@ public class GameListItem extends ListItem {
     public int getType() {
         return ListItem.TYPE_GAME;
     }
+
+    @Override
+    public String getTitle() {
+        return game.getGameName().substring(0, 1);
+    }
 }

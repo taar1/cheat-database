@@ -18,4 +18,9 @@ public class SystemPlatformListItem extends ListItem {
     public int getType() {
         return ListItem.TYPE_SYSTEM;
     }
+
+    @Override
+    public String getTitle() {
+        return systemPlatform.getSystemName().substring(0, 1);
+    }
 }

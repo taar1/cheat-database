@@ -6,4 +6,9 @@ public class BlankListItem extends ListItem {
     public int getType() {
         return ListItem.TYPE_BLANK;
     }
+
+    @Override
+    public String getTitle() {
+        return "";
+    }
 }
