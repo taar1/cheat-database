@@ -12,8 +12,8 @@ apply plugin: 'io.fabric'
 
 String APK_ID = "com.cheatdatabase"
 String APK_NAME = "Cheat-Database"
-int VERSION_CODE = 43
-String VERSION_NAME = "2.4.1-preRelease"
+int VERSION_CODE = 44
+String VERSION_NAME = "2.5"
 
 android {
     compileSdkVersion 28
@@ -111,10 +111,10 @@ dependencies {
     api 'com.google.firebase:firebase-messaging:20.0.0'
     api 'com.google.firebase:firebase-config:19.0.0'
     api 'com.google.firebase:firebase-appindexing:19.0.0'
-    api 'androidx.appcompat:appcompat:1.0.2'
+    api 'androidx.appcompat:appcompat:1.1.0'
     api 'com.google.android.material:material:1.0.0'
     api 'androidx.recyclerview:recyclerview:1.0.0'
-    api 'androidx.preference:preference:1.0.0'
+    api 'androidx.preference:preference:1.1.0'
     implementation 'com.github.vajro:MaterialDesignLibrary:1.6'
     implementation 'com.afollestad.material-dialogs:core:0.9.6.0'
     implementation 'com.google.code.gson:gson:2.8.5'
