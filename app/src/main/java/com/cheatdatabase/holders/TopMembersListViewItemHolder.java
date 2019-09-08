@@ -57,7 +57,7 @@ public class TopMembersListViewItemHolder extends RecyclerView.ViewHolder {
         memberMessage.setTypeface(fontLight);
 
         memberName.setText(member.getUsername().toUpperCase());
-        cheatCount.setText(CheatDatabaseApplication.getAppContext().getString(R.string.top_members_cheats_count) + ": " + String.valueOf(member.getCheatSubmissionCount()));
+        cheatCount.setText(CheatDatabaseApplication.getAppContext().getString(R.string.top_members_cheats_count) + ": " + member.getCheatSubmissionCount());
 
         if (member.getWebsite().length() > 1) {
             website.setText(member.getWebsite());

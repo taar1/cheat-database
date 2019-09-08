@@ -210,7 +210,7 @@ public class GamesBySystemListActivity extends AppCompatActivity implements OnGa
         }
 
         TreeMap gameListTree = null;
-        TreeMap<String, TreeMap<String, List<Game>>> gamesBySystemInCache = cheatDatabaseApplication.getGamesBySystemCached();
+        TreeMap<String, TreeMap<String, List<Game>>> gamesBySystemInCache = CheatDatabaseApplication.getGamesBySystemCached();
         if (gamesBySystemInCache.containsKey(String.valueOf(systemObj.getSystemId()))) {
 
             gameListTree = gamesBySystemInCache.get(String.valueOf(systemObj.getSystemId()));
@@ -250,7 +250,7 @@ public class GamesBySystemListActivity extends AppCompatActivity implements OnGa
                     }
 
                     gamesBySystemInCache.put(String.valueOf(systemObj.getSystemId()), updatedGameListForCache);
-                    cheatDatabaseApplication.setGamesBySystemCached(gamesBySystemInCache);
+                    CheatDatabaseApplication.setGamesBySystemCached(gamesBySystemInCache);
 
                     gameList = gameEntityList;
 

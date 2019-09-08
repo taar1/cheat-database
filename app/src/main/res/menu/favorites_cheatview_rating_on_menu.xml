@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:bwq="http://schemas.android.com/tools">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
         android:id="@+id/action_forum"
@@ -26,8 +25,8 @@
         android:icon="@android:drawable/ic_menu_share"
         android:orderInCategory="150"
         android:title="@string/share_title"
-        app:showAsAction="ifRoom"
-        bwq:actionProviderClass="android.support.v7.widget.ShareActionProvider" />
+        app:actionProviderClass="androidx.appcompat.widget.ShareActionProvider"
+        app:showAsAction="never" />
     <item
         android:id="@+id/action_metainfo"
         android:icon="@android:drawable/ic_menu_info_details"

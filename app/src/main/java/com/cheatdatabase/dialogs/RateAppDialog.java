@@ -6,13 +6,11 @@ import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Handler;
-import androidx.annotation.NonNull;
 import android.view.View;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.Theme;
 import com.cheatdatabase.MainActivity;
@@ -50,31 +48,20 @@ public class RateAppDialog {
                 .customView(R.layout.dialog_rate_cheatdatabase, true)
                 .positiveText(R.string.rate_us_submit)
                 .negativeText(R.string.cancel)
-                .onPositive(new MaterialDialog.SingleButtonCallback() {
-                    @Override
-                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                        editor.putInt(APP_RATING_LOCAL, rating);
-                        editor.apply();
+                .onPositive((dialog, which) -> {
+                    editor.putInt(APP_RATING_LOCAL, rating);
+                    editor.apply();
 
-                        if (rating >= MINIMUM_RATING_FOR_GOOGLE_PLAY) {
-                            Toast.makeText(activity, R.string.rate_us_thanks_good_rating, Toast.LENGTH_LONG).show();
-                            Handler handler = new Handler();
-                            handler.postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    goToGooglePlay();
-                                }
-                            }, 1000);
-                        } else {
-                            showBadRatingDialog();
-                        }
+                    if (rating >= MINIMUM_RATING_FOR_GOOGLE_PLAY) {
+                        Toast.makeText(activity, R.string.rate_us_thanks_good_rating, Toast.LENGTH_LONG).show();
+                        Handler handler = new Handler();
+                        handler.postDelayed(() -> goToGooglePlay(), 1000);
+                    } else {
+                        showBadRatingDialog();
                     }
                 })
-                .onNegative(new MaterialDialog.SingleButtonCallback() {
-                    @Override
-                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                        // User clicked CANCEL. Just close the dialog.
-                    }
+                .onNegative((dialog, which) -> {
+                    // User clicked CANCEL. Just close the dialog.
                 })
                 .theme(Theme.DARK)
                 .cancelable(false)
@@ -86,12 +73,7 @@ public class RateAppDialog {
         ratingtext.setTypeface(latoFontLight);
 
         final RatingBar ratingBar = dialogView.findViewById(R.id.ratingbar);
-        ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
-            @Override
-            public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
-                rating = Math.round(ratingBar.getRating());
-            }
-        });
+        ratingBar.setOnRatingBarChangeListener((ratingBar1, v, b) -> rating = Math.round(ratingBar1.getRating()));
         ratingBar.setRating(Float.valueOf(String.valueOf(settings.getInt(APP_RATING_LOCAL, 0))));
     }
 
@@ -110,17 +92,9 @@ public class RateAppDialog {
                 .customView(R.layout.dialog_bad_rating, true)
                 .positiveText(R.string.submit_feedback)
                 .negativeText(R.string.no_thanks)
-                .onPositive(new MaterialDialog.SingleButtonCallback() {
-                    @Override
-                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                        mainActivityCallbacks.showContactFormFragmentCallback();
-                    }
-                })
-                .onNegative(new MaterialDialog.SingleButtonCallback() {
-                    @Override
-                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                        // User clicked CANCEL. Just close the dialog.
-                    }
+                .onPositive((dialog, which) -> mainActivityCallbacks.showContactFormFragmentCallback())
+                .onNegative((dialog, which) -> {
+                    // User clicked CANCEL. Just close the dialog.
                 })
                 .theme(Theme.DARK)
                 .cancelable(false)

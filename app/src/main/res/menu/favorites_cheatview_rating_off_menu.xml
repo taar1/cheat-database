@@ -21,11 +21,11 @@
         app:showAsAction="never" />
     <item
         android:id="@+id/action_share"
-        app:actionProviderClass="androidx.appcompat.widget.ShareActionProvider"
         android:icon="@android:drawable/ic_menu_share"
         android:orderInCategory="150"
         android:title="@string/share_title"
-        app:showAsAction="ifRoom" />
+        app:actionProviderClass="androidx.appcompat.widget.ShareActionProvider"
+        app:showAsAction="never" />
     <item
         android:id="@+id/action_metainfo"
         android:icon="@android:drawable/ic_menu_info_details"

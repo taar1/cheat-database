@@ -172,10 +172,12 @@ public class CheatsByGameRecycleListViewAdapter extends RecyclerView.Adapter<Rec
             cheatListItem.setCheat(cheat);
             newListItems.add(cheatListItem);
 
-            if (j % Konstanten.INJECT_AD_AFTER_EVERY_POSITION == Konstanten.INJECT_AD_AFTER_EVERY_POSITION - 1) {
-                newListItems.add(new FacebookNativeAdListItem());
+            if (mNativeAdsManager != null) {
+                if (j % Konstanten.INJECT_AD_AFTER_EVERY_POSITION == Konstanten.INJECT_AD_AFTER_EVERY_POSITION - 1) {
+                    newListItems.add(new FacebookNativeAdListItem());
+                }
+                j++;
             }
-            j++;
         }
 
         Needle.onMainThread().execute(() -> {

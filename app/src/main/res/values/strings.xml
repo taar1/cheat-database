@@ -52,7 +52,7 @@
     <string name="cancel">Cancel</string>
     <string name="clearForm">Clear</string>
     <string name="error_nothing_found_title">Nothing found!</string>
-    <string name="error_nothing_found_text">No game could be found with your search query %s. Please try again with less keywords.</string>
+    <string name="error_nothing_found_text">No game could be found with your search query. Please try again with less keywords.</string>
     <string name="button_closeNothingFoundPopup">Refine query</string>
     <string name="cheat_counter_headline">Over %s cheatList and counting!</string>
 
@@ -169,7 +169,7 @@
     <string name="cheat_submit_ok">Thanks for your submission! We will review the cheat and will inform you by email if we are going to add it to the database. By the way: You can edit or delete your submitted cheatList via our website www.cheat-database.com.</string>
     <string name="cheat_submit_nok">There went something wrong submitting your cheat. Please try again.</string>
     <string name="submit_cheat_instructions_title">Information about submitting a cheat</string>
-    <string name="submit_cheat_instructions_text"></string>
+    <string name="submit_cheat_instructions_text">_</string>
     <string name="submit_cheat_guidelines">Please read our little author guidelines on how to write easy-to-understand cheatList.\n\n- Use capital letters for character or object names. Always use a capital letter after a full stop.\n\n- Try not to make long sentences. Short sentences are easier to understand. Try not to use &#8220;then&#8221; to connect sentences either.\n\n- Don\'t use the &#8220;I&#8221; form, i.e. &#8220;I did&#8221; or &#8220;it helped me&#8221; etc. Use the third person for instructions.</string>
     <string name="thanks">Thank you!</string>
     <string name="help">Help</string>

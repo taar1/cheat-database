@@ -245,7 +245,7 @@ public class FavoritesCheatViewPageIndicator extends AppCompatActivity implement
                 invalidateOptionsMenu();
                 if ((member != null) && intentReturnCode == Konstanten.REGISTER_SUCCESS_RETURN_CODE) {
                     Toast.makeText(FavoritesCheatViewPageIndicator.this, R.string.register_thanks, Toast.LENGTH_LONG).show();
-                } else if ((member != null) && intentReturnCode == Konstanten.REGISTER_SUCCESS_RETURN_CODE) {
+                } else if ((member != null) && intentReturnCode == Konstanten.LOGIN_SUCCESS_RETURN_CODE) {
                     Toast.makeText(FavoritesCheatViewPageIndicator.this, R.string.login_ok, Toast.LENGTH_LONG).show();
                 }
             }
@@ -255,9 +255,9 @@ public class FavoritesCheatViewPageIndicator extends AppCompatActivity implement
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         if ((visibleCheat != null) && (visibleCheat.getMemberRating() > 0)) {
-            getMenuInflater().inflate(R.menu.handset_favorites_cheatview_rating_on_menu, menu);
+            getMenuInflater().inflate(R.menu.favorites_cheatview_rating_on_menu, menu);
         } else {
-            getMenuInflater().inflate(R.menu.handset_favorites_cheatview_rating_off_menu, menu);
+            getMenuInflater().inflate(R.menu.favorites_cheatview_rating_off_menu, menu);
         }
 
         if (member != null) {

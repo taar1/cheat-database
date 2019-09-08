@@ -23,10 +23,7 @@ public class Reachability {
     }
 
     public static boolean isRegistered() {
-        if (reachability.receiver != null) {
-            return true;
-        }
-        return false;
+        return reachability.receiver != null;
     }
 
     public static boolean registerReachability(Context context) {

@@ -101,8 +101,8 @@ public class RecoverActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
-        Typeface latoFontBold = tools.getFont(getAssets(), Konstanten.FONT_BOLD);
-        Typeface latoFontLight = tools.getFont(getAssets(), Konstanten.FONT_LIGHT);
+        Typeface latoFontBold = Tools.getFont(getAssets(), Konstanten.FONT_BOLD);
+        Typeface latoFontLight = Tools.getFont(getAssets(), Konstanten.FONT_LIGHT);
 
         mLoginStatusMessageView.setTypeface(latoFontLight);
         mResponseMessageView.setTypeface(latoFontBold);

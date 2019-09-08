@@ -83,7 +83,6 @@ public class FavoriteCheatListActivity extends AppCompatActivity implements OnCh
     @BindView(R.id.banner_container)
     LinearLayout bannerContainerFacebook;
 
-
     @Override
     protected void onStart() {
         super.onStart();
@@ -294,12 +293,20 @@ public class FavoriteCheatListActivity extends AppCompatActivity implements OnCh
         this.visibleCheat = cheat;
         this.lastGameObj = cheat.getGame();
 
-        editor.putInt(Konstanten.PREFERENCES_PAGE_SELECTED, position);
-        editor.commit();
-
         if (Reachability.reachability.isReachable) {
             // Using local Preferences to pass data for large game objects
             // (instead of intent) such as Pokemon
+
+            int i = 0;
+            for (Cheat c : gameObj.getCheatList()) {
+                if (c == cheat) {
+                    position = i;
+                }
+                i++;
+            }
+
+            editor.putInt(Konstanten.PREFERENCES_PAGE_SELECTED, position);
+            editor.apply();
 
             Intent explicitIntent = new Intent(this, FavoritesCheatViewPageIndicator.class);
             explicitIntent.putExtra("gameObj", gameObj);

@@ -155,7 +155,7 @@
     <string name="cheat_submit_ok">Vielen Dank für Deinen Beitrag! Wir werden den Cheat prüfen und dich per E-Mail informieren, wenn wir ihn in unsere Datenbank aufnehmen werden. Du kannst jederzeit Deine geposteten Cheats auf www.cheat-database.com editieren oder löschen.</string>
     <string name="cheat_submit_nok">Irgendwas ist beim abschicken schiefgelaufen. Versuche es nochmals.</string>
     <string name="submit_cheat_instructions_title">Über das Einsenden von Cheats</string>
-    <string name="submit_cheat_instructions_text"></string>
+    <string name="submit_cheat_instructions_text">_</string>
     <string name="submit_cheat_guidelines">Lies bitte kurz die Richtlinien zum Verfassen eines Cheats durch:\n\n
 - Bitte verwende Grossbuchstaben für Personennamen oder Gegenstände. Nach einem Punkt sollte der Satz ebenfalls mit einem Grossbuchstaben anfangen.\n\n
 - Schreibe kurze Sätze. Lange Sätze mit Kommas verbunden sind schwieriger zu verstehen.\n\n

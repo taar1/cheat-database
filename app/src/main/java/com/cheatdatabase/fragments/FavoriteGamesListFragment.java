@@ -3,9 +3,6 @@ package com.cheatdatabase.fragments;
 import android.app.Activity;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import androidx.fragment.app.Fragment;
 import android.util.Log;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
@@ -16,6 +13,8 @@ import android.widget.ExpandableListView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import androidx.fragment.app.Fragment;
 
 import com.cheatdatabase.R;
 import com.cheatdatabase.businessobjects.Game;
@@ -41,7 +40,6 @@ public class FavoriteGamesListFragment extends Fragment {
 
     private FavoritesExpandableListAdapter adapter;
 
-    protected final int STEP_ONE_COMPLETE = 1;
     private List<Game> gamesFound;
 
     private DatabaseHelper db;
@@ -59,7 +57,6 @@ public class FavoriteGamesListFragment extends Fragment {
     @BindView(R.id.nothingfound_text)
     TextView nothingFoundText;
 
-    private final int REMOVE_FROM_FAVORITES = 1;
     private Typeface latoFontLight;
     private Typeface latoFontBold;
 
@@ -72,9 +69,6 @@ public class FavoriteGamesListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_favorites_main_list, container, false);
         ButterKnife.bind(this, view);
-
-
-        Log.d("XXXXX", "XXXXX onCreateView XXXXX");
 
         db = new DatabaseHelper(getActivity());
         gamesFound = db.getAllFavoritedGames();
@@ -106,11 +100,16 @@ public class FavoriteGamesListFragment extends Fragment {
     private void loadGames() {
         gamesFound = db.getAllFavoritedGames();
 
-        Message msg = Message.obtain();
-        msg.what = STEP_ONE_COMPLETE;
-        handler.sendMessage(msg);
-
+        fillList();
         createData();
+    }
+
+    private void fillList() {
+        if (groups != null && listView != null) {
+            for (int i = 0; i < groups.size(); i++) {
+                listView.expandGroup(i, false);
+            }
+        }
     }
 
     public void createData() {
@@ -161,33 +160,11 @@ public class FavoriteGamesListFragment extends Fragment {
         });
     }
 
-    private Handler handler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            switch (msg.what) {
-                case STEP_ONE_COMPLETE:
-                    fillList();
-                    break;
-            }
-        }
-
-        private void fillList() {
-            if (groups != null && listView != null) {
-                for (int i = 0; i < groups.size(); i++) {
-                    listView.expandGroup(i, false);
-                }
-            }
-        }
-    };
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Log.d("XXXXX", "XXXXX laskdjaölskdhasöldjaölsdjaölsdjasdf XXXXX");
         switch (item.getItemId()) {
             case android.R.id.home:
-
                 return true;
-
             default:
                 return super.onOptionsItemSelected(item);
         }

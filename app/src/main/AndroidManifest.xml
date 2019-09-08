@@ -10,15 +10,16 @@
         android:launchMode="singleTop"
         android:logo="@drawable/logo_full_centered"
         android:theme="@style/Theme.Navyblue">
-        <activity android:name=".ads.InMobiNativeAdsActivity"></activity>
 
         <activity
             android:name=".MainActivity"
             android:label="@string/title_activity_main">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
+
+                <action android:name="android.intent.action.VIEW" />
+                <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
 
             <meta-data
@@ -208,10 +209,6 @@
             android:name="com.google.android.gms.analytics.AnalyticsService"
             android:enabled="true"
             android:exported="false" />
-
-        <service
-            android:name="com.google.android.gms.analytics.CampaignTrackingService"
-            android:enabled="true" />
     </application>
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />

@@ -115,8 +115,8 @@ public class CheatsByGameListActivity extends AppCompatActivity implements OnChe
             cheatsByGameRecycleListViewAdapter = new CheatsByGameRecycleListViewAdapter(this, nativeAdsManager, this);
             recyclerView.setAdapter(cheatsByGameRecycleListViewAdapter);
 
-            getSupportActionBar().setTitle(gameObj.getGameName());
-            getSupportActionBar().setSubtitle(gameObj.getSystemName());
+            getSupportActionBar().setTitle(gameObj.getGameName() != null ? gameObj.getGameName() : "");
+            getSupportActionBar().setSubtitle(gameObj.getSystemName() != null ? gameObj.getSystemName() : "");
 
             recyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
             recyclerView.addItemDecoration(new DividerDecoration(this));
@@ -389,10 +389,19 @@ public class CheatsByGameListActivity extends AppCompatActivity implements OnChe
     public void onCheatListItemSelected(Cheat cheat, int position) {
         this.visibleCheat = cheat;
 
-        editor.putInt(Konstanten.PREFERENCES_PAGE_SELECTED, position);
-        editor.apply();
-
         if (Reachability.reachability.isReachable) {
+
+            int i = 0;
+            for (Cheat c : gameObj.getCheatList()) {
+                if (c == cheat) {
+                    position = i;
+                }
+                i++;
+            }
+
+            editor.putInt(Konstanten.PREFERENCES_PAGE_SELECTED, position);
+            editor.apply();
+
             // Using local Preferences to pass data for large game objects
             // (instead of intent) such as Pokemon
             Intent explicitIntent = new Intent(CheatsByGameListActivity.this, CheatViewPageIndicatorActivity.class);

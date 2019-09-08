@@ -179,7 +179,7 @@ public class MemberCheatViewPageIndicator extends AppCompatActivity {
         try {
             mAdapter = new MemberCheatViewFragmentAdapter(getSupportFragmentManager(), cheatList, cheatTitles);
 
-            mPager = (ViewPager) viewLayout.findViewById(R.id.pager);
+            mPager = viewLayout.findViewById(R.id.pager);
             mPager.setAdapter(mAdapter);
             mPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
                 @Override
@@ -219,7 +219,7 @@ public class MemberCheatViewPageIndicator extends AppCompatActivity {
                 }
             });
 
-            MagicIndicator magicIndicator = (MagicIndicator) findViewById(R.id.magic_indicator);
+            MagicIndicator magicIndicator = findViewById(R.id.magic_indicator);
             CommonNavigator commonNavigator = new CommonNavigator(this);
             commonNavigator.setSkimOver(true);
             commonNavigator.setAdapter(new CommonNavigatorAdapter() {

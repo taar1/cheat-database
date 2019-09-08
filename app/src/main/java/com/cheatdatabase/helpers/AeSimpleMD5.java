@@ -1,6 +1,7 @@
 package com.cheatdatabase.helpers;
 
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -33,7 +34,7 @@ public class AeSimpleMD5 {
         MessageDigest md;
         md = MessageDigest.getInstance("MD5");
         byte[] md5hash = new byte[32];
-        md.update(text.getBytes("iso-8859-1"), 0, text.length());
+        md.update(text.getBytes(StandardCharsets.ISO_8859_1), 0, text.length());
         md5hash = md.digest();
         return convertToHex(md5hash);
     }

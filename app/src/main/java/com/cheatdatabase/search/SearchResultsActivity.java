@@ -10,9 +10,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.SearchRecentSuggestions;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.SearchView;
-import androidx.appcompat.widget.Toolbar;
 import android.util.Log;
 import android.util.SparseArray;
 import android.view.Menu;
@@ -25,6 +22,10 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
+import androidx.appcompat.widget.Toolbar;
 
 import com.cheatdatabase.R;
 import com.cheatdatabase.businessobjects.Game;
@@ -165,17 +166,14 @@ public class SearchResultsActivity extends AppCompatActivity {
 
     private void searchNow() {
         reloadView.setVisibility(View.GONE);
-        new Thread(new Runnable() {
 
-            @Override
-            public void run() {
-                gamesFound = Webservice.searchGames(SearchResultsActivity.this, query);
-                createData();
+        new Thread(() -> {
+            gamesFound = Webservice.searchGames(SearchResultsActivity.this, query);
+            createData();
 
-                Message msg = Message.obtain();
-                msg.what = STEP_ONE_COMPLETE;
-                handler.sendMessage(msg);
-            }
+            Message msg = Message.obtain();
+            msg.what = STEP_ONE_COMPLETE;
+            handler.sendMessage(msg);
         }).start();
     }
 
@@ -200,22 +198,18 @@ public class SearchResultsActivity extends AppCompatActivity {
 
         // If nothing found then display a message.
         if (gamesFound == null) {
-            runOnUiThread(new Runnable() {
+            runOnUiThread(() -> {
+                nothingFoundText.setText(getString(R.string.error_nothing_found_text));
 
-                @Override
-                public void run() {
-                    nothingFoundText.setText(getString(R.string.error_nothing_found_text, "\"" + query + "\""));
+                somethingfoundLayout.setVisibility(View.GONE);
+                nothingFoundLayout.setVisibility(View.VISIBLE);
+                searchButton.setOnClickListener(new OnClickListener() {
 
-                    somethingfoundLayout.setVisibility(View.GONE);
-                    nothingFoundLayout.setVisibility(View.VISIBLE);
-                    searchButton.setOnClickListener(new OnClickListener() {
-
-                        @Override
-                        public void onClick(View v) {
-                            onSearchRequested();
-                        }
-                    });
-                }
+                    @Override
+                    public void onClick(View v) {
+                        onSearchRequested();
+                    }
+                });
             });
         } else {
             if ((gamesFound != null) && (gamesFound.length > 0)) {

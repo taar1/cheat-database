@@ -17,7 +17,7 @@ public abstract class ActionBarListActivity extends AppCompatActivity {
 
     protected ListView getListView() {
         if (mListView == null) {
-            mListView = (ListView) findViewById(android.R.id.list);
+            mListView = findViewById(android.R.id.list);
         }
         return mListView;
     }

@@ -313,7 +313,7 @@ public class ContactFormFragment extends Fragment {
     }
 
     public void forwardToMainView() {
-        Needle.onMainThread().execute((Runnable) () -> {
+        Needle.onMainThread().execute(() -> {
             Handler handler = new Handler();
             handler.postDelayed(new Runnable() {
                 @Override

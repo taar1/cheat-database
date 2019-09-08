@@ -91,7 +91,7 @@ public class ForumHandler extends DefaultHandler {
      * Gets be called on the following structure: <tag>characters</tag>
      */
     @Override
-    public void characters(char ch[], int start, int length) {
+    public void characters(char[] ch, int start, int length) {
     }
 
 }
