@@ -111,12 +111,9 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4caff62e-c62f-40ca-acf0-73c680b13375" name="Default" comment="VERSION 2.5 RELEASE READY">
-      <change beforePath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" afterDir="false" />
+    <list default="true" id="4caff62e-c62f-40ca-acf0-73c680b13375" name="Default" comment="VERSION 2.5.1 Hot Fixes">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/app.iml" beforeDir="false" afterPath="$PROJECT_DIR$/app/app.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/CheatsByGameListActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/CheatsByGameListActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/helpers/Konstanten.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/helpers/Konstanten.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/adapters/SystemsRecycleListViewAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/adapters/SystemsRecycleListViewAdapter.java" afterDir="false" />
     </list>
     <ignored path="Cheat-Database.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -198,20 +195,42 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/GamesBySystemListActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="568">
-              <caret line="299" column="38" selection-start-line="299" selection-start-column="38" selection-end-line="299" selection-end-column="38" />
+            <state relative-caret-position="689">
+              <caret line="272" selection-start-line="272" selection-end-line="272" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/CheatsByGameListActivity.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="661">
+              <caret line="309" column="77" selection-start-line="309" selection-start-column="44" selection-end-line="309" selection-end-column="77" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#15254#15255#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/favorites/FavoriteCheatListActivity.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="463">
+              <caret line="234" column="50" lean-forward="true" selection-start-line="234" selection-start-column="50" selection-end-line="234" selection-end-column="50" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/CheatsByGameListActivity.java">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/adapters/SystemsRecycleListViewAdapter.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="191">
-              <caret line="303" column="71" lean-forward="true" selection-start-line="303" selection-start-column="71" selection-end-line="303" selection-end-column="71" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
+            <state relative-caret-position="240">
+              <caret line="31" column="5" selection-start-line="31" selection-start-column="5" selection-end-line="31" selection-end-column="5" />
             </state>
           </provider>
         </entry>
@@ -229,7 +248,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/adapters/GamesBySystemRecycleListViewAdapter.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1650">
+            <state relative-caret-position="273">
               <caret line="149" column="16" selection-start-line="149" selection-start-column="16" selection-end-line="149" selection-end-column="16" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -273,10 +292,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>onStart</find>
-      <find>nativeAdsManager</find>
-      <find>onEvent</find>
-      <find>onSaveInstanceState</find>
       <find>showRatingDialog</find>
       <find>getche</find>
       <find>updateu</find>
@@ -301,8 +316,12 @@
       <find>substring(0, 1)</find>
       <find>INJECT_AD_AFTER_EVERY_POSITION</find>
       <find>CURRENT_VERSION</find>
-      <find>updateUI</find>
       <find>mSwipeRefreshLayout</find>
+      <find>updateui</find>
+      <find>updateUI</find>
+      <find>updateUI()</find>
+      <find>mSwipeRefreshLayout.setRefreshing</find>
+      <find>mSwipeRefreshLayout.setRefreshing(false)</find>
     </findStrings>
     <replaceStrings>
       <replace>//CheatDatabaseApplication.tracker()</replace>
@@ -375,7 +394,6 @@
         <option value="$PROJECT_DIR$/app/src/main/res/layout/native_ad_unit.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/helpers/Webservice.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/values/themes.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/GamesBySystemListActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/holders/GamesBySystemListViewItemHolder.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/holders/UkonAdListViewItemHolder.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/ukon_custom_ad.xml" />
@@ -383,7 +401,6 @@
         <option value="$PROJECT_DIR$/app/src/main/res/layout/include_fastscroll_recyclerview.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/listeners/OnSystemListItemSelectedListener.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/holders/SystemListViewItemHolder.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/adapters/SystemsRecycleListViewAdapter.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/fragments/SystemListFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/systemlist_item.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/menu/handset_favorites_cheatview_rating_on_menu.xml" />
@@ -394,7 +411,6 @@
         <option value="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/fragments/FavoriteGamesListFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/dialogs/RateAppDialog.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/search/SearchResultsActivity.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/favorites/FavoriteCheatListActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/favorites/handset/cheatview/FavoritesCheatViewPageIndicator.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/values-de/strings.xml" />
@@ -410,12 +426,15 @@
         <option value="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/listitems/UkonAdListItem.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/helpers/Konstanten.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/CheatsByGameListActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/GamesBySystemListActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/favorites/FavoriteCheatListActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/adapters/SystemsRecycleListViewAdapter.java" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="172" />
-    <option name="y" value="76" />
+    <option name="x" value="185" />
+    <option name="y" value="91" />
     <option name="width" value="2293" />
     <option name="height" value="1282" />
   </component>
@@ -527,6 +546,20 @@
               <item name="app" type="feadf853:AndroidModuleNode" />
               <item name="java" type="edd41e36:AndroidSourceTypeNode" />
               <item name="cheatdatabase" type="cbb59c9e:AndroidPsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="cheat-database" type="1abcf292:AndroidViewProjectNode" />
+              <item name="app" type="feadf853:AndroidModuleNode" />
+              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
+              <item name="cheatdatabase" type="cbb59c9e:AndroidPsiDirectoryNode" />
+              <item name="adapters" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="cheat-database" type="1abcf292:AndroidViewProjectNode" />
+              <item name="app" type="feadf853:AndroidModuleNode" />
+              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
+              <item name="cheatdatabase" type="cbb59c9e:AndroidPsiDirectoryNode" />
+              <item name="favorites" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="cheat-database" type="1abcf292:AndroidViewProjectNode" />
@@ -960,20 +993,6 @@
       <option name="presentableId" value="Default" />
       <updated>1487274191999</updated>
     </task>
-    <task id="LOCAL-00029" summary="Free many classes from AndroidAnnotations.">
-      <created>1539069877744</created>
-      <option name="number" value="00029" />
-      <option name="presentableId" value="LOCAL-00029" />
-      <option name="project" value="LOCAL" />
-      <updated>1539069877744</updated>
-    </task>
-    <task id="LOCAL-00030" summary="Free many classes from AndroidAnnotations.">
-      <created>1539889301304</created>
-      <option name="number" value="00030" />
-      <option name="presentableId" value="LOCAL-00030" />
-      <option name="project" value="LOCAL" />
-      <updated>1539889301304</updated>
-    </task>
     <task id="LOCAL-00031" summary="Free many classes from AndroidAnnotations.">
       <created>1539893896622</created>
       <option name="number" value="00031" />
@@ -1303,7 +1322,21 @@
       <option name="project" value="LOCAL" />
       <updated>1567948281034</updated>
     </task>
-    <option name="localTasksCounter" value="78" />
+    <task id="LOCAL-00078" summary="VERSION 2.5 RELEASE READY&#10;Bug Fixes...">
+      <created>1567969814869</created>
+      <option name="number" value="00078" />
+      <option name="presentableId" value="LOCAL-00078" />
+      <option name="project" value="LOCAL" />
+      <updated>1567969814870</updated>
+    </task>
+    <task id="LOCAL-00079" summary="VERSION 2.5.1 Hot Fixes">
+      <created>1568015079243</created>
+      <option name="number" value="00079" />
+      <option name="presentableId" value="LOCAL-00079" />
+      <option name="project" value="LOCAL" />
+      <updated>1568015079243</updated>
+    </task>
+    <option name="localTasksCounter" value="80" />
     <servers />
   </component>
   <component name="TodoView">
@@ -1316,16 +1349,16 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="172" y="76" width="2293" height="1282" extended-state="0" />
+    <frame x="185" y="91" width="2293" height="1282" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Image Layers" order="0" />
-      <window_info id="Build Variants" order="1" sideWeight="0.5064782" side_tool="true" visible="true" weight="0.20124389" />
+      <window_info id="Build Variants" order="1" sideWeight="0.5058824" side_tool="true" visible="true" weight="0.20124389" />
       <window_info id="Captures" order="2" side_tool="true" />
       <window_info id="Capture Tool" order="3" />
       <window_info id="Designer" order="4" />
       <window_info id="Favorites" order="5" side_tool="true" />
-      <window_info content_ui="combo" id="Project" order="6" sideWeight="0.49352178" visible="true" weight="0.20124389" />
+      <window_info content_ui="combo" id="Project" order="6" sideWeight="0.49411765" visible="true" weight="0.20124389" />
       <window_info id="Structure" order="7" sideWeight="0.50530034" side_tool="true" weight="0.20124389" />
       <window_info id="Nl-Palette" order="8" />
       <window_info id="Resources Explorer" order="9" />
@@ -1344,7 +1377,7 @@
       <window_info anchor="bottom" id="Terminal" order="12" weight="0.32804233" />
       <window_info anchor="bottom" id="Messages" order="13" weight="0.34705883" />
       <window_info anchor="bottom" id="Logcat" order="14" sideWeight="0.49954212" weight="0.4394958" />
-      <window_info anchor="bottom" id="Build" order="15" visible="true" weight="0.28655463" />
+      <window_info anchor="bottom" id="Build" order="15" weight="0.28655463" />
       <window_info anchor="bottom" id="Android Monitor" order="16" weight="0.53356683" />
       <window_info anchor="bottom" id="Gradle Console" order="17" sideWeight="0.5021322" side_tool="true" weight="0.3337029" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
@@ -1384,8 +1417,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
-    <MESSAGE value="Build scheint mit diesen Settings zu funktionieren?" />
-    <MESSAGE value="Top 20 Members fertigstellen.&#10;Bug Fixes &amp; Code Cleanup." />
     <MESSAGE value="Fix empty cheat list (from cache) bug." />
     <MESSAGE value="Free CheatForumActivity from AndroidAnnotations." />
     <MESSAGE value="Free many classes from AndroidAnnotations." />
@@ -1409,7 +1440,9 @@
     <MESSAGE value="Favorite Cheats List Fix" />
     <MESSAGE value="Some bug fixes" />
     <MESSAGE value="VERSION 2.5 RELEASE READY" />
-    <option name="LAST_COMMIT_MESSAGE" value="VERSION 2.5 RELEASE READY" />
+    <MESSAGE value="VERSION 2.5 RELEASE READY&#10;Bug Fixes..." />
+    <MESSAGE value="VERSION 2.5.1 Hot Fixes" />
+    <option name="LAST_COMMIT_MESSAGE" value="VERSION 2.5.1 Hot Fixes" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1617,13 +1650,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/adapters/SystemsRecycleListViewAdapter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="24" selection-start-line="24" selection-end-line="24" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/holders/SystemListViewItemHolder.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="60">
@@ -1755,18 +1781,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/favorites/FavoriteCheatListActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="973">
-          <caret line="110" column="79" selection-start-line="110" selection-start-column="79" selection-end-line="110" selection-end-column="79" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#10022#10023#0" expanded="true" />
-            <element signature="e#10070#10071#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/values/strings.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="254">
@@ -1868,25 +1882,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/GamesBySystemListActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="568">
-          <caret line="299" column="38" selection-start-line="299" selection-start-column="38" selection-end-line="299" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/adapters/GamesBySystemRecycleListViewAdapter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1650">
-          <caret line="149" column="16" selection-start-line="149" selection-start-column="16" selection-end-line="149" selection-end-column="16" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#2299#2300#0" expanded="true" />
-            <element signature="e#2339#2340#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/adapters/CheatsByGameRecycleListViewAdapter.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1770">
@@ -1909,13 +1904,50 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/adapters/GamesBySystemRecycleListViewAdapter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="273">
+          <caret line="149" column="16" selection-start-line="149" selection-start-column="16" selection-end-line="149" selection-end-column="16" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#2299#2300#0" expanded="true" />
+            <element signature="e#2339#2340#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/GamesBySystemListActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="689">
+          <caret line="272" selection-start-line="272" selection-end-line="272" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/CheatsByGameListActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="191">
-          <caret line="303" column="71" lean-forward="true" selection-start-line="303" selection-start-column="71" selection-end-line="303" selection-end-column="71" />
+        <state relative-caret-position="661">
+          <caret line="309" column="77" selection-start-line="309" selection-start-column="44" selection-end-line="309" selection-end-column="77" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#15254#15255#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/favorites/FavoriteCheatListActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="463">
+          <caret line="234" column="50" lean-forward="true" selection-start-line="234" selection-start-column="50" selection-end-line="234" selection-end-column="50" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/adapters/SystemsRecycleListViewAdapter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="31" column="5" selection-start-line="31" selection-start-column="5" selection-end-line="31" selection-end-column="5" />
         </state>
       </provider>
     </entry>

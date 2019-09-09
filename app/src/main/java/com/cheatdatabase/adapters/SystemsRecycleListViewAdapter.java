@@ -1,6 +1,5 @@
 package com.cheatdatabase.adapters;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +18,6 @@ import java.util.List;
 import needle.Needle;
 
 public class SystemsRecycleListViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-
     private static final String TAG = SystemsRecycleListViewAdapter.class.getSimpleName();
 
     private List<SystemPlatform> systemList;
@@ -33,12 +31,10 @@ public class SystemsRecycleListViewAdapter extends RecyclerView.Adapter<Recycler
         filterList("");
     }
 
-
     @Override
     public int getItemCount() {
         return systemList.size();
     }
-
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(final ViewGroup parent, int viewType) {
@@ -49,26 +45,22 @@ public class SystemsRecycleListViewAdapter extends RecyclerView.Adapter<Recycler
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         int type = getItemViewType(position);
-        Log.d(TAG, "XXXXX ADAPTER onBindViewHolder() TYPE: " + type);
 
         SystemListViewItemHolder systemListViewItemHolder = (SystemListViewItemHolder) holder;
         systemListViewItemHolder.setSystemPlatform(systemList.get(position));
         systemListViewItemHolder.view.setOnClickListener(v -> listener.onSystemListItemSelected(systemList.get(position)));
     }
 
-
     public void setSystemPlatforms(List<SystemPlatform> systemPlatforms) {
         systemList = systemPlatforms;
 
-        Collections.sort(systemList, (system1, system2) -> system1.getSystemName().toLowerCase().compareTo(system2.getSystemName().toLowerCase()));
+        if ((systemList != null) && (systemList.size() > 0)) {
+            Collections.sort(systemList, (system1, system2) -> system1.getSystemName().toLowerCase().compareTo(system2.getSystemName().toLowerCase()));
 
-        for (SystemPlatform sp : systemList) {
-            Log.d(TAG, "XXXXX SP: " + sp.getSystemName());
+            Needle.onMainThread().execute(() -> {
+                notifyDataSetChanged();
+            });
         }
-
-        Needle.onMainThread().execute(() -> {
-            notifyDataSetChanged();
-        });
     }
 
     // Filter List by search qord (not implemented yet)
