@@ -151,27 +151,27 @@ public class CheatViewFragment extends Fragment {
         outerLinearLayout = (LinearLayout) inflater.inflate(R.layout.fragment_cheat_detail_handset, container, false);
         ButterKnife.bind(this, outerLinearLayout);
 
-        cheatList = game.getCheatList();
-        cheatObj = cheatList.get(offset);
+        if (cheatList != null) {
+            cheatList = game.getCheatList();
+            cheatObj = cheatList.get(offset);
 
-//        getCheatRatings();
+            tvCheatTitle.setText(cheatObj.getCheatTitle());
 
-        tvCheatTitle.setText(cheatObj.getCheatTitle());
+            tvTextBeforeTable.setVisibility(View.VISIBLE);
+            tvGalleryInfo.setVisibility(View.INVISIBLE);
+            progressBar.setVisibility(View.INVISIBLE);
 
-        tvTextBeforeTable.setVisibility(View.VISIBLE);
-        tvGalleryInfo.setVisibility(View.INVISIBLE);
-        progressBar.setVisibility(View.INVISIBLE);
+            tvTextBeforeTable.setTypeface(latoFontLight);
+            tvCheatTitle.setTypeface(latoFontBold);
+            tvGalleryInfo.setTypeface(latoFontLight);
+            tvCheatText.setTypeface(latoFontLight);
 
-        tvTextBeforeTable.setTypeface(latoFontLight);
-        tvCheatTitle.setTypeface(latoFontBold);
-        tvGalleryInfo.setTypeface(latoFontLight);
-        tvCheatText.setTypeface(latoFontLight);
-
-        if (Reachability.reachability.isReachable) {
-            getOnlineContent();
-        } else {
-            reloadView.setVisibility(View.VISIBLE);
-            Toast.makeText(cheatViewPageIndicatorActivity, R.string.no_internet, Toast.LENGTH_SHORT).show();
+            if (Reachability.reachability.isReachable) {
+                getOnlineContent();
+            } else {
+                reloadView.setVisibility(View.VISIBLE);
+                Toast.makeText(cheatViewPageIndicatorActivity, R.string.no_internet, Toast.LENGTH_SHORT).show();
+            }
         }
 
         return outerLinearLayout;
