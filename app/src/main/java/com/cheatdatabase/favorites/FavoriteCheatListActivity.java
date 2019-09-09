@@ -213,22 +213,20 @@ public class FavoriteCheatListActivity extends AppCompatActivity implements OnCh
     }
 
     private void updateUI() {
-        Needle.onMainThread().execute(() -> {
-            try {
-                if (cheatsArrayList != null && cheatsArrayList.size() > 0) {
-                    cheatsByGameRecycleListViewAdapter.setCheatList(cheatsArrayList);
-                    cheatsByGameRecycleListViewAdapter.filterList("");
-                    cheatsByGameRecycleListViewAdapter.notifyDataSetChanged();
-                } else {
-                    error();
-                }
-            } catch (Exception e) {
-                Log.e(TAG, e.getLocalizedMessage());
+        try {
+            if (cheatsArrayList != null && cheatsArrayList.size() > 0) {
+                cheatsByGameRecycleListViewAdapter.setCheatList(cheatsArrayList);
+                cheatsByGameRecycleListViewAdapter.filterList("");
+                cheatsByGameRecycleListViewAdapter.notifyDataSetChanged();
+            } else {
                 error();
             }
+        } catch (Exception e) {
+            Log.e(TAG, e.getLocalizedMessage());
+            error();
+        }
 
-            mSwipeRefreshLayout.setRefreshing(false);
-        });
+        Needle.onMainThread().execute(() -> mSwipeRefreshLayout.setRefreshing(false));
     }
 
     // Save the position of the last element

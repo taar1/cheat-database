@@ -270,13 +270,11 @@ public class GamesBySystemListActivity extends AppCompatActivity implements OnGa
         if (gameList != null && gameList.size() > 0) {
             gamesBySystemRecycleListViewAdapter.setGameList(gameList);
             gamesBySystemRecycleListViewAdapter.filterList("");
-
-            //gamesBySystemRecycleListViewAdapter.notifyDataSetChanged();
         } else {
             error();
         }
 
-        mSwipeRefreshLayout.setRefreshing(false);
+        Needle.onMainThread().execute(() -> mSwipeRefreshLayout.setRefreshing(false));
     }
 
     private void error() {
