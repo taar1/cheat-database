@@ -427,7 +427,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
     }
 
-
     /**
      * Inserts the last search query to the search history.
      *

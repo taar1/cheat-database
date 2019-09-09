@@ -2,8 +2,7 @@ package com.cheatdatabase.helpers;
 
 public class Konstanten {
 
-    public final static String CURRENT_VERSION = "2.5";
-    public final static int DEFAULT_TOTAL_CHEATS = 161000;
+    public final static String CURRENT_VERSION = "2.5.1";
 
     public static final int INJECT_AD_AFTER_EVERY_POSITION = 20;
 
@@ -12,7 +11,6 @@ public class Konstanten {
     public final static String BASE_URL_ANDROID = "https://www.cheat-database.com/android/json/";
     public final static String SCREENSHOT_ROOT_WEBDIR = "https://www.cheat-database.com/cheatpics/";
     public final static String WEBDIR_MEMBER_AVATAR = "https://www.cheat-database.com/getblobimage.php?blobid=";
-    public final static String CHEATDATABASE_ANDROID_ICON_512 = "https://www.cheat-database.com/images/android_icons/cheat-database_icon_512x512.png";
 
     public static final int LOGIN_REGISTER_FAIL_RETURN_CODE = 0;
     public static final int LOGIN_REGISTER_OK_RETURN_CODE = 1;
@@ -41,9 +39,6 @@ public class Konstanten {
     public final static String PREFERENCES_TEMP_GAME_OBJECT_VIEW = "currentViewGameObj";
     public final static String PREFERENCES_TEMP_CHEAT_ARRAY_OBJECT_VIEW = "currentViewCheatArrObj";
     public final static String PREFERENCES_SELECTED_DRAWER_FRAGMENT_ID = "selectedDrawerFragmentId";
-
-    // Wird zum Zwischenspeichern des letzten Ratings verwendet
-    public final static String TMP_MEMBER_RATING = "tmpMemberRating";
 
     // Member Variablen
     public final static String MEMBER_OBJECT = "member_object";
@@ -97,15 +92,6 @@ public class Konstanten {
     public final static String FONT_BOLD = "Lato-Bold.ttf";
     public final static String FONT_LIGHT = "Lato-Light.ttf";
     public final static String FONT_REGULAR = "Lato-Regular.ttf";
-
-    // COLORS
-    public final static int COBALT_DARK = 0xFF003f50;
-    public final static int CYAN_DARK = 0xFF006464;
-    public final static int LIGHT_GREEN = 0xFF336600;
-    public final static int SUBMIT_CHEAT_PINK = 0xFFb00072;
-    public final static int PURPLE_DARK = 0xFF420058;
-    public final static int PURPLE_BRIGHT = 0xFF9900CC;
-    public final static int RED_DARK = 0xFFAA0000;
 
     public final static String ACHIEVEMENTS = "achievements";
     public final static String NO_ACHIEVEMENTS = "noAchievements";

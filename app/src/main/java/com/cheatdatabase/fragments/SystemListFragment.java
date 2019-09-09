@@ -144,7 +144,6 @@ public class SystemListFragment extends Fragment implements OnSystemListItemSele
             }
 
         });
-
     }
 
     @Override

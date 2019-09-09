@@ -1,8 +1,9 @@
 {
   "project_info": {
-    "project_id": "cheat-database",
     "project_number": "725928900571",
-    "name": "Cheat-Database"
+    "firebase_url": "https://cheat-database.firebaseio.com",
+    "project_id": "cheat-database",
+    "storage_bucket": "cheat-database.appspot.com"
   },
   "client": [
     {
@@ -14,8 +15,25 @@
           "package_name": "com.cheatdatabase"
         }
       },
-      "oauth_client": [],
-      "api_key": [ { "current_key": "" }],
+      "oauth_client": [
+        {
+          "client_id": "725928900571-opsvqfbdhdvf0foc8v884br5p4ch0hd2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.cheatdatabase",
+            "certificate_hash": "03ce20a38ccd700b6662311a829baa7d6633ad7c"
+          }
+        },
+        {
+          "client_id": "725928900571-8s5cu6lnud2de6591k7h84qhp8q1gjp5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDc_MlCRPPFra4XnXCOoVXCqCSfipvXW2I"
+        }
+      ],
       "services": {
         "analytics_service": {
           "status": 2,
@@ -29,7 +47,12 @@
         },
         "appinvite_service": {
           "status": 1,
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "725928900571-huv29cv9to7b6re792o298sv72qio3va.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         },
         "google_signin_service": {
           "status": 1
