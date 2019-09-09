@@ -136,13 +136,15 @@ public class SystemListFragment extends Fragment implements OnSystemListItemSele
     private void updateUI() {
         Needle.onMainThread().execute(() -> {
             systemsRecycleListViewAdapter.setSystemPlatforms(systemGameandCheatCounterList);
-
             mSwipeRefreshLayout.setRefreshing(false);
 
             if ((systemGameandCheatCounterList == null) || (systemGameandCheatCounterList.size() < 1)) {
-                Toast.makeText(getActivity(), R.string.no_internet, Toast.LENGTH_LONG).show();
+                try {
+                    Toast.makeText(getActivity(), R.string.no_internet, Toast.LENGTH_LONG).show();
+                } catch (NullPointerException e) {
+                    Log.e(TAG, "getActivity() is NULL");
+                }
             }
-
         });
     }
 

@@ -33,7 +33,11 @@ public class SystemsRecycleListViewAdapter extends RecyclerView.Adapter<Recycler
 
     @Override
     public int getItemCount() {
-        return systemList.size();
+        if (systemList != null) {
+            return systemList.size();
+        } else {
+            return 0;
+        }
     }
 
     @Override
