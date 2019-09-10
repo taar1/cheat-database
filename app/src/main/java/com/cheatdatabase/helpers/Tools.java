@@ -9,6 +9,8 @@ import android.content.res.Resources;
 import android.content.res.XmlResourceParser;
 import android.graphics.Typeface;
 import android.os.Environment;
+
+import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -503,10 +505,15 @@ public class Tools {
     }
 
     public static void showSnackbar(View fromView, String message) {
+        showSnackbar(fromView, message, BaseTransientBottomBar.LENGTH_LONG);
+    }
+
+    public static void showSnackbar(View fromView, String message, int duration) {
         Needle.onMainThread().execute(() -> {
             if ((message != null) && (fromView != null)) {
                 Snackbar snackbar = Snackbar.make(fromView, message, Snackbar.LENGTH_LONG);
                 snackbar.setText(message);
+                snackbar.setDuration(duration);
                 snackbar.show();
             }
         });

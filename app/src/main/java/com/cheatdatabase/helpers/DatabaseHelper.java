@@ -33,14 +33,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(SearchHistory.CREATE_TABLE);
     }
 
-    // TODO FAVORITEN HINZUFÜGEN GEHT, MAN KANN DEN FAVORITEN DANACH ABER NICHT ANSCHAUEN KOMMT EINE FEHLERMELDUNG
-    // TODO FAVORITEN HINZUFÜGEN GEHT, MAN KANN DEN FAVORITEN DANACH ABER NICHT ANSCHAUEN KOMMT EINE FEHLERMELDUNG
-    // TODO FAVORITEN HINZUFÜGEN GEHT, MAN KANN DEN FAVORITEN DANACH ABER NICHT ANSCHAUEN KOMMT EINE FEHLERMELDUNG
-    // TODO FAVORITEN HINZUFÜGEN GEHT, MAN KANN DEN FAVORITEN DANACH ABER NICHT ANSCHAUEN KOMMT EINE FEHLERMELDUNG
-    // TODO FAVORITEN HINZUFÜGEN GEHT, MAN KANN DEN FAVORITEN DANACH ABER NICHT ANSCHAUEN KOMMT EINE FEHLERMELDUNG
-    // TODO FAVORITEN HINZUFÜGEN GEHT, MAN KANN DEN FAVORITEN DANACH ABER NICHT ANSCHAUEN KOMMT EINE FEHLERMELDUNG
-    // TODO FAVORITEN HINZUFÜGEN GEHT, MAN KANN DEN FAVORITEN DANACH ABER NICHT ANSCHAUEN KOMMT EINE FEHLERMELDUNG
-
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         Log.w(TAG, "Upgrading database from version " + oldVersion + " to " + newVersion + ", which will destroy all old data");
@@ -226,15 +218,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             List<Cheat> favCheats = new ArrayList<>();
 
             Cursor cur = db.query(Favorite.TABLE_NAME, new String[]{
-                    Favorite.FAV_GAME_ID,
-                    Favorite.FAV_GAMENAME,
-                    Favorite.FAV_CHEAT_ID,
-                    Favorite.FAV_CHEAT_TITLE,
-                    Favorite.FAV_CHEAT_TEXT,
-                    Favorite.FAV_LANGUAGE_ID,
-                    Favorite.FAV_SYSTEM_ID,
-                    Favorite.FAV_SYSTEM_NAME,
-                    Favorite.FAV_WALKTHROUGH_FORMAT},
+                            Favorite.FAV_GAME_ID,
+                            Favorite.FAV_GAMENAME,
+                            Favorite.FAV_CHEAT_ID,
+                            Favorite.FAV_CHEAT_TITLE,
+                            Favorite.FAV_CHEAT_TEXT,
+                            Favorite.FAV_LANGUAGE_ID,
+                            Favorite.FAV_SYSTEM_ID,
+                            Favorite.FAV_SYSTEM_NAME,
+                            Favorite.FAV_WALKTHROUGH_FORMAT},
                     Favorite.FAV_GAME_ID + "=" + gameId, null, Favorite.FAV_CHEAT_ID, null, Favorite.FAV_CHEAT_TITLE);
 
             if (cur.moveToFirst()) {

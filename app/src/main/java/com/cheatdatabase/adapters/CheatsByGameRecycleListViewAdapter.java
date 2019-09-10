@@ -187,4 +187,20 @@ public class CheatsByGameRecycleListViewAdapter extends RecyclerView.Adapter<Rec
         });
     }
 
+    public void updateCheatListWithoutAds() {
+        final List<ListItem> newListItems = new ArrayList<>();
+
+        for (Cheat cheat : cheatList) {
+            CheatListItem cheatListItem = new CheatListItem();
+            cheatListItem.setCheat(cheat);
+            newListItems.add(cheatListItem);
+        }
+
+        Needle.onMainThread().execute(() -> {
+            listItems.clear();
+            listItems.addAll(newListItems);
+            notifyDataSetChanged();
+        });
+    }
+
 }

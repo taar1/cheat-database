@@ -312,9 +312,9 @@ public class CheatsByGameListActivity extends AppCompatActivity implements OnChe
     }
 
     private void error() {
+        Log.e(TAG, "Caught error: " + getPackageName() + "/" + getTitle());
         Needle.onMainThread().execute(() -> {
-            Log.e(TAG, "Caught error: " + getPackageName() + "/" + getTitle());
-            new AlertDialog.Builder(CheatsByGameListActivity.this).setIcon(R.drawable.ic_action_warning).setTitle(getString(R.string.err)).setMessage(R.string.err_data_not_accessible).setNeutralButton(R.string.ok, (dialog, whichButton) -> finish()).create().show();
+            Tools.showSnackbar(outerLayout, getString(R.string.err_data_not_accessible));
         });
     }
 

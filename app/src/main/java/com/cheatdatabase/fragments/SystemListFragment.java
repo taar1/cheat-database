@@ -7,7 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
+import android.widget.LinearLayout;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -38,6 +38,8 @@ public class SystemListFragment extends Fragment implements OnSystemListItemSele
     private List<SystemPlatform> systemGameandCheatCounterList;
     private SystemsRecycleListViewAdapter systemsRecycleListViewAdapter;
 
+    @BindView(R.id.outer_layout)
+    LinearLayout outerLayout;
     @BindView(R.id.my_recycler_view)
     RecyclerView recyclerView;
     @BindView(R.id.swipe_refresh_layout)
@@ -74,8 +76,6 @@ public class SystemListFragment extends Fragment implements OnSystemListItemSele
     }
 
     private void loadGamesAndCheatsCounterBackground() {
-        Log.d(TAG, "XXXXX loadGamesAndCheatsCounterBackground()");
-
         Needle.onBackgroundThread().execute(() -> {
             DatabaseHelper db = new DatabaseHelper(getActivity());
 
@@ -140,7 +140,7 @@ public class SystemListFragment extends Fragment implements OnSystemListItemSele
 
             if ((systemGameandCheatCounterList == null) || (systemGameandCheatCounterList.size() < 1)) {
                 try {
-                    Toast.makeText(getActivity(), R.string.no_internet, Toast.LENGTH_LONG).show();
+                    Tools.showSnackbar(outerLayout, getString(R.string.no_internet));
                 } catch (NullPointerException e) {
                     Log.e(TAG, "getActivity() is NULL");
                 }

@@ -1,9 +1,7 @@
 package com.cheatdatabase;
 
-import android.app.AlertDialog;
 import android.app.SearchManager;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -14,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
@@ -63,6 +62,8 @@ public class GamesBySystemListActivity extends AppCompatActivity implements OnGa
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
 
+    @BindView(R.id.outer_layout)
+    LinearLayout outerLayout;
     @BindView(R.id.my_recycler_view)
     FastScrollRecyclerView recyclerView;
     @BindView(R.id.swipe_refresh_layout)
@@ -278,9 +279,9 @@ public class GamesBySystemListActivity extends AppCompatActivity implements OnGa
     }
 
     private void error() {
+        Log.e(TAG, "Caught error: " + getPackageName() + "/" + getTitle());
         Needle.onMainThread().execute(() -> {
-            Log.e(TAG, "Caught error: " + getPackageName() + "/" + getTitle());
-            new AlertDialog.Builder(GamesBySystemListActivity.this).setIcon(R.drawable.ic_action_warning).setTitle(getString(R.string.err)).setMessage(R.string.err_data_not_accessible).setNeutralButton(R.string.ok, (dialog, whichButton) -> finish()).create().show();
+            Tools.showSnackbar(outerLayout, getString(R.string.err_data_not_accessible));
         });
     }
 

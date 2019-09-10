@@ -1,9 +1,7 @@
 package com.cheatdatabase.favorites;
 
-import android.app.AlertDialog;
 import android.app.SearchManager;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -216,8 +214,7 @@ public class FavoriteCheatListActivity extends AppCompatActivity implements OnCh
         try {
             if (cheatsArrayList != null && cheatsArrayList.size() > 0) {
                 cheatsByGameRecycleListViewAdapter.setCheatList(cheatsArrayList);
-                cheatsByGameRecycleListViewAdapter.filterList("");
-                cheatsByGameRecycleListViewAdapter.notifyDataSetChanged();
+                cheatsByGameRecycleListViewAdapter.updateCheatListWithoutAds();
             } else {
                 error();
             }
@@ -275,14 +272,8 @@ public class FavoriteCheatListActivity extends AppCompatActivity implements OnCh
 
     private void error() {
         Log.e(TAG, "Caught error: " + getPackageName() + "/" + getTitle());
-
         Needle.onMainThread().execute(() -> {
-            new AlertDialog.Builder(this).setIcon(R.drawable.ic_action_warning).setTitle(getString(R.string.err)).setMessage(R.string.err_data_not_accessible).setNeutralButton(R.string.ok, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int whichButton) {
-                    finish();
-                }
-            }).create().show();
+            Tools.showSnackbar(outerLayout, getString(R.string.err_data_not_accessible));
         });
     }
 
