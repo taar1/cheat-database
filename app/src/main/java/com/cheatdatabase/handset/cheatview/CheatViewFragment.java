@@ -172,6 +172,8 @@ public class CheatViewFragment extends Fragment {
                 reloadView.setVisibility(View.VISIBLE);
                 Toast.makeText(cheatViewPageIndicatorActivity, R.string.no_internet, Toast.LENGTH_SHORT).show();
             }
+        } else {
+            Tools.showSnackbar(outerLinearLayout, getString(R.string.err_data_not_accessible));
         }
 
         return outerLinearLayout;

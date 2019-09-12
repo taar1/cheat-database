@@ -9,10 +9,8 @@ import android.content.SharedPreferences.Editor;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
-import androidx.fragment.app.FragmentManager;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -22,6 +20,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.FragmentManager;
 
 import com.cheatdatabase.businessobjects.Member;
 import com.cheatdatabase.dialogs.AlreadyLoggedInDialog;
@@ -373,62 +375,26 @@ public class LoginActivity extends AppCompatActivity implements AlreadyLoggedInD
 
     }
 
-//    @Override
-//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//
-//        Log.d("requestCode", requestCode + "");
-//        Log.d("resultCode", resultCode + "");
-//
-//        // User registered an account. Therefore the login activity has to be
-//        // closed and the user returns to the previous screen.
-//        if (resultCode == RESULT_OK) {
-//            int intentReturnCode = data.getIntExtra("result", Konstanten.LOGIN_REGISTER_FAIL_RETURN_CODE);
-//
-//            if (intentReturnCode == Konstanten.REGISTER_SUCCESS_RETURN_CODE) {
-//                Intent returnIntent = new Intent();
-//                returnIntent.putExtra("result", Konstanten.REGISTER_SUCCESS_RETURN_CODE);
-//                setResult(RESULT_OK, returnIntent);
-//                finish();
-//            } else if (intentReturnCode == Konstanten.RECOVER_PASSWORD_SUCCESS_RETURN_CODE) {
-//                Toast.makeText(LoginActivity.this, R.string.recover_login_success, Toast.LENGTH_LONG).show();
-//            }
-//        }
-//    }
-
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        // TODO FIXME dies noch genau testen...
+        try {
+            int intentReturnCode = data.getIntExtra("result", Konstanten.LOGIN_REGISTER_FAIL_RETURN_CODE);
 
-        int intentReturnCode = data.getIntExtra("result", Konstanten.LOGIN_REGISTER_FAIL_RETURN_CODE);
-
-        if (intentReturnCode == Konstanten.REGISTER_SUCCESS_RETURN_CODE) {
-            Intent returnIntent = new Intent();
-            returnIntent.putExtra("result", Konstanten.REGISTER_SUCCESS_RETURN_CODE);
-            setResult(RESULT_OK, returnIntent);
+            if (intentReturnCode == Konstanten.REGISTER_SUCCESS_RETURN_CODE) {
+                Intent returnIntent = new Intent();
+                returnIntent.putExtra("result", Konstanten.REGISTER_SUCCESS_RETURN_CODE);
+                setResult(RESULT_OK, returnIntent);
+                finish();
+            } else if (intentReturnCode == Konstanten.RECOVER_PASSWORD_SUCCESS_RETURN_CODE) {
+                Toast.makeText(LoginActivity.this, R.string.recover_login_success, Toast.LENGTH_LONG).show();
+            }
+        } catch (NullPointerException e) {
+            Log.e(TAG, "onActivityResult data.getIntExtra is NULL: " + e.getLocalizedMessage());
             finish();
-        } else if (intentReturnCode == Konstanten.RECOVER_PASSWORD_SUCCESS_RETURN_CODE) {
-            Toast.makeText(LoginActivity.this, R.string.recover_login_success, Toast.LENGTH_LONG).show();
         }
     }
-
-//    @OnActivityResult(Konstanten.LOGIN_SUCCESS_RETURN_CODE)
-//    void onResult(Intent data) {
-//        int intentReturnCode = data.getIntExtra("result", Konstanten.LOGIN_REGISTER_FAIL_RETURN_CODE);
-//
-//        if (intentReturnCode == Konstanten.REGISTER_SUCCESS_RETURN_CODE) {
-//            Intent returnIntent = new Intent();
-//            returnIntent.putExtra("result", Konstanten.REGISTER_SUCCESS_RETURN_CODE);
-//            setResult(RESULT_OK, returnIntent);
-//            finish();
-//        } else if (intentReturnCode == Konstanten.RECOVER_PASSWORD_SUCCESS_RETURN_CODE) {
-//            Toast.makeText(LoginActivity.this, R.string.recover_login_success, Toast.LENGTH_LONG).show();
-//        }
-//    }
-
 
     @Override
     public void onFinishDialog(boolean signOutNow) {
