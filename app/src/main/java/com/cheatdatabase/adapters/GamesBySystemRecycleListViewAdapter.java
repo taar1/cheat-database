@@ -42,13 +42,13 @@ public class GamesBySystemRecycleListViewAdapter extends RecyclerView.Adapter<Re
 
     private List<Game> gameList;
     private List<ListItem> listItems;
-    private Context context;
+    private Context activity;
     private final OnGameListItemSelectedListener listener;
 
     private NativeAdsManager mNativeAdsManager;
 
-    public GamesBySystemRecycleListViewAdapter(Activity context, NativeAdsManager nativeAdsManager, OnGameListItemSelectedListener listener) {
-        this.context = context;
+    public GamesBySystemRecycleListViewAdapter(Activity activity, NativeAdsManager nativeAdsManager, OnGameListItemSelectedListener listener) {
+        this.activity = activity;
         this.mNativeAdsManager = nativeAdsManager;
         this.listener = listener;
         gameList = new ArrayList<>();
@@ -64,7 +64,11 @@ public class GamesBySystemRecycleListViewAdapter extends RecyclerView.Adapter<Re
 
     @Override
     public int getItemViewType(int position) {
-        return listItems.get(position).getType();
+        if (position >= 0) {
+            return listItems.get(position).getType();
+        } else {
+            return ListItem.TYPE_GAME;
+        }
     }
 
     @Override
@@ -78,7 +82,7 @@ public class GamesBySystemRecycleListViewAdapter extends RecyclerView.Adapter<Re
         if (viewType == ListItem.TYPE_GAME) {
             final View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.listrow_gamebysystem_item, parent, false);
             itemView.setDrawingCacheEnabled(true);
-            return new GamesBySystemListViewItemHolder(itemView, context);
+            return new GamesBySystemListViewItemHolder(itemView, activity);
         } else if (viewType == ListItem.TYPE_BLANK) {
             return new BlankWhiteListViewItemHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.listrow_blankwhite_item, parent, false));
         } else if (viewType == ListItem.TYPE_FACEBOOK_NATIVE_AD) {
@@ -86,7 +90,7 @@ public class GamesBySystemRecycleListViewAdapter extends RecyclerView.Adapter<Re
             return new FacebookNativeAdHolder(inflatedView);
         } else if (viewType == ListItem.TYPE_UKON_NO_CHIKARA) {
             final View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.ukon_custom_ad, parent, false);
-            return new UkonAdListViewItemHolder(itemView, context);
+            return new UkonAdListViewItemHolder(itemView, activity);
         }
 
         return null;
@@ -115,7 +119,7 @@ public class GamesBySystemRecycleListViewAdapter extends RecyclerView.Adapter<Re
                 facebookNativeAdHolder.tvAdSponsoredLabel.setText("Sponsored");
                 facebookNativeAdHolder.btnAdCallToAction.setText(ad.getAdCallToAction());
                 facebookNativeAdHolder.btnAdCallToAction.setVisibility(ad.hasCallToAction() ? View.VISIBLE : View.INVISIBLE);
-                AdOptionsView adOptionsView = new AdOptionsView(context, ad, facebookNativeAdHolder.nativeAdLayout);
+                AdOptionsView adOptionsView = new AdOptionsView(activity, ad, facebookNativeAdHolder.nativeAdLayout);
                 facebookNativeAdHolder.adChoicesContainer.addView(adOptionsView, 0);
 
                 List<View> clickableViews = new ArrayList<>();
@@ -131,9 +135,9 @@ public class GamesBySystemRecycleListViewAdapter extends RecyclerView.Adapter<Re
         } else if (type == ListItem.TYPE_UKON_NO_CHIKARA) {
             UkonAdListViewItemHolder ukonAdListViewItemHolder = (UkonAdListViewItemHolder) holder;
             ukonAdListViewItemHolder.view.setOnClickListener(v -> {
-                Uri uri = Uri.parse(context.getString(R.string.ukon_url));
+                Uri uri = Uri.parse(activity.getString(R.string.ukon_url));
                 Intent intentMoreApps = new Intent(Intent.ACTION_VIEW, uri);
-                context.startActivity(intentMoreApps);
+                activity.startActivity(intentMoreApps);
             });
         }
     }
