@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -140,9 +141,10 @@ public class SystemListFragment extends Fragment implements OnSystemListItemSele
 
             if ((systemGameandCheatCounterList == null) || (systemGameandCheatCounterList.size() < 1)) {
                 try {
-                    Tools.showSnackbar(outerLayout, getString(R.string.no_internet));
-                } catch (NullPointerException e) {
-                    Log.e(TAG, "getActivity() is NULL");
+                    Tools.showSnackbar(outerLayout, getString(R.string.err_data_not_accessible));
+                } catch (NullPointerException | IllegalStateException e) {
+                    Log.e(TAG, "NullPointerException or IllegalStateException: " + e.getLocalizedMessage());
+                    Toast.makeText(getActivity(), getString(R.string.err_data_not_accessible), Toast.LENGTH_LONG).show();
                 }
             }
         });

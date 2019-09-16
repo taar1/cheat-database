@@ -151,7 +151,7 @@ public class CheatViewFragment extends Fragment {
         outerLinearLayout = (LinearLayout) inflater.inflate(R.layout.fragment_cheat_detail_handset, container, false);
         ButterKnife.bind(this, outerLinearLayout);
 
-        if (cheatList != null) {
+        if (cheatList != null && game != null) {
             cheatList = game.getCheatList();
             cheatObj = cheatList.get(offset);
 
