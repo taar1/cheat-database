@@ -64,7 +64,11 @@ public class GamesBySystemRecycleListViewAdapter extends RecyclerView.Adapter<Re
 
     @Override
     public int getItemViewType(int position) {
-        return listItems.get(position).getType();
+        if (position < 0) {
+            return ListItem.TYPE_GAME;
+        } else {
+            return listItems.get(position).getType();
+        }
     }
 
     @Override

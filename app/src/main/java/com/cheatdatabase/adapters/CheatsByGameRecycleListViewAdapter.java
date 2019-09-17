@@ -70,7 +70,11 @@ public class CheatsByGameRecycleListViewAdapter extends RecyclerView.Adapter<Rec
 
     @Override
     public int getItemViewType(int position) {
-        return listItems.get(position).getType();
+        if (position < 0) {
+            return ListItem.TYPE_CHEAT;
+        } else {
+            return listItems.get(position).getType();
+        }
     }
 
     @Override
