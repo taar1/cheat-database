@@ -2,137 +2,69 @@
 <resources>
 
     <!-- UNIQUE NEWS -->
-    <string name="news_welcome">Novedades</string>
-    <string name="news_title">News</string>
-    <string name="welcome">Bienvenido a Cheat-Database</string>
-    <string name="news_text_static">Muchas gracias por usar Cheat-Database.</string>
 
     <!-- VARIOUS -->
     <string name="app_name">Cheat-Database</string>
     <string name="ok">OK</string>
-    <string name="showGameList">Lista de juegos</string>
-    <string name="showCheatList">Lista de trucos</string>
-    <string name="search_results">Resultados de la búsqueda</string>
-    <string name="no_cheats_title">No hay trucos disponibles</string>
-    <string name="no_cheats_text">No hay trucos disponibles en nuestra base de datos para este juego. Por favor, vuelve a consultar más adelante.</string>
-    <string name="please_wait">Espera, por favor</string>
-    <string name="retrieving_data">Recuperando datos</string>
-    <string name="cheat">truco</string>
-    <string name="cheatList">trucos</string>
-    <string name="game">juego</string>
-    <string name="games">juegos</string>
     <string name="no_internet">Sin conexión a Internet. Vuelve a intentar más adelante.</string>
-    <string name="search_hint">Buscar un juego</string>
-    <string name="splash_screen">Cargando Cheat-Database&#8230;&#8230;&#8230;</string>
     <string name="members_cheats_title">Trucos de %s</string>
     <string name="placeholder">Marcador</string>
 
     <!-- ADS TEXT -->
-    <string name="lead_bolt_text">Recomendaciones de nuestras apps ></string>
 
     <!-- MAIN SCREEN -->
-    <string name="enterGame">Introduce el nombre del juego:</string>
-    <string name="enter_game_hint">Nombre del juego</string>
-    <string name="game_platform">Sistema</string>
-    <string name="button_searchCheats">Buscar trucos</string>
     <string name="cancel">Cancelar</string>
-    <string name="clearForm">Borrar</string>
     <string name="error_nothing_found_title">Sin resultados!</string>
     <string name="error_nothing_found_text">No se han encontrado ningún juego. Prueba con menos palabras clave.</string>
-    <string name="button_closeNothingFoundPopup">Ajustar búsqueda</string>
-    <string name="cheat_counter_headline">Más de %s trucos y subiendo!</string>
-    <string name="total_cheats_unknown">Cientos de miles de trucos!</string>
-    <string name="new_cheats_title">Nuevos trucos para estos juegos:</string>
-    <string name="advanced_search">avanzado / búsqueda texto completo</string>
 
     <!-- MAIN MENU -->
     <string name="favorites">Favoritos</string>
-    <string name="goto_main_screen">Inicio</string>
     <string name="goto_cheat">A trucos</string>
-    <string name="goto_cheat_list">Al listado de trucos</string>
-    <string name="menu_fulltext_search_short">Búsqueda de texto completo</string>
-    <string name="menu_fulltext_search_long">Búsqueda de texto completo en trucos listados</string>
-    <string name="menu_server_status">Estado del servidor</string>
     <string name="menu_more_apps">Más aplicaciónes nuestras</string>
-    <string name="menu_pocketchange">Saldo Pocket Change</string>
 
     <!-- REPORT CHEAT -->
     <string name="report_cheat_title">Enviar truco</string>
     <string name="thanks_for_reporting">Gracias por tu informe. Si recibimos suficientes informes (individuales) consideraremos eliminar este truco de nuestra base de datos.</string>
 
     <!-- RATE CHEAT -->
-    <string name="rate_cheat_plain">Votar</string>
     <string name="rate_cheat">Valoración del truco</string>
-    <string name="rate_cheat_here">Vota este truco aquí</string>
-    <string name="rating_your">Tu voto:</string>
     <string name="rating_inserted">Gracias! Tu voto ha sido registrado.</string>
-    <string name="rating_updated">Gracias! Tu voto ha sido actualizado.</string>
-    <string name="rating_processing">Tu voto está siendo procesado&#8230;</string>
 
     <!-- REGISTER MEMBER -->
-    <string name="register_title">Regístrate aquí</string>
-    <string name="username">Usuario</string>
-    <string name="password">Contraseña</string>
-    <string name="email">E-Mail</string>
     <string name="register_thanks">Gracias por registrarte!</string>
     <string name="register">Registro</string>
-    <string name="register_instead">Registro</string>
-    <string name="register_login">Registro / Conexión</string>
 
     <!-- LOGIN MEMBER -->
-    <string name="login_title">Conéctate aquí</string>
-    <string name="login_instead">Conexión</string>
-    <string name="username_email">Usuario o E-Mail</string>
-    <string name="login_failed">Conexión fallida. Usuario/Contraseña incorrectos. Visita www.cheat-database.com para recuperar tu contraseña.</string>
     <string name="member_banned">Tu cuenta ha sido bloqueada.</string>
     <string name="login_ok">Conexión correcta.</string>
     <string name="logout">Desconexión</string>
     <string name="logout_ok">Desconexión correcta.</string>
-    <string name="login_forgot">Recuperar datos de conexión</string>
-    <string name="login_send_password">Enviar datos de conexión por email</string>
     <string name="login_sent_ok">Los datos de conexión han sido enviados por email</string>
 
     <!-- ERROR MESSAGES -->
     <string name="err">Error</string>
-    <string name="err_username_length">El nombre de usuario debe tener al menos 6 caracteres.</string>
     <string name="err_username_used">Este usuario ya existe.</string>
     <string name="err_email_invalid">Email no válido.</string>
     <string name="err_email_used">Esta dirección de email ya existe.</string>
-    <string name="err_password_length">La contraseña debe tener al menos 6 caracteres.</string>
     <string name="err_other_problem">Ha habido un problema creando la cuenta. Vuelve a intentarlo más tarde. Si el problema persiste, puedes registrarte en www.cheat-database.com/register.</string>
     <string name="err_email_user_not_found">No se ha encontrado ningún usuario con este email.</string>
     <string name="err_data_not_accessible">No se ha podido recuperar la información solicitada. Vuelve a intentarlo más tarde.</string>
-    <string name="err_sd_not_accessible">Tarjeta SD no accesible.</string>
-    <string name="err_saving_to_sd">Guardado a tarjeta SD fallido.</string>
     <string name="err_no_member_data">Error: No se ha encontrado información del usuario.</string>
     <string name="err_somethings_wrong">Algo ha fallado. Vuelve a intentarlo.</string>
 
     <!-- FAVORITES -->
-    <string name="my_favorites">Tus favoritos</string>
     <string name="add_favorite">Añadir a tus favoritos</string>
     <string name="add_favorite_ok">Truco añadido a tus favoritos.</string>
     <string name="remove_favorite">Eliminar de tus favoritos</string>
-    <string name="remove_favorite_ok">El truco %s se ha eliminado de tus favoritos.</string>
-    <string name="remove_favorite_nok">Error eliminando el truco de tus favoritos.</string>
-    <string name="remove_favorites_ok">Juego eliminado de tus favoritos.</string>
-    <string name="remove_favorites_nok">Error eliminado el juego de tus favoritos.</string>
-    <string name="goto_favorites">Ir a tus favoritos</string>
-    <string name="favorite_deleted">El truco ha sido eliminado de tus favoritos.</string>
     <string name="favorite_error">El truco ya está en tus favoritos.</string>
     <string name="favorite_empty">Todavía no tienes favoritos. Antes de acceder, necesitas añadir trucos a tus favoritos.</string>
-    <string name="favorite_no_cheats">No hay trucos para este juego en tus favoritos.</string>
-    <string name="favorites_welcome_text">Esta es la área donde se mostrarán tus trucos favoritos. Si quieres añadir un truco a tus favoritos, solo pulsa el botón \"Menu\" en un truco y elige \"Añadir a tus favoritos\" en el menú. Si quieres eliminar un truco de tus favoritos puedes hacerlo seleccionando \"Eliminar de tus favoritos\" en el menú del juego.</string>
     <string name="add_favorites_ok">Trucos añadidos a tus favoritos.</string>
-    <string name="add_favorites_error">Algunos o todos los trucos ya están en tus favoritos. Los nuevos han sido añadidos</string>
-    <string name="add_one_favorite">Añadir trucos a tus favoritos</string>
     <string name="add_all_favorites">Añadir todos los trucos a tus favoritos</string>
     <string name="favorite_adding">Añadiendo favoritos&#8230;&#8230;&#8230;</string>
 
     <!-- FORUM -->
     <string name="forum_goto">Ir al foro</string>
-    <string name="forum_goto_online">Ir al foro (online)</string>
     <string name="forum_button_submit">Comentar</string>
-    <string name="forum_submit_failed">Tu comentario no ha podido ser enviado. Vuelve a probar más tarde.</string>
     <string name="forum_submit_ok">Enviado.</string>
     <string name="forum_yet_empty">El foro para este truco todavía está vacio. Sé el primero en escribir algo. Consejo: Marca este truco como favorito para volver más fácilmente más adelante.</string>
     <string name="forum_hint">Your message</string>
@@ -142,51 +74,29 @@
 
     <!-- SUBMIT CHEAT -->
     <string name="submit_cheat_short">Enviar un truco</string>
-    <string name="submit_cheat_long">Enviar un truco para este juego</string>
     <string name="submit_cheat_your_title">Título del truco</string>
     <string name="submit_cheat_your_body">Tu truco</string>
     <string name="submit_cheat_review">Enviar truco para revisión</string>
     <string name="cheat_submit_ok">Gracias por tu envío! Revisaremos el truco y te informaremos por email si lo vamos a añadir a la base de datos. Por cierto: Puedes editar o eliminar tus trucos enviados desde nuestra página web www.cheat-database.com.</string>
     <string name="cheat_submit_nok">El envío del truco ha fallado. Vuelve a intentarlo.</string>
     <string name="submit_cheat_instructions_title">Información sobre cómo enviar un truco</string>
-    <string name="submit_cheat_instructions_text">Todos los trucos que envies se guardan en tu cuenta Cheat-Database. Una vez que un truco sea aprobado, te notificaremos por email. \n\nSi quieres aplicar cambios a tus trucos, puedes conectarte a www.cheat-database.com en tu ordenador. Podrás añadir capturas de pantalla, cambiar el texto o eliminar tus trucos.</string>
     <string name="submit_cheat_guidelines">Gracias por enviarnos el truco, apreciamos mucho tu ayuda! Sin embargo, antes de escribir un truco, por favor lee nuestras breves instrucciones que harán que tus trucos sean más fáciles de entender a los otros lectores.\n\n
 - Usa mayúsculas para personajes u objetos. Usa siempre una mayúscula después de un punto.\n\n
 - Evita las frases demasiado largas. Las frases cortas son más fáciles de entender. Intenta no usar \"despues\" para conectar frases.\n\n
 - Evita los \"Yo hice\" o \"me sirvió\" etc. en las frases. Usa la tercera persona para las instrucciones.</string>
     <string name="thanks">Gracias!</string>
-    <string name="help">Ayuda</string>
     <string name="fill_everything">Por favor, rellena todos los campos.</string>
     <string name="submit_cheat_consent_title">Acuerdo</string>
     <string name="submit_cheat_consent_text">Acepto que mi envío puede ser gramáticamente modificado y corregido para mantener un mínimo nivel de calidad.</string>
 
     <!-- CRASHREPORT -->
-    <string name="crashreport_submit">Enviar informe de errort</string>
-    <string name="crashreport_your_device">Modelo de dispositivo</string>
-    <string name="crashreport_when_crashed">Cuándo ha fallado la aplicación?</string>
-    <string name="crashreport_missing_devicemodel">Por favor introduce el modelo de tu teléfono.</string>
-    <string name="crashreport_missing_email">Por favor introduce tu email para poder contactarte en caso de que necesitemos más información sobre el error.</string>
-    <string name="crashreport_missing_crashreport">Por favor facilita información detallada sobre dónde hiciste click cuando la aplicación falló.</string>
-    <string name="crashreport_thanks">Gracias por tu informe de error! Te contactaremos por email en caso de necesitar más información sobre el error.</string>
 
     <!-- FULL-TEXT SEARCH -->
-    <string name="fulltext_search_title">Búsqueda de texto completo</string>
-    <string name="fulltext_search_titles_also">Buscar en títulos de trucos tambien</string>
-    <string name="fulltext_search_systems">Elegir plataformas</string>
-    <string name="fulltext_search_listed_cheats">Buscar entre los trucos listados</string>
-    <string name="fulltext_search_all_cheats">Buscar entre todos los trucos</string>
-    <string name="fulltext_search_results">Resultados de la búsqueda de texto completo</string>
-    <string name="fulltext_search_cheats">Buscar trucos</string>
-    <string name="fulltext_search_keywords">Palabras clave</string>
-    <string name="fulltext_search_error_nosystem_selected">Por favor elige por lo menos una plataforma</string>
 
     <!-- CONTEXT MENU -->
     <string name="context_menu_title">Menú contextual</string>
-    <string name="context_menu_copied">Truco copiado.</string>
 
     <!-- NOTIFICATIONS -->
-    <string name="notify_rotate_device">Rota tu dispositivo si el truco no se muestra adecuadamente.</string>
-    <string name="fullscreen_mode_exit">Haz doble click para salir del modo de pantalla completa</string>
 
     <!-- CHEAT META -->
     <string name="meta_info">Información</string>
@@ -198,11 +108,9 @@
     <string name="meta_views_today">Visitas hoy</string>
     <string name="meta_show_all_cheats">Mostrar todos los trucos</string>
     <string name="meta_rating_average">Media de votos por los usuarios</string>
-    <string name="meta_return">Volver al truco</string>
     <string name="meta_average_rating1">%1$s de 10</string>
     <string name="meta_average_rating2">sobre %s votos</string>
     <string name="meta_member_homepage">sitio web</string>
-    <string name="meta_info_retrieved">Información obtenida. Desliza a la izquierda para verla.</string>
 
     <!-- TOP MEMBERS -->
     <string name="top_members_title">Top 20 usuarios</string>
@@ -214,8 +122,6 @@
     <string name="share_title">Compartir truco</string>
     <string name="share_error_no_client">No hay ningún cliente de correo instalado.</string>
     <string name="share_email_subject">Acabo de encontrar este truco para %s</string>
-    <string name="share_email_body">Acabo de encontrar este truco en Cheat-Database para Android. Haz click en el link para consultarlo:</string>
-    <string name="share_download_cheatdatabase">Descarga Cheat-Database para Android aquí:</string>
 
     <!-- NEW STRINGS -->
     <string name="slide_gallery">Desliza a izquierda/derecha para más imágenes</string>

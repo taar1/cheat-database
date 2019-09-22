@@ -22,8 +22,5 @@
         <item>November</item>
         <item>December</item>
     </string-array>
-    <string-array name="contextmenu_cheatview">
-        <item>Copy to clipboard</item>
-    </string-array>
 
 </resources>

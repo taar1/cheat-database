@@ -30,8 +30,6 @@ import com.cheatdatabase.helpers.Tools;
 import com.cheatdatabase.helpers.Webservice;
 import com.cheatdatabase.listeners.OnGameListItemSelectedListener;
 import com.cheatdatabase.widgets.DividerDecoration;
-import com.facebook.ads.AdSize;
-import com.facebook.ads.AdView;
 import com.facebook.ads.NativeAd;
 import com.facebook.ads.NativeAdsManager;
 import com.google.gson.Gson;
@@ -56,7 +54,7 @@ public class GamesBySystemListActivity extends AppCompatActivity implements OnGa
     private GamesBySystemRecycleListViewAdapter gamesBySystemRecycleListViewAdapter;
     private SystemPlatform systemObj;
     private Member member;
-    private AdView facebookAdView;
+//    private AdView facebookAdView;
 
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
@@ -71,8 +69,8 @@ public class GamesBySystemListActivity extends AppCompatActivity implements OnGa
     Toolbar mToolbar;
     @BindView(R.id.item_list_empty_view)
     TextView mEmptyView;
-    @BindView(R.id.banner_container)
-    LinearLayout bannerContainerFacebook;
+//    @BindView(R.id.banner_container)
+//    LinearLayout bannerContainerFacebook;
 
     @Override
     protected void onStart() {
@@ -122,9 +120,9 @@ public class GamesBySystemListActivity extends AppCompatActivity implements OnGa
 
         cheatDatabaseApplication = CheatDatabaseApplication.getCurrentAppInstance();
 
-        facebookAdView = new AdView(this, Konstanten.FACEBOOK_AUDIENCE_NETWORK_NATIVE_BANNER_ID, AdSize.BANNER_HEIGHT_50);
-        bannerContainerFacebook.addView(facebookAdView);
-        facebookAdView.loadAd();
+//        facebookAdView = new AdView(this, Konstanten.FACEBOOK_AUDIENCE_NETWORK_NATIVE_BANNER_ID, AdSize.BANNER_HEIGHT_50);
+//        bannerContainerFacebook.addView(facebookAdView);
+//        facebookAdView.loadAd();
 
         if (mToolbar != null) {
             setSupportActionBar(mToolbar);
@@ -301,9 +299,9 @@ public class GamesBySystemListActivity extends AppCompatActivity implements OnGa
 
     @Override
     protected void onDestroy() {
-        if (facebookAdView != null) {
-            facebookAdView.destroy();
-        }
+//        if (facebookAdView != null) {
+//            facebookAdView.destroy();
+//        }
         super.onDestroy();
     }
 

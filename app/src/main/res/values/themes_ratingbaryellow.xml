@@ -3,8 +3,4 @@
 <!-- Generated with http://android-holo-colors.com -->
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <style name="RatingBarYellow" parent="android:Theme.Holo">
-        <item name="android:ratingBarStyle">@style/RatingBarRatingBarYellow</item>
-    </style>
-
 </resources>

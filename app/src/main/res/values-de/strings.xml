@@ -2,143 +2,73 @@
 <resources>
 
     <!-- UNIQUE NEWS -->
-    <string name="news_welcome">Neu in dieser Version</string>
-    <string name="news_title">News</string>
-    <string name="welcome">Willkommen bei Cheat-Database</string>
-    <string name="news_text_static">Vielen Dank, dass du Cheat-Database benutzt!</string>
 
     <!-- VARIOUS -->
     <string name="app_name">Cheat-Database</string>
-    <string name="title_item_detail">Item Detail</string>
     <string name="ok">OK</string>
-    <string name="showGameList">Spieleliste</string>
-    <string name="showCheatList">Cheat-Liste</string>
-    <string name="search_results">Suchresultate</string>
-    <string name="no_cheats_title">Keine Cheats vorhanden</string>
-    <string name="no_cheats_text">Zu diesem Spiel haben wir noch keine Cheats in der Datenbank. Versuche es zu einem späteren Zeitpunkt noch einmal.</string>
-    <string name="please_wait">Bitte warten</string>
-    <string name="retrieving_data">Lade Daten</string>
-    <string name="cheat">Cheat</string>
-    <string name="cheatList">Cheats</string>
-    <string name="game">Spiel</string>
-    <string name="games">Spiele</string>
     <string name="no_internet">Zur Zeit besteht keine Internetverbindung.</string>
-    <string name="search_hint">Suche ein Game</string>
-    <string name="splash_screen">Cheat-Database wird geladen&#8230;</string>
     <string name="members_cheats_title">%1$s\'s Tricks</string>
     <string name="placeholder">Platzhalter</string>
 
     <!-- ADS TEXT -->
-    <string name="lead_bolt_text">App Empfehlungen der Redaktion ></string>
 
     <!-- MAIN SCREEN -->
-    <string name="enterGame">Suche nach Spieltitel:</string>
-    <string name="enter_game_hint">Spieltitel</string>
-    <string name="game_platform">System</string>
-    <string name="button_searchCheats">Suche nach Cheats</string>
     <string name="cancel">Abbrechen</string>
-    <string name="clearForm">Löschen</string>
     <string name="error_nothing_found_title">Nichts gefunden!</string>
     <string name="error_nothing_found_text">Es konnte kein Spiel mit diesen Stichwörtern gefunden werden. Versuche es erneut mit weniger oder anderen Stichwörtern.</string>
-    <string name="button_closeNothingFoundPopup">Suche verbessern</string>
-    <string name="cheat_counter_headline">Über %1$s Cheats verfügbar!</string>
-    <string name="total_cheats_unknown">Hunderttausende Cheats!</string>
-    <string name="new_cheats_title">Neue Cheats für diese Games:</string>
-    <string name="advanced_search">Volltext-Suche</string>
 
     <!-- MAIN MENU -->
     <string name="favorites">Meine Favoriten</string>
-    <string name="goto_main_screen">Startseite</string>
     <string name="goto_cheat">Zum Cheat</string>
     <string name="goto_news">News</string>
     <string name="goto_games_and_cheats">Games &amp; Tricks</string>
-    <string name="goto_cheat_list">Zur Cheat-Liste</string>
-    <string name="menu_fulltext_search_short">Volltextsuche</string>
-    <string name="menu_fulltext_search_long">Volltextsuche in diesen Cheats</string>
-    <string name="menu_server_status">Server Status</string>
     <string name="menu_more_apps">Mehr Apps von uns</string>
-    <string name="menu_pocketchange">Pocket Change Guthaben</string>
 
     <!-- REPORT CHEAT -->
     <string name="report_cheat_title">Cheat melden</string>
     <string name="thanks_for_reporting">Besten Dank. Wir werden den Cheat überprüfen.</string>
 
     <!-- RATE CHEAT -->
-    <string name="rate_cheat_plain">Bewerten</string>
     <string name="rate_cheat">Cheat bewerten</string>
-    <string name="rate_cheat_here">Bewerte diesen Cheat</string>
-    <string name="rating_your">Deine Bewertung:</string>
     <string name="rating_inserted">Danke! Deine Bewertung wurde registriert.</string>
-    <string name="rating_updated">Danke! Deine Bewertung wurde aktualisiert.</string>
-    <string name="rating_processing">Dein Rating wird eingetragen&#8230;</string>
 
     <!-- REGISTER MEMBER -->
-    <string name="register_title">Registration</string>
-    <string name="username">Benutzername</string>
-    <string name="password">Passwort</string>
-    <string name="email">E-Mail</string>
     <string name="register_thanks">Registration erfolgreich. Vielen Dank!</string>
     <string name="register">Registrieren</string>
-    <string name="register_account">Registere neuen Account</string>
-    <string name="register_instead">Registration</string>
-    <string name="register_login">Einloggen / Registrieren</string>
     <string name="login">Login</string>
 
     <!-- LOGIN MEMBER -->
-    <string name="login_title">Einloggen</string>
-    <string name="login_instead">&#8230; oder Login</string>
-    <string name="username_email">Username oder E-Mail</string>
-    <string name="login_failed">Login nicht erfolgreich. Falsche Username/Passwort Kombination. Gehe auf www.cheat-database.com, um das Passwort zurückzusetzen.</string>
     <string name="member_banned">Dein Account ist gesperrt.</string>
     <string name="login_ok">Einloggen erfolgreich.</string>
     <string name="logout">Ausloggen</string>
     <string name="logout_ok">Ausloggen erfolgreich.</string>
-    <string name="login_forgot">Zugangsdaten vergessen</string>
     <string name="login_forgot_password">Passwort vergessen?</string>
-    <string name="login_send_password">Zugangsdaten per E-Mail senden</string>
     <string name="login_sent_ok">Die Zugangsdaten wurden per E-Mail verschickt.</string>
 
     <!-- ERROR MESSAGES -->
     <string name="err">Fehler</string>
-    <string name="err_username_length">Der Benutzername muss mindestens 6 Zeichen lang sein.</string>
     <string name="err_username_used">Dieser Benutzername wird bereits verwendet.</string>
     <string name="err_email_invalid">Ungültige E-Mail Adresse.</string>
     <string name="err_email_used">Diese E-Mail Adresse wird bereits verwendet.</string>
-    <string name="err_password_length">Das Passwort muss mindestens 6 Zeichen lang sein.</string>
     <string name="err_other_problem">Es gab ein Problem beim Erstellen des Accounts. Bitte versuche es später noch einmal. Sollte das Problem bestehen bleiben besuche www.cheat-database.com/register für eine Registration.</string>
     <string name="err_email_user_not_found">Kein Benutzer mit dieser E-Mail Adresse gefunden.</string>
     <string name="err_data_not_accessible">Die angeforderten Daten konnten nicht empfangen werden. Versuche es etwas später noch einmal.</string>
-    <string name="err_sd_not_accessible">SD card not accessible at the moment.</string>
-    <string name="err_saving_to_sd">Saving to SD card failed.</string>
     <string name="err_no_member_data">Fehler: Es wurden keine Daten gefunden.</string>
     <string name="err_somethings_wrong">Etwas ist soeben schief gelaufen. Versuchs bitte nochmals.</string>
 
     <!-- FAVORITES -->
-    <string name="my_favorites">Favoriten</string>
     <string name="add_favorite">Zu Favoriten hinzufügen</string>
     <string name="add_favorite_ok">Cheat wurde zu den Favoriten hinzugefügt.</string>
     <string name="remove_favorite">Von den Favoriten entfernen</string>
-    <string name="remove_favorite_ok">Der Cheat %1$s wurde aus den Favoriten entfernt.</string>
-    <string name="remove_favorite_nok">Fehler beim Entfernen dieses Favoriten.</string>
-    <string name="remove_favorites_ok">Game erfolgreich aus den Favoriten gelöscht.</string>
-    <string name="remove_favorites_nok">Fehler beim Löschen des Games aus den Favoriten.</string>
-    <string name="goto_favorites">Meine Favoriten</string>
-    <string name="favorite_deleted">Cheat wurde aus den Favoriten entfernt.</string>
     <string name="favorite_error">Cheat konnte nicht hinzugefügt werden, da er bereits in den Favoriten existiert.</string>
     <string name="favorite_empty">Es befinden sich noch keine Favoriten in der Liste. Füge erst einen Cheat zu dieser Liste hinzu.</string>
-    <string name="favorite_no_cheats">Es befinden sich keine Cheats zu diesem Game in den Favoriten.</string>
-    <string name="favorites_welcome_text">In diesem Bereich werden Deine favorisierten Cheats angezeigt. Um einen Cheat in diese Liste hinzuzufügen, drücke bei der Ansicht eines Cheats auf die \"Menü\" Taste und wähle anschliessend die Option \"Zu Favoriten hinzufügen\". Um einen Cheat aus der Liste wieder zu entfernen, einfach die Option \"Von den Favoriten entfernen\" auswählen.</string>
     <string name="add_favorites_ok">Die Cheats wurden zu den Favoriten hinzugefügt.</string>
-    <string name="add_favorites_error">Einige oder alle Cheats sind bereits in den Favoriten. Die Neuen wurden hinzugefügt.</string>
-    <string name="add_one_favorite">Cheat zu den Favoriten hinzufügen</string>
     <string name="add_all_favorites">Alle Cheats zu den Favoriten hinzufügen</string>
     <string name="favorite_adding">Füge hinzu&#8230;</string>
 
     <!-- FORUM -->
     <string name="forum_goto">Zum Forum</string>
-    <string name="forum_goto_online">Zum Forum (online)</string>
     <string name="forum_button_submit">Abschicken</string>
-    <string name="forum_submit_failed">Dein Forumsbeitrag konnte nicht gesendet werden. Versuche es später noch einmal.</string>
     <string name="forum_submit_ok">Forumeintrag erfolgreich gesendet.</string>
     <string name="forum_yet_empty">Das Forum für diesen Cheat ist noch leer. Sei der Erste, der etwas schreibt. Am besten du trägst den Cheat in deine Favoriten ein, so kannst du schneller auf dieses Forum wieder zugreifen.</string>
     <string name="forum_hint">Deine Nachricht</string>
@@ -148,20 +78,17 @@
 
     <!-- SUBMIT CHEAT -->
     <string name="submit_cheat_short">Cheat einsenden</string>
-    <string name="submit_cheat_long">Für dieses Game ein Cheat einsenden</string>
     <string name="submit_cheat_your_title">Cheat Titel</string>
     <string name="submit_cheat_your_body">Dein Cheat Text</string>
     <string name="submit_cheat_review">Cheat einsenden</string>
     <string name="cheat_submit_ok">Vielen Dank für Deinen Beitrag! Wir werden den Cheat prüfen und dich per E-Mail informieren, wenn wir ihn in unsere Datenbank aufnehmen werden. Du kannst jederzeit Deine geposteten Cheats auf www.cheat-database.com editieren oder löschen.</string>
     <string name="cheat_submit_nok">Irgendwas ist beim abschicken schiefgelaufen. Versuche es nochmals.</string>
     <string name="submit_cheat_instructions_title">Über das Einsenden von Cheats</string>
-    <string name="submit_cheat_instructions_text">_</string>
     <string name="submit_cheat_guidelines">Lies bitte kurz die Richtlinien zum Verfassen eines Cheats durch:\n\n
 - Bitte verwende Grossbuchstaben für Personennamen oder Gegenstände. Nach einem Punkt sollte der Satz ebenfalls mit einem Grossbuchstaben anfangen.\n\n
 - Schreibe kurze Sätze. Lange Sätze mit Kommas verbunden sind schwieriger zu verstehen.\n\n
 - Schreibe die Sätze nicht in der &#8220;ich&#8221;-Form wie zum Beispiel &#8220;es hat mir geholfen&#8221; oder &#8220;es hat mir 1000 Gold eingebracht&#8221;.</string>
     <string name="thanks">Thank you!</string>
-    <string name="help">Hilfe</string>
     <string name="fill_everything">Bitte fülle alle Felder aus.</string>
     <string name="submit_cheat_consent_title">Einverständniserklärung</string>
     <string name="submit_cheat_consent_text">Ich bin damit einverstanden, dass mein eingesandter Cheat korrigiert und unter Umständen angepasst werden kann, damit er den minimalen Qualitätsanforderungen von Cheat-Database entspricht.\n\nDurch das Übermitteln des Cheats gewährst du Cheat-Database das Recht der Verwendung und Verbreitung des Inhaltes via App und Website. Für den Autor entstehen dadurch keinerlei finanziellen Ansprüche von Cheat-Database.\n\nAlle eingeschickten Cheats werden in Deinem Cheat-Database Account gespeichert. Wenn ein eingesendeter Cheat geprüft und aufgenommen wurde, wirst du per E-Mail darüber informiert.\n\nWenn du nachträglich irgendwelche Änderungen am Cheat vornehmen willst, kannst du dich via Webbrowser auf www.cheat-database.com einloggen. Im Member-Bereich kannst du Deine Cheats editieren, Screenshots hinzufügen/ändern oder den kompletten Cheat aus der Datenbank entfernen.</string>
@@ -171,32 +98,13 @@
     <string name="submit_cheat_error_accept_conditions">Bitte bestätige die Einsendekonditionen indem du das Kästchen anklickst.</string>
 
     <!-- CRASHREPORT -->
-    <string name="crashreport_submit">Fehlerbericht senden</string>
-    <string name="crashreport_your_device">Gerätemodell</string>
-    <string name="crashreport_when_crashed">Wann ist die Applikation abgestürzt?</string>
-    <string name="crashreport_missing_devicemodel">Bitte trage Dein Telefonmodell ein.</string>
-    <string name="crashreport_missing_email">Bitte trage Deine E-Mailadresse ein, damit wir dich bei Fragen kontaktieren können.</string>
-    <string name="crashreport_missing_crashreport">Bitte beschreibe so detailliert wie möglich, wann es zum Absturz der Applikation kam.</string>
-    <string name="crashreport_thanks">Vielen Dank für den Fehlerbericht! Falls wir Fragen zum Crash hatten, werden wir uns bei Dir melden.</string>
 
     <!-- FULL-TEXT SEARCH -->
-    <string name="fulltext_search_title">Volltextsuche</string>
-    <string name="fulltext_search_titles_also">Cheat-Titel ebenfalls durchsuchen</string>
-    <string name="fulltext_search_systems">Systeme auswählen</string>
-    <string name="fulltext_search_listed_cheats">Gelistete Cheats durchsuchen</string>
-    <string name="fulltext_search_all_cheats">Alle Cheats durchsuchen</string>
-    <string name="fulltext_search_results">Volltext-Suchresultate</string>
-    <string name="fulltext_search_cheats">Cheats durchsuchen</string>
-    <string name="fulltext_search_keywords">Eingabe der Stichwörter</string>
-    <string name="fulltext_search_error_nosystem_selected">Wähle bitte mindestens ein System</string>
 
     <!-- CONTEXT MENU -->
     <string name="context_menu_title">Kontextmenü</string>
-    <string name="context_menu_copied">Cheat wurde in die Zwischenablage kopiert.</string>
 
     <!-- NOTIFICATIONS -->
-    <string name="notify_rotate_device">Drehe das Gerät um 90 Grad, sollte der Cheat nicht richtig dargestellt werden.</string>
-    <string name="fullscreen_mode_exit">Doppelklicken, um den Vollbildmodus zu verlassen</string>
 
     <!-- CHEAT META -->
     <string name="meta_info">Meta Info</string>
@@ -208,11 +116,9 @@
     <string name="meta_views_today">Aufrufe heute</string>
     <string name="meta_show_all_cheats">Zeige alle Cheats</string>
     <string name="meta_rating_average">Durchschnittliche Mitgliederbewertung</string>
-    <string name="meta_return">Zurück zum Cheat</string>
     <string name="meta_average_rating1">%1$s von 10</string>
     <string name="meta_average_rating2">basierend auf %1$s Stimmen</string>
     <string name="meta_member_homepage">Website</string>
-    <string name="meta_info_retrieved">Cheat Meta Info empfangen. Nach links swipen für Ansicht.</string>
 
     <!-- TOP MEMBERS -->
     <string name="top_members_title">Mitglieder Top 20</string>
@@ -225,33 +131,17 @@
     <string name="share_title">Cheat teilen</string>
     <string name="share_error_no_client">Es ist keine E-Mail Applikation installiert.</string>
     <string name="share_email_subject">Ich habe soeben diesen Cheat für %1$s entdeckt</string>
-    <string name="share_email_body">Ich habe soeben diesen Cheat mit der Cheat-Database App für Android entdeckt. Klicke auf den untenstehenden Link, um den Cheat anzuschauen:</string>
-    <string name="share_download_cheatdatabase">Lade Cheat-Database für Android hier herunter:</string>
 
     <!-- NEW STRINGS -->
     <string name="slide_gallery">Links/rechts wischen für mehr Bilder</string>
 
     <!-- FACEBOOK STUFF -->
-    <string name="success">Erfolg</string>
-    <string name="successfully_posted_post">Cheat erfolgreich gepostet.</string>
-    <string name="error">Fehler</string>
-    <string name="status_update">Status Update</string>
-    <string name="cancelled">Abgebrochen</string>
-    <string name="permission_not_granted">Keine Berechtigung</string>
-    <string name="facebook_share">Auf Facebook teilen</string>
     <string name="title_activity_main">Cheat-Database</string>
     <string name="action_settings">Einstellungen</string>
-    <string name="title_section1">Sektion 1</string>
-    <string name="title_section2">Sektion 2</string>
-    <string name="title_section3">Sektion 3</string>
     <string name="search_game">Game suchen</string>
-    <string name="search_game_hint">Gamename</string>
     <string name="title_activity_search_result">SearchResultActivity</string>
-    <string name="hello_world">Hallo Welt!</string>
     <string name="drawer_open">Öffne den Navigation Drawer</string>
     <string name="drawer_close">Schliesse den Navigation Drawer</string>
-    <string name="action_websearch">Websuche</string>
-    <string name="list_games">Zum System</string>
     <string name="cheats_count">Anzahl Cheats:</string>
 
     <!-- NEW VALUES FROM VERSION 2.0 -->
@@ -269,9 +159,7 @@
     <string name="sending_message_progress">Sende Nachricht&#8230;</string>
     <string name="error_value_too_short">Dieser Wert ist zu kurz.</string>
     <string name="error_login_required">Du musst eingeloggt sein, um diese Funktion nutzen zu können.</string>
-    <string name="error_login_first">Logge dich bitte zuerst ein.</string>
     <string name="error_login_to_rate">Du musst eingeloggt sein, um Cheats bewerten zu können.</string>
-    <string name="rate_cheat_title">Bewerte den Cheat &#8220;%s&#8221; hier</string>
     <string name="clear_search_history">Lösche den Suchverlauf</string>
     <string name="search_history_cleared">Suchverlauf gelöscht.</string>
     <string name="submit_cheat_instructions_activity_title">Für welches Game möchtest du einen Cheat einsenden?</string>
@@ -279,36 +167,20 @@
     <string name="already_logged_in">Du bist bereits als %s eingeloggt. Möchtest du ausloggen?</string>
 
     <string name="sign_out">Ausloggen</string>
-    <string name="search_again">Nochmals suchen</string>
-    <string name="coming_soon">Folgt in Kürze!</string>
     <string name="login_to_submit">Einloggen um einzusenden</string>
-    <string name="title_article_list">Artikel</string>
-    <string name="title_article_detail">Artikel Detail</string>
-    <string name="title_activity_favorites">FavoritesActivity</string>
     <string name="recover_login">Zugangsdaten zusenden</string>
     <string name="recover_login_success">Zugangsdaten wurden verschickt. Checke deine E-Mails.</string>
     <string name="err_username_too_short">Der eingegebene Benutzername ist zu kurz.</string>
-    <string name="rate_why_title">Bewerte Cheat-Database jetzt!</string>
-    <string name="rate_why_text">Es würde uns wahnsinnig freuen, von dir 5 Sterne zu erhalten. Kriegen wir gute Bewertungen, werden mehr Leute Cheat-Database installieren. Mehr Benutzer bedeutet, mehr Cheats werden eingesendet. Und das bedeutet wiederum, mehr Cheats für DICH! :-)</string>
-    <string name="system_overview">System Übersicht</string>
 
     <string name="remove_favorite_neutral_ok">Favorit gelöscht.</string>
-    <string name="remove_favorite_areyousure">Cheat von den Favoriten entfernen?</string>
-    <string name="confirm">Bestätigen</string>
     <string name="action_register_short">Registrieren</string>
     <string name="action_forgot_password">Passwort wiederherstellen</string>
     <string name="action_forgot_password_short">Wiederherstellen</string>
-    <string name="action_register_long">Neuen Account registrieren</string>
-    <string name="action_sign_in_register"><b>Anmelden</b></string>
     <string name="action_sign_in_short">Anmelden</string>
-    <string name="app_label">Cheat-Database</string>
     <string name="login_progress_signing_in">Logge ein...</string>
     <string name="rate_us">Bewerte Cheat-Database</string>
 
 
-
-
-    <string name="rate_us_title">Bewerte uns</string>
     <string name="rate_us_text">Gefällt dir Cheat-Database? Lasse es uns wissen!</string>
     <string name="rate_us_submit">Bewertung abschicken</string>
     <string name="rate_us_thanks_good_rating">Vielen Dank für die tolle Bewertung! Bitte bewerte die App doch auch noch auf Google Play.</string>
@@ -320,10 +192,6 @@
     <string name="pref_enable_achievements_key">enable_achievements</string>
     <string name="pref_enable_achievements">Achievements &amp; Trophies</string>
     <string name="pref_enable_achievements_summary">Filtere Achievement &amp; Trophy Cheats aus der Liste.</string>
-    <string name="enabled">Aktiviert</string>
-    <string name="disabled">Deaktiviert</string>
-    <string name="new_feature">Neue Funktion</string>
-    <string name="disable_achievements_text">Wir wissen, dass viele die <b>Achievements und Trophies</b> Tipps nerven. Aus dem Grund haben wir eine Option eingebaut, mit der ihr diese aus der App filtern könnt. Klickt einfach auf <b>Einstellungen</b> im Drawer links oben und aktiviert oder deaktiviert diese im entsprechenden Menüpunk. Standardmässig werden die Achievements und Trophies in der App angezeigt. Wenn ihr sie also nicht mehr sehen wollt, müsst ihr kurz bei den Einstellungen rein.\n\nFalls ihr noch irgendwas in der Cheat-Database App vermisst, benutzt das Feedback Formular, um eure Wünsche anzubringen.</string>
 
     <plurals name="entries">
         <item quantity="one">Eintrag</item>

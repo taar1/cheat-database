@@ -8,11 +8,8 @@
     <string name="prompt_email" translatable="false">Email</string>
     <string name="prompt_password">Password</string>
     <string name="prompt_username" translatable="false">Username</string>
-    <string name="prompt_email_or_username">Email or Username</string>
-    <string name="action_sign_in_register"><b>Sign in</b> or register</string>
     <string name="action_sign_in_short">Sign in</string>
     <string name="action_register_short">Register</string>
-    <string name="action_register_long">Register new account</string>
     <string name="action_forgot_password">Recover lost password</string>
     <string name="action_forgot_password_short">Recover</string>
     <string name="login_progress_signing_in">Signing in&#8230;</string>

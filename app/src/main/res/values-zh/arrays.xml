@@ -21,7 +21,4 @@
         <item>11月</item>
         <item>12月</item>
     </string-array>
-    <string-array name="contextmenu_cheatview">
-        <item>复制到剪贴板</item>
-    </string-array>
 </resources>

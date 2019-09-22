@@ -90,7 +90,7 @@ public class GamesBySystemRecycleListViewAdapter extends RecyclerView.Adapter<Re
             return new FacebookNativeAdHolder(inflatedView);
         } else if (viewType == ListItem.TYPE_UKON_NO_CHIKARA) {
             final View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.ukon_custom_ad, parent, false);
-            return new UkonAdListViewItemHolder(itemView, activity);
+            return new UkonAdListViewItemHolder(itemView);
         }
 
         return null;

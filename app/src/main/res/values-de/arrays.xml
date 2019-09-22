@@ -22,8 +22,5 @@
         <item>November</item>
         <item>Dezember</item>
     </string-array>
-    <string-array name="contextmenu_cheatview">
-        <item>In die Zwischenablage kopieren</item>
-    </string-array>
 
 </resources>

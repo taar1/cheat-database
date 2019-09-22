@@ -8,10 +8,7 @@
     <dimen name="activity_searchresult_vertical_margin">4dp</dimen>
 
     <dimen name="card_insets">0dp</dimen>
-    <dimen name="fab_size">56dp</dimen>
 
     <dimen name="outer_padding_listview_item">10dp</dimen>
 
-    <dimen name="list_item_height">56dp</dimen>
-    <dimen name="list_item_tall_height">72dp</dimen>
 </resources>

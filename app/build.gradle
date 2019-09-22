@@ -129,8 +129,8 @@ dependencies {
     }
     implementation 'com.facebook.android:audience-network-sdk:5.5.0'
     implementation 'com.zsoltsafrany:needle:1.0.0'
-    implementation 'com.jakewharton:butterknife:10.1.0'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:10.1.0'
+    implementation 'com.jakewharton:butterknife:10.2.0'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.0'
     implementation 'de.hdodenhof:circleimageview:3.0.1'
     api 'com.appbrain:appbrain-sdk:15.00'
 

@@ -116,7 +116,7 @@ public class FavoriteGamesListFragment extends Fragment {
         if (gamesFound == null) {
             handleEmptyState();
         } else {
-            if ((gamesFound != null) && (gamesFound.size() > 0)) {
+            if (gamesFound.size() > 0) {
                 Set<String> systems = new HashSet<>();
                 // Get system names
                 for (Game game : gamesFound) {
@@ -152,7 +152,7 @@ public class FavoriteGamesListFragment extends Fragment {
 
     }
 
-    public void handleEmptyState() {
+    private void handleEmptyState() {
         Needle.onMainThread().execute(() -> {
             nothingFoundText.setText(R.string.favorite_empty);
             somethingfoundLayout.setVisibility(View.GONE);
@@ -162,12 +162,10 @@ public class FavoriteGamesListFragment extends Fragment {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+        if (item.getItemId() == android.R.id.home) {
+            return true;
         }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

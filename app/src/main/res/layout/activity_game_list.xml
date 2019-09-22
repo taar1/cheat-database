@@ -20,13 +20,11 @@
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipe_refresh_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         android:layout_weight="100">
 
         <include layout="@layout/include_fastscroll_recyclerview" />
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-
-    <include layout="@layout/adview_facebook" />
 
 </LinearLayout>
