@@ -63,9 +63,7 @@ public class TopMembersFragment extends Fragment {
     public TopMembersFragment() {
         memberList = new ArrayList<>();
         parentActivity = getActivity();
-        mTopMembersListViewAdapter = new TopMembersListViewAdapter(member -> {
-            clickedOnMember(member);
-        });
+        mTopMembersListViewAdapter = new TopMembersListViewAdapter(member -> clickedOnMember(member));
     }
 
     public static TopMembersFragment newInstance() {
@@ -84,7 +82,7 @@ public class TopMembersFragment extends Fragment {
 
         setHasOptionsMenu(true);
 
-        mSwipeRefreshLayout.setOnRefreshListener(() -> loadMembersInBackground());
+        mSwipeRefreshLayout.setOnRefreshListener(this::loadMembersInBackground);
 
         if (Reachability.reachability.isReachable) {
             layoutManager = new LinearLayoutManager(getActivity());
@@ -167,7 +165,7 @@ public class TopMembersFragment extends Fragment {
 
     }
 
-    public void notifyAdapter() {
+    private void notifyAdapter() {
         Needle.onMainThread().execute(() -> {
             mSwipeRefreshLayout.setRefreshing(true);
 

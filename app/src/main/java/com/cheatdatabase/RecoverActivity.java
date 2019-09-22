@@ -6,8 +6,6 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
@@ -16,6 +14,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Reachability;
@@ -52,8 +53,6 @@ public class RecoverActivity extends AppCompatActivity {
     Button recoverButton;
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
-
-    Tools tools;
 
     private String mEmail;
 
@@ -196,7 +195,6 @@ public class RecoverActivity extends AppCompatActivity {
             boolean success = successMessage != R.string.err_email_invalid;
             updateUIAfterRecovery(success, successMessage);
         });
-
     }
 
     void updateUIAfterRecovery(boolean success, int successMessage) {
