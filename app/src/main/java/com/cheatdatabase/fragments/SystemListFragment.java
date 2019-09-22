@@ -140,9 +140,9 @@ public class SystemListFragment extends Fragment implements OnSystemListItemSele
 
             if ((systemGameandCheatCounterList == null) || (systemGameandCheatCounterList.size() < 1)) {
                 try {
-                    Tools.showSnackbar(outerLayout, getString(R.string.no_internet));
-                } catch (NullPointerException e) {
-                    Log.e(TAG, "getActivity() is NULL");
+                    Tools.showSnackbar(outerLayout, getString(R.string.err_data_not_accessible));
+                } catch (NullPointerException | IllegalStateException e) {
+                    Log.e(TAG, "NullPointerException or IllegalStateException: " + e.getLocalizedMessage());
                 }
             }
         });

@@ -48,8 +48,6 @@ public class SystemsRecycleListViewAdapter extends RecyclerView.Adapter<Recycler
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        int type = getItemViewType(position);
-
         SystemListViewItemHolder systemListViewItemHolder = (SystemListViewItemHolder) holder;
         systemListViewItemHolder.setSystemPlatform(systemList.get(position));
         systemListViewItemHolder.view.setOnClickListener(v -> listener.onSystemListItemSelected(systemList.get(position)));

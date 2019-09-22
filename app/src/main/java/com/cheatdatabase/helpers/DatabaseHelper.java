@@ -351,38 +351,41 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return null;
     }
 
-
     public List<SystemPlatform> getAllSystemsAndCount() {
-        SQLiteDatabase db = this.getReadableDatabase();
+        try {
+            SQLiteDatabase db = this.getReadableDatabase();
 
-        Cursor cur = db.query(GameSystemTable.TABLE_NAME, new String[]{GameSystemTable.SYS_SYSTEM_ID, GameSystemTable.SYS_SYSTEM_NAME, GameSystemTable.SYS_SYSTEM_GAMECOUNT, GameSystemTable.SYS_SYSTEM_CHEATCOUNT, GameSystemTable.SYS_SYSTEM_LASTMOD}, null, null, null, null, GameSystemTable.SYS_SYSTEM_NAME + " COLLATE NOCASE ASC;");
+            Cursor cur = db.query(GameSystemTable.TABLE_NAME, new String[]{GameSystemTable.SYS_SYSTEM_ID, GameSystemTable.SYS_SYSTEM_NAME, GameSystemTable.SYS_SYSTEM_GAMECOUNT, GameSystemTable.SYS_SYSTEM_CHEATCOUNT, GameSystemTable.SYS_SYSTEM_LASTMOD}, null, null, null, null, GameSystemTable.SYS_SYSTEM_NAME + " COLLATE NOCASE ASC;");
 
-        ArrayList<SystemPlatform> systems = null;
+            ArrayList<SystemPlatform> systems = null;
 
-        if (cur.moveToFirst()) {
-            if (cur.isFirst()) {
-                systems = new ArrayList<>();
-                do {
-                    int systemId = cur.getInt(cur.getColumnIndex(GameSystemTable.SYS_SYSTEM_ID));
-                    String systemName = cur.getString(cur.getColumnIndex(GameSystemTable.SYS_SYSTEM_NAME));
-                    int gameCount = cur.getInt(cur.getColumnIndex(GameSystemTable.SYS_SYSTEM_GAMECOUNT));
-                    int cheatCount = cur.getInt(cur.getColumnIndex(GameSystemTable.SYS_SYSTEM_CHEATCOUNT));
-                    String lastMod = cur.getString(cur.getColumnIndex(GameSystemTable.SYS_SYSTEM_LASTMOD));
+            if (cur.moveToFirst()) {
+                if (cur.isFirst()) {
+                    systems = new ArrayList<>();
+                    do {
+                        int systemId = cur.getInt(cur.getColumnIndex(GameSystemTable.SYS_SYSTEM_ID));
+                        String systemName = cur.getString(cur.getColumnIndex(GameSystemTable.SYS_SYSTEM_NAME));
+                        int gameCount = cur.getInt(cur.getColumnIndex(GameSystemTable.SYS_SYSTEM_GAMECOUNT));
+                        int cheatCount = cur.getInt(cur.getColumnIndex(GameSystemTable.SYS_SYSTEM_CHEATCOUNT));
+                        String lastMod = cur.getString(cur.getColumnIndex(GameSystemTable.SYS_SYSTEM_LASTMOD));
 
-                    SystemPlatform sysPla = new SystemPlatform();
-                    sysPla.setSystemId(systemId);
-                    sysPla.setSystemName(systemName);
-                    sysPla.setGameCount(gameCount);
-                    sysPla.setCheatCount(cheatCount);
-                    sysPla.setLastModTimeStamp(Long.parseLong(lastMod));
+                        SystemPlatform sysPla = new SystemPlatform();
+                        sysPla.setSystemId(systemId);
+                        sysPla.setSystemName(systemName);
+                        sysPla.setGameCount(gameCount);
+                        sysPla.setCheatCount(cheatCount);
+                        sysPla.setLastModTimeStamp(Long.parseLong(lastMod));
 
-                    systems.add(sysPla);
+                        systems.add(sysPla);
 
-                } while (cur.moveToNext());
+                    } while (cur.moveToNext());
+                }
+
+                cur.close();
+                return systems;
             }
-
-            cur.close();
-            return systems;
+        } catch (NullPointerException e) {
+            Log.e(TAG, "Database connection failed.");
         }
 
         return null;

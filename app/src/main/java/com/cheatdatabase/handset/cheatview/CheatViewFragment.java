@@ -151,7 +151,7 @@ public class CheatViewFragment extends Fragment {
         outerLinearLayout = (LinearLayout) inflater.inflate(R.layout.fragment_cheat_detail_handset, container, false);
         ButterKnife.bind(this, outerLinearLayout);
 
-        if (cheatList != null) {
+        if (cheatList != null && game != null) {
             cheatList = game.getCheatList();
             cheatObj = cheatList.get(offset);
 
@@ -172,6 +172,8 @@ public class CheatViewFragment extends Fragment {
                 reloadView.setVisibility(View.VISIBLE);
                 Toast.makeText(cheatViewPageIndicatorActivity, R.string.no_internet, Toast.LENGTH_SHORT).show();
             }
+        } else {
+            Tools.showSnackbar(outerLinearLayout, getString(R.string.err_data_not_accessible));
         }
 
         return outerLinearLayout;
