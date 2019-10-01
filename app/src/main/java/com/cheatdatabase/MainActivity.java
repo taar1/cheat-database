@@ -296,11 +296,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
      */
     @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
     private Context getActionBarThemedContextCompat() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
-            return getActionBar().getThemedContext();
-        } else {
-            return this;
-        }
+        return getActionBar().getThemedContext();
     }
 
     @Override

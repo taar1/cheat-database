@@ -326,9 +326,8 @@ public class Webservice {
      * @param forumPost
      */
     public static void insertForum(int cheatId, int memberId, String password, String forumPost) {
-        String urlParameters = null;
         try {
-            urlParameters = "mid=" + URLEncoder.encode(String.valueOf(memberId), "UTF-8") + "&cid=" + URLEncoder.encode(String.valueOf(cheatId), "UTF-8") + "&password=" + URLEncoder.encode(password, "UTF-8") + "&forumpost=" + URLEncoder.encode(forumPost, "UTF-8");
+            String urlParameters = "mid=" + URLEncoder.encode(String.valueOf(memberId), "UTF-8") + "&cid=" + URLEncoder.encode(String.valueOf(cheatId), "UTF-8") + "&password=" + URLEncoder.encode(password, "UTF-8") + "&forumpost=" + URLEncoder.encode(forumPost, "UTF-8");
             excutePost(Konstanten.BASE_URL_ANDROID + "insertForum.php", urlParameters);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
@@ -1400,7 +1399,7 @@ public class Webservice {
      */
     public static Cheat[] fulltextSearchConvertJSONStringToCheatArrayOffline(String jsonString) {
         Cheat[] cheats = null;
-        JSONArray jArray = null;
+        JSONArray jArray;
 
         try {
             jArray = new JSONArray(jsonString);
@@ -1523,7 +1522,7 @@ public class Webservice {
      * @param urlParameters FORMAT: urlParameters = "fName=" + URLEncoder.encode("???", "UTF-8") + "&lName=" + URLEncoder.encode("???", "UTF-8")
      * @return
      */
-    public static String excutePost(String targetURL, String urlParameters) {
+    private static String excutePost(String targetURL, String urlParameters) {
         // PARAMETER FORMAT
         // String urlParameters = "fName=" + URLEncoder.encode("???", "UTF-8") + "&lName=" + URLEncoder.encode("???", "UTF-8");
         URL url;
@@ -1533,20 +1532,15 @@ public class Webservice {
             url = new URL(targetURL);
             connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("POST");
-            connection.setRequestProperty("Content-Type",
-                    "application/x-www-form-urlencoded");
-
-            connection.setRequestProperty("Content-Length", "" +
-                    urlParameters.getBytes().length);
+            connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+            connection.setRequestProperty("Content-Length", "" + urlParameters.getBytes().length);
             connection.setRequestProperty("Content-Language", "en-US");
-
             connection.setUseCaches(false);
             connection.setDoInput(true);
             connection.setDoOutput(true);
 
             //Send request
-            DataOutputStream wr = new DataOutputStream(
-                    connection.getOutputStream());
+            DataOutputStream wr = new DataOutputStream(connection.getOutputStream());
             wr.writeBytes(urlParameters);
             wr.flush();
             wr.close();
@@ -1568,6 +1562,7 @@ public class Webservice {
 
             return responseString;
         } catch (Exception e) {
+            Log.e(TAG, "excutePost error: " + e.getLocalizedMessage());
             return "";
         } finally {
             if (connection != null) {

@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Typeface;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.Log;
@@ -34,6 +33,7 @@ import com.cheatdatabase.businessobjects.Cheat;
 import com.cheatdatabase.businessobjects.ForumPost;
 import com.cheatdatabase.businessobjects.Game;
 import com.cheatdatabase.businessobjects.Member;
+import com.cheatdatabase.callbacks.GenericCallback;
 import com.cheatdatabase.dialogs.CheatMetaDialog;
 import com.cheatdatabase.dialogs.RateCheatMaterialDialog;
 import com.cheatdatabase.dialogs.ReportCheatMaterialDialog;
@@ -197,26 +197,21 @@ public class CheatForumActivity extends AppCompatActivity {
 
             String[] months = getResources().getStringArray(R.array.months);
 
-            ForumPost tempFP = new ForumPost();
-            tempFP.setText(editText.getText().toString().trim());
-            tempFP.setUsername(member.getUsername());
-            tempFP.setName(member.getUsername());
-            tempFP.setEmail(member.getEmail());
-            tempFP.setCreated(months[mMonth] + " " + mDay + ", " + mYear + " / " + leadingZeroHour + ":" + leadingZeroMin);
+            ForumPost forumPost = new ForumPost();
+            forumPost.setText(editText.getText().toString().trim());
+            forumPost.setUsername(member.getUsername());
+            forumPost.setName(member.getUsername());
+            forumPost.setEmail(member.getEmail());
+            forumPost.setCreated(months[mMonth] + " " + mDay + ", " + mYear + " / " + leadingZeroHour + ":" + leadingZeroMin);
 
             if (Reachability.reachability.isReachable) {
-                llForumMain.addView(createForumPosts(tempFP), new TableLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+                llForumMain.addView(createForumPosts(forumPost), new TableLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
 
                 // Führt die ScrollView bis ganz nach unten zum neusten Post
-                sv.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        sv.fullScroll(View.FOCUS_DOWN);
-                    }
-
-                });
+                sv.post(() -> sv.fullScroll(View.FOCUS_DOWN));
                 editText.setEnabled(false);
                 postButton.setEnabled(false);
+
                 new CountDownTimer(5000, 1000) {
                     @Override
                     public void onTick(long millisUntilFinished) {
@@ -229,13 +224,22 @@ public class CheatForumActivity extends AppCompatActivity {
                     }
                 }.start();
 
-                new ForumPostTask().execute(tempFP);
+                postForumEntry(forumPost, new GenericCallback() {
+                    @Override
+                    public void success() {
+                        updateUI();
+                    }
+
+                    @Override
+                    public void fail(Exception e) {
+                        Toast.makeText(CheatForumActivity.this, R.string.err_occurred, Toast.LENGTH_LONG).show();
+                    }
+                });
+
             } else {
                 Toast.makeText(this, R.string.no_internet, Toast.LENGTH_SHORT).show();
             }
-
         }
-
     }
 
     /**
@@ -382,8 +386,6 @@ public class CheatForumActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                onBackPressed();
-                return true;
             case R.id.action_cheatview:
                 onBackPressed();
                 return true;
@@ -436,7 +438,7 @@ public class CheatForumActivity extends AppCompatActivity {
                 invalidateOptionsMenu();
                 if ((member != null) && intentReturnCode == Konstanten.REGISTER_SUCCESS_RETURN_CODE) {
                     Toast.makeText(CheatForumActivity.this, R.string.register_thanks, Toast.LENGTH_LONG).show();
-                } else if ((member != null) && intentReturnCode == Konstanten.REGISTER_SUCCESS_RETURN_CODE) {
+                } else if ((member != null) && intentReturnCode == Konstanten.LOGIN_SUCCESS_RETURN_CODE) {
                     Toast.makeText(CheatForumActivity.this, R.string.login_ok, Toast.LENGTH_LONG).show();
                 }
             }
@@ -467,29 +469,25 @@ public class CheatForumActivity extends AppCompatActivity {
         Toast.makeText(this, R.string.rating_inserted, Toast.LENGTH_SHORT).show();
     }
 
-    private class ForumPostTask extends AsyncTask<ForumPost, Void, Void> {
-
-        @Override
-        protected Void doInBackground(ForumPost... params) {
-
-            ForumPost fp = params[0];
-
+    private void postForumEntry(ForumPost forumPost, GenericCallback callback) {
+        Needle.onBackgroundThread().execute(() -> {
             try {
-                Webservice.insertForum(cheatObj.getCheatId(), member.getMid(), member.getPassword(), fp.getText());
+                Webservice.insertForum(cheatObj.getCheatId(), member.getMid(), member.getPassword(), forumPost.getText());
+                callback.success();
             } catch (Exception e) {
                 Log.e(TAG, e.getLocalizedMessage());
+                callback.fail(e);
             }
+        });
 
-            return null;
-        }
+    }
 
-        @Override
-        protected void onPostExecute(Void result) {
-            super.onPostExecute(result);
+    private void updateUI() {
+        Needle.onMainThread().execute(() -> {
             editText.setText("");
             tvEmpty.setVisibility(View.GONE);
             Toast.makeText(CheatForumActivity.this, R.string.forum_submit_ok, Toast.LENGTH_LONG).show();
-        }
+        });
 
     }
 

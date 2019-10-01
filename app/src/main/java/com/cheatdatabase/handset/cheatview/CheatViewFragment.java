@@ -14,7 +14,6 @@ import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.webkit.WebView;
@@ -335,12 +334,7 @@ public class CheatViewFragment extends Fragment {
             mainTable.addView(trTd, new TableLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
         }
 
-        mainTable.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                displayTableInWebview();
-            }
-        });
+        mainTable.setOnClickListener(view -> displayTableInWebview());
 
     }
 
@@ -348,11 +342,13 @@ public class CheatViewFragment extends Fragment {
         mainTable.setVisibility(View.GONE);
         tvTextBeforeTable.setVisibility(View.GONE);
 
-        CharSequence styledText = Html.fromHtml(cheatObj.getCheatText());
-        tvCheatText.setText(styledText);
+        if (cheatObj != null) {
+            CharSequence styledText = Html.fromHtml(cheatObj.getCheatText());
+            tvCheatText.setText(styledText);
 
-        if (cheatObj.isWalkthroughFormat()) {
-            tvCheatText.setTextAppearance(getContext(), R.style.WalkthroughText);
+            if (cheatObj.isWalkthroughFormat()) {
+                tvCheatText.setTextAppearance(getContext(), R.style.WalkthroughText);
+            }
         }
     }
 

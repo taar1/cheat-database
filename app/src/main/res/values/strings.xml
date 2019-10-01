@@ -51,6 +51,7 @@
     <string name="login_forgot_password">Forgot password?</string>
     <string name="login_sent_ok">Login data has been sent to you via email</string>
     <string name="err">Error</string>
+    <string name="err_occurred">An error occurred. Try again later.</string>
     <string name="err_username_used">This username is already being used.</string>
     <string name="err_email_invalid">Email is not valid.</string>
     <string name="err_email_used">This email address is already being used.</string>

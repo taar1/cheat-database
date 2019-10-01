@@ -48,9 +48,13 @@ public class SystemsRecycleListViewAdapter extends RecyclerView.Adapter<Recycler
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        SystemListViewItemHolder systemListViewItemHolder = (SystemListViewItemHolder) holder;
-        systemListViewItemHolder.setSystemPlatform(systemList.get(position));
-        systemListViewItemHolder.view.setOnClickListener(v -> listener.onSystemListItemSelected(systemList.get(position)));
+        if (systemList != null && systemList.size() > 0) {
+            SystemPlatform system = systemList.get(position);
+
+            SystemListViewItemHolder systemListViewItemHolder = (SystemListViewItemHolder) holder;
+            systemListViewItemHolder.setSystemPlatform(system);
+            systemListViewItemHolder.view.setOnClickListener(v -> listener.onSystemListItemSelected(system));
+        }
     }
 
     public void setSystemPlatforms(List<SystemPlatform> systemPlatforms) {

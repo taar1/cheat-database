@@ -47,6 +47,7 @@
 
     <!-- ERROR MESSAGES -->
     <string name="err">Fehler</string>
+    <string name="err_occurred">Es ist ein Fehler aufgetreten. Versuche es später nocheinmal.</string>
     <string name="err_username_used">Dieser Benutzername wird bereits verwendet.</string>
     <string name="err_email_invalid">Ungültige E-Mail Adresse.</string>
     <string name="err_email_used">Diese E-Mail Adresse wird bereits verwendet.</string>

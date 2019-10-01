@@ -475,7 +475,7 @@ public class Tools {
 
     public static void logout(Activity activity, Editor editor) {
         editor.remove(Konstanten.MEMBER_OBJECT);
-        editor.commit();
+        editor.apply();
 
         Toast.makeText(activity, R.string.logout_ok, Toast.LENGTH_LONG).show();
     }
