@@ -1,27 +1,25 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/outer"
     android:background="?android:attr/selectableItemBackground"
     android:baselineAligned="false"
-    android:layout_height="wrap_content"
-    android:layout_width="fill_parent"
-    android:minHeight="30dp"
-    android:orientation="horizontal"
-    android:padding="10dp"
-    android:weightSum="3">
+    android:layout_height="64dp"
+    android:layout_width="match_parent"
+    android:padding="10dp">
 
     <LinearLayout
         android:id="@+id/inner_left"
         android:fastScrollEnabled="true"
+        android:layout_alignParentStart="true"
         android:layout_gravity="center_vertical"
-        android:layout_height="fill_parent"
-        android:layout_weight="2"
+        android:layout_height="match_parent"
+        android:layout_toLeftOf="@id/inner_right"
         android:layout_width="match_parent"
         android:orientation="vertical">
 
         <TextView
             android:id="@+id/cheat_title"
             android:layout_height="wrap_content"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:paddingBottom="2dp"
             android:singleLine="true"
             android:text="@string/placeholder"
@@ -37,9 +35,9 @@
 
     <LinearLayout
         android:id="@+id/inner_right"
+        android:layout_alignParentEnd="true"
         android:layout_gravity="end"
-        android:layout_height="fill_parent"
-        android:layout_weight="1"
+        android:layout_height="match_parent"
         android:layout_width="wrap_content"
         android:orientation="horizontal">
 
@@ -48,27 +46,24 @@
             android:layout_gravity="end"
             android:layout_height="match_parent"
             android:layout_marginEnd="6dp"
-            android:layout_weight="1"
-            android:layout_width="match_parent"
-            android:src="@drawable/flag_new" />
+            android:layout_width="24dp"
+            android:src="@drawable/ic_new" />
 
         <ImageView
             android:id="@+id/screenshots"
             android:layout_gravity="end"
             android:layout_height="match_parent"
             android:layout_marginEnd="6dp"
-            android:layout_weight="1"
-            android:layout_width="match_parent"
-            android:src="@drawable/flag_img" />
+            android:layout_width="24dp"
+            android:src="@drawable/ic_map" />
 
         <ImageView
             android:id="@+id/flag"
             android:layout_gravity="end"
             android:layout_height="match_parent"
             android:layout_marginEnd="6dp"
-            android:layout_weight="1"
-            android:layout_width="match_parent"
-            android:src="@drawable/flag_german" />
+            android:layout_width="24dp"
+            android:src="@drawable/ic_germany" />
     </LinearLayout>
 
-</LinearLayout>
+</RelativeLayout>

@@ -1,8 +1,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:background="?android:attr/selectableItemBackground"
-    android:layout_height="60dp"
+    android:layout_height="64dp"
     android:layout_width="match_parent"
-    android:minHeight="30dp"
     android:orientation="horizontal"
     android:padding="10dp">
 
@@ -41,15 +40,15 @@
         <ImageView
             android:id="@+id/images_icon"
             android:layout_height="wrap_content"
-            android:layout_width="40dp"
-            android:padding="4dp"
+            android:layout_marginEnd="6dp"
+            android:layout_width="24dp"
             android:src="@drawable/ic_map" />
 
         <ImageView
             android:id="@+id/german_flag_icon"
             android:layout_height="wrap_content"
-            android:layout_width="40dp"
-            android:padding="4dp"
+            android:layout_marginEnd="6dp"
+            android:layout_width="24dp"
             android:src="@drawable/ic_germany" />
     </LinearLayout>
 

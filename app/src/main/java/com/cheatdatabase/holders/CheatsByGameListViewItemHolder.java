@@ -35,10 +35,6 @@ public class CheatsByGameListViewItemHolder extends RecyclerView.ViewHolder {
         ButterKnife.bind(this, view);
 
         this.view = view;
-
-        mFlagNewAddition.setImageResource(R.drawable.flag_new);
-        mFlagScreenshot.setImageResource(R.drawable.flag_img);
-        mFlagGerman.setImageResource(R.drawable.flag_german);
     }
 
     public Cheat getCheat() {
