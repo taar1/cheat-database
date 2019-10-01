@@ -1,4 +1,4 @@
-package com.cheatdatabase.handset.cheatview;
+package com.cheatdatabase.handset.cheat_detail_view;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;

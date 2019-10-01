@@ -214,7 +214,7 @@ ADDED from AndroidManifest.xml:113:9
 		ADDED from AndroidManifest.xml:114:13
 	android:logo
 		ADDED from AndroidManifest.xml:115:13
-activity#com.cheatdatabase.members.cheatview.MemberCheatViewPageIndicator
+activity#com.cheatdatabase.cheat_detail_view.MemberCheatViewPageIndicator
 ADDED from AndroidManifest.xml:121:9
 	android:uiOptions
 		ADDED from AndroidManifest.xml:125:13
@@ -236,7 +236,7 @@ ADDED from AndroidManifest.xml:130:9
 		ADDED from AndroidManifest.xml:131:13
 	android:logo
 		ADDED from AndroidManifest.xml:133:13
-activity#com.cheatdatabase.favorites.FavoriteCheatListActivity
+activity#com.cheatdatabase.FavoriteCheatListActivity
 ADDED from AndroidManifest.xml:143:9
 	android:label
 		ADDED from AndroidManifest.xml:145:13
@@ -248,7 +248,7 @@ ADDED from AndroidManifest.xml:143:9
 		ADDED from AndroidManifest.xml:144:13
 	android:logo
 		ADDED from AndroidManifest.xml:146:13
-activity#com.cheatdatabase.favorites.handset.cheatview.FavoritesCheatViewPageIndicator
+activity#com.cheatdatabase.cheat_detail_view.FavoritesCheatViewPageIndicator
 ADDED from AndroidManifest.xml:156:9
 	android:label
 		ADDED from AndroidManifest.xml:158:13

@@ -1,6 +1,5 @@
 package com.cheatdatabase;
 
-import android.app.AlertDialog;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
@@ -26,7 +25,7 @@ import com.cheatdatabase.businessobjects.Cheat;
 import com.cheatdatabase.businessobjects.Game;
 import com.cheatdatabase.businessobjects.Member;
 import com.cheatdatabase.callbacks.RepositoryEntityListCallback;
-import com.cheatdatabase.handset.cheatview.CheatViewPageIndicatorActivity;
+import com.cheatdatabase.handset.cheat_detail_view.CheatViewPageIndicatorActivity;
 import com.cheatdatabase.helpers.DatabaseHelper;
 import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Reachability;

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.cheatdatabase.fragments.AppPreferencesFragment;
 import com.cheatdatabase.helpers.Konstanten;
 
 import butterknife.BindView;

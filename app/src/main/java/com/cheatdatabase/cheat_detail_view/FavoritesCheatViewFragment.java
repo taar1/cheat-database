@@ -1,4 +1,4 @@
-package com.cheatdatabase.favorites.handset.cheatview;
+package com.cheatdatabase.cheat_detail_view;
 
 import android.content.Context;
 import android.content.Intent;

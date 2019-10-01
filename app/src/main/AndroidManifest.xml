@@ -88,12 +88,12 @@
         <activity
             android:name=".CheatForumActivity"
             android:logo="@drawable/app_icon_fox"
-            android:parentActivityName=".handset.cheatview.CheatViewPageIndicatorActivity"
+            android:parentActivityName=".handset.cheat_detail_view.CheatViewPageIndicatorActivity"
             android:uiOptions="splitActionBarWhenNarrow"
             android:windowSoftInputMode="adjustResize|stateHidden">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.cheatdatabase.handset.cheatview.CheatViewPageIndicatorActivity" />
+                android:value="com.cheatdatabase.handset.cheat_detail_view.CheatViewPageIndicatorActivity" />
             <meta-data
                 android:name="android.app.default_searchable"
                 android:value="com.cheatdatabase.search.SearchResultsActivity" />
@@ -107,7 +107,7 @@
                 android:value="com.cheatdatabase.search.SearchResultsActivity" />
         </activity>
         <activity
-            android:name=".members.cheatview.MemberCheatViewPageIndicator"
+            android:name=".cheat_detail_view.MemberCheatViewPageIndicator"
             android:logo="@drawable/app_icon_fox"
             android:parentActivityName=".CheatsByMemberListActivity"
             android:uiOptions="splitActionBarWhenNarrow">
@@ -116,7 +116,7 @@
                 android:value="com.cheatdatabase.search.SearchResultsActivity" />
         </activity>
         <activity
-            android:name=".handset.cheatview.CheatViewPageIndicatorActivity"
+            android:name=".handset.cheat_detail_view.CheatViewPageIndicatorActivity"
             android:label="@string/title_cheat_detail"
             android:logo="@drawable/app_icon_fox"
             android:parentActivityName=".CheatsByGameListActivity"
@@ -129,7 +129,7 @@
                 android:value="com.cheatdatabase.search.SearchResultsActivity" />
         </activity>
         <activity
-            android:name=".favorites.FavoriteCheatListActivity"
+            android:name=".FavoriteCheatListActivity"
             android:label="@string/title_favorite_list"
             android:logo="@drawable/app_icon_fox"
             android:parentActivityName=".MainActivity"
@@ -142,7 +142,7 @@
                 android:value="com.cheatdatabase.search.SearchResultsActivity" />
         </activity>
         <activity
-            android:name=".favorites.handset.cheatview.FavoritesCheatViewPageIndicator"
+            android:name=".cheat_detail_view.FavoritesCheatViewPageIndicator"
             android:label="@string/title_cheat_detail"
             android:logo="@drawable/app_icon_fox"
             android:theme="@style/Theme.Navyblue"

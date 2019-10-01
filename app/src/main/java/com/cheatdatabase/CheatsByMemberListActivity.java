@@ -25,7 +25,7 @@ import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.helpers.Tools;
 import com.cheatdatabase.helpers.Webservice;
-import com.cheatdatabase.members.cheatview.MemberCheatViewPageIndicator;
+import com.cheatdatabase.cheat_detail_view.MemberCheatViewPageIndicator;
 import com.cheatdatabase.widgets.DividerDecoration;
 import com.facebook.ads.AdSize;
 import com.facebook.ads.AdView;

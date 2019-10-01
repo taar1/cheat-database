@@ -1,7 +1,9 @@
-package com.cheatdatabase;
+package com.cheatdatabase.fragments;
 
 import android.os.Bundle;
 import androidx.preference.PreferenceFragmentCompat;
+
+import com.cheatdatabase.R;
 
 public class AppPreferencesFragment extends PreferenceFragmentCompat {
 

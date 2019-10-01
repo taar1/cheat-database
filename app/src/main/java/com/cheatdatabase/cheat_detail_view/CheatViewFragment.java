@@ -1,4 +1,4 @@
-package com.cheatdatabase.handset.cheatview;
+package com.cheatdatabase.handset.cheat_detail_view;
 
 import android.content.ActivityNotFoundException;
 import android.content.Context;

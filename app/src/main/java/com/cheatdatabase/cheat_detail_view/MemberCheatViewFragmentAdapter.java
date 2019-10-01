@@ -1,4 +1,4 @@
-package com.cheatdatabase.members.cheatview;
+package com.cheatdatabase.cheat_detail_view;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;

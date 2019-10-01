@@ -1,4 +1,4 @@
-package com.cheatdatabase.favorites.handset.cheatview;
+package com.cheatdatabase.cheat_detail_view;
 
 import android.app.AlertDialog;
 import android.app.SearchManager;

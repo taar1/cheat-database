@@ -1,4 +1,4 @@
-package com.cheatdatabase.favorites;
+package com.cheatdatabase;
 
 import android.app.SearchManager;
 import android.content.Context;
@@ -19,14 +19,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.cheatdatabase.R;
-import com.cheatdatabase.SubmitCheatActivity;
 import com.cheatdatabase.adapters.CheatsByGameRecycleListViewAdapter;
 import com.cheatdatabase.businessobjects.Cheat;
 import com.cheatdatabase.businessobjects.Game;
 import com.cheatdatabase.businessobjects.Member;
 import com.cheatdatabase.events.CheatRatingFinishedEvent;
-import com.cheatdatabase.favorites.handset.cheatview.FavoritesCheatViewPageIndicator;
+import com.cheatdatabase.cheat_detail_view.FavoritesCheatViewPageIndicator;
 import com.cheatdatabase.helpers.DatabaseHelper;
 import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Reachability;
