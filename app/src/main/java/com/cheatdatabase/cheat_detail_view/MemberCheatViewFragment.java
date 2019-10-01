@@ -10,7 +10,6 @@ import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
-import androidx.fragment.app.Fragment;
 import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -27,6 +26,8 @@ import android.widget.ProgressBar;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+
+import androidx.fragment.app.Fragment;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.Theme;
@@ -135,14 +136,6 @@ public class MemberCheatViewFragment extends Fragment {
             cheatObj = cheats.get(offset);
 
             getCheatRating();
-
-//            mainTable = linearLayout.findViewById(R.id.table_cheat_list_main);
-//            tvTextBeforeTable = linearLayout.findViewById(R.id.text_cheat_before_table);
-//            tvCheatTitle = linearLayout.findViewById(R.id.text_cheat_title);
-//            tvGalleryInfo = linearLayout.findViewById(R.id.gallery_info);
-//            screenshotGallery = linearLayout.findViewById(R.id.gallery);
-//            progressBar = linearLayout.findViewById(R.id.progress_bar);
-//            tvCheatText = linearLayout.findViewById(R.id.cheat_content);
 
             tvTextBeforeTable.setVisibility(View.VISIBLE);
             tvCheatTitle.setTypeface(latoFontBold);
@@ -406,30 +399,6 @@ public class MemberCheatViewFragment extends Fragment {
             populateView();
         });
     }
-
-//    private class FetchCheatRatingOnlineBackgroundTask extends AsyncTask<Void, Void, Void> {
-//        float cheatRating;
-//
-//        @Override
-//        protected Void doInBackground(Void... params) {
-//            try {
-//                cheatRating = Webservice.getCheatRatingByMemberId(member.getMid(), cheatObj.getCheatId());
-//            } catch (Exception e) {
-//                cheatRating = 0;
-//            }
-//
-//            return null;
-//        }
-//
-//        @Override
-//        protected void onPostExecute(Void result) {
-//            super.onPostExecute(result);
-//
-//            if (cheatRating > 0) {
-//                cheatViewPageIndicator.setRating(offset, cheatRating);
-//            }
-//        }
-//    }
 
     private void getCheatRating() {
         Needle.onBackgroundThread().execute(() -> {

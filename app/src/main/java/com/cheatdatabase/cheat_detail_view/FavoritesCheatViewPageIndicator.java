@@ -171,7 +171,7 @@ public class FavoritesCheatViewPageIndicator extends AppCompatActivity implement
                 public void onPageSelected(int position) {
                     // Save the last selected page
                     editor.putInt(Konstanten.PREFERENCES_PAGE_SELECTED, position);
-                    editor.commit();
+                    editor.apply();
 
                     activePage = position;
 

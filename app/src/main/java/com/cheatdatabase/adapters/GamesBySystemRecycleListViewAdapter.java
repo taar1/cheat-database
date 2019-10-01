@@ -54,8 +54,7 @@ public class GamesBySystemRecycleListViewAdapter extends RecyclerView.Adapter<Re
         gameList = new ArrayList<>();
         listItems = new ArrayList<>();
 
-        // TODO FIXME try out if this is needed or not....
-        filterList("");
+        filterList(""); // Pass String for filtering
     }
 
     public void setGameList(List<Game> gameList) {

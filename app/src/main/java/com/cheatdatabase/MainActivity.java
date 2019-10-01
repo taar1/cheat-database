@@ -89,7 +89,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @BindView(R.id.nav_view)
     NavigationView navigationView;
     @BindView(R.id.add_new_cheat_button)
-    FloatingActionButton fab;
+    FloatingActionButton floatingActionButton;
     @BindView(R.id.mixed_banner_container)
     LinearLayout mixedBannerContainer;
     @BindView(R.id.banner_container_facebook)
@@ -176,7 +176,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         fragmentTransaction.addToBackStack(SubmitCheatFragment.class.getSimpleName());
         fragmentManager.beginTransaction().replace(R.id.content_frame, SubmitCheatFragment.newInstance(), SubmitCheatFragment.class.getSimpleName()).commit();
 
-        fab.hide();
+        floatingActionButton.hide();
     }
 
     @Override
@@ -361,13 +361,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             fragmentManager.beginTransaction().replace(R.id.content_frame, FavoriteGamesListFragment.newInstance(), FavoriteGamesListFragment.class.getSimpleName()).commit();
 
             mToolbar.setTitle(R.string.favorites);
-            fab.show();
+            floatingActionButton.show();
         } else if (id == R.id.nav_members) {
             fragmentTransaction.addToBackStack(TopMembersFragment.class.getSimpleName());
             fragmentManager.beginTransaction().replace(R.id.content_frame, TopMembersFragment.newInstance(), TopMembersFragment.class.getSimpleName()).commit();
 
             mToolbar.setTitle(R.string.top_members_top_helping);
-            fab.show();
+            floatingActionButton.hide();
         } else if (id == R.id.nav_rate) {
             new RateAppDialog(this, () -> showContactFormFragment());
             return true;
@@ -376,7 +376,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             fragmentManager.beginTransaction().replace(R.id.content_frame, SubmitCheatFragment.newInstance(), SubmitCheatFragment.class.getSimpleName()).commit();
 
             mToolbar.setTitle(R.string.submit_cheat_short);
-            fab.hide();
+            floatingActionButton.hide();
         } else if (id == R.id.nav_contact) {
             showContactFormFragment();
         } else if (id == R.id.nav_settings) {
@@ -422,7 +422,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         fragmentTransaction.addToBackStack(ContactFormFragment.class.getSimpleName());
         fragmentManager.beginTransaction().replace(R.id.content_frame, ContactFormFragment.newInstance(), ContactFormFragment.class.getSimpleName()).commit();
 
-        fab.hide();
+        floatingActionButton.hide();
         mDrawerLayout.closeDrawers();
     }
 
@@ -431,7 +431,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         fragmentTransaction.addToBackStack(SystemListFragment.class.getSimpleName());
         fragmentManager.beginTransaction().replace(R.id.content_frame, SystemListFragment.newInstance(), SystemListFragment.class.getSimpleName()).commit();
 
-        fab.show();
+        floatingActionButton.show();
         mDrawerLayout.closeDrawers();
     }
 }

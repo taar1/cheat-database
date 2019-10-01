@@ -25,7 +25,7 @@ import com.cheatdatabase.businessobjects.Cheat;
 import com.cheatdatabase.businessobjects.Game;
 import com.cheatdatabase.businessobjects.Member;
 import com.cheatdatabase.callbacks.RepositoryEntityListCallback;
-import com.cheatdatabase.handset.cheat_detail_view.CheatViewPageIndicatorActivity;
+import com.cheatdatabase.cheat_detail_view.CheatViewPageIndicatorActivity;
 import com.cheatdatabase.helpers.DatabaseHelper;
 import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Reachability;

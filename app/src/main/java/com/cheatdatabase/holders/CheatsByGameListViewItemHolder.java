@@ -1,6 +1,5 @@
 package com.cheatdatabase.holders;
 
-import android.content.Context;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RatingBar;
@@ -19,7 +18,6 @@ import butterknife.ButterKnife;
 
 public class CheatsByGameListViewItemHolder extends RecyclerView.ViewHolder {
     public View view;
-    private Context context;
     private Cheat cheat;
 
     @BindView(R.id.cheat_title)
@@ -33,12 +31,11 @@ public class CheatsByGameListViewItemHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.flag)
     ImageView mFlagGerman;
 
-    public CheatsByGameListViewItemHolder(View view, Context context) {
+    public CheatsByGameListViewItemHolder(View view) {
         super(view);
         ButterKnife.bind(this, view);
 
         this.view = view;
-        this.context = context;
 
         mCheatTitle.setTypeface(Tools.getFont(view.getContext().getAssets(), Konstanten.FONT_REGULAR));
 

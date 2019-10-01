@@ -47,7 +47,7 @@ public class TopMembersFragment extends Fragment {
     private List<Member> memberList;
     private Member selectedMember;
 
-    private Activity parentActivity;
+    private Activity activity;
     private RecyclerView.LayoutManager layoutManager;
     private TopMembersListViewAdapter mTopMembersListViewAdapter;
 
@@ -62,7 +62,7 @@ public class TopMembersFragment extends Fragment {
 
     public TopMembersFragment() {
         memberList = new ArrayList<>();
-        parentActivity = getActivity();
+        activity = getActivity();
         mTopMembersListViewAdapter = new TopMembersListViewAdapter(member -> clickedOnMember(member));
     }
 
@@ -77,7 +77,7 @@ public class TopMembersFragment extends Fragment {
         ButterKnife.bind(this, view);
 
         if (!Reachability.isRegistered()) {
-            Reachability.registerReachability(parentActivity);
+            Reachability.registerReachability(activity);
         }
 
         setHasOptionsMenu(true);
@@ -92,7 +92,7 @@ public class TopMembersFragment extends Fragment {
             DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(), RecyclerView.VERTICAL);
             recyclerView.addItemDecoration(dividerItemDecoration);
         } else {
-            Toast.makeText(parentActivity, R.string.no_internet, Toast.LENGTH_LONG).show();
+            Toast.makeText(activity, R.string.no_internet, Toast.LENGTH_LONG).show();
         }
 
         return view;
@@ -116,7 +116,7 @@ public class TopMembersFragment extends Fragment {
 
     @Override
     public void onPause() {
-        Reachability.unregister(parentActivity);
+        Reachability.unregister(activity);
         super.onPause();
     }
 
@@ -140,7 +140,7 @@ public class TopMembersFragment extends Fragment {
                     intent.setData(Uri.parse(selectedMember.getWebsite()));
                     startActivity(intent);
                 } else {
-                    Toast.makeText(parentActivity, getString(R.string.top_members_no_website, selectedMember.getUsername()), Toast.LENGTH_LONG).show();
+                    Toast.makeText(activity, getString(R.string.top_members_no_website, selectedMember.getUsername()), Toast.LENGTH_LONG).show();
                 }
 
                 return true;

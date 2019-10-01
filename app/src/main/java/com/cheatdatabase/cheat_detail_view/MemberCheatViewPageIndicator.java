@@ -190,7 +190,7 @@ public class MemberCheatViewPageIndicator extends AppCompatActivity {
                 public void onPageSelected(int position) {
                     // Save selected page
                     editor.putInt(Konstanten.PREFERENCES_PAGE_SELECTED, position);
-                    editor.commit();
+                    editor.apply();
 
                     activePage = position;
 

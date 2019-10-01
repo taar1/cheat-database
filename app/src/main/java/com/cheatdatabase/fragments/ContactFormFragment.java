@@ -9,11 +9,8 @@ import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import com.google.android.material.textfield.TextInputEditText;
-import androidx.fragment.app.Fragment;
 import android.text.TextUtils;
 import android.text.util.Linkify;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -25,6 +22,8 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.fragment.app.Fragment;
+
 import com.cheatdatabase.R;
 import com.cheatdatabase.businessobjects.Member;
 import com.cheatdatabase.events.GenericEvent;
@@ -32,6 +31,7 @@ import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.helpers.Tools;
 import com.cheatdatabase.helpers.Webservice;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.gson.Gson;
 
 import org.greenrobot.eventbus.EventBus;
@@ -101,15 +101,12 @@ public class ContactFormFragment extends Fragment {
             mEmailView.setText(member.getEmail());
         }
 
-        mMessageView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
-                if (id == R.id.login || id == EditorInfo.IME_NULL) {
-                    attemptSendForm();
-                    return true;
-                }
-                return false;
+        mMessageView.setOnEditorActionListener((textView, id, keyEvent) -> {
+            if (id == R.id.login || id == EditorInfo.IME_NULL) {
+                attemptSendForm();
+                return true;
             }
+            return false;
         });
         Linkify.addLinks(mEmailaddressView, Linkify.ALL);
 
@@ -286,28 +283,22 @@ public class ContactFormFragment extends Fragment {
     }
 
     public void sendForm() {
-        Needle.onBackgroundThread().execute(new Runnable() {
-            @Override
-            public void run() {
-                Webservice.submitContactForm(mEmailView.getText().toString().trim(), mMessageView.getText().toString().trim());
-                actionAfterSendForm();
-            }
+        Needle.onBackgroundThread().execute(() -> {
+            Webservice.submitContactForm(mEmailView.getText().toString().trim(), mMessageView.getText().toString().trim());
+            actionAfterSendForm();
         });
 
     }
 
     public void actionAfterSendForm() {
-        Needle.onMainThread().execute(new Runnable() {
-            @Override
-            public void run() {
-                View view = getActivity().getCurrentFocus();
-                if (view != null) {
-                    InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-                    imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-                }
-                Tools.showSnackbar(outerLayout, getActivity().getString(R.string.contactform_thanks));
-                forwardToMainView();
+        Needle.onMainThread().execute(() -> {
+            View view = getActivity().getCurrentFocus();
+            if (view != null) {
+                InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
             }
+            Tools.showSnackbar(outerLayout, getActivity().getString(R.string.contactform_thanks));
+            forwardToMainView();
         });
 
     }
@@ -315,12 +306,7 @@ public class ContactFormFragment extends Fragment {
     public void forwardToMainView() {
         Needle.onMainThread().execute(() -> {
             Handler handler = new Handler();
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    EventBus.getDefault().post(new GenericEvent(GenericEvent.Action.CLICK_CHEATS_DRAWER));
-                }
-            }, 1500);
+            handler.postDelayed(() -> EventBus.getDefault().post(new GenericEvent(GenericEvent.Action.CLICK_CHEATS_DRAWER)), 1500);
         });
     }
 }

@@ -1,7 +1,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:id="@+id/outer_layout"
     android:background="@drawable/bg"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
     android:orientation="vertical">
 
     <include layout="@layout/toolbar" />
@@ -9,9 +10,9 @@
     <!-- List item layout: member_cheatlist_item.xml -->
     <TextView
         android:id="@+id/item_list_empty_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
         android:text="@string/placeholder"
         android:textColor="@color/white"
         android:textSize="20sp"
@@ -19,8 +20,8 @@
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipe_refresh_layout"
-        android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_width="match_parent"
         android:paddingBottom="52dp">
 
         <include layout="@layout/include_fastscroll_recyclerview" />

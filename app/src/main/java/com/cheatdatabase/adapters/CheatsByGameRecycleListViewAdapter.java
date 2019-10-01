@@ -84,17 +84,15 @@ public class CheatsByGameRecycleListViewAdapter extends RecyclerView.Adapter<Rec
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(final ViewGroup parent, int viewType) {
-
-        if (viewType == ListItem.TYPE_CHEAT) {
-            final View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.listrow_cheat_item, parent, false);
-            itemView.setDrawingCacheEnabled(true);
-            return new CheatsByGameListViewItemHolder(itemView, context);
-        } else if (viewType == ListItem.TYPE_FACEBOOK_NATIVE_AD) {
+        if (viewType == ListItem.TYPE_FACEBOOK_NATIVE_AD) {
             NativeAdLayout inflatedView = (NativeAdLayout) LayoutInflater.from(parent.getContext()).inflate(R.layout.native_ad_unit, parent, false);
             return new FacebookNativeAdHolder(inflatedView);
+        } else {
+            // ListItem.TYPE_CHEAT
+            final View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.listrow_cheat_item, parent, false);
+            itemView.setDrawingCacheEnabled(true);
+            return new CheatsByGameListViewItemHolder(itemView);
         }
-
-        return null;
     }
 
     @Override
