@@ -1,6 +1,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:baselineAligned="false"
-    android:layout_height="wrap_content"
+    android:background="?android:attr/selectableItemBackground"
+    android:layout_height="60dp"
     android:layout_width="match_parent"
     android:minHeight="30dp"
     android:orientation="horizontal"
@@ -41,22 +41,16 @@
         <ImageView
             android:id="@+id/images_icon"
             android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:paddingEnd="3dp"
-            android:paddingLeft="3dp"
-            android:paddingRight="3dp"
-            android:paddingStart="3dp"
-            android:src="@drawable/flag_img" />
+            android:layout_width="40dp"
+            android:padding="4dp"
+            android:src="@drawable/ic_map" />
 
         <ImageView
             android:id="@+id/german_flag_icon"
             android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:paddingEnd="3dp"
-            android:paddingLeft="3dp"
-            android:paddingRight="3dp"
-            android:paddingStart="3dp"
-            android:src="@drawable/flag_german" />
+            android:layout_width="40dp"
+            android:padding="4dp"
+            android:src="@drawable/ic_germany" />
     </LinearLayout>
 
 </LinearLayout>

@@ -23,11 +23,11 @@ public class MemberCheatRecycleListViewAdapter extends RecyclerView.Adapter<Recy
     private static final String TAG = MemberCheatRecycleListViewAdapter.class.getSimpleName();
 
     private List<Cheat> cheatList;
-    private OnCheatListItemSelectedListener listener;
+    private OnCheatListItemSelectedListener onCheatListItemSelectedListener;
 
-    public MemberCheatRecycleListViewAdapter(OnCheatListItemSelectedListener listener) {
+    public MemberCheatRecycleListViewAdapter(OnCheatListItemSelectedListener onCheatListItemSelectedListener) {
         cheatList = new ArrayList<>();
-        this.listener = listener;
+        this.onCheatListItemSelectedListener = onCheatListItemSelectedListener;
     }
 
     @Override
@@ -42,7 +42,7 @@ public class MemberCheatRecycleListViewAdapter extends RecyclerView.Adapter<Recy
         Cheat cheat = cheatList.get(position);
         MemberCheatsListViewItemHolder memberCheatsListViewItemHolder = (MemberCheatsListViewItemHolder) holder;
         memberCheatsListViewItemHolder.setCheat(cheat);
-        memberCheatsListViewItemHolder.view.setOnClickListener(v -> listener.onCheatListItemSelected(cheat, position));
+        memberCheatsListViewItemHolder.view.setOnClickListener(v -> onCheatListItemSelectedListener.onCheatListItemSelected(cheat, position));
     }
 
     public void setCheatList(List<Cheat> cheatList) {

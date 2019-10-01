@@ -30,7 +30,6 @@ public class MemberCheatsListViewItemHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.german_flag_icon)
     ImageView germanFlagIcon;
 
-
     public MemberCheatsListViewItemHolder(View view) {
         super(view);
         ButterKnife.bind(this, view);

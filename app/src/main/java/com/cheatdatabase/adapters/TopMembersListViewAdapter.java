@@ -33,7 +33,8 @@ public class TopMembersListViewAdapter extends RecyclerView.Adapter<TopMembersLi
     public void onBindViewHolder(TopMembersListViewItemHolder holder, final int position) {
         TopMembersListViewItemHolder topMembersListViewItemHolder = holder;
         topMembersListViewItemHolder.updateUI(memberList.get(position));
-        topMembersListViewItemHolder.setClickListener(onTopMemberListItemSelectedListener);
+        topMembersListViewItemHolder.view.setOnClickListener(v -> onTopMemberListItemSelectedListener.onMemberClicked(memberList.get(position)));
+        topMembersListViewItemHolder.website.setOnClickListener(v -> onTopMemberListItemSelectedListener.onWebsiteClicked(memberList.get(position)));
     }
 
     public void setMemberList(List<Member> members) {

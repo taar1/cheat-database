@@ -9,12 +9,10 @@ import com.cheatdatabase.CheatDatabaseApplication;
 import com.cheatdatabase.R;
 import com.cheatdatabase.businessobjects.Member;
 import com.cheatdatabase.helpers.Konstanten;
-import com.cheatdatabase.listeners.OnTopMemberListItemSelectedListener;
 import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class TopMembersListViewItemHolder extends RecyclerView.ViewHolder {
@@ -25,14 +23,11 @@ public class TopMembersListViewItemHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.member_message)
     TextView memberMessage;
     @BindView(R.id.website)
-    TextView website;
+    public TextView website;
     @BindView(R.id.avatar)
     CircleImageView avatar;
 
-    private final View view;
-
-    private Member member;
-    private OnTopMemberListItemSelectedListener topMemberListItemClickListener;
+    public final View view;
 
     public TopMembersListViewItemHolder(View view) {
         super(view);
@@ -42,7 +37,6 @@ public class TopMembersListViewItemHolder extends RecyclerView.ViewHolder {
     }
 
     public void updateUI(final Member member) {
-        this.member = member;
 
         Picasso.get().load(Konstanten.WEBDIR_MEMBER_AVATAR + member.getMid()).placeholder(R.drawable.avatar).into(avatar);
 
@@ -62,19 +56,5 @@ public class TopMembersListViewItemHolder extends RecyclerView.ViewHolder {
         } else {
             memberMessage.setVisibility(View.GONE);
         }
-    }
-
-    @OnClick(R.id.website)
-    void openWebsite() {
-        topMemberListItemClickListener.onWebsiteClicked(member);
-    }
-
-    @OnClick({R.id.member_name, R.id.cheat_count, R.id.avatar})
-    void showMemberCheatList() {
-        topMemberListItemClickListener.onMemberClicked(member);
-    }
-
-    public void setClickListener(OnTopMemberListItemSelectedListener onTopMemberListItemSelectedListener) {
-        this.topMemberListItemClickListener = onTopMemberListItemSelectedListener;
     }
 }

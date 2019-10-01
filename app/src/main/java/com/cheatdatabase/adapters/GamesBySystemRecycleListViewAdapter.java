@@ -1,7 +1,6 @@
 package com.cheatdatabase.adapters;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.util.Log;
@@ -15,7 +14,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.cheatdatabase.R;
 import com.cheatdatabase.businessobjects.Game;
 import com.cheatdatabase.helpers.Konstanten;
-import com.cheatdatabase.holders.BlankWhiteListViewItemHolder;
 import com.cheatdatabase.holders.FacebookNativeAdHolder;
 import com.cheatdatabase.holders.GamesBySystemListViewItemHolder;
 import com.cheatdatabase.holders.UkonAdListViewItemHolder;
@@ -82,8 +80,6 @@ public class GamesBySystemRecycleListViewAdapter extends RecyclerView.Adapter<Re
             final View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.listrow_gamebysystem_item, parent, false);
             itemView.setDrawingCacheEnabled(true);
             return new GamesBySystemListViewItemHolder(itemView, activity);
-        } else if (viewType == ListItem.TYPE_BLANK) {
-            return new BlankWhiteListViewItemHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.listrow_blankwhite_item, parent, false));
         } else if (viewType == ListItem.TYPE_FACEBOOK_NATIVE_AD) {
             NativeAdLayout inflatedView = (NativeAdLayout) LayoutInflater.from(parent.getContext()).inflate(R.layout.native_ad_unit, parent, false);
             return new FacebookNativeAdHolder(inflatedView);

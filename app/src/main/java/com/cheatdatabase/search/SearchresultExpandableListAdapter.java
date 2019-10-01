@@ -50,7 +50,7 @@ public class SearchresultExpandableListAdapter extends BaseExpandableListAdapter
         TextView textGameTitle;
         TextView textCheatCounter;
         if (convertView == null) {
-            convertView = inflater.inflate(R.layout.gamesearch_listrow_details, null);
+            convertView = inflater.inflate(R.layout.listrow_expandable_item, null);
         }
         textGameTitle = convertView.findViewById(R.id.text_game_name);
         textGameTitle.setText(gameObj.getGameName());
@@ -105,7 +105,7 @@ public class SearchresultExpandableListAdapter extends BaseExpandableListAdapter
     @Override
     public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
         if (convertView == null) {
-            convertView = inflater.inflate(R.layout.gamesearch_listrow_group, null);
+            convertView = inflater.inflate(R.layout.listrow_expandable_group, null);
         }
         Group group = (Group) getGroup(groupPosition);
         ((CheckedTextView) convertView).setText(group.string);

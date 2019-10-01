@@ -1,37 +1,38 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/outer_layout"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:background="?android:attr/selectableItemBackground"
     android:gravity="center_vertical"
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
     android:orientation="horizontal"
     android:padding="8dp">
 
     <ImageView
         android:id="@+id/system_icon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:contentDescription="star"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
         android:src="@drawable/ic_dot_star" />
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginLeft="8dp"
         android:gravity="center_vertical"
+        android:layout_height="match_parent"
+        android:layout_marginStart="8dp"
+        android:layout_width="match_parent"
         android:orientation="vertical">
 
         <TextView
             android:id="@+id/system_name"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
             android:text="@string/placeholder"
             android:textAppearance="@style/GameTitle"
             android:textIsSelectable="false" />
 
         <TextView
             android:id="@+id/subtitle"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
             android:text="@string/placeholder"
             android:textAppearance="@style/ListSubItemPhoneMedium"
             android:textColor="@color/subtitle"
