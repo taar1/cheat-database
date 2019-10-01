@@ -19,28 +19,34 @@
         <item name="android:textColor">#EEFFFFFF</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">20sp</item>
+        <item name="android:fontFamily">@font/lato_bold</item>
     </style>
 
-    <style name="CheatTitlePhone">
-        <item name="android:textColor">#FFFFFF</item>
-        <item name="android:textSize">22sp</item>
-    </style>
-
-    <style name="CheatTitleTablet">
+    <style name="CheatTitle">
         <item name="android:textColor">#FFFFFF</item>
         <item name="android:textSize">24sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:fontFamily">@font/lato_bold</item>
     </style>
 
     <style name="NormalTextBold">
         <item name="android:textColor">#FFFFFF</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">18sp</item>
+        <item name="android:fontFamily">@font/lato_bold</item>
     </style>
 
     <style name="NormalText">
         <item name="android:textColor">#FFFFFF</item>
         <item name="android:textStyle">normal</item>
         <item name="android:textSize">18sp</item>
+        <item name="android:fontFamily">@font/lato_regular</item>
+    </style>
+
+    <style name="NormalTextLight">
+        <item name="android:textColor">#EEFFFFFF</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:fontFamily">@font/lato_light</item>
     </style>
 
     <style name="WalkthroughText">
@@ -54,89 +60,88 @@
         <item name="android:textColor">#FFFFFF</item>
         <item name="android:textSize">26sp</item>
         <item name="android:textStyle">bold</item>
+        <item name="android:fontFamily">@font/lato_bold</item>
     </style>
 
     <style name="WelcomeTextDate">
         <item name="android:textColor">#FFFFFF</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">14sp</item>
+        <item name="android:fontFamily">@font/lato_bold</item>
     </style>
 
     <style name="TopMemberName">
         <item name="android:textColor">#FFFFFF</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">20sp</item>
+        <item name="android:fontFamily">@font/lato_bold</item>
     </style>
 
     <style name="TopMemberCheatCount">
         <item name="android:textColor">#FFFFFF</item>
         <item name="android:textSize">18sp</item>
+        <item name="android:fontFamily">@font/lato_light</item>
     </style>
 
     <style name="TopMemberFreetext">
         <item name="android:textColor">#CCCCCC</item>
         <item name="android:textSize">18sp</item>
+        <item name="android:fontFamily">@font/lato_light</item>
     </style>
 
     <style name="TopMemberHomepage">
         <item name="android:textColor">#DDDDDD</item>
         <item name="android:textSize">16sp</item>
+        <item name="android:fontFamily">@font/lato_light</item>
     </style>
 
     <style name="LoginFormContainer">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:padding">16dp</item>
+        <item name="android:fontFamily">@font/lato_regular</item>
     </style>
 
     <style name="ContactFormContainer">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">fill_parent</item>
         <item name="android:padding">16dp</item>
+        <item name="android:fontFamily">@font/lato_regular</item>
     </style>
 
     <style name="SearchResultListrowGroup">
-        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textColor">#FFFFFFFF</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:textSize">20sp</item>
+        <item name="android:textSize">22sp</item>
+        <item name="android:fontFamily">@font/lato_bold</item>
     </style>
 
-    <style name="ListrowFirstLine">
-        <item name="android:textColor">#FFFFFF</item>
+    <style name="SearchResultListItemTitle">
+        <item name="android:textColor">#FFFFFFFF</item>
         <item name="android:textSize">16sp</item>
+        <item name="android:fontFamily">@font/lato_bold</item>
     </style>
 
-    <style name="ListrowSecondLine">
-        <item name="android:textColor">#AAAAAA</item>
+    <style name="SearchResultListItemText">
+        <item name="android:textColor">#EEFFFFFF</item>
         <item name="android:textSize">16sp</item>
+        <item name="android:fontFamily">@font/lato_light</item>
     </style>
 
-    <style name="GeneralText">
-        <item name="android:textColor">#FFFFFF</item>
-        <item name="android:textStyle">normal</item>
-        <item name="android:textSize">16sp</item>
-    </style>
-
-    <!-- Style for items in a list -->
-
-    <!-- Style for items in a list -->
-    <style name="ListItemPhone">
-        <item name="android:textColor">#FFFFFF</item>
-        <item name="android:textStyle">normal</item>
-        <item name="android:textSize">16sp</item>
-    </style>
 
     <!-- Style for items in a list -->
     <style name="ListSubItemPhone">
         <item name="android:textColor">#AAAAAA</item>
         <item name="android:textStyle">normal</item>
         <item name="android:textSize">12sp</item>
+        <item name="android:fontFamily">@font/lato_regular</item>
     </style>
 
     <style name="ListSubItemPhoneMedium">
         <item name="android:textColor">#AAAAAA</item>
         <item name="android:textStyle">normal</item>
         <item name="android:textSize">14sp</item>
+        <item name="android:fontFamily">@font/lato_regular</item>
     </style>
 
     <style name="UndoBar">
@@ -149,6 +154,7 @@
         <item name="android:showDividers">middle</item>
         <item name="android:divider">@drawable/undobar_divider</item>
         <item name="android:dividerPadding">10dp</item>
+        <item name="android:fontFamily">@font/lato_regular</item>
     </style>
 
     <style name="UndoBarMessage">
@@ -160,6 +166,7 @@
         <item name="android:layout_marginRight">16dp</item>
         <item name="android:textAppearance">?android:textAppearanceMedium</item>
         <item name="android:textColor">#fff</item>
+        <item name="android:fontFamily">@font/lato_regular</item>
     </style>
 
     <style name="UndoBarButton">
@@ -175,6 +182,7 @@
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">#fff</item>
         <item name="android:text">@string/undo</item>
+        <item name="android:fontFamily">@font/lato_regular</item>
     </style>
 
     <style name="cheat_detail_view_page_indicator">
@@ -184,20 +192,17 @@
         <item name="android:background">@color/color_primary_dark</item>
     </style>
 
-    <!--<style name="RedRatingBar" parent="Theme.AppCompat">-->
-    <!--<item name="colorControlNormal">@color/rating_inactive</item>-->
-    <!--<item name="colorControlActivated">@color/colorPrimary</item>-->
-    <!--</style>-->
-
     <style name="UkonAdTitle">
         <item name="android:textColor">#FFFFFF</item>
         <item name="android:textStyle">normal</item>
         <item name="android:textSize">16sp</item>
+        <item name="android:fontFamily">@font/lato_regular</item>
     </style>
 
     <style name="UkonAdSubTitle">
         <item name="android:textColor">#FFFFFF</item>
         <item name="android:textStyle">italic</item>
         <item name="android:textSize">12sp</item>
+        <item name="android:fontFamily">@font/lato_regular</item>
     </style>
 </resources>

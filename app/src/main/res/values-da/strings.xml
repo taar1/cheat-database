@@ -116,7 +116,7 @@
     <string name="meta_views_today">Views today</string>
     <string name="meta_show_all_cheats">Show all cheatList</string>
     <string name="meta_rating_average">Average cheat rating by members</string>
-    <string name="meta_average_rating1">%1$s out of 10</string>
+    <string name="meta_average_rating1">%1$d out of 10</string>
     <string name="meta_average_rating2">based on %s votes</string>
     <string name="meta_member_homepage">website</string>
 

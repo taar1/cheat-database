@@ -138,12 +138,9 @@ public class MemberCheatViewFragment extends Fragment {
             getCheatRating();
 
             tvTextBeforeTable.setVisibility(View.VISIBLE);
-            tvCheatTitle.setTypeface(latoFontBold);
             tvCheatTitle.setText(cheatObj.getCheatTitle());
             tvGalleryInfo.setVisibility(View.INVISIBLE);
-            tvGalleryInfo.setTypeface(latoFontLight);
             progressBar.setVisibility(View.INVISIBLE);
-            tvCheatText.setTypeface(latoFontLight);
 
             /**
              * Get thumbnails if there are screenshots.

@@ -1,9 +1,7 @@
 package com.cheatdatabase.fragments;
 
 import android.app.Activity;
-import android.graphics.Typeface;
 import android.os.Bundle;
-import androidx.fragment.app.Fragment;
 import android.text.Html;
 import android.text.Spanned;
 import android.text.util.Linkify;
@@ -17,9 +15,10 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.fragment.app.Fragment;
+
 import com.cheatdatabase.R;
 import com.cheatdatabase.businessobjects.WelcomeMessage;
-import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.helpers.Tools;
 import com.cheatdatabase.helpers.Webservice;
@@ -41,8 +40,6 @@ public class NewsFragment extends Fragment {
     @BindView(R.id.text_welcome_text)
     TextView welcomeText;
 
-    private Typeface latoFontBold;
-    private Typeface latoFontLight;
     private Activity parentActivity;
 
     @Override
@@ -55,24 +52,14 @@ public class NewsFragment extends Fragment {
             Reachability.registerReachability(parentActivity);
         }
 
-        latoFontBold = Tools.getFont(parentActivity.getAssets(), Konstanten.FONT_BOLD);
-        latoFontLight = Tools.getFont(parentActivity.getAssets(), Konstanten.FONT_LIGHT);
-
         progressBar.setVisibility(View.VISIBLE);
         reloadView.setVisibility(View.INVISIBLE);
 
-        createdTitle.setTypeface(latoFontLight);
-        welcomeTitle.setTypeface(latoFontBold);
-        welcomeText.setTypeface(latoFontLight);
+        reloadView.setOnClickListener(v -> {
+            reloadView.setVisibility(View.INVISIBLE);
+            progressBar.setVisibility(View.VISIBLE);
 
-        reloadView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                reloadView.setVisibility(View.INVISIBLE);
-                progressBar.setVisibility(View.VISIBLE);
-
-                getWelcomeMessage();
-            }
+            getWelcomeMessage();
         });
 
         getWelcomeMessage();

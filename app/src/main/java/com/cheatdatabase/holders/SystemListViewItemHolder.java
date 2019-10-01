@@ -9,8 +9,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.cheatdatabase.R;
 import com.cheatdatabase.businessobjects.SystemPlatform;
-import com.cheatdatabase.helpers.Konstanten;
-import com.cheatdatabase.helpers.Tools;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -35,12 +33,8 @@ public class SystemListViewItemHolder extends RecyclerView.ViewHolder {
     }
 
     public void setSystemPlatform(SystemPlatform systemPlatform) {
-
         systemName.setText(systemPlatform.getSystemName());
         subtitle.setText(systemPlatform.getGameCount() + " Games");
-
-        systemName.setTypeface(Tools.getFont(view.getContext().getAssets(), Konstanten.FONT_BOLD));
-        subtitle.setTypeface(Tools.getFont(view.getContext().getAssets(), Konstanten.FONT_LIGHT));
     }
 
 }

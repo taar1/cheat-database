@@ -15,15 +15,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
-        android:textAppearance="@style/ListrowFirstLine"
-        android:textIsSelectable="false"></TextView>
+        android:textAppearance="@style/SearchResultListItemTitle"
+        android:textIsSelectable="false" />
 
     <TextView
         android:id="@+id/text_cheat_counter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
-        android:textAppearance="@style/ListrowSecondLine"
-        android:textIsSelectable="false"></TextView>
+        android:textAppearance="@style/SearchResultListItemText"
+        android:textIsSelectable="false" />
 
 </LinearLayout>

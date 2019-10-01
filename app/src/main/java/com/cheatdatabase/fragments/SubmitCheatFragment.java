@@ -21,8 +21,6 @@ import butterknife.ButterKnife;
 public class SubmitCheatFragment extends Fragment {
 
     private Activity parentActivity;
-    private Typeface latoFontLight;
-    private Typeface latoFontBold;
 
     @BindView(R.id.title)
     TextView title;
@@ -46,12 +44,6 @@ public class SubmitCheatFragment extends Fragment {
             Reachability.registerReachability(parentActivity);
         }
 
-        latoFontLight = Tools.getFont(parentActivity.getAssets(), Konstanten.FONT_LIGHT);
-        latoFontBold = Tools.getFont(parentActivity.getAssets(), Konstanten.FONT_BOLD);
-
-        title.setTypeface(latoFontBold);
-        subtitle.setTypeface(latoFontLight);
-        searchButton.setTypeface(latoFontBold);
         searchButton.setOnClickListener(v -> parentActivity.onSearchRequested());
 
         return view;

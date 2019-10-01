@@ -59,7 +59,6 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/blue01_edit_text_holo_dark"
                 android:hint="@string/prompt_username"
-                android:imeActionId="@+id/register"
                 android:imeActionLabel="@string/action_register_short"
                 android:imeOptions="actionUnspecified"
                 android:inputType="text"

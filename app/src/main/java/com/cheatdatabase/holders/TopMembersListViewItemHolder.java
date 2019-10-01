@@ -1,8 +1,5 @@
 package com.cheatdatabase.holders;
 
-import android.content.Intent;
-import android.graphics.Typeface;
-import android.net.Uri;
 import android.view.View;
 import android.widget.TextView;
 
@@ -11,9 +8,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.cheatdatabase.CheatDatabaseApplication;
 import com.cheatdatabase.R;
 import com.cheatdatabase.businessobjects.Member;
-import com.cheatdatabase.fragments.TopMembersFragment;
 import com.cheatdatabase.helpers.Konstanten;
-import com.cheatdatabase.helpers.Tools;
+import com.cheatdatabase.listeners.OnTopMemberListItemSelectedListener;
 import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
@@ -33,28 +29,22 @@ public class TopMembersListViewItemHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.avatar)
     CircleImageView avatar;
 
-    private final Typeface fontBold;
-    private final Typeface fontLight;
+    private final View view;
+
     private Member member;
-    private TopMembersFragment.TopMemberListItemClickListener topMemberListItemClickListener;
+    private OnTopMemberListItemSelectedListener topMemberListItemClickListener;
 
     public TopMembersListViewItemHolder(View view) {
         super(view);
         ButterKnife.bind(this, view);
 
-        fontBold = Tools.getFont(CheatDatabaseApplication.getAppContext().getAssets(), Konstanten.FONT_BOLD);
-        fontLight = Tools.getFont(CheatDatabaseApplication.getAppContext().getAssets(), Konstanten.FONT_LIGHT);
+        this.view = view;
     }
 
     public void updateUI(final Member member) {
         this.member = member;
 
         Picasso.get().load(Konstanten.WEBDIR_MEMBER_AVATAR + member.getMid()).placeholder(R.drawable.avatar).into(avatar);
-
-        memberName.setTypeface(fontBold);
-        cheatCount.setTypeface(fontLight);
-        website.setTypeface(fontLight);
-        memberMessage.setTypeface(fontLight);
 
         memberName.setText(member.getUsername().toUpperCase());
         cheatCount.setText(CheatDatabaseApplication.getAppContext().getString(R.string.top_members_cheats_count) + ": " + member.getCheatSubmissionCount());
@@ -76,20 +66,15 @@ public class TopMembersListViewItemHolder extends RecyclerView.ViewHolder {
 
     @OnClick(R.id.website)
     void openWebsite() {
-        String url = member.getWebsite();
-        if ((url != null) && (url.length() > 4)) {
-            Intent intent = new Intent(Intent.ACTION_VIEW);
-            intent.setData(Uri.parse(url));
-            CheatDatabaseApplication.getAppContext().startActivity(intent);
-        }
+        topMemberListItemClickListener.onWebsiteClicked(member);
     }
 
     @OnClick({R.id.member_name, R.id.cheat_count, R.id.avatar})
     void showMemberCheatList() {
-        topMemberListItemClickListener.clickedOnMember(member);
+        topMemberListItemClickListener.onMemberClicked(member);
     }
 
-    public void setClickListener(TopMembersFragment.TopMemberListItemClickListener topMemberListItemClickListener) {
-        this.topMemberListItemClickListener = topMemberListItemClickListener;
+    public void setClickListener(OnTopMemberListItemSelectedListener onTopMemberListItemSelectedListener) {
+        this.topMemberListItemClickListener = onTopMemberListItemSelectedListener;
     }
 }

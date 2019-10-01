@@ -1,7 +1,6 @@
 package com.cheatdatabase.fragments;
 
 import android.app.Activity;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.SparseArray;
@@ -17,12 +16,10 @@ import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 
 import com.cheatdatabase.R;
-import com.cheatdatabase.businessobjects.Game;
 import com.cheatdatabase.adapters.FavoritesExpandableListAdapter;
+import com.cheatdatabase.businessobjects.Game;
 import com.cheatdatabase.helpers.DatabaseHelper;
 import com.cheatdatabase.helpers.Group;
-import com.cheatdatabase.helpers.Konstanten;
-import com.cheatdatabase.helpers.Tools;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -57,8 +54,6 @@ public class FavoriteGamesListFragment extends Fragment {
     @BindView(R.id.nothingfound_text)
     TextView nothingFoundText;
 
-    private Typeface latoFontLight;
-    private Typeface latoFontBold;
 
     public static FavoriteGamesListFragment newInstance() {
         FavoriteGamesListFragment favoriteGamesListFragment = new FavoriteGamesListFragment();
@@ -76,9 +71,6 @@ public class FavoriteGamesListFragment extends Fragment {
 
         setHasOptionsMenu(true);
 
-        nothingFoundTitle.setTypeface(latoFontBold);
-        nothingFoundText.setTypeface(latoFontLight);
-
         listView.setAdapter(adapter);
         registerForContextMenu(listView);
 
@@ -90,11 +82,7 @@ public class FavoriteGamesListFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         parentActivity = getActivity();
-
-        latoFontLight = Tools.getFont(parentActivity.getAssets(), Konstanten.FONT_LIGHT);
-        latoFontBold = Tools.getFont(parentActivity.getAssets(), Konstanten.FONT_BOLD);
     }
 
     private void loadGames() {

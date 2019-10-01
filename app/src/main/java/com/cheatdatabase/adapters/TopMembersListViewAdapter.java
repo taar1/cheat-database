@@ -1,26 +1,27 @@
 package com.cheatdatabase.adapters;
 
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.cheatdatabase.R;
 import com.cheatdatabase.businessobjects.Member;
-import com.cheatdatabase.fragments.TopMembersFragment;
 import com.cheatdatabase.holders.TopMembersListViewItemHolder;
+import com.cheatdatabase.listeners.OnTopMemberListItemSelectedListener;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class TopMembersListViewAdapter extends RecyclerView.Adapter<TopMembersListViewItemHolder> {
     private List<Member> memberList;
-    private TopMembersFragment.TopMemberListItemClickListener topMemberListItemClickListener;
+    private OnTopMemberListItemSelectedListener onTopMemberListItemSelectedListener;
 
-    public TopMembersListViewAdapter(TopMembersFragment.TopMemberListItemClickListener topMemberListItemClickListener) {
+    public TopMembersListViewAdapter(OnTopMemberListItemSelectedListener onTopMemberListItemSelectedListener) {
         memberList = new ArrayList<>();
 
-        this.topMemberListItemClickListener = topMemberListItemClickListener;
+        this.onTopMemberListItemSelectedListener = onTopMemberListItemSelectedListener;
     }
 
     @Override
@@ -32,7 +33,7 @@ public class TopMembersListViewAdapter extends RecyclerView.Adapter<TopMembersLi
     public void onBindViewHolder(TopMembersListViewItemHolder holder, final int position) {
         TopMembersListViewItemHolder topMembersListViewItemHolder = holder;
         topMembersListViewItemHolder.updateUI(memberList.get(position));
-        topMembersListViewItemHolder.setClickListener(topMemberListItemClickListener);
+        topMembersListViewItemHolder.setClickListener(onTopMemberListItemSelectedListener);
     }
 
     public void setMemberList(List<Member> members) {

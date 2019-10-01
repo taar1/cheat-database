@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.cheatdatabase.R;
 import com.cheatdatabase.businessobjects.Cheat;
 import com.cheatdatabase.helpers.Konstanten;
-import com.cheatdatabase.helpers.Tools;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -37,9 +36,6 @@ public class MemberCheatsListViewItemHolder extends RecyclerView.ViewHolder {
         ButterKnife.bind(this, view);
 
         this.view = view;
-
-        tvGameName.setTypeface(Tools.getFont(view.getContext().getAssets(), Konstanten.FONT_REGULAR));
-        tvCheatTitle.setTypeface(Tools.getFont(view.getContext().getAssets(), Konstanten.FONT_REGULAR));
     }
 
     public Cheat getCheat() {

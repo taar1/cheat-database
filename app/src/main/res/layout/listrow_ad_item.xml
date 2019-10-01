@@ -16,7 +16,7 @@
         android:layout_height="wrap_content"
         android:singleLine="true"
         android:text="@string/placeholder"
-        android:textAppearance="@style/ListrowFirstLine" />
+        android:textAppearance="@style/SearchResultListItemTitle" />
 
     <TextView
         android:id="@+id/cheats_count"
@@ -24,6 +24,6 @@
         android:layout_height="wrap_content"
         android:singleLine="true"
         android:text="@string/placeholder"
-        android:textAppearance="@style/ListrowSecondLine" />
+        android:textAppearance="@style/SearchResultListItemText" />
 
 </LinearLayout>

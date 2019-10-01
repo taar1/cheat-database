@@ -2,7 +2,6 @@ package com.cheatdatabase.adapters;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,31 +12,22 @@ import android.widget.CheckedTextView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.cheatdatabase.FavoriteCheatListActivity;
 import com.cheatdatabase.R;
 import com.cheatdatabase.businessobjects.Game;
-import com.cheatdatabase.FavoriteCheatListActivity;
 import com.cheatdatabase.helpers.Group;
-import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Reachability;
-import com.cheatdatabase.helpers.Tools;
 
 public class FavoritesExpandableListAdapter extends BaseExpandableListAdapter {
 
     private final SparseArray<Group> groups;
     public LayoutInflater inflater;
     public Activity activity;
-    private Typeface latoFontLight;
-    private Typeface latoFontRegular;
-    private Typeface latoFontBold;
 
     public FavoritesExpandableListAdapter(Activity act, SparseArray<Group> groups) {
         activity = act;
         this.groups = groups;
         inflater = act.getLayoutInflater();
-
-        latoFontLight = Tools.getFont(act.getAssets(), Konstanten.FONT_LIGHT);
-        latoFontRegular = Tools.getFont(act.getAssets(), Konstanten.FONT_REGULAR);
-        latoFontBold = Tools.getFont(act.getAssets(), Konstanten.FONT_BOLD);
     }
 
     @Override
@@ -61,12 +51,10 @@ public class FavoritesExpandableListAdapter extends BaseExpandableListAdapter {
         }
         textGameTitle = convertView.findViewById(R.id.text_game_name);
         textGameTitle.setText(children.getGameName());
-        textGameTitle.setTypeface(latoFontRegular);
 
         // TODO machen wie gamesbystem mit: "5 Cheats" (nicht: Anz. Cheats: 5
         textCheatCounter = convertView.findViewById(R.id.text_cheat_counter);
         textCheatCounter.setText(R.string.cheats_count);
-        textCheatCounter.setTypeface(latoFontLight);
         textCheatCounter.append(" " + children.getCheatsCount());
         convertView.setOnClickListener(new OnClickListener() {
             @Override
@@ -120,7 +108,6 @@ public class FavoritesExpandableListAdapter extends BaseExpandableListAdapter {
         }
         Group group = (Group) getGroup(groupPosition);
         ((CheckedTextView) convertView).setText(group.string);
-        ((CheckedTextView) convertView).setTypeface(latoFontBold);
         ((CheckedTextView) convertView).setChecked(isExpanded);
 
         return convertView;

@@ -132,14 +132,6 @@ public class RegisterActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
-        Typeface latoFontBold = Tools.getFont(getAssets(), Konstanten.FONT_BOLD);
-        Typeface latoFontLight = Tools.getFont(getAssets(), Konstanten.FONT_LIGHT);
-
-        mEmailView.setTypeface(latoFontLight);
-        mUsernameView.setTypeface(latoFontLight);
-        mLoginStatusMessageView.setTypeface(latoFontLight);
-        registerButton.setTypeface(latoFontBold);
-
         settings = getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
         editor = settings.edit();
     }

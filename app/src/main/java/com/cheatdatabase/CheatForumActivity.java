@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.Log;
@@ -89,8 +88,6 @@ public class CheatForumActivity extends AppCompatActivity {
     private SharedPreferences settings;
     private ShareActionProvider mShare;
     private Member member;
-    private Typeface latoFontBold;
-    private Typeface latoFontLight;
 
     @BindView(R.id.banner_container)
     LinearLayout facebookBanner;
@@ -113,9 +110,6 @@ public class CheatForumActivity extends AppCompatActivity {
             init();
 
             tvCheatTitle.setText(cheatObj.getCheatTitle() + " (" + getString(R.string.forum) + ")");
-            tvCheatTitle.setTypeface(latoFontBold);
-
-            tvEmpty.setTypeface(latoFontLight);
 
             if (Reachability.reachability.isReachable) {
                 reloadView.setVisibility(View.GONE);
@@ -156,9 +150,6 @@ public class CheatForumActivity extends AppCompatActivity {
         adView = new AdView(this, Konstanten.FACEBOOK_AUDIENCE_NETWORK_NATIVE_BANNER_ID, AdSize.BANNER_HEIGHT_50);
         facebookBanner.addView(adView);
         adView.loadAd();
-
-        latoFontLight = Tools.getFont(getAssets(), Konstanten.FONT_LIGHT);
-        latoFontBold = Tools.getFont(getAssets(), Konstanten.FONT_BOLD);
 
         member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
 
@@ -257,8 +248,10 @@ public class CheatForumActivity extends AppCompatActivity {
 
         TextView tvFirstThCol = new TextView(this);
         TextView tvSecondThCol = new TextView(this);
-        tvFirstThCol.setTypeface(latoFontBold);
-        tvSecondThCol.setTypeface(latoFontBold);
+
+        // TODO hier noch programmatisch die FONT auf LATO setzen
+//        tvFirstThCol.setTypeface(latoFontBold);
+//        tvSecondThCol.setTypeface(latoFontBold);
 
         // Headerinfo of Forumpost
         LinearLayout rowForumPostHeader = new LinearLayout(this);
@@ -295,7 +288,8 @@ public class CheatForumActivity extends AppCompatActivity {
         tvForumPost.setBackgroundColor(Color.BLACK);
         tvForumPost.setTextColor(Color.WHITE);
         tvForumPost.setPadding(10, 10, 10, 40);
-        tvForumPost.setTypeface(latoFontLight);
+        // TODO hier noch programmatisch die FONT auf LATO setzen
+//        tvForumPost.setTypeface(latoFontLight);
         tvForumPost.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
 
         tl.addView(tvForumPost);

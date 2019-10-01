@@ -9,21 +9,21 @@ import android.content.res.Resources;
 import android.content.res.XmlResourceParser;
 import android.graphics.Typeface;
 import android.os.Environment;
-
-import com.google.android.material.snackbar.BaseTransientBottomBar;
-import com.google.android.material.snackbar.Snackbar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
 import com.cheatdatabase.R;
 import com.cheatdatabase.businessobjects.Cheat;
 import com.cheatdatabase.businessobjects.Game;
 import com.cheatdatabase.businessobjects.SystemPlatform;
+import com.google.android.material.snackbar.BaseTransientBottomBar;
+import com.google.android.material.snackbar.Snackbar;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -251,9 +251,8 @@ public class Tools {
      * @return Game[]
      */
     public static Game[] getGameListConvertStringToGameList(Activity activity, String gameListString, int systemId) {
-
         Game[] games = null;
-        JSONArray jArray = null;
+        JSONArray jArray;
 
         try {
 
@@ -330,6 +329,7 @@ public class Tools {
 
     /**
      * Get Systems from xml/systems.xml
+     *
      * @param activity
      * @return
      */
@@ -421,57 +421,9 @@ public class Tools {
     }
 
     public static Typeface getFont(AssetManager assetManager, String fontName) {
-        return Typeface.createFromAsset(assetManager, fontName);
+//        return Typeface.createFromAsset(assetManager, fontName);
+        return null;
     }
-
-
-//    public static MoPubView initMoPubAdView(final Activity activity, MoPubView mAdView) {
-//
-//        mAdView = (MoPubView) activity.findViewById(R.id.adview);
-//
-//        try {
-//            String screen = activity.getString(R.string.screen_type);
-//            if (screen.equalsIgnoreCase("phone")) {
-//                mAdView.setAdUnitId(Konstanten.MOPUB_PHONE_UNIT_ID);
-//            } else {
-//                mAdView.setAdUnitId(Konstanten.MOPUB_TABLET_UNIT_ID);
-//            }
-//
-//            mAdView.setAutorefreshEnabled(true);
-//            mAdView.setTesting(false);
-//            mAdView.setKeywords("m_age:15,m_gender:m,m_marital:single");
-//            mAdView.loadAd();
-//        } catch (Exception e) {
-//            Log.e("ADVIEW LOAD", e.getMessage());
-//            e.printStackTrace();
-//        }
-//
-//        return mAdView;
-//    }
-
-//    public void loadAd(MoPubView mAdView, String screenType) {
-//        Log.d(TAG, "XXXXX screenType: " + screenType);
-//
-//        try {
-//            if (screenType.equalsIgnoreCase("phone")) {
-//                mAdView.setAdUnitId(Konstanten.MOPUB_PHONE_UNIT_ID);
-//            } else {
-//                mAdView.setAdUnitId(Konstanten.MOPUB_TABLET_UNIT_ID);
-//            }
-//
-//            mAdView.setAutorefreshEnabled(true);
-//            mAdView.setTesting(true);
-//            mAdView.setAutorefreshEnabled(true);
-////            mAdView.s
-//// etKeywords("m_age:15,m_gender:m,m_marital:single");
-//            mAdView.loadAd();
-//
-//            Log.d(TAG, "XXXXX AD LOADED");
-//        } catch (Exception e) {
-//            Log.e("XXXXX ADVIEW LOAD", e.getMessage());
-//            e.printStackTrace();
-//        }
-//    }
 
     public static void logout(Activity activity, Editor editor) {
         editor.remove(Konstanten.MEMBER_OBJECT);

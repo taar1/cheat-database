@@ -89,9 +89,9 @@ public class Konstanten {
     // SD CARD SETTINGS
     public final static String APP_PATH_SD_CARD = "/Android/data/com.cheatdatabase/files/";
 
-    public final static String FONT_BOLD = "Lato-Bold.ttf";
-    public final static String FONT_LIGHT = "Lato-Light.ttf";
-    public final static String FONT_REGULAR = "Lato-Regular.ttf";
+    public final static String FONT_BOLD = "font/lato_bold.ttf";
+    public final static String FONT_LIGHT = "font/lato_light.ttf";
+    public final static String FONT_REGULAR = "font/lato_regular.ttf";
 
     public final static String ACHIEVEMENTS = "achievements";
     public final static String NO_ACHIEVEMENTS = "noAchievements";

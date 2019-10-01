@@ -5,7 +5,6 @@ import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -72,8 +71,7 @@ public class ContactFormFragment extends Fragment {
     private boolean isFormSent = false;
 
     public static ContactFormFragment newInstance() {
-        ContactFormFragment contactFormFragment = new ContactFormFragment();
-        return contactFormFragment;
+        return new ContactFormFragment();
     }
 
     @Override
@@ -87,8 +85,6 @@ public class ContactFormFragment extends Fragment {
 
         SharedPreferences settings = getActivity().getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
         Member member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
-
-        Typeface latoFontLight = Tools.getFont(getActivity().getAssets(), Konstanten.FONT_LIGHT);
 
         // Update action bar menu items?
         setHasOptionsMenu(true);
@@ -109,12 +105,6 @@ public class ContactFormFragment extends Fragment {
             return false;
         });
         Linkify.addLinks(mEmailaddressView, Linkify.ALL);
-
-        mEmailView.setTypeface(latoFontLight);
-        mMessageView.setTypeface(latoFontLight);
-        mEmailaddressView.setTypeface(latoFontLight);
-        mThankyouText.setTypeface(latoFontLight);
-        mLoginStatusMessageView.setTypeface(latoFontLight);
 
         // TODO FIXME keyboard anzeigen
         // TODO FIXME keyboard anzeigen

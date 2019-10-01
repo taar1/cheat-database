@@ -8,8 +8,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.cheatdatabase.R;
 import com.cheatdatabase.businessobjects.Game;
-import com.cheatdatabase.helpers.Konstanten;
-import com.cheatdatabase.helpers.Tools;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -40,12 +38,10 @@ public class GamesBySystemListViewItemHolder extends RecyclerView.ViewHolder {
         this.game = game;
 
         gameName.setText(game.getGameName());
-        gameName.setTypeface(Tools.getFont(view.getContext().getAssets(), Konstanten.FONT_BOLD));
 
         if (game.getCheatsCount() > 0) {
             cheatCount.setVisibility(View.VISIBLE);
             cheatCount.setText(game.getCheatsCount() + " " + context.getResources().getQuantityString(R.plurals.entries, game.getCheatsCount()));
-            cheatCount.setTypeface(Tools.getFont(view.getContext().getAssets(), Konstanten.FONT_LIGHT));
         } else {
             cheatCount.setVisibility(View.GONE);
         }

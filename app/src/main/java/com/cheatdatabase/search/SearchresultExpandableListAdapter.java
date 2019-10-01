@@ -2,7 +2,6 @@ package com.cheatdatabase.search;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,27 +15,18 @@ import com.cheatdatabase.CheatsByGameListActivity;
 import com.cheatdatabase.R;
 import com.cheatdatabase.businessobjects.Game;
 import com.cheatdatabase.helpers.Group;
-import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Reachability;
-import com.cheatdatabase.helpers.Tools;
 
 public class SearchresultExpandableListAdapter extends BaseExpandableListAdapter {
 
     private final SparseArray<Group> groups;
     public LayoutInflater inflater;
     public Activity activity;
-    private Typeface latoFontLight;
-    private Typeface latoFontRegular;
-    private Typeface latoFontBold;
 
     public SearchresultExpandableListAdapter(Activity activity, SparseArray<Group> groups) {
         this.activity = activity;
         this.groups = groups;
         inflater = activity.getLayoutInflater();
-
-        latoFontLight = Tools.getFont(activity.getAssets(), Konstanten.FONT_LIGHT);
-        latoFontRegular = Tools.getFont(activity.getAssets(), Konstanten.FONT_REGULAR);
-        latoFontBold = Tools.getFont(activity.getAssets(), Konstanten.FONT_BOLD);
     }
 
     @Override
@@ -64,13 +54,11 @@ public class SearchresultExpandableListAdapter extends BaseExpandableListAdapter
         }
         textGameTitle = convertView.findViewById(R.id.text_game_name);
         textGameTitle.setText(gameObj.getGameName());
-        textGameTitle.setTypeface(latoFontRegular);
 
         // TODO gleich machen wie bei gamesbystem mit: "10 Cheats" (nicht:
         // Anzahl Cheats: 10)
         textCheatCounter = convertView.findViewById(R.id.text_cheat_counter);
         textCheatCounter.setText(R.string.cheats_count);
-        textCheatCounter.setTypeface(latoFontLight);
         textCheatCounter.append(" " + gameObj.getCheatsCount());
         convertView.setOnClickListener(v -> {
             if (Reachability.reachability.isReachable) {
@@ -121,7 +109,6 @@ public class SearchresultExpandableListAdapter extends BaseExpandableListAdapter
         }
         Group group = (Group) getGroup(groupPosition);
         ((CheckedTextView) convertView).setText(group.string);
-        ((CheckedTextView) convertView).setTypeface(latoFontBold);
         ((CheckedTextView) convertView).setChecked(isExpanded);
 
         return convertView;

@@ -3,7 +3,6 @@ package com.cheatdatabase;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -20,7 +19,6 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Reachability;
-import com.cheatdatabase.helpers.Tools;
 import com.cheatdatabase.helpers.Webservice;
 
 import butterknife.BindView;
@@ -67,20 +65,17 @@ public class RecoverActivity extends AppCompatActivity {
         mEmail = getIntent().getStringExtra(EXTRA_EMAIL);
         mEmailView.setText(mEmail);
 
-        mEmailView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
-                if (id == R.id.login || id == EditorInfo.IME_NULL) {
-                    if (Reachability.reachability.isReachable) {
-                        attemptRecover();
-                        return true;
-                    } else {
-                        Toast.makeText(RecoverActivity.this, R.string.no_internet, Toast.LENGTH_SHORT).show();
-                    }
-
+        mEmailView.setOnEditorActionListener((textView, id, keyEvent) -> {
+            if (id == R.id.login || id == EditorInfo.IME_NULL) {
+                if (Reachability.reachability.isReachable) {
+                    attemptRecover();
+                    return true;
+                } else {
+                    Toast.makeText(RecoverActivity.this, R.string.no_internet, Toast.LENGTH_SHORT).show();
                 }
-                return false;
+
             }
+            return false;
         });
     }
 
@@ -93,19 +88,15 @@ public class RecoverActivity extends AppCompatActivity {
         }
     }
 
+    // TODO FIXME init() wird nicht aufgerufen?
+    // TODO FIXME init() wird nicht aufgerufen?
+    // TODO FIXME init() wird nicht aufgerufen?
     private void init() {
         if (mToolbar != null) {
             setSupportActionBar(mToolbar);
         }
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
-
-        Typeface latoFontBold = Tools.getFont(getAssets(), Konstanten.FONT_BOLD);
-        Typeface latoFontLight = Tools.getFont(getAssets(), Konstanten.FONT_LIGHT);
-
-        mLoginStatusMessageView.setTypeface(latoFontLight);
-        mResponseMessageView.setTypeface(latoFontBold);
-        recoverButton.setTypeface(latoFontBold);
     }
 
     @Override

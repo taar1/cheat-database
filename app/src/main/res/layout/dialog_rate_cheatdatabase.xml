@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:gravity="left"
             android:text="@string/rate_us_text"
-            android:textAppearance="@style/NormalText" />
+            android:textAppearance="@style/NormalTextLight" />
 
         <RatingBar
             android:id="@+id/ratingbar"

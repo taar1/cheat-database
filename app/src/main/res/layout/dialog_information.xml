@@ -12,7 +12,7 @@
         android:gravity="center"
         android:padding="5dp"
         android:text="@string/submit_cheat_consent_title"
-        android:textAppearance="@style/CheatTitleTablet">
+        android:textAppearance="@style/CheatTitle">
 
     </TextView>
 

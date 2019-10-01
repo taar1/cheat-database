@@ -117,7 +117,7 @@
     <string name="meta_views_today">Aufrufe heute</string>
     <string name="meta_show_all_cheats">Zeige alle Cheats</string>
     <string name="meta_rating_average">Durchschnittliche Mitgliederbewertung</string>
-    <string name="meta_average_rating1">%1$s von 10</string>
+    <string name="meta_average_rating1">%1$d von 10</string>
     <string name="meta_average_rating2">basierend auf %1$s Stimmen</string>
     <string name="meta_member_homepage">Website</string>
 

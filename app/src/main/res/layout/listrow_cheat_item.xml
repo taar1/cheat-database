@@ -24,7 +24,7 @@
             android:paddingBottom="2dp"
             android:singleLine="true"
             android:text="@string/placeholder"
-            android:textAppearance="@style/ListItemPhone" />
+            android:textAppearance="@style/NormalText" />
 
         <RatingBar
             android:id="@+id/small_ratingbar"

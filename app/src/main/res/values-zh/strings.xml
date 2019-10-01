@@ -107,7 +107,7 @@
     <string name="meta_views_today">查看日趋</string>
     <string name="meta_show_all_cheats">显示所有秘笈</string>
     <string name="meta_rating_average">平均分</string>
-    <string name="meta_average_rating1">%1$s 两成</string>
+    <string name="meta_average_rating1">%1$d 两成</string>
     <string name="meta_average_rating2">基于 %s 投票</string>
     <string name="meta_member_homepage">网站</string>
 

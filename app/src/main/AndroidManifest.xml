@@ -88,12 +88,12 @@
         <activity
             android:name=".CheatForumActivity"
             android:logo="@drawable/app_icon_fox"
-            android:parentActivityName=".handset.cheat_detail_view.CheatViewPageIndicatorActivity"
+            android:parentActivityName=".cheat_detail_view.CheatViewPageIndicatorActivity"
             android:uiOptions="splitActionBarWhenNarrow"
             android:windowSoftInputMode="adjustResize|stateHidden">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.cheatdatabase.handset.cheat_detail_view.CheatViewPageIndicatorActivity" />
+                android:value="com.cheatdatabase.cheat_detail_view.CheatViewPageIndicatorActivity" />
             <meta-data
                 android:name="android.app.default_searchable"
                 android:value="com.cheatdatabase.search.SearchResultsActivity" />
@@ -116,7 +116,7 @@
                 android:value="com.cheatdatabase.search.SearchResultsActivity" />
         </activity>
         <activity
-            android:name=".handset.cheat_detail_view.CheatViewPageIndicatorActivity"
+            android:name=".cheat_detail_view.CheatViewPageIndicatorActivity"
             android:label="@string/title_cheat_detail"
             android:logo="@drawable/app_icon_fox"
             android:parentActivityName=".CheatsByGameListActivity"
@@ -162,6 +162,7 @@
                 android:value="com.cheatdatabase.MainActivity" />
         </activity>
         <activity android:name="com.appbrain.AppBrainActivity" />
+
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
@@ -210,6 +211,7 @@
             android:enabled="true"
             android:exported="false" />
     </application>
+
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />

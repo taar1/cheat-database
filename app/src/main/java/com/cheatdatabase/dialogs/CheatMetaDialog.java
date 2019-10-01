@@ -4,9 +4,8 @@ import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.net.Uri;
-import android.os.AsyncTask;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -17,130 +16,97 @@ import com.cheatdatabase.CheatsByMemberListActivity;
 import com.cheatdatabase.R;
 import com.cheatdatabase.businessobjects.Cheat;
 import com.cheatdatabase.businessobjects.Member;
-import com.cheatdatabase.helpers.Konstanten;
-import com.cheatdatabase.helpers.Tools;
 import com.cheatdatabase.helpers.Webservice;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import needle.Needle;
+
 @SuppressLint("SimpleDateFormat")
 public class CheatMetaDialog extends Dialog implements OnClickListener {
-
-    private final Typeface latoFontBold;
-    private final Typeface latoFontLight;
+    private static final String TAG = CheatMetaDialog.class.getSimpleName();
     private Context context;
 
     private Cheat cheat;
     private Member member;
 
-    private TextView title_cheat_details;
-    private TextView submission_date_title;
-    private TextView lifetime_views_title;
-    private TextView views_today_title;
-    private TextView tvAverageRatingTitle;
-    private TextView tvSubmittedByTitle;
-    private TextView tvTotalSubmissionsMemberTitle;
-    private TextView tvAverageRatingText;
-    private TextView tvTotalViewsText;
-    private TextView tvSubmissionDateText;
-    private TextView tvAuthorText;
-    private TextView tvViewsTodayText;
-    private TextView tvTotalSubmissionCountMemberText;
-    private TextView tvTotalSubmissionShowAll;
-    private TextView tvMemberHomepageTitle;
-    private TextView tvMemberHomepageText;
-    private LinearLayout llSubmittedBy;
-    private LinearLayout llCountSubmissions;
-    private LinearLayout llCountSubmissions2;
-    private LinearLayout llMemberHomepage;
-    private LinearLayout llRating;
-    private LinearLayout llBuffer3;
-    private LinearLayout llBuffer4;
-    private LinearLayout llBuffer5;
-    private LinearLayout llBuffer6;
+
+    @BindView(R.id.tvAverageRatingText)
+    TextView tvAverageRatingText;
+    @BindView(R.id.lifetime_views_text)
+    TextView tvTotalViewsText;
+    @BindView(R.id.submission_date_text)
+    TextView tvSubmissionDateText;
+    @BindView(R.id.tvSubmittedByText)
+    TextView tvAuthorText;
+    @BindView(R.id.views_today_text)
+    TextView tvViewsTodayText;
+    @BindView(R.id.tvTotalSubmissionsMemberText)
+    TextView tvTotalSubmissionCountMemberText;
+    @BindView(R.id.tvTotalSubmissionsShow)
+    TextView tvTotalSubmissionShowAll;
+    @BindView(R.id.tvMemberHomepageTitle)
+    TextView tvMemberHomepageTitle;
+    @BindView(R.id.tvMemberHomepageText)
+    TextView tvMemberHomepageText;
+    @BindView(R.id.llSubmittedBy)
+    LinearLayout llSubmittedBy;
+    @BindView(R.id.llCountSubmissions)
+    LinearLayout llCountSubmissions;
+    @BindView(R.id.llCountSubmissions2)
+    LinearLayout llCountSubmissions2;
+    @BindView(R.id.llMemberHomepage)
+    LinearLayout llMemberHomepage;
+    @BindView(R.id.llRating)
+    LinearLayout llRating;
+    @BindView(R.id.llBuffer3)
+    LinearLayout llBuffer3;
+    @BindView(R.id.llBuffer4)
+    LinearLayout llBuffer4;
+    @BindView(R.id.llBuffer5)
+    LinearLayout llBuffer5;
+    @BindView(R.id.llBuffer6)
+    LinearLayout llBuffer6;
 
     public CheatMetaDialog(Context context, Cheat cheat) {
         super(context);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+
+        setContentView(R.layout.layout_cheatview_meta_dialog);
+        ButterKnife.bind(this);
+
         this.context = context;
         this.cheat = cheat;
 
-        latoFontBold = Tools.getFont(context.getAssets(), Konstanten.FONT_BOLD);
-        latoFontLight = Tools.getFont(context.getAssets(), Konstanten.FONT_LIGHT);
-
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.layout_cheatview_meta_dialog);
-
         member = cheat.getSubmittingMember();
 
-        new MetaDataLoader().execute(cheat);
-
-        title_cheat_details = findViewById(R.id.title_cheat_details);
-        title_cheat_details.setTypeface(latoFontBold);
-        submission_date_title = findViewById(R.id.submission_date_title);
-        submission_date_title.setTypeface(latoFontBold);
-        lifetime_views_title = findViewById(R.id.lifetime_views_title);
-        lifetime_views_title.setTypeface(latoFontBold);
-        views_today_title = findViewById(R.id.views_today_title);
-        views_today_title.setTypeface(latoFontBold);
-        tvAverageRatingTitle = findViewById(R.id.tvAverageRatingTitle);
-        tvAverageRatingTitle.setTypeface(latoFontBold);
-        tvSubmittedByTitle = findViewById(R.id.tvSubmittedByTitle);
-        tvSubmittedByTitle.setTypeface(latoFontBold);
-        tvTotalSubmissionsMemberTitle = findViewById(R.id.tvTotalSubmissionsMemberTitle);
-        tvTotalSubmissionsMemberTitle.setTypeface(latoFontBold);
-
-        tvAverageRatingText = findViewById(R.id.tvAverageRatingText);
-        tvAverageRatingText.setTypeface(latoFontLight);
-
-        tvTotalViewsText = findViewById(R.id.lifetime_views_text);
         tvTotalViewsText.setOnClickListener(this);
-        tvTotalViewsText.setTypeface(latoFontLight);
-
-        tvViewsTodayText = findViewById(R.id.views_today_text);
         tvViewsTodayText.setOnClickListener(this);
-        tvViewsTodayText.setTypeface(latoFontLight);
-
-        tvTotalSubmissionCountMemberText = findViewById(R.id.tvTotalSubmissionsMemberText);
         tvTotalSubmissionCountMemberText.setOnClickListener(this);
-        tvTotalSubmissionCountMemberText.setTypeface(latoFontLight);
-
-        tvTotalSubmissionShowAll = findViewById(R.id.tvTotalSubmissionsShow);
         tvTotalSubmissionShowAll.setOnClickListener(this);
-        tvTotalSubmissionShowAll.setTypeface(latoFontLight);
-
-        tvSubmissionDateText = findViewById(R.id.submission_date_text);
         tvSubmissionDateText.setOnClickListener(this);
-        tvSubmissionDateText.setTypeface(latoFontLight);
 
-        llRating = findViewById(R.id.llRating);
         llRating.setVisibility(View.GONE);
-        llSubmittedBy = findViewById(R.id.llSubmittedBy);
         llSubmittedBy.setVisibility(View.GONE);
-        llCountSubmissions = findViewById(R.id.llCountSubmissions);
         llCountSubmissions.setVisibility(View.GONE);
-        llCountSubmissions2 = findViewById(R.id.llCountSubmissions2);
         llCountSubmissions2.setVisibility(View.GONE);
-        llMemberHomepage = findViewById(R.id.llMemberHomepage);
         llMemberHomepage.setVisibility(View.GONE);
 
-        llBuffer3 = findViewById(R.id.llBuffer3);
         llBuffer3.setVisibility(View.GONE);
-        llBuffer4 = findViewById(R.id.llBuffer4);
         llBuffer4.setVisibility(View.GONE);
-        llBuffer5 = findViewById(R.id.llBuffer5);
         llBuffer5.setVisibility(View.GONE);
-        llBuffer6 = findViewById(R.id.llBuffer6);
         llBuffer6.setVisibility(View.GONE);
+
+        loadMetaData();
     }
 
-    private class MetaDataLoader extends AsyncTask<Cheat, Void, Void> {
-
-        @Override
-        protected Void doInBackground(Cheat... tmpCheat) {
-            Cheat metaCheat;
+    private void loadMetaData() {
+        Needle.onBackgroundThread().execute(() -> {
             try {
-                metaCheat = Webservice.getCheatMetaById(tmpCheat[0].getCheatId());
+                Cheat metaCheat = Webservice.getCheatMetaById(cheat.getCheatId());
                 cheat.setViewsTotal(metaCheat.getViewsTotal());
                 cheat.setViewsToday(metaCheat.getViewsToday());
                 cheat.setAuthorName(metaCheat.getAuthor());
@@ -148,18 +114,16 @@ public class CheatMetaDialog extends Dialog implements OnClickListener {
                 cheat.setRatingAverage(metaCheat.getRatingAverage());
                 cheat.setVotes(metaCheat.getVotes());
                 cheat.setMember(metaCheat.getSubmittingMember());
+
+                updateUI();
             } catch (Exception e) {
                 // do nothing
             }
-            return null;
-        }
+        });
+    }
 
-        @Override
-        protected void onProgressUpdate(Void... progress) {
-        }
-
-        @Override
-        protected void onPostExecute(Void result) {
+    private void updateUI() {
+        Needle.onMainThread().execute(() -> {
             try {
                 member = cheat.getSubmittingMember();
 
@@ -209,17 +173,11 @@ public class CheatMetaDialog extends Dialog implements OnClickListener {
 
                     if (member.getWebsite().length() > 3) {
                         llMemberHomepage.setVisibility(View.VISIBLE);
-                        tvMemberHomepageText = findViewById(R.id.tvMemberHomepageText);
                         tvMemberHomepageText.setText(member.getWebsite());
                         tvMemberHomepageText.setOnClickListener(CheatMetaDialog.this);
-                        tvMemberHomepageText.setTypeface(latoFontLight);
                     } else {
                         llBuffer6.setVisibility(View.INVISIBLE);
                     }
-                    tvAuthorText = findViewById(R.id.tvSubmittedByText);
-                    tvAuthorText.setTypeface(latoFontLight);
-                    tvMemberHomepageTitle = findViewById(R.id.tvMemberHomepageTitle);
-                    tvMemberHomepageTitle.setTypeface(latoFontBold);
                     if (member.getUsername().length() > 1) {
                         tvAuthorText.setText(member.getUsername());
                         tvMemberHomepageTitle.setText(member.getUsername() + "'s " + context.getString(R.string.meta_member_homepage));
@@ -233,9 +191,9 @@ public class CheatMetaDialog extends Dialog implements OnClickListener {
                 String newDateStr = dateFormat.format(dateObj);
                 tvSubmissionDateText.setText(newDateStr);
             } catch (Exception e) {
-                e.getStackTrace();
+                Log.e(TAG, "updateUI Error: " + e.getLocalizedMessage());
             }
-        }
+        });
     }
 
     @Override

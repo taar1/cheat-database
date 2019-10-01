@@ -3,7 +3,6 @@ package com.cheatdatabase.dialogs;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Handler;
 import android.view.View;
@@ -17,14 +16,11 @@ import com.cheatdatabase.MainActivity;
 import com.cheatdatabase.R;
 import com.cheatdatabase.helpers.DistinctValues;
 import com.cheatdatabase.helpers.Konstanten;
-import com.cheatdatabase.helpers.Tools;
 
 public class RateAppDialog {
     private static final String TAG = RateAppDialog.class.getSimpleName();
     private static final int MINIMUM_RATING_FOR_GOOGLE_PLAY = 4;
 
-    private final Typeface latoFontBold;
-    private final Typeface latoFontLight;
     private final Activity activity;
     private final MainActivity.MainActivityCallbacks mainActivityCallbacks;
 
@@ -40,9 +36,6 @@ public class RateAppDialog {
 
         settings = activity.getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
         editor = settings.edit();
-
-        latoFontBold = Tools.getFont(activity.getAssets(), Konstanten.FONT_BOLD);
-        latoFontLight = Tools.getFont(activity.getAssets(), Konstanten.FONT_LIGHT);
 
         MaterialDialog md = new MaterialDialog.Builder(activity)
                 .customView(R.layout.dialog_rate_cheatdatabase, true)
@@ -68,9 +61,6 @@ public class RateAppDialog {
                 .show();
 
         View dialogView = md.getCustomView();
-
-        final TextView ratingtext = dialogView.findViewById(R.id.ratingtext);
-        ratingtext.setTypeface(latoFontLight);
 
         final RatingBar ratingBar = dialogView.findViewById(R.id.ratingbar);
         ratingBar.setOnRatingBarChangeListener((ratingBar1, v, b) -> rating = Math.round(ratingBar1.getRating()));
@@ -103,9 +93,7 @@ public class RateAppDialog {
         View dialogView = badRatingDialog.getCustomView();
 
         final TextView dialogTitle = dialogView.findViewById(R.id.bad_rating_title);
-        dialogTitle.setTypeface(latoFontBold);
         final TextView dialogText = dialogView.findViewById(R.id.bad_rating_text);
         dialogText.setText(activity.getString(R.string.bad_rating_text, rating));
-        dialogText.setTypeface(latoFontLight);
     }
 }

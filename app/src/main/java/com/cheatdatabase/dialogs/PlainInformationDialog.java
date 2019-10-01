@@ -2,13 +2,10 @@ package com.cheatdatabase.dialogs;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.graphics.Typeface;
 import android.view.Window;
 import android.widget.TextView;
 
 import com.cheatdatabase.R;
-import com.cheatdatabase.helpers.Konstanten;
-import com.cheatdatabase.helpers.Tools;
 
 /**
  * Dialog to display a title and text.
@@ -23,17 +20,12 @@ public class PlainInformationDialog extends Dialog {
     public PlainInformationDialog(Context context) {
         super(context);
 
-        Typeface latoFontBold = Tools.getFont(context.getAssets(), Konstanten.FONT_BOLD);
-        Typeface latoFontLight = Tools.getFont(context.getAssets(), Konstanten.FONT_LIGHT);
-
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.dialog_information);
         setTitle(R.string.guidelines);
 
         mTitle = findViewById(R.id.termsandconditions_title);
-        mTitle.setTypeface(latoFontBold);
         mText = findViewById(R.id.termsandconditions_text);
-        mText.setTypeface(latoFontLight);
     }
 
     public void setContent(int title, int text, int button) {

@@ -157,11 +157,6 @@ public class FavoritesCheatViewFragment extends Fragment {
 
         tvCheatTitle.setText(cheatObj.getCheatTitle());
 
-        tvTextBeforeTable.setTypeface(latoFontLight);
-        tvCheatTitle.setTypeface(latoFontBold);
-        tvGalleryInfo.setTypeface(latoFontLight);
-        tvCheatText.setTypeface(latoFontLight);
-
         tvTextBeforeTable.setVisibility(View.VISIBLE);
         tvGalleryInfo.setVisibility(View.INVISIBLE);
         progressBar.setVisibility(View.INVISIBLE);

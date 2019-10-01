@@ -6,7 +6,6 @@ import android.annotation.TargetApi;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
-import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -58,35 +57,26 @@ public class LoginActivity extends AppCompatActivity implements AlreadyLoggedInD
 
     @BindView(R.id.email)
     EditText mEmailView;
-
     @BindView(R.id.password)
     EditText mPasswordView;
-
     @BindView(R.id.login_form)
     View mLoginFormView;
-
     @BindView(R.id.send_status)
     View mLoginStatusView;
-
     @BindView(R.id.send_status_message)
     TextView mLoginStatusMessageView;
-
     @BindView(R.id.txt_send_login)
     TextView mForgotPassword;
-
     @BindView(R.id.login_button)
     Button loginButton;
-
     @BindView(R.id.cancel_button)
     Button cancelButton;
-
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
 
     private Member member;
     private SharedPreferences settings;
     private Editor editor;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -146,16 +136,6 @@ public class LoginActivity extends AppCompatActivity implements AlreadyLoggedInD
         editor = settings.edit();
 
         member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
-
-        Typeface latoFontBold = Tools.getFont(getAssets(), Konstanten.FONT_BOLD);
-        Typeface latoFontLight = Tools.getFont(getAssets(), Konstanten.FONT_LIGHT);
-
-        mEmailView.setTypeface(latoFontLight);
-        mPasswordView.setTypeface(latoFontLight);
-        mLoginStatusMessageView.setTypeface(latoFontLight);
-        loginButton.setTypeface(latoFontBold);
-        cancelButton.setTypeface(latoFontBold);
-        mForgotPassword.setTypeface(latoFontLight);
     }
 
     @OnClick(R.id.txt_send_login)

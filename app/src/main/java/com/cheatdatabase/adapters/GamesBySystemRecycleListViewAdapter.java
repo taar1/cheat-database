@@ -42,7 +42,7 @@ public class GamesBySystemRecycleListViewAdapter extends RecyclerView.Adapter<Re
 
     private List<Game> gameList;
     private List<ListItem> listItems;
-    private Context activity;
+    private Activity activity;
     private final OnGameListItemSelectedListener listener;
 
     private NativeAdsManager mNativeAdsManager;

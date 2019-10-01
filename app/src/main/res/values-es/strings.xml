@@ -108,7 +108,7 @@
     <string name="meta_views_today">Visitas hoy</string>
     <string name="meta_show_all_cheats">Mostrar todos los trucos</string>
     <string name="meta_rating_average">Media de votos por los usuarios</string>
-    <string name="meta_average_rating1">%1$s de 10</string>
+    <string name="meta_average_rating1">%1$d de 10</string>
     <string name="meta_average_rating2">sobre %s votos</string>
     <string name="meta_member_homepage">sitio web</string>
 

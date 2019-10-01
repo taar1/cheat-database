@@ -2,7 +2,6 @@ package com.cheatdatabase;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.Menu;
@@ -56,8 +55,6 @@ public class SubmitCheatActivity extends AppCompatActivity {
     private Member member;
 
     private SharedPreferences settings;
-    private Typeface latoFontBold;
-    private Typeface latoFontLight;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -125,15 +122,6 @@ public class SubmitCheatActivity extends AppCompatActivity {
         getSupportActionBar().setSubtitle((gameObj.getSystemName() != null ? gameObj.getSystemName() : ""));
 
         settings = getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
-
-        latoFontLight = Tools.getFont(getAssets(), Konstanten.FONT_LIGHT);
-        latoFontBold = Tools.getFont(getAssets(), Konstanten.FONT_BOLD);
-
-        textCheatTitle.setTypeface(latoFontBold);
-        cheatTitle.setTypeface(latoFontLight);
-        cheatText.setTypeface(latoFontLight);
-        checkBoxTerms.setTypeface(latoFontLight);
-        sendButton.setTypeface(latoFontBold);
     }
 
     @Override

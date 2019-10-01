@@ -160,11 +160,6 @@ public class CheatViewFragment extends Fragment {
             tvGalleryInfo.setVisibility(View.INVISIBLE);
             progressBar.setVisibility(View.INVISIBLE);
 
-            tvTextBeforeTable.setTypeface(latoFontLight);
-            tvCheatTitle.setTypeface(latoFontBold);
-            tvGalleryInfo.setTypeface(latoFontLight);
-            tvCheatText.setTypeface(latoFontLight);
-
             if (Reachability.reachability.isReachable) {
                 getOnlineContent();
             } else {

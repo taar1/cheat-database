@@ -1,6 +1,5 @@
 package com.cheatdatabase.fragments;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -16,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -27,6 +27,7 @@ import com.cheatdatabase.adapters.TopMembersListViewAdapter;
 import com.cheatdatabase.businessobjects.Member;
 import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.helpers.Webservice;
+import com.cheatdatabase.listeners.OnTopMemberListItemSelectedListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,16 +41,16 @@ import needle.Needle;
  *
  * @author Dominik Erbsland
  */
-public class TopMembersFragment extends Fragment {
+public class TopMembersFragment extends Fragment implements OnTopMemberListItemSelectedListener {
     private static final String TAG = TopMembersFragment.class.getSimpleName();
     private final int VISIT_WEBSITE = 0;
+    private final FragmentActivity activity;
 
     private List<Member> memberList;
     private Member selectedMember;
 
-    private Activity activity;
     private RecyclerView.LayoutManager layoutManager;
-    private TopMembersListViewAdapter mTopMembersListViewAdapter;
+    private TopMembersListViewAdapter topMembersListViewAdapter;
 
     @BindView(R.id.my_recycler_view)
     RecyclerView recyclerView;
@@ -61,14 +62,13 @@ public class TopMembersFragment extends Fragment {
     TextView emptyLabel;
 
     public TopMembersFragment() {
+        this.activity = getActivity();
         memberList = new ArrayList<>();
-        activity = getActivity();
-        mTopMembersListViewAdapter = new TopMembersListViewAdapter(member -> clickedOnMember(member));
+        topMembersListViewAdapter = new TopMembersListViewAdapter(this);
     }
 
     public static TopMembersFragment newInstance() {
-        TopMembersFragment topMembersFragment = new TopMembersFragment();
-        return topMembersFragment;
+        return new TopMembersFragment();
     }
 
     @Override
@@ -88,7 +88,7 @@ public class TopMembersFragment extends Fragment {
             layoutManager = new LinearLayoutManager(getActivity());
             recyclerView.setLayoutManager(layoutManager);
             recyclerView.setHasFixedSize(true);
-            recyclerView.setAdapter(mTopMembersListViewAdapter);
+            recyclerView.setAdapter(topMembersListViewAdapter);
             DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(), RecyclerView.VERTICAL);
             recyclerView.addItemDecoration(dividerItemDecoration);
         } else {
@@ -170,8 +170,8 @@ public class TopMembersFragment extends Fragment {
             mSwipeRefreshLayout.setRefreshing(true);
 
             if (memberList != null && memberList.size() > 0) {
-                mTopMembersListViewAdapter.setMemberList(memberList);
-                mTopMembersListViewAdapter.notifyDataSetChanged();
+                topMembersListViewAdapter.setMemberList(memberList);
+                topMembersListViewAdapter.notifyDataSetChanged();
             } else {
                 handleEmptyViewState();
             }
@@ -183,7 +183,7 @@ public class TopMembersFragment extends Fragment {
         if (mSwipeRefreshLayout == null || !isAdded()) {
             return;
         }
-        if (mTopMembersListViewAdapter.getItemCount() == 0) {
+        if (topMembersListViewAdapter.getItemCount() == 0) {
             emptyLabel.setText(getString(R.string.err_no_member_data));
             emptyView.setVisibility(View.VISIBLE);
             mSwipeRefreshLayout.setVisibility(View.GONE);
@@ -193,18 +193,25 @@ public class TopMembersFragment extends Fragment {
         }
     }
 
-    private void clickedOnMember(Member member) {
+    @Override
+    public void onMemberClicked(Member member) {
         if (Reachability.reachability.isReachable) {
-            Intent intent = new Intent(getActivity(), CheatsByMemberListActivity.class);
+            Intent intent = new Intent(activity, CheatsByMemberListActivity.class);
             intent.putExtra("member", member);
-            getActivity().startActivity(intent);
+            startActivity(intent);
         } else {
             Toast.makeText(getActivity(), R.string.no_internet, Toast.LENGTH_SHORT).show();
         }
     }
 
-    public interface TopMemberListItemClickListener {
-        void clickedOnMember(Member member);
+    @Override
+    public void onWebsiteClicked(Member member) {
+        String url = member.getWebsite();
+        if ((url != null) && (url.length() > 4)) {
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            intent.setData(Uri.parse(url));
+            startActivity(intent);
+        }
     }
 
 }
