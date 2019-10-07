@@ -2,10 +2,8 @@ package com.cheatdatabase.fragments;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
@@ -19,6 +17,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
@@ -54,7 +53,7 @@ public class ContactFormFragment extends Fragment {
     @BindView(R.id.thankyou_text)
     TextView mThankyouText;
     @BindView(R.id.contact_form)
-    View mContactFormView;
+    RelativeLayout mContactFormView;
     @BindView(R.id.send_status)
     View mContactStatusView;
     @BindView(R.id.thank_you)
@@ -63,7 +62,7 @@ public class ContactFormFragment extends Fragment {
     /**
      * The default email to populate the email field with.
      */
-    public static final String EXTRA_EMAIL = "com.example.android.authenticatordemo.extra.EMAIL";
+    private static final String EXTRA_EMAIL = "com.example.android.authenticatordemo.extra.EMAIL";
 
     // Values for email and password at the time of the login attempt.
     private String mEmail;
@@ -98,7 +97,7 @@ public class ContactFormFragment extends Fragment {
         }
 
         mMessageView.setOnEditorActionListener((textView, id, keyEvent) -> {
-            if (id == R.id.login || id == EditorInfo.IME_NULL) {
+            if (id == 444 || id == EditorInfo.IME_NULL) {
                 attemptSendForm();
                 return true;
             }
@@ -106,11 +105,7 @@ public class ContactFormFragment extends Fragment {
         });
         Linkify.addLinks(mEmailaddressView, Linkify.ALL);
 
-        // TODO FIXME keyboard anzeigen
-        // TODO FIXME keyboard anzeigen
-        // TODO FIXME keyboard anzeigen
-        // TODO FIXME keyboard anzeigen
-//        Tools.showKeyboard(getActivity(), outerLayout);
+        Tools.showKeyboard(getActivity(), outerLayout);
 
         return view;
     }
@@ -126,7 +121,7 @@ public class ContactFormFragment extends Fragment {
      * (invalid email, missing fields, etc.), the errors are presented and no
      * actual login attempt is made.
      */
-    public void attemptSendForm() {
+    private void attemptSendForm() {
         // Reset errors.
         mEmailView.setError(null);
         mMessageView.setError(null);
@@ -175,75 +170,56 @@ public class ContactFormFragment extends Fragment {
     /**
      * Shows the progress UI and hides the login form.
      */
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
     private void showProgress(final boolean show, final int step) {
 
         if ((step == 1) || (step == 2)) {
             // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which
             // allow for very easy animations. If available, use these APIs to
             // fade-in the progress spinner.
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
-                int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
+            int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
 
-                mContactStatusView.setVisibility(View.VISIBLE);
-                mContactStatusView.animate().setDuration(shortAnimTime).alpha(show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
-                    @Override
-                    public void onAnimationEnd(Animator animation) {
-                        mContactStatusView.setVisibility(show ? View.VISIBLE : View.GONE);
-                    }
-                });
+            mContactStatusView.setVisibility(View.VISIBLE);
+            mContactStatusView.animate().setDuration(shortAnimTime).alpha(show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    mContactStatusView.setVisibility(show ? View.VISIBLE : View.GONE);
+                }
+            });
 
-                mContactFormView.setVisibility(View.VISIBLE);
-                mContactFormView.animate().setDuration(shortAnimTime).alpha(show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
-                    @Override
-                    public void onAnimationEnd(Animator animation) {
-                        mContactFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-                    }
-                });
-            } else {
-                // The ViewPropertyAnimator APIs are not available, so simply
-                // show and hide the relevant UI components.
-                mContactStatusView.setVisibility(show ? View.VISIBLE : View.GONE);
-                mContactFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-
-                mThankyouView.setVisibility(show ? View.GONE : View.VISIBLE);
-            }
+            mContactFormView.setVisibility(View.VISIBLE);
+            mContactFormView.animate().setDuration(shortAnimTime).alpha(show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    mContactFormView.setVisibility(show ? View.GONE : View.VISIBLE);
+                }
+            });
         } else if (step == 3) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
-                int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
+            int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
 
-                mContactStatusView.setVisibility(View.VISIBLE);
-                mContactStatusView.animate().setDuration(shortAnimTime).alpha(0).setListener(new AnimatorListenerAdapter() {
-                    @Override
-                    public void onAnimationEnd(Animator animation) {
-                        mContactStatusView.setVisibility(View.GONE);
-                    }
-                });
+            mContactStatusView.setVisibility(View.VISIBLE);
+            mContactStatusView.animate().setDuration(shortAnimTime).alpha(0).setListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    mContactStatusView.setVisibility(View.GONE);
+                }
+            });
 
-                mContactFormView.setVisibility(View.GONE);
+            mContactFormView.setVisibility(View.GONE);
 
-                mThankyouView.setVisibility(View.VISIBLE);
-                mThankyouView.animate().setDuration(shortAnimTime).alpha(1).setListener(new AnimatorListenerAdapter() {
-                    @Override
-                    public void onAnimationEnd(Animator animation) {
-                        mThankyouView.setVisibility(View.VISIBLE);
-                    }
-                });
-            } else {
-                mContactStatusView.setVisibility(View.GONE);
-                mContactFormView.setVisibility(View.GONE);
-                mThankyouView.setVisibility(View.VISIBLE);
-            }
+            mThankyouView.setVisibility(View.VISIBLE);
+            mThankyouView.animate().setDuration(shortAnimTime).alpha(1).setListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    mThankyouView.setVisibility(View.VISIBLE);
+                }
+            });
         }
     }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-
-        if (Build.VERSION.SDK_INT >= 11) {
-            selectMenu(menu);
-        }
+        selectMenu(menu);
     }
 
     @Override
@@ -255,24 +231,20 @@ public class ContactFormFragment extends Fragment {
         menu.clear();
         if (!isFormSent) {
             getActivity().getMenuInflater().inflate(R.menu.contactform_send_menu, menu);
-        } else {
-            // change actionbar menu how when contact form is sent?
-        }
+        }  // change actionbar menu how when contact form is sent?
+
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_send:
-                attemptSendForm();
-                return true;
-            default:
-                break;
+        if (item.getItemId() == R.id.action_send) {
+            attemptSendForm();
+            return true;
         }
         return false;
     }
 
-    public void sendForm() {
+    private void sendForm() {
         Needle.onBackgroundThread().execute(() -> {
             Webservice.submitContactForm(mEmailView.getText().toString().trim(), mMessageView.getText().toString().trim());
             actionAfterSendForm();
@@ -280,7 +252,7 @@ public class ContactFormFragment extends Fragment {
 
     }
 
-    public void actionAfterSendForm() {
+    private void actionAfterSendForm() {
         Needle.onMainThread().execute(() -> {
             View view = getActivity().getCurrentFocus();
             if (view != null) {
@@ -293,7 +265,7 @@ public class ContactFormFragment extends Fragment {
 
     }
 
-    public void forwardToMainView() {
+    private void forwardToMainView() {
         Needle.onMainThread().execute(() -> {
             Handler handler = new Handler();
             handler.postDelayed(() -> EventBus.getDefault().post(new GenericEvent(GenericEvent.Action.CLICK_CHEATS_DRAWER)), 1500);

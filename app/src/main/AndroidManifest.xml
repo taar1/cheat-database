@@ -2,6 +2,20 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.cheatdatabase">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="com.android.browser.permission.READ_HISTORY_BOOKMARKS" />
+    <uses-permission android:name="com.android.browser.permission.WRITE_HISTORY_BOOKMARKS" />
+    <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT" />
+    <uses-permission android:name="com.android.launcher.permission.UNINSTALL_SHORTCUT" />
+
     <application
         android:name=".CheatDatabaseApplication"
         android:hardwareAccelerated="true"
@@ -30,7 +44,6 @@
         <activity
             android:name=".search.SearchResultsActivity"
             android:label="@string/title_activity_search_result"
-            android:logo="@drawable/app_icon_fox"
             android:parentActivityName=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
@@ -45,7 +58,6 @@
         </activity>
         <activity
             android:name=".GamesBySystemListActivity"
-            android:logo="@drawable/app_icon_fox"
             android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.app.default_searchable"
@@ -53,13 +65,10 @@
         </activity>
 
         <activity android:name=".helpers.Helper" />
-        <activity
-            android:name=".SubmitCheatActivity"
-            android:logo="@drawable/app_icon_fox" />
+        <activity android:name=".SubmitCheatActivity" />
         <activity
             android:name=".CheatsByGameListActivity"
             android:label="@string/title_cheat_list"
-            android:logo="@drawable/app_icon_fox"
             android:parentActivityName=".GamesBySystemListActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -71,23 +80,19 @@
         <activity
             android:name=".LoginActivity"
             android:label="@string/title_activity_login"
-            android:logo="@drawable/app_icon_fox"
             android:windowSoftInputMode="adjustResize|stateVisible" />
         <activity
             android:name=".RecoverActivity"
             android:label="@string/title_activity_recover"
-            android:logo="@drawable/app_icon_fox"
             android:parentActivityName=".LoginActivity"
             android:windowSoftInputMode="adjustResize|stateVisible" />
         <activity
             android:name=".RegisterActivity"
             android:label="@string/title_activity_register"
-            android:logo="@drawable/app_icon_fox"
             android:parentActivityName=".LoginActivity"
             android:windowSoftInputMode="adjustResize|stateVisible" />
         <activity
             android:name=".CheatForumActivity"
-            android:logo="@drawable/app_icon_fox"
             android:parentActivityName=".cheat_detail_view.CheatViewPageIndicatorActivity"
             android:uiOptions="splitActionBarWhenNarrow"
             android:windowSoftInputMode="adjustResize|stateHidden">
@@ -100,7 +105,6 @@
         </activity>
         <activity
             android:name=".CheatsByMemberListActivity"
-            android:logo="@drawable/app_icon_fox"
             android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.app.default_searchable"
@@ -108,7 +112,6 @@
         </activity>
         <activity
             android:name=".cheat_detail_view.MemberCheatViewPageIndicator"
-            android:logo="@drawable/app_icon_fox"
             android:parentActivityName=".CheatsByMemberListActivity"
             android:uiOptions="splitActionBarWhenNarrow">
             <meta-data
@@ -118,7 +121,6 @@
         <activity
             android:name=".cheat_detail_view.CheatViewPageIndicatorActivity"
             android:label="@string/title_cheat_detail"
-            android:logo="@drawable/app_icon_fox"
             android:parentActivityName=".CheatsByGameListActivity"
             android:uiOptions="splitActionBarWhenNarrow">
             <meta-data
@@ -131,7 +133,6 @@
         <activity
             android:name=".FavoriteCheatListActivity"
             android:label="@string/title_favorite_list"
-            android:logo="@drawable/app_icon_fox"
             android:parentActivityName=".MainActivity"
             android:theme="@style/Theme.Navyblue">
             <meta-data
@@ -144,7 +145,6 @@
         <activity
             android:name=".cheat_detail_view.FavoritesCheatViewPageIndicator"
             android:label="@string/title_cheat_detail"
-            android:logo="@drawable/app_icon_fox"
             android:theme="@style/Theme.Navyblue"
             android:uiOptions="splitActionBarWhenNarrow">
             <meta-data
@@ -186,7 +186,9 @@
             <intent-filter>
                 <action android:name="com.android.vending.INSTALL_REFERRER" />
             </intent-filter>
-        </receiver> <!-- GOOGLE ANALYTICS -->
+        </receiver>
+
+        <!-- GOOGLE ANALYTICS -->
         <!-- Enable background dispatching to improve delivery on non-Google Play devices -->
         <receiver
             android:name="com.google.android.gms.analytics.AnalyticsReceiver"
@@ -212,19 +214,6 @@
             android:exported="false" />
     </application>
 
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
-    <uses-permission android:name="com.android.browser.permission.READ_HISTORY_BOOKMARKS" />
-    <uses-permission android:name="com.android.browser.permission.WRITE_HISTORY_BOOKMARKS" />
-    <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT" />
 
-    <uses-permission android:name="com.android.launcher.permission.UNINSTALL_SHORTCUT" />
 
 </manifest>

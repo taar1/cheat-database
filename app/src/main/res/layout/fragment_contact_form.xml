@@ -1,124 +1,119 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/outer_layout"
-    android:background="@drawable/bg"
-    android:layout_height="match_parent"
     android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg"
     android:orientation="vertical">
 
     <!-- Sending progress -->
-
     <LinearLayout
         android:id="@+id/send_status"
-        android:gravity="center_horizontal"
-        android:layout_gravity="center"
-        android:layout_height="wrap_content"
         android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center_horizontal"
         android:orientation="vertical"
+        android:padding="16dp"
         android:visibility="gone">
 
         <ProgressBar
             style="?android:attr/progressBarStyleLarge"
-            android:layout_height="wrap_content"
             android:layout_width="wrap_content"
-            android:padding="10dp" />
+            android:layout_height="wrap_content" />
 
         <TextView
             android:id="@+id/send_status_message"
-            android:layout_height="wrap_content"
             android:layout_width="wrap_content"
-            android:paddingBottom="16dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
             android:text="@string/login_progress_signing_in"
             android:textAppearance="@style/NormalTextLight" />
     </LinearLayout>
 
     <!-- Contact form -->
-    <ScrollView
+    <RelativeLayout
         android:id="@+id/contact_form"
-        android:background="@drawable/bg"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_width="match_parent">
+        android:layout_margin="10dp">
 
-        <RelativeLayout
-            android:layout_height="match_parent"
-            android:layout_margin="10dp"
-            android:layout_width="match_parent">
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/email_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:textAppearance="@style/NormalTextLight">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/email_layout"
-                android:gravity="center_vertical"
-                android:layout_gravity="top"
-                android:layout_height="wrap_content"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/email"
                 android:layout_width="match_parent"
-                android:orientation="horizontal"
+                android:layout_height="wrap_content"
+                android:hint="@string/prompt_email"
+                android:inputType="textEmailAddress"
+                android:maxLines="1"
+                android:padding="16dp"
+                android:singleLine="true"
                 android:textAppearance="@style/NormalTextLight">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/email"
-                    android:hint="@string/prompt_email"
-                    android:inputType="textEmailAddress"
-                    android:layout_height="wrap_content"
-                    android:layout_width="match_parent"
-                    android:maxLines="1"
-                    android:singleLine="true"
-                    android:textAppearance="@style/NormalTextLight">
+                <requestFocus />
+            </com.google.android.material.textfield.TextInputEditText>
 
-                    <requestFocus />
-                </com.google.android.material.textfield.TextInputEditText>
-
-            </com.google.android.material.textfield.TextInputLayout>
+        </com.google.android.material.textfield.TextInputLayout>
 
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/textbox_layout"
-                android:gravity="center_vertical"
-                android:layout_below="@+id/email_layout"
-                android:layout_gravity="top"
-                android:layout_height="wrap_content"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textbox_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/email_layout"
+            android:layout_gravity="top"
+            android:layout_marginTop="16dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:textAppearance="@style/NormalTextLight">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/form_message"
                 android:layout_width="match_parent"
-                android:orientation="horizontal"
-                android:textAppearance="@style/NormalTextLight">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/form_message"
-                    android:ems="10"
-                    android:gravity="top"
-                    android:hint="@string/contactform_yourmessage"
-                    android:inputType="textMultiLine"
-                    android:layout_height="match_parent"
-                    android:layout_width="match_parent"
-                    android:minHeight="240dp"
-                    android:textAppearance="@style/NormalTextLight" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <TextView
-                android:id="@+id/emailaddress"
-                android:layout_below="@+id/textbox_layout"
-                android:layout_height="wrap_content"
-                android:layout_width="match_parent"
-                android:paddingTop="15dp"
-                android:text="@string/contactform_send_email"
+                android:layout_height="match_parent"
+                android:ems="10"
+                android:gravity="top"
+                android:hint="@string/contactform_yourmessage"
+                android:imeActionId="444"
+                android:imeActionLabel="@string/action_sign_in_short"
+                android:inputType="textMultiLine"
+                android:minHeight="240dp"
                 android:textAppearance="@style/NormalTextLight" />
 
-        </RelativeLayout>
+        </com.google.android.material.textfield.TextInputLayout>
 
-    </ScrollView>
+        <TextView
+            android:id="@+id/emailaddress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textbox_layout"
+            android:layout_marginTop="16dp"
+            android:text="@string/contactform_send_email"
+            android:textAppearance="@style/NormalTextLight" />
+
+    </RelativeLayout>
 
     <LinearLayout
         android:id="@+id/thank_you"
         style="@style/ContactFormContainer"
-        android:background="@drawable/bg"
-        android:gravity="center_horizontal"
-        android:layout_gravity="center"
-        android:layout_height="match_parent"
         android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:gravity="center_horizontal"
         android:orientation="vertical"
         android:visibility="gone">
 
         <TextView
             android:id="@+id/thankyou_text"
-            android:layout_height="wrap_content"
             android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:text="@string/contactform_thanks"
             android:textAppearance="@style/NormalTextLight" />
     </LinearLayout>

@@ -3,10 +3,8 @@ package com.cheatdatabase;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
@@ -62,11 +60,13 @@ public class RecoverActivity extends AppCompatActivity {
         setContentView(R.layout.activity_recover);
         ButterKnife.bind(this);
 
+        init();
+
         mEmail = getIntent().getStringExtra(EXTRA_EMAIL);
         mEmailView.setText(mEmail);
 
         mEmailView.setOnEditorActionListener((textView, id, keyEvent) -> {
-            if (id == R.id.login || id == EditorInfo.IME_NULL) {
+            if (id == 333 || id == EditorInfo.IME_NULL) {
                 if (Reachability.reachability.isReachable) {
                     attemptRecover();
                     return true;
@@ -88,9 +88,6 @@ public class RecoverActivity extends AppCompatActivity {
         }
     }
 
-    // TODO FIXME init() wird nicht aufgerufen?
-    // TODO FIXME init() wird nicht aufgerufen?
-    // TODO FIXME init() wird nicht aufgerufen?
     private void init() {
         if (mToolbar != null) {
             setSupportActionBar(mToolbar);
@@ -153,30 +150,23 @@ public class RecoverActivity extends AppCompatActivity {
      * @param show
      */
     private void showProgress(final boolean show) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
-            int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
+        int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
 
-            mLoginStatusView.setVisibility(View.VISIBLE);
-            mLoginStatusView.animate().setDuration(shortAnimTime).alpha(show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    mLoginStatusView.setVisibility(show ? View.VISIBLE : View.GONE);
-                }
-            });
+        mLoginStatusView.setVisibility(View.VISIBLE);
+        mLoginStatusView.animate().setDuration(shortAnimTime).alpha(show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                mLoginStatusView.setVisibility(show ? View.VISIBLE : View.GONE);
+            }
+        });
 
-            mLoginFormView.setVisibility(View.VISIBLE);
-            mLoginFormView.animate().setDuration(shortAnimTime).alpha(show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-                }
-            });
-        } else {
-            // The ViewPropertyAnimator APIs are not available, so simply show
-            // and hide the relevant UI components.
-            mLoginStatusView.setVisibility(show ? View.VISIBLE : View.GONE);
-            mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-        }
+        mLoginFormView.setVisibility(View.VISIBLE);
+        mLoginFormView.animate().setDuration(shortAnimTime).alpha(show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
+            }
+        });
     }
 
     void sendRecoveryEmail(String email) {

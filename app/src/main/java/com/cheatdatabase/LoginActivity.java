@@ -10,13 +10,13 @@ import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -53,14 +53,13 @@ public class LoginActivity extends AppCompatActivity implements AlreadyLoggedInD
 
     // Values for email and password at the time of the login attempt.
     private String mEmail;
-    private String mPassword;
 
     @BindView(R.id.email)
     EditText mEmailView;
     @BindView(R.id.password)
     EditText mPasswordView;
     @BindView(R.id.login_form)
-    View mLoginFormView;
+    LinearLayout mLoginFormView;
     @BindView(R.id.send_status)
     View mLoginStatusView;
     @BindView(R.id.send_status_message)
@@ -94,19 +93,16 @@ public class LoginActivity extends AppCompatActivity implements AlreadyLoggedInD
             mEmailView.setText(member.getEmail());
         }
 
-        mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
-                if (id == R.id.login || id == EditorInfo.IME_NULL) {
-                    if (Reachability.reachability.isReachable) {
-                        attemptLogin();
-                    } else {
-                        Toast.makeText(LoginActivity.this, R.string.no_internet, Toast.LENGTH_SHORT).show();
-                    }
-                    return true;
+        mPasswordView.setOnEditorActionListener((textView, id, keyEvent) -> {
+            if (id == 111 || id == EditorInfo.IME_NULL) {
+                if (Reachability.reachability.isReachable) {
+                    attemptLogin();
+                } else {
+                    Toast.makeText(LoginActivity.this, R.string.no_internet, Toast.LENGTH_SHORT).show();
                 }
-                return false;
+                return true;
             }
+            return false;
         });
 
 
@@ -219,7 +215,7 @@ public class LoginActivity extends AppCompatActivity implements AlreadyLoggedInD
 
         // Store values at the time of the login attempt.
         mEmail = mEmailView.getText().toString();
-        mPassword = mPasswordView.getText().toString();
+        String mPassword = mPasswordView.getText().toString();
 
         boolean cancel = false;
         View focusView = null;
@@ -268,35 +264,28 @@ public class LoginActivity extends AppCompatActivity implements AlreadyLoggedInD
         // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
         // for very easy animations. If available, use these APIs to fade-in
         // the progress spinner.
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
-            int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
+        int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
 
-            mLoginStatusView.setVisibility(View.VISIBLE);
-            mLoginStatusView.animate().setDuration(shortAnimTime).alpha(show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    mLoginStatusView.setVisibility(show ? View.VISIBLE : View.GONE);
-                }
-            });
+        mLoginStatusView.setVisibility(View.VISIBLE);
+        mLoginStatusView.animate().setDuration(shortAnimTime).alpha(show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                mLoginStatusView.setVisibility(show ? View.VISIBLE : View.GONE);
+            }
+        });
 
-            mLoginFormView.setVisibility(View.VISIBLE);
-            mLoginFormView.animate().setDuration(shortAnimTime).alpha(show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-                }
-            });
-        } else {
-            // The ViewPropertyAnimator APIs are not available, so simply show
-            // and hide the relevant UI components.
-            mLoginStatusView.setVisibility(show ? View.VISIBLE : View.GONE);
-            mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-        }
+        mLoginFormView.setVisibility(View.VISIBLE);
+        mLoginFormView.animate().setDuration(shortAnimTime).alpha(show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
+            }
+        });
     }
 
     private void loginInBackground(String email, String password) {
         Needle.onBackgroundThread().execute(() -> {
-            boolean loginResult = false;
+            boolean loginResult;
 
             member = Webservice.login(email, password);
             if (member != null) {
@@ -380,7 +369,7 @@ public class LoginActivity extends AppCompatActivity implements AlreadyLoggedInD
     public void onFinishDialog(boolean signOutNow) {
         if (signOutNow) {
             editor.remove(Konstanten.MEMBER_OBJECT);
-            editor.commit();
+            editor.apply();
 
             mEmailView.setText("");
             mEmailView.setEnabled(true);

@@ -6,25 +6,23 @@ import android.annotation.TargetApi;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
-import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import android.text.TextUtils;
-import android.view.KeyEvent;
 import android.view.View;
-import android.view.View.OnFocusChangeListener;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.cheatdatabase.businessobjects.Member;
 import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Reachability;
-import com.cheatdatabase.helpers.Tools;
 import com.cheatdatabase.helpers.Webservice;
 
 import butterknife.BindView;
@@ -45,26 +43,19 @@ public class RegisterActivity extends AppCompatActivity {
 
     // Values for email and password at the time of the login attempt.
     private String mEmail;
-    private String mUsername;
 
     @BindView(R.id.email)
     EditText mEmailView;
-
     @BindView(R.id.username)
     EditText mUsernameView;
-
     @BindView(R.id.login_form)
-    View mLoginFormView;
-
+    LinearLayout mLoginFormView;
     @BindView(R.id.send_status)
     View mLoginStatusView;
-
     @BindView(R.id.send_status_message)
     TextView mLoginStatusMessageView;
-
     @BindView(R.id.register_button)
     Button registerButton;
-
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
 
@@ -85,32 +76,24 @@ public class RegisterActivity extends AppCompatActivity {
         mEmail = getIntent().getStringExtra(EXTRA_EMAIL);
         mEmailView.setText(mEmail);
 
-        mUsernameView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
-                if (id == R.id.login || id == EditorInfo.IME_NULL) {
-                    if (Reachability.reachability.isReachable) {
-                        attemptRegister();
-                        return true;
-                    } else {
-                        Toast.makeText(RegisterActivity.this, R.string.no_internet, Toast.LENGTH_SHORT).show();
-                    }
-
+        mUsernameView.setOnEditorActionListener((textView, id, keyEvent) -> {
+            if (id == 222 || id == EditorInfo.IME_NULL) {
+                if (Reachability.reachability.isReachable) {
+                    attemptRegister();
+                    return true;
+                } else {
+                    Toast.makeText(RegisterActivity.this, R.string.no_internet, Toast.LENGTH_SHORT).show();
                 }
-                return false;
+
             }
+            return false;
         });
-        mUsernameView.setOnFocusChangeListener(new OnFocusChangeListener() {
-
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (!hasFocus) {
-                    String fixedUsername = mUsernameView.getText().toString();
-                    fixedUsername = fixedUsername.replaceAll("\\s", "");
-                    mUsernameView.setText(fixedUsername);
-                }
+        mUsernameView.setOnFocusChangeListener((v, hasFocus) -> {
+            if (!hasFocus) {
+                String fixedUsername = mUsernameView.getText().toString();
+                fixedUsername = fixedUsername.replaceAll("\\s", "");
+                mUsernameView.setText(fixedUsername);
             }
-
         });
 
     }
@@ -162,7 +145,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         // Store values at the time of the login attempt.
         mEmail = mEmailView.getText().toString();
-        mUsername = mUsernameView.getText().toString();
+        String mUsername = mUsernameView.getText().toString();
         mUsername = mUsername.replaceAll("\\s", "");
 
         boolean cancel = false;
@@ -216,30 +199,23 @@ public class RegisterActivity extends AppCompatActivity {
         // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
         // for very easy animations. If available, use these APIs to fade-in
         // the progress spinner.
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
-            int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
+        int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
 
-            mLoginStatusView.setVisibility(View.VISIBLE);
-            mLoginStatusView.animate().setDuration(shortAnimTime).alpha(show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    mLoginStatusView.setVisibility(show ? View.VISIBLE : View.GONE);
-                }
-            });
+        mLoginStatusView.setVisibility(View.VISIBLE);
+        mLoginStatusView.animate().setDuration(shortAnimTime).alpha(show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                mLoginStatusView.setVisibility(show ? View.VISIBLE : View.GONE);
+            }
+        });
 
-            mLoginFormView.setVisibility(View.VISIBLE);
-            mLoginFormView.animate().setDuration(shortAnimTime).alpha(show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-                }
-            });
-        } else {
-            // The ViewPropertyAnimator APIs are not available, so simply show
-            // and hide the relevant UI components.
-            mLoginStatusView.setVisibility(show ? View.VISIBLE : View.GONE);
-            mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-        }
+        mLoginFormView.setVisibility(View.VISIBLE);
+        mLoginFormView.animate().setDuration(shortAnimTime).alpha(show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
+            }
+        });
     }
 
     /**

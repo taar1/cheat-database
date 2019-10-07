@@ -117,7 +117,7 @@ dependencies {
     api 'androidx.preference:preference:1.1.0'
     implementation 'com.github.vajro:MaterialDesignLibrary:1.6'
     implementation 'com.afollestad.material-dialogs:core:0.9.6.0'
-    implementation 'com.google.code.gson:gson:2.8.5'
+    implementation 'com.google.code.gson:gson:2.8.6'
     api 'com.google.android.gms:play-services-analytics:17.0.0'
     implementation 'com.google.android.gms:play-services-auth:17.0.0'
     implementation 'com.squareup.picasso:picasso:2.71828'
@@ -136,7 +136,7 @@ dependencies {
 
     // INMOBI ADS START
     implementation 'com.inmobi.monetization:inmobi-ads:8.2.0'
-    implementation 'com.google.android.gms:play-services-basement:17.1.0'
+    implementation 'com.google.android.gms:play-services-basement:17.1.1'
     implementation 'com.google.android.gms:play-services-ads-identifier:17.0.0'
     implementation 'com.google.android.gms:play-services-location:17.0.0'
     implementation 'com.android.support:customtabs:28.0.0'

@@ -422,6 +422,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         fragmentTransaction.addToBackStack(ContactFormFragment.class.getSimpleName());
         fragmentManager.beginTransaction().replace(R.id.content_frame, ContactFormFragment.newInstance(), ContactFormFragment.class.getSimpleName()).commit();
 
+        mixedBannerContainer.setVisibility(View.GONE);
+
         floatingActionButton.hide();
         mDrawerLayout.closeDrawers();
     }
