@@ -50,11 +50,9 @@ public class GamesBySystemListActivity extends AppCompatActivity implements OnGa
     private static final String TAG = GamesBySystemListActivity.class.getSimpleName();
 
     private List<Game> gameList;
-    private CheatDatabaseApplication cheatDatabaseApplication;
     private GamesBySystemRecycleListViewAdapter gamesBySystemRecycleListViewAdapter;
     private SystemPlatform systemObj;
     private Member member;
-//    private AdView facebookAdView;
 
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
@@ -69,8 +67,6 @@ public class GamesBySystemListActivity extends AppCompatActivity implements OnGa
     Toolbar mToolbar;
     @BindView(R.id.item_list_empty_view)
     TextView mEmptyView;
-//    @BindView(R.id.banner_container)
-//    LinearLayout bannerContainerFacebook;
 
     @Override
     protected void onStart() {
@@ -117,12 +113,6 @@ public class GamesBySystemListActivity extends AppCompatActivity implements OnGa
     private void init() {
         sharedPreferences = getSharedPreferences(Konstanten.PREFERENCES_FILE, MODE_PRIVATE);
         editor = sharedPreferences.edit();
-
-        cheatDatabaseApplication = CheatDatabaseApplication.getCurrentAppInstance();
-
-//        facebookAdView = new AdView(this, Konstanten.FACEBOOK_AUDIENCE_NETWORK_NATIVE_BANNER_ID, AdSize.BANNER_HEIGHT_50);
-//        bannerContainerFacebook.addView(facebookAdView);
-//        facebookAdView.loadAd();
 
         if (mToolbar != null) {
             setSupportActionBar(mToolbar);
@@ -261,6 +251,8 @@ public class GamesBySystemListActivity extends AppCompatActivity implements OnGa
                 }
             });
 
+        } else {
+            updateUI();
         }
     }
 
@@ -296,33 +288,6 @@ public class GamesBySystemListActivity extends AppCompatActivity implements OnGa
         Reachability.unregister(this);
         super.onStop();
     }
-
-    @Override
-    protected void onDestroy() {
-//        if (facebookAdView != null) {
-//            facebookAdView.destroy();
-//        }
-        super.onDestroy();
-    }
-
-//    @Override
-//    protected void onSaveInstanceState(Bundle outState) {
-//        super.onSaveInstanceState(outState);
-//        outState.putParcelable("systemObj", systemObj);
-//    }
-//
-//    @Override
-//    public void onRestoreInstanceState(Bundle savedInstanceState) {
-//        super.onRestoreInstanceState(savedInstanceState);
-//
-//        systemObj = savedInstanceState.getParcelable("systemObj");
-//    }
-//
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//    }
-
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {

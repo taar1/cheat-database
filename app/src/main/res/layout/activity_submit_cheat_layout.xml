@@ -1,82 +1,104 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:orientation="vertical">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/outer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
+    <include layout="@layout/toolbar" />
+
+    <TextView
+        android:id="@+id/text_cheat_submission_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/toolbar"
+        android:layout_margin="16dp"
+        android:singleLine="true"
+        android:text="@string/submit_cheat_title"
+        android:textAppearance="@style/GameTitle" />
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/title_input_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/color_primary_light"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
+        android:layout_below="@+id/text_cheat_submission_title"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="8dp"
+        android:textAppearance="@style/NormalTextLight">
 
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_gravity="bottom"
-        android:background="@drawable/bg"
-        android:orientation="vertical"
-        android:padding="10dp">
-
-        <TextView
-            android:id="@+id/text_cheat_submission_title"
-            android:layout_width="wrap_content"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edit_cheat_title"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingBottom="10dp"
-            android:text="@string/submit_cheat_title"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
+            android:background="@drawable/blue01_edit_text_holo_dark"
+            android:hint="@string/submit_cheat_your_title"
+            android:imeOptions="actionNext"
+            android:inputType="textCapWords|textAutoCorrect"
+            android:maxLines="1"
+            android:paddingTop="16dp"
+            android:paddingBottom="16dp"
+            android:singleLine="true"
+            android:textAppearance="@style/WalkthroughText">
 
-        <LinearLayout
-            android:layout_width="fill_parent"
+            <requestFocus />
+        </com.google.android.material.textfield.TextInputEditText>
+
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/cheat_input_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/title_input_layout"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:textAppearance="@style/NormalTextLight">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edit_cheat_text"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/blue01_edit_text_holo_dark"
             android:gravity="top"
-            android:orientation="vertical">
+            android:hint="@string/submit_cheat_your_body"
+            android:inputType="textCapSentences|textAutoCorrect|textMultiLine"
+            android:minHeight="200dp"
+            android:textAppearance="@style/WalkthroughText" />
+    </com.google.android.material.textfield.TextInputLayout>
 
-            <EditText
-                android:id="@+id/edit_cheat_title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="5"
-                android:background="@drawable/blue01_edit_text_holo_dark"
-                android:hint="@string/submit_cheat_your_title"
-                android:imeOptions="actionNext"
-                android:inputType="textCapWords|textAutoCorrect"
-                android:textColor="@color/white" />
+    <CheckBox
+        android:id="@+id/checkbox_terms"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/cheat_input_layout"
+        android:layout_margin="16dp"
+        android:text="@string/submit_cheat_agree_terms_conditions" />
 
-            <EditText
-                android:id="@+id/edit_cheat_text"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:layout_marginTop="10dp"
-                android:layout_weight="200"
-                android:background="@drawable/blue01_edit_text_holo_dark"
-                android:gravity="top"
-                android:hint="@string/submit_cheat_your_body"
-                android:inputType="textCapSentences|textAutoCorrect|textMultiLine"
-                android:minHeight="240dp"
-                android:textColor="@color/white" />
 
-            <CheckBox
-                android:id="@+id/checkbox_terms"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="5"
-                android:paddingBottom="10dp"
-                android:paddingTop="10dp"
-                android:text="@string/submit_cheat_agree_terms_conditions" />
+    <TextView
+        android:id="@+id/guidelines"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/checkbox_terms"
+        android:layout_marginStart="24dp"
+        android:singleLine="true"
+        android:text="@string/guidelines"
+        android:textAppearance="@style/SmallTextLight" />
 
-            <Button
-                android:id="@+id/send_button"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_gravity="center"
-                android:layout_marginTop="10dp"
-                android:layout_weight="5"
-                android:background="@drawable/bluedark01_btn_default_holo_dark"
-                android:paddingLeft="5dp"
-                android:paddingRight="5dp"
-                android:text="@string/submit_cheat_review" />
-        </LinearLayout>
+    <TextView
+        android:id="@+id/terms_conditions"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/guidelines"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="12dp"
+        android:singleLine="true"
+        android:text="@string/submit_cheat_consent_title"
+        android:textAppearance="@style/SmallTextLight" />
 
-    </LinearLayout>
-</LinearLayout>
+
+</RelativeLayout>

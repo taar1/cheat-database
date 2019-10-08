@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.cheatdatabase.R;
 import com.cheatdatabase.businessobjects.Game;
 import com.cheatdatabase.helpers.Konstanten;
+import com.cheatdatabase.helpers.Tools;
 import com.cheatdatabase.holders.FacebookNativeAdHolder;
 import com.cheatdatabase.holders.GamesBySystemListViewItemHolder;
 import com.cheatdatabase.holders.UkonAdListViewItemHolder;
@@ -171,6 +172,11 @@ public class GamesBySystemRecycleListViewAdapter extends RecyclerView.Adapter<Re
         int j = 0;
         int adCounter = 0;
         final List<ListItem> newListItems = new ArrayList<>();
+        boolean showUkonAds = true;
+
+        if (Tools.getCountryCode(activity).equalsIgnoreCase("us")) {
+            showUkonAds = false;
+        }
 
         for (Game game : gameList) {
             GameListItem gameListItem = new GameListItem();
@@ -179,13 +185,17 @@ public class GamesBySystemRecycleListViewAdapter extends RecyclerView.Adapter<Re
 
             if (j % Konstanten.INJECT_AD_AFTER_EVERY_POSITION == Konstanten.INJECT_AD_AFTER_EVERY_POSITION - 1) {
 
-                if (adCounter == 1) {
-                    newListItems.add(new UkonAdListItem());
+                if (showUkonAds) {
+                    if (adCounter == 1) {
+                        newListItems.add(new UkonAdListItem());
+                    } else {
+                        newListItems.add(new FacebookNativeAdListItem());
+                    }
+
+                    adCounter++;
                 } else {
                     newListItems.add(new FacebookNativeAdListItem());
                 }
-
-                adCounter++;
             }
 
             j++;

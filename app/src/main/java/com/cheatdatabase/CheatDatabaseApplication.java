@@ -103,7 +103,6 @@ public class CheatDatabaseApplication extends Application implements Application
         InMobiSdk.init(this, Konstanten.INMOBI_CHEATDATABASE_APP_ID, consentObject);
         InMobiSdk.setAgeGroup(InMobiSdk.AgeGroup.BETWEEN_18_AND_24);
         InMobiSdk.setLogLevel(InMobiSdk.LogLevel.DEBUG);
-
     }
 
     @Override

@@ -54,7 +54,8 @@
                 android:hint="@string/prompt_email"
                 android:inputType="textEmailAddress"
                 android:maxLines="1"
-                android:padding="16dp"
+                android:paddingTop="16dp"
+                android:paddingBottom="16dp"
                 android:singleLine="true" />
 
             <EditText
@@ -68,7 +69,8 @@
                 android:imeOptions="actionUnspecified"
                 android:inputType="textPassword"
                 android:maxLines="1"
-                android:padding="16dp"
+                android:paddingTop="16dp"
+                android:paddingBottom="16dp"
                 android:singleLine="true" />
 
             <LinearLayout

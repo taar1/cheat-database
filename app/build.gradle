@@ -12,8 +12,8 @@ apply plugin: 'io.fabric'
 
 String APK_ID = "com.cheatdatabase"
 String APK_NAME = "Cheat-Database"
-int VERSION_CODE = 55
-String VERSION_NAME = "2.5.9-preRelease"
+int VERSION_CODE = 56
+String VERSION_NAME = "2.5.9"
 
 android {
     compileSdkVersion 28

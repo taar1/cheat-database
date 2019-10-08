@@ -59,7 +59,6 @@ public class CheatsByGameListActivity extends AppCompatActivity implements OnChe
     private Editor editor;
     private Member member;
     private List<Cheat> cheatList;
-    private Cheat visibleCheat;
 
     private CheatDatabaseApplication cheatDatabaseApplication;
     private CheatsByGameRecycleListViewAdapter cheatsByGameRecycleListViewAdapter;
@@ -224,7 +223,7 @@ public class CheatsByGameListActivity extends AppCompatActivity implements OnChe
 
         cheatList = new ArrayList<>();
         List<Cheat> cachedCheatsCollection;
-        List<Cheat> cheatsFound = null;
+        List<Cheat> cheatsFound;
         boolean isCached = false;
         String achievementsEnabled;
         boolean isAchievementsEnabled = sharedPreferences.getBoolean("enable_achievements", true);
@@ -248,6 +247,8 @@ public class CheatsByGameListActivity extends AppCompatActivity implements OnChe
                     if ((cachedCheatsCollection != null) && (cachedCheatsCollection.size() > 0)) {
                         cheatsFound = cachedCheatsCollection;
                         gameObj.setCheatList(cheatsFound);
+
+                        cheatList = cheatsFound;
                         isCached = true;
                     }
                 }
@@ -296,6 +297,8 @@ public class CheatsByGameListActivity extends AppCompatActivity implements OnChe
                     Needle.onMainThread().execute(() -> Toast.makeText(CheatsByGameListActivity.this, R.string.err_somethings_wrong, Toast.LENGTH_LONG).show());
                 }
             });
+        } else {
+            updateUI();
         }
     }
 
@@ -387,8 +390,6 @@ public class CheatsByGameListActivity extends AppCompatActivity implements OnChe
 
     @Override
     public void onCheatListItemSelected(Cheat cheat, int position) {
-        this.visibleCheat = cheat;
-
         if (Reachability.reachability.isReachable) {
 
             int i = 0;

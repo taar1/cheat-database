@@ -9,6 +9,7 @@ import android.content.res.Resources;
 import android.content.res.XmlResourceParser;
 import android.graphics.Typeface;
 import android.os.Environment;
+import android.telephony.TelephonyManager;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.View;
@@ -480,5 +481,10 @@ public class Tools {
     public static void hideKeyboard(Context context, View view) {
         InputMethodManager imm = (InputMethodManager) context.getSystemService(Activity.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
+
+    public static String getCountryCode(Context context) {
+        TelephonyManager tm = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+        return tm.getSimCountryIso();
     }
 }

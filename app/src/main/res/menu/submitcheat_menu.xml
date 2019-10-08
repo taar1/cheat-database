@@ -3,14 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/action_termsandconditions"
-        android:icon="@drawable/ic_paragraph"
-        android:title="@string/submit_cheat_consent_title"
-        app:showAsAction="ifRoom" />
-    <item
-        android:id="@+id/action_guidelines"
-        android:icon="@drawable/ic_info_circle"
-        android:title="@string/guidelines"
-        app:showAsAction="ifRoom|withText" />
+        android:id="@+id/action_send"
+        android:icon="@drawable/ic_send"
+        android:title="@string/submit_cheat_review"
+        app:showAsAction="always" />
+
 
 </menu>

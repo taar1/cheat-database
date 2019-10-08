@@ -6,9 +6,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,6 +23,7 @@ import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.helpers.Tools;
 import com.cheatdatabase.helpers.Webservice;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.gson.Gson;
 
 import butterknife.BindView;
@@ -31,23 +31,22 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
- * Liste mit allen Cheats eines Games.
- * http://developer.android.com/guide/tutorials/views/hello-tablelayout.html
+ * Form to submit a cheat for a game.
  *
  * @author erbsland
  */
 public class SubmitCheatActivity extends AppCompatActivity {
 
+    @BindView(R.id.outer_layout)
+    RelativeLayout outerLayout;
     @BindView(R.id.text_cheat_submission_title)
     TextView textCheatTitle;
     @BindView(R.id.edit_cheat_title)
-    EditText cheatTitle;
+    TextInputEditText cheatTitle;
     @BindView(R.id.edit_cheat_text)
-    EditText cheatText;
+    TextInputEditText cheatText;
     @BindView(R.id.checkbox_terms)
     CheckBox checkBoxTerms;
-    @BindView(R.id.send_button)
-    Button sendButton;
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
 
@@ -68,13 +67,72 @@ public class SubmitCheatActivity extends AppCompatActivity {
             finish();
         } else {
             init();
-
-            changeSubmitButtonText();
+            textCheatTitle.setText(gameObj.getGameName() + " (" + gameObj.getSystemName() + ")");
         }
     }
 
-    @OnClick(R.id.send_button)
-    void sendButtonClick() {
+    private void init() {
+        if (mToolbar != null) {
+            setSupportActionBar(mToolbar);
+        }
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+
+        settings = getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
+        member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        Reachability.unregister(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (!Reachability.isRegistered()) {
+            Reachability.registerReachability(this);
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+            case R.id.action_send:
+                sendButtonClicked();
+                return true;
+            case R.id.action_login:
+                login();
+                return true;
+            case R.id.action_logout:
+                member = null;
+                Tools.logout(SubmitCheatActivity.this, settings.edit());
+                invalidateOptionsMenu();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @OnClick(R.id.guidelines)
+    void guidelinesClicked() {
+        PlainInformationDialog instructionsDialog = new PlainInformationDialog(this);
+        instructionsDialog.setContent(R.string.submit_cheat_instructions_title, R.string.submit_cheat_guidelines, R.string.ok);
+        instructionsDialog.show();
+    }
+
+    @OnClick(R.id.terms_conditions)
+    void termsAndConditionsClicked() {
+        PlainInformationDialog termsDialog = new PlainInformationDialog(this);
+        termsDialog.setContent(R.string.guidelines, R.string.submit_cheat_consent_text, R.string.ok);
+        termsDialog.show();
+    }
+
+    void sendButtonClicked() {
         if ((member != null) && (member.getMid() != 0)) {
             if ((cheatText.getText().toString().trim().length() < 5) || (cheatTitle.getText().toString().trim().length() < 2)) {
                 showAlertDialog(R.string.err, R.string.fill_everything);
@@ -112,62 +170,6 @@ public class SubmitCheatActivity extends AppCompatActivity {
         }
     }
 
-    private void init() {
-        if (mToolbar != null) {
-            setSupportActionBar(mToolbar);
-        }
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeButtonEnabled(true);
-        getSupportActionBar().setTitle((gameObj.getGameName() != null ? gameObj.getGameName() : ""));
-        getSupportActionBar().setSubtitle((gameObj.getSystemName() != null ? gameObj.getSystemName() : ""));
-
-        settings = getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        Reachability.unregister(this);
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if (!Reachability.isRegistered()) {
-            Reachability.registerReachability(this);
-        }
-        member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                onBackPressed();
-                return true;
-            case R.id.action_termsandconditions:
-                PlainInformationDialog termsDialog = new PlainInformationDialog(this);
-                termsDialog.setContent(R.string.guidelines, R.string.submit_cheat_consent_text, R.string.ok);
-                termsDialog.show();
-                return true;
-            case R.id.action_guidelines:
-                PlainInformationDialog instructionsDialog = new PlainInformationDialog(this);
-                instructionsDialog.setContent(R.string.submit_cheat_instructions_title, R.string.submit_cheat_guidelines, R.string.ok);
-                instructionsDialog.show();
-                return true;
-            case R.id.action_login:
-                login();
-                return true;
-            case R.id.action_logout:
-                member = null;
-                Tools.logout(SubmitCheatActivity.this, settings.edit());
-                changeSubmitButtonText();
-                invalidateOptionsMenu();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
 
     private void showAlertDialog(int title, int text) {
         new MaterialDialog.Builder(SubmitCheatActivity.this)
@@ -199,14 +201,6 @@ public class SubmitCheatActivity extends AppCompatActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
-    private void changeSubmitButtonText() {
-        if (member == null) {
-            sendButton.setText(getString(R.string.login_to_submit));
-        } else {
-            sendButton.setText(getString(R.string.submit_cheat_review));
-        }
-    }
-
     private void login() {
         Intent loginIntent = new Intent(SubmitCheatActivity.this, LoginActivity.class);
         startActivityForResult(loginIntent, Konstanten.LOGIN_REGISTER_OK_RETURN_CODE);
@@ -228,7 +222,6 @@ public class SubmitCheatActivity extends AppCompatActivity {
             }
         }
 
-        changeSubmitButtonText();
         invalidateOptionsMenu();
     }
 
