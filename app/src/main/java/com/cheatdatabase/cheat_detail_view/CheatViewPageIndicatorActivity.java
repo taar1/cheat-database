@@ -58,7 +58,6 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -86,7 +85,7 @@ public class CheatViewPageIndicatorActivity extends AppCompatActivity {
     private int pageSelected;
 
     private Game gameObj;
-    private List<Cheat> cheatArray;
+    private ArrayList<Cheat> cheatArray;
     private Cheat visibleCheat;
 
     private SharedPreferences settings;
@@ -130,7 +129,6 @@ public class CheatViewPageIndicatorActivity extends AppCompatActivity {
         pageSelected = intent.getIntExtra("selectedPage", 0);
         activePage = pageSelected;
 
-
         if (gameObj == null) {
             finish();
         } else {
@@ -139,16 +137,20 @@ public class CheatViewPageIndicatorActivity extends AppCompatActivity {
                 cheat.setGameName(gameObj.getGameName());
                 cheat.setSystemId(gameObj.getSystemId());
                 cheat.setSystemName(gameObj.getSystemName());
+
+                if (cheatArray == null) {
+                    cheatArray = new ArrayList();
+                }
                 cheatArray.add(cheat);
             }
 
             if ((cheatArray == null) || (cheatArray.size() < 1)) {
-                finish();
+                onBackPressed();
             }
             visibleCheat = cheatArray.get(pageSelected);
 
-            getSupportActionBar().setTitle(gameObj.getGameName());
-            getSupportActionBar().setSubtitle(gameObj.getSystemName());
+            getSupportActionBar().setTitle((gameObj.getGameName() != null ? gameObj.getGameName() : ""));
+            getSupportActionBar().setSubtitle((gameObj.getSystemName() != null ? gameObj.getSystemName() : ""));
 
             initialisePaging();
         }
@@ -221,12 +223,7 @@ public class CheatViewPageIndicatorActivity extends AppCompatActivity {
                     clipPagerTitleView.setText(cheatArray.get(index).getCheatTitle());
                     clipPagerTitleView.setNormalColor(Color.parseColor("#88ffffff")); // White transparent
                     clipPagerTitleView.setSelectedColor(Color.WHITE);
-                    clipPagerTitleView.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            mPager.setCurrentItem(index);
-                        }
-                    });
+                    clipPagerTitleView.setOnClickListener(v -> mPager.setCurrentItem(index));
                     return clipPagerTitleView;
 
                 }
@@ -245,13 +242,10 @@ public class CheatViewPageIndicatorActivity extends AppCompatActivity {
             mPager.setCurrentItem(pageSelected);
 
             FloatingActionButton fa = viewLayout.findViewById(R.id.add_new_cheat_button);
-            fa.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent explicitIntent = new Intent(CheatViewPageIndicatorActivity.this, SubmitCheatActivity.class);
-                    explicitIntent.putExtra("gameObj", gameObj);
-                    startActivity(explicitIntent);
-                }
+            fa.setOnClickListener(v -> {
+                Intent explicitIntent = new Intent(CheatViewPageIndicatorActivity.this, SubmitCheatActivity.class);
+                explicitIntent.putExtra("gameObj", gameObj);
+                startActivity(explicitIntent);
             });
         } catch (Exception e2) {
             Log.e(TAG, "ERROR: " + getPackageName() + "/" + getTitle() + "... " + e2.getMessage());
@@ -271,7 +265,7 @@ public class CheatViewPageIndicatorActivity extends AppCompatActivity {
                 invalidateOptionsMenu();
                 if ((member != null) && intentReturnCode == Konstanten.REGISTER_SUCCESS_RETURN_CODE) {
                     Toast.makeText(CheatViewPageIndicatorActivity.this, R.string.register_thanks, Toast.LENGTH_LONG).show();
-                } else if ((member != null) && intentReturnCode == Konstanten.REGISTER_SUCCESS_RETURN_CODE) {
+                } else if ((member != null) && intentReturnCode == Konstanten.LOGIN_SUCCESS_RETURN_CODE) {
                     Toast.makeText(CheatViewPageIndicatorActivity.this, R.string.login_ok, Toast.LENGTH_LONG).show();
                 }
             }

@@ -12,8 +12,8 @@ apply plugin: 'io.fabric'
 
 String APK_ID = "com.cheatdatabase"
 String APK_NAME = "Cheat-Database"
-int VERSION_CODE = 56
-String VERSION_NAME = "2.5.10-preRelease"
+int VERSION_CODE = 57
+String VERSION_NAME = "2.5.11-preRelease"
 
 android {
     compileSdkVersion 28
@@ -109,7 +109,7 @@ dependencies {
     api 'androidx.exifinterface:exifinterface:1.0.0'
     api 'com.google.firebase:firebase-core:17.2.0'
     api 'com.google.firebase:firebase-messaging:20.0.0'
-    api 'com.google.firebase:firebase-config:19.0.2'
+    api 'com.google.firebase:firebase-config:19.0.3'
     api 'com.google.firebase:firebase-appindexing:19.0.0'
     api 'androidx.appcompat:appcompat:1.1.0'
     api 'com.google.android.material:material:1.0.0'

@@ -31,6 +31,7 @@ import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.helpers.Tools;
 import com.cheatdatabase.helpers.Webservice;
+import com.crashlytics.android.Crashlytics;
 import com.google.gson.Gson;
 
 import butterknife.BindView;
@@ -355,12 +356,15 @@ public class LoginActivity extends AppCompatActivity implements AlreadyLoggedInD
                 Intent returnIntent = new Intent();
                 returnIntent.putExtra("result", Konstanten.REGISTER_SUCCESS_RETURN_CODE);
                 setResult(RESULT_OK, returnIntent);
+
+                Toast.makeText(LoginActivity.this, R.string.register_thanks, Toast.LENGTH_LONG).show();
                 finish();
             } else if (intentReturnCode == Konstanten.RECOVER_PASSWORD_SUCCESS_RETURN_CODE) {
                 Toast.makeText(LoginActivity.this, R.string.recover_login_success, Toast.LENGTH_LONG).show();
             }
         } catch (NullPointerException e) {
             Log.e(TAG, "onActivityResult data.getIntExtra is NULL: " + e.getLocalizedMessage());
+            Crashlytics.logException(e);
             finish();
         }
     }

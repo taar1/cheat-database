@@ -13,6 +13,7 @@ import com.cheatdatabase.businessobjects.Screenshot;
 import com.cheatdatabase.businessobjects.SystemPlatform;
 import com.cheatdatabase.businessobjects.WelcomeMessage;
 import com.cheatdatabase.callbacks.RepositoryEntityListCallback;
+import com.crashlytics.android.Crashlytics;
 import com.google.gson.Gson;
 
 import org.json.JSONArray;
@@ -149,7 +150,8 @@ public class Webservice {
             String urlParameters = "memberId=" + URLEncoder.encode(String.valueOf(memberId), "UTF-8") + "&gameId=" + URLEncoder.encode(String.valueOf(gameId), "UTF-8") + "&achievementsEnabled=" + URLEncoder.encode(achievementsEnabled, "UTF-8");
             ret = excutePost(Konstanten.BASE_URL_ANDROID + "getCheatsAndRatingByGameId.php", urlParameters);
         } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
+            Crashlytics.logException(e);
+            Log.e(TAG, "getCheatListAsString Error: " + e.getLocalizedMessage());
         }
 
         return ret;
@@ -169,7 +171,8 @@ public class Webservice {
             String urlParameters = "gameId=" + URLEncoder.encode(String.valueOf(gameId), "UTF-8") + "&loadContent=" + URLEncoder.encode("1", "UTF-8");
             ret = excutePost(Konstanten.BASE_URL_ANDROID + "getCheatTitlesByGameId.php", urlParameters);
         } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
+            Crashlytics.logException(e);
+            Log.e(TAG, "getCheatTitleListAsString Error: " + e.getLocalizedMessage());
         }
 
         return ret;
@@ -186,7 +189,6 @@ public class Webservice {
      * ist zu kurz, INTEGER=OK (Member-ID)
      */
     public static Member register(String username, String email) {
-
         Member member = new Member();
 
         try {
@@ -195,14 +197,11 @@ public class Webservice {
                 String responseString = excutePost(Konstanten.BASE_URL_ANDROID + "register.php", urlParameters);
 
                 if (responseString.length() > 1) {
-                    JSONObject jsonObject = null;
+                    JSONObject jsonObject;
 
                     jsonObject = new JSONObject(responseString);
 
                     int mid = jsonObject.getInt("id");
-                    // String username_returned =
-                    // jsonObject.getString("username");
-                    // String email_returned = jsonObject.getString("email");
                     String password = jsonObject.getString("password");
 
                     member.setMid(mid);
@@ -223,8 +222,8 @@ public class Webservice {
                 member.setErrorCode(1);
             }
         } catch (JSONException | UnsupportedEncodingException e) {
+            Crashlytics.logException(e);
             Log.e(TAG, "JSONException | UnsupportedEncodingException: " + e.getMessage());
-            e.printStackTrace();
             member.setErrorCode(4);
         }
 
@@ -243,7 +242,7 @@ public class Webservice {
 
         String responseString = null;
         Member member = null;
-        String password_md5 = password.trim();
+        String password_md5;
 
         try {
             // MD5 Hash vom Passwort generieren
@@ -258,7 +257,7 @@ public class Webservice {
         // 0 = Fehler beim Login
         if (responseString != null) {
             if (!responseString.equalsIgnoreCase("0")) {
-                JSONObject jsonObject = null;
+                JSONObject jsonObject;
 
                 try {
                     jsonObject = new JSONObject(responseString);
@@ -282,6 +281,7 @@ public class Webservice {
                     }
 
                 } catch (JSONException e) {
+                    Crashlytics.logException(e);
                     Log.e("login", "JSON Parsing Error: " + e);
                 }
             }
@@ -311,7 +311,7 @@ public class Webservice {
                     "&cheatText=" + URLEncoder.encode(cheatText, "UTF-8");
             ret = Integer.parseInt(excutePost(Konstanten.BASE_URL_ANDROID + "submitCheat.php", urlParameters));
         } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
+            Crashlytics.logException(e);
         }
 
         return ret;
@@ -330,7 +330,7 @@ public class Webservice {
             String urlParameters = "mid=" + URLEncoder.encode(String.valueOf(memberId), "UTF-8") + "&cid=" + URLEncoder.encode(String.valueOf(cheatId), "UTF-8") + "&password=" + URLEncoder.encode(password, "UTF-8") + "&forumpost=" + URLEncoder.encode(forumPost, "UTF-8");
             excutePost(Konstanten.BASE_URL_ANDROID + "insertForum.php", urlParameters);
         } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
+            Crashlytics.logException(e);
         }
     }
 
@@ -372,6 +372,7 @@ public class Webservice {
             ret = Float.parseFloat(excutePost(Konstanten.BASE_URL_ANDROID + "getRatingByMemberId.php", urlParameters));
         } catch (UnsupportedEncodingException e) {
             Log.e(TAG, e.getLocalizedMessage());
+            Crashlytics.logException(e);
         }
 
         return ret;
@@ -408,6 +409,7 @@ public class Webservice {
 
         } catch (JSONException | UnsupportedEncodingException e) {
             Log.e(TAG, "JSONException | UnsupportedEncodingException: " + e.getLocalizedMessage());
+            Crashlytics.logException(e);
         }
 
         return al;
@@ -453,6 +455,7 @@ public class Webservice {
 
         } catch (JSONException e) {
             Log.e(TAG, "JSONException: " + e.getLocalizedMessage());
+            Crashlytics.logException(e);
         }
 
         return cheats;
@@ -525,7 +528,7 @@ public class Webservice {
                 editor.putInt(String.valueOf(sysId), count);
             }
 
-            editor.commit();
+            editor.apply();
         } catch (JSONException e) {
             Log.e(TAG, "JSONException: " + e.getLocalizedMessage());
         }
@@ -566,7 +569,7 @@ public class Webservice {
         String systemString = getCheatTitleListAsString(gameId);
 
         Cheat[] cheats = null;
-        JSONArray jArray = null;
+        JSONArray jArray;
 
         try {
             jArray = new JSONArray(systemString);
@@ -700,6 +703,7 @@ public class Webservice {
 
             } catch (JSONException e) {
                 Log.e(TAG, "JSONException: " + e.getLocalizedMessage());
+                Crashlytics.logException(e);
                 callback.onFailure(e);
             }
         });
@@ -752,6 +756,7 @@ public class Webservice {
 
         } catch (JSONException | UnsupportedEncodingException e) {
             Log.e(TAG, "JSONException | UnsupportedEncodingException: " + e.getLocalizedMessage());
+            Crashlytics.logException(e);
         }
 
         return cheat;
@@ -766,7 +771,7 @@ public class Webservice {
      */
     public static Cheat[] getCheatsByGameId(int gameId, String gameName) {
         Cheat[] cheats = null;
-        JSONArray jArray = null;
+        JSONArray jArray;
 
         try {
             String urlParameters = "gameId=" + URLEncoder.encode(String.valueOf(gameId), "UTF-8");
@@ -817,6 +822,7 @@ public class Webservice {
 
         } catch (JSONException | UnsupportedEncodingException e) {
             Log.e(TAG, "JSONException | UnsupportedEncodingException: " + e.getLocalizedMessage());
+            Crashlytics.logException(e);
         }
 
         return cheats;
@@ -830,11 +836,11 @@ public class Webservice {
      */
     public static SystemPlatform[] getCheatsByMemberIdNested(int memberId) {
         SystemPlatform[] systems = null;
-        Game[] games = null;
-        Cheat[] cheats = null;
+        Game[] games;
+        Cheat[] cheats;
         List<Game> temporaryGameList = new ArrayList<>();
 
-        JSONArray jArray = null;
+        JSONArray jArray;
 
         Map<Integer, String> systemsHashMap = new HashMap<>();
         Map<Integer, String> gamesHashMap = new HashMap<>();
@@ -1067,6 +1073,7 @@ public class Webservice {
 
         } catch (JSONException | UnsupportedEncodingException e) {
             Log.e(TAG, e.getLocalizedMessage());
+            Crashlytics.logException(e);
         }
 
         return cheats;
@@ -1110,9 +1117,9 @@ public class Webservice {
 
         } catch (JSONException e) {
             Log.e(TAG, "XXXXX JSONException: " + e.getLocalizedMessage());
+            Crashlytics.logException(e);
         }
 
-        Log.d(TAG, "XXXXX 01b memberList: " + memberList.size());
         return memberList;
     }
 
@@ -1145,6 +1152,7 @@ public class Webservice {
 
         } catch (JSONException e) {
             Log.e(TAG, "JSONException: " + e.getLocalizedMessage());
+            Crashlytics.logException(e);
         }
 
         return systems;
@@ -1167,7 +1175,7 @@ public class Webservice {
             welcomeMessage.setWelcomeMessage_de(jsonObject.getString("welcomemessage_de"));
             welcomeMessage.setCreated(jsonObject.getString("created"));
         } catch (JSONException e) {
-            e.printStackTrace();
+            Crashlytics.logException(e);
         }
 
         return welcomeMessage;
@@ -1220,6 +1228,7 @@ public class Webservice {
 
         } catch (JSONException | UnsupportedEncodingException e) {
             Log.e(TAG, e.getLocalizedMessage());
+            Crashlytics.logException(e);
         }
 
         return forumPostList;
@@ -1267,6 +1276,7 @@ public class Webservice {
 
             } catch (JSONException | UnsupportedEncodingException e) {
                 Log.e(TAG, "getGameListBySystemId | UnsupportedEncodingException: " + e);
+                Crashlytics.logException(e);
                 callback.onFailure(e);
             }
         });
@@ -1287,7 +1297,7 @@ public class Webservice {
             urlParameters = "cheatId=" + URLEncoder.encode(String.valueOf(cheatId), "UTF-8");
             returnString = excutePost(Konstanten.BASE_URL_ANDROID + "getCheatById.php", urlParameters);
         } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
+            Crashlytics.logException(e);
         }
         return returnString;
     }
@@ -1306,7 +1316,7 @@ public class Webservice {
             return retValObj.getInt("allow") != 0;
         } catch (Exception e) {
             Log.e("ERROR", e.getMessage());
-            e.getStackTrace();
+            Crashlytics.logException(e);
             return false;
         }
     }
@@ -1342,7 +1352,7 @@ public class Webservice {
             String urlParameters = "cheatId=" + URLEncoder.encode(String.valueOf(cheatId), "UTF-8") + "&memberId=" + URLEncoder.encode(String.valueOf(memberId), "UTF-8") + "&reason=" + URLEncoder.encode(reason, "UTF-8");
             excutePost(Konstanten.BASE_URL_ANDROID + "reportCheat.php", urlParameters);
         } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
+            Crashlytics.logException(e);
         }
     }
 
@@ -1357,7 +1367,7 @@ public class Webservice {
             String urlParameters = "email=" + URLEncoder.encode(email.trim(), "UTF-8") + "&message=" + URLEncoder.encode(message.trim(), "UTF-8");
             excutePost(Konstanten.BASE_URL_ANDROID + "submitMessage.php", urlParameters);
         } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
+            Crashlytics.logException(e);
         }
     }
 
@@ -1386,7 +1396,7 @@ public class Webservice {
                     "&searchInTitlesToo=" + URLEncoder.encode(String.valueOf(searchInTitlesToo), "UTF-8");
             ret = excutePost(Konstanten.BASE_URL_ANDROID + "searchFulltext.php", urlParameters);
         } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
+            Crashlytics.logException(e);
         }
         return ret;
     }
@@ -1433,6 +1443,7 @@ public class Webservice {
 
         } catch (JSONException e) {
             Log.e(TAG, "JSONException: " + e.getLocalizedMessage());
+            Crashlytics.logException(e);
         }
 
         return cheats;
@@ -1470,49 +1481,13 @@ public class Webservice {
             return response.toString();
 
         } catch (Exception e) {
-            e.printStackTrace();
+            Crashlytics.logException(e);
             return null;
         } finally {
             if (connection != null) {
                 connection.disconnect();
             }
         }
-
-//        HttpUriRequest request = null;
-//        HttpClient httpClient = null;
-//        HttpResponse response = null;
-//
-//        try {
-//            request = new HttpGet(parameterlessUrl);
-//            request.addHeader("Accept-Encoding", "gzip");
-//
-//            httpClient = new DefaultHttpClient();
-//            response = httpClient.execute(request);
-//
-//            // GZIP Daten entpacken
-//            ByteArrayOutputStream streamBuilder = new ByteArrayOutputStream();
-//
-//            InputStream instream = response.getEntity().getContent();
-//            Header contentEncoding = response.getFirstHeader("Content-Encoding");
-//            if (contentEncoding != null && contentEncoding.getValue().equalsIgnoreCase("gzip")) {
-//                instream = new GZIPInputStream(instream);
-//            }
-//            int bytesRead;
-//            byte[] tempBuffer = new byte[8192 * 2];
-//
-//            while ((bytesRead = instream.read(tempBuffer)) != -1) {
-//                streamBuilder.write(tempBuffer, 0, bytesRead);
-//            }
-//
-//            responseString = streamBuilder.toString();
-//
-//        } catch (Exception e) {
-//            // URL Incorrect
-//            responseString = e.getMessage();
-//            Log.e("getDataFromServer ERROR", e.getMessage());
-//        }
-//
-//        return responseString;
     }
 
     /**
@@ -1563,6 +1538,7 @@ public class Webservice {
             return responseString;
         } catch (Exception e) {
             Log.e(TAG, "excutePost error: " + e.getLocalizedMessage());
+            Crashlytics.logException(e);
             return "";
         } finally {
             if (connection != null) {
@@ -1570,6 +1546,4 @@ public class Webservice {
             }
         }
     }
-
-
 }

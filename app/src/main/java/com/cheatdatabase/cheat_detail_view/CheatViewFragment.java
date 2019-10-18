@@ -41,6 +41,7 @@ import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.helpers.Tools;
 import com.cheatdatabase.helpers.Webservice;
+import com.crashlytics.android.Crashlytics;
 import com.google.gson.Gson;
 
 import java.io.BufferedInputStream;
@@ -119,8 +120,6 @@ public class CheatViewFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        settings = getActivity().getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
-        editor = settings.edit();
 
         init();
 
@@ -135,6 +134,9 @@ public class CheatViewFragment extends Fragment {
 
         latoFontLight = Tools.getFont(cheatViewPageIndicatorActivity.getAssets(), Konstanten.FONT_LIGHT);
         latoFontBold = Tools.getFont(cheatViewPageIndicatorActivity.getAssets(), Konstanten.FONT_BOLD);
+
+        settings = getActivity().getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
+        editor = settings.edit();
 
         member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
     }
@@ -441,9 +443,10 @@ public class CheatViewFragment extends Fragment {
 
                 Uri uri = Uri.parse(Konstanten.SCREENSHOT_ROOT_WEBDIR + screenShot.getCheatId() + screenShot.getFilename());
                 Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-                startActivity(intent);
+                cheatViewPageIndicatorActivity.startActivity(intent);
             });
-        } catch (ActivityNotFoundException ignored) {
+        } catch (ActivityNotFoundException e) {
+            Crashlytics.logException(e);
         }
     }
 
