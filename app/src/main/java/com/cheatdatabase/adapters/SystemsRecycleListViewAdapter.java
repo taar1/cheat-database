@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cheatdatabase.R;
-import com.cheatdatabase.businessobjects.SystemPlatform;
+import com.cheatdatabase.model.SystemPlatform;
 import com.cheatdatabase.holders.SystemListViewItemHolder;
 import com.cheatdatabase.listeners.OnSystemListItemSelectedListener;
 

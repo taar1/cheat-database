@@ -11,7 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cheatdatabase.R;
-import com.cheatdatabase.businessobjects.Cheat;
+import com.cheatdatabase.model.Cheat;
 import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.holders.CheatsByGameListViewItemHolder;
 import com.cheatdatabase.holders.FacebookNativeAdHolder;

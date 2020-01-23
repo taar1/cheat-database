@@ -9,7 +9,7 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cheatdatabase.R;
-import com.cheatdatabase.businessobjects.Cheat;
+import com.cheatdatabase.model.Cheat;
 import com.cheatdatabase.holders.MemberCheatsListViewItemHolder;
 import com.cheatdatabase.listeners.OnCheatListItemSelectedListener;
 import com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView;

@@ -1,4 +1,4 @@
-package com.cheatdatabase.businessobjects;
+package com.cheatdatabase.model;
 
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -8,6 +8,8 @@ import android.os.Parcelable;
 import com.cheatdatabase.helpers.Konstanten;
 import com.google.gson.Gson;
 
+import javax.inject.Inject;
+
 public class Member implements Parcelable {
 
     private String username, password, email, website, city, greeting;
@@ -15,9 +17,11 @@ public class Member implements Parcelable {
     private boolean banned;
     private Bitmap avatar;
 
+    @Inject
     public Member() {
     }
 
+    @Inject
     public Member(String username, String password, String email, int mid, boolean banned) {
         this.username = username;
         this.password = password;
@@ -26,6 +30,7 @@ public class Member implements Parcelable {
         this.banned = banned;
     }
 
+    @Inject
     protected Member(Parcel in) {
         username = in.readString();
         password = in.readString();

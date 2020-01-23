@@ -1,6 +1,6 @@
 package com.cheatdatabase.listeners;
 
-import com.cheatdatabase.businessobjects.Member;
+import com.cheatdatabase.model.Member;
 
 public interface OnTopMemberListItemSelectedListener {
     void onMemberClicked(Member member);

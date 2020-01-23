@@ -11,9 +11,9 @@ import android.widget.CheckedTextView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.cheatdatabase.CheatsByGameListActivity;
+import com.cheatdatabase.activity.CheatsByGameListActivity;
 import com.cheatdatabase.R;
-import com.cheatdatabase.businessobjects.Game;
+import com.cheatdatabase.model.Game;
 import com.cheatdatabase.helpers.Group;
 import com.cheatdatabase.helpers.Reachability;
 

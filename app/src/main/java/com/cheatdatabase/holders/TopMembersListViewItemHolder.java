@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.cheatdatabase.CheatDatabaseApplication;
 import com.cheatdatabase.R;
-import com.cheatdatabase.businessobjects.Member;
+import com.cheatdatabase.model.Member;
 import com.cheatdatabase.helpers.Konstanten;
 import com.squareup.picasso.Picasso;
 

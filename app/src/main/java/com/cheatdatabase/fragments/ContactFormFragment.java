@@ -23,7 +23,7 @@ import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 
 import com.cheatdatabase.R;
-import com.cheatdatabase.businessobjects.Member;
+import com.cheatdatabase.model.Member;
 import com.cheatdatabase.events.GenericEvent;
 import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Reachability;

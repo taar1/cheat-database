@@ -1,6 +1,6 @@
 package com.cheatdatabase.listitems;
 
-import com.cheatdatabase.businessobjects.SystemPlatform;
+import com.cheatdatabase.model.SystemPlatform;
 
 public class SystemPlatformListItem extends ListItem {
 

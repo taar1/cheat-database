@@ -12,10 +12,10 @@ import android.view.Window;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.cheatdatabase.CheatsByMemberListActivity;
+import com.cheatdatabase.activity.CheatsByMemberListActivity;
 import com.cheatdatabase.R;
-import com.cheatdatabase.businessobjects.Cheat;
-import com.cheatdatabase.businessobjects.Member;
+import com.cheatdatabase.model.Cheat;
+import com.cheatdatabase.model.Member;
 import com.cheatdatabase.helpers.Webservice;
 
 import java.text.SimpleDateFormat;

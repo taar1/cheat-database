@@ -14,10 +14,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.cheatdatabase.GamesBySystemListActivity;
+import com.cheatdatabase.activity.GamesBySystemListActivity;
 import com.cheatdatabase.R;
 import com.cheatdatabase.adapters.SystemsRecycleListViewAdapter;
-import com.cheatdatabase.businessobjects.SystemPlatform;
+import com.cheatdatabase.model.SystemPlatform;
 import com.cheatdatabase.helpers.DatabaseHelper;
 import com.cheatdatabase.helpers.Tools;
 import com.cheatdatabase.helpers.Webservice;

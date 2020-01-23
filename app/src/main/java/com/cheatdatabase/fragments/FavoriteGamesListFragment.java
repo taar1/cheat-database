@@ -17,7 +17,7 @@ import androidx.fragment.app.Fragment;
 
 import com.cheatdatabase.R;
 import com.cheatdatabase.adapters.FavoritesExpandableListAdapter;
-import com.cheatdatabase.businessobjects.Game;
+import com.cheatdatabase.model.Game;
 import com.cheatdatabase.helpers.DatabaseHelper;
 import com.cheatdatabase.helpers.Group;
 

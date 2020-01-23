@@ -1,6 +1,6 @@
 package com.cheatdatabase.helpers;
 
-import com.cheatdatabase.businessobjects.ForumPost;
+import com.cheatdatabase.model.ForumPost;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;

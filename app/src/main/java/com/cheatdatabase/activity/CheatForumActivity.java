@@ -1,4 +1,4 @@
-package com.cheatdatabase;
+package com.cheatdatabase.activity;
 
 import android.app.SearchManager;
 import android.content.Context;
@@ -28,10 +28,11 @@ import androidx.appcompat.widget.ShareActionProvider;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.MenuItemCompat;
 
-import com.cheatdatabase.businessobjects.Cheat;
-import com.cheatdatabase.businessobjects.ForumPost;
-import com.cheatdatabase.businessobjects.Game;
-import com.cheatdatabase.businessobjects.Member;
+import com.cheatdatabase.R;
+import com.cheatdatabase.model.Cheat;
+import com.cheatdatabase.model.ForumPost;
+import com.cheatdatabase.model.Game;
+import com.cheatdatabase.model.Member;
 import com.cheatdatabase.callbacks.GenericCallback;
 import com.cheatdatabase.dialogs.CheatMetaDialog;
 import com.cheatdatabase.dialogs.RateCheatMaterialDialog;

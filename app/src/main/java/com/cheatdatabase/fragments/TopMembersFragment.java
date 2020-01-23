@@ -22,10 +22,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.cheatdatabase.CheatsByMemberListActivity;
+import com.cheatdatabase.activity.CheatsByMemberListActivity;
 import com.cheatdatabase.R;
 import com.cheatdatabase.adapters.TopMembersListViewAdapter;
-import com.cheatdatabase.businessobjects.Member;
+import com.cheatdatabase.model.Member;
 import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.helpers.Webservice;
 import com.cheatdatabase.listeners.OnTopMemberListItemSelectedListener;

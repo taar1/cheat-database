@@ -26,7 +26,7 @@
         android:theme="@style/Theme.Navyblue">
 
         <activity
-            android:name=".MainActivity"
+            android:name=".activity.MainActivity"
             android:label="@string/title_activity_main">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -44,7 +44,7 @@
         <activity
             android:name=".search.SearchResultsActivity"
             android:label="@string/title_activity_search_result"
-            android:parentActivityName=".MainActivity">
+            android:parentActivityName=".activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
@@ -57,8 +57,8 @@
                 android:value="com.cheatdatabase.search.SearchResultsActivity" />
         </activity>
         <activity
-            android:name=".GamesBySystemListActivity"
-            android:parentActivityName=".MainActivity">
+            android:name=".activity.GamesBySystemListActivity"
+            android:parentActivityName=".activity.MainActivity">
             <meta-data
                 android:name="android.app.default_searchable"
                 android:value="com.cheatdatabase.search.SearchResultsActivity" />
@@ -66,35 +66,35 @@
 
         <activity android:name=".helpers.Helper" />
         <activity
-            android:name=".SubmitCheatActivity"
+            android:name=".activity.SubmitCheatActivity"
             android:label="@string/submit_cheat_title" />
         <activity
-            android:name=".CheatsByGameListActivity"
+            android:name=".activity.CheatsByGameListActivity"
             android:label="@string/title_cheat_list"
-            android:parentActivityName=".GamesBySystemListActivity">
+            android:parentActivityName=".activity.GamesBySystemListActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.cheatdatabase.GamesBySystemListActivity" />
+                android:value="com.cheatdatabase.activity.GamesBySystemListActivity" />
             <meta-data
                 android:name="android.app.default_searchable"
                 android:value="com.cheatdatabase.search.SearchResultsActivity" />
         </activity>
         <activity
-            android:name=".LoginActivity"
+            android:name=".activity.LoginActivity"
             android:label="@string/title_activity_login"
             android:windowSoftInputMode="adjustResize|stateVisible" />
         <activity
-            android:name=".RecoverActivity"
+            android:name=".activity.RecoverActivity"
             android:label="@string/title_activity_recover"
-            android:parentActivityName=".LoginActivity"
+            android:parentActivityName=".activity.LoginActivity"
             android:windowSoftInputMode="adjustResize|stateVisible" />
         <activity
-            android:name=".RegisterActivity"
+            android:name=".activity.RegisterActivity"
             android:label="@string/title_activity_register"
-            android:parentActivityName=".LoginActivity"
+            android:parentActivityName=".activity.LoginActivity"
             android:windowSoftInputMode="adjustResize|stateVisible" />
         <activity
-            android:name=".CheatForumActivity"
+            android:name=".activity.CheatForumActivity"
             android:parentActivityName=".cheat_detail_view.CheatViewPageIndicatorActivity"
             android:uiOptions="splitActionBarWhenNarrow"
             android:windowSoftInputMode="adjustResize|stateHidden">
@@ -106,15 +106,15 @@
                 android:value="com.cheatdatabase.search.SearchResultsActivity" />
         </activity>
         <activity
-            android:name=".CheatsByMemberListActivity"
-            android:parentActivityName=".MainActivity">
+            android:name=".activity.CheatsByMemberListActivity"
+            android:parentActivityName=".activity.MainActivity">
             <meta-data
                 android:name="android.app.default_searchable"
                 android:value="com.cheatdatabase.search.SearchResultsActivity" />
         </activity>
         <activity
             android:name=".cheat_detail_view.MemberCheatViewPageIndicator"
-            android:parentActivityName=".CheatsByMemberListActivity"
+            android:parentActivityName=".activity.CheatsByMemberListActivity"
             android:uiOptions="splitActionBarWhenNarrow">
             <meta-data
                 android:name="android.app.default_searchable"
@@ -123,23 +123,23 @@
         <activity
             android:name=".cheat_detail_view.CheatViewPageIndicatorActivity"
             android:label="@string/title_cheat_detail"
-            android:parentActivityName=".CheatsByGameListActivity"
+            android:parentActivityName=".activity.CheatsByGameListActivity"
             android:uiOptions="splitActionBarWhenNarrow">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".CheatsByGameListActivity" />
+                android:value=".activity.CheatsByGameListActivity" />
             <meta-data
                 android:name="android.app.default_searchable"
                 android:value="com.cheatdatabase.search.SearchResultsActivity" />
         </activity>
         <activity
-            android:name=".FavoriteCheatListActivity"
+            android:name=".activity.FavoriteCheatListActivity"
             android:label="@string/title_favorite_list"
-            android:parentActivityName=".MainActivity"
+            android:parentActivityName=".activity.MainActivity"
             android:theme="@style/Theme.Navyblue">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.cheatdatabase.MainActivity" />
+                android:value="com.cheatdatabase.activity.MainActivity" />
             <meta-data
                 android:name="android.app.default_searchable"
                 android:value="com.cheatdatabase.search.SearchResultsActivity" />
@@ -154,14 +154,14 @@
                 android:value="com.cheatdatabase.search.SearchResultsActivity" />
         </activity>
         <activity
-            android:name=".AppPreferencesActivity"
+            android:name=".activity.AppPreferencesActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/action_settings"
-            android:parentActivityName=".MainActivity"
+            android:parentActivityName=".activity.MainActivity"
             android:theme="@style/Theme.Navyblue">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.cheatdatabase.MainActivity" />
+                android:value="com.cheatdatabase.activity.MainActivity" />
         </activity>
         <activity android:name="com.appbrain.AppBrainActivity" />
 

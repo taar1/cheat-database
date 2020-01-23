@@ -18,7 +18,7 @@ import android.widget.Toast;
 import androidx.fragment.app.Fragment;
 
 import com.cheatdatabase.R;
-import com.cheatdatabase.businessobjects.WelcomeMessage;
+import com.cheatdatabase.model.WelcomeMessage;
 import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.helpers.Tools;
 import com.cheatdatabase.helpers.Webservice;

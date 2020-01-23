@@ -1,4 +1,4 @@
-package com.cheatdatabase;
+package com.cheatdatabase.activity;
 
 import android.annotation.TargetApi;
 import android.app.SearchManager;
@@ -30,7 +30,8 @@ import androidx.fragment.app.FragmentTransaction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.Theme;
 import com.appbrain.AppBrain;
-import com.cheatdatabase.businessobjects.Member;
+import com.cheatdatabase.R;
+import com.cheatdatabase.model.Member;
 import com.cheatdatabase.dialogs.RateAppDialog;
 import com.cheatdatabase.events.GenericEvent;
 import com.cheatdatabase.fragments.ContactFormFragment;

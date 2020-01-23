@@ -1,4 +1,4 @@
-package com.cheatdatabase.businessobjects;
+package com.cheatdatabase.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -6,6 +6,8 @@ import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.inject.Inject;
 
 public class Game implements Parcelable {
 
@@ -16,10 +18,12 @@ public class Game implements Parcelable {
     private int cheatsCount;
     private String gameName;
 
+    @Inject
     public Game() {
         cheatList = new ArrayList<>();
     }
 
+    @Inject
     public Game(int gameId, String gameName, int systemId, String systemName) {
 //        super(systemId, systemName);
         this.gameId = gameId;
@@ -28,6 +32,7 @@ public class Game implements Parcelable {
         this.systemName = systemName;
     }
 
+    @Inject
     protected Game(Parcel in) {
         // Attention: The order of writing and reading the parcel MUST match.
         cheatList = in.createTypedArrayList(Cheat.CREATOR);

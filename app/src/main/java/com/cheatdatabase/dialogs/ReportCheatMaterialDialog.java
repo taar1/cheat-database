@@ -7,8 +7,8 @@ import android.widget.Toast;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.Theme;
 import com.cheatdatabase.R;
-import com.cheatdatabase.businessobjects.Cheat;
-import com.cheatdatabase.businessobjects.Member;
+import com.cheatdatabase.model.Cheat;
+import com.cheatdatabase.model.Member;
 import com.cheatdatabase.helpers.Webservice;
 
 import needle.Needle;

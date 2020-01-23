@@ -28,7 +28,7 @@ import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 
 import com.cheatdatabase.R;
-import com.cheatdatabase.businessobjects.Game;
+import com.cheatdatabase.model.Game;
 import com.cheatdatabase.helpers.Group;
 import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Reachability;

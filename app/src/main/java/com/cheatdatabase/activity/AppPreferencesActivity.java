@@ -1,4 +1,4 @@
-package com.cheatdatabase;
+package com.cheatdatabase.activity;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -6,6 +6,7 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.cheatdatabase.R;
 import com.cheatdatabase.fragments.AppPreferencesFragment;
 import com.cheatdatabase.helpers.Konstanten;
 

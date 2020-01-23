@@ -9,7 +9,7 @@
     android:paddingLeft="10dp"
     android:paddingStart="10dp"
     android:paddingTop="5dp"
-    tools:context=".MainActivity">
+    tools:context=".activity.MainActivity">
 
     <TextView
         android:id="@+id/text_game_name"

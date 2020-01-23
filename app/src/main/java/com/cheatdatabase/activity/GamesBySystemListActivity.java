@@ -1,4 +1,4 @@
-package com.cheatdatabase;
+package com.cheatdatabase.activity;
 
 import android.app.SearchManager;
 import android.content.Context;
@@ -19,10 +19,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.cheatdatabase.CheatDatabaseApplication;
+import com.cheatdatabase.R;
 import com.cheatdatabase.adapters.GamesBySystemRecycleListViewAdapter;
-import com.cheatdatabase.businessobjects.Game;
-import com.cheatdatabase.businessobjects.Member;
-import com.cheatdatabase.businessobjects.SystemPlatform;
+import com.cheatdatabase.model.Game;
+import com.cheatdatabase.model.Member;
+import com.cheatdatabase.model.SystemPlatform;
 import com.cheatdatabase.callbacks.RepositoryEntityListCallback;
 import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Reachability;

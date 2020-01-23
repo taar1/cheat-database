@@ -7,7 +7,7 @@ import android.os.Bundle;
 import androidx.fragment.app.DialogFragment;
 
 import com.cheatdatabase.R;
-import com.cheatdatabase.businessobjects.Member;
+import com.cheatdatabase.model.Member;
 import com.cheatdatabase.helpers.Konstanten;
 import com.google.gson.Gson;
 

@@ -1,6 +1,6 @@
 package com.cheatdatabase.listitems;
 
-import com.cheatdatabase.businessobjects.Game;
+import com.cheatdatabase.model.Game;
 
 public class GameListItem extends ListItem {
 

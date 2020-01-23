@@ -1,6 +1,6 @@
 package com.cheatdatabase.listeners;
 
-import com.cheatdatabase.businessobjects.Cheat;
+import com.cheatdatabase.model.Cheat;
 
 public interface OnCheatListItemSelectedListener {
     void onCheatListItemSelected(Cheat cheat, int position);

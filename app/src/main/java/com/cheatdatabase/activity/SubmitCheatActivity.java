@@ -1,4 +1,4 @@
-package com.cheatdatabase;
+package com.cheatdatabase.activity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -16,8 +16,9 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.Theme;
-import com.cheatdatabase.businessobjects.Game;
-import com.cheatdatabase.businessobjects.Member;
+import com.cheatdatabase.R;
+import com.cheatdatabase.model.Game;
+import com.cheatdatabase.model.Member;
 import com.cheatdatabase.dialogs.PlainInformationDialog;
 import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Reachability;

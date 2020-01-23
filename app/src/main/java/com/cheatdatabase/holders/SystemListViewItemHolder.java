@@ -8,7 +8,7 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cheatdatabase.R;
-import com.cheatdatabase.businessobjects.SystemPlatform;
+import com.cheatdatabase.model.SystemPlatform;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

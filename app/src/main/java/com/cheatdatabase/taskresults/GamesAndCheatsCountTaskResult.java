@@ -1,6 +1,6 @@
 package com.cheatdatabase.taskresults;
 
-import com.cheatdatabase.businessobjects.SystemPlatform;
+import com.cheatdatabase.model.SystemPlatform;
 
 import java.util.List;
 

@@ -15,7 +15,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.cheatdatabase.R;
-import com.cheatdatabase.businessobjects.Cheat;
+import com.cheatdatabase.model.Cheat;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;

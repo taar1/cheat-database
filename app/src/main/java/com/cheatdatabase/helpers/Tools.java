@@ -20,9 +20,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.cheatdatabase.R;
-import com.cheatdatabase.businessobjects.Cheat;
-import com.cheatdatabase.businessobjects.Game;
-import com.cheatdatabase.businessobjects.SystemPlatform;
+import com.cheatdatabase.model.Cheat;
+import com.cheatdatabase.model.Game;
+import com.cheatdatabase.model.SystemPlatform;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 

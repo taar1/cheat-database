@@ -7,10 +7,11 @@ import android.graphics.Typeface;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 
-import com.cheatdatabase.businessobjects.Cheat;
-import com.cheatdatabase.businessobjects.Game;
+import com.cheatdatabase.activity.MainActivity;
 import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.TrackingUtils;
+import com.cheatdatabase.model.Cheat;
+import com.cheatdatabase.model.Game;
 import com.crashlytics.android.Crashlytics;
 import com.facebook.ads.AudienceNetworkAds;
 import com.google.android.gms.analytics.GoogleAnalytics;
@@ -24,9 +25,11 @@ import org.json.JSONObject;
 import java.util.List;
 import java.util.TreeMap;
 
+import dagger.android.AndroidInjector;
+import dagger.android.DaggerApplication;
 import io.fabric.sdk.android.Fabric;
 
-public class CheatDatabaseApplication extends Application implements Application.ActivityLifecycleCallbacks {
+public class CheatDatabaseApplication extends DaggerApplication implements Application.ActivityLifecycleCallbacks {
 
     private static final String TAG = CheatDatabaseApplication.class.getSimpleName();
 
@@ -67,10 +70,16 @@ public class CheatDatabaseApplication extends Application implements Application
     @Override
     public void onCreate() {
         super.onCreate();
+
         currentApplicationInstance = this;
         sAppContext = getApplicationContext();
 
         init();
+    }
+
+    @Override
+    protected AndroidInjector<? extends DaggerApplication> applicationInjector() {
+        return null;
     }
 
     private void init() {

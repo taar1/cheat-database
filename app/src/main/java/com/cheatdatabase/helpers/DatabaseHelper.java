@@ -7,10 +7,10 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import com.cheatdatabase.businessobjects.Cheat;
-import com.cheatdatabase.businessobjects.Game;
-import com.cheatdatabase.businessobjects.Screenshot;
-import com.cheatdatabase.businessobjects.SystemPlatform;
+import com.cheatdatabase.model.Cheat;
+import com.cheatdatabase.model.Game;
+import com.cheatdatabase.model.Screenshot;
+import com.cheatdatabase.model.SystemPlatform;
 
 import java.util.ArrayList;
 import java.util.Calendar;

@@ -1,4 +1,4 @@
-package com.cheatdatabase;
+package com.cheatdatabase.activity;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -24,7 +24,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentManager;
 
-import com.cheatdatabase.businessobjects.Member;
+import com.cheatdatabase.R;
+import com.cheatdatabase.model.Member;
 import com.cheatdatabase.dialogs.AlreadyLoggedInDialog;
 import com.cheatdatabase.dialogs.AlreadyLoggedInDialog.AlreadyLoggedInDialogListener;
 import com.cheatdatabase.helpers.Konstanten;

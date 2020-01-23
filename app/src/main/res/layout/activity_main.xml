@@ -20,7 +20,7 @@
             android:layout_height="0dp"
             android:layout_weight="100"
             android:gravity="top"
-            tools:context=".MainActivity"
+            tools:context=".activity.MainActivity"
             tools:ignore="MergeRootFrame">
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton

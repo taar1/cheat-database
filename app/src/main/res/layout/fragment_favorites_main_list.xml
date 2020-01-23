@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:layout_width="match_parent"
     android:orientation="vertical"
-    tools:context=".MainActivity">
+    tools:context=".activity.MainActivity">
 
     <RelativeLayout
         android:id="@+id/somethingfound_layout"
@@ -17,7 +17,7 @@
         android:paddingRight="@dimen/activity_searchresult_horizontal_margin"
         android:paddingStart="@dimen/activity_searchresult_horizontal_margin"
         android:paddingTop="@dimen/activity_searchresult_vertical_margin"
-        tools:context="com.cheatdatabase.MainActivity">
+        tools:context="com.cheatdatabase.activity.MainActivity">
 
         <ExpandableListView
             android:id="@+id/listView"

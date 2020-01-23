@@ -12,7 +12,7 @@ import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.Theme;
-import com.cheatdatabase.MainActivity;
+import com.cheatdatabase.activity.MainActivity;
 import com.cheatdatabase.R;
 import com.cheatdatabase.helpers.DistinctValues;
 import com.cheatdatabase.helpers.Konstanten;

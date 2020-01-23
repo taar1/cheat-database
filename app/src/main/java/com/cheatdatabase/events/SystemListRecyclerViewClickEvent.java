@@ -1,6 +1,6 @@
 package com.cheatdatabase.events;
 
-import com.cheatdatabase.businessobjects.SystemPlatform;
+import com.cheatdatabase.model.SystemPlatform;
 
 /**
  * Created by Dominik on 01.06.2015.

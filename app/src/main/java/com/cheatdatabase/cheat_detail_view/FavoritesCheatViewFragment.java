@@ -27,10 +27,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cheatdatabase.R;
-import com.cheatdatabase.businessobjects.Cheat;
-import com.cheatdatabase.businessobjects.Game;
-import com.cheatdatabase.businessobjects.Member;
-import com.cheatdatabase.businessobjects.Screenshot;
+import com.cheatdatabase.model.Cheat;
+import com.cheatdatabase.model.Game;
+import com.cheatdatabase.model.Member;
+import com.cheatdatabase.model.Screenshot;
 import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.helpers.Tools;
