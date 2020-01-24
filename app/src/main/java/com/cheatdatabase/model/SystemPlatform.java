@@ -16,7 +16,6 @@ public class SystemPlatform implements Parcelable {
     private Game[] games;
     private long lastModTimeStamp;
 
-    @Inject
     public SystemPlatform(int systemId, String systemName, String dateLocallyAdded) {
         super();
         this.systemId = systemId;
@@ -24,7 +23,6 @@ public class SystemPlatform implements Parcelable {
         this.dateLocallyAdded = dateLocallyAdded;
     }
 
-    @Inject
     public SystemPlatform(int systemId, String systemName) {
         super();
         this.systemId = systemId;
@@ -36,7 +34,6 @@ public class SystemPlatform implements Parcelable {
 
     }
 
-    @Inject
     protected SystemPlatform(Parcel in) {
         systemId = in.readInt();
         gameCount = in.readInt();

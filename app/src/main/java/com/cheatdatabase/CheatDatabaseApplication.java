@@ -25,11 +25,9 @@ import org.json.JSONObject;
 import java.util.List;
 import java.util.TreeMap;
 
-import dagger.android.AndroidInjector;
-import dagger.android.DaggerApplication;
 import io.fabric.sdk.android.Fabric;
 
-public class CheatDatabaseApplication extends DaggerApplication implements Application.ActivityLifecycleCallbacks {
+public class CheatDatabaseApplication extends Application implements Application.ActivityLifecycleCallbacks {
 
     private static final String TAG = CheatDatabaseApplication.class.getSimpleName();
 
@@ -75,11 +73,6 @@ public class CheatDatabaseApplication extends DaggerApplication implements Appli
         sAppContext = getApplicationContext();
 
         init();
-    }
-
-    @Override
-    protected AndroidInjector<? extends DaggerApplication> applicationInjector() {
-        return null;
     }
 
     private void init() {

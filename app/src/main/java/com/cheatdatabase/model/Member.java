@@ -21,7 +21,6 @@ public class Member implements Parcelable {
     public Member() {
     }
 
-    @Inject
     public Member(String username, String password, String email, int mid, boolean banned) {
         this.username = username;
         this.password = password;
@@ -30,7 +29,6 @@ public class Member implements Parcelable {
         this.banned = banned;
     }
 
-    @Inject
     protected Member(Parcel in) {
         username = in.readString();
         password = in.readString();

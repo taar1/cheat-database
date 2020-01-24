@@ -35,10 +35,8 @@ public class Cheat extends Game implements Parcelable {
 
     @Inject
     public Cheat() {
-
     }
 
-    @Inject
     public Cheat(int gameId, String gameName, int cheatId, String cheatTitle, String cheatText, int languageId, int systemId, String systemName, boolean walkthroughFormat) {
         super(gameId, gameName, systemId, systemName);
         this.cheatId = cheatId;
@@ -48,7 +46,6 @@ public class Cheat extends Game implements Parcelable {
         this.walkthroughFormat = walkthroughFormat;
     }
 
-    @Inject
     protected Cheat(Parcel in) {
         // Attention: The order of writing and reading the parcel MUST match.
         screenshots = in.readByte() != 0;

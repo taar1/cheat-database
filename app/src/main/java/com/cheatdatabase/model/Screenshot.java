@@ -30,7 +30,6 @@ public class Screenshot implements Parcelable {
 
     }
 
-    @Inject
     public Screenshot(String kbyteSize, String filename, int cheatId) {
         super();
         this.kbyteSize = kbyteSize;
@@ -38,7 +37,6 @@ public class Screenshot implements Parcelable {
         this.cheatId = cheatId;
     }
 
-    @Inject
     protected Screenshot(Parcel in) {
         // Attention: The order of writing and reading the parcel MUST match.
         kbyteSize = in.readString();

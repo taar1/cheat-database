@@ -29,10 +29,6 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.MenuItemCompat;
 
 import com.cheatdatabase.R;
-import com.cheatdatabase.model.Cheat;
-import com.cheatdatabase.model.ForumPost;
-import com.cheatdatabase.model.Game;
-import com.cheatdatabase.model.Member;
 import com.cheatdatabase.callbacks.GenericCallback;
 import com.cheatdatabase.dialogs.CheatMetaDialog;
 import com.cheatdatabase.dialogs.RateCheatMaterialDialog;
@@ -43,6 +39,12 @@ import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.helpers.Tools;
 import com.cheatdatabase.helpers.Webservice;
+import com.cheatdatabase.model.Cheat;
+import com.cheatdatabase.model.CheatComponent;
+import com.cheatdatabase.model.DaggerCheatComponent;
+import com.cheatdatabase.model.ForumPost;
+import com.cheatdatabase.model.Game;
+import com.cheatdatabase.model.Member;
 import com.facebook.ads.AdSize;
 import com.facebook.ads.AdView;
 import com.google.gson.Gson;
@@ -93,7 +95,6 @@ public class CheatForumActivity extends AppCompatActivity {
     @BindView(R.id.banner_container)
     LinearLayout facebookBanner;
     private AdView adView;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

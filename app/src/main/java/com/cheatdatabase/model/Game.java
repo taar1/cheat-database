@@ -23,16 +23,13 @@ public class Game implements Parcelable {
         cheatList = new ArrayList<>();
     }
 
-    @Inject
     public Game(int gameId, String gameName, int systemId, String systemName) {
-//        super(systemId, systemName);
         this.gameId = gameId;
         this.gameName = gameName;
         this.systemId = systemId;
         this.systemName = systemName;
     }
 
-    @Inject
     protected Game(Parcel in) {
         // Attention: The order of writing and reading the parcel MUST match.
         cheatList = in.createTypedArrayList(Cheat.CREATOR);
