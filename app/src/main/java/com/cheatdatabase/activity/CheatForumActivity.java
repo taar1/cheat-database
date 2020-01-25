@@ -40,8 +40,6 @@ import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.helpers.Tools;
 import com.cheatdatabase.helpers.Webservice;
 import com.cheatdatabase.model.Cheat;
-import com.cheatdatabase.model.CheatComponent;
-import com.cheatdatabase.model.DaggerCheatComponent;
 import com.cheatdatabase.model.ForumPost;
 import com.cheatdatabase.model.Game;
 import com.cheatdatabase.model.Member;

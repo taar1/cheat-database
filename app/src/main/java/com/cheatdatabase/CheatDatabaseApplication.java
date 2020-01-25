@@ -8,6 +8,7 @@ import android.net.ConnectivityManager;
 import android.os.Bundle;
 
 import com.cheatdatabase.activity.MainActivity;
+import com.cheatdatabase.di.DaggerAppComponent;
 import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.TrackingUtils;
 import com.cheatdatabase.model.Cheat;
@@ -25,9 +26,12 @@ import org.json.JSONObject;
 import java.util.List;
 import java.util.TreeMap;
 
+import dagger.android.AndroidInjector;
+import dagger.android.HasAndroidInjector;
+import dagger.android.support.DaggerApplication;
 import io.fabric.sdk.android.Fabric;
 
-public class CheatDatabaseApplication extends Application implements Application.ActivityLifecycleCallbacks {
+public class CheatDatabaseApplication extends DaggerApplication implements HasAndroidInjector, Application.ActivityLifecycleCallbacks {
 
     private static final String TAG = CheatDatabaseApplication.class.getSimpleName();
 
@@ -42,6 +46,18 @@ public class CheatDatabaseApplication extends Application implements Application
     private ConnectivityManager connectivityManager;
 
     private boolean isActivityVisible = false;
+
+    @Override
+    protected AndroidInjector<? extends DaggerApplication> applicationInjector() {
+        return DaggerAppComponent.builder().build();
+//        return null;
+    }
+
+//    @Override
+//    protected AndroidInjector<? extends DaggerApplication> applicationInjector() {
+//        // TODO FIXME ???
+//        return null;
+//    }
 
     /**
      * Gets the default {@link Tracker} for this {@link CheatDatabaseApplication}.
@@ -74,6 +90,7 @@ public class CheatDatabaseApplication extends Application implements Application
 
         init();
     }
+
 
     private void init() {
         Fabric.with(this, new Crashlytics());

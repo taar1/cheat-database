@@ -7,9 +7,9 @@ import android.view.ViewGroup;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cheatdatabase.R;
-import com.cheatdatabase.model.SystemPlatform;
 import com.cheatdatabase.holders.SystemListViewItemHolder;
 import com.cheatdatabase.listeners.OnSystemListItemSelectedListener;
+import com.cheatdatabase.model.SystemPlatform;
 
 import java.util.ArrayList;
 import java.util.Collections;

@@ -14,14 +14,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.cheatdatabase.activity.GamesBySystemListActivity;
 import com.cheatdatabase.R;
+import com.cheatdatabase.activity.GamesBySystemListActivity;
 import com.cheatdatabase.adapters.SystemsRecycleListViewAdapter;
-import com.cheatdatabase.model.SystemPlatform;
 import com.cheatdatabase.helpers.DatabaseHelper;
 import com.cheatdatabase.helpers.Tools;
 import com.cheatdatabase.helpers.Webservice;
 import com.cheatdatabase.listeners.OnSystemListItemSelectedListener;
+import com.cheatdatabase.model.SystemPlatform;
 import com.cheatdatabase.widgets.DividerDecoration;
 import com.google.gson.Gson;
 

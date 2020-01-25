@@ -3,6 +3,10 @@ package com.cheatdatabase.helpers;
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.util.Log;
+import android.widget.ArrayAdapter;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
 
 import com.cheatdatabase.R;
 import com.cheatdatabase.model.Cheat;
@@ -13,6 +17,7 @@ import com.cheatdatabase.model.Screenshot;
 import com.cheatdatabase.model.SystemPlatform;
 import com.cheatdatabase.model.WelcomeMessage;
 import com.cheatdatabase.callbacks.RepositoryEntityListCallback;
+import com.cheatdatabase.rest.RestApi;
 import com.crashlytics.android.Crashlytics;
 import com.google.gson.Gson;
 
@@ -36,6 +41,12 @@ import java.util.List;
 import java.util.Map;
 
 import needle.Needle;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.http.Body;
 
 /**
  * REST Calls class.
@@ -634,6 +645,71 @@ public class Webservice {
      * @return
      */
     public static void getCheatList(Game game, int memberId, boolean isAchievementsEnabled, final RepositoryEntityListCallback<Cheat> callback) {
+        Log.d(TAG, "XXXXX getCheatList() 1");
+
+        // TODO switch to REST/RETROFIT method here
+
+        //Creating a retrofit object
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(Konstanten.BASE_URL_REST)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        //creating the postApi interface
+        RestApi postApi = retrofit.create(RestApi.class);
+
+        //making the call object
+        Call<List<Cheat>> call = postApi.getCheatsByGameId(game.getGameId());
+        call.enqueue(new Callback<List<Cheat>>() {
+            @Override
+            public void onResponse(@NonNull Call<List<Cheat>> call, @NonNull Response<List<Cheat>> response) {
+                Log.d(TAG, "XXXXX getCheatList() 2");
+
+                List<Cheat> postList = response.body();
+
+                //Creating a String array for the Listview
+                String[] posts = new String[postList.size()];
+
+                //looping through all the posts
+                for (int i = 0; i < postList.size(); i++){
+                    posts[i] = postList.get(i).getCheatTitle();
+
+                    Log.d(TAG, "XXXXX onResponse: " + posts[i]);
+                }
+
+                //displaying the string array into listview
+                //listView.setAdapter(new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_list_item_1, posts));
+            }
+
+            @Override
+            public void onFailure(Call<List<Cheat>> call, Throwable t) {
+                Log.d(TAG, "XXXXX getCheatList() 3");
+
+                // TODO FIXME komme hier noch in die exception rein beim aufrufen der cheat-liste per game-ID
+                // TODO FIXME komme hier noch in die exception rein beim aufrufen der cheat-liste per game-ID
+                // TODO FIXME komme hier noch in die exception rein beim aufrufen der cheat-liste per game-ID
+                // TODO FIXME komme hier noch in die exception rein beim aufrufen der cheat-liste per game-ID
+                // TODO FIXME komme hier noch in die exception rein beim aufrufen der cheat-liste per game-ID
+                // TODO FIXME komme hier noch in die exception rein beim aufrufen der cheat-liste per game-ID
+                // TODO FIXME komme hier noch in die exception rein beim aufrufen der cheat-liste per game-ID
+                // TODO FIXME komme hier noch in die exception rein beim aufrufen der cheat-liste per game-ID
+                // TODO FIXME komme hier noch in die exception rein beim aufrufen der cheat-liste per game-ID
+                // TODO FIXME komme hier noch in die exception rein beim aufrufen der cheat-liste per game-ID
+                // TODO FIXME komme hier noch in die exception rein beim aufrufen der cheat-liste per game-ID
+                // TODO FIXME komme hier noch in die exception rein beim aufrufen der cheat-liste per game-ID
+                // TODO FIXME komme hier noch in die exception rein beim aufrufen der cheat-liste per game-ID
+                // TODO FIXME komme hier noch in die exception rein beim aufrufen der cheat-liste per game-ID
+                // TODO FIXME komme hier noch in die exception rein beim aufrufen der cheat-liste per game-ID
+                // TODO FIXME komme hier noch in die exception rein beim aufrufen der cheat-liste per game-ID
+                // TODO FIXME komme hier noch in die exception rein beim aufrufen der cheat-liste per game-ID
+
+                //Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                Log.e(TAG, "XXXXX onFailure: " + t.getMessage(), t);
+
+            }
+        });
+
+
 
         Needle.onBackgroundThread().execute(() -> {
             String systemString = getCheatListAsString(game.getGameId(), memberId, isAchievementsEnabled);

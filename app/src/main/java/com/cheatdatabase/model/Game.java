@@ -4,6 +4,8 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,11 +13,17 @@ import javax.inject.Inject;
 
 public class Game implements Parcelable {
 
+    @SerializedName("system_id")
     private int systemId;
+    @SerializedName("system_name")
     private String systemName;
+    @SerializedName("cheats")
     private List<Cheat> cheatList;
+    @SerializedName("game_id")
     private int gameId;
+    @SerializedName("cheats_count")
     private int cheatsCount;
+    @SerializedName("game_name")
     private String gameName;
 
     @Inject

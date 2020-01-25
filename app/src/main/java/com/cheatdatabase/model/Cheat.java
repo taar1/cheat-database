@@ -7,6 +7,7 @@ import android.util.Log;
 
 import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Tools;
+import com.google.gson.annotations.SerializedName;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -26,12 +27,44 @@ import javax.inject.Inject;
  */
 public class Cheat extends Game implements Parcelable {
 
-    private String cheatTitle, cheatText, created, author;
+    @SerializedName("id")
+    private int cheatId;
+    @SerializedName("title")
+    private String cheatTitle;
+    @SerializedName("cheat")
+    private String cheatText;
+    @SerializedName("lang")
+    private int languageId;
+    @SerializedName("style")
+    private int style; // 1 = normal cheat, 2 = walkthrough
+    @SerializedName("created")
+    private String created;
+    @SerializedName("author")
+    private String author;
+    @SerializedName("member")
     private Member submittingMember;
-    private float rating, memberRating;
+    @SerializedName("rating")
+    private float rating;
+    @SerializedName("member_rating")
+    private float memberRating;
+    @SerializedName("screenshots")
     private List<Screenshot> screenshotList = new ArrayList<>();
-    private int cheatId, languageId, views, votes, viewsLifetime, viewsToday, forumCount;
-    private boolean walkthroughFormat, screenshots;
+
+
+    @SerializedName("views")
+    private int views;
+    @SerializedName("votes")
+    private int votes;
+    @SerializedName("views_lifetime")
+    private int viewsLifetime;
+    @SerializedName("views_today")
+    private int viewsToday;
+    @SerializedName("forum_count")
+    private int forumCount;
+    @SerializedName("is_walkthrough")
+    private boolean walkthroughFormat;
+    @SerializedName("has_screenshots")
+    private boolean screenshots;
 
     @Inject
     public Cheat() {

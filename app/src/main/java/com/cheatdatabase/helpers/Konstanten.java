@@ -9,6 +9,7 @@ public class Konstanten {
     // URL Konstanten
     public final static String BASE_URL = "https://www.cheat-database.com/";
     public final static String BASE_URL_ANDROID = "https://www.cheat-database.com/android/json/";
+    public final static String BASE_URL_REST = "https://www.cheat-database.com/rest/v1/";
     public final static String SCREENSHOT_ROOT_WEBDIR = "https://www.cheat-database.com/cheatpics/";
     public final static String WEBDIR_MEMBER_AVATAR = "https://www.cheat-database.com/getblobimage.php?blobid=";
 
