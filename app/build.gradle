@@ -150,6 +150,9 @@ dependencies {
     implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
     implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
 
+    //Logging Network Calls
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.10.0'
+
     // INMOBI ADS START
     implementation 'com.inmobi.monetization:inmobi-ads:8.2.0'
     implementation 'com.google.android.gms:play-services-basement:17.1.1'

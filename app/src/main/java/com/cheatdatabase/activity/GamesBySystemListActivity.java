@@ -22,22 +22,20 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.cheatdatabase.CheatDatabaseApplication;
 import com.cheatdatabase.R;
 import com.cheatdatabase.adapters.GamesBySystemRecycleListViewAdapter;
-import com.cheatdatabase.model.Game;
-import com.cheatdatabase.model.Member;
-import com.cheatdatabase.model.SystemPlatform;
 import com.cheatdatabase.callbacks.RepositoryEntityListCallback;
 import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.helpers.Tools;
 import com.cheatdatabase.helpers.Webservice;
 import com.cheatdatabase.listeners.OnGameListItemSelectedListener;
+import com.cheatdatabase.model.Game;
+import com.cheatdatabase.model.Member;
+import com.cheatdatabase.model.SystemPlatform;
 import com.cheatdatabase.widgets.DividerDecoration;
 import com.facebook.ads.NativeAd;
 import com.facebook.ads.NativeAdsManager;
 import com.google.gson.Gson;
 import com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView;
-
-import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -286,7 +284,6 @@ public class GamesBySystemListActivity extends AppCompatActivity implements OnGa
 
     @Override
     protected void onStop() {
-        EventBus.getDefault().unregister(this);
         Reachability.unregister(this);
         super.onStop();
     }

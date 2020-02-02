@@ -1,6 +1,7 @@
 package com.cheatdatabase.activity;
 
 import android.annotation.TargetApi;
+import android.app.Application;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
@@ -30,6 +31,7 @@ import androidx.fragment.app.FragmentTransaction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.Theme;
 import com.appbrain.AppBrain;
+import com.cheatdatabase.CheatDatabaseApplication;
 import com.cheatdatabase.R;
 import com.cheatdatabase.dialogs.RateAppDialog;
 import com.cheatdatabase.events.GenericEvent;
@@ -43,7 +45,9 @@ import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.helpers.Tools;
 import com.cheatdatabase.helpers.TrackingUtils;
+import com.cheatdatabase.model.Cheat;
 import com.cheatdatabase.model.Member;
+import com.cheatdatabase.rest.RestApi;
 import com.cheatdatabase.search.SearchSuggestionProvider;
 import com.facebook.ads.AdSize;
 import com.facebook.ads.AdView;
@@ -56,11 +60,18 @@ import com.inmobi.sdk.InMobiSdk;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import java.util.List;
 import java.util.Random;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -83,6 +94,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private FragmentManager fragmentManager;
     private FragmentTransaction fragmentTransaction;
 
+    @Inject
+    Retrofit retrofit;
+
+    @Inject
+    Application application;
+
+    private RestApi apiService;
+
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
     @BindView(R.id.drawer_layout)
@@ -100,19 +119,26 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @BindView(R.id.inmobi_banner)
     InMobiBanner inMobiBanner;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
+        // Dagger start
+        ((CheatDatabaseApplication) getApplication()).getNetworkComponent().inject(this);
+        apiService = retrofit.create(RestApi.class);
+        // Dagger end
+
+
         mFragmentId = getIntent().getIntExtra("mFragmentId", 0);
 
         init();
         prepareAdBanner();
 
-        fragmentTransaction.replace(R.id.content_frame, SystemListFragment.newInstance(), SystemListFragment.class.getSimpleName()).commit();
+        SystemListFragment fragment = SystemListFragment.newInstance();
+        fragment.setMainActivity(this);
+        fragmentTransaction.replace(R.id.content_frame, fragment, SystemListFragment.class.getSimpleName()).commit();
 
         actionBarDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, mToolbar, R.string.drawer_open, R.string.drawer_close);
         mDrawerLayout.addDrawerListener(actionBarDrawerToggle);
@@ -432,10 +458,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void showGameSystemsFragment() {
         mToolbar.setTitle(R.string.app_name);
         fragmentTransaction.addToBackStack(SystemListFragment.class.getSimpleName());
-        fragmentManager.beginTransaction().replace(R.id.content_frame, SystemListFragment.newInstance(), SystemListFragment.class.getSimpleName()).commit();
+
+        SystemListFragment fragment = SystemListFragment.newInstance();
+        fragment.setMainActivity(this);
+        fragmentManager.beginTransaction().replace(R.id.content_frame, fragment, SystemListFragment.class.getSimpleName()).commit();
 
         floatingActionButton.show();
         mDrawerLayout.closeDrawers();
+    }
+
+    public RestApi getApiService() {
+        return apiService;
     }
 }
 

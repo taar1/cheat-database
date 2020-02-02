@@ -3,12 +3,11 @@ package com.cheatdatabase.helpers;
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.util.Log;
-import android.widget.ArrayAdapter;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
 import com.cheatdatabase.R;
+import com.cheatdatabase.callbacks.RepositoryEntityListCallback;
 import com.cheatdatabase.model.Cheat;
 import com.cheatdatabase.model.ForumPost;
 import com.cheatdatabase.model.Game;
@@ -16,7 +15,6 @@ import com.cheatdatabase.model.Member;
 import com.cheatdatabase.model.Screenshot;
 import com.cheatdatabase.model.SystemPlatform;
 import com.cheatdatabase.model.WelcomeMessage;
-import com.cheatdatabase.callbacks.RepositoryEntityListCallback;
 import com.cheatdatabase.rest.RestApi;
 import com.crashlytics.android.Crashlytics;
 import com.google.gson.Gson;
@@ -40,13 +38,16 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import javax.inject.Inject;
+
 import needle.Needle;
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-import retrofit2.http.Body;
 
 /**
  * REST Calls class.
@@ -54,6 +55,19 @@ import retrofit2.http.Body;
 public class Webservice {
 
     private static final String TAG = Webservice.class.getSimpleName();
+
+    private final RestApi restApi;
+
+    @Inject
+    public Webservice(RestApi restApi) {
+        this.restApi = restApi;
+
+        Log.d(TAG, "XXXXXXXXXXX Webservice()");
+
+        if (restApi == null) {
+            Log.d(TAG, "XXXXXXXXXXX Webservice: REST API IS NULL");
+        }
+    }
 
     /**
      * Holt eine Liste von Games von einem System anhand des übergebenen
@@ -126,6 +140,8 @@ public class Webservice {
         return responseCode;
     }
 
+
+
     /**
      * Universal Search
      *
@@ -167,6 +183,8 @@ public class Webservice {
 
         return ret;
     }
+
+
 
     /**
      * Holt alle Cheat-IDs, -Titel und -Inhalte von Nicht-Walkthroughs anhand
@@ -241,6 +259,9 @@ public class Webservice {
         return member;
 
     }
+
+
+
 
     /**
      * Loginprozess: MEMBER_ID = Erfolgreich, 0 = nicht erfolgreich
@@ -472,91 +493,93 @@ public class Webservice {
         return cheats;
     }
 
-    /**
-     * Holt alle initialen Informationen und speichert sie ins Flat-File: -
-     * Totale Anzahl Cheats - 3 neuste Cheats - Anzahl Games pro System
-     */
-    public static void getInitialData(SharedPreferences settings) {
-        String newCheats = executeGet(Konstanten.BASE_URL_ANDROID + "getInitialData.php");
 
-        Gson gson = new Gson();
-        Cheat[] cheats;
-        JSONObject jo;
-        JSONArray jaNewCheats, jaGamesPerSystem;
 
-        SharedPreferences.Editor editor = settings.edit();
+//    /**
+//     * Holt alle initialen Informationen und speichert sie ins Flat-File: -
+//     * Totale Anzahl Cheats - 3 neuste Cheats - Anzahl Games pro System
+//     */
+//    public static void getInitialData(SharedPreferences settings) {
+//        String newCheats = executeGet(Konstanten.BASE_URL_ANDROID + "getInitialData.php");
+//
+//        Gson gson = new Gson();
+//        Cheat[] cheats;
+//        JSONObject jo;
+//        JSONArray jaNewCheats, jaGamesPerSystem;
+//
+//        SharedPreferences.Editor editor = settings.edit();
+//
+//        try {
+//            jo = new JSONObject(newCheats);
+//            jaNewCheats = jo.getJSONArray("cheats");
+//            jaGamesPerSystem = jo.getJSONArray("gps");
+//
+//            int totalCheats = jo.getInt("totalCheats");
+//
+//            cheats = new Cheat[jaNewCheats.length()];
+//            for (int i = 0; i < jaNewCheats.length(); i++) {
+//                JSONObject cheatsObject = jaNewCheats.getJSONObject(i);
+//                int gameIdValue = cheatsObject.getInt("gid");
+//                int cheatIdValue = cheatsObject.getInt("cid");
+//                String gameNameValue = cheatsObject.getString("name");
+//                String titleValue = cheatsObject.getString("title");
+//                String systemValue = cheatsObject.getString("system");
+//
+//                Cheat tmpCheat = new Cheat();
+//                tmpCheat.setGameId(gameIdValue);
+//                tmpCheat.setCheatId(cheatIdValue);
+//                tmpCheat.setGameName(gameNameValue);
+//                tmpCheat.setCheatTitle(titleValue);
+//                tmpCheat.setSystemName(systemValue);
+//
+//                cheats[i] = tmpCheat;
+//            }
+//
+//            /*
+//             * Neue Cheats ins Flat-File speichern
+//             */
+//            String cheat1 = gson.toJson(cheats[0]);
+//            String cheat2 = gson.toJson(cheats[1]);
+//            String cheat3 = gson.toJson(cheats[2]);
+//            editor.putString(Konstanten.PREF_NEWCHEAT1_VARIABLE, cheat1);
+//            editor.putString(Konstanten.PREF_NEWCHEAT2_VARIABLE, cheat2);
+//            editor.putString(Konstanten.PREF_NEWCHEAT3_VARIABLE, cheat3);
+//            editor.putString(Konstanten.PREF_NEWCHEATS_LAST_UPDATE_VARIABLE, Tools.now("yyyy-MM-dd"));
+//
+//            /*
+//             * Total Cheats ins Flat-File speichern
+//             */
+//            editor.putInt(Konstanten.PREF_TOTAL_CHEATS_VARIABLE, totalCheats);
+//
+//            /*
+//             * Anzahl Games pro System auslesen und ins Flat-File speichern
+//             */
+//            for (int j = 0; j < jaGamesPerSystem.length(); j++) {
+//                JSONObject gpsObject = jaGamesPerSystem.getJSONObject(j);
+//                int sysId = gpsObject.getInt("s");
+//                int count = gpsObject.getInt("c");
+//
+//                editor.putInt(String.valueOf(sysId), count);
+//            }
+//
+//            editor.apply();
+//        } catch (JSONException e) {
+//            Log.e(TAG, "JSONException: " + e.getLocalizedMessage());
+//        }
+//    }
 
-        try {
-            jo = new JSONObject(newCheats);
-            jaNewCheats = jo.getJSONArray("cheats");
-            jaGamesPerSystem = jo.getJSONArray("gps");
-
-            int totalCheats = jo.getInt("totalCheats");
-
-            cheats = new Cheat[jaNewCheats.length()];
-            for (int i = 0; i < jaNewCheats.length(); i++) {
-                JSONObject cheatsObject = jaNewCheats.getJSONObject(i);
-                int gameIdValue = cheatsObject.getInt("gid");
-                int cheatIdValue = cheatsObject.getInt("cid");
-                String gameNameValue = cheatsObject.getString("name");
-                String titleValue = cheatsObject.getString("title");
-                String systemValue = cheatsObject.getString("system");
-
-                Cheat tmpCheat = new Cheat();
-                tmpCheat.setGameId(gameIdValue);
-                tmpCheat.setCheatId(cheatIdValue);
-                tmpCheat.setGameName(gameNameValue);
-                tmpCheat.setCheatTitle(titleValue);
-                tmpCheat.setSystemName(systemValue);
-
-                cheats[i] = tmpCheat;
-            }
-
-            /*
-             * Neue Cheats ins Flat-File speichern
-             */
-            String cheat1 = gson.toJson(cheats[0]);
-            String cheat2 = gson.toJson(cheats[1]);
-            String cheat3 = gson.toJson(cheats[2]);
-            editor.putString(Konstanten.PREF_NEWCHEAT1_VARIABLE, cheat1);
-            editor.putString(Konstanten.PREF_NEWCHEAT2_VARIABLE, cheat2);
-            editor.putString(Konstanten.PREF_NEWCHEAT3_VARIABLE, cheat3);
-            editor.putString(Konstanten.PREF_NEWCHEATS_LAST_UPDATE_VARIABLE, Tools.now("yyyy-MM-dd"));
-
-            /*
-             * Total Cheats ins Flat-File speichern
-             */
-            editor.putInt(Konstanten.PREF_TOTAL_CHEATS_VARIABLE, totalCheats);
-
-            /*
-             * Anzahl Games pro System auslesen und ins Flat-File speichern
-             */
-            for (int j = 0; j < jaGamesPerSystem.length(); j++) {
-                JSONObject gpsObject = jaGamesPerSystem.getJSONObject(j);
-                int sysId = gpsObject.getInt("s");
-                int count = gpsObject.getInt("c");
-
-                editor.putInt(String.valueOf(sysId), count);
-            }
-
-            editor.apply();
-        } catch (JSONException e) {
-            Log.e(TAG, "JSONException: " + e.getLocalizedMessage());
-        }
-    }
-
-    /**
-     * Holt eine Liste von Games von einem System anhand des übergebenen
-     * Suchstrings und liefert sie als Game-Objekte in einem Game-Array zurück.
-     *
-     * @param searchString
-     * @param systemId
-     * @return Game[]
-     */
-    public static Game[] searchGames(Activity activity, String searchString, int systemId) {
-        String gameListString = searchGamesAsString(searchString, systemId);
-        return Tools.getGameListConvertStringToGameList(activity, gameListString, systemId);
-    }
+//    /**
+//     * Holt eine Liste von Games von einem System anhand des übergebenen
+//     * Suchstrings und liefert sie als Game-Objekte in einem Game-Array zurück.
+//     *
+//     * @param searchString
+//     * @param systemId
+//     * @return Game[]
+//     */
+//    public static Game[] searchGames(Activity activity, String searchString, int systemId) {
+//        String gameListString = searchGamesAsString(searchString, systemId);
+//        return Tools.getGameListConvertStringToGameList(activity, gameListString, systemId);
+//    }
 
     public static Game[] searchGames(Activity activity, String searchString) {
         String gameListString = searchGamesAsString(searchString);
@@ -566,76 +589,76 @@ public class Webservice {
         return null;
     }
 
-    /**
-     * Holt eine Liste von Cheat-Titeln von einem Game anhand der übergebenen
-     * Game-ID und liefert sie als String-Arrays in einer ArrayList zurück.
-     *
-     * @param gameId
-     * @return Cheat[]
-     * @deprecated Ab Version 1.4.2 getCheatList(int gameId, int memberId)
-     * verwenden
-     */
-    @Deprecated
-    public static Cheat[] getCheatTitleList(int gameId) {
-        String systemString = getCheatTitleListAsString(gameId);
-
-        Cheat[] cheats = null;
-        JSONArray jArray;
-
-        try {
-            jArray = new JSONArray(systemString);
-            cheats = new Cheat[jArray.length()];
-
-            for (int i = 0; i < jArray.length(); i++) {
-
-                JSONObject jsonObject = jArray.getJSONObject(i);
-
-                int cheatId = jsonObject.getInt("id");
-                String cheatTitle = jsonObject.getString("title");
-                String cheatText = jsonObject.getString("cheat");
-                int language = jsonObject.getInt("lang");
-                int cheatFormat = jsonObject.getInt("format");
-                String rating = jsonObject.getString("rating");
-
-                Cheat cheat = new Cheat();
-
-                /*
-                 * Screenshot-Informationen auslesen
-                 */
-                JSONArray screenshots = jsonObject.getJSONArray("screenshots");
-                Screenshot[] screens = new Screenshot[screenshots.length()];
-                for (int j = 0; j < screenshots.length(); j++) {
-                    JSONArray screenshot = screenshots.getJSONArray(j);
-                    String filename = screenshot.getString(0);
-                    String filesize_kb = screenshot.getString(1);
-
-                    screens[j] = new Screenshot(filesize_kb, filename, cheatId);
-
-                    cheat.setHasScreenshots(true);
-                }
-                cheat.setScreenshotList(screens);
-
-                cheat.setCheatId(cheatId);
-                cheat.setCheatTitle(cheatTitle.replaceAll("\\\\", ""));
-                cheat.setCheatText(cheatText.replaceAll("\\\\", ""));
-                cheat.setLanguageId(language);
-                cheat.setRatingAverage(Float.parseFloat(rating));
-                cheat.setGameId(gameId);
-                if (cheatFormat == 2) {
-                    cheat.setWalkthroughFormat(true);
-                } else {
-                    cheat.setWalkthroughFormat(false);
-                }
-
-                cheats[i] = cheat;
-            }
-
-        } catch (JSONException e) {
-            Log.e(TAG, "JSONException: " + e.getLocalizedMessage());
-        }
-
-        return cheats;
-    }
+//    /**
+//     * Holt eine Liste von Cheat-Titeln von einem Game anhand der übergebenen
+//     * Game-ID und liefert sie als String-Arrays in einer ArrayList zurück.
+//     *
+//     * @param gameId
+//     * @return Cheat[]
+//     * @deprecated Ab Version 1.4.2 getCheatList(int gameId, int memberId)
+//     * verwenden
+//     */
+//    @Deprecated
+//    public static Cheat[] getCheatTitleList(int gameId) {
+//        String systemString = getCheatTitleListAsString(gameId);
+//
+//        Cheat[] cheats = null;
+//        JSONArray jArray;
+//
+//        try {
+//            jArray = new JSONArray(systemString);
+//            cheats = new Cheat[jArray.length()];
+//
+//            for (int i = 0; i < jArray.length(); i++) {
+//
+//                JSONObject jsonObject = jArray.getJSONObject(i);
+//
+//                int cheatId = jsonObject.getInt("id");
+//                String cheatTitle = jsonObject.getString("title");
+//                String cheatText = jsonObject.getString("cheat");
+//                int language = jsonObject.getInt("lang");
+//                int cheatFormat = jsonObject.getInt("format");
+//                String rating = jsonObject.getString("rating");
+//
+//                Cheat cheat = new Cheat();
+//
+//                /*
+//                 * Screenshot-Informationen auslesen
+//                 */
+//                JSONArray screenshots = jsonObject.getJSONArray("screenshots");
+//                Screenshot[] screens = new Screenshot[screenshots.length()];
+//                for (int j = 0; j < screenshots.length(); j++) {
+//                    JSONArray screenshot = screenshots.getJSONArray(j);
+//                    String filename = screenshot.getString(0);
+//                    String filesize_kb = screenshot.getString(1);
+//
+//                    screens[j] = new Screenshot(filesize_kb, filename, cheatId);
+//
+//                    cheat.setHasScreenshots(true);
+//                }
+//                cheat.setScreenshotList(screens);
+//
+//                cheat.setCheatId(cheatId);
+//                cheat.setCheatTitle(cheatTitle.replaceAll("\\\\", ""));
+//                cheat.setCheatText(cheatText.replaceAll("\\\\", ""));
+//                cheat.setLanguageId(language);
+//                cheat.setRatingAverage(Float.parseFloat(rating));
+//                cheat.setGameId(gameId);
+//                if (cheatFormat == 2) {
+//                    cheat.setWalkthroughFormat(true);
+//                } else {
+//                    cheat.setWalkthroughFormat(false);
+//                }
+//
+//                cheats[i] = cheat;
+//            }
+//
+//        } catch (JSONException e) {
+//            Log.e(TAG, "JSONException: " + e.getLocalizedMessage());
+//        }
+//
+//        return cheats;
+//    }
 
     /**
      * Holt alle Cheats inkl. Member- und Average-Rating anhand einer Game-ID
@@ -646,70 +669,6 @@ public class Webservice {
      */
     public static void getCheatList(Game game, int memberId, boolean isAchievementsEnabled, final RepositoryEntityListCallback<Cheat> callback) {
         Log.d(TAG, "XXXXX getCheatList() 1");
-
-        // TODO switch to REST/RETROFIT method here
-
-        //Creating a retrofit object
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(Konstanten.BASE_URL_REST)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        //creating the postApi interface
-        RestApi postApi = retrofit.create(RestApi.class);
-
-        //making the call object
-        Call<List<Cheat>> call = postApi.getCheatsByGameId(game.getGameId());
-        call.enqueue(new Callback<List<Cheat>>() {
-            @Override
-            public void onResponse(@NonNull Call<List<Cheat>> call, @NonNull Response<List<Cheat>> response) {
-                Log.d(TAG, "XXXXX getCheatList() 2");
-
-                List<Cheat> postList = response.body();
-
-                //Creating a String array for the Listview
-                String[] posts = new String[postList.size()];
-
-                //looping through all the posts
-                for (int i = 0; i < postList.size(); i++){
-                    posts[i] = postList.get(i).getCheatTitle();
-
-                    Log.d(TAG, "XXXXX onResponse: " + posts[i]);
-                }
-
-                //displaying the string array into listview
-                //listView.setAdapter(new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_list_item_1, posts));
-            }
-
-            @Override
-            public void onFailure(Call<List<Cheat>> call, Throwable t) {
-                Log.d(TAG, "XXXXX getCheatList() 3");
-
-                // TODO FIXME komme hier noch in die exception rein beim aufrufen der cheat-liste per game-ID
-                // TODO FIXME komme hier noch in die exception rein beim aufrufen der cheat-liste per game-ID
-                // TODO FIXME komme hier noch in die exception rein beim aufrufen der cheat-liste per game-ID
-                // TODO FIXME komme hier noch in die exception rein beim aufrufen der cheat-liste per game-ID
-                // TODO FIXME komme hier noch in die exception rein beim aufrufen der cheat-liste per game-ID
-                // TODO FIXME komme hier noch in die exception rein beim aufrufen der cheat-liste per game-ID
-                // TODO FIXME komme hier noch in die exception rein beim aufrufen der cheat-liste per game-ID
-                // TODO FIXME komme hier noch in die exception rein beim aufrufen der cheat-liste per game-ID
-                // TODO FIXME komme hier noch in die exception rein beim aufrufen der cheat-liste per game-ID
-                // TODO FIXME komme hier noch in die exception rein beim aufrufen der cheat-liste per game-ID
-                // TODO FIXME komme hier noch in die exception rein beim aufrufen der cheat-liste per game-ID
-                // TODO FIXME komme hier noch in die exception rein beim aufrufen der cheat-liste per game-ID
-                // TODO FIXME komme hier noch in die exception rein beim aufrufen der cheat-liste per game-ID
-                // TODO FIXME komme hier noch in die exception rein beim aufrufen der cheat-liste per game-ID
-                // TODO FIXME komme hier noch in die exception rein beim aufrufen der cheat-liste per game-ID
-                // TODO FIXME komme hier noch in die exception rein beim aufrufen der cheat-liste per game-ID
-                // TODO FIXME komme hier noch in die exception rein beim aufrufen der cheat-liste per game-ID
-
-                //Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
-                Log.e(TAG, "XXXXX onFailure: " + t.getMessage(), t);
-
-            }
-        });
-
-
 
         Needle.onBackgroundThread().execute(() -> {
             String systemString = getCheatListAsString(game.getGameId(), memberId, isAchievementsEnabled);
@@ -904,177 +863,177 @@ public class Webservice {
         return cheats;
     }
 
-    /**
-     * Holt alle Cheats verschachtelt von einem Mitglied.
-     *
-     * @param memberId
-     * @return SystemPlatform[]> Game[]> Cheat[]
-     */
-    public static SystemPlatform[] getCheatsByMemberIdNested(int memberId) {
-        SystemPlatform[] systems = null;
-        Game[] games;
-        Cheat[] cheats;
-        List<Game> temporaryGameList = new ArrayList<>();
-
-        JSONArray jArray;
-
-        Map<Integer, String> systemsHashMap = new HashMap<>();
-        Map<Integer, String> gamesHashMap = new HashMap<>();
-
-        try {
-            String urlParameters = "memberId=" + URLEncoder.encode(String.valueOf(memberId), "UTF-8");
-            String cheatsString = excutePost(Konstanten.BASE_URL_ANDROID + "getCheatsByMemberId.php", urlParameters);
-
-            jArray = new JSONArray(cheatsString);
-            cheats = new Cheat[jArray.length()];
-
-            for (int i = 0; i < jArray.length(); i++) {
-
-                JSONObject jsonObject = jArray.getJSONObject(i);
-
-                int cheatId = jsonObject.getInt("cheat_id");
-                int gameId = jsonObject.getInt("game_id");
-                String gameName = jsonObject.getString("gamename");
-                String cheatTitle = jsonObject.getString("title");
-                String cheatText = jsonObject.getString("cheat");
-                int language = jsonObject.getInt("lang");
-                int style = jsonObject.getInt("style");
-                String created = jsonObject.getString("created");
-                String rating = jsonObject.optString("rating", "0");
-                String system = jsonObject.getString("system");
-                int systemId = jsonObject.getInt("system_id");
-
-                systemsHashMap.put(systemId, system);
-                gamesHashMap.put(gameId, gameName);
-
-                // Games in ArrayList speichern, damit man spüter die
-                // System-ID und System-Name wieder rauskriegt
-                Game tmpGameX = new Game(gameId, gameName, systemId, system);
-                temporaryGameList.add(tmpGameX);
-
-                Cheat cheat = new Cheat();
-
-                JSONArray screenshotsArray = jsonObject.getJSONArray("screenshots");
-                Screenshot[] screens = new Screenshot[screenshotsArray.length()];
-                for (int x = 0; x < screenshotsArray.length(); x++) {
-                    screens[x] = new Screenshot(screenshotsArray.getJSONObject(x).getString("size"), screenshotsArray.getJSONObject(x).getString("url"), cheatId);
-                    cheat.setHasScreenshots(true);
-                }
-
-                cheat.setCheatId(cheatId);
-                cheat.setCheatTitle(cheatTitle.replaceAll("\\\\", ""));
-                cheat.setCheatText(cheatText.replaceAll("\\\\", ""));
-                cheat.setLanguageId(language);
-
-                if (style == 1) {
-                    cheat.setWalkthroughFormat(false);
-                } else {
-                    cheat.setWalkthroughFormat(true);
-                }
-
-                cheat.setCreated(created);
-                cheat.setRatingAverage(Float.parseFloat(rating));
-                cheat.setGameId(gameId);
-                cheat.setGameName(gameName);
-
-                cheats[i] = cheat;
-            }
-
-            Iterator<Map.Entry<Integer, String>> it1 = systemsHashMap.entrySet().iterator();
-            List<SystemPlatform> temporarySystemList = new ArrayList<>();
-            while (it1.hasNext()) {
-                Map.Entry<Integer, String> pairs1 = it1.next();
-                int tmpSystemId = Integer.valueOf(pairs1.getKey().toString());
-                String tmpSystemName = pairs1.getValue();
-
-                SystemPlatform tempSys = new SystemPlatform(tmpSystemId, tmpSystemName);
-                temporarySystemList.add(tempSys);
-            }
-            systems = new SystemPlatform[temporarySystemList.size()];
-            for (int m = 0; m < temporarySystemList.size(); m++) {
-                systems[m] = temporarySystemList.get(m);
-            }
-
-            Iterator<Map.Entry<Integer, String>> it2 = gamesHashMap.entrySet().iterator();
-            List<Game> temporaryInnerGameList = new ArrayList<>();
-            while (it2.hasNext()) {
-                Map.Entry<Integer, String> pairs2 = it2.next();
-                int tmpGameId = Integer.valueOf(pairs2.getKey().toString());
-                String tmpGameName = pairs2.getValue();
-                Game tmpGame = new Game();
-                tmpGame.setGameId(tmpGameId);
-                tmpGame.setGameName(tmpGameName);
-
-                /*
-                 * Dem Game-Objekt die System-ID und System-Namen ergünzen
-                 */
-                for (int k = 0; k < temporaryGameList.size(); k++) {
-                    Game gg = temporaryGameList.get(k);
-                    if (gg.getGameId() == tmpGameId) {
-                        tmpGame.setSystemId(gg.getSystemId());
-                        tmpGame.setSystemName(gg.getSystemName());
-                    }
-                }
-
-                List<Cheat> matchingCheats = new ArrayList<>();
-                for (Cheat cheat : cheats) {
-                    if (cheat.getGameId() == tmpGame.getGameId()) {
-                        matchingCheats.add(cheat);
-                    }
-                }
-
-                /*
-                 * Dem Game-Object die korrekte Anzahl Cheat-Objekten zuweisen
-                 */
-//                tmpGame.createCheatCollection(matchingCheats.size());
-
-                /*
-                 * Die passenden Cheats dem Game-Objekt hinzufügen
-                 */
-                for (int i = 0; i < matchingCheats.size(); i++) {
-                    tmpGame.addCheat(matchingCheats.get(i));
-                }
-
-                temporaryInnerGameList.add(tmpGame);
-            }
-
-            /*
-             * Die Games zum globalen Game-Array-Objekt hinzufügen
-             */
-            games = new Game[temporaryInnerGameList.size()];
-            for (int n = 0; n < temporaryInnerGameList.size(); n++) {
-                games[n] = temporaryInnerGameList.get(n);
-            }
-
-            /*
-             * Die passenden Games dem System[]-Objekt hinzufügen.
-             */
-            for (int j2 = 0; j2 < systems.length; j2++) {
-                SystemPlatform ss = systems[j2];
-
-                List<Game> matchingGames = new ArrayList<>();
-
-                for (Game game : games) {
-                    if (ss.getSystemId() == game.getSystemId()) {
-                        matchingGames.add(game);
-                    }
-                }
-                systems[j2].createGameCollection(matchingGames.size());
-
-                /*
-                 * Die passenden Game-Objekte dem System-Objekt hinzufügen
-                 */
-                for (Game game : matchingGames) {
-                    systems[j2].addGame(game);
-                }
-            }
-
-        } catch (JSONException | UnsupportedEncodingException e) {
-            Log.e(TAG, "JSONException | UnsupportedEncodingException: " + e.getLocalizedMessage());
-        }
-
-        return systems;
-    }
+//    /**
+//     * Holt alle Cheats verschachtelt von einem Mitglied.
+//     *
+//     * @param memberId
+//     * @return SystemPlatform[]> Game[]> Cheat[]
+//     */
+//    public static SystemPlatform[] getCheatsByMemberIdNested(int memberId) {
+//        SystemPlatform[] systems = null;
+//        Game[] games;
+//        Cheat[] cheats;
+//        List<Game> temporaryGameList = new ArrayList<>();
+//
+//        JSONArray jArray;
+//
+//        Map<Integer, String> systemsHashMap = new HashMap<>();
+//        Map<Integer, String> gamesHashMap = new HashMap<>();
+//
+//        try {
+//            String urlParameters = "memberId=" + URLEncoder.encode(String.valueOf(memberId), "UTF-8");
+//            String cheatsString = excutePost(Konstanten.BASE_URL_ANDROID + "getCheatsByMemberId.php", urlParameters);
+//
+//            jArray = new JSONArray(cheatsString);
+//            cheats = new Cheat[jArray.length()];
+//
+//            for (int i = 0; i < jArray.length(); i++) {
+//
+//                JSONObject jsonObject = jArray.getJSONObject(i);
+//
+//                int cheatId = jsonObject.getInt("cheat_id");
+//                int gameId = jsonObject.getInt("game_id");
+//                String gameName = jsonObject.getString("gamename");
+//                String cheatTitle = jsonObject.getString("title");
+//                String cheatText = jsonObject.getString("cheat");
+//                int language = jsonObject.getInt("lang");
+//                int style = jsonObject.getInt("style");
+//                String created = jsonObject.getString("created");
+//                String rating = jsonObject.optString("rating", "0");
+//                String system = jsonObject.getString("system");
+//                int systemId = jsonObject.getInt("system_id");
+//
+//                systemsHashMap.put(systemId, system);
+//                gamesHashMap.put(gameId, gameName);
+//
+//                // Games in ArrayList speichern, damit man spüter die
+//                // System-ID und System-Name wieder rauskriegt
+//                Game tmpGameX = new Game(gameId, gameName, systemId, system);
+//                temporaryGameList.add(tmpGameX);
+//
+//                Cheat cheat = new Cheat();
+//
+//                JSONArray screenshotsArray = jsonObject.getJSONArray("screenshots");
+//                Screenshot[] screens = new Screenshot[screenshotsArray.length()];
+//                for (int x = 0; x < screenshotsArray.length(); x++) {
+//                    screens[x] = new Screenshot(screenshotsArray.getJSONObject(x).getString("size"), screenshotsArray.getJSONObject(x).getString("url"), cheatId);
+//                    cheat.setHasScreenshots(true);
+//                }
+//
+//                cheat.setCheatId(cheatId);
+//                cheat.setCheatTitle(cheatTitle.replaceAll("\\\\", ""));
+//                cheat.setCheatText(cheatText.replaceAll("\\\\", ""));
+//                cheat.setLanguageId(language);
+//
+//                if (style == 1) {
+//                    cheat.setWalkthroughFormat(false);
+//                } else {
+//                    cheat.setWalkthroughFormat(true);
+//                }
+//
+//                cheat.setCreated(created);
+//                cheat.setRatingAverage(Float.parseFloat(rating));
+//                cheat.setGameId(gameId);
+//                cheat.setGameName(gameName);
+//
+//                cheats[i] = cheat;
+//            }
+//
+//            Iterator<Map.Entry<Integer, String>> it1 = systemsHashMap.entrySet().iterator();
+//            List<SystemPlatform> temporarySystemList = new ArrayList<>();
+//            while (it1.hasNext()) {
+//                Map.Entry<Integer, String> pairs1 = it1.next();
+//                int tmpSystemId = Integer.valueOf(pairs1.getKey().toString());
+//                String tmpSystemName = pairs1.getValue();
+//
+//                SystemPlatform tempSys = new SystemPlatform(tmpSystemId, tmpSystemName);
+//                temporarySystemList.add(tempSys);
+//            }
+//            systems = new SystemPlatform[temporarySystemList.size()];
+//            for (int m = 0; m < temporarySystemList.size(); m++) {
+//                systems[m] = temporarySystemList.get(m);
+//            }
+//
+//            Iterator<Map.Entry<Integer, String>> it2 = gamesHashMap.entrySet().iterator();
+//            List<Game> temporaryInnerGameList = new ArrayList<>();
+//            while (it2.hasNext()) {
+//                Map.Entry<Integer, String> pairs2 = it2.next();
+//                int tmpGameId = Integer.valueOf(pairs2.getKey().toString());
+//                String tmpGameName = pairs2.getValue();
+//                Game tmpGame = new Game();
+//                tmpGame.setGameId(tmpGameId);
+//                tmpGame.setGameName(tmpGameName);
+//
+//                /*
+//                 * Dem Game-Objekt die System-ID und System-Namen ergünzen
+//                 */
+//                for (int k = 0; k < temporaryGameList.size(); k++) {
+//                    Game gg = temporaryGameList.get(k);
+//                    if (gg.getGameId() == tmpGameId) {
+//                        tmpGame.setSystemId(gg.getSystemId());
+//                        tmpGame.setSystemName(gg.getSystemName());
+//                    }
+//                }
+//
+//                List<Cheat> matchingCheats = new ArrayList<>();
+//                for (Cheat cheat : cheats) {
+//                    if (cheat.getGameId() == tmpGame.getGameId()) {
+//                        matchingCheats.add(cheat);
+//                    }
+//                }
+//
+//                /*
+//                 * Dem Game-Object die korrekte Anzahl Cheat-Objekten zuweisen
+//                 */
+////                tmpGame.createCheatCollection(matchingCheats.size());
+//
+//                /*
+//                 * Die passenden Cheats dem Game-Objekt hinzufügen
+//                 */
+//                for (int i = 0; i < matchingCheats.size(); i++) {
+//                    tmpGame.addCheat(matchingCheats.get(i));
+//                }
+//
+//                temporaryInnerGameList.add(tmpGame);
+//            }
+//
+//            /*
+//             * Die Games zum globalen Game-Array-Objekt hinzufügen
+//             */
+//            games = new Game[temporaryInnerGameList.size()];
+//            for (int n = 0; n < temporaryInnerGameList.size(); n++) {
+//                games[n] = temporaryInnerGameList.get(n);
+//            }
+//
+//            /*
+//             * Die passenden Games dem System[]-Objekt hinzufügen.
+//             */
+//            for (int j2 = 0; j2 < systems.length; j2++) {
+//                SystemPlatform ss = systems[j2];
+//
+//                List<Game> matchingGames = new ArrayList<>();
+//
+//                for (Game game : games) {
+//                    if (ss.getSystemId() == game.getSystemId()) {
+//                        matchingGames.add(game);
+//                    }
+//                }
+//                systems[j2].createGameCollection(matchingGames.size());
+//
+//                /*
+//                 * Die passenden Game-Objekte dem System-Objekt hinzufügen
+//                 */
+//                for (Game game : matchingGames) {
+//                    systems[j2].addGame(game);
+//                }
+//            }
+//
+//        } catch (JSONException | UnsupportedEncodingException e) {
+//            Log.e(TAG, "JSONException | UnsupportedEncodingException: " + e.getLocalizedMessage());
+//        }
+//
+//        return systems;
+//    }
 
     /**
      * Loads all cheats from the member.
@@ -1397,24 +1356,24 @@ public class Webservice {
         }
     }
 
-    /**
-     * Gets a cheat by cheat ID and highlights
-     *
-     * @param cheatId
-     * @param highlights
-     * @return
-     */
-    public static String getCheatByIdHighlighted(int cheatId, String highlights) {
-        String returnString = null;
-        try {
-            String urlParameters = "cheatId=" + URLEncoder.encode(String.valueOf(cheatId), "UTF-8") + "&highlights=" + URLEncoder.encode(highlights.trim(), "UTF-8");
-            returnString = excutePost(Konstanten.BASE_URL_ANDROID + "getCheatTextByCheatIdHighlighted.php", urlParameters);
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-
-        return returnString;
-    }
+//    /**
+//     * Gets a cheat by cheat ID and highlights
+//     *
+//     * @param cheatId
+//     * @param highlights
+//     * @return
+//     */
+//    public static String getCheatByIdHighlighted(int cheatId, String highlights) {
+//        String returnString = null;
+//        try {
+//            String urlParameters = "cheatId=" + URLEncoder.encode(String.valueOf(cheatId), "UTF-8") + "&highlights=" + URLEncoder.encode(highlights.trim(), "UTF-8");
+//            returnString = excutePost(Konstanten.BASE_URL_ANDROID + "getCheatTextByCheatIdHighlighted.php", urlParameters);
+//        } catch (UnsupportedEncodingException e) {
+//            e.printStackTrace();
+//        }
+//
+//        return returnString;
+//    }
 
     /**
      * Einen Cheat melden.
@@ -1447,83 +1406,83 @@ public class Webservice {
         }
     }
 
-    /**
-     * Volltext-Suche in einem Array von Games oder in allen Games.
-     *
-     * @param query
-     * @param cheatIds          (z.b. 34,52345,234,123)
-     * @param gameIds           (z.b. 555,400,2500)
-     * @param systemIds         (z.b. 2,16,4)
-     * @param searchInTitlesToo (0 = Titel nicht durchsuchen, 1 = Titel durchsuchen)
-     * @return Cheat[]
-     * @link http://www.exampledepot.com/egs/java.net/Post.html
-     */
-    public static Cheat[] fulltextSearch(String query, String cheatIds, String gameIds, String systemIds, int searchInTitlesToo) {
-        return fulltextSearchConvertJSONStringToCheatArrayOffline(fulltextSearchToJSONString(query, cheatIds, gameIds, systemIds, searchInTitlesToo));
-    }
-
-    public static String fulltextSearchToJSONString(String query, String cheatIds, String gameIds, String systemIds, int searchInTitlesToo) {
-        String ret = null;
-        try {
-            String urlParameters = "executeGet=" + URLEncoder.encode(query, "UTF-8") +
-                    "&cheatIds=" + URLEncoder.encode(cheatIds, "UTF-8") +
-                    "&gameIds=" + URLEncoder.encode(gameIds, "UTF-8") +
-                    "&systemIds=" + URLEncoder.encode(systemIds, "UTF-8") +
-                    "&searchInTitlesToo=" + URLEncoder.encode(String.valueOf(searchInTitlesToo), "UTF-8");
-            ret = excutePost(Konstanten.BASE_URL_ANDROID + "searchFulltext.php", urlParameters);
-        } catch (UnsupportedEncodingException e) {
-            Crashlytics.logException(e);
-        }
-        return ret;
-    }
-
-    /**
-     * Wandelt den Rückgabestring bei der Volltextsuche in ein Cheat-Array um.
-     *
-     * @param jsonString
-     * @return
-     */
-    public static Cheat[] fulltextSearchConvertJSONStringToCheatArrayOffline(String jsonString) {
-        Cheat[] cheats = null;
-        JSONArray jArray;
-
-        try {
-            jArray = new JSONArray(jsonString);
-            cheats = new Cheat[jArray.length()];
-
-            for (int i = 0; i < jArray.length(); i++) {
-
-                JSONObject jsonObject = jArray.getJSONObject(i);
-                int cheatId = jsonObject.getInt("id");
-                int gameId = jsonObject.getInt("gid");
-                int systemId = jsonObject.getInt("sid");
-                String gameName = jsonObject.getString("name");
-                String cheatTitle = jsonObject.getString("title");
-                String cheatText = jsonObject.getString("cheat");
-
-                Cheat cheat = new Cheat();
-                cheat.setCheatId(cheatId);
-                cheat.setCheatText(cheatText.replaceAll("\\\\", ""));
-                cheat.setCheatTitle(cheatTitle.replaceAll("\\\\", ""));
-                cheat.setGameId(gameId);
-                cheat.setGameName(gameName.replaceAll("\\\\", ""));
-                cheat.setLanguageId(0); // FIXME
-                cheat.setRatingAverage(0); // FIXME
-                cheat.setHasScreenshots(false); // FIXME
-                cheat.setSystemId(systemId);
-                cheat.setSystemName(""); // FIXME
-                cheat.setWalkthroughFormat(false); // FIXME
-
-                cheats[i] = cheat;
-            }
-
-        } catch (JSONException e) {
-            Log.e(TAG, "JSONException: " + e.getLocalizedMessage());
-            Crashlytics.logException(e);
-        }
-
-        return cheats;
-    }
+//    /**
+//     * Volltext-Suche in einem Array von Games oder in allen Games.
+//     *
+//     * @param query
+//     * @param cheatIds          (z.b. 34,52345,234,123)
+//     * @param gameIds           (z.b. 555,400,2500)
+//     * @param systemIds         (z.b. 2,16,4)
+//     * @param searchInTitlesToo (0 = Titel nicht durchsuchen, 1 = Titel durchsuchen)
+//     * @return Cheat[]
+//     * @link http://www.exampledepot.com/egs/java.net/Post.html
+//     */
+//    public static Cheat[] fulltextSearch(String query, String cheatIds, String gameIds, String systemIds, int searchInTitlesToo) {
+//        return fulltextSearchConvertJSONStringToCheatArrayOffline(fulltextSearchToJSONString(query, cheatIds, gameIds, systemIds, searchInTitlesToo));
+//    }
+//
+//    public static String fulltextSearchToJSONString(String query, String cheatIds, String gameIds, String systemIds, int searchInTitlesToo) {
+//        String ret = null;
+//        try {
+//            String urlParameters = "executeGet=" + URLEncoder.encode(query, "UTF-8") +
+//                    "&cheatIds=" + URLEncoder.encode(cheatIds, "UTF-8") +
+//                    "&gameIds=" + URLEncoder.encode(gameIds, "UTF-8") +
+//                    "&systemIds=" + URLEncoder.encode(systemIds, "UTF-8") +
+//                    "&searchInTitlesToo=" + URLEncoder.encode(String.valueOf(searchInTitlesToo), "UTF-8");
+//            ret = excutePost(Konstanten.BASE_URL_ANDROID + "searchFulltext.php", urlParameters);
+//        } catch (UnsupportedEncodingException e) {
+//            Crashlytics.logException(e);
+//        }
+//        return ret;
+//    }
+//
+//    /**
+//     * Wandelt den Rückgabestring bei der Volltextsuche in ein Cheat-Array um.
+//     *
+//     * @param jsonString
+//     * @return
+//     */
+//    public static Cheat[] fulltextSearchConvertJSONStringToCheatArrayOffline(String jsonString) {
+//        Cheat[] cheats = null;
+//        JSONArray jArray;
+//
+//        try {
+//            jArray = new JSONArray(jsonString);
+//            cheats = new Cheat[jArray.length()];
+//
+//            for (int i = 0; i < jArray.length(); i++) {
+//
+//                JSONObject jsonObject = jArray.getJSONObject(i);
+//                int cheatId = jsonObject.getInt("id");
+//                int gameId = jsonObject.getInt("gid");
+//                int systemId = jsonObject.getInt("sid");
+//                String gameName = jsonObject.getString("name");
+//                String cheatTitle = jsonObject.getString("title");
+//                String cheatText = jsonObject.getString("cheat");
+//
+//                Cheat cheat = new Cheat();
+//                cheat.setCheatId(cheatId);
+//                cheat.setCheatText(cheatText.replaceAll("\\\\", ""));
+//                cheat.setCheatTitle(cheatTitle.replaceAll("\\\\", ""));
+//                cheat.setGameId(gameId);
+//                cheat.setGameName(gameName.replaceAll("\\\\", ""));
+//                cheat.setLanguageId(0); // FIXME
+//                cheat.setRatingAverage(0); // FIXME
+//                cheat.setHasScreenshots(false); // FIXME
+//                cheat.setSystemId(systemId);
+//                cheat.setSystemName(""); // FIXME
+//                cheat.setWalkthroughFormat(false); // FIXME
+//
+//                cheats[i] = cheat;
+//            }
+//
+//        } catch (JSONException e) {
+//            Log.e(TAG, "JSONException: " + e.getLocalizedMessage());
+//            Crashlytics.logException(e);
+//        }
+//
+//        return cheats;
+//    }
 
     /**
      * Aufrufen einer parameterlosen URL mit GZIP-Kompression

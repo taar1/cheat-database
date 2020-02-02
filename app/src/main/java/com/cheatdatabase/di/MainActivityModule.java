@@ -3,7 +3,6 @@ package com.cheatdatabase.di;
 import android.content.Context;
 
 import dagger.Module;
-import dagger.Provides;
 
 @Module
 public class MainActivityModule {
@@ -13,8 +12,4 @@ public class MainActivityModule {
         this.context = context;
     }
 
-    @Provides //scope is not necessary for parameters stored within the module
-    public Context context() {
-        return context;
-    }
 }

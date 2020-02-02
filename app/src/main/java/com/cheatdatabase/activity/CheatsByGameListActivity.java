@@ -1,5 +1,6 @@
 package com.cheatdatabase.activity;
 
+import android.app.Application;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
@@ -23,9 +24,6 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.cheatdatabase.CheatDatabaseApplication;
 import com.cheatdatabase.R;
 import com.cheatdatabase.adapters.CheatsByGameRecycleListViewAdapter;
-import com.cheatdatabase.model.Cheat;
-import com.cheatdatabase.model.Game;
-import com.cheatdatabase.model.Member;
 import com.cheatdatabase.callbacks.RepositoryEntityListCallback;
 import com.cheatdatabase.cheat_detail_view.CheatViewPageIndicatorActivity;
 import com.cheatdatabase.helpers.DatabaseHelper;
@@ -34,6 +32,10 @@ import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.helpers.Tools;
 import com.cheatdatabase.helpers.Webservice;
 import com.cheatdatabase.listeners.OnCheatListItemSelectedListener;
+import com.cheatdatabase.model.Cheat;
+import com.cheatdatabase.model.Game;
+import com.cheatdatabase.model.Member;
+import com.cheatdatabase.rest.RestApi;
 import com.cheatdatabase.widgets.DividerDecoration;
 import com.facebook.ads.AdSize;
 import com.facebook.ads.AdView;
@@ -48,10 +50,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeMap;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import needle.Needle;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
 
 public class CheatsByGameListActivity extends AppCompatActivity implements OnCheatListItemSelectedListener {
 
@@ -81,6 +89,11 @@ public class CheatsByGameListActivity extends AppCompatActivity implements OnChe
     @BindView(R.id.banner_container)
     LinearLayout bannerContainerFacebook;
 
+    @Inject
+    Retrofit retrofit;
+
+    private RestApi restApi;
+
     @Override
     protected void onStart() {
         super.onStart();
@@ -102,6 +115,10 @@ public class CheatsByGameListActivity extends AppCompatActivity implements OnChe
         nativeAdsManager.loadAds(NativeAd.MediaCacheFlag.ALL);
 
         gameObj = getIntent().getParcelableExtra("gameObj");
+
+        ((CheatDatabaseApplication) getApplication()).getNetworkComponent().inject(this);
+        restApi = retrofit.create(RestApi.class);
+
         if (gameObj == null) {
             Toast.makeText(this, R.string.err_somethings_wrong, Toast.LENGTH_LONG).show();
             finish();
@@ -265,13 +282,22 @@ public class CheatsByGameListActivity extends AppCompatActivity implements OnChe
 
             TreeMap finalCheatListTree = cheatListTree;
 
-            Webservice.getCheatList(gameObj, memberId, isAchievementsEnabled, new RepositoryEntityListCallback<Cheat>() {
+
+            // TODO FIXME ursprünglich wird Webservice.getCheatList(gameObj, memberId, isAchievementsEnabled) verwendet. korrekte methode finden in retrofit...
+            // TODO FIXME ursprünglich wird Webservice.getCheatList(gameObj, memberId, isAchievementsEnabled) verwendet. korrekte methode finden in retrofit...
+            // TODO FIXME ursprünglich wird Webservice.getCheatList(gameObj, memberId, isAchievementsEnabled) verwendet. korrekte methode finden in retrofit...
+            // TODO FIXME ursprünglich wird Webservice.getCheatList(gameObj, memberId, isAchievementsEnabled) verwendet. korrekte methode finden in retrofit...
+            // TODO FIXME ursprünglich wird Webservice.getCheatList(gameObj, memberId, isAchievementsEnabled) verwendet. korrekte methode finden in retrofit...
+            Call<List<Cheat>> call = restApi.getCheatsByGameId(gameObj.getGameId());
+            call.enqueue(new Callback<List<Cheat>>() {
                 @Override
-                public void onSuccess(List<Cheat> cheatEntityList) {
-                    gameObj.setCheatList(cheatEntityList);
+                public void onResponse(Call<List<Cheat>> cheats, Response<List<Cheat>> response) {
+                    cheatList = response.body();
+
+                    gameObj.setCheatList(cheatList);
 
                     TreeMap<String, List<Cheat>> updatedCheatListForCache = new TreeMap<>();
-                    updatedCheatListForCache.put(achievementsEnabled, cheatEntityList);
+                    updatedCheatListForCache.put(achievementsEnabled, cheatList);
 
                     String checkWhichSubKey;
                     if (achievementsEnabled.equalsIgnoreCase(Konstanten.ACHIEVEMENTS)) {
@@ -288,17 +314,53 @@ public class CheatsByGameListActivity extends AppCompatActivity implements OnChe
                     cheatsByGameInCache.put(String.valueOf(gameObj.getGameId()), updatedCheatListForCache);
                     cheatDatabaseApplication.setCheatsByGameCached(cheatsByGameInCache);
 
-                    cheatList = cheatEntityList;
-
                     updateUI();
                 }
 
                 @Override
-                public void onFailure(Exception e) {
+                public void onFailure(Call<List<Cheat>> call, Throwable e) {
                     Log.e(TAG, "getCheatList onFailure: " + e.getLocalizedMessage());
                     Needle.onMainThread().execute(() -> Toast.makeText(CheatsByGameListActivity.this, R.string.err_somethings_wrong, Toast.LENGTH_LONG).show());
                 }
             });
+
+
+                // TODO FIXME bei retrofit oben die korrekte methode mit allen parametern verwenden.
+                // TODO FIXME bei retrofit oben die korrekte methode mit allen parametern verwenden.
+//            Webservice.getCheatList(gameObj, memberId, isAchievementsEnabled, new RepositoryEntityListCallback<Cheat>() {
+//                @Override
+//                public void onSuccess(List<Cheat> cheatEntityList) {
+//                    gameObj.setCheatList(cheatEntityList);
+//
+//                    TreeMap<String, List<Cheat>> updatedCheatListForCache = new TreeMap<>();
+//                    updatedCheatListForCache.put(achievementsEnabled, cheatEntityList);
+//
+//                    String checkWhichSubKey;
+//                    if (achievementsEnabled.equalsIgnoreCase(Konstanten.ACHIEVEMENTS)) {
+//                        checkWhichSubKey = Konstanten.NO_ACHIEVEMENTS;
+//                    } else {
+//                        checkWhichSubKey = Konstanten.ACHIEVEMENTS;
+//                    }
+//
+//                    if ((finalCheatListTree != null) && (finalCheatListTree.containsKey(checkWhichSubKey))) {
+//                        List<Cheat> existingGamesInCache = (List<Cheat>) finalCheatListTree.get(checkWhichSubKey);
+//                        updatedCheatListForCache.put(checkWhichSubKey, existingGamesInCache);
+//                    }
+//
+//                    cheatsByGameInCache.put(String.valueOf(gameObj.getGameId()), updatedCheatListForCache);
+//                    cheatDatabaseApplication.setCheatsByGameCached(cheatsByGameInCache);
+//
+//                    cheatList = cheatEntityList;
+//
+//                    updateUI();
+//                }
+//
+//                @Override
+//                public void onFailure(Exception e) {
+//                    Log.e(TAG, "getCheatList onFailure: " + e.getLocalizedMessage());
+//                    Needle.onMainThread().execute(() -> Toast.makeText(CheatsByGameListActivity.this, R.string.err_somethings_wrong, Toast.LENGTH_LONG).show());
+//                }
+//            });
         } else {
             updateUI();
         }
@@ -393,7 +455,6 @@ public class CheatsByGameListActivity extends AppCompatActivity implements OnChe
     @Override
     public void onCheatListItemSelected(Cheat cheat, int position) {
         if (Reachability.reachability.isReachable) {
-
             int i = 0;
             for (Cheat c : gameObj.getCheatList()) {
                 if (c == cheat) {

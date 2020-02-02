@@ -8,7 +8,9 @@ import android.net.ConnectivityManager;
 import android.os.Bundle;
 
 import com.cheatdatabase.activity.MainActivity;
-import com.cheatdatabase.di.DaggerAppComponent;
+import com.cheatdatabase.di.ApplicationModule;
+import com.cheatdatabase.di.DaggerNetworkComponent;
+import com.cheatdatabase.di.NetworkComponent;
 import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.TrackingUtils;
 import com.cheatdatabase.model.Cheat;
@@ -26,14 +28,13 @@ import org.json.JSONObject;
 import java.util.List;
 import java.util.TreeMap;
 
-import dagger.android.AndroidInjector;
-import dagger.android.HasAndroidInjector;
-import dagger.android.support.DaggerApplication;
 import io.fabric.sdk.android.Fabric;
 
-public class CheatDatabaseApplication extends DaggerApplication implements HasAndroidInjector, Application.ActivityLifecycleCallbacks {
+public class CheatDatabaseApplication extends Application implements Application.ActivityLifecycleCallbacks {
 
     private static final String TAG = CheatDatabaseApplication.class.getSimpleName();
+
+    private NetworkComponent networkComponent;
 
     private static Context sAppContext;
 
@@ -46,18 +47,20 @@ public class CheatDatabaseApplication extends DaggerApplication implements HasAn
     private ConnectivityManager connectivityManager;
 
     private boolean isActivityVisible = false;
+//    private ApplicationComponent appComponent;
 
-    @Override
-    protected AndroidInjector<? extends DaggerApplication> applicationInjector() {
-        return DaggerAppComponent.builder().build();
-//        return null;
-    }
 
 //    @Override
 //    protected AndroidInjector<? extends DaggerApplication> applicationInjector() {
-//        // TODO FIXME ???
+////        return DaggerAppComponent.builder().build();
 //        return null;
 //    }
+//
+////    @Override
+////    protected AndroidInjector<? extends DaggerApplication> applicationInjector() {
+////        // TODO FIXME ???
+////        return null;
+////    }
 
     /**
      * Gets the default {@link Tracker} for this {@link CheatDatabaseApplication}.
@@ -85,12 +88,21 @@ public class CheatDatabaseApplication extends DaggerApplication implements HasAn
     public void onCreate() {
         super.onCreate();
 
+        networkComponent = DaggerNetworkComponent.builder().applicationModule(new ApplicationModule(this)).build();
+//        mainActivityComponent = DaggerMainActivityComponent.builder().mainActivityModule(new MainActivityModule(this)).build();
+
+        // Reference to the application graph that is used across the whole app
+//        appComponent = DaggerApplicationComponent.builder().build();
+
         currentApplicationInstance = this;
         sAppContext = getApplicationContext();
 
         init();
     }
 
+    public NetworkComponent getNetworkComponent() {
+        return networkComponent;
+    }
 
     private void init() {
         Fabric.with(this, new Crashlytics());

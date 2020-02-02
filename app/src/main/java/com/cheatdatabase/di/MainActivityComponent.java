@@ -7,11 +7,14 @@ import com.cheatdatabase.activity.MainActivity;
 import javax.inject.Singleton;
 
 import dagger.Component;
+import dagger.Provides;
 
-@Component(modules = {MainActivityModule.class})
 @Singleton
+@Component(modules = {MainActivityModule.class, NetworkModule.class})
 public interface MainActivityComponent {
-    Context context();
-
-    void inject(MainActivity mainActivity);
+//    @Provides
+//    Context context();
+//
+//    @Provides
+//    void inject(MainActivity mainActivity);
 }

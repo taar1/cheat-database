@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -15,28 +16,37 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.cheatdatabase.R;
+import com.cheatdatabase.activity.CheatsByGameListActivity;
 import com.cheatdatabase.activity.GamesBySystemListActivity;
+import com.cheatdatabase.activity.MainActivity;
 import com.cheatdatabase.adapters.SystemsRecycleListViewAdapter;
 import com.cheatdatabase.helpers.DatabaseHelper;
+import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Tools;
 import com.cheatdatabase.helpers.Webservice;
 import com.cheatdatabase.listeners.OnSystemListItemSelectedListener;
+import com.cheatdatabase.model.Cheat;
 import com.cheatdatabase.model.SystemPlatform;
 import com.cheatdatabase.widgets.DividerDecoration;
 import com.google.gson.Gson;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.TreeMap;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import needle.Needle;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class SystemListFragment extends Fragment implements OnSystemListItemSelectedListener {
     private final String TAG = SystemListFragment.class.getSimpleName();
 
     private List<SystemPlatform> systemGameandCheatCounterList;
     private SystemsRecycleListViewAdapter systemsRecycleListViewAdapter;
+    private MainActivity mainActivity;
 
     @BindView(R.id.outer_layout)
     LinearLayout outerLayout;
@@ -49,10 +59,22 @@ public class SystemListFragment extends Fragment implements OnSystemListItemSele
         return new SystemListFragment();
     }
 
+    public MainActivity getMainActivity() {
+        return mainActivity;
+    }
+
+    public void setMainActivity(MainActivity mainActivity) {
+        this.mainActivity = mainActivity;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_systemlist, container, false);
         ButterKnife.bind(this, view);
+
+
+//        ((CheatDatabaseApplication) getApplication()).getNetworkComponent().inject(this);
+//        restApi = retrofit.create(RestApi.class);
 
         mSwipeRefreshLayout.setOnRefreshListener(() -> loadGamesAndCheatsCounterBackground());
 
@@ -106,6 +128,33 @@ public class SystemListFragment extends Fragment implements OnSystemListItemSele
             }
 
             Log.d(TAG, "getSystemsAndCountsFromWebservice: " + getSystemsAndCountsFromWebservice);
+
+
+            // TODO FIXME hier den retrofit call fertig machen...
+            // TODO FIXME hier den retrofit call fertig machen...
+            // TODO FIXME hier den retrofit call fertig machen...
+            Call<List<SystemPlatform>> call = mainActivity.getApiService().countGamesAndCheatsBySystem();
+            call.enqueue(new Callback<List<SystemPlatform>>() {
+                @Override
+                public void onResponse(Call<List<SystemPlatform>> cheats, Response<List<SystemPlatform>> response) {
+                    if (response.isSuccessful()) {
+                        // TODO
+                        // TODO
+                        List<SystemPlatform> apiResponse = response.body();
+
+                    } else {
+                        System.out.println("Request Error :: " + response.errorBody());
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<List<SystemPlatform>> call, Throwable t) {
+                    // TODO
+                    // TODO
+                    System.out.println("Network Error :: " + t.getLocalizedMessage());
+                }
+            });
+
 
             if (getSystemsAndCountsFromWebservice) {
                 try {

@@ -44,6 +44,8 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.inject.Inject;
+
 import needle.Needle;
 
 /**
@@ -53,6 +55,10 @@ import needle.Needle;
  */
 public class Tools {
     private final String TAG = Tools.class.getSimpleName();
+
+    @Inject
+    public Tools() {
+    }
 
     public static boolean isEmailValid(String email) {
         boolean isValid = false;
