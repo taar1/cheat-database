@@ -4,16 +4,27 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
 
+import com.google.gson.annotations.SerializedName;
+
+import java.util.List;
+
 import javax.inject.Inject;
 
 public class SystemPlatform implements Parcelable {
 
+    @SerializedName("systemId")
     private int systemId;
+    @SerializedName("gameCount")
     private int gameCount;
+    @SerializedName("cheatCount")
     private int cheatCount;
+    @SerializedName("systemName")
     private String systemName;
+    @SerializedName("dateAdded")
     private String dateLocallyAdded;
-    private Game[] games;
+    @SerializedName("games")
+    private List<Game> games;
+    @SerializedName("lastMod")
     private long lastModTimeStamp;
 
     public SystemPlatform(int systemId, String systemName, String dateLocallyAdded) {
@@ -31,7 +42,6 @@ public class SystemPlatform implements Parcelable {
 
     @Inject
     public SystemPlatform() {
-
     }
 
     protected SystemPlatform(Parcel in) {
@@ -40,7 +50,7 @@ public class SystemPlatform implements Parcelable {
         cheatCount = in.readInt();
         systemName = in.readString();
         dateLocallyAdded = in.readString();
-        games = in.createTypedArray(Game.CREATOR);
+        games = in.createTypedArrayList(Game.CREATOR);
         lastModTimeStamp = in.readLong();
     }
 
@@ -64,22 +74,9 @@ public class SystemPlatform implements Parcelable {
         this.cheatCount = cheatCount;
     }
 
-    /**
-     * Legt die Anzahl Game-Objekte fest
-     *
-     * @param gamesCount
-     */
-    public void createGameCollection(int gamesCount) {
-        this.games = new Game[gamesCount];
-    }
-
     public boolean addGame(Game game) {
         try {
-            for (int i = 0; i < games.length; i++) {
-                if (games[i] == null) {
-                    games[i] = game;
-                }
-            }
+            games.add(game);
             return true;
         } catch (Exception e) {
             Log.e("SystemPlatform", "SystemPlatform:addGame(): " + e.getMessage());
@@ -139,7 +136,7 @@ public class SystemPlatform implements Parcelable {
         dest.writeInt(cheatCount);
         dest.writeString(systemName);
         dest.writeString(dateLocallyAdded);
-        dest.writeTypedArray(games, flags);
+        dest.writeTypedList(games);
         dest.writeLong(lastModTimeStamp);
     }
 }

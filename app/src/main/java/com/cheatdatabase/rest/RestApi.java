@@ -231,8 +231,8 @@ public interface RestApi {
     Call<List<Member>> getMemberTop20();
 
     @FormUrlEncoded
-    @GET("countGamesAndCheatsBySystem.php")
-    Call<List<SystemPlatform>> countGamesAndCheatsBySystem();
+    @GET("countGamesAndCheatsOfAllSystems.php")
+    Call<List<SystemPlatform>> countGamesAndCheatsOfAllSystems();
 
     @FormUrlEncoded
     @GET("getWelcomeMessage.php")

@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -16,23 +15,19 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.cheatdatabase.R;
-import com.cheatdatabase.activity.CheatsByGameListActivity;
 import com.cheatdatabase.activity.GamesBySystemListActivity;
 import com.cheatdatabase.activity.MainActivity;
 import com.cheatdatabase.adapters.SystemsRecycleListViewAdapter;
 import com.cheatdatabase.helpers.DatabaseHelper;
-import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Tools;
 import com.cheatdatabase.helpers.Webservice;
 import com.cheatdatabase.listeners.OnSystemListItemSelectedListener;
-import com.cheatdatabase.model.Cheat;
 import com.cheatdatabase.model.SystemPlatform;
 import com.cheatdatabase.widgets.DividerDecoration;
 import com.google.gson.Gson;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.TreeMap;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -121,8 +116,8 @@ public class SystemListFragment extends Fragment implements OnSystemListItemSele
                 Log.d(TAG, "DIFFERENCE in H: " + differenceInHours);
                 Log.d(TAG, "DIFFERENCE in M: " + differenceInMins);
 
-                if (differenceInHours > 23) {
-                    Log.d(TAG, "DIFFERENCE MORE THAN 23 HOURS. LOADING VALUES FROM WEBSERVICE AGAIN");
+                if (differenceInHours > 48) {
+                    Log.d(TAG, "DIFFERENCE MORE THAN 48 HOURS. LOADING VALUES FROM WEBSERVICE AGAIN");
                     getSystemsAndCountsFromWebservice = true;
                 }
             }
@@ -130,10 +125,12 @@ public class SystemListFragment extends Fragment implements OnSystemListItemSele
             Log.d(TAG, "getSystemsAndCountsFromWebservice: " + getSystemsAndCountsFromWebservice);
 
 
-            // TODO FIXME hier den retrofit call fertig machen...
-            // TODO FIXME hier den retrofit call fertig machen...
-            // TODO FIXME hier den retrofit call fertig machen...
-            Call<List<SystemPlatform>> call = mainActivity.getApiService().countGamesAndCheatsBySystem();
+            // TODO der API call failed noch wegen dem retrofit mapper....
+            // TODO der API call failed noch wegen dem retrofit mapper....
+            // TODO der API call failed noch wegen dem retrofit mapper....
+            // TODO der API call failed noch wegen dem retrofit mapper....
+            // TODO der API call failed noch wegen dem retrofit mapper....
+            Call<List<SystemPlatform>> call = mainActivity.getApiService().countGamesAndCheatsOfAllSystems();
             call.enqueue(new Callback<List<SystemPlatform>>() {
                 @Override
                 public void onResponse(Call<List<SystemPlatform>> cheats, Response<List<SystemPlatform>> response) {
@@ -159,7 +156,7 @@ public class SystemListFragment extends Fragment implements OnSystemListItemSele
             if (getSystemsAndCountsFromWebservice) {
                 try {
                     systemGameandCheatCounterList = Webservice.countGamesAndCheatsBySystem();
-                    Log.d(TAG, "Webservice countGamesAndCheatsBySystem() USED");
+                    Log.d(TAG, "Webservice countGamesAndCheatsOfAllSystems() USED");
 
                     // Update the local database
                     db.updateSystemsAndCount(systemGameandCheatCounterList);
