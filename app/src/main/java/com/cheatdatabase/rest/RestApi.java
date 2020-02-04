@@ -171,7 +171,6 @@ public interface RestApi {
      *
      * @return Cheats
      */
-    @FormUrlEncoded
     @GET("getNewAndTotalCheats.php")
     Call<List<Cheat>> getInitialInformation();
 
@@ -180,7 +179,6 @@ public interface RestApi {
      *
      * @return int
      */
-    @FormUrlEncoded
     @GET("getInitialData.php")
     Call<Integer> getTotalCheats();
 
@@ -226,15 +224,12 @@ public interface RestApi {
     @POST("getCheatsByMemberId.php")
     Call<List<Cheat>> getCheatsByMemberId(@Field("memberId") int memberId);
 
-    @FormUrlEncoded
     @GET("getMemberTop20.php")
     Call<List<Member>> getMemberTop20();
 
-    @FormUrlEncoded
     @GET("countGamesAndCheatsOfAllSystems.php")
     Call<List<SystemPlatform>> countGamesAndCheatsOfAllSystems();
 
-    @FormUrlEncoded
     @GET("getWelcomeMessage.php")
     Call<WelcomeMessage> getWelcomeMessage();
 

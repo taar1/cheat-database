@@ -19,6 +19,7 @@ public class NetworkModule {
     @Provides
     static Gson provideGson() {
         GsonBuilder builder = new GsonBuilder();
+        builder.setDateFormat("yyyy-MM-dd");
         return builder.create();
     }
 

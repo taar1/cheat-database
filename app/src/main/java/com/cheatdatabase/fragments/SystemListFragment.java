@@ -138,9 +138,10 @@ public class SystemListFragment extends Fragment implements OnSystemListItemSele
                         // TODO
                         // TODO
                         List<SystemPlatform> apiResponse = response.body();
-
+                        Log.d(TAG, "XXXXX onResponse: SUCCESS");
                     } else {
                         System.out.println("Request Error :: " + response.errorBody());
+                        Log.d(TAG, "XXXXX onResponse: NO SUCCESS");
                     }
                 }
 
@@ -149,6 +150,7 @@ public class SystemListFragment extends Fragment implements OnSystemListItemSele
                     // TODO
                     // TODO
                     System.out.println("Network Error :: " + t.getLocalizedMessage());
+                    Log.d(TAG, "XXXXX onResponse: FAIL");
                 }
             });
 

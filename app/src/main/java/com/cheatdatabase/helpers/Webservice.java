@@ -1,10 +1,7 @@
 package com.cheatdatabase.helpers;
 
 import android.app.Activity;
-import android.content.SharedPreferences;
 import android.util.Log;
-
-import androidx.annotation.NonNull;
 
 import com.cheatdatabase.R;
 import com.cheatdatabase.callbacks.RepositoryEntityListCallback;
@@ -17,7 +14,6 @@ import com.cheatdatabase.model.SystemPlatform;
 import com.cheatdatabase.model.WelcomeMessage;
 import com.cheatdatabase.rest.RestApi;
 import com.crashlytics.android.Crashlytics;
-import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -33,21 +29,12 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
+import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 import javax.inject.Inject;
 
 import needle.Needle;
-import okhttp3.OkHttpClient;
-import okhttp3.logging.HttpLoggingInterceptor;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * REST Calls class.
@@ -1180,7 +1167,9 @@ public class Webservice {
                 system.setSystemName(jsonObject.getString("systemName"));
                 system.setGameCount(jsonObject.getInt("gamesCounter"));
                 system.setCheatCount(jsonObject.getInt("cheatsCounter"));
-                system.setLastModTimeStamp(System.currentTimeMillis());
+
+                // TODO FIXME testen ob das korrekt konvertiert wird!
+                system.setLastModTimeStamp(new Date(System.currentTimeMillis()));
 
                 systems.add(system);
             }

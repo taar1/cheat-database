@@ -14,6 +14,7 @@ import com.cheatdatabase.model.SystemPlatform;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
@@ -374,7 +375,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         sysPla.setSystemName(systemName);
                         sysPla.setGameCount(gameCount);
                         sysPla.setCheatCount(cheatCount);
-                        sysPla.setLastModTimeStamp(Long.parseLong(lastMod));
+
+                        // TODO TESTEN OB DAS SO KORREKT FUNKTIONIERT MIT DEM KONVERTIEREN
+                        sysPla.setLastModTimeStamp(new Date(Long.parseLong(lastMod) * 1000));
 
                         systems.add(sysPla);
 

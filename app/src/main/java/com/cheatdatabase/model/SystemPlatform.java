@@ -6,6 +6,7 @@ import android.util.Log;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -21,13 +22,13 @@ public class SystemPlatform implements Parcelable {
     @SerializedName("systemName")
     private String systemName;
     @SerializedName("dateAdded")
-    private String dateLocallyAdded;
+    private Date dateLocallyAdded;
     @SerializedName("games")
     private List<Game> games;
     @SerializedName("lastMod")
-    private long lastModTimeStamp;
+    private Date lastModTimeStamp;
 
-    public SystemPlatform(int systemId, String systemName, String dateLocallyAdded) {
+    public SystemPlatform(int systemId, String systemName, Date dateLocallyAdded) {
         super();
         this.systemId = systemId;
         this.systemName = systemName;
@@ -49,9 +50,9 @@ public class SystemPlatform implements Parcelable {
         gameCount = in.readInt();
         cheatCount = in.readInt();
         systemName = in.readString();
-        dateLocallyAdded = in.readString();
+        dateLocallyAdded = (java.util.Date) in.readSerializable();
         games = in.createTypedArrayList(Game.CREATOR);
-        lastModTimeStamp = in.readLong();
+        lastModTimeStamp = (java.util.Date) in.readSerializable();
     }
 
     public static final Creator<SystemPlatform> CREATOR = new Creator<SystemPlatform>() {
@@ -84,11 +85,11 @@ public class SystemPlatform implements Parcelable {
         }
     }
 
-    public String getDateLocallyAdded() {
+    public Date getDateLocallyAdded() {
         return dateLocallyAdded;
     }
 
-    public void setDateLocallyAdded(String dateLocallyAdded) {
+    public void setDateLocallyAdded(Date dateLocallyAdded) {
         this.dateLocallyAdded = dateLocallyAdded;
     }
 
@@ -117,10 +118,10 @@ public class SystemPlatform implements Parcelable {
     }
 
     public long getLastModTimeStamp() {
-        return lastModTimeStamp;
+        return lastModTimeStamp.getTime();
     }
 
-    public void setLastModTimeStamp(long lastModTimeStamp) {
+    public void setLastModTimeStamp(Date lastModTimeStamp) {
         this.lastModTimeStamp = lastModTimeStamp;
     }
 
@@ -135,8 +136,8 @@ public class SystemPlatform implements Parcelable {
         dest.writeInt(gameCount);
         dest.writeInt(cheatCount);
         dest.writeString(systemName);
-        dest.writeString(dateLocallyAdded);
+        dest.writeSerializable(dateLocallyAdded);
         dest.writeTypedList(games);
-        dest.writeLong(lastModTimeStamp);
+        dest.writeSerializable(lastModTimeStamp);
     }
 }
