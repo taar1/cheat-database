@@ -20,11 +20,9 @@ import com.cheatdatabase.activity.MainActivity;
 import com.cheatdatabase.adapters.SystemsRecycleListViewAdapter;
 import com.cheatdatabase.helpers.DatabaseHelper;
 import com.cheatdatabase.helpers.Tools;
-import com.cheatdatabase.helpers.Webservice;
 import com.cheatdatabase.listeners.OnSystemListItemSelectedListener;
 import com.cheatdatabase.model.SystemPlatform;
 import com.cheatdatabase.widgets.DividerDecoration;
-import com.google.gson.Gson;
 
 import java.util.Collections;
 import java.util.List;
@@ -38,6 +36,8 @@ import retrofit2.Response;
 
 public class SystemListFragment extends Fragment implements OnSystemListItemSelectedListener {
     private final String TAG = SystemListFragment.class.getSimpleName();
+
+    boolean getSystemsAndCountsFromWebservice = false;
 
     private List<SystemPlatform> systemGameandCheatCounterList;
     private SystemsRecycleListViewAdapter systemsRecycleListViewAdapter;
@@ -67,7 +67,6 @@ public class SystemListFragment extends Fragment implements OnSystemListItemSele
         View view = inflater.inflate(R.layout.fragment_systemlist, container, false);
         ButterKnife.bind(this, view);
 
-
 //        ((CheatDatabaseApplication) getApplication()).getNetworkComponent().inject(this);
 //        restApi = retrofit.create(RestApi.class);
 
@@ -96,9 +95,6 @@ public class SystemListFragment extends Fragment implements OnSystemListItemSele
         Needle.onBackgroundThread().execute(() -> {
             DatabaseHelper db = new DatabaseHelper(getActivity());
 
-            // System Game count will only be updated every 24h
-            boolean getSystemsAndCountsFromWebservice = false;
-
             List<SystemPlatform> systemsLocal = db.getAllSystemsAndCount();
             if (systemsLocal == null || systemsLocal.size() == 0) {
                 getSystemsAndCountsFromWebservice = true;
@@ -124,60 +120,41 @@ public class SystemListFragment extends Fragment implements OnSystemListItemSele
 
             Log.d(TAG, "getSystemsAndCountsFromWebservice: " + getSystemsAndCountsFromWebservice);
 
-
-            // TODO der API call failed noch wegen dem retrofit mapper....
-            // TODO der API call failed noch wegen dem retrofit mapper....
-            // TODO der API call failed noch wegen dem retrofit mapper....
-            // TODO der API call failed noch wegen dem retrofit mapper....
-            // TODO der API call failed noch wegen dem retrofit mapper....
-            Call<List<SystemPlatform>> call = mainActivity.getApiService().countGamesAndCheatsOfAllSystems();
-            call.enqueue(new Callback<List<SystemPlatform>>() {
-                @Override
-                public void onResponse(Call<List<SystemPlatform>> cheats, Response<List<SystemPlatform>> response) {
-                    if (response.isSuccessful()) {
-                        // TODO
-                        // TODO
-                        List<SystemPlatform> apiResponse = response.body();
-                        Log.d(TAG, "XXXXX onResponse: SUCCESS");
-                    } else {
-                        System.out.println("Request Error :: " + response.errorBody());
-                        Log.d(TAG, "XXXXX onResponse: NO SUCCESS");
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<List<SystemPlatform>> call, Throwable t) {
-                    // TODO
-                    // TODO
-                    System.out.println("Network Error :: " + t.getLocalizedMessage());
-                    Log.d(TAG, "XXXXX onResponse: FAIL");
-                }
-            });
-
-
             if (getSystemsAndCountsFromWebservice) {
-                try {
-                    systemGameandCheatCounterList = Webservice.countGamesAndCheatsBySystem();
-                    Log.d(TAG, "Webservice countGamesAndCheatsOfAllSystems() USED");
+                Call<List<SystemPlatform>> call = mainActivity.getApiService().countGamesAndCheatsOfAllSystems();
+                call.enqueue(new Callback<List<SystemPlatform>>() {
+                    @Override
+                    public void onResponse(Call<List<SystemPlatform>> cheats, Response<List<SystemPlatform>> response) {
+                        if (response.isSuccessful()) {
+                            systemGameandCheatCounterList = response.body();
 
-                    // Update the local database
-                    db.updateSystemsAndCount(systemGameandCheatCounterList);
-                    Log.d(TAG, "SYSTEM VALUES FROM WEBSERVICE: " + new Gson().toJson(systemGameandCheatCounterList));
+                            if ((systemGameandCheatCounterList == null) || (systemGameandCheatCounterList.size() < 1)) {
+                                db.deleteSystemsAndCount();
+                            } else {
+//                                Log.d(TAG, "System values from RestApi: " + new Gson().toJson(systemGameandCheatCounterList));
 
-                    if ((systemGameandCheatCounterList == null) || (systemGameandCheatCounterList.size() < 1)) {
-                        db.deleteSystemsAndCount();
-                    } else {
-                        // Sort the systems by name
-                        Collections.sort(systemGameandCheatCounterList, (system1, system2) -> system1.getSystemName().toLowerCase().compareTo(system2.getSystemName().toLowerCase()));
+                                // Update the local database
+                                db.updateSystemsAndCount(systemGameandCheatCounterList);
+
+                                // Sort the systems by name
+                                Collections.sort(systemGameandCheatCounterList, (system1, system2) -> system1.getSystemName().toLowerCase().compareTo(system2.getSystemName().toLowerCase()));
+                            }
+                        }
+
+                        updateUI();
                     }
-                } catch (Exception e) {
-                    Log.e(TAG, "Load game and cheats counters failed: " + e.getLocalizedMessage());
-                }
+
+                    @Override
+                    public void onFailure(Call<List<SystemPlatform>> call, Throwable t) {
+                        Log.e(TAG, "Load game and cheats counters failed: " + t.getLocalizedMessage());
+
+                        updateUI();
+                    }
+                });
             } else {
                 systemGameandCheatCounterList = systemsLocal;
+                updateUI();
             }
-
-            updateUI();
         });
     }
 

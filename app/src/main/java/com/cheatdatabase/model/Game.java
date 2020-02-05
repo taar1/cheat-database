@@ -13,17 +13,17 @@ import javax.inject.Inject;
 
 public class Game implements Parcelable {
 
-    @SerializedName("system_id")
+    @SerializedName("systemId")
     private int systemId;
-    @SerializedName("system_name")
+    @SerializedName("systemName")
     private String systemName;
     @SerializedName("cheats")
     private List<Cheat> cheatList;
-    @SerializedName("game_id")
+    @SerializedName("gameId")
     private int gameId;
-    @SerializedName("cheats_count")
+    @SerializedName("cheatCount")
     private int cheatsCount;
-    @SerializedName("game_name")
+    @SerializedName("gameName")
     private String gameName;
 
     @Inject

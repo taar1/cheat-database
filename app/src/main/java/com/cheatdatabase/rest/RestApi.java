@@ -246,7 +246,7 @@ public interface RestApi {
      */
     @FormUrlEncoded
     @POST("getGamesBySystemId.php")
-    Call<List<Game>> getGameListBySystemId(@Field("systemId") int systemId, @Field("achievementsEnabled") int achievementsEnabled);
+    Call<List<Game>> getGameListBySystemId(@Field("systemId") int systemId, @Field("achievementsEnabled") boolean achievementsEnabled);
 
     /**
      * Gets the cheat text (body) of a cheat as a string.

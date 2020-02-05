@@ -31,6 +31,7 @@ import com.cheatdatabase.listeners.OnGameListItemSelectedListener;
 import com.cheatdatabase.model.Game;
 import com.cheatdatabase.model.Member;
 import com.cheatdatabase.model.SystemPlatform;
+import com.cheatdatabase.rest.RestApi;
 import com.cheatdatabase.widgets.DividerDecoration;
 import com.facebook.ads.NativeAd;
 import com.facebook.ads.NativeAdsManager;
@@ -41,9 +42,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeMap;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import needle.Needle;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
 
 public class GamesBySystemListActivity extends AppCompatActivity implements OnGameListItemSelectedListener {
 
@@ -56,6 +63,11 @@ public class GamesBySystemListActivity extends AppCompatActivity implements OnGa
 
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
+
+    @Inject
+    Retrofit retrofit;
+
+    private RestApi apiService;
 
     @BindView(R.id.outer_layout)
     LinearLayout outerLayout;
@@ -84,6 +96,11 @@ public class GamesBySystemListActivity extends AppCompatActivity implements OnGa
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_list);
         ButterKnife.bind(this);
+
+        // Dagger start
+        ((CheatDatabaseApplication) getApplication()).getNetworkComponent().inject(this);
+        apiService = retrofit.create(RestApi.class);
+        // Dagger end
 
         NativeAdsManager nativeAdsManager = new NativeAdsManager(this, Konstanten.FACEBOOK_AUDIENCE_NETWORK_NATIVE_AD_IN_RECYCLER_VIEW, 5);
         nativeAdsManager.loadAds(NativeAd.MediaCacheFlag.ALL);
@@ -218,6 +235,37 @@ public class GamesBySystemListActivity extends AppCompatActivity implements OnGa
         if (!isCached || forceLoadOnline || gameList.size() == 0) {
             gameList = new ArrayList<>();
             TreeMap finalGameListTree = gameListTree;
+
+
+            Call<List<Game>> call = apiService.getGameListBySystemId(systemObj.getSystemId(), isAchievementsEnabled);
+            call.enqueue(new Callback<List<Game>>() {
+                @Override
+                public void onResponse(Call<List<Game>> games, Response<List<Game>> response) {
+                    Log.d(TAG, "XXXXX4 onResponse: getGameListBySystemId");
+                    if (response.isSuccessful()) {
+                        gameList = response.body();
+
+                        // TODO hier weitermachen, die daten kommen rein!! :)
+                        // TODO hier weitermachen, die daten kommen rein!! :)
+                        // TODO hier weitermachen, die daten kommen rein!! :)
+                        // TODO hier weitermachen, die daten kommen rein!! :)
+                        // TODO hier weitermachen, die daten kommen rein!! :)
+                        // TODO hier weitermachen, die daten kommen rein!! :)
+                        // TODO hier weitermachen, die daten kommen rein!! :)
+                        // TODO hier weitermachen, die daten kommen rein!! :)
+
+                        for (Game g : gameList) {
+                            Log.d(TAG, "onResponse: Game: " + g.getGameName());
+                        }
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<List<Game>> call, Throwable t) {
+                    Log.e(TAG, "XXXXX4 Load game and cheats counters failed: " + t.getLocalizedMessage());
+                }
+            });
+
 
             Webservice.getGameListBySystemId(systemObj.getSystemId(), systemObj.getSystemName(), isAchievementsEnabled, new RepositoryEntityListCallback<Game>() {
                 @Override

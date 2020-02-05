@@ -388,7 +388,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 return systems;
             }
         } catch (NullPointerException e) {
-            Log.e(TAG, "Database connection failed.");
+            Log.e(TAG, "getAllSystemsAndCount: Error: ", e);
         }
 
         return null;
@@ -400,29 +400,32 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         int insertCount = 0;
         deleteSystemsAndCount();
 
-        for (SystemPlatform sysPla : systemsAndCount) {
+        try {
+            for (SystemPlatform sysPla : systemsAndCount) {
+                ContentValues initialValues = new ContentValues();
+                initialValues.put(GameSystemTable.SYS_SYSTEM_ID, sysPla.getSystemId());
+                initialValues.put(GameSystemTable.SYS_SYSTEM_NAME, sysPla.getSystemName());
+                initialValues.put(GameSystemTable.SYS_SYSTEM_GAMECOUNT, sysPla.getGameCount());
+                initialValues.put(GameSystemTable.SYS_SYSTEM_CHEATCOUNT, sysPla.getCheatCount());
+                initialValues.put(GameSystemTable.SYS_SYSTEM_LASTMOD, sysPla.getLastModTimeStamp());
 
-            ContentValues initialValues = new ContentValues();
-            initialValues.put(GameSystemTable.SYS_SYSTEM_ID, sysPla.getSystemId());
-            initialValues.put(GameSystemTable.SYS_SYSTEM_NAME, sysPla.getSystemName());
-            initialValues.put(GameSystemTable.SYS_SYSTEM_GAMECOUNT, sysPla.getGameCount());
-            initialValues.put(GameSystemTable.SYS_SYSTEM_CHEATCOUNT, sysPla.getCheatCount());
-            initialValues.put(GameSystemTable.SYS_SYSTEM_LASTMOD, sysPla.getLastModTimeStamp());
-
-            Long l_result = db.insert(GameSystemTable.TABLE_NAME, null, initialValues);
-            if (l_result > -1) {
-                insertCount++;
+                Long l_result = db.insert(GameSystemTable.TABLE_NAME, null, initialValues);
+                if (l_result > -1) {
+                    insertCount++;
+                }
             }
+        } catch (Exception e) {
+            Log.e(TAG, "XXXXX updateSystemsAndCount: ", e);
         }
 
-        db.close();
+//        db.close();
         return insertCount;
     }
 
     public void deleteSystemsAndCount() {
         SQLiteDatabase db = this.getReadableDatabase();
         db.delete(GameSystemTable.TABLE_NAME, null, null);
-        db.close();
+//        db.close();
     }
 
     /**
