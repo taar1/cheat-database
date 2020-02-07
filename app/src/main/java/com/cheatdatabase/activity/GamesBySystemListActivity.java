@@ -22,11 +22,9 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.cheatdatabase.CheatDatabaseApplication;
 import com.cheatdatabase.R;
 import com.cheatdatabase.adapters.GamesBySystemRecycleListViewAdapter;
-import com.cheatdatabase.callbacks.RepositoryEntityListCallback;
 import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.helpers.Tools;
-import com.cheatdatabase.helpers.Webservice;
 import com.cheatdatabase.listeners.OnGameListItemSelectedListener;
 import com.cheatdatabase.model.Game;
 import com.cheatdatabase.model.Member;
@@ -236,68 +234,73 @@ public class GamesBySystemListActivity extends AppCompatActivity implements OnGa
             gameList = new ArrayList<>();
             TreeMap finalGameListTree = gameListTree;
 
-
             Call<List<Game>> call = apiService.getGameListBySystemId(systemObj.getSystemId(), isAchievementsEnabled);
             call.enqueue(new Callback<List<Game>>() {
                 @Override
                 public void onResponse(Call<List<Game>> games, Response<List<Game>> response) {
-                    Log.d(TAG, "XXXXX4 onResponse: getGameListBySystemId");
                     if (response.isSuccessful()) {
                         gameList = response.body();
 
-                        // TODO hier weitermachen, die daten kommen rein!! :)
-                        // TODO hier weitermachen, die daten kommen rein!! :)
-                        // TODO hier weitermachen, die daten kommen rein!! :)
-                        // TODO hier weitermachen, die daten kommen rein!! :)
-                        // TODO hier weitermachen, die daten kommen rein!! :)
-                        // TODO hier weitermachen, die daten kommen rein!! :)
-                        // TODO hier weitermachen, die daten kommen rein!! :)
-                        // TODO hier weitermachen, die daten kommen rein!! :)
+                        TreeMap<String, List<Game>> updatedGameListForCache = new TreeMap<>();
+                        updatedGameListForCache.put(achievementsEnabled, gameList);
 
-                        for (Game g : gameList) {
-                            Log.d(TAG, "onResponse: Game: " + g.getGameName());
+                        String checkWhichSubKey;
+                        if (achievementsEnabled.equalsIgnoreCase(Konstanten.ACHIEVEMENTS)) {
+                            checkWhichSubKey = Konstanten.NO_ACHIEVEMENTS;
+                        } else {
+                            checkWhichSubKey = Konstanten.ACHIEVEMENTS;
                         }
+
+                        if ((finalGameListTree != null) && (finalGameListTree.containsKey(checkWhichSubKey))) {
+                            List<Game> existingGamesInCache = (List<Game>) finalGameListTree.get(checkWhichSubKey);
+                            updatedGameListForCache.put(checkWhichSubKey, existingGamesInCache);
+                        }
+
+                        gamesBySystemInCache.put(String.valueOf(systemObj.getSystemId()), updatedGameListForCache);
+                        CheatDatabaseApplication.setGamesBySystemCached(gamesBySystemInCache);
+
+                        updateUI();
                     }
                 }
 
                 @Override
                 public void onFailure(Call<List<Game>> call, Throwable t) {
-                    Log.e(TAG, "XXXXX4 Load game and cheats counters failed: " + t.getLocalizedMessage());
-                }
-            });
-
-
-            Webservice.getGameListBySystemId(systemObj.getSystemId(), systemObj.getSystemName(), isAchievementsEnabled, new RepositoryEntityListCallback<Game>() {
-                @Override
-                public void onSuccess(List<Game> gameEntityList) {
-                    TreeMap<String, List<Game>> updatedGameListForCache = new TreeMap<>();
-                    updatedGameListForCache.put(achievementsEnabled, gameList);
-
-                    String checkWhichSubKey;
-                    if (achievementsEnabled.equalsIgnoreCase(Konstanten.ACHIEVEMENTS)) {
-                        checkWhichSubKey = Konstanten.NO_ACHIEVEMENTS;
-                    } else {
-                        checkWhichSubKey = Konstanten.ACHIEVEMENTS;
-                    }
-
-                    if ((finalGameListTree != null) && (finalGameListTree.containsKey(checkWhichSubKey))) {
-                        List<Game> existingGamesInCache = (List<Game>) finalGameListTree.get(checkWhichSubKey);
-                        updatedGameListForCache.put(checkWhichSubKey, existingGamesInCache);
-                    }
-
-                    gamesBySystemInCache.put(String.valueOf(systemObj.getSystemId()), updatedGameListForCache);
-                    CheatDatabaseApplication.setGamesBySystemCached(gamesBySystemInCache);
-
-                    gameList = gameEntityList;
-
-                    updateUI();
-                }
-
-                @Override
-                public void onFailure(Exception e) {
+                    Log.e(TAG, "Load game and cheats counters failed: " + t.getLocalizedMessage());
                     error();
                 }
             });
+
+//            Webservice.getGameListBySystemId(systemObj.getSystemId(), systemObj.getSystemName(), isAchievementsEnabled, new RepositoryEntityListCallback<Game>() {
+//                @Override
+//                public void onSuccess(List<Game> gameEntityList) {
+//                    TreeMap<String, List<Game>> updatedGameListForCache = new TreeMap<>();
+//                    updatedGameListForCache.put(achievementsEnabled, gameList);
+//
+//                    String checkWhichSubKey;
+//                    if (achievementsEnabled.equalsIgnoreCase(Konstanten.ACHIEVEMENTS)) {
+//                        checkWhichSubKey = Konstanten.NO_ACHIEVEMENTS;
+//                    } else {
+//                        checkWhichSubKey = Konstanten.ACHIEVEMENTS;
+//                    }
+//
+//                    if ((finalGameListTree != null) && (finalGameListTree.containsKey(checkWhichSubKey))) {
+//                        List<Game> existingGamesInCache = (List<Game>) finalGameListTree.get(checkWhichSubKey);
+//                        updatedGameListForCache.put(checkWhichSubKey, existingGamesInCache);
+//                    }
+//
+//                    gamesBySystemInCache.put(String.valueOf(systemObj.getSystemId()), updatedGameListForCache);
+//                    CheatDatabaseApplication.setGamesBySystemCached(gamesBySystemInCache);
+//
+//                    gameList = gameEntityList;
+//
+//                    updateUI();
+//                }
+//
+//                @Override
+//                public void onFailure(Exception e) {
+//                    error();
+//                }
+//            });
 
         } else {
             updateUI();

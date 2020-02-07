@@ -1,6 +1,5 @@
 package com.cheatdatabase.activity;
 
-import android.app.Application;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
@@ -24,13 +23,11 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.cheatdatabase.CheatDatabaseApplication;
 import com.cheatdatabase.R;
 import com.cheatdatabase.adapters.CheatsByGameRecycleListViewAdapter;
-import com.cheatdatabase.callbacks.RepositoryEntityListCallback;
 import com.cheatdatabase.cheat_detail_view.CheatViewPageIndicatorActivity;
 import com.cheatdatabase.helpers.DatabaseHelper;
 import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.helpers.Tools;
-import com.cheatdatabase.helpers.Webservice;
 import com.cheatdatabase.listeners.OnCheatListItemSelectedListener;
 import com.cheatdatabase.model.Cheat;
 import com.cheatdatabase.model.Game;
@@ -282,13 +279,7 @@ public class CheatsByGameListActivity extends AppCompatActivity implements OnChe
 
             TreeMap finalCheatListTree = cheatListTree;
 
-
-            // TODO FIXME ursprünglich wird Webservice.getCheatList(gameObj, memberId, isAchievementsEnabled) verwendet. korrekte methode finden in retrofit...
-            // TODO FIXME ursprünglich wird Webservice.getCheatList(gameObj, memberId, isAchievementsEnabled) verwendet. korrekte methode finden in retrofit...
-            // TODO FIXME ursprünglich wird Webservice.getCheatList(gameObj, memberId, isAchievementsEnabled) verwendet. korrekte methode finden in retrofit...
-            // TODO FIXME ursprünglich wird Webservice.getCheatList(gameObj, memberId, isAchievementsEnabled) verwendet. korrekte methode finden in retrofit...
-            // TODO FIXME ursprünglich wird Webservice.getCheatList(gameObj, memberId, isAchievementsEnabled) verwendet. korrekte methode finden in retrofit...
-            Call<List<Cheat>> call = restApi.getCheatsByGameId(gameObj.getGameId());
+            Call<List<Cheat>> call = restApi.getCheatsAndRatings(gameObj.getGameId(), memberId, (isAchievementsEnabled ? 1 : 0));
             call.enqueue(new Callback<List<Cheat>>() {
                 @Override
                 public void onResponse(Call<List<Cheat>> cheats, Response<List<Cheat>> response) {
@@ -325,8 +316,6 @@ public class CheatsByGameListActivity extends AppCompatActivity implements OnChe
             });
 
 
-                // TODO FIXME bei retrofit oben die korrekte methode mit allen parametern verwenden.
-                // TODO FIXME bei retrofit oben die korrekte methode mit allen parametern verwenden.
 //            Webservice.getCheatList(gameObj, memberId, isAchievementsEnabled, new RepositoryEntityListCallback<Cheat>() {
 //                @Override
 //                public void onSuccess(List<Cheat> cheatEntityList) {
