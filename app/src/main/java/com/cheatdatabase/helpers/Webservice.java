@@ -1131,7 +1131,7 @@ public class Webservice {
                 member.setUsername(memberName);
                 member.setCity(city);
                 member.setWebsite(website);
-                member.setGreeting(greeting);
+                member.setProfileText(greeting);
                 member.setCheatSubmissionCount(cheats_submitted);
 
                 memberList.add(member);

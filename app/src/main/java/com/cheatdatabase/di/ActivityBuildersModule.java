@@ -2,6 +2,7 @@ package com.cheatdatabase.di;
 
 import com.cheatdatabase.activity.CheatsByGameListActivity;
 import com.cheatdatabase.activity.MainActivity;
+import com.cheatdatabase.fragments.TopMembersFragment;
 
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
@@ -24,4 +25,11 @@ public abstract class ActivityBuildersModule {
             }
     )
     abstract CheatsByGameListActivity contributeCheatsByGameListActivity();
+
+    @ContributesAndroidInjector(
+            modules = {
+                    NetworkModule.class
+            }
+    )
+    abstract TopMembersFragment contributeTopMembersFragment();
 }

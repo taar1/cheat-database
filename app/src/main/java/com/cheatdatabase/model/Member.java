@@ -7,15 +7,33 @@ import android.os.Parcelable;
 
 import com.cheatdatabase.helpers.Konstanten;
 import com.google.gson.Gson;
+import com.google.gson.annotations.SerializedName;
 
 import javax.inject.Inject;
 
 public class Member implements Parcelable {
 
-    private String username, password, email, website, city, greeting;
-    private int mid, errorCode, cheatSubmissionCount;
+    @SerializedName("username")
+    private String username;
+    @SerializedName("email")
+    private String email;
+    @SerializedName("website")
+    private String website;
+    @SerializedName("city")
+    private String city;
+    @SerializedName("profileText")
+    private String profileText;
+    @SerializedName("memberId")
+    private int mid;
+    @SerializedName("errorCode")
+    private int errorCode;
+    @SerializedName("cheatsSubmitted")
+    private int cheatSubmissionCount;
+    @SerializedName("isBanned")
     private boolean banned;
+
     private Bitmap avatar;
+    private String password;
 
     @Inject
     public Member() {
@@ -35,7 +53,7 @@ public class Member implements Parcelable {
         email = in.readString();
         website = in.readString();
         city = in.readString();
-        greeting = in.readString();
+        profileText = in.readString();
         mid = in.readInt();
         errorCode = in.readInt();
         cheatSubmissionCount = in.readInt();
@@ -84,8 +102,8 @@ public class Member implements Parcelable {
         return errorCode;
     }
 
-    public String getGreeting() {
-        return greeting;
+    public String getProfileText() {
+        return profileText;
     }
 
     /**
@@ -161,8 +179,8 @@ public class Member implements Parcelable {
         this.errorCode = errorCode;
     }
 
-    public void setGreeting(String greeting) {
-        this.greeting = greeting;
+    public void setProfileText(String profileText) {
+        this.profileText = profileText;
     }
 
     /**
@@ -215,7 +233,7 @@ public class Member implements Parcelable {
         dest.writeString(email);
         dest.writeString(website);
         dest.writeString(city);
-        dest.writeString(greeting);
+        dest.writeString(profileText);
         dest.writeInt(mid);
         dest.writeInt(errorCode);
         dest.writeInt(cheatSubmissionCount);

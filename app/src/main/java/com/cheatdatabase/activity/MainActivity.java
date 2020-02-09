@@ -45,7 +45,6 @@ import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.helpers.Tools;
 import com.cheatdatabase.helpers.TrackingUtils;
-import com.cheatdatabase.model.Cheat;
 import com.cheatdatabase.model.Member;
 import com.cheatdatabase.rest.RestApi;
 import com.cheatdatabase.search.SearchSuggestionProvider;
@@ -60,7 +59,6 @@ import com.inmobi.sdk.InMobiSdk;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
-import java.util.List;
 import java.util.Random;
 
 import javax.inject.Inject;
@@ -68,9 +66,6 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 import retrofit2.Retrofit;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -390,8 +385,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             mToolbar.setTitle(R.string.favorites);
             floatingActionButton.show();
         } else if (id == R.id.nav_members) {
+
+            TopMembersFragment topMembersFragment = TopMembersFragment.newInstance();
+            topMembersFragment.setMainActivity(this);
+
             fragmentTransaction.addToBackStack(TopMembersFragment.class.getSimpleName());
-            fragmentManager.beginTransaction().replace(R.id.content_frame, TopMembersFragment.newInstance(), TopMembersFragment.class.getSimpleName()).commit();
+            fragmentManager.beginTransaction().replace(R.id.content_frame, topMembersFragment, TopMembersFragment.class.getSimpleName()).commit();
 
             mToolbar.setTitle(R.string.top_members_top_helping);
             floatingActionButton.hide();

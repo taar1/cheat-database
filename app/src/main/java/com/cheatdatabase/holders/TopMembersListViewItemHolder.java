@@ -7,8 +7,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.cheatdatabase.CheatDatabaseApplication;
 import com.cheatdatabase.R;
-import com.cheatdatabase.model.Member;
 import com.cheatdatabase.helpers.Konstanten;
+import com.cheatdatabase.model.Member;
 import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
@@ -50,8 +50,8 @@ public class TopMembersListViewItemHolder extends RecyclerView.ViewHolder {
             website.setVisibility(View.GONE);
         }
 
-        if (member.getGreeting().length() > 1) {
-            memberMessage.setText("\"" + member.getGreeting().replaceAll("\\\\", "").trim() + "\"");
+        if (member.getProfileText().length() > 1) {
+            memberMessage.setText("\"" + member.getProfileText().replaceAll("\\\\", "").trim() + "\"");
             memberMessage.setVisibility(View.VISIBLE);
         } else {
             memberMessage.setVisibility(View.GONE);

@@ -22,20 +22,27 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.cheatdatabase.activity.CheatsByMemberListActivity;
 import com.cheatdatabase.R;
+import com.cheatdatabase.activity.CheatsByMemberListActivity;
+import com.cheatdatabase.activity.MainActivity;
 import com.cheatdatabase.adapters.TopMembersListViewAdapter;
-import com.cheatdatabase.model.Member;
 import com.cheatdatabase.helpers.Reachability;
-import com.cheatdatabase.helpers.Webservice;
 import com.cheatdatabase.listeners.OnTopMemberListItemSelectedListener;
+import com.cheatdatabase.model.Member;
+import com.cheatdatabase.rest.RestApi;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import needle.Needle;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
 
 /**
  * Show Top 20 helping memberList in a list.
@@ -62,6 +69,12 @@ public class TopMembersFragment extends Fragment implements OnTopMemberListItemS
     @BindView(R.id.empty_label)
     TextView emptyLabel;
 
+    @Inject
+    Retrofit retrofit;
+
+    private RestApi restApi;
+    private MainActivity mainActivity;
+
     public TopMembersFragment() {
         memberList = new ArrayList<>();
         topMembersListViewAdapter = new TopMembersListViewAdapter(this);
@@ -69,6 +82,11 @@ public class TopMembersFragment extends Fragment implements OnTopMemberListItemS
 
     public static TopMembersFragment newInstance() {
         return new TopMembersFragment();
+    }
+
+
+    public void setMainActivity(MainActivity mainActivity) {
+        this.mainActivity = mainActivity;
     }
 
     @Override
@@ -95,24 +113,25 @@ public class TopMembersFragment extends Fragment implements OnTopMemberListItemS
             Toast.makeText(context, R.string.no_internet, Toast.LENGTH_LONG).show();
         }
 
+        loadMembersInBackground();
         return view;
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        if (memberList.size() < 1) {
-            loadMembersInBackground();
-        }
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        if (memberList.size() < 1) {
-            loadMembersInBackground();
-        }
-    }
+//    @Override
+//    public void onStart() {
+//        super.onStart();
+//        if (memberList.size() < 1) {
+//            loadMembersInBackground();
+//        }
+//    }
+//
+//    @Override
+//    public void onResume() {
+//        super.onResume();
+//        if (memberList.size() < 1) {
+//            loadMembersInBackground();
+//        }
+//    }
 
     @Override
     public void onPause() {
@@ -149,20 +168,25 @@ public class TopMembersFragment extends Fragment implements OnTopMemberListItemS
         return super.onContextItemSelected(item);
     }
 
-    public void loadMembersInBackground() {
+    private void loadMembersInBackground() {
         if (!mSwipeRefreshLayout.isRefreshing()) {
             mSwipeRefreshLayout.setRefreshing(true);
         }
 
-        Needle.onBackgroundThread().execute(() -> {
-            try {
-                memberList = Webservice.getMemberTop20();
-            } catch (Exception e) {
-                Log.e(TAG, e.getLocalizedMessage());
+        Call<List<Member>> call = mainActivity.getApiService().getMemberTop20();
+        call.enqueue(new Callback<List<Member>>() {
+            @Override
+            public void onResponse(Call<List<Member>> members, Response<List<Member>> response) {
+                memberList = response.body();
+                notifyAdapter();
             }
-            notifyAdapter();
-        });
 
+            @Override
+            public void onFailure(Call<List<Member>> call, Throwable e) {
+                Log.e(TAG, "loadMembersInBackground onFailure: " + e.getLocalizedMessage());
+                handleEmptyViewState();
+            }
+        });
     }
 
     private void notifyAdapter() {
@@ -183,6 +207,7 @@ public class TopMembersFragment extends Fragment implements OnTopMemberListItemS
         if (mSwipeRefreshLayout == null || !isAdded()) {
             return;
         }
+
         if (topMembersListViewAdapter.getItemCount() == 0) {
             emptyLabel.setText(getString(R.string.err_no_member_data));
             emptyView.setVisibility(View.VISIBLE);
