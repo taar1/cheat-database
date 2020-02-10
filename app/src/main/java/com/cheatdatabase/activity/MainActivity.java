@@ -446,7 +446,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void showContactFormFragment() {
         mToolbar.setTitle(R.string.contactform_title);
         fragmentTransaction.addToBackStack(ContactFormFragment.class.getSimpleName());
-        fragmentManager.beginTransaction().replace(R.id.content_frame, ContactFormFragment.newInstance(), ContactFormFragment.class.getSimpleName()).commit();
+
+        ContactFormFragment contactFormFragment = ContactFormFragment.newInstance();
+        contactFormFragment.setMainActivity(this);
+
+        fragmentManager.beginTransaction().replace(R.id.content_frame, contactFormFragment, ContactFormFragment.class.getSimpleName()).commit();
 
         mixedBannerContainer.setVisibility(View.GONE);
 

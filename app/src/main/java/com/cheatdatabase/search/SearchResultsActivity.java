@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
@@ -14,7 +13,6 @@ import android.util.Log;
 import android.util.SparseArray;
 import android.view.Menu;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
@@ -27,13 +25,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 
+import com.cheatdatabase.CheatDatabaseApplication;
 import com.cheatdatabase.R;
-import com.cheatdatabase.model.Game;
 import com.cheatdatabase.helpers.Group;
 import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.helpers.Tools;
-import com.cheatdatabase.helpers.Webservice;
+import com.cheatdatabase.model.Game;
+import com.cheatdatabase.rest.RestApi;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -42,11 +41,19 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import needle.Needle;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
 
 @SuppressLint("NewApi")
 public class SearchResultsActivity extends AppCompatActivity {
+    private static final String TAG = "SearchResultsActivity";
 
     SparseArray<Group> groups = new SparseArray<>();
 
@@ -65,16 +72,19 @@ public class SearchResultsActivity extends AppCompatActivity {
     @BindView(R.id.listView)
     ExpandableListView listView;
 
-    private Game[] gamesFound;
+    @Inject
+    Retrofit retrofit;
+
+    private RestApi restApi;
+
+    private List<Game> gamesFound;
     private String query;
-    private SearchresultExpandableListAdapter adapter;
 
     protected final int STEP_ONE_COMPLETE = 1;
 
     private Typeface latoFontBold;
     private Typeface latoFontLight;
 
-    private SharedPreferences settings;
     private Toolbar toolbar;
 
     @Override
@@ -89,8 +99,7 @@ public class SearchResultsActivity extends AppCompatActivity {
         nothingFoundTitle.setTypeface(latoFontBold);
         nothingFoundText.setTypeface(latoFontLight);
 
-        adapter = new SearchresultExpandableListAdapter(SearchResultsActivity.this, groups);
-        listView.setAdapter(adapter);
+        listView.setAdapter(new SearchresultExpandableListAdapter(SearchResultsActivity.this, groups));
 
         handleIntent(getIntent());
     }
@@ -100,10 +109,11 @@ public class SearchResultsActivity extends AppCompatActivity {
             Reachability.registerReachability(this);
         }
 
+        ((CheatDatabaseApplication) getApplication()).getNetworkComponent().inject(this);
+        restApi = retrofit.create(RestApi.class);
+
         latoFontLight = Tools.getFont(getAssets(), Konstanten.FONT_LIGHT);
         latoFontBold = Tools.getFont(getAssets(), Konstanten.FONT_BOLD);
-
-        settings = getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
 
         Tools.initToolbarBase(this, toolbar);
     }
@@ -116,15 +126,12 @@ public class SearchResultsActivity extends AppCompatActivity {
 
     @Override
     protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
         handleIntent(intent);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Full Text Search
-        // getMenuInflater().inflate(R.menu.search_fulltext_menu, menu);
-
-        // Search
         getMenuInflater().inflate(R.menu.search_menu, menu);
 
         // Associate searchable configuration with the SearchView
@@ -148,15 +155,11 @@ public class SearchResultsActivity extends AppCompatActivity {
                 searchNow();
             } else {
                 reloadView.setVisibility(View.VISIBLE);
-                reloadView.setOnClickListener(new OnClickListener() {
-
-                    @Override
-                    public void onClick(View v) {
-                        if (Reachability.reachability.isReachable) {
-                            searchNow();
-                        } else {
-                            Toast.makeText(SearchResultsActivity.this, R.string.no_internet, Toast.LENGTH_SHORT).show();
-                        }
+                reloadView.setOnClickListener(v -> {
+                    if (Reachability.reachability.isReachable) {
+                        searchNow();
+                    } else {
+                        Toast.makeText(SearchResultsActivity.this, R.string.no_internet, Toast.LENGTH_SHORT).show();
                     }
                 });
                 Toast.makeText(this, R.string.no_internet, Toast.LENGTH_SHORT).show();
@@ -167,14 +170,24 @@ public class SearchResultsActivity extends AppCompatActivity {
     private void searchNow() {
         reloadView.setVisibility(View.GONE);
 
-        new Thread(() -> {
-            gamesFound = Webservice.searchGames(SearchResultsActivity.this, query);
-            createData();
+        Call<List<Game>> call = restApi.universalGameSearch(query, Konstanten.CURRENT_VERSION);
+        call.enqueue(new Callback<List<Game>>() {
+            @Override
+            public void onResponse(Call<List<Game>> cheats, Response<List<Game>> response) {
+                gamesFound = response.body();
+                createData();
 
-            Message msg = Message.obtain();
-            msg.what = STEP_ONE_COMPLETE;
-            handler.sendMessage(msg);
-        }).start();
+                Message msg = Message.obtain();
+                msg.what = STEP_ONE_COMPLETE;
+                handler.sendMessage(msg);
+            }
+
+            @Override
+            public void onFailure(Call<List<Game>> call, Throwable e) {
+                Log.e(TAG, "searchGames onFailure: " + e.getLocalizedMessage());
+                Needle.onMainThread().execute(() -> Toast.makeText(SearchResultsActivity.this, R.string.err_somethings_wrong, Toast.LENGTH_LONG).show());
+            }
+        });
     }
 
     private Handler handler = new Handler() {
@@ -203,16 +216,10 @@ public class SearchResultsActivity extends AppCompatActivity {
 
                 somethingfoundLayout.setVisibility(View.GONE);
                 nothingFoundLayout.setVisibility(View.VISIBLE);
-                searchButton.setOnClickListener(new OnClickListener() {
-
-                    @Override
-                    public void onClick(View v) {
-                        onSearchRequested();
-                    }
-                });
+                searchButton.setOnClickListener(v -> onSearchRequested());
             });
         } else {
-            if ((gamesFound != null) && (gamesFound.length > 0)) {
+            if (gamesFound.size() > 0) {
                 Set<String> systems = new HashSet<>();
 
                 // Get system names
@@ -226,24 +233,22 @@ public class SearchResultsActivity extends AppCompatActivity {
 
                 // Go through systems
                 for (int i = 0; i < systemsSorted.size(); i++) {
-                    Log.i("system", systemsSorted.get(i) + "");
+                    Log.d(TAG, "System: " + systemsSorted.get(i) + "");
 
                     // Create groups with system names
                     Group group = new Group(systemsSorted.get(i) + "");
 
                     // Fill each group with the game names
-                    for (int l = 0; l < gamesFound.length; l++) {
-                        Game game = gamesFound[l];
+                    for (Game game : gamesFound) {
                         if (game.getSystemName().equalsIgnoreCase(systemsSorted.get(i))) {
                             group.children.add(game.getGameName());
                             group.gameChildren.add(game);
                         }
                     }
+
                     groups.append(i, group);
                 }
             }
         }
-
     }
-
 }

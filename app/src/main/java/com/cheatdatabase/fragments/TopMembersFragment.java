@@ -29,7 +29,6 @@ import com.cheatdatabase.adapters.TopMembersListViewAdapter;
 import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.listeners.OnTopMemberListItemSelectedListener;
 import com.cheatdatabase.model.Member;
-import com.cheatdatabase.rest.RestApi;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -72,7 +71,6 @@ public class TopMembersFragment extends Fragment implements OnTopMemberListItemS
     @Inject
     Retrofit retrofit;
 
-    private RestApi restApi;
     private MainActivity mainActivity;
 
     public TopMembersFragment() {
@@ -83,7 +81,6 @@ public class TopMembersFragment extends Fragment implements OnTopMemberListItemS
     public static TopMembersFragment newInstance() {
         return new TopMembersFragment();
     }
-
 
     public void setMainActivity(MainActivity mainActivity) {
         this.mainActivity = mainActivity;

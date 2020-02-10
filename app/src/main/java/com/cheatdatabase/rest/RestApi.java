@@ -42,7 +42,7 @@ public interface RestApi {
 
     @FormUrlEncoded
     @POST("universalGameSearch.php")
-    Call<String> universalGameSearch(@Field("q") String searchString, @Field("v") String appVersion);
+    Call<List<Game>> universalGameSearch(@Field("q") String searchString, @Field("v") String appVersion);
 
     /**
      * Gets all cheats from a game as a string.
@@ -284,12 +284,13 @@ public interface RestApi {
      * Submits a message to me.
      *
      * @param email   E-Mail
+     * @param subject Title of email
      * @param message Message
      * @return
      */
     @FormUrlEncoded
     @POST("submitMessage.php")
-    Call<Void> submitContactForm(@Field("email") String email, @Field("message") String message);
+    Call<Void> submitContactForm(@Field("email") String email, @Field("subject") String subject, @Field("message") String message);
 
 
 }

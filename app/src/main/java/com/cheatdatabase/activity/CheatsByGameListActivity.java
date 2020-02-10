@@ -314,42 +314,6 @@ public class CheatsByGameListActivity extends AppCompatActivity implements OnChe
                     Needle.onMainThread().execute(() -> Toast.makeText(CheatsByGameListActivity.this, R.string.err_somethings_wrong, Toast.LENGTH_LONG).show());
                 }
             });
-
-
-//            Webservice.getCheatList(gameObj, memberId, isAchievementsEnabled, new RepositoryEntityListCallback<Cheat>() {
-//                @Override
-//                public void onSuccess(List<Cheat> cheatEntityList) {
-//                    gameObj.setCheatList(cheatEntityList);
-//
-//                    TreeMap<String, List<Cheat>> updatedCheatListForCache = new TreeMap<>();
-//                    updatedCheatListForCache.put(achievementsEnabled, cheatEntityList);
-//
-//                    String checkWhichSubKey;
-//                    if (achievementsEnabled.equalsIgnoreCase(Konstanten.ACHIEVEMENTS)) {
-//                        checkWhichSubKey = Konstanten.NO_ACHIEVEMENTS;
-//                    } else {
-//                        checkWhichSubKey = Konstanten.ACHIEVEMENTS;
-//                    }
-//
-//                    if ((finalCheatListTree != null) && (finalCheatListTree.containsKey(checkWhichSubKey))) {
-//                        List<Cheat> existingGamesInCache = (List<Cheat>) finalCheatListTree.get(checkWhichSubKey);
-//                        updatedCheatListForCache.put(checkWhichSubKey, existingGamesInCache);
-//                    }
-//
-//                    cheatsByGameInCache.put(String.valueOf(gameObj.getGameId()), updatedCheatListForCache);
-//                    cheatDatabaseApplication.setCheatsByGameCached(cheatsByGameInCache);
-//
-//                    cheatList = cheatEntityList;
-//
-//                    updateUI();
-//                }
-//
-//                @Override
-//                public void onFailure(Exception e) {
-//                    Log.e(TAG, "getCheatList onFailure: " + e.getLocalizedMessage());
-//                    Needle.onMainThread().execute(() -> Toast.makeText(CheatsByGameListActivity.this, R.string.err_somethings_wrong, Toast.LENGTH_LONG).show());
-//                }
-//            });
         } else {
             updateUI();
         }

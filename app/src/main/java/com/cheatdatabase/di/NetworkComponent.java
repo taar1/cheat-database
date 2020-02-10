@@ -3,8 +3,7 @@ package com.cheatdatabase.di;
 import com.cheatdatabase.activity.CheatsByGameListActivity;
 import com.cheatdatabase.activity.GamesBySystemListActivity;
 import com.cheatdatabase.activity.MainActivity;
-import com.cheatdatabase.fragments.SystemListFragment;
-import com.cheatdatabase.fragments.TopMembersFragment;
+import com.cheatdatabase.search.SearchResultsActivity;
 
 import javax.inject.Singleton;
 
@@ -20,9 +19,7 @@ public interface NetworkComponent {
 
     void inject(CheatsByGameListActivity activity);
 
-    void inject(SystemListFragment fragment);
-
-    void inject(TopMembersFragment fragment);
+    void inject(SearchResultsActivity activity);
 
 
 }

@@ -130,6 +130,5 @@
     <string name="share_title">Share cheat</string>
     <string name="share_error_no_client">There are no email clients installed.</string>
     <string name="share_email_subject">I just found this cheat for %s</string>
-    <string name="game_search_results_title"></string>
 
 </resources>

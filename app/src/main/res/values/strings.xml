@@ -58,6 +58,7 @@
     <string name="err_other_problem">There was a problem creating the user account. Please try again a bit later. If the problem remains you can also register at www.cheat-database.com/register.</string>
     <string name="err_email_user_not_found">No user found with this email address.</string>
     <string name="err_data_not_accessible">Requested data could not be retrieved. Please try again a bit later.</string>
+    <string name="err_submit_contactform">There was a problem submitting the data. Please try again.</string>
 
     <!-- FAVORITES -->
     <string name="err_no_member_data">Error: No member data could be found.</string>
@@ -150,7 +151,7 @@
     <string name="title_cheat_list">Cheats</string>
     <string name="title_cheat_detail">Cheat Detail</string>
     <string name="title_cheat_details">Cheat Details</string>
-    <string name="game_search_results_title">Search Results for &#8220;%s&#8221;</string>
+    <string name="game_search_results_title">Search Results for &#8220;%1$s&#8221;</string>
     <string name="button_dismiss">Dismiss</string>
     <string name="contactform_title">Contact Us</string>
     <string name="contactform_sendmessage">Send Message</string>

@@ -1,19 +1,17 @@
 package com.cheatdatabase.fragments;
 
 import android.app.Activity;
-import android.graphics.Typeface;
 import android.os.Bundle;
-import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.fragment.app.Fragment;
+
 import com.cheatdatabase.R;
-import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Reachability;
-import com.cheatdatabase.helpers.Tools;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -30,8 +28,7 @@ public class SubmitCheatFragment extends Fragment {
     Button searchButton;
 
     public static SubmitCheatFragment newInstance() {
-        SubmitCheatFragment submitCheatFragment = new SubmitCheatFragment();
-        return submitCheatFragment;
+        return new SubmitCheatFragment();
     }
 
     @Override

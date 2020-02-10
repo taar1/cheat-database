@@ -56,6 +56,7 @@
     <string name="err_data_not_accessible">Die angeforderten Daten konnten nicht empfangen werden. Versuche es etwas später noch einmal.</string>
     <string name="err_no_member_data">Fehler: Es wurden keine Daten gefunden.</string>
     <string name="err_somethings_wrong">Etwas ist soeben schief gelaufen. Versuchs bitte nochmals.</string>
+    <string name="err_submit_contactform">Es gab ein Problem beim übermitteln der Daten. Versuche es erneut.</string>
 
     <!-- FAVORITES -->
     <string name="add_favorite">Zu Favoriten hinzufügen</string>
@@ -149,7 +150,7 @@
     <string name="title_cheat_list">Cheats</string>
     <string name="title_cheat_detail">Cheat Detail</string>
     <string name="title_cheat_details">Cheat Details</string>
-    <string name="game_search_results_title">Suchresultate für &#8220;%s&#8221;</string>
+    <string name="game_search_results_title">Suchresultate für &#8220;%1$s&#8221;</string>
     <string name="button_dismiss">Ausblenden</string>
     <string name="contactform_title">Kontaktiere uns</string>
     <string name="contactform_sendmessage">Nachricht senden</string>

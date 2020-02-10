@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
 import android.text.util.Linkify;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -23,22 +24,29 @@ import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 
 import com.cheatdatabase.R;
-import com.cheatdatabase.model.Member;
+import com.cheatdatabase.activity.MainActivity;
 import com.cheatdatabase.events.GenericEvent;
 import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.helpers.Tools;
-import com.cheatdatabase.helpers.Webservice;
+import com.cheatdatabase.model.Member;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.gson.Gson;
 
 import org.greenrobot.eventbus.EventBus;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import needle.Needle;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
 
 public class ContactFormFragment extends Fragment {
+
+    private static final String TAG = "ContactFormFragment";
 
     @BindView(R.id.outer_layout)
     LinearLayout outerLayout;
@@ -59,6 +67,11 @@ public class ContactFormFragment extends Fragment {
     @BindView(R.id.thank_you)
     View mThankyouView;
 
+    @Inject
+    Retrofit retrofit;
+
+    private MainActivity mainActivity;
+
     /**
      * The default email to populate the email field with.
      */
@@ -67,10 +80,12 @@ public class ContactFormFragment extends Fragment {
     // Values for email and password at the time of the login attempt.
     private String mEmail;
 
-    private boolean isFormSent = false;
-
     public static ContactFormFragment newInstance() {
         return new ContactFormFragment();
+    }
+
+    public void setMainActivity(MainActivity mainActivity) {
+        this.mainActivity = mainActivity;
     }
 
     @Override
@@ -79,17 +94,17 @@ public class ContactFormFragment extends Fragment {
         ButterKnife.bind(this, view);
 
         if (!Reachability.isRegistered()) {
-            Reachability.registerReachability(getActivity());
+            Reachability.registerReachability(mainActivity);
         }
 
-        SharedPreferences settings = getActivity().getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
+        SharedPreferences settings = mainActivity.getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
         Member member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
 
         // Update action bar menu items?
         setHasOptionsMenu(true);
 
         // Set up the login form.
-        mEmail = getActivity().getIntent().getStringExtra(EXTRA_EMAIL);
+        mEmail = mainActivity.getIntent().getStringExtra(EXTRA_EMAIL);
 
         mEmailView.setText(mEmail);
         if ((member != null) && member.getEmail() != null) {
@@ -105,14 +120,14 @@ public class ContactFormFragment extends Fragment {
         });
         Linkify.addLinks(mEmailaddressView, Linkify.ALL);
 
-        Tools.showKeyboard(getActivity(), outerLayout);
+        Tools.showKeyboard(mainActivity, outerLayout);
 
         return view;
     }
 
     @Override
     public void onPause() {
-        Reachability.unregister(getActivity());
+        Reachability.unregister(mainActivity);
         super.onPause();
     }
 
@@ -163,7 +178,7 @@ public class ContactFormFragment extends Fragment {
             // Show a progress spinner, and kick off a background task to perform the user login attempt.
             mLoginStatusMessageView.setText(R.string.sending_message_progress);
             showProgress(true, 1);
-            sendForm();
+            submitContactForm();
         }
     }
 
@@ -229,10 +244,7 @@ public class ContactFormFragment extends Fragment {
 
     private void selectMenu(Menu menu) {
         menu.clear();
-        if (!isFormSent) {
-            getActivity().getMenuInflater().inflate(R.menu.contactform_send_menu, menu);
-        }  // change actionbar menu how when contact form is sent?
-
+        mainActivity.getMenuInflater().inflate(R.menu.contactform_send_menu, menu);
     }
 
     @Override
@@ -244,31 +256,32 @@ public class ContactFormFragment extends Fragment {
         return false;
     }
 
-    private void sendForm() {
-        Needle.onBackgroundThread().execute(() -> {
-            Webservice.submitContactForm(mEmailView.getText().toString().trim(), mMessageView.getText().toString().trim());
-            actionAfterSendForm();
-        });
+    private void submitContactForm() {
+        Call<Void> call = mainActivity.getApiService().submitContactForm(mEmailView.getText().toString().trim(), "Contact through Android App", mMessageView.getText().toString().trim());
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> voidValue, Response<Void> response) {
+                actionAfterSendForm();
+            }
 
+            @Override
+            public void onFailure(Call<Void> call, Throwable e) {
+                Log.e(TAG, "submitContactForm onFailure: " + e.getLocalizedMessage());
+
+                Tools.showSnackbar(outerLayout, mainActivity.getString(R.string.err_submit_contactform), 5000);
+            }
+        });
     }
 
     private void actionAfterSendForm() {
-        Needle.onMainThread().execute(() -> {
-            View view = getActivity().getCurrentFocus();
-            if (view != null) {
-                InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-            }
-            Tools.showSnackbar(outerLayout, getActivity().getString(R.string.contactform_thanks));
-            forwardToMainView();
-        });
+        View view = mainActivity.getCurrentFocus();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager) mainActivity.getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
+        Tools.showSnackbar(outerLayout, mainActivity.getString(R.string.contactform_thanks), 5000);
 
-    }
-
-    private void forwardToMainView() {
-        Needle.onMainThread().execute(() -> {
-            Handler handler = new Handler();
-            handler.postDelayed(() -> EventBus.getDefault().post(new GenericEvent(GenericEvent.Action.CLICK_CHEATS_DRAWER)), 1500);
-        });
+        Handler handler = new Handler();
+        handler.postDelayed(() -> EventBus.getDefault().post(new GenericEvent(GenericEvent.Action.CLICK_CHEATS_DRAWER)), 1500);
     }
 }
