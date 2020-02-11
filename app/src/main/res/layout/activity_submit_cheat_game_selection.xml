@@ -1,37 +1,36 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:background="@drawable/bg"
     android:gravity="top"
-    android:layout_height="match_parent"
-    android:layout_width="match_parent"
     android:orientation="vertical"
-    android:padding="10dp">
+    android:padding="16dp">
 
     <TextView
         android:id="@+id/title"
-        android:layout_height="wrap_content"
         android:layout_width="wrap_content"
-        android:paddingBottom="10sp"
+        android:layout_height="wrap_content"
+        android:paddingBottom="16dp"
         android:text="@string/submit_cheat_instructions_activity_title"
         android:textAppearance="@style/ActivityMainTitle" />
 
     <TextView
         android:id="@+id/subtitle"
-        android:layout_height="wrap_content"
         android:layout_width="wrap_content"
-        android:paddingBottom="20sp"
+        android:layout_height="wrap_content"
+        android:paddingBottom="24dp"
         android:text="@string/submit_cheat_instructions_activity_subtitle"
         android:textAppearance="@style/NormalTextLight" />
 
 
     <Button
         android:id="@+id/search_button"
-        android:background="@drawable/bluedark01_btn_default_holo_dark"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
         android:layout_gravity="center"
-        android:layout_height="50dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:layout_marginTop="5dp"
-        android:layout_width="match_parent"
+        android:background="@drawable/bluedark01_btn_default_holo_dark"
         android:text="@string/search_game"
         android:textAppearance="@style/NormalTextBold"
         android:textSize="20sp" />

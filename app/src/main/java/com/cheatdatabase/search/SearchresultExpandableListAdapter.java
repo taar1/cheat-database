@@ -11,11 +11,11 @@ import android.widget.CheckedTextView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.cheatdatabase.activity.CheatsByGameListActivity;
 import com.cheatdatabase.R;
-import com.cheatdatabase.model.Game;
+import com.cheatdatabase.activity.CheatsByGameListActivity;
 import com.cheatdatabase.helpers.Group;
 import com.cheatdatabase.helpers.Reachability;
+import com.cheatdatabase.model.Game;
 
 public class SearchresultExpandableListAdapter extends BaseExpandableListAdapter {
 
@@ -55,7 +55,7 @@ public class SearchresultExpandableListAdapter extends BaseExpandableListAdapter
         textGameTitle = convertView.findViewById(R.id.text_game_name);
         textGameTitle.setText(gameObj.getGameName());
 
-        // TODO gleich machen wie bei gamesbystem mit: "10 Cheats" (nicht:
+        // TODO gleich machen wie bei gamesbysystem mit: "10 Cheats" (nicht:
         // Anzahl Cheats: 10)
         textCheatCounter = convertView.findViewById(R.id.text_cheat_counter);
         textCheatCounter.setText(R.string.cheats_count);

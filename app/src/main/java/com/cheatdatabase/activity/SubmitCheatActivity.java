@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.CheckBox;
@@ -17,13 +18,13 @@ import androidx.appcompat.widget.Toolbar;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.Theme;
 import com.cheatdatabase.R;
-import com.cheatdatabase.model.Game;
-import com.cheatdatabase.model.Member;
 import com.cheatdatabase.dialogs.PlainInformationDialog;
 import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.helpers.Tools;
 import com.cheatdatabase.helpers.Webservice;
+import com.cheatdatabase.model.Game;
+import com.cheatdatabase.model.Member;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.gson.Gson;
 
@@ -37,6 +38,7 @@ import butterknife.OnClick;
  * @author erbsland
  */
 public class SubmitCheatActivity extends AppCompatActivity {
+    private static final String TAG = "SubmitCheatActivity";
 
     @BindView(R.id.outer_layout)
     RelativeLayout outerLayout;
@@ -64,6 +66,7 @@ public class SubmitCheatActivity extends AppCompatActivity {
 
         gameObj = getIntent().getParcelableExtra("gameObj");
         if (gameObj == null) {
+            Log.d(TAG, "XXXXX onCreate: GAME OBJ NULL");
             Toast.makeText(SubmitCheatActivity.this, R.string.err_somethings_wrong, Toast.LENGTH_LONG).show();
             finish();
         } else {

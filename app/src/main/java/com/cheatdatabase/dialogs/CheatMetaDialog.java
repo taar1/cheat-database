@@ -12,18 +12,22 @@ import android.view.Window;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.cheatdatabase.activity.CheatsByMemberListActivity;
 import com.cheatdatabase.R;
+import com.cheatdatabase.activity.CheatsByMemberListActivity;
+import com.cheatdatabase.helpers.Webservice;
 import com.cheatdatabase.model.Cheat;
 import com.cheatdatabase.model.Member;
-import com.cheatdatabase.helpers.Webservice;
+import com.cheatdatabase.rest.RestApi;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import needle.Needle;
+import retrofit2.Retrofit;
 
 @SuppressLint("SimpleDateFormat")
 public class CheatMetaDialog extends Dialog implements OnClickListener {
@@ -33,6 +37,10 @@ public class CheatMetaDialog extends Dialog implements OnClickListener {
     private Cheat cheat;
     private Member member;
 
+    @Inject
+    Retrofit retrofit;
+
+    private RestApi restApi;
 
     @BindView(R.id.tvAverageRatingText)
     TextView tvAverageRatingText;
@@ -78,6 +86,12 @@ public class CheatMetaDialog extends Dialog implements OnClickListener {
         setContentView(R.layout.layout_cheatview_meta_dialog);
         ButterKnife.bind(this);
 
+        // TODO dagger zeugs....
+        // TODO dagger zeugs....
+        // TODO dagger zeugs....
+//        ((CheatDatabaseApplication) getApplication()).getNetworkComponent().inject(this);
+//        restApi = retrofit.create(RestApi.class);
+
         this.context = context;
         this.cheat = cheat;
 
@@ -103,7 +117,29 @@ public class CheatMetaDialog extends Dialog implements OnClickListener {
         loadMetaData();
     }
 
+
     private void loadMetaData() {
+        // TODO meta laden in RETROFIT block verschieben....
+        // TODO meta laden in RETROFIT block verschieben....
+        // TODO meta laden in RETROFIT block verschieben....
+        // TODO meta laden in RETROFIT block verschieben....
+//        Call<List<Cheat>> call = restApi.getCheatsAndRatings(gameObj.getGameId(), memberId, (isAchievementsEnabled ? 1 : 0));
+//        call.enqueue(new Callback<List<Cheat>>() {
+//            @Override
+//            public void onResponse(Call<List<Cheat>> cheats, Response<List<Cheat>> response) {
+//                cheatList = response.body();
+//
+//
+//            }
+//
+//            @Override
+//            public void onFailure(Call<List<Cheat>> call, Throwable e) {
+//                Log.e(TAG, "getCheatList onFailure: " + e.getLocalizedMessage());
+//                Toast.makeText(context, R.string.err_somethings_wrong, Toast.LENGTH_LONG).show()
+//            }
+//        });
+
+
         Needle.onBackgroundThread().execute(() -> {
             try {
                 Cheat metaCheat = Webservice.getCheatMetaById(cheat.getCheatId());
