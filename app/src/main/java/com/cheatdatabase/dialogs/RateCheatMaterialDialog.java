@@ -42,19 +42,16 @@ public class RateCheatMaterialDialog {
                 .customView(R.layout.dialog_layout_rate_cheat, false)
                 .positiveText(R.string.ok)
                 .negativeText(R.string.cancel)
-                .onPositive(new MaterialDialog.SingleButtonCallback() {
-                    @Override
-                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                        if ((previousRating != newRatingBarValue) && (newRatingBarValue != 0)) {
+                .onPositive((dialog, which) -> {
+                    if ((previousRating != newRatingBarValue) && (newRatingBarValue != 0)) {
 
-                            try {
-                                new RateCheatBackgroundTask().execute(newRatingBarValue);
-                            } catch (Exception e) {
-                                Toast.makeText(activity, R.string.no_internet, Toast.LENGTH_SHORT).show();
-                                Log.e(TAG, e.getLocalizedMessage());
-                            }
-
+                        try {
+                            new RateCheatBackgroundTask().execute(newRatingBarValue);
+                        } catch (Exception e) {
+                            Toast.makeText(activity, R.string.no_internet, Toast.LENGTH_SHORT).show();
+                            Log.e(TAG, e.getLocalizedMessage());
                         }
+
                     }
                 })
                 .theme(Theme.DARK)
@@ -66,16 +63,13 @@ public class RateCheatMaterialDialog {
         View dialogView = ratingDialog.getCustomView();
         RatingBar ratingBar = dialogView.findViewById(R.id.rating_bar);
         ratingBar.setRating(previousRating);
-        ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
-            @Override
-            public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
-                newRatingBarValue = Math.round(rating) * 2;
+        ratingBar.setOnRatingBarChangeListener((ratingBar1, rating, fromUser) -> {
+            newRatingBarValue = Math.round(rating) * 2;
 
-                if (newRatingBarValue != previousRating * 2) {
-                    positive.setEnabled(true);
-                } else {
-                    positive.setEnabled(false);
-                }
+            if (newRatingBarValue != previousRating * 2) {
+                positive.setEnabled(true);
+            } else {
+                positive.setEnabled(false);
             }
         });
 

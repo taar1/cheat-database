@@ -95,7 +95,7 @@ public class GamesBySystemRecycleListViewAdapter extends RecyclerView.Adapter<Re
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         int type = getItemViewType(position);
-        Log.d(TAG, "XXXXX ADAPTER onBindViewHolder() TYPE: " + type);
+        Log.d(TAG, "ADAPTER onBindViewHolder() TYPE: " + type);
 
         if (type == ListItem.TYPE_GAME) {
             final GameListItem gameListItem = (GameListItem) listItems.get(position);

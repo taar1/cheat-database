@@ -1,5 +1,6 @@
 package com.cheatdatabase.di;
 
+import com.cheatdatabase.activity.CheatForumActivity;
 import com.cheatdatabase.activity.CheatsByGameListActivity;
 import com.cheatdatabase.activity.GamesBySystemListActivity;
 import com.cheatdatabase.activity.MainActivity;
@@ -21,6 +22,8 @@ public interface NetworkComponent {
     void inject(CheatsByGameListActivity activity);
 
     void inject(SearchResultsActivity activity);
+
+    void inject(CheatForumActivity activity);
 
     void inject(CheatMetaDialog dialog);
 

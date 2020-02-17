@@ -30,10 +30,10 @@ public class AeSimpleMD5 {
         return buf.toString();
     }
 
-    public static String MD5(String text) throws NoSuchAlgorithmException, UnsupportedEncodingException {
+    public static String MD5(String text) throws NoSuchAlgorithmException {
         MessageDigest md;
         md = MessageDigest.getInstance("MD5");
-        byte[] md5hash = new byte[32];
+        byte[] md5hash;
         md.update(text.getBytes(StandardCharsets.ISO_8859_1), 0, text.length());
         md5hash = md.digest();
         return convertToHex(md5hash);

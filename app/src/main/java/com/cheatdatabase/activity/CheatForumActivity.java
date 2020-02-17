@@ -28,21 +28,22 @@ import androidx.appcompat.widget.ShareActionProvider;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.MenuItemCompat;
 
+import com.cheatdatabase.CheatDatabaseApplication;
 import com.cheatdatabase.R;
-import com.cheatdatabase.callbacks.GenericCallback;
 import com.cheatdatabase.dialogs.CheatMetaDialog;
 import com.cheatdatabase.dialogs.RateCheatMaterialDialog;
 import com.cheatdatabase.dialogs.ReportCheatMaterialDialog;
 import com.cheatdatabase.events.CheatRatingFinishedEvent;
+import com.cheatdatabase.helpers.AeSimpleMD5;
 import com.cheatdatabase.helpers.Helper;
 import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.helpers.Tools;
-import com.cheatdatabase.helpers.Webservice;
 import com.cheatdatabase.model.Cheat;
 import com.cheatdatabase.model.ForumPost;
 import com.cheatdatabase.model.Game;
 import com.cheatdatabase.model.Member;
+import com.cheatdatabase.rest.RestApi;
 import com.facebook.ads.AdSize;
 import com.facebook.ads.AdView;
 import com.google.gson.Gson;
@@ -50,12 +51,19 @@ import com.google.gson.Gson;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import java.security.NoSuchAlgorithmException;
 import java.util.Calendar;
 import java.util.List;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import needle.Needle;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
 
 /**
  * Displaying the forum of one cheat.
@@ -66,6 +74,9 @@ public class CheatForumActivity extends AppCompatActivity {
 
     private Cheat cheatObj;
     private Game gameObj;
+    private SharedPreferences settings;
+    private ShareActionProvider mShare;
+    private Member member;
 
     @BindView(R.id.outer_layout)
     LinearLayout outerLayout;
@@ -85,14 +96,14 @@ public class CheatForumActivity extends AppCompatActivity {
     EditText editText;
     @BindView(R.id.btnSubmitPost)
     Button postButton;
-
-    private SharedPreferences settings;
-    private ShareActionProvider mShare;
-    private Member member;
-
     @BindView(R.id.banner_container)
     LinearLayout facebookBanner;
     private AdView adView;
+
+    @Inject
+    Retrofit retrofit;
+
+    private RestApi restApi;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -144,6 +155,9 @@ public class CheatForumActivity extends AppCompatActivity {
         if (!Reachability.isRegistered()) {
             Reachability.registerReachability(this);
         }
+
+        ((CheatDatabaseApplication) getApplication()).getNetworkComponent().inject(this);
+        restApi = retrofit.create(RestApi.class);
 
         settings = getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
 
@@ -215,17 +229,7 @@ public class CheatForumActivity extends AppCompatActivity {
                     }
                 }.start();
 
-                postForumEntry(forumPost, new GenericCallback() {
-                    @Override
-                    public void success() {
-                        updateUI();
-                    }
-
-                    @Override
-                    public void fail(Exception e) {
-                        Toast.makeText(CheatForumActivity.this, R.string.err_occurred, Toast.LENGTH_LONG).show();
-                    }
-                });
+                postForumEntry(forumPost);
 
             } else {
                 Toast.makeText(this, R.string.no_internet, Toast.LENGTH_SHORT).show();
@@ -463,16 +467,48 @@ public class CheatForumActivity extends AppCompatActivity {
         Toast.makeText(this, R.string.rating_inserted, Toast.LENGTH_SHORT).show();
     }
 
-    private void postForumEntry(ForumPost forumPost, GenericCallback callback) {
-        Needle.onBackgroundThread().execute(() -> {
-            try {
-                Webservice.insertForum(cheatObj.getCheatId(), member.getMid(), member.getPassword(), forumPost.getText());
-                callback.success();
-            } catch (Exception e) {
-                Log.e(TAG, e.getLocalizedMessage());
-                callback.fail(e);
-            }
-        });
+    private void postForumEntry(ForumPost forumPost) {
+        // TODO FIXME serverseitig schauen, ob das PW als MD5 hash übermittelt werden muss...
+        // TODO FIXME serverseitig schauen, ob das PW als MD5 hash übermittelt werden muss...
+        // TODO FIXME serverseitig schauen, ob das PW als MD5 hash übermittelt werden muss...
+        // TODO FIXME serverseitig schauen, ob das PW als MD5 hash übermittelt werden muss...
+
+
+        // TODO FIXME posten funktioniert noch nicht!
+        // TODO FIXME posten funktioniert noch nicht!
+        // TODO FIXME posten funktioniert noch nicht!
+        Log.d(TAG, "XXXXX postForumEntry: " + member.getPassword());
+
+        Call<Void> call = null;
+        try {
+            call = restApi.insertForum(member.getMid(), cheatObj.getCheatId(), AeSimpleMD5.MD5(member.getPassword()), forumPost.getText());
+            call.enqueue(new Callback<Void>() {
+                @Override
+                public void onResponse(Call<Void> forumPost, Response<Void> response) {
+                    Log.d(TAG, "XXXXX submit forum post onResponse: SUCCESS");
+                    updateUI();
+                }
+
+                @Override
+                public void onFailure(Call<Void> call, Throwable e) {
+                    Log.e(TAG, "XXXXX Submit forum post onFailure: " + e.getLocalizedMessage());
+                    Toast.makeText(CheatForumActivity.this, R.string.err_occurred, Toast.LENGTH_LONG).show();
+                }
+            });
+        } catch (NoSuchAlgorithmException e) {
+            Log.e(TAG, "postForumEntry: ", e);
+        }
+
+
+//        Needle.onBackgroundThread().execute(() -> {
+//            try {
+//                Webservice.insertForum(cheatObj.getCheatId(), member.getMid(), member.getPassword(), forumPost.getText());
+//                callback.success();
+//            } catch (Exception e) {
+//                Log.e(TAG, e.getLocalizedMessage());
+//                callback.fail(e);
+//            }
+//        });
 
     }
 
@@ -486,28 +522,69 @@ public class CheatForumActivity extends AppCompatActivity {
     }
 
     public void loadForumAsync() {
-        Needle.onBackgroundThread().execute(() -> forumLoaded(Webservice.getForum(cheatObj.getCheatId())));
-    }
+        //Needle.onBackgroundThread().execute(() -> forumLoaded(Webservice.getForum(cheatObj.getCheatId())));
 
-    public void forumLoaded(List<ForumPost> forumThread) {
+        // TODO FIXME forum laden geht noch nicht.. mit server PHP script vergleichen...
+        // TODO FIXME forum laden geht noch nicht.. mit server PHP script vergleichen...
+        // TODO FIXME forum laden geht noch nicht.. mit server PHP script vergleichen...
+        // TODO FIXME forum laden geht noch nicht.. mit server PHP script vergleichen...
+        // TODO FIXME forum laden geht noch nicht.. mit server PHP script vergleichen...
+        Call<List<ForumPost>> call = restApi.getForum(cheatObj.getCheatId());
+        call.enqueue(new Callback<List<ForumPost>>() {
+            @Override
+            public void onResponse(Call<List<ForumPost>> forum, Response<List<ForumPost>> response) {
+                Log.d(TAG, "XXXXX get forum: SUCCESS");
 
-        Needle.onMainThread().execute(() -> {
-            reloadView.setVisibility(View.GONE);
-
-            llForumMain.removeAllViews();
-            if (forumThread.size() > 0) {
-                tvEmpty.setVisibility(View.GONE);
-
-                for (ForumPost forumPost : forumThread) {
-                    LinearLayout linearLayout = createForumPosts(forumPost);
-                    llForumMain.addView(linearLayout, new TableLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+                List<ForumPost> forumThread = response.body();
+                for (ForumPost f : forumThread) {
+                    Log.d(TAG, "XXXXX onResponse: " + f.getText());
                 }
-            } else {
+
+                reloadView.setVisibility(View.GONE);
+
+                llForumMain.removeAllViews();
+                if (forumThread.size() > 0) {
+                    tvEmpty.setVisibility(View.GONE);
+
+                    for (ForumPost forumPost : forumThread) {
+                        LinearLayout linearLayout = createForumPosts(forumPost);
+                        llForumMain.addView(linearLayout, new TableLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+                    }
+                } else {
+                    tvEmpty.setVisibility(View.VISIBLE);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<ForumPost>> call, Throwable e) {
+                Log.e(TAG, "XXXXX load forum onFailure: " + e.getLocalizedMessage());
+
                 tvEmpty.setVisibility(View.VISIBLE);
             }
         });
-
-
     }
 
+//    public void forumLoaded(List<ForumPost> forumThread) {
+//
+//        Needle.onMainThread().execute(() -> {
+//            reloadView.setVisibility(View.GONE);
+//
+//            llForumMain.removeAllViews();
+//            if (forumThread.size() > 0) {
+//                tvEmpty.setVisibility(View.GONE);
+//
+//                for (ForumPost forumPost : forumThread) {
+//                    LinearLayout linearLayout = createForumPosts(forumPost);
+//                    llForumMain.addView(linearLayout, new TableLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+//                }
+//            } else {
+//                tvEmpty.setVisibility(View.VISIBLE);
+//            }
+//        });
+//    }
+
+
+    public Retrofit getRetrofit() {
+        return retrofit;
+    }
 }

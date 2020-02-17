@@ -270,7 +270,7 @@ public class Webservice {
                     "&password=" + URLEncoder.encode(password_md5, "UTF-8");
             responseString = excutePost(Konstanten.BASE_URL_ANDROID + "login_md5.php", urlParameters);
         } catch (NoSuchAlgorithmException | UnsupportedEncodingException e1) {
-            e1.printStackTrace();
+            Log.e(TAG, "login: ", e1);
         }
 
         // 0 = Fehler beim Login

@@ -98,7 +98,7 @@ public class CheatsByGameRecycleListViewAdapter extends RecyclerView.Adapter<Rec
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         int type = getItemViewType(position);
-        Log.d(TAG, "XXXXX ADAPTER onBindViewHolder() TYPE: " + type);
+        Log.d(TAG, "ADAPTER onBindViewHolder() TYPE: " + type);
 
         if (type == ListItem.TYPE_CHEAT) {
             final CheatListItem cheatListItem = (CheatListItem) listItems.get(position);
