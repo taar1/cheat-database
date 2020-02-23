@@ -468,17 +468,6 @@ public class CheatForumActivity extends AppCompatActivity {
     }
 
     private void postForumEntry(ForumPost forumPost) {
-        // TODO FIXME serverseitig schauen, ob das PW als MD5 hash übermittelt werden muss...
-        // TODO FIXME serverseitig schauen, ob das PW als MD5 hash übermittelt werden muss...
-        // TODO FIXME serverseitig schauen, ob das PW als MD5 hash übermittelt werden muss...
-        // TODO FIXME serverseitig schauen, ob das PW als MD5 hash übermittelt werden muss...
-
-
-        // TODO FIXME posten funktioniert noch nicht!
-        // TODO FIXME posten funktioniert noch nicht!
-        // TODO FIXME posten funktioniert noch nicht!
-        Log.d(TAG, "XXXXX postForumEntry: " + member.getPassword());
-
         Call<Void> call = null;
         try {
             call = restApi.insertForum(member.getMid(), cheatObj.getCheatId(), AeSimpleMD5.MD5(member.getPassword()), forumPost.getText());
@@ -498,18 +487,6 @@ public class CheatForumActivity extends AppCompatActivity {
         } catch (NoSuchAlgorithmException e) {
             Log.e(TAG, "postForumEntry: ", e);
         }
-
-
-//        Needle.onBackgroundThread().execute(() -> {
-//            try {
-//                Webservice.insertForum(cheatObj.getCheatId(), member.getMid(), member.getPassword(), forumPost.getText());
-//                callback.success();
-//            } catch (Exception e) {
-//                Log.e(TAG, e.getLocalizedMessage());
-//                callback.fail(e);
-//            }
-//        });
-
     }
 
     private void updateUI() {
@@ -518,27 +495,27 @@ public class CheatForumActivity extends AppCompatActivity {
             tvEmpty.setVisibility(View.GONE);
             Toast.makeText(CheatForumActivity.this, R.string.forum_submit_ok, Toast.LENGTH_LONG).show();
         });
-
     }
 
-    public void loadForumAsync() {
-        //Needle.onBackgroundThread().execute(() -> forumLoaded(Webservice.getForum(cheatObj.getCheatId())));
+    // TODO FIXME beim drop down menü muss noch die anzahl forum-einträge angezeigt werden (gleich bevor man auf die forum-view gelangt via cheat-ansicht)
+    // TODO FIXME beim drop down menü muss noch die anzahl forum-einträge angezeigt werden (gleich bevor man auf die forum-view gelangt via cheat-ansicht)
+    // TODO FIXME beim drop down menü muss noch die anzahl forum-einträge angezeigt werden (gleich bevor man auf die forum-view gelangt via cheat-ansicht)
+    // TODO FIXME beim drop down menü muss noch die anzahl forum-einträge angezeigt werden (gleich bevor man auf die forum-view gelangt via cheat-ansicht)
+    // TODO FIXME beim drop down menü muss noch die anzahl forum-einträge angezeigt werden (gleich bevor man auf die forum-view gelangt via cheat-ansicht)
+    // TODO FIXME beim drop down menü muss noch die anzahl forum-einträge angezeigt werden (gleich bevor man auf die forum-view gelangt via cheat-ansicht)
+    // TODO FIXME beim drop down menü muss noch die anzahl forum-einträge angezeigt werden (gleich bevor man auf die forum-view gelangt via cheat-ansicht)
+    // TODO FIXME beim drop down menü muss noch die anzahl forum-einträge angezeigt werden (gleich bevor man auf die forum-view gelangt via cheat-ansicht)
+    // TODO FIXME beim drop down menü muss noch die anzahl forum-einträge angezeigt werden (gleich bevor man auf die forum-view gelangt via cheat-ansicht)
+    // TODO FIXME beim drop down menü muss noch die anzahl forum-einträge angezeigt werden (gleich bevor man auf die forum-view gelangt via cheat-ansicht)
+    // TODO FIXME beim drop down menü muss noch die anzahl forum-einträge angezeigt werden (gleich bevor man auf die forum-view gelangt via cheat-ansicht)
+    // TODO FIXME beim drop down menü muss noch die anzahl forum-einträge angezeigt werden (gleich bevor man auf die forum-view gelangt via cheat-ansicht)
 
-        // TODO FIXME forum laden geht noch nicht.. mit server PHP script vergleichen...
-        // TODO FIXME forum laden geht noch nicht.. mit server PHP script vergleichen...
-        // TODO FIXME forum laden geht noch nicht.. mit server PHP script vergleichen...
-        // TODO FIXME forum laden geht noch nicht.. mit server PHP script vergleichen...
-        // TODO FIXME forum laden geht noch nicht.. mit server PHP script vergleichen...
+    void loadForumAsync() {
         Call<List<ForumPost>> call = restApi.getForum(cheatObj.getCheatId());
         call.enqueue(new Callback<List<ForumPost>>() {
             @Override
             public void onResponse(Call<List<ForumPost>> forum, Response<List<ForumPost>> response) {
-                Log.d(TAG, "XXXXX get forum: SUCCESS");
-
                 List<ForumPost> forumThread = response.body();
-                for (ForumPost f : forumThread) {
-                    Log.d(TAG, "XXXXX onResponse: " + f.getText());
-                }
 
                 reloadView.setVisibility(View.GONE);
 
@@ -557,32 +534,10 @@ public class CheatForumActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<List<ForumPost>> call, Throwable e) {
-                Log.e(TAG, "XXXXX load forum onFailure: " + e.getLocalizedMessage());
-
                 tvEmpty.setVisibility(View.VISIBLE);
             }
         });
     }
-
-//    public void forumLoaded(List<ForumPost> forumThread) {
-//
-//        Needle.onMainThread().execute(() -> {
-//            reloadView.setVisibility(View.GONE);
-//
-//            llForumMain.removeAllViews();
-//            if (forumThread.size() > 0) {
-//                tvEmpty.setVisibility(View.GONE);
-//
-//                for (ForumPost forumPost : forumThread) {
-//                    LinearLayout linearLayout = createForumPosts(forumPost);
-//                    llForumMain.addView(linearLayout, new TableLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
-//                }
-//            } else {
-//                tvEmpty.setVisibility(View.VISIBLE);
-//            }
-//        });
-//    }
-
 
     public Retrofit getRetrofit() {
         return retrofit;

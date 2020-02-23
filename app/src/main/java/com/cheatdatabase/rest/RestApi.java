@@ -124,7 +124,7 @@ public interface RestApi {
      */
     @FormUrlEncoded
     @POST("insertForum.php")
-    Call<Void> insertForum(@Field("mid") int memberId, @Field("cid") int cheatId, @Field("password") String password, @Field("forumpost") String forumpost);
+    Call<Void> insertForum(@Field("memberId") int memberId, @Field("cheatId") int cheatId, @Field("password") String password, @Field("forumPost") String forumpost);
 
 
     /**
