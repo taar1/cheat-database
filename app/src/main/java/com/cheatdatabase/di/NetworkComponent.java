@@ -27,5 +27,7 @@ public interface NetworkComponent {
 
     void inject(CheatMetaDialog dialog);
 
+//    void inject(CheatViewFragment fragment);
+
 
 }

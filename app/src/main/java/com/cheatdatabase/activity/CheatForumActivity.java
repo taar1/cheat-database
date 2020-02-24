@@ -497,19 +497,6 @@ public class CheatForumActivity extends AppCompatActivity {
         });
     }
 
-    // TODO FIXME beim drop down menü muss noch die anzahl forum-einträge angezeigt werden (gleich bevor man auf die forum-view gelangt via cheat-ansicht)
-    // TODO FIXME beim drop down menü muss noch die anzahl forum-einträge angezeigt werden (gleich bevor man auf die forum-view gelangt via cheat-ansicht)
-    // TODO FIXME beim drop down menü muss noch die anzahl forum-einträge angezeigt werden (gleich bevor man auf die forum-view gelangt via cheat-ansicht)
-    // TODO FIXME beim drop down menü muss noch die anzahl forum-einträge angezeigt werden (gleich bevor man auf die forum-view gelangt via cheat-ansicht)
-    // TODO FIXME beim drop down menü muss noch die anzahl forum-einträge angezeigt werden (gleich bevor man auf die forum-view gelangt via cheat-ansicht)
-    // TODO FIXME beim drop down menü muss noch die anzahl forum-einträge angezeigt werden (gleich bevor man auf die forum-view gelangt via cheat-ansicht)
-    // TODO FIXME beim drop down menü muss noch die anzahl forum-einträge angezeigt werden (gleich bevor man auf die forum-view gelangt via cheat-ansicht)
-    // TODO FIXME beim drop down menü muss noch die anzahl forum-einträge angezeigt werden (gleich bevor man auf die forum-view gelangt via cheat-ansicht)
-    // TODO FIXME beim drop down menü muss noch die anzahl forum-einträge angezeigt werden (gleich bevor man auf die forum-view gelangt via cheat-ansicht)
-    // TODO FIXME beim drop down menü muss noch die anzahl forum-einträge angezeigt werden (gleich bevor man auf die forum-view gelangt via cheat-ansicht)
-    // TODO FIXME beim drop down menü muss noch die anzahl forum-einträge angezeigt werden (gleich bevor man auf die forum-view gelangt via cheat-ansicht)
-    // TODO FIXME beim drop down menü muss noch die anzahl forum-einträge angezeigt werden (gleich bevor man auf die forum-view gelangt via cheat-ansicht)
-
     void loadForumAsync() {
         Call<List<ForumPost>> call = restApi.getForum(cheatObj.getCheatId());
         call.enqueue(new Callback<List<ForumPost>>() {

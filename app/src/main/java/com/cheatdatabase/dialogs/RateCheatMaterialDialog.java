@@ -2,7 +2,6 @@ package com.cheatdatabase.dialogs;
 
 import android.app.Activity;
 import android.os.AsyncTask;
-import androidx.annotation.NonNull;
 import android.util.Log;
 import android.view.View;
 import android.widget.RatingBar;
@@ -12,10 +11,10 @@ import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.Theme;
 import com.cheatdatabase.R;
-import com.cheatdatabase.model.Cheat;
-import com.cheatdatabase.model.Member;
 import com.cheatdatabase.events.CheatRatingFinishedEvent;
 import com.cheatdatabase.helpers.Webservice;
+import com.cheatdatabase.model.Cheat;
+import com.cheatdatabase.model.Member;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -23,8 +22,7 @@ import org.greenrobot.eventbus.EventBus;
  * Material Design Cheat Rating Dialog.
  */
 public class RateCheatMaterialDialog {
-
-    private static final String TAG = RateCheatMaterialDialog.class.getSimpleName();
+    private static final String TAG = "RateCheatMaterialDialog";
 
     Cheat cheat;
     Member member;

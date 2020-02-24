@@ -32,17 +32,19 @@ import androidx.fragment.app.Fragment;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.Theme;
 import com.cheatdatabase.R;
-import com.cheatdatabase.model.Cheat;
-import com.cheatdatabase.model.Game;
-import com.cheatdatabase.model.Member;
-import com.cheatdatabase.model.Screenshot;
 import com.cheatdatabase.callbacks.GalleryLoadingCallback;
 import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.helpers.Tools;
 import com.cheatdatabase.helpers.Webservice;
+import com.cheatdatabase.model.Cheat;
+import com.cheatdatabase.model.Game;
+import com.cheatdatabase.model.Member;
+import com.cheatdatabase.model.Screenshot;
+import com.cheatdatabase.rest.RestApi;
 import com.crashlytics.android.Crashlytics;
 import com.google.gson.Gson;
+import com.google.gson.JsonElement;
 
 import java.io.BufferedInputStream;
 import java.io.IOException;
@@ -52,10 +54,16 @@ import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import needle.Needle;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
 
 /**
  * List of Cheats from a Game.
@@ -64,6 +72,8 @@ import needle.Needle;
  * @version 1.1
  */
 public class CheatViewFragment extends Fragment {
+    private static final String TAG = "CheatViewFragment";
+    private static final String KEY_CONTENT = "CheatViewFragment:Content";
 
     private LinearLayout outerLinearLayout;
 
@@ -92,12 +102,15 @@ public class CheatViewFragment extends Fragment {
     private int offset;
     private List<ImageView> imageViews;
     private Member member;
-
     private SharedPreferences settings;
     private Editor editor;
-
-    private static final String KEY_CONTENT = "CheatViewFragment:Content";
-    private static final String TAG = CheatViewFragment.class.getSimpleName();
+    @Inject
+    Retrofit retrofit;
+    private String mContent = "???";
+    private Typeface latoFontBold;
+    private Typeface latoFontLight;
+    private CheatViewPageIndicatorActivity cheatViewPageIndicatorActivity;
+    private RestApi restApi;
 
     public CheatViewFragment() {
         cheatList = new ArrayList<>();
@@ -111,11 +124,6 @@ public class CheatViewFragment extends Fragment {
         cheatViewFragment.offset = offset;
         return cheatViewFragment;
     }
-
-    private String mContent = "???";
-    private Typeface latoFontBold;
-    private Typeface latoFontLight;
-    private CheatViewPageIndicatorActivity cheatViewPageIndicatorActivity;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -139,6 +147,14 @@ public class CheatViewFragment extends Fragment {
         editor = settings.edit();
 
         member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
+
+        // TODO DAGGER INJECTION....
+        // TODO DAGGER INJECTION....
+        // TODO DAGGER INJECTION....
+        // TODO DAGGER INJECTION....
+        // TODO DAGGER INJECTION....
+//        ((CheatDatabaseApplication) getApplication()).getNetworkComponent().inject(this);
+//        restApi = retrofit.create(RestApi.class);
     }
 
     @Override
@@ -149,7 +165,7 @@ public class CheatViewFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        outerLinearLayout = (LinearLayout) inflater.inflate(R.layout.fragment_cheat_detail_handset, container, false);
+        outerLinearLayout = (LinearLayout) inflater.inflate(R.layout.fragment_cheat_detail_view, container, false);
         ButterKnife.bind(this, outerLinearLayout);
 
         if (cheatList != null && game != null) {
@@ -365,6 +381,25 @@ public class CheatViewFragment extends Fragment {
 
     private void getCheatText() {
         Needle.onBackgroundThread().execute(() -> setCheatText(Webservice.getCheatById(cheatObj.getCheatId())));
+    }
+
+    private void countForumPosts() {
+        Call<JsonElement> call = restApi.countForumPosts(cheatObj.getCheatId());
+        call.enqueue(new Callback<JsonElement>() {
+            @Override
+            public void onResponse(Call<JsonElement> forum, Response<JsonElement> response) {
+                JsonElement forumPostsCount = response.body();
+                // TODO handle count value
+                // TODO handle count value
+                // TODO handle count value
+                // TODO handle count value
+            }
+
+            @Override
+            public void onFailure(Call<JsonElement> call, Throwable e) {
+                // TODO handle exception
+            }
+        });
     }
 
     private void setCheatText(String fullCheatText) {
