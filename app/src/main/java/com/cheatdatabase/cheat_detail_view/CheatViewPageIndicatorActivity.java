@@ -23,13 +23,11 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.MenuItemCompat;
 import androidx.viewpager.widget.ViewPager;
 
+import com.cheatdatabase.CheatDatabaseApplication;
+import com.cheatdatabase.R;
 import com.cheatdatabase.activity.CheatForumActivity;
 import com.cheatdatabase.activity.LoginActivity;
-import com.cheatdatabase.R;
 import com.cheatdatabase.activity.SubmitCheatActivity;
-import com.cheatdatabase.model.Cheat;
-import com.cheatdatabase.model.Game;
-import com.cheatdatabase.model.Member;
 import com.cheatdatabase.dialogs.CheatMetaDialog;
 import com.cheatdatabase.dialogs.RateCheatMaterialDialog;
 import com.cheatdatabase.dialogs.ReportCheatMaterialDialog;
@@ -38,6 +36,10 @@ import com.cheatdatabase.helpers.Helper;
 import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.helpers.Tools;
+import com.cheatdatabase.model.Cheat;
+import com.cheatdatabase.model.Game;
+import com.cheatdatabase.model.Member;
+import com.cheatdatabase.rest.RestApi;
 import com.facebook.ads.AdSize;
 import com.facebook.ads.AdView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -59,8 +61,11 @@ import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import retrofit2.Retrofit;
 
 /**
  * Swipe through cheats horizontally with this CheatViewPageIndicatorActivity.
@@ -83,26 +88,23 @@ public class CheatViewPageIndicatorActivity extends AppCompatActivity {
 
     private View viewLayout;
     private int pageSelected;
-
     private Game gameObj;
     private ArrayList<Cheat> cheatArray;
     private Cheat visibleCheat;
-
     private SharedPreferences settings;
     private Editor editor;
-
     private Member member;
-
     public AlertDialog.Builder builder;
-
     private CheatViewFragmentAdapter mAdapter;
     private ViewPager mPager;
-
     private int activePage;
-
     private ShareActionProvider mShare;
-
     private AdView adView;
+
+    @Inject
+    Retrofit retrofit;
+
+    private RestApi restApi;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -160,6 +162,9 @@ public class CheatViewPageIndicatorActivity extends AppCompatActivity {
         if (!Reachability.isRegistered()) {
             Reachability.registerReachability(this);
         }
+
+        ((CheatDatabaseApplication) getApplication()).getNetworkComponent().inject(this);
+        restApi = retrofit.create(RestApi.class);
 
         settings = getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
         editor = settings.edit();
@@ -448,4 +453,7 @@ public class CheatViewPageIndicatorActivity extends AppCompatActivity {
         invalidateOptionsMenu();
     }
 
+    public RestApi getRestApi() {
+        return restApi;
+    }
 }

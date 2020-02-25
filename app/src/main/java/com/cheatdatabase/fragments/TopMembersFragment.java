@@ -170,7 +170,7 @@ public class TopMembersFragment extends Fragment implements OnTopMemberListItemS
             mSwipeRefreshLayout.setRefreshing(true);
         }
 
-        Call<List<Member>> call = mainActivity.getApiService().getMemberTop20();
+        Call<List<Member>> call = mainActivity.getRestApi().getMemberTop20();
         call.enqueue(new Callback<List<Member>>() {
             @Override
             public void onResponse(Call<List<Member>> members, Response<List<Member>> response) {

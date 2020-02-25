@@ -6,7 +6,7 @@ import com.cheatdatabase.model.Game;
 import com.cheatdatabase.model.Member;
 import com.cheatdatabase.model.SystemPlatform;
 import com.cheatdatabase.model.WelcomeMessage;
-import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 
 import java.util.List;
 
@@ -240,7 +240,7 @@ public interface RestApi {
 
     @FormUrlEncoded
     @POST("countForumPosts.php")
-    Call<JsonElement> countForumPosts(@Field("cheatId") int cheatId);
+    Call<JsonObject> countForumPosts(@Field("cheatId") int cheatId);
 
     /**
      * Gets all games from a system.

@@ -41,10 +41,9 @@ import com.cheatdatabase.model.Cheat;
 import com.cheatdatabase.model.Game;
 import com.cheatdatabase.model.Member;
 import com.cheatdatabase.model.Screenshot;
-import com.cheatdatabase.rest.RestApi;
 import com.crashlytics.android.Crashlytics;
 import com.google.gson.Gson;
-import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 
 import java.io.BufferedInputStream;
 import java.io.IOException;
@@ -54,8 +53,6 @@ import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.inject.Inject;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -63,7 +60,6 @@ import needle.Needle;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
 
 /**
  * List of Cheats from a Game.
@@ -104,13 +100,10 @@ public class CheatViewFragment extends Fragment {
     private Member member;
     private SharedPreferences settings;
     private Editor editor;
-    @Inject
-    Retrofit retrofit;
     private String mContent = "???";
     private Typeface latoFontBold;
     private Typeface latoFontLight;
     private CheatViewPageIndicatorActivity cheatViewPageIndicatorActivity;
-    private RestApi restApi;
 
     public CheatViewFragment() {
         cheatList = new ArrayList<>();
@@ -147,14 +140,6 @@ public class CheatViewFragment extends Fragment {
         editor = settings.edit();
 
         member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
-
-        // TODO DAGGER INJECTION....
-        // TODO DAGGER INJECTION....
-        // TODO DAGGER INJECTION....
-        // TODO DAGGER INJECTION....
-        // TODO DAGGER INJECTION....
-//        ((CheatDatabaseApplication) getApplication()).getNetworkComponent().inject(this);
-//        restApi = retrofit.create(RestApi.class);
     }
 
     @Override
@@ -188,6 +173,7 @@ public class CheatViewFragment extends Fragment {
             Tools.showSnackbar(outerLinearLayout, getString(R.string.err_data_not_accessible));
         }
 
+        countForumPosts();
         return outerLinearLayout;
     }
 
@@ -384,19 +370,27 @@ public class CheatViewFragment extends Fragment {
     }
 
     private void countForumPosts() {
-        Call<JsonElement> call = restApi.countForumPosts(cheatObj.getCheatId());
-        call.enqueue(new Callback<JsonElement>() {
+        Log.d(TAG, "countForumPosts: " + cheatObj.getCheatId());
+        Call<JsonObject> call = cheatViewPageIndicatorActivity.getRestApi().countForumPosts(cheatObj.getCheatId());
+        call.enqueue(new Callback<JsonObject>() {
             @Override
-            public void onResponse(Call<JsonElement> forum, Response<JsonElement> response) {
-                JsonElement forumPostsCount = response.body();
-                // TODO handle count value
-                // TODO handle count value
-                // TODO handle count value
-                // TODO handle count value
+            public void onResponse(Call<JsonObject> forum, Response<JsonObject> response) {
+                JsonObject forumPostsCount = response.body();
+                int forumCount = forumPostsCount.get("forumCount").getAsInt();
+
+                Log.d(TAG, "XXXXXXXXXXXXX onResponse forumCount: " + forumCount);
+                // TODO bei ON VISIBLE oder so ähnlich "forumCount" zur activity senden ins drop down menü...
+                // TODO bei ON VISIBLE oder so ähnlich "forumCount" zur activity senden ins drop down menü...
+                // TODO bei ON VISIBLE oder so ähnlich "forumCount" zur activity senden ins drop down menü...
+                // TODO bei ON VISIBLE oder so ähnlich "forumCount" zur activity senden ins drop down menü...
+                // TODO bei ON VISIBLE oder so ähnlich "forumCount" zur activity senden ins drop down menü...
+                // TODO bei ON VISIBLE oder so ähnlich "forumCount" zur activity senden ins drop down menü...
+
+                cheatObj.setForumCount(forumCount);
             }
 
             @Override
-            public void onFailure(Call<JsonElement> call, Throwable e) {
+            public void onFailure(Call<JsonObject> call, Throwable e) {
                 // TODO handle exception
             }
         });
@@ -487,18 +481,13 @@ public class CheatViewFragment extends Fragment {
 
     /**
      * Inner class to display gallery thumbnails
-     * <p/>
-     * Copyright (c) 2010-2019<br>
-     *
-     * @author Dominik Erbsland
-     * @version 1.1
      */
     public class ImageAdapter extends BaseAdapter {
 
         /**
          * Simple Constructor saving the 'parent' context.
          */
-        public ImageAdapter(Context c) {
+        ImageAdapter(Context c) {
         }
 
         @Override

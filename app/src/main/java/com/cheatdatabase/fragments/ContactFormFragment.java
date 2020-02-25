@@ -257,7 +257,7 @@ public class ContactFormFragment extends Fragment {
     }
 
     private void submitContactForm() {
-        Call<Void> call = mainActivity.getApiService().submitContactForm(mEmailView.getText().toString().trim(), "Contact through Android App", mMessageView.getText().toString().trim());
+        Call<Void> call = mainActivity.getRestApi().submitContactForm(mEmailView.getText().toString().trim(), "Contact through Android App", mMessageView.getText().toString().trim());
         call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> voidValue, Response<Void> response) {

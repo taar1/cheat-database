@@ -112,7 +112,7 @@ dependencies {
     api 'com.google.firebase:firebase-config:19.1.0'
     api 'com.google.firebase:firebase-appindexing:19.0.0'
     api 'androidx.appcompat:appcompat:1.1.0'
-    api 'com.google.android.material:material:1.0.0'
+    api 'com.google.android.material:material:1.1.0'
     api 'androidx.recyclerview:recyclerview:1.1.0'
     api 'androidx.preference:preference:1.1.0'
     implementation 'com.github.vajro:MaterialDesignLibrary:1.6'

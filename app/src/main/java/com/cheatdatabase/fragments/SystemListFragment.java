@@ -117,7 +117,7 @@ public class SystemListFragment extends Fragment implements OnSystemListItemSele
             Log.d(TAG, "getSystemsAndCountsFromWebservice: " + getSystemsAndCountsFromWebservice);
 
             if (getSystemsAndCountsFromWebservice) {
-                Call<List<SystemPlatform>> call = mainActivity.getApiService().countGamesAndCheatsOfAllSystems();
+                Call<List<SystemPlatform>> call = mainActivity.getRestApi().countGamesAndCheatsOfAllSystems();
                 call.enqueue(new Callback<List<SystemPlatform>>() {
                     @Override
                     public void onResponse(Call<List<SystemPlatform>> cheats, Response<List<SystemPlatform>> response) {

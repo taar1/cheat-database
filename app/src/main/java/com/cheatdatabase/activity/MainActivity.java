@@ -95,7 +95,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Inject
     Application application;
 
-    private RestApi apiService;
+    private RestApi restApi;
 
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
@@ -122,7 +122,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         // Dagger start
         ((CheatDatabaseApplication) getApplication()).getNetworkComponent().inject(this);
-        apiService = retrofit.create(RestApi.class);
+        restApi = retrofit.create(RestApi.class);
         // Dagger end
 
 
@@ -470,8 +470,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mDrawerLayout.closeDrawers();
     }
 
-    public RestApi getApiService() {
-        return apiService;
+    public RestApi getRestApi() {
+        return restApi;
     }
 }
 
