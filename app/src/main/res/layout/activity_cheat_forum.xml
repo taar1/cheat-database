@@ -12,7 +12,6 @@
         android:background="@color/color_primary_light"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
 
-
     <ImageView
         android:id="@+id/reload"
         android:layout_width="wrap_content"
@@ -38,7 +37,7 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/tvEmpty"
+            android:id="@+id/textview_empty"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
@@ -54,15 +53,15 @@
             android:scrollbars="vertical">
 
             <LinearLayout
-                android:id="@+id/llForumMain"
+                android:id="@+id/main_forum"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"></LinearLayout>
+                android:orientation="vertical" />
         </ScrollView>
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/llForumInputMain"
+        android:id="@+id/forum_input"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="5dp"
@@ -71,10 +70,9 @@
         android:padding="5dp">
 
         <EditText
-            android:id="@+id/etEnterForumPost"
+            android:id="@+id/forum_text_input"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_marginLeft="5dp"
             android:layout_marginStart="5dp"
             android:layout_weight="10"
             android:background="@android:drawable/editbox_background"
@@ -86,11 +84,10 @@
         </EditText>
 
         <Button
-            android:id="@+id/btnSubmitPost"
+            android:id="@+id/submit_button"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginEnd="5dp"
-            android:layout_marginRight="5dp"
             android:layout_weight="1"
             android:background="@drawable/bluedark01_btn_default_holo_dark"
             android:minWidth="80dp"

@@ -82,19 +82,19 @@ public class CheatForumActivity extends AppCompatActivity {
     LinearLayout outerLayout;
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
-    @BindView(R.id.llForumMain)
+    @BindView(R.id.main_forum)
     LinearLayout llForumMain;
     @BindView(R.id.text_cheat_title)
     TextView tvCheatTitle;
-    @BindView(R.id.tvEmpty)
+    @BindView(R.id.textview_empty)
     TextView tvEmpty;
     @BindView(R.id.sv)
     ScrollView sv;
     @BindView(R.id.reload)
     ImageView reloadView;
-    @BindView(R.id.etEnterForumPost)
+    @BindView(R.id.forum_text_input)
     EditText editText;
-    @BindView(R.id.btnSubmitPost)
+    @BindView(R.id.submit_button)
     Button postButton;
     @BindView(R.id.banner_container)
     LinearLayout facebookBanner;
@@ -124,12 +124,12 @@ public class CheatForumActivity extends AppCompatActivity {
 
             if (Reachability.reachability.isReachable) {
                 reloadView.setVisibility(View.GONE);
-                loadForumAsync();
+                fetchForumPosts();
             } else {
                 reloadView.setVisibility(View.VISIBLE);
                 reloadView.setOnClickListener(v -> {
                     if (Reachability.reachability.isReachable) {
-                        loadForumAsync();
+                        fetchForumPosts();
                     } else {
                         Toast.makeText(CheatForumActivity.this, R.string.no_internet, Toast.LENGTH_SHORT).show();
                     }
@@ -229,7 +229,7 @@ public class CheatForumActivity extends AppCompatActivity {
                     }
                 }.start();
 
-                postForumEntry(forumPost);
+                submitForumPost(forumPost);
 
             } else {
                 Toast.makeText(this, R.string.no_internet, Toast.LENGTH_SHORT).show();
@@ -240,10 +240,10 @@ public class CheatForumActivity extends AppCompatActivity {
     /**
      * Fills the table of the forum
      *
-     * @param tempFP
+     * @param forumPost
      * @return
      */
-    private LinearLayout createForumPosts(ForumPost tempFP) {
+    private LinearLayout createForumPosts(ForumPost forumPost) {
         LinearLayout tl = new LinearLayout(this);
         tl.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
         tl.setGravity(Gravity.TOP);
@@ -265,17 +265,17 @@ public class CheatForumActivity extends AppCompatActivity {
         rowForumPostHeader.setPadding(5, 5, 10, 5);
         rowForumPostHeader.setOrientation(LinearLayout.HORIZONTAL);
 
-        if (!tempFP.getUsername().equalsIgnoreCase("null")) {
-            tvFirstThCol.setText(tempFP.getUsername().trim());
+        if (!forumPost.getUsername().equalsIgnoreCase("null")) {
+            tvFirstThCol.setText(forumPost.getUsername().trim());
         } else {
-            tvFirstThCol.setText(tempFP.getName().trim());
+            tvFirstThCol.setText(forumPost.getName().trim());
         }
         tvFirstThCol.setTextColor(Color.WHITE);
         tvFirstThCol.setGravity(Gravity.START);
         tvFirstThCol.setSingleLine(true);
         tvFirstThCol.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
 
-        tvSecondThCol.setText(tempFP.getCreated());
+        tvSecondThCol.setText(forumPost.getCreated());
         tvSecondThCol.setTextColor(Color.LTGRAY);
         tvSecondThCol.setGravity(Gravity.END);
         tvSecondThCol.setSingleLine(true);
@@ -288,7 +288,7 @@ public class CheatForumActivity extends AppCompatActivity {
 
         // Forum-Post
         TextView tvForumPost = new TextView(this);
-        tvForumPost.setText(tempFP.getText());
+        tvForumPost.setText(forumPost.getText());
         tvForumPost.setBackgroundColor(Color.BLACK);
         tvForumPost.setTextColor(Color.WHITE);
         tvForumPost.setPadding(10, 10, 10, 40);
@@ -467,7 +467,7 @@ public class CheatForumActivity extends AppCompatActivity {
         Toast.makeText(this, R.string.rating_inserted, Toast.LENGTH_SHORT).show();
     }
 
-    private void postForumEntry(ForumPost forumPost) {
+    private void submitForumPost(ForumPost forumPost) {
         Call<Void> call = null;
         try {
             call = restApi.insertForum(member.getMid(), cheatObj.getCheatId(), AeSimpleMD5.MD5(member.getPassword()), forumPost.getText());
@@ -497,7 +497,7 @@ public class CheatForumActivity extends AppCompatActivity {
         });
     }
 
-    void loadForumAsync() {
+    void fetchForumPosts() {
         Call<List<ForumPost>> call = restApi.getForum(cheatObj.getCheatId());
         call.enqueue(new Callback<List<ForumPost>>() {
             @Override

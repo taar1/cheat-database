@@ -62,11 +62,6 @@ public class GamesBySystemListActivity extends AppCompatActivity implements OnGa
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
 
-    @Inject
-    Retrofit retrofit;
-
-    private RestApi apiService;
-
     @BindView(R.id.outer_layout)
     LinearLayout outerLayout;
     @BindView(R.id.my_recycler_view)
@@ -77,6 +72,11 @@ public class GamesBySystemListActivity extends AppCompatActivity implements OnGa
     Toolbar mToolbar;
     @BindView(R.id.item_list_empty_view)
     TextView mEmptyView;
+
+    @Inject
+    Retrofit retrofit;
+
+    private RestApi apiService;
 
     @Override
     protected void onStart() {
@@ -198,7 +198,7 @@ public class GamesBySystemListActivity extends AppCompatActivity implements OnGa
     }
 
     private void loadGames(boolean forceLoadOnline) {
-        Log.d(TAG, "XXXXX loadGames() System ID/NAME: " + systemObj.getSystemId() + "/" + systemObj.getSystemName());
+        Log.d(TAG, "loadGames() System ID/NAME: " + systemObj.getSystemId() + "/" + systemObj.getSystemName());
 
         gameList = new ArrayList<>();
         List<Game> cachedGamesCollection;
@@ -240,6 +240,7 @@ public class GamesBySystemListActivity extends AppCompatActivity implements OnGa
                 public void onResponse(Call<List<Game>> games, Response<List<Game>> response) {
                     if (response.isSuccessful()) {
                         gameList = response.body();
+                        applySystemToGames();
 
                         TreeMap<String, List<Game>> updatedGameListForCache = new TreeMap<>();
                         updatedGameListForCache.put(achievementsEnabled, gameList);
@@ -304,6 +305,13 @@ public class GamesBySystemListActivity extends AppCompatActivity implements OnGa
 
         } else {
             updateUI();
+        }
+    }
+
+    private void applySystemToGames() {
+        for (Game g : gameList) {
+            g.setSystemId(systemObj.getSystemId());
+            g.setSystemName(systemObj.getSystemName());
         }
     }
 

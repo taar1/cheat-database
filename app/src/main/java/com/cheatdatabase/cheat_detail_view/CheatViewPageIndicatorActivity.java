@@ -76,6 +76,7 @@ import retrofit2.Retrofit;
 public class CheatViewPageIndicatorActivity extends AppCompatActivity {
 
     private static final String TAG = CheatViewPageIndicatorActivity.class.getSimpleName();
+    public static final int FORUM_POST_ADDED_REQUEST = 176;
 
     private Intent intent;
 
@@ -261,6 +262,18 @@ public class CheatViewPageIndicatorActivity extends AppCompatActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
+        Log.d(TAG, "onActivityResult: GGGGGGGGGGGGGGGG");
+        // TODO hier noch beim zurückkehren vom forum post submitten das menü updaten mit der neuen anzahl forum posts....
+        // TODO hier noch beim zurückkehren vom forum post submitten das menü updaten mit der neuen anzahl forum posts....
+        // TODO hier noch beim zurückkehren vom forum post submitten das menü updaten mit der neuen anzahl forum posts....
+        // TODO hier noch beim zurückkehren vom forum post submitten das menü updaten mit der neuen anzahl forum posts....
+        // TODO hier noch beim zurückkehren vom forum post submitten das menü updaten mit der neuen anzahl forum posts....
+        // TODO hier noch beim zurückkehren vom forum post submitten das menü updaten mit der neuen anzahl forum posts....
+        // TODO hier noch beim zurückkehren vom forum post submitten das menü updaten mit der neuen anzahl forum posts....
+        // TODO hier noch beim zurückkehren vom forum post submitten das menü updaten mit der neuen anzahl forum posts....
+        // TODO hier noch beim zurückkehren vom forum post submitten das menü updaten mit der neuen anzahl forum posts....
+        // TODO hier noch beim zurückkehren vom forum post submitten das menü updaten mit der neuen anzahl forum posts....
+
         if (resultCode == RESULT_OK) {
             // Return result code. Login success, Register success etc.
             int intentReturnCode = data.getIntExtra("result", Konstanten.LOGIN_REGISTER_FAIL_RETURN_CODE);
@@ -318,17 +331,16 @@ public class CheatViewPageIndicatorActivity extends AppCompatActivity {
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         super.onPrepareOptionsMenu(menu);
-        MenuItem item = menu.findItem(R.id.action_share);
-        mShare = (ShareActionProvider) MenuItemCompat.getActionProvider(item);
+//        MenuItem item = menu.findItem(R.id.action_share);
+//        mShare = (ShareActionProvider) MenuItemCompat.getActionProvider(item);
 
-        // TODO FIXME bei walkthroughs das share feature geht nicht. mShare ist NULL....
-        // TODO FIXME bei walkthroughs das share feature geht nicht. mShare ist NULL....
-        // TODO FIXME bei walkthroughs das share feature geht nicht. mShare ist NULL....
-        // TODO FIXME bei walkthroughs das share feature geht nicht. mShare ist NULL....
-        // TODO FIXME bei walkthroughs das share feature geht nicht. mShare ist NULL....
-
+        String postOrPosts = getString(R.string.forum_many_posts);
+        if (visibleCheat.getForumCount() == 1) {
+            postOrPosts = getString(R.string.forum_single_post);
+        }
+        MenuItem forumMenuItem = menu.findItem(R.id.action_forum);
+        forumMenuItem.setTitle(getString(R.string.forum_amount_posts, visibleCheat.getForumCount(), postOrPosts));
         return true;
-
     }
 
     // Call to update the share intent
@@ -356,7 +368,7 @@ public class CheatViewPageIndicatorActivity extends AppCompatActivity {
                     explicitIntent = new Intent(CheatViewPageIndicatorActivity.this, CheatForumActivity.class);
                     explicitIntent.putExtra("gameObj", gameObj);
                     explicitIntent.putExtra("cheatObj", visibleCheat);
-                    startActivity(explicitIntent);
+                    startActivityForResult(explicitIntent, FORUM_POST_ADDED_REQUEST);
                 } else {
                     Toast.makeText(this, R.string.no_internet, Toast.LENGTH_SHORT).show();
                 }
