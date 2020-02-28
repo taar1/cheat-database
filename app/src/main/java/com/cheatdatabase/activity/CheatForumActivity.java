@@ -474,13 +474,17 @@ public class CheatForumActivity extends AppCompatActivity {
             call.enqueue(new Callback<Void>() {
                 @Override
                 public void onResponse(Call<Void> forumPost, Response<Void> response) {
-                    Log.d(TAG, "XXXXX submit forum post onResponse: SUCCESS");
+                    Log.d(TAG, "submit forum post SUCCESS");
+
+                    Intent output = new Intent();
+                    output.putExtra("newForumCount", cheatObj.getForumCount() + 1);
+                    setResult(RESULT_OK, output);
                     updateUI();
                 }
 
                 @Override
                 public void onFailure(Call<Void> call, Throwable e) {
-                    Log.e(TAG, "XXXXX Submit forum post onFailure: " + e.getLocalizedMessage());
+                    Log.e(TAG, "Submit forum post FAIL: " + e.getLocalizedMessage());
                     Toast.makeText(CheatForumActivity.this, R.string.err_occurred, Toast.LENGTH_LONG).show();
                 }
             });
