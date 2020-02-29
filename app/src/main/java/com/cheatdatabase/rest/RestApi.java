@@ -140,8 +140,8 @@ public interface RestApi {
      * @return 1 = INSERT, 2 = UPDATE
      */
     @FormUrlEncoded
-    @POST("rateCheatWithoutPw.php")
-    Call<Void> rateCheat(@Field("mid") int memberId, @Field("cheatId") int cheatId, @Field("rating") String rating);
+    @POST("rateCheat.php")
+    Call<JsonObject> rateCheat(@Field("memberId") int memberId, @Field("cheatId") int cheatId, @Field("rating") int rating);
 
 
     /**

@@ -22,13 +22,11 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.MenuItemCompat;
 import androidx.viewpager.widget.ViewPager;
 
+import com.cheatdatabase.CheatDatabaseApplication;
+import com.cheatdatabase.R;
 import com.cheatdatabase.activity.CheatForumActivity;
 import com.cheatdatabase.activity.LoginActivity;
-import com.cheatdatabase.R;
 import com.cheatdatabase.activity.SubmitCheatActivity;
-import com.cheatdatabase.model.Cheat;
-import com.cheatdatabase.model.Game;
-import com.cheatdatabase.model.Member;
 import com.cheatdatabase.dialogs.CheatMetaDialog;
 import com.cheatdatabase.dialogs.RateCheatMaterialDialog;
 import com.cheatdatabase.dialogs.ReportCheatMaterialDialog;
@@ -37,6 +35,10 @@ import com.cheatdatabase.helpers.Helper;
 import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.helpers.Tools;
+import com.cheatdatabase.model.Cheat;
+import com.cheatdatabase.model.Game;
+import com.cheatdatabase.model.Member;
+import com.cheatdatabase.rest.RestApi;
 import com.facebook.ads.AdSize;
 import com.facebook.ads.AdView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -60,8 +62,11 @@ import org.greenrobot.eventbus.Subscribe;
 import java.lang.reflect.Type;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import retrofit2.Retrofit;
 
 /**
  * Horizontal sliding through cheats submitted by member.
@@ -80,31 +85,25 @@ public class MemberCheatViewPageIndicator extends AppCompatActivity {
     @BindView(R.id.banner_container)
     LinearLayout facebookBanner;
 
-
     private Intent intent;
-
     private View viewLayout;
     private int pageSelected;
-
     private List<Cheat> cheatList;
     private Cheat visibleCheat;
     private Game gameObj;
-
     private SharedPreferences sharedPreferences;
     private Editor editor;
-
     private Member member;
-
-
     private MemberCheatViewFragmentAdapter mAdapter;
     private ViewPager mPager;
-
     private int activePage;
-
     private ShareActionProvider mShare;
-
     private AdView adView;
 
+    @Inject
+    Retrofit retrofit;
+
+    private RestApi restApi;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -158,6 +157,9 @@ public class MemberCheatViewPageIndicator extends AppCompatActivity {
     }
 
     private void init() {
+        ((CheatDatabaseApplication) getApplication()).getNetworkComponent().inject(this);
+        restApi = retrofit.create(RestApi.class);
+
         sharedPreferences = getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
         editor = sharedPreferences.edit();
 
@@ -390,7 +392,7 @@ public class MemberCheatViewPageIndicator extends AppCompatActivity {
         if ((member == null) || (member.getMid() == 0)) {
             Toast.makeText(this, R.string.error_login_required, Toast.LENGTH_LONG).show();
         } else {
-            new RateCheatMaterialDialog(this, visibleCheat, member);
+            new RateCheatMaterialDialog(this, visibleCheat, member, restApi);
         }
     }
 

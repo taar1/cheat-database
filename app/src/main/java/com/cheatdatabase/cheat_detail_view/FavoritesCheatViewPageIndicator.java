@@ -25,13 +25,11 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.MenuItemCompat;
 import androidx.viewpager.widget.ViewPager;
 
+import com.cheatdatabase.CheatDatabaseApplication;
+import com.cheatdatabase.R;
 import com.cheatdatabase.activity.CheatForumActivity;
 import com.cheatdatabase.activity.LoginActivity;
-import com.cheatdatabase.R;
 import com.cheatdatabase.activity.SubmitCheatActivity;
-import com.cheatdatabase.model.Cheat;
-import com.cheatdatabase.model.Game;
-import com.cheatdatabase.model.Member;
 import com.cheatdatabase.dialogs.CheatMetaDialog;
 import com.cheatdatabase.dialogs.RateCheatMaterialDialog;
 import com.cheatdatabase.dialogs.ReportCheatMaterialDialog;
@@ -41,6 +39,10 @@ import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.helpers.Tools;
 import com.cheatdatabase.helpers.UndoBarController;
+import com.cheatdatabase.model.Cheat;
+import com.cheatdatabase.model.Game;
+import com.cheatdatabase.model.Member;
+import com.cheatdatabase.rest.RestApi;
 import com.facebook.ads.AdSize;
 import com.facebook.ads.AdView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -61,6 +63,10 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.util.List;
+
+import javax.inject.Inject;
+
+import retrofit2.Retrofit;
 
 /**
  * Horizontal sliding gallery of cheats from a game.
@@ -106,6 +112,11 @@ public class FavoritesCheatViewPageIndicator extends AppCompatActivity implement
     private LinearLayout facebookBanner;
     private AdView adView;
 
+    @Inject
+    Retrofit retrofit;
+
+    private RestApi restApi;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -136,6 +147,9 @@ public class FavoritesCheatViewPageIndicator extends AppCompatActivity implement
     }
 
     private void init() {
+        ((CheatDatabaseApplication) getApplication()).getNetworkComponent().inject(this);
+        restApi = retrofit.create(RestApi.class);
+
         settings = getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
         editor = settings.edit();
 
@@ -391,7 +405,7 @@ public class FavoritesCheatViewPageIndicator extends AppCompatActivity implement
         if ((member == null) || (member.getMid() == 0)) {
             Toast.makeText(this, R.string.error_login_to_rate, Toast.LENGTH_LONG).show();
         } else {
-            new RateCheatMaterialDialog(this, visibleCheat, member);
+            new RateCheatMaterialDialog(this, visibleCheat, member, restApi);
         }
     }
 

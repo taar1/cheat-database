@@ -1,8 +1,6 @@
 package com.cheatdatabase.dialogs;
 
 import android.app.Activity;
-import android.os.AsyncTask;
-import android.util.Log;
 import android.view.View;
 import android.widget.RatingBar;
 import android.widget.Toast;
@@ -12,11 +10,16 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.Theme;
 import com.cheatdatabase.R;
 import com.cheatdatabase.events.CheatRatingFinishedEvent;
-import com.cheatdatabase.helpers.Webservice;
 import com.cheatdatabase.model.Cheat;
 import com.cheatdatabase.model.Member;
+import com.cheatdatabase.rest.RestApi;
+import com.google.gson.JsonObject;
 
 import org.greenrobot.eventbus.EventBus;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Material Design Cheat Rating Dialog.
@@ -24,13 +27,17 @@ import org.greenrobot.eventbus.EventBus;
 public class RateCheatMaterialDialog {
     private static final String TAG = "RateCheatMaterialDialog";
 
+    Activity activity;
     Cheat cheat;
     Member member;
+    RestApi restApi;
     private int newRatingBarValue;
 
-    public RateCheatMaterialDialog(final Activity activity, Cheat cheat, Member member) {
+    public RateCheatMaterialDialog(final Activity activity, Cheat cheat, Member member, RestApi restApi) {
+        this.activity = activity;
         this.cheat = cheat;
         this.member = member;
+        this.restApi = restApi;
 
         final int previousRating = (int) (cheat.getMemberRating() / 2);
         newRatingBarValue = previousRating;
@@ -42,14 +49,7 @@ public class RateCheatMaterialDialog {
                 .negativeText(R.string.cancel)
                 .onPositive((dialog, which) -> {
                     if ((previousRating != newRatingBarValue) && (newRatingBarValue != 0)) {
-
-                        try {
-                            new RateCheatBackgroundTask().execute(newRatingBarValue);
-                        } catch (Exception e) {
-                            Toast.makeText(activity, R.string.no_internet, Toast.LENGTH_SHORT).show();
-                            Log.e(TAG, e.getLocalizedMessage());
-                        }
-
+                        rateCheat(newRatingBarValue);
                     }
                 })
                 .theme(Theme.DARK)
@@ -70,28 +70,24 @@ public class RateCheatMaterialDialog {
                 positive.setEnabled(false);
             }
         });
-
     }
 
-    private class RateCheatBackgroundTask extends AsyncTask<Integer, Integer, Integer> {
+    void rateCheat(int rating) {
+        Call<JsonObject> call = restApi.rateCheat(member.getMid(), cheat.getCheatId(), rating);
+        call.enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(Call<JsonObject> forum, Response<JsonObject> response) {
+                JsonObject cheatRatingResponse = response.body();
+                String cheatRatingResponseValue = cheatRatingResponse.get("successMessage").getAsString(); // inserted|updated
 
-        @Override
-        protected Integer doInBackground(Integer... rating) {
-
-            try {
-                Webservice.rateCheat(member.getMid(), cheat.getCheatId(), rating[0]);
-                cheat.setMemberRating(rating[0]);
-                return rating[0];
-            } catch (Exception e) {
-                Log.e(TAG, e.getLocalizedMessage());
-                return 0;
+                cheat.setMemberRating(rating);
+                Toast.makeText(activity, R.string.rating_inserted, Toast.LENGTH_SHORT).show();
             }
-        }
 
-        @Override
-        protected void onPostExecute(Integer rating) {
-            EventBus.getDefault().post(new CheatRatingFinishedEvent(cheat, rating));
-        }
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable e) {
+                EventBus.getDefault().post(new CheatRatingFinishedEvent(cheat, rating));
+            }
+        });
     }
-
 }
