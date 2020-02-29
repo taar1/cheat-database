@@ -2,11 +2,9 @@ package com.cheatdatabase.activity;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
-import android.annotation.TargetApi;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
-import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -20,16 +18,24 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.cheatdatabase.CheatDatabaseApplication;
 import com.cheatdatabase.R;
-import com.cheatdatabase.model.Member;
 import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Reachability;
-import com.cheatdatabase.helpers.Webservice;
+import com.cheatdatabase.model.Member;
+import com.cheatdatabase.rest.RestApi;
+import com.google.gson.JsonObject;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import needle.Needle;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
 
 /**
  * Activity which displays a login screen to the user, offering registration as
@@ -63,6 +69,11 @@ public class RegisterActivity extends AppCompatActivity {
     private Member member;
     private SharedPreferences settings;
     private Editor editor;
+
+    @Inject
+    Retrofit retrofit;
+
+    private RestApi restApi;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,6 +120,8 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void init() {
+        ((CheatDatabaseApplication) getApplication()).getNetworkComponent().inject(this);
+        restApi = retrofit.create(RestApi.class);
 
         if (mToolbar != null) {
             setSupportActionBar(mToolbar);
@@ -195,7 +208,6 @@ public class RegisterActivity extends AppCompatActivity {
     /**
      * Shows the progress UI and hides the login form.
      */
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
     private void showProgress(final boolean show) {
         // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
         // for very easy animations. If available, use these APIs to fade-in
@@ -224,25 +236,43 @@ public class RegisterActivity extends AppCompatActivity {
      * user.
      */
     void registerTask(String username, String email) {
-        Needle.onBackgroundThread().execute(() -> {
-            boolean success;
-            member = Webservice.register(username, email);
+        Call<JsonObject> call = restApi.register(username, email);
+        call.enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(Call<JsonObject> forum, Response<JsonObject> response) {
+                JsonObject registerResponse = response.body();
 
-            if (member.getErrorCode() == 0) {
-                member.writeMemberData(member, settings);
+                // register_ok, member_reactivated, member_already_exists, other_error, parameters_too_short
+                String returnValue = registerResponse.get("returnValue").getAsString();
+                if ((returnValue.equalsIgnoreCase("register_ok")) || (returnValue.equalsIgnoreCase("member_reactivated"))) {
 
-                success = true;
-            } else {
-                success = false;
+                    // TODO FIXME hier gibts NULLPOINTER....
+                    // TODO FIXME hier gibts NULLPOINTER....
+                    // TODO FIXME hier gibts NULLPOINTER....
+                    // TODO FIXME hier gibts NULLPOINTER....
+                    member.setMid(registerResponse.get("memberId").getAsInt());
+                    member.setUsername(registerResponse.get("username").getAsString());
+                    member.setEmail(registerResponse.get("email").getAsString());
+                    member.setPassword(registerResponse.get("pw").getAsString());
+
+                    registerTaskFinished(true, 0);
+                } else if (returnValue.equalsIgnoreCase("member_already_exists")) {
+                    registerTaskFinished(false, 3);
+                } else if (returnValue.equalsIgnoreCase("parameters_too_short")) {
+                    registerTaskFinished(false, 4);
+                } else if (returnValue.equalsIgnoreCase("other_error")) {
+                    registerTaskFinished(false, 99);
+                }
             }
 
-            registerTaskFinished(success);
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable e) {
+                registerTaskFinished(false, 4);
+            }
         });
-
-
     }
 
-    void registerTaskFinished(boolean success) {
+    void registerTaskFinished(boolean success, int errorCode) {
         Needle.onMainThread().execute(() -> {
             showProgress(false);
 
@@ -253,13 +283,12 @@ public class RegisterActivity extends AppCompatActivity {
                 setResult(RESULT_OK, returnIntent);
                 finish();
             } else {
-                errorStuff();
+                displayError();
             }
         });
-
     }
 
-    private void errorStuff() {
+    private void displayError() {
         if (member != null) {
             switch (member.getErrorCode()) {
                 case 1:
@@ -271,7 +300,11 @@ public class RegisterActivity extends AppCompatActivity {
                     mEmailView.requestFocus();
                     break;
                 case 3:
-                    mUsernameView.setError(getString(R.string.err_username_used));
+                    mUsernameView.setError(getString(R.string.err_email_used));
+                    mUsernameView.requestFocus();
+                    break;
+                case 4:
+                    mUsernameView.setError(getString(R.string.err_parameter_too_short));
                     mUsernameView.requestFocus();
                     break;
                 default:
@@ -279,5 +312,4 @@ public class RegisterActivity extends AppCompatActivity {
             }
         }
     }
-
 }

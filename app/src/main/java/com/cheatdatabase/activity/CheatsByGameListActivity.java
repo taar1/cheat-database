@@ -235,8 +235,6 @@ public class CheatsByGameListActivity extends AppCompatActivity implements OnChe
     }
 
     private void loadCheats(boolean forceLoadOnline) {
-        Log.d(TAG, "XXXXX loadCheats() by game: " + gameObj.getGameName() + " / " + gameObj.getGameId());
-
         cheatList = new ArrayList<>();
         List<Cheat> cachedCheatsCollection;
         List<Cheat> cheatsFound;

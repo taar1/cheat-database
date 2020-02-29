@@ -199,4 +199,6 @@
     <string name="ukon_ad_title">Say Goodbye to Your Hangover</string>
     <string name="ukon_ad_subtitle">Shop now at ukon.ch - Worldwide Free Shipping!</string>
     <string name="ukon_url">http://www.ukon.ch/?lang=en</string>
+
+    <string name="err_parameter_too_short">The entered username or email is too short.</string>
 </resources>

@@ -83,8 +83,8 @@ public interface RestApi {
      * @return Member
      */
     @FormUrlEncoded
-    @POST("register.php")
-    Call<Member> register(@Field("username") String username, @Field("email") String email);
+    @POST("registerMember.php")
+    Call<JsonObject> register(@Field("username") String username, @Field("email") String email);
 
     /**
      * Authenticates the user and returns a Member object.

@@ -205,4 +205,5 @@
     <string name="ukon_ad_subtitle">Jetzt auf ukon.ch bestellen - Versandkostenfrei!</string>
     <string name="ukon_url">http://www.ukon.ch?lang=de</string>
 
+    <string name="err_parameter_too_short">Der Benutzername oder die E-Mailadresse ist zu kurz.</string>
 </resources>

@@ -62,7 +62,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 /**
- * List of Cheats from a Game.
+ * Cheat Detail View Fragment.
  *
  * @author Dominik Erbsland
  * @version 1.1
@@ -196,9 +196,7 @@ public class CheatViewFragment extends Fragment {
     private void getOnlineContent() {
         reloadView.setVisibility(View.GONE);
 
-        /**
-         * Get thumbnails if there are screenshots.
-         */
+        // Get thumbnails if there are screenshots.
         if (cheatObj.isScreenshots()) {
             biggestHeight = 100; // setMemberList value
             progressBar.setVisibility(View.VISIBLE);
@@ -255,10 +253,10 @@ public class CheatViewFragment extends Fragment {
         mainTable.setVisibility(View.VISIBLE);
         mainTable.setHorizontalScrollBarEnabled(true);
 
-        // Cheat Text oberhalb der Tabelle
+        // Cheat text before the table
         String[] textBeforeTable = null;
 
-        // Einige tabellarische Cheats beginnen direkt mit der Tabelle
+        // Some cheats start right with a table
         if (cheatObj.getCheatText().startsWith("<br><table")) {
             tvTextBeforeTable.setVisibility(View.GONE);
         } else {
@@ -341,7 +339,6 @@ public class CheatViewFragment extends Fragment {
         }
 
         mainTable.setOnClickListener(view -> displayTableInWebview());
-
     }
 
     private void fillSimpleContent() {
