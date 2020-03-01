@@ -45,8 +45,8 @@
       <sourceFolder url="file://$MODULE_DIR$/src/googlePlayFlavorDebug/java" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/googlePlayFlavorDebug/rs" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/googlePlayFlavorDebug/shaders" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/build/generated/aidl_source_output_dir/googlePlayFlavorDebugAndroidTest/compileGooglePlayFlavorDebugAndroidTestAidl/out" isTestSource="true" generated="true" />
       <sourceFolder url="file://$MODULE_DIR$/build/generated/ap_generated_sources/googlePlayFlavorDebugAndroidTest/out" isTestSource="true" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/build/generated/aidl_source_output_dir/googlePlayFlavorDebugAndroidTest/compileGooglePlayFlavorDebugAndroidTestAidl/out" isTestSource="true" generated="true" />
       <sourceFolder url="file://$MODULE_DIR$/build/generated/renderscript_source_output_dir/googlePlayFlavorDebugAndroidTest/compileGooglePlayFlavorDebugAndroidTestRenderscript/out" isTestSource="true" generated="true" />
       <sourceFolder url="file://$MODULE_DIR$/build/generated/source/buildConfig/androidTest/googlePlayFlavor/debug" isTestSource="true" generated="true" />
       <sourceFolder url="file://$MODULE_DIR$/build/generated/res/rs/androidTest/googlePlayFlavor/debug" type="java-test-resource" generated="true" />

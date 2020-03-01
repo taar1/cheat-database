@@ -96,7 +96,7 @@ public interface RestApi {
      */
     @FormUrlEncoded
     @POST("login.php")
-    Call<Member> login(@Field("username") String username, @Field("password") String password_md5);
+    Call<JsonObject> login(@Field("username") String username, @Field("password") String password_md5);
 
 
     /**

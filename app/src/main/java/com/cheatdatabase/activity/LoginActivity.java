@@ -2,11 +2,9 @@ package com.cheatdatabase.activity;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
-import android.annotation.TargetApi;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
-import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -24,21 +22,33 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentManager;
 
+import com.cheatdatabase.CheatDatabaseApplication;
 import com.cheatdatabase.R;
-import com.cheatdatabase.model.Member;
 import com.cheatdatabase.dialogs.AlreadyLoggedInDialog;
 import com.cheatdatabase.dialogs.AlreadyLoggedInDialog.AlreadyLoggedInDialogListener;
+import com.cheatdatabase.helpers.AeSimpleMD5;
 import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.helpers.Tools;
-import com.cheatdatabase.helpers.Webservice;
+import com.cheatdatabase.model.Member;
+import com.cheatdatabase.rest.RestApi;
 import com.crashlytics.android.Crashlytics;
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+
+import java.security.NoSuchAlgorithmException;
+import java.util.Objects;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import needle.Needle;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
 
 /**
  * Activity which displays a login screen to the user, offering registration as
@@ -46,11 +56,7 @@ import needle.Needle;
  */
 public class LoginActivity extends AppCompatActivity implements AlreadyLoggedInDialogListener {
 
-    public static final String TAG = LoginActivity.class.getSimpleName();
-
-    /**
-     * The default email to populate the email field with.
-     */
+    private static final String TAG = "LoginActivity";
     public static final String EXTRA_EMAIL = "com.example.android.authenticatordemo.extra.EMAIL";
 
     // Values for email and password at the time of the login attempt.
@@ -78,6 +84,11 @@ public class LoginActivity extends AppCompatActivity implements AlreadyLoggedInD
     private Member member;
     private SharedPreferences settings;
     private Editor editor;
+
+    @Inject
+    Retrofit retrofit;
+
+    private RestApi restApi;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -124,10 +135,13 @@ public class LoginActivity extends AppCompatActivity implements AlreadyLoggedInD
     }
 
     private void init() {
+        ((CheatDatabaseApplication) getApplication()).getNetworkComponent().inject(this);
+        restApi = retrofit.create(RestApi.class);
+
         if (mToolbar != null) {
             setSupportActionBar(mToolbar);
         }
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
         settings = getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
@@ -254,18 +268,14 @@ public class LoginActivity extends AppCompatActivity implements AlreadyLoggedInD
             mLoginStatusMessageView.setText(R.string.login_progress_signing_in);
             showProgress(true);
 
-            loginInBackground(mEmailView.getText().toString().trim(), mPasswordView.getText().toString().trim());
+            loginTask(mEmailView.getText().toString().trim(), mPasswordView.getText().toString().trim());
         }
     }
 
     /**
      * Shows the progress UI and hides the login form.
      */
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
     private void showProgress(final boolean show) {
-        // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
-        // for very easy animations. If available, use these APIs to fade-in
-        // the progress spinner.
         int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
 
         mLoginStatusView.setVisibility(View.VISIBLE);
@@ -285,27 +295,56 @@ public class LoginActivity extends AppCompatActivity implements AlreadyLoggedInD
         });
     }
 
-    private void loginInBackground(String email, String password) {
-        Needle.onBackgroundThread().execute(() -> {
-            boolean loginResult;
+    void loginTask(String username, String password) {
+        String password_md5 = null;
+        try {
+            password_md5 = AeSimpleMD5.MD5(password.trim());
+        } catch (NoSuchAlgorithmException e) {
+            Log.e(TAG, "loginTask: NoSuchAlgorithmException", e);
+        }
 
-            member = Webservice.login(email, password);
-            if (member != null) {
-                if (member.getErrorCode() == 0) {
+        Call<JsonObject> call = restApi.login(username, password_md5);
+        call.enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(Call<JsonObject> forum, Response<JsonObject> response) {
+                JsonObject registerResponse = response.body();
+
+                // login_ok, wrong_pw, member_not_found
+                String returnValue = registerResponse.get("returnValue").getAsString();
+
+                // TODO FIXME das login muss noch getestet werden....
+                // TODO FIXME das login muss noch getestet werden....
+                // TODO FIXME das login muss noch getestet werden....
+                // TODO FIXME das login muss noch getestet werden....
+                // TODO FIXME das login muss noch getestet werden....
+                // TODO FIXME das login muss noch getestet werden....
+
+                if (returnValue.equalsIgnoreCase("login_ok")) {
+                    member = new Member();
+                    member.setMid(registerResponse.get("memberId").getAsInt());
+                    member.setUsername(registerResponse.get("username").getAsString());
+                    member.setEmail(registerResponse.get("email").getAsString());
+                    member.setPassword(password);
                     member.writeMemberData(member, settings);
-                    loginResult = true;
-                } else {
-                    loginResult = false;
+
+                    afterLogin(true, 0);
+                } else if (returnValue.equalsIgnoreCase("wrong_pw")) {
+                    afterLogin(false, 1);
+                } else if (returnValue.equalsIgnoreCase("member_not_found")) {
+                    afterLogin(false, 2);
+                } else if (returnValue.equalsIgnoreCase("member_banned")) {
+                    afterLogin(false, 3);
                 }
-            } else {
-                loginResult = false;
             }
 
-            afterLogin(loginResult);
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable e) {
+                afterLogin(false, 99);
+            }
         });
     }
 
-    private void afterLogin(boolean loginResult) {
+    private void afterLogin(boolean loginResult, int errorCode) {
         Needle.onMainThread().execute(() -> {
             showProgress(false);
 
@@ -316,34 +355,28 @@ public class LoginActivity extends AppCompatActivity implements AlreadyLoggedInD
                 setResult(Konstanten.LOGIN_SUCCESS_RETURN_CODE, returnIntent);
                 finish();
             } else {
-                errorStuff();
+                errorStuff(errorCode);
             }
         });
     }
 
-    private void errorStuff() {
-        if (member != null) {
-            switch (member.getErrorCode()) {
-                case 1:
-                    mEmailView.setError(getString(R.string.err_email_invalid));
-                    mEmailView.requestFocus();
-                    break;
-                case 2:
-                    mEmailView.setError(getString(R.string.err_email_used));
-                    mEmailView.requestFocus();
-                    break;
-                case 3:
-                    mEmailView.setError(getString(R.string.err_username_used));
-                    mEmailView.requestFocus();
-                    break;
-                default:
-                    Toast.makeText(LoginActivity.this, R.string.err_other_problem, Toast.LENGTH_LONG).show();
-            }
-        } else {
-            mPasswordView.setError(getString(R.string.error_incorrect_password));
-            mPasswordView.requestFocus();
+    private void errorStuff(int errorCode) {
+        switch (errorCode) {
+            case 1: // wrong_pw
+                mPasswordView.setError(getString(R.string.error_incorrect_password));
+                mPasswordView.requestFocus();
+                break;
+            case 2: // member_not_found
+                mEmailView.setError(getString(R.string.err_no_member_data));
+                mEmailView.requestFocus();
+                break;
+            case 3: // member_banned
+                mEmailView.setError(getString(R.string.member_banned));
+                mEmailView.requestFocus();
+                break;
+            default:
+                Toast.makeText(LoginActivity.this, R.string.err_occurred, Toast.LENGTH_LONG).show();
         }
-
     }
 
     @Override

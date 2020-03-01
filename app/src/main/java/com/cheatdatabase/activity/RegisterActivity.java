@@ -242,22 +242,23 @@ public class RegisterActivity extends AppCompatActivity {
             public void onResponse(Call<JsonObject> forum, Response<JsonObject> response) {
                 JsonObject registerResponse = response.body();
 
-                // register_ok, member_reactivated, member_already_exists, other_error, parameters_too_short
+                // register_ok, username_already_exists, email_already_exists, parameters_too_short, other_error
                 String returnValue = registerResponse.get("returnValue").getAsString();
-                if ((returnValue.equalsIgnoreCase("register_ok")) || (returnValue.equalsIgnoreCase("member_reactivated"))) {
 
-                    // TODO FIXME hier gibts NULLPOINTER....
-                    // TODO FIXME hier gibts NULLPOINTER....
-                    // TODO FIXME hier gibts NULLPOINTER....
-                    // TODO FIXME hier gibts NULLPOINTER....
+                if (returnValue.equalsIgnoreCase("register_ok")) {
+
+                    member = new Member();
                     member.setMid(registerResponse.get("memberId").getAsInt());
                     member.setUsername(registerResponse.get("username").getAsString());
                     member.setEmail(registerResponse.get("email").getAsString());
                     member.setPassword(registerResponse.get("pw").getAsString());
+                    member.writeMemberData(member, settings);
 
                     registerTaskFinished(true, 0);
-                } else if (returnValue.equalsIgnoreCase("member_already_exists")) {
-                    registerTaskFinished(false, 3);
+                } else if (returnValue.equalsIgnoreCase("username_already_exists")) {
+                    registerTaskFinished(false, 1);
+                } else if (returnValue.equalsIgnoreCase("email_already_exists")) {
+                    registerTaskFinished(false, 2);
                 } else if (returnValue.equalsIgnoreCase("parameters_too_short")) {
                     registerTaskFinished(false, 4);
                 } else if (returnValue.equalsIgnoreCase("other_error")) {
@@ -267,7 +268,7 @@ public class RegisterActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<JsonObject> call, Throwable e) {
-                registerTaskFinished(false, 4);
+                registerTaskFinished(false, 99);
             }
         });
     }
@@ -283,33 +284,27 @@ public class RegisterActivity extends AppCompatActivity {
                 setResult(RESULT_OK, returnIntent);
                 finish();
             } else {
-                displayError();
+                displayError(errorCode);
             }
         });
     }
 
-    private void displayError() {
-        if (member != null) {
-            switch (member.getErrorCode()) {
-                case 1:
-                    mEmailView.setError(getString(R.string.err_email_invalid));
-                    mEmailView.requestFocus();
-                    break;
-                case 2:
-                    mEmailView.setError(getString(R.string.err_email_used));
-                    mEmailView.requestFocus();
-                    break;
-                case 3:
-                    mUsernameView.setError(getString(R.string.err_email_used));
-                    mUsernameView.requestFocus();
-                    break;
-                case 4:
-                    mUsernameView.setError(getString(R.string.err_parameter_too_short));
-                    mUsernameView.requestFocus();
-                    break;
-                default:
-                    Toast.makeText(RegisterActivity.this, R.string.err_other_problem, Toast.LENGTH_LONG).show();
-            }
+    private void displayError(int errorCode) {
+        switch (errorCode) {
+            case 1: // username_already_exists
+                mUsernameView.setError(getString(R.string.err_username_used));
+                mUsernameView.requestFocus();
+                break;
+            case 2: // email_already_exists
+                mEmailView.setError(getString(R.string.err_email_used));
+                mEmailView.requestFocus();
+                break;
+            case 4:
+                mUsernameView.setError(getString(R.string.err_parameter_too_short));
+                mUsernameView.requestFocus();
+                break;
+            default:
+                Toast.makeText(RegisterActivity.this, R.string.err_other_problem, Toast.LENGTH_LONG).show();
         }
     }
 }
