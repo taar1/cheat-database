@@ -5,6 +5,7 @@ import com.cheatdatabase.activity.CheatsByGameListActivity;
 import com.cheatdatabase.activity.GamesBySystemListActivity;
 import com.cheatdatabase.activity.LoginActivity;
 import com.cheatdatabase.activity.MainActivity;
+import com.cheatdatabase.activity.RecoverActivity;
 import com.cheatdatabase.activity.RegisterActivity;
 import com.cheatdatabase.cheat_detail_view.CheatViewPageIndicatorActivity;
 import com.cheatdatabase.cheat_detail_view.FavoritesCheatViewPageIndicator;
@@ -37,6 +38,8 @@ public interface NetworkComponent {
     void inject(RegisterActivity activity);
 
     void inject(LoginActivity activity);
+
+    void inject(RecoverActivity activity);
 
     void inject(FavoritesCheatViewPageIndicator favoritesCheatViewPageIndicator);
 

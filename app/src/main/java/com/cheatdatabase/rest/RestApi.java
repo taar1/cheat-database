@@ -32,14 +32,14 @@ public interface RestApi {
 
 
     /**
-     * Sendet die Logindaten an einen E-Mail Account
+     * Sends the login data to an email address.
      *
      * @param email
-     * @return "ok"; "no_user_found"; other string
+     * @return email_sent, no_user_found, invalid_email
      */
     @FormUrlEncoded
     @POST("sendLoginData.php")
-    Call<String> sendLoginData(@Field("email") String email);
+    Call<JsonObject> sendLoginData(@Field("email") String email);
 
     @FormUrlEncoded
     @POST("universalGameSearch.php")
@@ -80,7 +80,7 @@ public interface RestApi {
      *
      * @param username Desired username
      * @param email    User email address
-     * @return Member
+     * @return JsonObject
      */
     @FormUrlEncoded
     @POST("registerMember.php")
@@ -92,12 +92,11 @@ public interface RestApi {
      *
      * @param username     Username / email
      * @param password_md5 MD5 Hash of Password
-     * @return Member
+     * @return JsonObject
      */
     @FormUrlEncoded
     @POST("login.php")
     Call<JsonObject> login(@Field("username") String username, @Field("password") String password_md5);
-
 
     /**
      * Submit a cheat.

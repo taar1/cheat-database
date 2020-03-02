@@ -2,7 +2,6 @@ package com.cheatdatabase.activity;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -15,15 +14,21 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.cheatdatabase.CheatDatabaseApplication;
 import com.cheatdatabase.R;
-import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Reachability;
-import com.cheatdatabase.helpers.Webservice;
+import com.cheatdatabase.rest.RestApi;
+import com.google.gson.JsonObject;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import needle.Needle;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
 
 /**
  * Activity which displays a login screen to the user, offering registration as
@@ -52,8 +57,12 @@ public class RecoverActivity extends AppCompatActivity {
     Toolbar mToolbar;
 
     private String mEmail;
-
     private int successMessage;
+
+    @Inject
+    Retrofit retrofit;
+
+    private RestApi restApi;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,6 +99,9 @@ public class RecoverActivity extends AppCompatActivity {
     }
 
     private void init() {
+        ((CheatDatabaseApplication) getApplication()).getNetworkComponent().inject(this);
+        restApi = retrofit.create(RestApi.class);
+
         if (mToolbar != null) {
             setSupportActionBar(mToolbar);
         }
@@ -171,36 +183,48 @@ public class RecoverActivity extends AppCompatActivity {
     }
 
     void sendRecoveryEmail(String email) {
-        Needle.onBackgroundThread().execute(() -> {
-            successMessage = Webservice.sendLoginData(email);
+        Call<JsonObject> call = restApi.sendLoginData(email);
+        call.enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(Call<JsonObject> forum, Response<JsonObject> response) {
+                JsonObject registerResponse = response.body();
 
-            boolean success = successMessage != R.string.err_email_invalid;
-            updateUIAfterRecovery(success, successMessage);
+                // email_sent, no_user_found, invalid_email
+                String returnValue = registerResponse.get("returnValue").getAsString();
+
+                if (returnValue.equalsIgnoreCase("email_sent")) {
+                    updateUIAfterRecovery(true, R.string.login_sent_ok);
+                } else if (returnValue.equalsIgnoreCase("no_user_found")) {
+                    updateUIAfterRecovery(false, R.string.err_email_user_not_found);
+                } else if (returnValue.equalsIgnoreCase("invalid_email")) {
+                    updateUIAfterRecovery(false, R.string.error_invalid_email);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable e) {
+                updateUIAfterRecovery(false, 99);
+            }
         });
     }
 
     void updateUIAfterRecovery(boolean success, int successMessage) {
-        Needle.onMainThread().execute(() -> {
-            showProgress(false);
+        showProgress(false);
 
-            if (success) {
-                mResponseMessageView.setText(getString(successMessage));
-                mResponseMessageView.setVisibility(View.VISIBLE);
-
-                if (successMessage != R.string.err_email_user_not_found) {
-                    Intent returnIntent = new Intent();
-                    returnIntent.putExtra("result", Konstanten.RECOVER_PASSWORD_SUCCESS_RETURN_CODE);
-                    setResult(RESULT_OK, returnIntent);
-                    finish();
-                }
-
-            } else {
-                mEmailView.setError(getString(successMessage));
-                mEmailView.requestFocus();
-            }
-        });
-
-
+        if (success) {
+            Toast.makeText(this, getString(R.string.login_sent_ok), Toast.LENGTH_LONG).show();
+//            mResponseMessageView.setText(getString(successMessage));
+//            mResponseMessageView.setVisibility(View.VISIBLE);
+//
+//            if (successMessage != R.string.err_email_user_not_found) {
+//                Intent returnIntent = new Intent();
+//                returnIntent.putExtra("result", Konstanten.RECOVER_PASSWORD_SUCCESS_RETURN_CODE);
+//                setResult(RESULT_OK, returnIntent);
+//                finish();
+//            }
+        } else {
+            mEmailView.setError(getString(successMessage));
+            mEmailView.requestFocus();
+        }
     }
-
 }

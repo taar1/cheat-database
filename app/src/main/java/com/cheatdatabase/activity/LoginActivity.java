@@ -299,49 +299,44 @@ public class LoginActivity extends AppCompatActivity implements AlreadyLoggedInD
         String password_md5 = null;
         try {
             password_md5 = AeSimpleMD5.MD5(password.trim());
+            //Log.d(TAG, "loginTask password_md5: " + password_md5);
+
+            Call<JsonObject> call = restApi.login(username, password_md5);
+            call.enqueue(new Callback<JsonObject>() {
+                @Override
+                public void onResponse(Call<JsonObject> forum, Response<JsonObject> response) {
+                    JsonObject registerResponse = response.body();
+
+                    // login_ok, wrong_pw, member_not_found
+                    String returnValue = registerResponse.get("returnValue").getAsString();
+
+                    if (returnValue.equalsIgnoreCase("login_ok")) {
+                        member = new Member();
+                        member.setMid(registerResponse.get("memberId").getAsInt());
+                        member.setUsername(registerResponse.get("username").getAsString());
+                        member.setEmail(registerResponse.get("email").getAsString());
+                        member.setPassword(password);
+                        member.writeMemberData(member, settings);
+
+                        afterLogin(true, 0);
+                    } else if (returnValue.equalsIgnoreCase("wrong_pw")) {
+                        afterLogin(false, 1);
+                    } else if (returnValue.equalsIgnoreCase("member_not_found")) {
+                        afterLogin(false, 2);
+                    } else if (returnValue.equalsIgnoreCase("member_banned")) {
+                        afterLogin(false, 3);
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<JsonObject> call, Throwable e) {
+                    afterLogin(false, 99);
+                }
+            });
         } catch (NoSuchAlgorithmException e) {
             Log.e(TAG, "loginTask: NoSuchAlgorithmException", e);
+            afterLogin(false, 99);
         }
-
-        Call<JsonObject> call = restApi.login(username, password_md5);
-        call.enqueue(new Callback<JsonObject>() {
-            @Override
-            public void onResponse(Call<JsonObject> forum, Response<JsonObject> response) {
-                JsonObject registerResponse = response.body();
-
-                // login_ok, wrong_pw, member_not_found
-                String returnValue = registerResponse.get("returnValue").getAsString();
-
-                // TODO FIXME das login muss noch getestet werden....
-                // TODO FIXME das login muss noch getestet werden....
-                // TODO FIXME das login muss noch getestet werden....
-                // TODO FIXME das login muss noch getestet werden....
-                // TODO FIXME das login muss noch getestet werden....
-                // TODO FIXME das login muss noch getestet werden....
-
-                if (returnValue.equalsIgnoreCase("login_ok")) {
-                    member = new Member();
-                    member.setMid(registerResponse.get("memberId").getAsInt());
-                    member.setUsername(registerResponse.get("username").getAsString());
-                    member.setEmail(registerResponse.get("email").getAsString());
-                    member.setPassword(password);
-                    member.writeMemberData(member, settings);
-
-                    afterLogin(true, 0);
-                } else if (returnValue.equalsIgnoreCase("wrong_pw")) {
-                    afterLogin(false, 1);
-                } else if (returnValue.equalsIgnoreCase("member_not_found")) {
-                    afterLogin(false, 2);
-                } else if (returnValue.equalsIgnoreCase("member_banned")) {
-                    afterLogin(false, 3);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<JsonObject> call, Throwable e) {
-                afterLogin(false, 99);
-            }
-        });
     }
 
     private void afterLogin(boolean loginResult, int errorCode) {

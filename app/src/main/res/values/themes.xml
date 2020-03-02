@@ -104,7 +104,6 @@
     <style name="LoginFormContainer">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
-        <item name="android:padding">16dp</item>
         <item name="android:fontFamily">@font/lato_regular</item>
     </style>
 
