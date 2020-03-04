@@ -447,7 +447,7 @@ public class CheatForumActivity extends AppCompatActivity {
         if ((member == null) || (member.getMid() == 0)) {
             Toast.makeText(this, R.string.error_login_required, Toast.LENGTH_LONG).show();
         } else {
-            new ReportCheatMaterialDialog(this, cheatObj, member);
+            new ReportCheatMaterialDialog(this, cheatObj, member, restApi);
         }
     }
 

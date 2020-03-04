@@ -4,8 +4,8 @@
     <facet type="android-gradle" name="Android-Gradle">
       <configuration>
         <option name="GRADLE_PROJECT_PATH" value=":app" />
-        <option name="LAST_SUCCESSFUL_SYNC_AGP_VERSION" value="3.5.3" />
-        <option name="LAST_KNOWN_AGP_VERSION" value="3.5.3" />
+        <option name="LAST_SUCCESSFUL_SYNC_AGP_VERSION" value="3.6.1" />
+        <option name="LAST_KNOWN_AGP_VERSION" value="3.6.1" />
       </configuration>
     </facet>
     <facet type="android" name="Android">
@@ -19,7 +19,7 @@
         <option name="ALLOW_USER_CONFIGURATION" value="false" />
         <option name="MANIFEST_FILE_RELATIVE_PATH" value="/src/main/AndroidManifest.xml" />
         <option name="RES_FOLDER_RELATIVE_PATH" value="/src/main/res" />
-        <option name="RES_FOLDERS_RELATIVE_PATH" value="file://$MODULE_DIR$/src/main/res;file://$MODULE_DIR$/build/generated/fabric/res/googlePlayFlavor/debug;file://$MODULE_DIR$/build/generated/res/google-services/googlePlayFlavor/debug;file://$MODULE_DIR$/build/generated/res/resValues/googlePlayFlavor/debug" />
+        <option name="RES_FOLDERS_RELATIVE_PATH" value="file://$MODULE_DIR$/src/main/res;file://$MODULE_DIR$/build/generated/fabric/res/googlePlayFlavor/debug;file://$MODULE_DIR$/build/generated/res/google-services/googlePlayFlavor/debug" />
         <option name="TEST_RES_FOLDERS_RELATIVE_PATH" value="" />
         <option name="ASSETS_FOLDER_RELATIVE_PATH" value="/src/main/assets" />
       </configuration>
@@ -30,14 +30,13 @@
     <output-test url="file://$MODULE_DIR$/build/intermediates/javac/googlePlayFlavorDebugUnitTest/classes" />
     <exclude-output />
     <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/build/generated/renderscript_source_output_dir/googlePlayFlavorDebug/out" isTestSource="false" generated="true" />
       <sourceFolder url="file://$MODULE_DIR$/build/generated/ap_generated_sources/googlePlayFlavorDebug/out" isTestSource="false" generated="true" />
-      <sourceFolder url="file://$MODULE_DIR$/build/generated/aidl_source_output_dir/googlePlayFlavorDebug/compileGooglePlayFlavorDebugAidl/out" isTestSource="false" generated="true" />
-      <sourceFolder url="file://$MODULE_DIR$/build/generated/renderscript_source_output_dir/googlePlayFlavorDebug/compileGooglePlayFlavorDebugRenderscript/out" isTestSource="false" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/build/generated/aidl_source_output_dir/googlePlayFlavorDebug/out" isTestSource="false" generated="true" />
       <sourceFolder url="file://$MODULE_DIR$/build/generated/source/buildConfig/googlePlayFlavor/debug" isTestSource="false" generated="true" />
       <sourceFolder url="file://$MODULE_DIR$/build/generated/fabric/res/googlePlayFlavor/debug" type="java-resource" generated="true" />
       <sourceFolder url="file://$MODULE_DIR$/build/generated/res/google-services/googlePlayFlavor/debug" type="java-resource" generated="true" />
       <sourceFolder url="file://$MODULE_DIR$/build/generated/res/rs/googlePlayFlavor/debug" type="java-resource" generated="true" />
-      <sourceFolder url="file://$MODULE_DIR$/build/generated/res/resValues/googlePlayFlavor/debug" type="java-resource" generated="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/googlePlayFlavorDebug/res" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/googlePlayFlavorDebug/resources" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/googlePlayFlavorDebug/assets" type="java-resource" />
@@ -45,12 +44,11 @@
       <sourceFolder url="file://$MODULE_DIR$/src/googlePlayFlavorDebug/java" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/googlePlayFlavorDebug/rs" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/googlePlayFlavorDebug/shaders" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/build/generated/ap_generated_sources/googlePlayFlavorDebugAndroidTest/out" isTestSource="true" generated="true" />
-      <sourceFolder url="file://$MODULE_DIR$/build/generated/aidl_source_output_dir/googlePlayFlavorDebugAndroidTest/compileGooglePlayFlavorDebugAndroidTestAidl/out" isTestSource="true" generated="true" />
-      <sourceFolder url="file://$MODULE_DIR$/build/generated/renderscript_source_output_dir/googlePlayFlavorDebugAndroidTest/compileGooglePlayFlavorDebugAndroidTestRenderscript/out" isTestSource="true" generated="true" />
       <sourceFolder url="file://$MODULE_DIR$/build/generated/source/buildConfig/androidTest/googlePlayFlavor/debug" isTestSource="true" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/build/generated/ap_generated_sources/googlePlayFlavorDebugAndroidTest/out" isTestSource="true" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/build/generated/renderscript_source_output_dir/googlePlayFlavorDebugAndroidTest/out" isTestSource="true" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/build/generated/aidl_source_output_dir/googlePlayFlavorDebugAndroidTest/out" isTestSource="true" generated="true" />
       <sourceFolder url="file://$MODULE_DIR$/build/generated/res/rs/androidTest/googlePlayFlavor/debug" type="java-test-resource" generated="true" />
-      <sourceFolder url="file://$MODULE_DIR$/build/generated/res/resValues/androidTest/googlePlayFlavor/debug" type="java-test-resource" generated="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/androidTestGooglePlayFlavorDebug/res" type="java-test-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/androidTestGooglePlayFlavorDebug/resources" type="java-test-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/androidTestGooglePlayFlavorDebug/assets" type="java-test-resource" />

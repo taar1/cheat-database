@@ -2,8 +2,10 @@ package com.cheatdatabase.activity;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
@@ -16,9 +18,13 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.cheatdatabase.CheatDatabaseApplication;
 import com.cheatdatabase.R;
+import com.cheatdatabase.helpers.AeSimpleMD5;
+import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.rest.RestApi;
 import com.google.gson.JsonObject;
+
+import java.security.NoSuchAlgorithmException;
 
 import javax.inject.Inject;
 
@@ -35,7 +41,7 @@ import retrofit2.Retrofit;
  * well.
  */
 public class RecoverActivity extends AppCompatActivity {
-
+    private static final String TAG = "RecoverActivity";
     /**
      * The default email to populate the email field with.
      */
@@ -57,7 +63,6 @@ public class RecoverActivity extends AppCompatActivity {
     Toolbar mToolbar;
 
     private String mEmail;
-    private int successMessage;
 
     @Inject
     Retrofit retrofit;
@@ -159,8 +164,7 @@ public class RecoverActivity extends AppCompatActivity {
 
     /**
      * Shows the progress UI and hides the login form.
-     *
-     * @param show
+     * @param show or not show
      */
     private void showProgress(final boolean show) {
         int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
@@ -183,33 +187,37 @@ public class RecoverActivity extends AppCompatActivity {
     }
 
     void sendRecoveryEmail(String email) {
-        Call<JsonObject> call = restApi.sendLoginData(email);
-        call.enqueue(new Callback<JsonObject>() {
-            @Override
-            public void onResponse(Call<JsonObject> forum, Response<JsonObject> response) {
-                JsonObject registerResponse = response.body();
+        try {
+            String email_md5 = AeSimpleMD5.MD5(email.trim());
 
-                // email_sent, no_user_found, invalid_email
-                // TODO FIXME hier gibt es ein nullpointer.....
-                // TODO FIXME hier gibt es ein nullpointer.....
-                // TODO FIXME hier gibt es ein nullpointer.....
-                // TODO FIXME hier gibt es ein nullpointer.....
-                String returnValue = registerResponse.get("returnValue").getAsString();
+            Call<JsonObject> call = restApi.sendLoginData(email_md5);
+            call.enqueue(new Callback<JsonObject>() {
+                @Override
+                public void onResponse(Call<JsonObject> forum, Response<JsonObject> response) {
+                    JsonObject registerResponse = response.body();
 
-                if (returnValue.equalsIgnoreCase("email_sent")) {
-                    updateUIAfterRecovery(true, R.string.login_sent_ok);
-                } else if (returnValue.equalsIgnoreCase("no_user_found")) {
-                    updateUIAfterRecovery(false, R.string.err_email_user_not_found);
-                } else if (returnValue.equalsIgnoreCase("invalid_email")) {
-                    updateUIAfterRecovery(false, R.string.error_invalid_email);
+                    // email_sent, no_user_found, invalid_email
+                    String returnValue = registerResponse.get("returnValue").getAsString();
+
+                    if (returnValue.equalsIgnoreCase("email_sent")) {
+                        updateUIAfterRecovery(true, R.string.login_sent_ok);
+                    } else if (returnValue.equalsIgnoreCase("no_user_found")) {
+                        updateUIAfterRecovery(false, R.string.err_email_user_not_found);
+                    } else if (returnValue.equalsIgnoreCase("invalid_email")) {
+                        updateUIAfterRecovery(false, R.string.error_invalid_email);
+                    }
                 }
-            }
 
-            @Override
-            public void onFailure(Call<JsonObject> call, Throwable e) {
-                updateUIAfterRecovery(false, 99);
-            }
-        });
+                @Override
+                public void onFailure(Call<JsonObject> call, Throwable e) {
+                    updateUIAfterRecovery(false, 99);
+                }
+            });
+
+        } catch (NoSuchAlgorithmException e) {
+            updateUIAfterRecovery(false, 99);
+            Log.e(TAG, "sendRecoveryEmail: ", e);
+        }
     }
 
     void updateUIAfterRecovery(boolean success, int successMessage) {
@@ -217,15 +225,15 @@ public class RecoverActivity extends AppCompatActivity {
 
         if (success) {
             Toast.makeText(this, getString(R.string.login_sent_ok), Toast.LENGTH_LONG).show();
-//            mResponseMessageView.setText(getString(successMessage));
-//            mResponseMessageView.setVisibility(View.VISIBLE);
-//
-//            if (successMessage != R.string.err_email_user_not_found) {
-//                Intent returnIntent = new Intent();
-//                returnIntent.putExtra("result", Konstanten.RECOVER_PASSWORD_SUCCESS_RETURN_CODE);
-//                setResult(RESULT_OK, returnIntent);
-//                finish();
-//            }
+            mResponseMessageView.setText(getString(successMessage));
+            mResponseMessageView.setVisibility(View.VISIBLE);
+
+            if (successMessage != R.string.err_email_user_not_found) {
+                Intent returnIntent = new Intent();
+                returnIntent.putExtra("result", Konstanten.RECOVER_PASSWORD_SUCCESS_RETURN_CODE);
+                setResult(RESULT_OK, returnIntent);
+                finish();
+            }
         } else {
             mEmailView.setError(getString(successMessage));
             mEmailView.requestFocus();

@@ -34,7 +34,7 @@ public interface RestApi {
     /**
      * Sends the login data to an email address.
      *
-     * @param email
+     * @param email as MD5 hash
      * @return email_sent, no_user_found, invalid_email
      */
     @FormUrlEncoded
@@ -282,7 +282,7 @@ public interface RestApi {
      */
     @FormUrlEncoded
     @POST("reportCheat.php")
-    Call<Void> reportCheat(@Field("cheatId") int cheatId, @Field("memberId") int memberId, @Field("reason") String reason);
+    Call<JsonObject> reportCheat(@Field("cheatId") int cheatId, @Field("memberId") int memberId, @Field("reason") String reason);
 
     /**
      * Submits a message to me.

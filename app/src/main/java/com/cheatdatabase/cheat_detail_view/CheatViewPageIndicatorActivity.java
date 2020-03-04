@@ -431,7 +431,7 @@ public class CheatViewPageIndicatorActivity extends AppCompatActivity {
         if ((member == null) || (member.getMid() == 0)) {
             Toast.makeText(this, R.string.error_login_required, Toast.LENGTH_SHORT).show();
         } else {
-            new ReportCheatMaterialDialog(this, visibleCheat, member);
+            new ReportCheatMaterialDialog(this, visibleCheat, member, restApi);
         }
     }
 
