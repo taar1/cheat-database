@@ -384,7 +384,7 @@ public class MemberCheatViewPageIndicator extends AppCompatActivity {
         if ((member == null) || (member.getMid() == 0)) {
             Toast.makeText(MemberCheatViewPageIndicator.this, R.string.error_login_required, Toast.LENGTH_SHORT).show();
         } else {
-            new ReportCheatMaterialDialog(this, visibleCheat, member, restApi);
+            new ReportCheatMaterialDialog(this, visibleCheat, member, restApi, outerLayout);
         }
     }
 
@@ -392,7 +392,7 @@ public class MemberCheatViewPageIndicator extends AppCompatActivity {
         if ((member == null) || (member.getMid() == 0)) {
             Toast.makeText(this, R.string.error_login_required, Toast.LENGTH_LONG).show();
         } else {
-            new RateCheatMaterialDialog(this, visibleCheat, member, restApi);
+            new RateCheatMaterialDialog(this, visibleCheat, member, restApi, outerLayout);
         }
     }
 

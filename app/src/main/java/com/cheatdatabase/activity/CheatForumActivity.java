@@ -447,7 +447,7 @@ public class CheatForumActivity extends AppCompatActivity {
         if ((member == null) || (member.getMid() == 0)) {
             Toast.makeText(this, R.string.error_login_required, Toast.LENGTH_LONG).show();
         } else {
-            new ReportCheatMaterialDialog(this, cheatObj, member, restApi);
+            new ReportCheatMaterialDialog(this, cheatObj, member, restApi, outerLayout);
         }
     }
 
@@ -455,7 +455,7 @@ public class CheatForumActivity extends AppCompatActivity {
         if ((member == null) || (member.getMid() == 0)) {
             Toast.makeText(this, R.string.error_login_required, Toast.LENGTH_LONG).show();
         } else {
-            new RateCheatMaterialDialog(this, cheatObj, member, restApi);
+            new RateCheatMaterialDialog(this, cheatObj, member, restApi, outerLayout);
         }
     }
 

@@ -2,11 +2,11 @@ package com.cheatdatabase.dialogs;
 
 import android.app.Activity;
 import android.view.View;
-import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.Theme;
 import com.cheatdatabase.R;
+import com.cheatdatabase.helpers.Tools;
 import com.cheatdatabase.model.Cheat;
 import com.cheatdatabase.model.Member;
 import com.cheatdatabase.rest.RestApi;
@@ -22,12 +22,14 @@ import retrofit2.Response;
 public class ReportCheatMaterialDialog {
     private static final String TAG = "ReportCheatMaterialDial";
 
+    private final View view;
     Activity activity;
     RestApi restApi;
 
-    public ReportCheatMaterialDialog(final Activity activity, final Cheat cheat, final Member member, RestApi restApi) {
+    public ReportCheatMaterialDialog(final Activity activity, final Cheat cheat, final Member member, RestApi restApi, View view) {
         this.activity = activity;
         this.restApi = restApi;
+        this.view = view;
 
         final String[] reasons = activity.getResources().getStringArray(R.array.report_reasons);
 
@@ -53,23 +55,12 @@ public class ReportCheatMaterialDialog {
             public void onResponse(Call<JsonObject> forum, Response<JsonObject> response) {
                 JsonObject cheatRatingResponse = response.body();
 
-                // TODO FIXME hier den return value handlen...
-                // TODO FIXME hier den return value handlen...
-                // TODO FIXME hier den return value handlen...
-                // TODO FIXME hier den return value handlen...
-                // TODO FIXME hier den return value handlen...
-                // TODO FIXME hier den return value handlen...
-                // TODO FIXME hier den return value handlen...
-                // TODO FIXME hier den return value handlen...
-                // TODO FIXME hier den return value handlen...
-                // TODO FIXME hier den return value handlen...
-                // TODO FIXME hier den return value handlen...
-                // TODO FIXME hier den return value handlen...
-                // TODO FIXME hier den return value handlen...
                 String cheatRatingResponseValue = cheatRatingResponse.get("returnValue").getAsString(); // inserted|updated|invalid_parameters
-
-
-                postReporting(true);
+                if (cheatRatingResponseValue.equalsIgnoreCase("inserted") || (cheatRatingResponseValue.equalsIgnoreCase("updated"))) {
+                    postReporting(true);
+                } else {
+                    postReporting(false);
+                }
             }
 
             @Override
@@ -81,9 +72,9 @@ public class ReportCheatMaterialDialog {
 
     private void postReporting(final boolean isSuccess) {
         if (isSuccess) {
-            Toast.makeText(activity, activity.getString(R.string.thanks_for_reporting), Toast.LENGTH_LONG).show();
+            Tools.showSnackbar(view, activity.getString(R.string.thanks_for_reporting));
         } else {
-            Toast.makeText(activity, activity.getString(R.string.no_internet), Toast.LENGTH_SHORT).show();
+            Tools.showSnackbar(view, activity.getString(R.string.err_occurred));
         }
     }
 }

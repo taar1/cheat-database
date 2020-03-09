@@ -3,13 +3,13 @@ package com.cheatdatabase.dialogs;
 import android.app.Activity;
 import android.view.View;
 import android.widget.RatingBar;
-import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.Theme;
 import com.cheatdatabase.R;
 import com.cheatdatabase.events.CheatRatingFinishedEvent;
+import com.cheatdatabase.helpers.Tools;
 import com.cheatdatabase.model.Cheat;
 import com.cheatdatabase.model.Member;
 import com.cheatdatabase.rest.RestApi;
@@ -31,13 +31,15 @@ public class RateCheatMaterialDialog {
     Cheat cheat;
     Member member;
     RestApi restApi;
+    View view;
     private int newRatingBarValue;
 
-    public RateCheatMaterialDialog(final Activity activity, Cheat cheat, Member member, RestApi restApi) {
+    public RateCheatMaterialDialog(final Activity activity, Cheat cheat, Member member, RestApi restApi, View view) {
         this.activity = activity;
         this.cheat = cheat;
         this.member = member;
         this.restApi = restApi;
+        this.view = view;
 
         final int previousRating = (int) (cheat.getMemberRating() / 2);
         newRatingBarValue = previousRating;
@@ -81,7 +83,7 @@ public class RateCheatMaterialDialog {
                 String cheatRatingResponseValue = cheatRatingResponse.get("successMessage").getAsString(); // inserted|updated
 
                 cheat.setMemberRating(rating);
-                Toast.makeText(activity, R.string.rating_inserted, Toast.LENGTH_SHORT).show();
+                Tools.showSnackbar(view, activity.getString(R.string.rating_inserted));
             }
 
             @Override

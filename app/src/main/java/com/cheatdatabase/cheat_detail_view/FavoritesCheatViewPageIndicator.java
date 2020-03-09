@@ -66,6 +66,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import butterknife.BindView;
 import retrofit2.Retrofit;
 
 /**
@@ -82,6 +83,9 @@ public class FavoritesCheatViewPageIndicator extends AppCompatActivity implement
     private UndoBarController mUndoBarController;
 
     private Intent intent;
+
+    @BindView(R.id.outer_layout)
+    LinearLayout outerLayout;
 
     private View viewLayout;
     private int pageSelected;
@@ -397,7 +401,7 @@ public class FavoritesCheatViewPageIndicator extends AppCompatActivity implement
         if ((member == null) || (member.getMid() == 0)) {
             Toast.makeText(this, R.string.error_login_required, Toast.LENGTH_SHORT).show();
         } else {
-            new ReportCheatMaterialDialog(this, visibleCheat, member, restApi);
+            new ReportCheatMaterialDialog(this, visibleCheat, member, restApi, outerLayout);
         }
     }
 
@@ -405,7 +409,7 @@ public class FavoritesCheatViewPageIndicator extends AppCompatActivity implement
         if ((member == null) || (member.getMid() == 0)) {
             Toast.makeText(this, R.string.error_login_to_rate, Toast.LENGTH_LONG).show();
         } else {
-            new RateCheatMaterialDialog(this, visibleCheat, member, restApi);
+            new RateCheatMaterialDialog(this, visibleCheat, member, restApi, outerLayout);
         }
     }
 
