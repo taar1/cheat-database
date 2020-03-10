@@ -111,17 +111,11 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4caff62e-c62f-40ca-acf0-73c680b13375" name="Default" comment="Login Feature &amp; Password recovery auf Retrofit umstellen">
-      <change beforePath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" afterDir="false" />
+    <list default="true" id="4caff62e-c62f-40ca-acf0-73c680b13375" name="Default" comment="Added in-app messaging library.&#10;Rate cheat implemented and tested with retrofit.&#10;Show snackbar instead toast for reporting and rating cheats.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/app.iml" beforeDir="false" afterPath="$PROJECT_DIR$/app/app.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/CheatForumActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/CheatForumActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/cheat_detail_view/CheatViewPageIndicatorActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/cheat_detail_view/CheatViewPageIndicatorActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/cheat_detail_view/FavoritesCheatViewPageIndicator.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/cheat_detail_view/FavoritesCheatViewPageIndicator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/cheat_detail_view/MemberCheatViewPageIndicator.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/cheat_detail_view/MemberCheatViewPageIndicator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/dialogs/RateCheatMaterialDialog.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/dialogs/RateCheatMaterialDialog.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/dialogs/ReportCheatMaterialDialog.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/dialogs/ReportCheatMaterialDialog.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/dialogs/CheatMetaDialog.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/dialogs/CheatMetaDialog.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/rest/RestApi.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/rest/RestApi.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -588,13 +582,6 @@
       <option name="presentableId" value="Default" />
       <updated>1487274191999</updated>
     </task>
-    <task id="LOCAL-00053" summary="Crashlytics Bug Fixes&#10;Version update to 2.3 (release version)">
-      <created>1564327179875</created>
-      <option name="number" value="00053" />
-      <option name="presentableId" value="LOCAL-00053" />
-      <option name="project" value="LOCAL" />
-      <updated>1564327179876</updated>
-    </task>
     <task id="LOCAL-00054" summary="Crashlytics Bug Fixes&#10;&#10;Version 2.4-preRelease">
       <created>1565359176385</created>
       <option name="number" value="00054" />
@@ -931,7 +918,14 @@
       <option name="project" value="LOCAL" />
       <updated>1583358048828</updated>
     </task>
-    <option name="localTasksCounter" value="102" />
+    <task id="LOCAL-00102" summary="Added in-app messaging library.&#10;Rate cheat implemented and tested with retrofit.&#10;Show snackbar instead toast for reporting and rating cheats.">
+      <created>1583786562965</created>
+      <option name="number" value="00102" />
+      <option name="presentableId" value="LOCAL-00102" />
+      <option name="project" value="LOCAL" />
+      <updated>1583786562966</updated>
+    </task>
+    <option name="localTasksCounter" value="103" />
     <servers />
   </component>
   <component name="UpdateCopyrightCheckinHandler">
@@ -975,7 +969,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
-    <MESSAGE value="Bug Fix" />
     <MESSAGE value="bug fix" />
     <MESSAGE value="REMOVING MANY UNUSED RESOURCES!&#10;Bug Fixes" />
     <MESSAGE value="Version 2.5.7" />
@@ -1000,7 +993,8 @@
     <MESSAGE value="Login Feature auf Retrofit umstellen" />
     <MESSAGE value="Login Feature &amp; Password recovery auf Retrofit umstellen" />
     <MESSAGE value="Password recovery auf Retrofit umstellen. Cheat Reporten auf Retrofit umstellen (noch nicht fertig)" />
-    <option name="LAST_COMMIT_MESSAGE" value="Password recovery auf Retrofit umstellen. Cheat Reporten auf Retrofit umstellen (noch nicht fertig)" />
+    <MESSAGE value="Added in-app messaging library.&#10;Rate cheat implemented and tested with retrofit.&#10;Show snackbar instead toast for reporting and rating cheats." />
+    <option name="LAST_COMMIT_MESSAGE" value="Added in-app messaging library.&#10;Rate cheat implemented and tested with retrofit.&#10;Show snackbar instead toast for reporting and rating cheats." />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />

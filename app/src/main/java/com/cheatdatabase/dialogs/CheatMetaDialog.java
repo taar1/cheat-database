@@ -11,6 +11,7 @@ import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.cheatdatabase.R;
 import com.cheatdatabase.activity.CheatsByMemberListActivity;
@@ -18,6 +19,7 @@ import com.cheatdatabase.helpers.Webservice;
 import com.cheatdatabase.model.Cheat;
 import com.cheatdatabase.model.Member;
 import com.cheatdatabase.rest.RestApi;
+import com.google.gson.JsonObject;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -27,6 +29,9 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import needle.Needle;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import retrofit2.Retrofit;
 
 @SuppressLint("SimpleDateFormat")
@@ -123,21 +128,23 @@ public class CheatMetaDialog extends Dialog implements OnClickListener {
         // TODO meta laden in RETROFIT block verschieben....
         // TODO meta laden in RETROFIT block verschieben....
         // TODO meta laden in RETROFIT block verschieben....
-//        Call<List<Cheat>> call = restApi.getCheatsAndRatings(gameObj.getGameId(), memberId, (isAchievementsEnabled ? 1 : 0));
-//        call.enqueue(new Callback<List<Cheat>>() {
-//            @Override
-//            public void onResponse(Call<List<Cheat>> cheats, Response<List<Cheat>> response) {
-//                cheatList = response.body();
-//
-//
-//            }
-//
-//            @Override
-//            public void onFailure(Call<List<Cheat>> call, Throwable e) {
-//                Log.e(TAG, "getCheatList onFailure: " + e.getLocalizedMessage());
-//                Toast.makeText(context, R.string.err_somethings_wrong, Toast.LENGTH_LONG).show()
-//            }
-//        });
+        Call<JsonObject> call = restApi.getCheatMetaById(cheat.getCheatId());
+        call.enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(Call<JsonObject> forum, Response<JsonObject> response) {
+                JsonObject metaInfo = response.body();
+
+                // {"author":"Internet","cheatId":13450,"created":"2004-05-06 15:38:57","memberId":null,"rating":0,"votes":0}
+                // {"author":"Internet","cheatId":13450,"created":"2004-05-06 15:38:57","memberId":null,"rating":0,"votes":0}
+                // {"author":"Internet","cheatId":13450,"created":"2004-05-06 15:38:57","memberId":null,"rating":0,"votes":0}
+            }
+
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable e) {
+                Log.e(TAG, "getCheatList onFailure: " + e.getLocalizedMessage());
+                Toast.makeText(context, R.string.err_somethings_wrong, Toast.LENGTH_LONG).show()
+            }
+        });
 
 
         Needle.onBackgroundThread().execute(() -> {

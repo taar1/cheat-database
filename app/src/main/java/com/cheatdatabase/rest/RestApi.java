@@ -202,7 +202,7 @@ public interface RestApi {
      */
     @FormUrlEncoded
     @POST("getCheatMetaById.php")
-    Call<Cheat> getCheatMetaById(@Field("cheatId") int cheatId);
+    Call<JsonObject> getCheatMetaById(@Field("cheatId") int cheatId);
 
     /**
      * Gets all cheat from a game.
