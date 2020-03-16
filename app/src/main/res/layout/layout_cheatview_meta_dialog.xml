@@ -1,266 +1,291 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:background="@color/navy_blue_medium_dark"
-    android:layout_height="wrap_content"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:minWidth="200dp"
-    android:orientation="vertical">
+    android:layout_height="match_parent"
+    android:background="@color/navy_blue_medium_dark"
+    android:paddingTop="16dp"
+    android:paddingBottom="16dp">
 
     <TextView
-        android:id="@+id/title_cheat_details"
-        android:background="@color/color_primary_light"
-        android:gravity="center"
+        android:id="@+id/submission_date_title"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:text="@string/meta_submission_date"
+        android:textAppearance="@style/NormalTextBold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <TextView
+        android:id="@+id/submission_date_text"
         android:layout_width="match_parent"
-        android:padding="5dp"
-        android:text="@string/title_cheat_details"
-        android:textAppearance="@style/CheatTitle" />
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:text="@string/meta_unknown"
+        android:textAppearance="@style/NormalTextLight"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/submission_date_title" />
 
-    <ScrollView
-        android:id="@+id/scroll_view"
-        android:layout_height="0dp"
-        android:layout_weight="100"
+    <View
+        android:id="@+id/divider_1"
         android:layout_width="match_parent"
-        android:minHeight="100dp"
-        android:padding="5dp">
+        android:layout_height="1dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:background="@color/gray"
+        app:layout_constraintBottom_toTopOf="@+id/lifetime_views_title"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/submission_date_text" />
 
-        <LinearLayout
-            android:id="@+id/linearLayout2"
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent"
-            android:orientation="vertical">
+    <TextView
+        android:id="@+id/lifetime_views_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:text="@string/meta_views_lifetime"
+        android:textAppearance="@style/NormalTextBold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/divider_1" />
 
-            <LinearLayout
-                android:id="@+id/submission_date_layout"
-                android:layout_height="wrap_content"
-                android:layout_width="match_parent"
-                android:orientation="vertical"
-                android:paddingBottom="4dp"
-                android:paddingLeft="8dp"
-                android:paddingTop="4dp">
+    <TextView
+        android:id="@+id/lifetime_views_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:text="@string/meta_unknown"
+        android:textAppearance="@style/NormalTextLight"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lifetime_views_title" />
 
-                <TextView
-                    android:id="@+id/submission_date_title"
-                    android:layout_height="wrap_content"
-                    android:layout_width="match_parent"
-                    android:text="@string/meta_submission_date"
-                    android:textAppearance="@style/NormalTextBold" />
 
-                <TextView
-                    android:id="@+id/submission_date_text"
-                    android:layout_height="wrap_content"
-                    android:layout_width="match_parent"
-                    android:text="@string/meta_unknown"
-                    android:textAppearance="@style/NormalTextLight" />
-            </LinearLayout>
+    <View
+        android:id="@+id/divider_2"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:background="@color/gray"
+        app:layout_constraintBottom_toTopOf="@+id/views_today_title"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lifetime_views_text" />
 
-            <LinearLayout
-                android:id="@+id/llBuffer1"
-                android:background="@color/gray"
-                android:layout_height="1dp"
-                android:layout_width="match_parent"
-                android:orientation="vertical" />
 
-            <LinearLayout
-                android:id="@+id/llViewsLifetime"
-                android:layout_height="wrap_content"
-                android:layout_width="match_parent"
-                android:orientation="vertical"
-                android:paddingBottom="4dp"
-                android:paddingLeft="8dp"
-                android:paddingTop="4dp">
+    <TextView
+        android:id="@+id/views_today_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:text="@string/meta_views_today"
+        android:textAppearance="@style/NormalTextBold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/divider_2" />
 
-                <TextView
-                    android:id="@+id/lifetime_views_title"
-                    android:layout_height="wrap_content"
-                    android:layout_width="match_parent"
-                    android:text="@string/meta_views_lifetime"
-                    android:textAppearance="@style/NormalTextBold" />
+    <TextView
+        android:id="@+id/views_today_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:text="@string/meta_unknown"
+        android:textAppearance="@style/NormalTextLight"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/views_today_title" />
 
-                <TextView
-                    android:id="@+id/lifetime_views_text"
-                    android:layout_height="wrap_content"
-                    android:layout_width="match_parent"
-                    android:text="@string/meta_unknown"
-                    android:textAppearance="@style/NormalTextLight" />
-            </LinearLayout>
 
-            <LinearLayout
-                android:id="@+id/llBuffer2"
-                android:background="@color/gray"
-                android:layout_height="1dp"
-                android:layout_width="match_parent"
-                android:orientation="vertical" />
+    <View
+        android:id="@+id/divider_3"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:background="@color/gray"
+        app:layout_constraintBottom_toTopOf="@+id/average_rating_title"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/views_today_text" />
 
-            <LinearLayout
-                android:id="@+id/llViewsToday"
-                android:layout_height="wrap_content"
-                android:layout_width="match_parent"
-                android:orientation="vertical"
-                android:paddingBottom="4dp"
-                android:paddingLeft="8dp"
-                android:paddingTop="4dp">
 
-                <TextView
-                    android:id="@+id/views_today_title"
-                    android:layout_height="wrap_content"
-                    android:layout_width="match_parent"
-                    android:text="@string/meta_views_today"
-                    android:textAppearance="@style/NormalTextBold" />
+    <TextView
+        android:id="@+id/average_rating_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:text="@string/meta_rating_average"
+        android:textAppearance="@style/NormalTextBold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/divider_3" />
 
-                <TextView
-                    android:id="@+id/views_today_text"
-                    android:layout_height="wrap_content"
-                    android:layout_width="match_parent"
-                    android:text="@string/meta_unknown"
-                    android:textAppearance="@style/NormalTextLight" />
-            </LinearLayout>
+    <TextView
+        android:id="@+id/average_rating_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:text="@string/meta_unknown"
+        android:textAppearance="@style/NormalTextLight"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/average_rating_title" />
 
-            <LinearLayout
-                android:id="@+id/llBuffer3"
-                android:background="@color/gray"
-                android:layout_height="1dp"
-                android:layout_width="match_parent"
-                android:orientation="vertical" />
+    <View
+        android:id="@+id/divider_4"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:background="@color/gray"
+        app:layout_constraintBottom_toTopOf="@+id/submitted_by_title"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/average_rating_text" />
 
-            <LinearLayout
-                android:id="@+id/llRating"
-                android:layout_height="wrap_content"
-                android:layout_width="match_parent"
-                android:orientation="vertical"
-                android:paddingBottom="4dp"
-                android:paddingLeft="8dp"
-                android:paddingTop="4dp">
 
-                <TextView
-                    android:id="@+id/tvAverageRatingTitle"
-                    android:layout_height="wrap_content"
-                    android:layout_width="match_parent"
-                    android:text="@string/meta_rating_average"
-                    android:textAppearance="@style/NormalTextBold" />
+    <TextView
+        android:id="@+id/submitted_by_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:text="@string/meta_submitted_by"
+        android:textAppearance="@style/NormalTextBold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/divider_4" />
 
-                <TextView
-                    android:id="@+id/tvAverageRatingText"
-                    android:layout_height="wrap_content"
-                    android:layout_width="match_parent"
-                    android:text="@string/meta_unknown"
-                    android:textAppearance="@style/NormalTextLight" />
-            </LinearLayout>
+    <TextView
+        android:id="@+id/submitted_by_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:text="@string/meta_unknown"
+        android:textAppearance="@style/NormalTextLight"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/submitted_by_title" />
 
-            <LinearLayout
-                android:id="@+id/llBuffer4"
-                android:background="@color/gray"
-                android:layout_height="1dp"
-                android:layout_width="match_parent"
-                android:orientation="vertical" />
+    <View
+        android:id="@+id/divider_5"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:background="@color/gray"
+        app:layout_constraintBottom_toTopOf="@+id/total_cheats_by_member_title"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/submitted_by_text" />
 
-            <LinearLayout
-                android:id="@+id/llSubmittedBy"
-                android:layout_height="wrap_content"
-                android:layout_width="match_parent"
-                android:orientation="vertical"
-                android:paddingBottom="4dp"
-                android:paddingLeft="8dp"
-                android:paddingTop="4dp">
 
-                <TextView
-                    android:id="@+id/tvSubmittedByTitle"
-                    android:layout_height="wrap_content"
-                    android:layout_width="match_parent"
-                    android:text="@string/meta_submitted_by"
-                    android:textAppearance="@style/NormalTextBold" />
+    <TextView
+        android:id="@+id/total_cheats_by_member_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:text="@string/meta_submission_total"
+        android:textAppearance="@style/NormalTextBold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/divider_5" />
 
-                <TextView
-                    android:id="@+id/tvSubmittedByText"
-                    android:layout_height="wrap_content"
-                    android:layout_width="match_parent"
-                    android:text="@string/meta_unknown"
-                    android:textAppearance="@style/NormalTextLight" />
-            </LinearLayout>
 
-            <LinearLayout
-                android:id="@+id/llBuffer5"
-                android:background="@color/gray"
-                android:layout_height="1dp"
-                android:layout_width="match_parent"
-                android:orientation="vertical" />
+    <TextView
+        android:id="@+id/total_cheats_by_member_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:gravity="top|start"
+        android:text="@string/meta_unknown"
+        android:textAppearance="@style/NormalTextLight"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/total_cheats_by_member_title" />
 
-            <LinearLayout
-                android:id="@+id/llCountSubmissions"
-                android:layout_height="wrap_content"
-                android:layout_width="match_parent"
-                android:orientation="vertical"
-                android:paddingBottom="4dp"
-                android:paddingLeft="8dp"
-                android:paddingTop="4dp">
+    <TextView
+        android:id="@+id/show_all_cheats_by_member"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:gravity="top|end"
+        android:text="@string/meta_show_all_cheats"
+        android:textAppearance="@style/NormalTextBold"
+        android:textColorHighlight="#FF0000"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/total_cheats_by_member_text" />
 
-                <TextView
-                    android:id="@+id/tvTotalSubmissionsMemberTitle"
-                    android:layout_height="wrap_content"
-                    android:layout_width="match_parent"
-                    android:text="@string/meta_submission_total"
-                    android:textAppearance="@style/NormalTextBold" />
-            </LinearLayout>
 
-            <LinearLayout
-                android:id="@+id/llCountSubmissions2"
-                android:layout_height="wrap_content"
-                android:layout_width="match_parent"
-                android:orientation="horizontal"
-                android:paddingBottom="4dp"
-                android:paddingLeft="8dp">
+    <View
+        android:id="@+id/divider_6"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:background="@color/gray"
+        app:layout_constraintBottom_toTopOf="@+id/website_title"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/show_all_cheats_by_member" />
 
-                <TextView
-                    android:id="@+id/tvTotalSubmissionsMemberText"
-                    android:gravity="top|left"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_width="wrap_content"
-                    android:text="@string/meta_unknown"
-                    android:textAppearance="@style/NormalTextLight" />
 
-                <TextView
-                    android:id="@+id/tvTotalSubmissionsShow"
-                    android:gravity="top|right"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_width="wrap_content"
-                    android:paddingRight="10dp"
-                    android:text="@string/meta_show_all_cheats"
-                    android:textAppearance="@style/NormalTextBold"
-                    android:textColorHighlight="#FF0000" />
-            </LinearLayout>
+    <TextView
+        android:id="@+id/website_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:text="@string/meta_member_homepage"
+        android:textAppearance="@style/NormalTextBold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/divider_6" />
 
-            <LinearLayout
-                android:id="@+id/llBuffer6"
-                android:background="@color/gray"
-                android:layout_height="1dp"
-                android:layout_width="match_parent"
-                android:orientation="vertical" />
+    <TextView
+        android:id="@+id/website_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:text="@string/meta_unknown"
+        android:textAppearance="@style/NormalTextLight"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/website_title" />
 
-            <LinearLayout
-                android:id="@+id/llMemberHomepage"
-                android:layout_height="wrap_content"
-                android:layout_width="match_parent"
-                android:orientation="vertical"
-                android:paddingBottom="4dp"
-                android:paddingLeft="8dp"
-                android:paddingTop="4dp">
 
-                <TextView
-                    android:id="@+id/tvMemberHomepageTitle"
-                    android:layout_height="wrap_content"
-                    android:layout_width="match_parent"
-                    android:text="@string/meta_member_homepage"
-                    android:textAppearance="@style/NormalTextBold" />
-
-                <TextView
-                    android:id="@+id/tvMemberHomepageText"
-                    android:layout_height="wrap_content"
-                    android:layout_width="match_parent"
-                    android:text="@string/meta_unknown"
-                    android:textAppearance="@style/NormalTextLight" />
-            </LinearLayout>
-        </LinearLayout>
-    </ScrollView>
-
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

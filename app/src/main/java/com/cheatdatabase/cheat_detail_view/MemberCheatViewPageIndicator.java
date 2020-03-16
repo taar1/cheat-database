@@ -359,7 +359,7 @@ public class MemberCheatViewPageIndicator extends AppCompatActivity {
                 showReportDialog();
                 return true;
             case R.id.action_metainfo:
-                CheatMetaDialog cmDialog = new CheatMetaDialog(MemberCheatViewPageIndicator.this, visibleCheat);
+                CheatMetaDialog cmDialog = new CheatMetaDialog(MemberCheatViewPageIndicator.this, visibleCheat, restApi, outerLayout);
                 cmDialog.show();
                 return true;
             case R.id.action_login:

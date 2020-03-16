@@ -398,7 +398,7 @@ public class CheatForumActivity extends AppCompatActivity {
                 Helper.shareCheat(cheatObj, this);
                 return true;
             case R.id.action_metainfo:
-                CheatMetaDialog cmDialog = new CheatMetaDialog(this, cheatObj);
+                CheatMetaDialog cmDialog = new CheatMetaDialog(this, cheatObj, restApi, outerLayout);
                 cmDialog.show();
                 return true;
             case R.id.action_report:

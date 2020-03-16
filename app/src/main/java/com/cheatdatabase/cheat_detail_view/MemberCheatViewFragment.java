@@ -32,13 +32,12 @@ import androidx.fragment.app.Fragment;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.Theme;
 import com.cheatdatabase.R;
-import com.cheatdatabase.model.Cheat;
-import com.cheatdatabase.model.Member;
-import com.cheatdatabase.model.Screenshot;
-import com.cheatdatabase.dialogs.CheatMetaDialog;
 import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Tools;
 import com.cheatdatabase.helpers.Webservice;
+import com.cheatdatabase.model.Cheat;
+import com.cheatdatabase.model.Member;
+import com.cheatdatabase.model.Screenshot;
 import com.google.gson.Gson;
 
 import java.io.BufferedInputStream;
@@ -514,29 +513,5 @@ public class MemberCheatViewFragment extends Fragment {
             return imageViews.get(position);
         }
 
-        /**
-         * Returns the size (0.0f to 1.0f) of the views depending on the
-         * 'offset' to the center.
-         */
-        public float getScale(boolean focused, int offset) {
-            /* Formula: 1 / (2 ^ offset) */
-            return Math.max(0, 1.0f / (float) Math.pow(2, Math.abs(offset)));
-        }
-
     }
-
-    public void highlightRatingIcon(boolean highlight) {
-        // rating icon highlighten...
-        // if (highlight) {
-        // btnRateCheat.setImageResource(R.drawable.ic_action_star);
-        // } else {
-        // btnRateCheat.setImageResource(R.drawable.ic_action_not_important);
-        // }
-    }
-
-    public void showMetaInfo(Context context) {
-        CheatMetaDialog cmDialog = new CheatMetaDialog(cheatViewPageIndicator, cheatObj);
-        cmDialog.show();
-    }
-
 }
