@@ -52,6 +52,7 @@ public class CheatMetaDialog extends Dialog implements OnClickListener {
     private TextView submittedByTitle;
     private TextView viewsTodayTitle;
     private TextView totalCheatsByMemberTitle;
+    private View divider3;
     private View divider4;
     private View divider5;
     private View divider6;
@@ -155,6 +156,9 @@ public class CheatMetaDialog extends Dialog implements OnClickListener {
             // 3: VIEWS TODAY
             viewsTodayText.setText(String.valueOf(cheat.getViewsToday()));
 
+            boolean isLowerPartIncomplete = false;
+            boolean isLowerPartPartiallyIncomplete = false;
+
             // 4: AVERAGE CHEAT RATING
             if (cheat.getVotes() > 0) {
                 divider4.setVisibility(View.VISIBLE);
@@ -168,7 +172,11 @@ public class CheatMetaDialog extends Dialog implements OnClickListener {
                 divider4.setVisibility(View.GONE);
                 averageRatingTitle.setVisibility(View.GONE);
                 averageRatingText.setVisibility(View.GONE);
+
+                isLowerPartIncomplete = false;
+                isLowerPartPartiallyIncomplete = true;
             }
+
 
             // 5: SUBMITTED BY
             if (member.getUsername() != null) {
@@ -182,6 +190,9 @@ public class CheatMetaDialog extends Dialog implements OnClickListener {
                 divider5.setVisibility(View.GONE);
                 submittedByTitle.setVisibility(View.GONE);
                 submittedByText.setVisibility(View.GONE);
+
+                isLowerPartIncomplete = true;
+                isLowerPartPartiallyIncomplete = true;
             }
 
             // 6: AMOUNT OF CHEATS BY MEMBER
@@ -200,13 +211,22 @@ public class CheatMetaDialog extends Dialog implements OnClickListener {
                 totalCheatsByMemberTitle.setVisibility(View.GONE);
                 totalCheatsByMemberText.setVisibility(View.GONE);
                 showAllCheatsByMember.setVisibility(View.GONE);
+
+                isLowerPartIncomplete = true;
+                isLowerPartPartiallyIncomplete = true;
             }
 
-            // TODO remove divider4 when 5, 6 & 7 is not available....
-            // TODO remove divider4 when 5, 6 & 7 is not available....
-            // TODO remove divider4 when 5, 6 & 7 is not available....
-            // TODO remove divider4 when 5, 6 & 7 is not available....
-            // TODO remove divider4 when 5, 6 & 7 is not available....
+            // TODO mit den divider 3 und 4 ausblenden noch genauer anschauen. geht noch nicht richtig...
+            // TODO mit den divider 3 und 4 ausblenden noch genauer anschauen. geht noch nicht richtig...
+            // TODO mit den divider 3 und 4 ausblenden noch genauer anschauen. geht noch nicht richtig...
+            // TODO mit den divider 3 und 4 ausblenden noch genauer anschauen. geht noch nicht richtig...
+            // TODO mit den divider 3 und 4 ausblenden noch genauer anschauen. geht noch nicht richtig...
+            // TODO mit den divider 3 und 4 ausblenden noch genauer anschauen. geht noch nicht richtig...
+            // TODO mit den divider 3 und 4 ausblenden noch genauer anschauen. geht noch nicht richtig...
+            // TODO mit den divider 3 und 4 ausblenden noch genauer anschauen. geht noch nicht richtig...
+            // TODO mit den divider 3 und 4 ausblenden noch genauer anschauen. geht noch nicht richtig...
+            // TODO mit den divider 3 und 4 ausblenden noch genauer anschauen. geht noch nicht richtig...
+            // TODO mit den divider 3 und 4 ausblenden noch genauer anschauen. geht noch nicht richtig...
 
             // 7: WEBSITE
             if ((member.getWebsite() != null) && (member.getWebsite().length() > 3) && (member.getUsername() != null)) {
@@ -219,6 +239,17 @@ public class CheatMetaDialog extends Dialog implements OnClickListener {
             } else {
                 websiteTitle.setVisibility(View.GONE);
                 websiteText.setVisibility(View.GONE);
+
+                isLowerPartIncomplete = true;
+                isLowerPartPartiallyIncomplete = true;
+            }
+
+            if (isLowerPartIncomplete) {
+                divider3.setVisibility(View.VISIBLE);
+                divider4.setVisibility(View.GONE);
+            } else if (isLowerPartPartiallyIncomplete) {
+                divider3.setVisibility(View.GONE);
+                divider4.setVisibility(View.VISIBLE);
             }
         } catch (Exception e) {
             Log.e(TAG, "updateUI Error: " + e.getLocalizedMessage());
@@ -254,6 +285,7 @@ public class CheatMetaDialog extends Dialog implements OnClickListener {
         showAllCheatsByMember = dialogView.findViewById(R.id.show_all_cheats_by_member);
         websiteTitle = dialogView.findViewById(R.id.website_title);
         websiteText = dialogView.findViewById(R.id.website_text);
+        divider3 = dialogView.findViewById(R.id.divider_3);
         divider4 = dialogView.findViewById(R.id.divider_4);
         divider5 = dialogView.findViewById(R.id.divider_5);
         divider6 = dialogView.findViewById(R.id.divider_6);

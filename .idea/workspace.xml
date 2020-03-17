@@ -110,13 +110,8 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4caff62e-c62f-40ca-acf0-73c680b13375" name="Default" comment="get cheat meta function switch to retrofit">
+    <list default="true" id="4caff62e-c62f-40ca-acf0-73c680b13375" name="Default" comment="Fixing the cheat meda material dialog">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/CheatForumActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/CheatForumActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/cheat_detail_view/CheatViewPageIndicatorActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/cheat_detail_view/CheatViewPageIndicatorActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/cheat_detail_view/FavoritesCheatViewPageIndicator.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/cheat_detail_view/FavoritesCheatViewPageIndicator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/cheat_detail_view/MemberCheatViewFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/cheat_detail_view/MemberCheatViewFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/cheat_detail_view/MemberCheatViewPageIndicator.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/cheat_detail_view/MemberCheatViewPageIndicator.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/dialogs/CheatMetaDialog.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/dialogs/CheatMetaDialog.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/layout_cheatview_meta_dialog.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/layout_cheatview_meta_dialog.xml" afterDir="false" />
     </list>
@@ -585,13 +580,6 @@
       <option name="presentableId" value="Default" />
       <updated>1487274191999</updated>
     </task>
-    <task id="LOCAL-00055" summary="Crashlytics Bug Fixes&#10;&#10;Version 2.4-preRelease">
-      <created>1565360097658</created>
-      <option name="number" value="00055" />
-      <option name="presentableId" value="LOCAL-00055" />
-      <option name="project" value="LOCAL" />
-      <updated>1565360097658</updated>
-    </task>
     <task id="LOCAL-00056" summary="RELEASE VERSION 2.4">
       <created>1565360444205</created>
       <option name="number" value="00056" />
@@ -928,7 +916,14 @@
       <option name="project" value="LOCAL" />
       <updated>1583875182645</updated>
     </task>
-    <option name="localTasksCounter" value="104" />
+    <task id="LOCAL-00104" summary="Fixing the cheat meda material dialog">
+      <created>1584389885642</created>
+      <option name="number" value="00104" />
+      <option name="presentableId" value="LOCAL-00104" />
+      <option name="project" value="LOCAL" />
+      <updated>1584389885643</updated>
+    </task>
+    <option name="localTasksCounter" value="105" />
     <servers />
   </component>
   <component name="UpdateCopyrightCheckinHandler">
@@ -972,7 +967,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
-    <MESSAGE value="REMOVING MANY UNUSED RESOURCES!&#10;Bug Fixes" />
     <MESSAGE value="Version 2.5.7" />
     <MESSAGE value="Fixing Login/Register/Recover layouts" />
     <MESSAGE value="Fixing Login/Register/Recover/Contact forms" />
@@ -997,7 +991,8 @@
     <MESSAGE value="Password recovery auf Retrofit umstellen. Cheat Reporten auf Retrofit umstellen (noch nicht fertig)" />
     <MESSAGE value="Added in-app messaging library.&#10;Rate cheat implemented and tested with retrofit.&#10;Show snackbar instead toast for reporting and rating cheats." />
     <MESSAGE value="get cheat meta function switch to retrofit" />
-    <option name="LAST_COMMIT_MESSAGE" value="get cheat meta function switch to retrofit" />
+    <MESSAGE value="Fixing the cheat meda material dialog" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixing the cheat meda material dialog" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
