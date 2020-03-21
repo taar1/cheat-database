@@ -17,20 +17,28 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.Theme;
+import com.cheatdatabase.CheatDatabaseApplication;
 import com.cheatdatabase.R;
 import com.cheatdatabase.dialogs.PlainInformationDialog;
 import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.helpers.Tools;
-import com.cheatdatabase.helpers.Webservice;
 import com.cheatdatabase.model.Game;
 import com.cheatdatabase.model.Member;
+import com.cheatdatabase.rest.RestApi;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
 
 /**
  * Form to submit a cheat for a game.
@@ -58,11 +66,21 @@ public class SubmitCheatActivity extends AppCompatActivity {
 
     private SharedPreferences settings;
 
+    @Inject
+    Retrofit retrofit;
+
+    private RestApi apiService;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_submit_cheat_layout);
         ButterKnife.bind(this);
+
+        // Dagger start
+        ((CheatDatabaseApplication) getApplication()).getNetworkComponent().inject(this);
+        apiService = retrofit.create(RestApi.class);
+        // Dagger end
 
         gameObj = getIntent().getParcelableExtra("gameObj");
         if (gameObj == null) {
@@ -143,30 +161,10 @@ public class SubmitCheatActivity extends AppCompatActivity {
             } else if (!checkBoxTerms.isChecked()) {
                 showAlertDialog(R.string.err, R.string.submit_cheat_error_accept_conditions);
             } else {
-
                 if (Reachability.reachability.isReachable) {
-
-                    new Thread(() -> {
-                        if (Webservice.hasMemberPermissions(member)) {
-
-                            Webservice.insertCheat(member.getMid(), gameObj.getGameId(), cheatTitle.getText().toString().trim(), cheatText.getText().toString().trim());
-                            runOnUiThread(() -> {
-                                try {
-                                    cheatTitle.setText("");
-                                    cheatText.setText("");
-
-                                    showAlertDialog(R.string.thanks, R.string.cheat_submit_ok);
-                                } catch (Exception e) {
-                                    showAlertDialog(R.string.err, R.string.cheat_submit_nok);
-                                }
-                            });
-
-                        } else {
-                            showAlertDialog(R.string.err, R.string.member_banned);
-                        }
-                    }).start();
+                    checkMemberPermissions();
                 } else {
-                    Toast.makeText(SubmitCheatActivity.this, R.string.no_internet, Toast.LENGTH_SHORT).show();
+                    Tools.showSnackbar(outerLayout, getString(R.string.no_internet));
                 }
             }
         } else {
@@ -174,6 +172,77 @@ public class SubmitCheatActivity extends AppCompatActivity {
         }
     }
 
+    private void checkMemberPermissions() {
+        Log.d(TAG, "checkMemberPermissions: 1");
+        Call<JsonObject> call = apiService.getMemberPermissions(member.getMid());
+        call.enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(Call<JsonObject> games, Response<JsonObject> response) {
+                Log.d(TAG, "checkMemberPermissions: 2");
+                if (response.isSuccessful()) {
+                    JsonObject permissions = response.body();
+
+                    boolean banned = permissions.get("banned").getAsBoolean();
+                    String username = permissions.get("username").getAsString(); // Ignore for now
+                    int memberId = permissions.get("memberId").getAsInt(); // Ignore for now
+                    boolean enabled = permissions.get("enabled").getAsBoolean(); // Ignore for now
+
+                    if (!banned) {
+                        submitCheatNow();
+                    } else {
+                        showAlertDialog(R.string.err, R.string.member_banned);
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+                Log.d(TAG, "checkMemberPermissions: 3");
+                Log.e(TAG, "Get user permissions failed: " + t.getLocalizedMessage());
+                Tools.showSnackbar(outerLayout, getString(R.string.no_internet));
+            }
+        });
+    }
+
+    private void submitCheatNow() {
+        Log.d(TAG, "submitCheatNow: 1");
+        Call<JsonObject> call = apiService.insertCheat(member.getMid(), gameObj.getGameId(), cheatTitle.getText().toString().trim(), cheatText.getText().toString().trim());
+        call.enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(Call<JsonObject> games, Response<JsonObject> response) {
+                Log.d(TAG, "submitCheatNow: 2");
+                if (response.isSuccessful()) {
+                    JsonObject submissionResponse = response.body();
+
+
+                    // TODO FIXME hier noch den error handlen (geht in "onFailure" rein)
+                    // TODO FIXME hier noch den error handlen (geht in "onFailure" rein)
+                    // TODO FIXME hier noch den error handlen (geht in "onFailure" rein)
+                    // TODO FIXME hier noch den error handlen (geht in "onFailure" rein)
+                    // TODO FIXME hier noch den error handlen (geht in "onFailure" rein)
+
+                    String returnMessage = submissionResponse.get("returnMessage").getAsString();
+                    if (returnMessage.equalsIgnoreCase("insert_ok")) {
+                        cheatTitle.setText("");
+                        cheatText.setText("");
+
+                        showAlertDialog(R.string.thanks, R.string.cheat_submit_ok);
+                    } else if (returnMessage.equalsIgnoreCase("missing_values")) {
+                        showAlertDialog(R.string.err, R.string.cheat_submit_nok);
+                    } else if (returnMessage.equalsIgnoreCase("invalid_member_id")) {
+                        showAlertDialog(R.string.err, R.string.cheat_submit_nok);
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+                Log.d(TAG, "submitCheatNow: 3");
+                Log.e(TAG, "Submitting the cheat has failed: " + t.getLocalizedMessage());
+                Tools.showSnackbar(outerLayout, getString(R.string.no_internet));
+            }
+        });
+    }
 
     private void showAlertDialog(int title, int text) {
         new MaterialDialog.Builder(SubmitCheatActivity.this)

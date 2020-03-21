@@ -105,12 +105,11 @@ public interface RestApi {
      * @param gameId     Game ID
      * @param cheatTitle Cheat Title
      * @param cheatText  Cheat Text
-     * @return 1 = Member eligible for PocketChange, 0 = Member NOT eligible for PocketChange
+     * @return returnMessage insert_ok|missing_values|invalid_member_id
      */
     @FormUrlEncoded
     @POST("insertCheat.php")
-    Call<Integer> insertCheat(@Field("memberId") int memberId, @Field("gameId") int gameId, @Field("cheatTitle") String cheatTitle, @Field("cheatText") String cheatText);
-
+    Call<JsonObject> insertCheat(@Field("memberId") int memberId, @Field("gameId") int gameId, @Field("cheatTitle") String cheatTitle, @Field("cheatText") String cheatText);
 
     /**
      * Insert a forum post.
@@ -265,12 +264,12 @@ public interface RestApi {
     /**
      * Checks Member-Permissions.
      *
-     * @param username Username
+     * @param memberId memberId
      * @return boolean
      */
     @FormUrlEncoded
     @POST("checkMember.php")
-    Call<Boolean> hasMemberPermissions(@Field("username") String username);
+    Call<JsonObject> getMemberPermissions(@Field("memberId") int memberId);
 
     /**
      * Reports a cheat as invalid.

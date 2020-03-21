@@ -270,39 +270,6 @@ public class GamesBySystemListActivity extends AppCompatActivity implements OnGa
                     error();
                 }
             });
-
-//            Webservice.getGameListBySystemId(systemObj.getSystemId(), systemObj.getSystemName(), isAchievementsEnabled, new RepositoryEntityListCallback<Game>() {
-//                @Override
-//                public void onSuccess(List<Game> gameEntityList) {
-//                    TreeMap<String, List<Game>> updatedGameListForCache = new TreeMap<>();
-//                    updatedGameListForCache.put(achievementsEnabled, gameList);
-//
-//                    String checkWhichSubKey;
-//                    if (achievementsEnabled.equalsIgnoreCase(Konstanten.ACHIEVEMENTS)) {
-//                        checkWhichSubKey = Konstanten.NO_ACHIEVEMENTS;
-//                    } else {
-//                        checkWhichSubKey = Konstanten.ACHIEVEMENTS;
-//                    }
-//
-//                    if ((finalGameListTree != null) && (finalGameListTree.containsKey(checkWhichSubKey))) {
-//                        List<Game> existingGamesInCache = (List<Game>) finalGameListTree.get(checkWhichSubKey);
-//                        updatedGameListForCache.put(checkWhichSubKey, existingGamesInCache);
-//                    }
-//
-//                    gamesBySystemInCache.put(String.valueOf(systemObj.getSystemId()), updatedGameListForCache);
-//                    CheatDatabaseApplication.setGamesBySystemCached(gamesBySystemInCache);
-//
-//                    gameList = gameEntityList;
-//
-//                    updateUI();
-//                }
-//
-//                @Override
-//                public void onFailure(Exception e) {
-//                    error();
-//                }
-//            });
-
         } else {
             updateUI();
         }

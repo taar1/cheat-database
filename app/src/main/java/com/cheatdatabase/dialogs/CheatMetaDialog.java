@@ -55,7 +55,6 @@ public class CheatMetaDialog extends Dialog implements OnClickListener {
     private TextView submittedByTitle;
     private TextView viewsTodayTitle;
     private TextView totalCheatsByMemberTitle;
-    private View divider2;
     private View divider3;
     private View divider4;
     private View divider5;
@@ -263,7 +262,6 @@ public class CheatMetaDialog extends Dialog implements OnClickListener {
         showAllCheatsByMember = dialogView.findViewById(R.id.show_all_cheats_by_member);
         websiteTitle = dialogView.findViewById(R.id.website_title);
         websiteText = dialogView.findViewById(R.id.website_text);
-        divider2 = dialogView.findViewById(R.id.divider_2);
         divider3 = dialogView.findViewById(R.id.divider_3);
         divider4 = dialogView.findViewById(R.id.divider_4);
         divider5 = dialogView.findViewById(R.id.divider_5);
