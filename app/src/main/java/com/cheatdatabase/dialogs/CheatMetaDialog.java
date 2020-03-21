@@ -10,6 +10,8 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.TextView;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
+
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.Theme;
 import com.cheatdatabase.R;
@@ -37,6 +39,7 @@ public class CheatMetaDialog extends Dialog implements OnClickListener {
     private RestApi restApi;
     private View view;
 
+    private ConstraintLayout outerLayout;
     private TextView averageRatingTitle;
     private TextView averageRatingText;
     private TextView lifetimeViewsText;
@@ -52,6 +55,7 @@ public class CheatMetaDialog extends Dialog implements OnClickListener {
     private TextView submittedByTitle;
     private TextView viewsTodayTitle;
     private TextView totalCheatsByMemberTitle;
+    private View divider2;
     private View divider3;
     private View divider4;
     private View divider5;
@@ -156,77 +160,57 @@ public class CheatMetaDialog extends Dialog implements OnClickListener {
             // 3: VIEWS TODAY
             viewsTodayText.setText(String.valueOf(cheat.getViewsToday()));
 
-            boolean isLowerPartIncomplete = false;
-            boolean isLowerPartPartiallyIncomplete = false;
+            divider3.setVisibility(View.GONE);
+            divider4.setVisibility(View.GONE);
+            divider5.setVisibility(View.GONE);
+            divider6.setVisibility(View.GONE);
 
             // 4: AVERAGE CHEAT RATING
             if (cheat.getVotes() > 0) {
-                divider4.setVisibility(View.VISIBLE);
                 averageRatingTitle.setVisibility(View.VISIBLE);
                 averageRatingText.setVisibility(View.VISIBLE);
 
                 String averageRatingText = context.getString(R.string.meta_average_rating1, Math.round(cheat.getRatingAverage()));
                 averageRatingText += " " + context.getString(R.string.meta_average_rating2, String.valueOf(cheat.getVotes()));
                 this.averageRatingText.setText(averageRatingText);
+
+                divider3.setVisibility(View.VISIBLE);
             } else {
-                divider4.setVisibility(View.GONE);
                 averageRatingTitle.setVisibility(View.GONE);
                 averageRatingText.setVisibility(View.GONE);
-
-                isLowerPartIncomplete = false;
-                isLowerPartPartiallyIncomplete = true;
             }
 
 
             // 5: SUBMITTED BY
             if (member.getUsername() != null) {
-                divider5.setVisibility(View.VISIBLE);
                 submittedByTitle.setVisibility(View.VISIBLE);
                 submittedByText.setVisibility(View.VISIBLE);
 
                 submittedByText.setText(member.getUsername());
                 submittedByText.setOnClickListener(CheatMetaDialog.this);
+
+                divider4.setVisibility(View.VISIBLE);
             } else {
-                divider5.setVisibility(View.GONE);
                 submittedByTitle.setVisibility(View.GONE);
                 submittedByText.setVisibility(View.GONE);
-
-                isLowerPartIncomplete = true;
-                isLowerPartPartiallyIncomplete = true;
             }
 
             // 6: AMOUNT OF CHEATS BY MEMBER
             if ((member != null) && (member.getCheatSubmissionCount() > 0)) {
-                divider6.setVisibility(View.VISIBLE);
                 totalCheatsByMemberTitle.setVisibility(View.VISIBLE);
                 totalCheatsByMemberText.setVisibility(View.VISIBLE);
                 showAllCheatsByMember.setVisibility(View.VISIBLE);
 
                 totalCheatsByMemberText.setText(String.valueOf(member.getCheatSubmissionCount()));
                 showAllCheatsByMember.setText("[" + context.getString(R.string.meta_show_all_cheats) + "]");
-
                 showAllCheatsByMember.setOnClickListener(CheatMetaDialog.this);
+
+                divider5.setVisibility(View.VISIBLE);
             } else {
-                divider6.setVisibility(View.GONE);
                 totalCheatsByMemberTitle.setVisibility(View.GONE);
                 totalCheatsByMemberText.setVisibility(View.GONE);
                 showAllCheatsByMember.setVisibility(View.GONE);
-
-                isLowerPartIncomplete = true;
-                isLowerPartPartiallyIncomplete = true;
             }
-
-            // TODO mit den divider 3 und 4 ausblenden noch genauer anschauen. geht noch nicht richtig...
-            // TODO mit den divider 3 und 4 ausblenden noch genauer anschauen. geht noch nicht richtig...
-            // TODO mit den divider 3 und 4 ausblenden noch genauer anschauen. geht noch nicht richtig...
-            // TODO mit den divider 3 und 4 ausblenden noch genauer anschauen. geht noch nicht richtig...
-            // TODO mit den divider 3 und 4 ausblenden noch genauer anschauen. geht noch nicht richtig...
-            // TODO mit den divider 3 und 4 ausblenden noch genauer anschauen. geht noch nicht richtig...
-            // TODO mit den divider 3 und 4 ausblenden noch genauer anschauen. geht noch nicht richtig...
-            // TODO mit den divider 3 und 4 ausblenden noch genauer anschauen. geht noch nicht richtig...
-            // TODO mit den divider 3 und 4 ausblenden noch genauer anschauen. geht noch nicht richtig...
-            // TODO mit den divider 3 und 4 ausblenden noch genauer anschauen. geht noch nicht richtig...
-            // TODO mit den divider 3 und 4 ausblenden noch genauer anschauen. geht noch nicht richtig...
 
             // 7: WEBSITE
             if ((member.getWebsite() != null) && (member.getWebsite().length() > 3) && (member.getUsername() != null)) {
@@ -236,24 +220,17 @@ public class CheatMetaDialog extends Dialog implements OnClickListener {
                 websiteText.setText(member.getWebsite());
                 websiteTitle.setText(member.getUsername() + "'s " + context.getString(R.string.meta_member_homepage));
                 websiteText.setOnClickListener(CheatMetaDialog.this);
+
+                divider6.setVisibility(View.VISIBLE);
             } else {
                 websiteTitle.setVisibility(View.GONE);
                 websiteText.setVisibility(View.GONE);
-
-                isLowerPartIncomplete = true;
-                isLowerPartPartiallyIncomplete = true;
-            }
-
-            if (isLowerPartIncomplete) {
-                divider3.setVisibility(View.VISIBLE);
-                divider4.setVisibility(View.GONE);
-            } else if (isLowerPartPartiallyIncomplete) {
-                divider3.setVisibility(View.GONE);
-                divider4.setVisibility(View.VISIBLE);
             }
         } catch (Exception e) {
             Log.e(TAG, "updateUI Error: " + e.getLocalizedMessage());
         }
+
+        outerLayout.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -270,6 +247,7 @@ public class CheatMetaDialog extends Dialog implements OnClickListener {
     }
 
     private void bind(View dialogView) {
+        outerLayout = dialogView.findViewById(R.id.outer_layout);
         averageRatingTitle = dialogView.findViewById(R.id.average_rating_title);
         averageRatingText = dialogView.findViewById(R.id.average_rating_text);
         lifetimeViewsTitle = dialogView.findViewById(R.id.lifetime_views_title);
@@ -285,6 +263,7 @@ public class CheatMetaDialog extends Dialog implements OnClickListener {
         showAllCheatsByMember = dialogView.findViewById(R.id.show_all_cheats_by_member);
         websiteTitle = dialogView.findViewById(R.id.website_title);
         websiteText = dialogView.findViewById(R.id.website_text);
+        divider2 = dialogView.findViewById(R.id.divider_2);
         divider3 = dialogView.findViewById(R.id.divider_3);
         divider4 = dialogView.findViewById(R.id.divider_4);
         divider5 = dialogView.findViewById(R.id.divider_5);
