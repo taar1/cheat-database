@@ -49,8 +49,6 @@ public class Cheat extends Game implements Parcelable {
     private float memberRating;
     @SerializedName("screenshots")
     private List<Screenshot> screenshotList = new ArrayList<>();
-
-
     @SerializedName("views")
     private int views;
     @SerializedName("votes")
@@ -65,6 +63,11 @@ public class Cheat extends Game implements Parcelable {
     private boolean walkthroughFormat;
     @SerializedName("hasScreenshots")
     private boolean screenshots;
+
+    @SerializedName("game")
+    private Game game;
+    @SerializedName("system")
+    private SystemPlatform system;
 
     @Inject
     public Cheat() {
@@ -133,7 +136,11 @@ public class Cheat extends Game implements Parcelable {
     };
 
     public Game getGame() {
-        return new Game(getGameId(), getGameName(), getSystemId(), getSystemName());
+        return game;
+    }
+
+    public SystemPlatform getSystem() {
+        return system;
     }
 
     public String getAuthor() {

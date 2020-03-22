@@ -16,16 +16,17 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.cheatdatabase.CheatDatabaseApplication;
 import com.cheatdatabase.R;
 import com.cheatdatabase.adapters.MemberCheatRecycleListViewAdapter;
-import com.cheatdatabase.model.Cheat;
-import com.cheatdatabase.model.Member;
 import com.cheatdatabase.cheat_detail_view.MemberCheatViewPageIndicator;
 import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.helpers.Tools;
-import com.cheatdatabase.helpers.Webservice;
 import com.cheatdatabase.listeners.OnCheatListItemSelectedListener;
+import com.cheatdatabase.model.Cheat;
+import com.cheatdatabase.model.Member;
+import com.cheatdatabase.rest.RestApi;
 import com.cheatdatabase.widgets.DividerDecoration;
 import com.facebook.ads.AdSize;
 import com.facebook.ads.AdView;
@@ -35,9 +36,14 @@ import com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import needle.Needle;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
 
 /**
  * Shows all cheats of one particular member.
@@ -70,11 +76,21 @@ public class CheatsByMemberListActivity extends AppCompatActivity implements OnC
 
     private Editor editor;
 
+    @Inject
+    Retrofit retrofit;
+
+    private RestApi apiService;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_member_cheat_list);
         ButterKnife.bind(this);
+
+        // Dagger start
+        ((CheatDatabaseApplication) getApplication()).getNetworkComponent().inject(this);
+        apiService = retrofit.create(RestApi.class);
+        // Dagger end
 
         member = getIntent().getParcelableExtra("member");
         if (member != null) {
@@ -121,35 +137,39 @@ public class CheatsByMemberListActivity extends AppCompatActivity implements OnC
     }
 
     void getCheats() {
-        Needle.onBackgroundThread().execute(() -> {
-            cheatList = Webservice.getCheatsByMemberId(member.getMid());
+        Call<List<Cheat>> call = apiService.getCheatsByMemberId(member.getMid());
+        call.enqueue(new Callback<List<Cheat>>() {
+            @Override
+            public void onResponse(Call<List<Cheat>> games, Response<List<Cheat>> response) {
+                if (response.isSuccessful()) {
+                    cheatList = response.body();
 
-            editor.putString(Konstanten.PREFERENCES_TEMP_CHEAT_ARRAY_OBJECT_VIEW, new Gson().toJson(cheatList));
-            editor.commit();
+                    editor.putString(Konstanten.PREFERENCES_TEMP_CHEAT_ARRAY_OBJECT_VIEW, new Gson().toJson(cheatList));
+                    editor.apply();
 
-            fillListWithCheats();
-        });
-
-    }
-
-    void fillListWithCheats() {
-        Needle.onMainThread().execute(() -> {
-            try {
-                if ((cheatList != null) && (cheatList.size() > 0)) {
-                    memberCheatRecycleListViewAdapter.setCheatList(cheatList);
-                    mRecyclerView.setAdapter(memberCheatRecycleListViewAdapter);
-
-                    memberCheatRecycleListViewAdapter.notifyDataSetChanged();
-                } else {
-                    Tools.showSnackbar(outerLayout, getString(R.string.err_data_not_accessible));
+                    updateUI();
                 }
-            } catch (Exception e) {
-                Log.e(TAG, e.getLocalizedMessage());
-                Tools.showSnackbar(outerLayout, getString(R.string.err_no_member_data));
             }
 
-            mSwipeRefreshLayout.setRefreshing(false);
+            @Override
+            public void onFailure(Call<List<Cheat>> call, Throwable t) {
+                Log.e(TAG, "getting member cheats has failed: " + t.getLocalizedMessage());
+                Tools.showSnackbar(outerLayout, getString(R.string.no_internet));
+            }
         });
+    }
+
+    private void updateUI() {
+        if ((cheatList != null) && (cheatList.size() > 0)) {
+            memberCheatRecycleListViewAdapter.setCheatList(cheatList);
+            mRecyclerView.setAdapter(memberCheatRecycleListViewAdapter);
+
+            memberCheatRecycleListViewAdapter.notifyDataSetChanged();
+        } else {
+            Tools.showSnackbar(outerLayout, getString(R.string.err_data_not_accessible));
+        }
+
+        mSwipeRefreshLayout.setRefreshing(false);
     }
 
     @Override
@@ -198,6 +218,25 @@ public class CheatsByMemberListActivity extends AppCompatActivity implements OnC
         if (Reachability.reachability.isReachable) {
             // Using local Preferences to pass data for large game objects (instead of intent) such as Pokemon
             Intent intent = new Intent(CheatsByMemberListActivity.this, MemberCheatViewPageIndicator.class);
+
+            // TODO FIXME bei MemberCheatViewPageIndicator wird game name und system in der toolbar noch nicht angezeigt...
+            // TODO FIXME bei MemberCheatViewPageIndicator wird game name und system in der toolbar noch nicht angezeigt...
+            // TODO FIXME bei MemberCheatViewPageIndicator wird game name und system in der toolbar noch nicht angezeigt...
+            // TODO FIXME bei MemberCheatViewPageIndicator wird game name und system in der toolbar noch nicht angezeigt...
+            // TODO FIXME bei MemberCheatViewPageIndicator wird game name und system in der toolbar noch nicht angezeigt...
+            // TODO FIXME bei MemberCheatViewPageIndicator wird game name und system in der toolbar noch nicht angezeigt...
+            // TODO FIXME bei MemberCheatViewPageIndicator wird game name und system in der toolbar noch nicht angezeigt...
+            // TODO FIXME bei MemberCheatViewPageIndicator wird game name und system in der toolbar noch nicht angezeigt...
+            // TODO FIXME bei MemberCheatViewPageIndicator wird game name und system in der toolbar noch nicht angezeigt...
+            // TODO FIXME bei MemberCheatViewPageIndicator wird game name und system in der toolbar noch nicht angezeigt...
+            // TODO FIXME bei MemberCheatViewPageIndicator wird game name und system in der toolbar noch nicht angezeigt...
+            // TODO FIXME bei MemberCheatViewPageIndicator wird game name und system in der toolbar noch nicht angezeigt...
+            // TODO FIXME bei MemberCheatViewPageIndicator wird game name und system in der toolbar noch nicht angezeigt...
+            // TODO FIXME bei MemberCheatViewPageIndicator wird game name und system in der toolbar noch nicht angezeigt...
+            // TODO FIXME bei MemberCheatViewPageIndicator wird game name und system in der toolbar noch nicht angezeigt...
+
+            Log.d(TAG, "onCheatListItemSelected cheat list size:        " + cheatList.size());
+            Log.d(TAG, "onCheatListItemSelected position:               " + position);
 
             if (cheatList.size() <= 100) {
 

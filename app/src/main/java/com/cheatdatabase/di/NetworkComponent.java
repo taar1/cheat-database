@@ -2,6 +2,7 @@ package com.cheatdatabase.di;
 
 import com.cheatdatabase.activity.CheatForumActivity;
 import com.cheatdatabase.activity.CheatsByGameListActivity;
+import com.cheatdatabase.activity.CheatsByMemberListActivity;
 import com.cheatdatabase.activity.GamesBySystemListActivity;
 import com.cheatdatabase.activity.LoginActivity;
 import com.cheatdatabase.activity.MainActivity;
@@ -43,6 +44,8 @@ public interface NetworkComponent {
     void inject(RecoverActivity activity);
 
     void inject(SubmitCheatActivity activity);
+
+    void inject(CheatsByMemberListActivity activity);
 
     void inject(FavoritesCheatViewPageIndicator favoritesCheatViewPageIndicator);
 

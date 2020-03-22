@@ -6,6 +6,7 @@ import android.os.Parcelable;
 import android.util.Log;
 
 import com.cheatdatabase.helpers.Konstanten;
+import com.google.gson.annotations.SerializedName;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -21,8 +22,11 @@ import javax.inject.Inject;
  * @author erbsland
  */
 public class Screenshot implements Parcelable {
+    @SerializedName("kbyteSize")
     private String kbyteSize;
+    @SerializedName("filename")
     private String filename;
+    @SerializedName("cheatId")
     private int cheatId;
 
     @Inject

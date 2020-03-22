@@ -23,7 +23,6 @@
             ads:refreshInterval="30" />
     </LinearLayout>
 
-
     <LinearLayout
         android:id="@+id/banner_container_facebook"
         android:layout_width="match_parent"

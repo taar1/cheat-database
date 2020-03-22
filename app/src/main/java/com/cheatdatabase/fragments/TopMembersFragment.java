@@ -114,22 +114,6 @@ public class TopMembersFragment extends Fragment implements OnTopMemberListItemS
         return view;
     }
 
-//    @Override
-//    public void onStart() {
-//        super.onStart();
-//        if (memberList.size() < 1) {
-//            loadMembersInBackground();
-//        }
-//    }
-//
-//    @Override
-//    public void onResume() {
-//        super.onResume();
-//        if (memberList.size() < 1) {
-//            loadMembersInBackground();
-//        }
-//    }
-
     @Override
     public void onPause() {
         Reachability.unregister(context);

@@ -214,13 +214,6 @@ public class SubmitCheatActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     JsonObject submissionResponse = response.body();
 
-
-                    // TODO FIXME hier noch den error handlen (geht in "onFailure" rein)
-                    // TODO FIXME hier noch den error handlen (geht in "onFailure" rein)
-                    // TODO FIXME hier noch den error handlen (geht in "onFailure" rein)
-                    // TODO FIXME hier noch den error handlen (geht in "onFailure" rein)
-                    // TODO FIXME hier noch den error handlen (geht in "onFailure" rein)
-
                     String returnMessage = submissionResponse.get("returnMessage").getAsString();
                     if (returnMessage.equalsIgnoreCase("insert_ok")) {
                         cheatTitle.setText("");
