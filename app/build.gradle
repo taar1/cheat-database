@@ -20,7 +20,7 @@ android {
     defaultConfig {
         applicationId APK_ID
         archivesBaseName = APK_NAME
-        minSdkVersion 21
+        minSdkVersion 23
         targetSdkVersion 28
         versionCode VERSION_CODE
         versionName VERSION_NAME

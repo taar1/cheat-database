@@ -141,15 +141,30 @@ public class MemberCheatViewFragment extends Fragment {
             tvGalleryInfo.setVisibility(View.INVISIBLE);
             progressBar.setVisibility(View.INVISIBLE);
 
+            Log.d(TAG, "onCreateView: 1");
+
+            // TODO FIXME hier hat das objekt keine screenshots, obwohl es screenshots hätte....
+            // TODO FIXME hier hat das objekt keine screenshots, obwohl es screenshots hätte....
+            // TODO FIXME hier hat das objekt keine screenshots, obwohl es screenshots hätte....
+            // TODO FIXME hier hat das objekt keine screenshots, obwohl es screenshots hätte....
+            // TODO FIXME hier hat das objekt keine screenshots, obwohl es screenshots hätte....
+
             /**
              * Get thumbnails if there are screenshots.
              */
             if (cheatObj.isScreenshots()) {
+                // TODO FIXME hier kommt man nicht rein auch wenn der cheat screenshots hat...
+                // TODO FIXME hier kommt man nicht rein auch wenn der cheat screenshots hat...
+                // TODO FIXME hier kommt man nicht rein auch wenn der cheat screenshots hat...
+                // TODO FIXME hier kommt man nicht rein auch wenn der cheat screenshots hat...
+                Log.d(TAG, "onCreateView: 2");
+
                 biggestHeight = 100; // setMemberList value
                 progressBar.setVisibility(View.VISIBLE);
 
                 loadScreenshots();
             } else {
+                Log.d(TAG, "onCreateView: 3");
                 tvGalleryInfo.setVisibility(View.INVISIBLE);
                 screenshotGallery.setVisibility(View.GONE);
             }

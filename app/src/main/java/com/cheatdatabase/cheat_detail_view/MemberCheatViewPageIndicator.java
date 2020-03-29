@@ -72,7 +72,6 @@ import retrofit2.Retrofit;
  * Horizontal sliding through cheats submitted by member.
  *
  * @author Dominik Erbsland
- * @version 1.0
  */
 public class MemberCheatViewPageIndicator extends AppCompatActivity {
 
@@ -125,6 +124,8 @@ public class MemberCheatViewPageIndicator extends AppCompatActivity {
             cheatList = intent.getParcelableArrayListExtra("cheatList");
         }
 
+        Log.d(TAG, "onCreate: cheatList: " + cheatList.size());
+
         if ((cheatList == null) || (cheatList.size() < 1)) {
             handleNullPointerException();
         } else {
@@ -134,15 +135,12 @@ public class MemberCheatViewPageIndicator extends AppCompatActivity {
             try {
                 visibleCheat = cheatList.get(pageSelected);
 
-                gameObj = new Game();
-                gameObj.setCheat(visibleCheat);
-                gameObj.setGameId(visibleCheat.getGameId());
-                gameObj.setGameName(visibleCheat.getGameName());
-                gameObj.setSystemId(visibleCheat.getSystemId());
-                gameObj.setSystemName(visibleCheat.getSystemName());
+                gameObj = visibleCheat.getGame();
+                gameObj.setSystemId(visibleCheat.getSystem().getSystemId());
+                gameObj.setSystemName(visibleCheat.getSystem().getSystemName());
 
-                getSupportActionBar().setTitle(visibleCheat.getGameName());
-                getSupportActionBar().setSubtitle(visibleCheat.getSystemName());
+                getSupportActionBar().setTitle(visibleCheat.getGame().getGameName());
+                getSupportActionBar().setSubtitle(visibleCheat.getSystem().getSystemName());
 
                 initialisePaging();
             } catch (NullPointerException e) {
@@ -173,13 +171,8 @@ public class MemberCheatViewPageIndicator extends AppCompatActivity {
     }
 
     private void initialisePaging() {
-        final String[] cheatTitles = new String[cheatList.size()];
-        for (int i = 0; i < cheatList.size(); i++) {
-            cheatTitles[i] = cheatList.get(i).getCheatTitle();
-        }
-
         try {
-            mAdapter = new MemberCheatViewFragmentAdapter(getSupportFragmentManager(), cheatList, cheatTitles);
+            mAdapter = new MemberCheatViewFragmentAdapter(getSupportFragmentManager(), cheatList);
 
             mPager = viewLayout.findViewById(R.id.pager);
             mPager.setAdapter(mAdapter);
@@ -200,15 +193,12 @@ public class MemberCheatViewPageIndicator extends AppCompatActivity {
                         visibleCheat = cheatList.get(position);
                         invalidateOptionsMenu();
 
-                        gameObj = new Game();
-                        gameObj.setCheat(visibleCheat);
-                        gameObj.setGameId(visibleCheat.getGameId());
-                        gameObj.setGameName(visibleCheat.getGameName());
-                        gameObj.setSystemId(visibleCheat.getSystemId());
-                        gameObj.setSystemName(visibleCheat.getSystemName());
+                        gameObj = visibleCheat.getGame();
+                        gameObj.setSystemId(visibleCheat.getSystem().getSystemId());
+                        gameObj.setSystemName(visibleCheat.getSystem().getSystemName());
 
-                        getSupportActionBar().setTitle(visibleCheat.getGameName());
-                        getSupportActionBar().setSubtitle(visibleCheat.getSystemName());
+                        getSupportActionBar().setTitle(visibleCheat.getGame().getGameName());
+                        getSupportActionBar().setSubtitle(visibleCheat.getSystem().getSystemName());
                     } catch (Exception e) {
                         Log.e(TAG, e.getMessage());
                         Toast.makeText(MemberCheatViewPageIndicator.this, R.string.err_somethings_wrong, Toast.LENGTH_SHORT).show();
@@ -233,15 +223,10 @@ public class MemberCheatViewPageIndicator extends AppCompatActivity {
                 @Override
                 public IPagerTitleView getTitleView(Context context, final int index) {
                     SimplePagerTitleView clipPagerTitleView = new ColorTransitionPagerTitleView(context);
-                    clipPagerTitleView.setText(cheatTitles[index]);
+                    clipPagerTitleView.setText(cheatList.get(index).getCheatTitle());
                     clipPagerTitleView.setNormalColor(Color.parseColor("#88ffffff")); // White transparent
                     clipPagerTitleView.setSelectedColor(Color.WHITE);
-                    clipPagerTitleView.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            mPager.setCurrentItem(index);
-                        }
-                    });
+                    clipPagerTitleView.setOnClickListener(v -> mPager.setCurrentItem(index));
                     return clipPagerTitleView;
                 }
 
@@ -263,8 +248,6 @@ public class MemberCheatViewPageIndicator extends AppCompatActivity {
                 Intent intent = new Intent(MemberCheatViewPageIndicator.this, SubmitCheatActivity.class);
                 intent.putExtra("gameObj", gameObj);
                 startActivity(intent);
-
-
             });
         } catch (Exception e2) {
             Log.e(TAG, "ERROR: " + getPackageName() + "/" + getTitle() + "... " + e2.getMessage());
@@ -378,7 +361,6 @@ public class MemberCheatViewPageIndicator extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
-
 
     public void showReportDialog() {
         if ((member == null) || (member.getMid() == 0)) {

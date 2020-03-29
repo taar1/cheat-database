@@ -9,36 +9,25 @@ import com.cheatdatabase.model.Cheat;
 import java.util.List;
 
 public class MemberCheatViewFragmentAdapter extends FragmentPagerAdapter {
-
-    protected static String[] CONTENT = new String[]{"T1", "T2", "T3"};
-    private int mCount;
-
     private List<Cheat> cheats;
 
-    public MemberCheatViewFragmentAdapter(FragmentManager fm, List<Cheat> cheats, String[] cheatTitleNames) {
+    public MemberCheatViewFragmentAdapter(FragmentManager fm, List<Cheat> cheats) {
         super(fm);
         this.cheats = cheats;
-        CONTENT = cheatTitleNames;
-        mCount = CONTENT.length;
     }
 
     @Override
     public Fragment getItem(int position) {
-        if (CONTENT == null) {
-            CONTENT = new String[cheats.size()];
-        }
         return MemberCheatViewFragment.newInstance(cheats, position);
     }
 
     @Override
     public int getCount() {
-        return mCount;
+        return cheats.size();
     }
 
     @Override
     public CharSequence getPageTitle(int position) {
-        return MemberCheatViewFragmentAdapter.CONTENT[position % CONTENT.length];
+        return cheats.get(position % cheats.size()).getCheatTitle();
     }
-
-
 }

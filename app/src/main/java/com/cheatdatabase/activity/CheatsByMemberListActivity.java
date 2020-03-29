@@ -33,7 +33,6 @@ import com.facebook.ads.AdView;
 import com.google.gson.Gson;
 import com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -47,8 +46,6 @@ import retrofit2.Retrofit;
 
 /**
  * Shows all cheats of one particular member.
- *
- * @author Dominik
  */
 public class CheatsByMemberListActivity extends AppCompatActivity implements OnCheatListItemSelectedListener {
 
@@ -215,45 +212,9 @@ public class CheatsByMemberListActivity extends AppCompatActivity implements OnC
         editor.putInt(Konstanten.PREFERENCES_PAGE_SELECTED, position);
         editor.apply();
 
+        // Using local Preferences to pass data (PREFERENCES_TEMP_CHEAT_ARRAY_OBJECT_VIEW) for game objects (instead of intent) otherwise runs into TransactionTooLargeException when passing the array to the next activity.
         if (Reachability.reachability.isReachable) {
-            // Using local Preferences to pass data for large game objects (instead of intent) such as Pokemon
             Intent intent = new Intent(CheatsByMemberListActivity.this, MemberCheatViewPageIndicator.class);
-
-            // TODO FIXME bei MemberCheatViewPageIndicator wird game name und system in der toolbar noch nicht angezeigt...
-            // TODO FIXME bei MemberCheatViewPageIndicator wird game name und system in der toolbar noch nicht angezeigt...
-            // TODO FIXME bei MemberCheatViewPageIndicator wird game name und system in der toolbar noch nicht angezeigt...
-            // TODO FIXME bei MemberCheatViewPageIndicator wird game name und system in der toolbar noch nicht angezeigt...
-            // TODO FIXME bei MemberCheatViewPageIndicator wird game name und system in der toolbar noch nicht angezeigt...
-            // TODO FIXME bei MemberCheatViewPageIndicator wird game name und system in der toolbar noch nicht angezeigt...
-            // TODO FIXME bei MemberCheatViewPageIndicator wird game name und system in der toolbar noch nicht angezeigt...
-            // TODO FIXME bei MemberCheatViewPageIndicator wird game name und system in der toolbar noch nicht angezeigt...
-            // TODO FIXME bei MemberCheatViewPageIndicator wird game name und system in der toolbar noch nicht angezeigt...
-            // TODO FIXME bei MemberCheatViewPageIndicator wird game name und system in der toolbar noch nicht angezeigt...
-            // TODO FIXME bei MemberCheatViewPageIndicator wird game name und system in der toolbar noch nicht angezeigt...
-            // TODO FIXME bei MemberCheatViewPageIndicator wird game name und system in der toolbar noch nicht angezeigt...
-            // TODO FIXME bei MemberCheatViewPageIndicator wird game name und system in der toolbar noch nicht angezeigt...
-            // TODO FIXME bei MemberCheatViewPageIndicator wird game name und system in der toolbar noch nicht angezeigt...
-            // TODO FIXME bei MemberCheatViewPageIndicator wird game name und system in der toolbar noch nicht angezeigt...
-
-            Log.d(TAG, "onCheatListItemSelected cheat list size:        " + cheatList.size());
-            Log.d(TAG, "onCheatListItemSelected position:               " + position);
-
-            if (cheatList.size() <= 100) {
-
-                // Delete Walkthrough texts (otherwise runs into a timeout)
-                for (Cheat c : cheatList) {
-                    if (c.isWalkthroughFormat()) {
-                        c.setCheatText("");
-                    }
-                }
-
-                intent.putParcelableArrayListExtra("cheatList", (ArrayList) cheatList);
-            } else {
-                // Save to SharedPreferences if array too big
-                editor.putString(Konstanten.PREFERENCES_TEMP_CHEAT_ARRAY_OBJECT_VIEW, new Gson().toJson(cheatList));
-                editor.apply();
-            }
-
             intent.putExtra("selectedPage", position);
             intent.putExtra("layoutResourceId", R.layout.activity_cheatview_pager);
             startActivity(intent);

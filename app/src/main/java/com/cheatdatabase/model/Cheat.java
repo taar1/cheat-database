@@ -100,6 +100,8 @@ public class Cheat extends Game implements Parcelable {
         viewsToday = in.readInt();
         forumCount = in.readInt();
         walkthroughFormat = in.readByte() != 0;
+        game = in.readTypedObject(Game.CREATOR);
+        system = in.readTypedObject(SystemPlatform.CREATOR);
     }
 
     @Override
@@ -121,6 +123,8 @@ public class Cheat extends Game implements Parcelable {
         dest.writeInt(viewsToday);
         dest.writeInt(forumCount);
         dest.writeByte((byte) (walkthroughFormat ? 1 : 0));
+        dest.writeTypedObject(game, Game.PARCELABLE_WRITE_RETURN_VALUE);
+        dest.writeTypedObject(system, SystemPlatform.PARCELABLE_WRITE_RETURN_VALUE);
     }
 
     public static final Creator<Cheat> CREATOR = new Creator<Cheat>() {

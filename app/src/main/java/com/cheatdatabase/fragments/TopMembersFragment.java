@@ -37,7 +37,6 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import needle.Needle;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -171,17 +170,15 @@ public class TopMembersFragment extends Fragment implements OnTopMemberListItemS
     }
 
     private void notifyAdapter() {
-        Needle.onMainThread().execute(() -> {
-            mSwipeRefreshLayout.setRefreshing(true);
+        mSwipeRefreshLayout.setRefreshing(true);
 
-            if (memberList != null && memberList.size() > 0) {
-                topMembersListViewAdapter.setMemberList(memberList);
-                topMembersListViewAdapter.notifyDataSetChanged();
-            } else {
-                handleEmptyViewState();
-            }
-            mSwipeRefreshLayout.setRefreshing(false);
-        });
+        if (memberList != null && memberList.size() > 0) {
+            topMembersListViewAdapter.setMemberList(memberList);
+            topMembersListViewAdapter.notifyDataSetChanged();
+        } else {
+            handleEmptyViewState();
+        }
+        mSwipeRefreshLayout.setRefreshing(false);
     }
 
     private void handleEmptyViewState() {
