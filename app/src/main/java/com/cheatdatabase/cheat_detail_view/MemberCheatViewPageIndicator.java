@@ -93,7 +93,7 @@ public class MemberCheatViewPageIndicator extends AppCompatActivity {
     private SharedPreferences sharedPreferences;
     private Editor editor;
     private Member member;
-    private MemberCheatViewFragmentAdapter mAdapter;
+    private MemberCheatViewFragmentAdapter memberCheatViewFragmentAdapter;
     private ViewPager mPager;
     private int activePage;
     private ShareActionProvider mShare;
@@ -172,10 +172,10 @@ public class MemberCheatViewPageIndicator extends AppCompatActivity {
 
     private void initialisePaging() {
         try {
-            mAdapter = new MemberCheatViewFragmentAdapter(getSupportFragmentManager(), cheatList);
+            memberCheatViewFragmentAdapter = new MemberCheatViewFragmentAdapter(getSupportFragmentManager(), cheatList, restApi, outerLayout, this);
 
             mPager = viewLayout.findViewById(R.id.pager);
-            mPager.setAdapter(mAdapter);
+            mPager.setAdapter(memberCheatViewFragmentAdapter);
             mPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
                 @Override
                 public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {

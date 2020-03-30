@@ -6,9 +6,10 @@
     </shared>
   </component>
   <component name="AndroidLogFilters">
-    <option name="TOOL_WINDOW_CUSTOM_FILTER" value="CheatsByMemberListActivity|MemberCheatViewPageIndicator|MemberCheatViewFragment" />
+    <option name="TOOL_WINDOW_CUSTOM_FILTER" value="XXXXX" />
     <option name="TOOL_WINDOW_LOG_LEVEL" value="verbose" />
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="No Filters" />
+    <option name="TOOL_WINDOW_REGEXP_FILTER" value="false" />
   </component>
   <component name="AvailableLibraryUpdateStorage">
     <library-updates>
@@ -111,17 +112,14 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4caff62e-c62f-40ca-acf0-73c680b13375" name="Default" comment="Switching top member views etc. to retrofit.">
+    <list default="true" id="4caff62e-c62f-40ca-acf0-73c680b13375" name="Default" comment="Retrofit weiter einbauen">
       <change beforePath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/app.iml" beforeDir="false" afterPath="$PROJECT_DIR$/app/app.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/CheatsByMemberListActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/CheatsByMemberListActivity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/cheat_detail_view/MemberCheatViewFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/cheat_detail_view/MemberCheatViewFragment.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/cheat_detail_view/MemberCheatViewFragmentAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/cheat_detail_view/MemberCheatViewFragmentAdapter.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/cheat_detail_view/MemberCheatViewPageIndicator.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/cheat_detail_view/MemberCheatViewPageIndicator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/fragments/TopMembersFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/fragments/TopMembersFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/model/Cheat.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/model/Cheat.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -154,6 +152,35 @@
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
                 <item name="cheat-database" type="f1a62948:ProjectNode" />
               </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="cheat-database" type="f1a62948:ProjectNode" />
+                <item name="cheat-database" type="2d1252cf:ModuleNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="cheat-database" type="f1a62948:ProjectNode" />
+                <item name="cheat-database" type="2d1252cf:ModuleNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="cheat-database" type="f1a62948:ProjectNode" />
+                <item name="cheat-database" type="2d1252cf:ModuleNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="android" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="cheat-database" type="f1a62948:ProjectNode" />
+                <item name=":app" type="2d1252cf:ModuleNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="cheat-database" type="f1a62948:ProjectNode" />
+                <item name=":app" type="2d1252cf:ModuleNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+              </path>
             </expand>
             <select />
           </tree_state>
@@ -182,15 +209,14 @@
     <option name="REMEMBER_PASSWORDS" value="true" />
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
         <entry key="$PROJECT_DIR$" value="master" />
       </map>
     </option>
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
-    <option name="ROOT_SYNC" value="DONT_SYNC" />
   </component>
-  <component name="ProjectId" id="1YGeGO0sPY4mlU5YXqjVT3oFmbY" />
+  <component name="ProjectId" id="1ZrVJ5uxNTcUzsDbb7K5lTnZG5z" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="1" id="Add" />
     <ConfirmationsSetting value="2" id="Remove" />
@@ -219,8 +245,8 @@
     <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1538756288633" />
     <property name="device.picker.selection" value="6ea89d94" />
     <property name="ignore.virus.scanning.warn.message" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/app/src/main/res/layout" />
-    <property name="project.structure.last.edited" value="Project" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../library_projects/Dagger-Examples" />
+    <property name="project.structure.last.edited" value="Suggestions" />
     <property name="project.structure.proportion" value="0.17" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="settings.editor.selected.configurable" value="vcs.Git" />
@@ -230,11 +256,11 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\Development\Android\Workspaces\cheat-database\app\src\main\res\layout" />
       <recent name="$PROJECT_DIR$/app/src/main/res/layout" />
       <recent name="$PROJECT_DIR$/app/libs" />
       <recent name="$PROJECT_DIR$/app/src/main/res/layout-xlarge-land" />
       <recent name="$PROJECT_DIR$/app/src/main/res/xml" />
+      <recent name="C:\Users\taar1\Development\Android\GitHub\cheat-database\app\libs" />
     </key>
     <key name="android.template.packageName">
       <recent name="com.cheatdatabase.ads" />
@@ -588,6 +614,167 @@
       <option name="presentableId" value="Default" />
       <updated>1487274191999</updated>
     </task>
+    <task id="LOCAL-00037" summary="Free many classes from AndroidAnnotations.">
+      <created>1540326294670</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1540326294670</updated>
+    </task>
+    <task id="LOCAL-00038" summary="Free many classes from AndroidAnnotations.">
+      <created>1540500530638</created>
+      <option name="number" value="00038" />
+      <option name="presentableId" value="LOCAL-00038" />
+      <option name="project" value="LOCAL" />
+      <updated>1540500530638</updated>
+    </task>
+    <task id="LOCAL-00039" summary="Free many classes from AndroidAnnotations.">
+      <created>1540640089112</created>
+      <option name="number" value="00039" />
+      <option name="presentableId" value="LOCAL-00039" />
+      <option name="project" value="LOCAL" />
+      <updated>1540640089112</updated>
+    </task>
+    <task id="LOCAL-00040" summary="Free many classes from AndroidAnnotations.">
+      <created>1540670414884</created>
+      <option name="number" value="00040" />
+      <option name="presentableId" value="LOCAL-00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1540670414884</updated>
+    </task>
+    <task id="LOCAL-00041" summary="Free many classes from AndroidAnnotations.">
+      <created>1540757344098</created>
+      <option name="number" value="00041" />
+      <option name="presentableId" value="LOCAL-00041" />
+      <option name="project" value="LOCAL" />
+      <updated>1540757344098</updated>
+    </task>
+    <task id="LOCAL-00042" summary="Free many classes from AndroidAnnotations.">
+      <created>1540758112630</created>
+      <option name="number" value="00042" />
+      <option name="presentableId" value="LOCAL-00042" />
+      <option name="project" value="LOCAL" />
+      <updated>1540758112630</updated>
+    </task>
+    <task id="LOCAL-00043" summary="Free many classes from AndroidAnnotations.§">
+      <created>1542144263648</created>
+      <option name="number" value="00043" />
+      <option name="presentableId" value="LOCAL-00043" />
+      <option name="project" value="LOCAL" />
+      <updated>1542144263649</updated>
+    </task>
+    <task id="LOCAL-00044" summary="Free many classes from AndroidAnnotations.&#10;Fix favorites detail view bug.">
+      <created>1542231647030</created>
+      <option name="number" value="00044" />
+      <option name="presentableId" value="LOCAL-00044" />
+      <option name="project" value="LOCAL" />
+      <updated>1542231647030</updated>
+    </task>
+    <task id="LOCAL-00045" summary="Free many classes from AndroidAnnotations.§">
+      <created>1543177878068</created>
+      <option name="number" value="00045" />
+      <option name="presentableId" value="LOCAL-00045" />
+      <option name="project" value="LOCAL" />
+      <updated>1543177878068</updated>
+    </task>
+    <task id="LOCAL-00046" summary="Free many classes from AndroidAnnotations.§">
+      <created>1543178074150</created>
+      <option name="number" value="00046" />
+      <option name="presentableId" value="LOCAL-00046" />
+      <option name="project" value="LOCAL" />
+      <updated>1543178074150</updated>
+    </task>
+    <task id="LOCAL-00047" summary="Free from AndroidAnnotations.">
+      <created>1543179257137</created>
+      <option name="number" value="00047" />
+      <option name="presentableId" value="LOCAL-00047" />
+      <option name="project" value="LOCAL" />
+      <updated>1543179257137</updated>
+    </task>
+    <task id="LOCAL-00048" summary="Free from AndroidAnnotations.">
+      <created>1543180017401</created>
+      <option name="number" value="00048" />
+      <option name="presentableId" value="LOCAL-00048" />
+      <option name="project" value="LOCAL" />
+      <updated>1543180017401</updated>
+    </task>
+    <task id="LOCAL-00049" summary="Fix Crash bei Cheats mit Screenshots.">
+      <created>1543763670937</created>
+      <option name="number" value="00049" />
+      <option name="presentableId" value="LOCAL-00049" />
+      <option name="project" value="LOCAL" />
+      <updated>1543763670937</updated>
+    </task>
+    <task id="LOCAL-00050" summary="Fix Crash bei Cheats mit Screenshots.">
+      <created>1543763880657</created>
+      <option name="number" value="00050" />
+      <option name="presentableId" value="LOCAL-00050" />
+      <option name="project" value="LOCAL" />
+      <updated>1543763880657</updated>
+    </task>
+    <task id="LOCAL-00051" summary="Crashlytics Bug Fixes">
+      <created>1564154173746</created>
+      <option name="number" value="00051" />
+      <option name="presentableId" value="LOCAL-00051" />
+      <option name="project" value="LOCAL" />
+      <updated>1564154173748</updated>
+    </task>
+    <task id="LOCAL-00052" summary="Crashlytics Bug Fixes">
+      <created>1564155499157</created>
+      <option name="number" value="00052" />
+      <option name="presentableId" value="LOCAL-00052" />
+      <option name="project" value="LOCAL" />
+      <updated>1564155499157</updated>
+    </task>
+    <task id="LOCAL-00053" summary="Crashlytics Bug Fixes&#10;Version update to 2.3 (release version)">
+      <created>1564327179875</created>
+      <option name="number" value="00053" />
+      <option name="presentableId" value="LOCAL-00053" />
+      <option name="project" value="LOCAL" />
+      <updated>1564327179876</updated>
+    </task>
+    <task id="LOCAL-00054" summary="Crashlytics Bug Fixes&#10;&#10;Version 2.4-preRelease">
+      <created>1565359176385</created>
+      <option name="number" value="00054" />
+      <option name="presentableId" value="LOCAL-00054" />
+      <option name="project" value="LOCAL" />
+      <updated>1565359176386</updated>
+    </task>
+    <task id="LOCAL-00055" summary="Crashlytics Bug Fixes&#10;&#10;Version 2.4-preRelease">
+      <created>1565360097658</created>
+      <option name="number" value="00055" />
+      <option name="presentableId" value="LOCAL-00055" />
+      <option name="project" value="LOCAL" />
+      <updated>1565360097658</updated>
+    </task>
+    <task id="LOCAL-00056" summary="RELEASE VERSION 2.4">
+      <created>1565360444205</created>
+      <option name="number" value="00056" />
+      <option name="presentableId" value="LOCAL-00056" />
+      <option name="project" value="LOCAL" />
+      <updated>1565360444205</updated>
+    </task>
+    <task id="LOCAL-00057" summary="Bug Fixes for upcoming version 2.4.1">
+      <created>1565705982422</created>
+      <option name="number" value="00057" />
+      <option name="presentableId" value="LOCAL-00057" />
+      <option name="project" value="LOCAL" />
+      <updated>1565705982423</updated>
+    </task>
+    <task id="LOCAL-00058" summary="Bug Fixes for upcoming version 2.4.1">
+      <created>1565706633319</created>
+      <option name="number" value="00058" />
+      <option name="presentableId" value="LOCAL-00058" />
+      <option name="project" value="LOCAL" />
+      <updated>1565706633319</updated>
+    </task>
+    <task id="LOCAL-00059" summary="Fixing ads, adding InMobie ads for upcoming version 2.4.1">
+      <created>1565776420498</created>
+      <option name="number" value="00059" />
+      <option name="presentableId" value="LOCAL-00059" />
+      <option name="project" value="LOCAL" />
+      <updated>1565776420499</updated>
+    </task>
     <task id="LOCAL-00060" summary="Changing the Listen Item View Adapter / Holder concept">
       <created>1565790566111</created>
       <option name="number" value="00060" />
@@ -763,179 +950,24 @@
       <option name="project" value="LOCAL" />
       <updated>1580764594176</updated>
     </task>
-    <task id="LOCAL-00085" summary="Retrofit bug fixes">
-      <created>1580854342431</created>
+    <task id="LOCAL-00085" summary="Retrofit weiter einbauen">
+      <created>1581973998815</created>
       <option name="number" value="00085" />
       <option name="presentableId" value="LOCAL-00085" />
       <option name="project" value="LOCAL" />
-      <updated>1580854342431</updated>
+      <updated>1581973998816</updated>
     </task>
-    <task id="LOCAL-00086" summary="GamesBySystemListActivity: Migrating to Retrofit &amp; Dagger">
-      <created>1580936018081</created>
-      <option name="number" value="00086" />
-      <option name="presentableId" value="LOCAL-00086" />
-      <option name="project" value="LOCAL" />
-      <updated>1580936018081</updated>
-    </task>
-    <task id="LOCAL-00087" summary="Migrating to Retrofit &amp; Dagger">
-      <created>1581112201455</created>
-      <option name="number" value="00087" />
-      <option name="presentableId" value="LOCAL-00087" />
-      <option name="project" value="LOCAL" />
-      <updated>1581112201455</updated>
-    </task>
-    <task id="LOCAL-00088" summary="TopMembersFragment: Migrating to Retrofit &amp; Dagger">
-      <created>1581278138775</created>
-      <option name="number" value="00088" />
-      <option name="presentableId" value="LOCAL-00088" />
-      <option name="project" value="LOCAL" />
-      <updated>1581278138775</updated>
-    </task>
-    <task id="LOCAL-00089" summary="ContactFormFragment &amp; SearchResultsActivity: Migrating to Retrofit &amp; Dagger">
-      <created>1581370859323</created>
-      <option name="number" value="00089" />
-      <option name="presentableId" value="LOCAL-00089" />
-      <option name="project" value="LOCAL" />
-      <updated>1581370859323</updated>
-    </task>
-    <task id="LOCAL-00090" summary="ContactFormFragment &amp; SearchResultsActivity: Migrating to Retrofit &amp; Dagger">
-      <created>1581457174295</created>
-      <option name="number" value="00090" />
-      <option name="presentableId" value="LOCAL-00090" />
-      <option name="project" value="LOCAL" />
-      <updated>1581457174295</updated>
-    </task>
-    <task id="LOCAL-00091" summary="Forum Posten &amp; Laden FIX">
-      <created>1582486266918</created>
-      <option name="number" value="00091" />
-      <option name="presentableId" value="LOCAL-00091" />
-      <option name="project" value="LOCAL" />
-      <updated>1582486266919</updated>
-    </task>
-    <task id="LOCAL-00092" summary="Count Forum Posts preparation">
-      <created>1582579623298</created>
-      <option name="number" value="00092" />
-      <option name="presentableId" value="LOCAL-00092" />
-      <option name="project" value="LOCAL" />
-      <updated>1582579623299</updated>
-    </task>
-    <task id="LOCAL-00093" summary="Fixing getForumCount Retrofit Call">
-      <created>1582665148764</created>
-      <option name="number" value="00093" />
-      <option name="presentableId" value="LOCAL-00093" />
-      <option name="project" value="LOCAL" />
-      <updated>1582665148764</updated>
-    </task>
-    <task id="LOCAL-00094" summary="Forum Fixes">
-      <created>1582838162433</created>
-      <option name="number" value="00094" />
-      <option name="presentableId" value="LOCAL-00094" />
-      <option name="project" value="LOCAL" />
-      <updated>1582838162434</updated>
-    </task>
-    <task id="LOCAL-00095" summary="Forum Post Counter wird nun aktualisiert bei der Cheat-Ansicht wenn man das Forum verlässt.">
-      <created>1582925078988</created>
-      <option name="number" value="00095" />
-      <option name="presentableId" value="LOCAL-00095" />
-      <option name="project" value="LOCAL" />
-      <updated>1582925078989</updated>
-    </task>
-    <task id="LOCAL-00096" summary="Cheat Rating function">
-      <created>1582996565046</created>
-      <option name="number" value="00096" />
-      <option name="presentableId" value="LOCAL-00096" />
-      <option name="project" value="LOCAL" />
-      <updated>1582996565046</updated>
-    </task>
-    <task id="LOCAL-00097" summary="Register feature update">
-      <created>1583010956665</created>
-      <option name="number" value="00097" />
-      <option name="presentableId" value="LOCAL-00097" />
-      <option name="project" value="LOCAL" />
-      <updated>1583010956665</updated>
-    </task>
-    <task id="LOCAL-00098" summary="Login Feature auf Retrofit umstellen">
-      <created>1583098795293</created>
-      <option name="number" value="00098" />
-      <option name="presentableId" value="LOCAL-00098" />
-      <option name="project" value="LOCAL" />
-      <updated>1583098795294</updated>
-    </task>
-    <task id="LOCAL-00099" summary="Login Feature &amp; Password recovery auf Retrofit umstellen">
-      <created>1583178439899</created>
-      <option name="number" value="00099" />
-      <option name="presentableId" value="LOCAL-00099" />
-      <option name="project" value="LOCAL" />
-      <updated>1583178439900</updated>
-    </task>
-    <task id="LOCAL-00100" summary="Login Feature &amp; Password recovery auf Retrofit umstellen">
-      <created>1583178480748</created>
-      <option name="number" value="00100" />
-      <option name="presentableId" value="LOCAL-00100" />
-      <option name="project" value="LOCAL" />
-      <updated>1583178480748</updated>
-    </task>
-    <task id="LOCAL-00101" summary="Password recovery auf Retrofit umstellen. Cheat Reporten auf Retrofit umstellen (noch nicht fertig)">
-      <created>1583358048826</created>
-      <option name="number" value="00101" />
-      <option name="presentableId" value="LOCAL-00101" />
-      <option name="project" value="LOCAL" />
-      <updated>1583358048828</updated>
-    </task>
-    <task id="LOCAL-00102" summary="Added in-app messaging library.&#10;Rate cheat implemented and tested with retrofit.&#10;Show snackbar instead toast for reporting and rating cheats.">
-      <created>1583786562965</created>
-      <option name="number" value="00102" />
-      <option name="presentableId" value="LOCAL-00102" />
-      <option name="project" value="LOCAL" />
-      <updated>1583786562966</updated>
-    </task>
-    <task id="LOCAL-00103" summary="get cheat meta function switch to retrofit">
-      <created>1583875182644</created>
-      <option name="number" value="00103" />
-      <option name="presentableId" value="LOCAL-00103" />
-      <option name="project" value="LOCAL" />
-      <updated>1583875182645</updated>
-    </task>
-    <task id="LOCAL-00104" summary="Fixing the cheat meda material dialog">
-      <created>1584389885642</created>
-      <option name="number" value="00104" />
-      <option name="presentableId" value="LOCAL-00104" />
-      <option name="project" value="LOCAL" />
-      <updated>1584389885643</updated>
-    </task>
-    <task id="LOCAL-00105" summary="Fixing the cheat meta material dialog">
-      <created>1584478799750</created>
-      <option name="number" value="00105" />
-      <option name="presentableId" value="LOCAL-00105" />
-      <option name="project" value="LOCAL" />
-      <updated>1584478799750</updated>
-    </task>
-    <task id="LOCAL-00106" summary="Fixing the cheat meta material dialog: DONE">
-      <created>1584810745861</created>
-      <option name="number" value="00106" />
-      <option name="presentableId" value="LOCAL-00106" />
-      <option name="project" value="LOCAL" />
-      <updated>1584810745861</updated>
-    </task>
-    <task id="LOCAL-00107" summary="Switching cheat submission over to retrofit (not working yet)">
-      <created>1584820946759</created>
-      <option name="number" value="00107" />
-      <option name="presentableId" value="LOCAL-00107" />
-      <option name="project" value="LOCAL" />
-      <updated>1584820946759</updated>
-    </task>
-    <task id="LOCAL-00108" summary="Switching top member views etc. to retrofit.">
-      <created>1584905955517</created>
-      <option name="number" value="00108" />
-      <option name="presentableId" value="LOCAL-00108" />
-      <option name="project" value="LOCAL" />
-      <updated>1584905955518</updated>
-    </task>
-    <option name="localTasksCounter" value="109" />
+    <option name="localTasksCounter" value="86" />
     <servers />
   </component>
-  <component name="UpdateCopyrightCheckinHandler">
-    <option name="UPDATE_COPYRIGHT" value="true" />
+  <component name="TodoView">
+    <todo-panel id="selected-file">
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
   </component>
   <component name="Vcs.Log.History.Properties">
     <option name="COLUMN_ORDER">
@@ -969,41 +1001,35 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
-    <option name="CHECK_CODE_CLEANUP_BEFORE_PROJECT_COMMIT" value="true" />
-    <option name="CHECK_NEW_TODO" value="false" />
     <ignored-roots>
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
+    <MESSAGE value="Crashlytics Bug Fixes" />
+    <MESSAGE value="Crashlytics Bug Fixes&#10;Version update to 2.3 (release version)" />
+    <MESSAGE value="Crashlytics Bug Fixes&#10;&#10;Version 2.4-preRelease" />
+    <MESSAGE value="RELEASE VERSION 2.4" />
+    <MESSAGE value="Bug Fixes for upcoming version 2.4.1" />
+    <MESSAGE value="Fixing ads, adding InMobie ads for upcoming version 2.4.1" />
+    <MESSAGE value="Add callback class." />
+    <MESSAGE value="Changing the Listen Item View Adapter / Holder concept" />
+    <MESSAGE value="Insert blank list item every 20th position in recycler view" />
+    <MESSAGE value="AdView in RecyclerView every 20th position" />
+    <MESSAGE value="Implementing Facebook Native Ads (not working yet....)" />
+    <MESSAGE value="Facebook Audience Network Native Ads Implementation" />
+    <MESSAGE value="Facebook Audience Network Native Ads Implementation&#10;FACEBOOK NATIVE ADS FINALLY WORKING!" />
+    <MESSAGE value="Bug fixes for hotfix version 2.5.2" />
+    <MESSAGE value="Bug Fix" />
+    <MESSAGE value="bug fix" />
+    <MESSAGE value="REMOVING MANY UNUSED RESOURCES!&#10;Bug Fixes" />
+    <MESSAGE value="Version 2.5.7" />
+    <MESSAGE value="Fixing Login/Register/Recover layouts" />
+    <MESSAGE value="Fixing Login/Register/Recover/Contact forms" />
+    <MESSAGE value="THIS BUILD IS NOT WORKING! Starting with DAGGER &amp; RETROFIT. Refactoring." />
     <MESSAGE value="Dagger Cleanup. Funktioniert jetzt (ganz simpel erst)." />
     <MESSAGE value="Switching to RetroFit &amp; Dagger" />
     <MESSAGE value="Dagger &amp; Retrofit usage. Working version (halfway)" />
-    <MESSAGE value="Retrofit bug fixes" />
-    <MESSAGE value="GamesBySystemListActivity: Migrating to Retrofit &amp; Dagger" />
-    <MESSAGE value="Migrating to Retrofit &amp; Dagger" />
-    <MESSAGE value="TopMembersFragment: Migrating to Retrofit &amp; Dagger" />
-    <MESSAGE value="ContactFormFragment &amp; SearchResultsActivity: Migrating to Retrofit &amp; Dagger" />
-    <MESSAGE value="Forum Posten &amp; Laden FIX" />
-    <MESSAGE value="Count Forum Posts preparation" />
-    <MESSAGE value="Fixing getForumCount Retrofit Call" />
-    <MESSAGE value="Forum Fixes" />
-    <MESSAGE value="Forum Post Counter wird nun aktualisiert bei der Cheat-Ansicht wenn man das Forum verlässt." />
-    <MESSAGE value="Cheat Rating function" />
-    <MESSAGE value="Register feature update" />
-    <MESSAGE value="Login Feature auf Retrofit umstellen" />
-    <MESSAGE value="Login Feature &amp; Password recovery auf Retrofit umstellen" />
-    <MESSAGE value="Password recovery auf Retrofit umstellen. Cheat Reporten auf Retrofit umstellen (noch nicht fertig)" />
-    <MESSAGE value="Added in-app messaging library.&#10;Rate cheat implemented and tested with retrofit.&#10;Show snackbar instead toast for reporting and rating cheats." />
-    <MESSAGE value="get cheat meta function switch to retrofit" />
-    <MESSAGE value="Fixing the cheat meda material dialog" />
-    <MESSAGE value="Fixing the cheat meta material dialog" />
-    <MESSAGE value="Fixing the cheat meta material dialog: DONE" />
-    <MESSAGE value="Switching cheat submission over to retrofit (not working yet)" />
-    <MESSAGE value="Switching top member views etc. to retrofit." />
-    <option name="LAST_COMMIT_MESSAGE" value="Switching top member views etc. to retrofit." />
-    <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
-    <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
-    <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
+    <MESSAGE value="Retrofit weiter einbauen" />
+    <option name="LAST_COMMIT_MESSAGE" value="Retrofit weiter einbauen" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1024,37 +1050,13 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/helpers/Webservice.java</url>
-          <line>158</line>
-          <properties class="com.cheatdatabase.helpers.Webservice" method="getCheatListAsString" />
+          <line>172</line>
+          <properties class="com.cheatdatabase.helpers.Webservice" />
           <option name="timeStamp" value="148" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/helpers/Tools.java</url>
-          <line>452</line>
-          <properties class="com.cheatdatabase.helpers.Tools" method="setShareText" />
-          <option name="timeStamp" value="161" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/RecoverActivity.java</url>
-          <line>188</line>
-          <properties class="com.cheatdatabase.activity.RecoverActivity" method="sendRecoveryEmail" />
-          <option name="timeStamp" value="170" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/fragments/TopMembersFragment.java</url>
-          <line>171</line>
-          <properties class="com.cheatdatabase.fragments.TopMembersFragment" method="notifyAdapter" />
-          <option name="timeStamp" value="176" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/CheatsByMemberListActivity.java</url>
-          <line>210</line>
-          <properties class="com.cheatdatabase.activity.CheatsByMemberListActivity" method="onCheatListItemSelected" />
-          <option name="timeStamp" value="179" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/helpers/Webservice.java</url>
-          <line>842</line>
+          <line>856</line>
           <option name="timeStamp" value="57" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
@@ -1063,8 +1065,13 @@
           <option name="timeStamp" value="64" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/dialogs/ReportCheatMaterialDialog.java</url>
+          <line>43</line>
+          <option name="timeStamp" value="80" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/helpers/Webservice.java</url>
-          <line>1376</line>
+          <line>1390</line>
           <option name="timeStamp" value="82" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
@@ -1073,29 +1080,39 @@
           <option name="timeStamp" value="138" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/holders/GamesBySystemListViewItemHolder.java</url>
+          <line>39</line>
+          <option name="timeStamp" value="141" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/helpers/Webservice.java</url>
-          <line>801</line>
+          <line>815</line>
           <option name="timeStamp" value="146" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/helpers/Webservice.java</url>
-          <line>1559</line>
+          <line>1573</line>
           <option name="timeStamp" value="149" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/cheat_detail_view/CheatViewFragment.java</url>
-          <line>381</line>
-          <option name="timeStamp" value="160" />
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/CheatsByGameListActivity.java</url>
+          <line>116</line>
+          <option name="timeStamp" value="151" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/dialogs/RateCheatMaterialDialog.java</url>
-          <line>82</line>
-          <option name="timeStamp" value="165" />
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/fragments/SystemListFragment.java</url>
+          <line>130</line>
+          <option name="timeStamp" value="155" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/adapters/MemberCheatRecycleListViewAdapter.java</url>
-          <line>41</line>
-          <option name="timeStamp" value="177" />
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/fragments/SystemListFragment.java</url>
+          <line>133</line>
+          <option name="timeStamp" value="156" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/CheatForumActivity.java</url>
+          <line>508</line>
+          <option name="timeStamp" value="157" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

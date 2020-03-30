@@ -38,6 +38,7 @@ import com.cheatdatabase.helpers.Webservice;
 import com.cheatdatabase.model.Cheat;
 import com.cheatdatabase.model.Member;
 import com.cheatdatabase.model.Screenshot;
+import com.cheatdatabase.rest.RestApi;
 import com.google.gson.Gson;
 
 import java.io.BufferedInputStream;
@@ -51,6 +52,9 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import needle.Needle;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MemberCheatViewFragment extends Fragment {
     private static final String TAG = MemberCheatViewFragment.class.getSimpleName();
@@ -87,16 +91,23 @@ public class MemberCheatViewFragment extends Fragment {
     private Typeface latoFontLight;
     private MemberCheatViewPageIndicator cheatViewPageIndicator;
 
+    private RestApi restApi;
+
     private static final String KEY_CONTENT = "MemberCheatViewFragment:Content";
+    private LinearLayout outerLayout;
+    private Context context;
 
     public MemberCheatViewFragment() {
         imageViews = new ArrayList<>();
     }
 
-    public static MemberCheatViewFragment newInstance(List<Cheat> cheats, int offset) {
+    public static MemberCheatViewFragment newInstance(List<Cheat> cheats, int offset, RestApi restApi, LinearLayout outerLayout, Context context) {
         MemberCheatViewFragment fragment = new MemberCheatViewFragment();
         fragment.cheats = cheats;
         fragment.offset = offset;
+        fragment.restApi = restApi;
+        fragment.outerLayout = outerLayout;
+        fragment.context = context;
         return fragment;
     }
 
@@ -180,7 +191,7 @@ public class MemberCheatViewFragment extends Fragment {
                 // if ((isFromSearchResults == true) || (cheat.getFullCheatText() ==
                 // null) || (cheat.getFullCheatText().length() < 10)) {
                 progressBar.setVisibility(View.VISIBLE);
-                getFullCheatText();
+                getCheatBody();
             } else {
                 progressBar.setVisibility(View.GONE);
                 populateView();
@@ -395,23 +406,41 @@ public class MemberCheatViewFragment extends Fragment {
 //        }
 //    }
 
-    private void getFullCheatText() {
-        Needle.onBackgroundThread().execute(() -> updateUI(Webservice.getCheatById(cheatObj.getCheatId())));
-    }
-
-    private void updateUI(String fullCheatText) {
-        Needle.onMainThread().execute(() -> {
-            if (fullCheatText.substring(0, 1).equalsIgnoreCase("2")) {
-                cheatObj.setWalkthroughFormat(true);
+    private void getCheatBody() {
+        // TODO FIXME dies testen...
+        // TODO FIXME dies testen...
+        // TODO FIXME dies testen...
+        Call<String> call = restApi.getCheatBodyById(cheatObj.getCheatId());
+        call.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> metaInfo, Response<String> response) {
+                Log.d(TAG, "XXXXX getCheatBody SUCCESS: " + response.body());
+                updateUI(response.body());
             }
-            progressBar.setVisibility(View.GONE);
-            cheatObj.setCheatText(fullCheatText.substring(1));
 
-            populateView();
+            @Override
+            public void onFailure(Call<String> call, Throwable e) {
+                Log.e(TAG, "getCheatBody onFailure: " + e.getLocalizedMessage());
+                Tools.showSnackbar(outerLayout, context.getString(R.string.err_somethings_wrong), 5000);
+            }
         });
     }
 
+    private void updateUI(String fullCheatText) {
+        if (fullCheatText.substring(0, 1).equalsIgnoreCase("2")) {
+            cheatObj.setWalkthroughFormat(true);
+        }
+        progressBar.setVisibility(View.GONE);
+        cheatObj.setCheatText(fullCheatText.substring(1));
+
+        populateView();
+    }
+
     private void getCheatRating() {
+        // TODO FIXME umstellen auf restApi....
+        // TODO FIXME umstellen auf restApi....
+        // TODO FIXME umstellen auf restApi....
+        // TODO FIXME umstellen auf restApi....
         Needle.onBackgroundThread().execute(() -> {
             float cheatRating = 0;
             try {
