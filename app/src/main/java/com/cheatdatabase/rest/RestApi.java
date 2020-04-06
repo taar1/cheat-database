@@ -147,11 +147,11 @@ public interface RestApi {
      *
      * @param memberId Member ID
      * @param cheatId  Cheat ID
-     * @return 1-10
+     * @return {"rating":"6"} (1-10)
      */
     @FormUrlEncoded
-    @POST("getRatingByMemberId.php")
-    Call<Void> getCheatRatingByMemberId(@Field("memberId") int memberId, @Field("cheatId") int cheatId);
+    @POST("getMemberRatingByCheatId.php")
+    Call<JsonObject> getMemberRatingByCheatId(@Field("memberId") int memberId, @Field("cheatId") int cheatId);
 
 
     /**
@@ -255,11 +255,11 @@ public interface RestApi {
      * Gets the cheat text (body) of a cheat as a string.
      *
      * @param cheatId Cheat ID
-     * @return String
+     * @return Cheat
      */
     @FormUrlEncoded
     @POST("getCheatById.php")
-    Call<String> getCheatBodyById(@Field("cheatId") int cheatId);
+    Call<Cheat> getCheatById(@Field("cheatId") int cheatId);
 
     /**
      * Checks Member-Permissions.

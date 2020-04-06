@@ -58,8 +58,8 @@ public class Konstanten {
     public static final int ENGLISH = 1;
     public static final int GERMAN = 2;
 
-    public static final int FORMAT_PLAIN = 1;
-    public static final int FORMAT_WALKTHROUGH = 2;
+    public static final int CHEAT_TEXT_FORMAT_PLAIN = 1;
+    public static final int CHEAT_TEXT_FORMAT_WALKTHROUGH = 2;
 
     // ADS
     public final static String MOPUB_PHONE_UNIT_ID = "2492994e324a43dd89367f60df00b55b";

@@ -34,12 +34,12 @@ import com.afollestad.materialdialogs.Theme;
 import com.cheatdatabase.R;
 import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Tools;
-import com.cheatdatabase.helpers.Webservice;
 import com.cheatdatabase.model.Cheat;
 import com.cheatdatabase.model.Member;
 import com.cheatdatabase.model.Screenshot;
 import com.cheatdatabase.rest.RestApi;
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 
 import java.io.BufferedInputStream;
 import java.io.IOException;
@@ -175,7 +175,6 @@ public class MemberCheatViewFragment extends Fragment {
 
                 loadScreenshots();
             } else {
-                Log.d(TAG, "onCreateView: 3");
                 tvGalleryInfo.setVisibility(View.INVISIBLE);
                 screenshotGallery.setVisibility(View.GONE);
             }
@@ -185,7 +184,6 @@ public class MemberCheatViewFragment extends Fragment {
              * be complete (trimmed for the search results) and therefore has to
              * be re-fetched in a background process.
              */
-            // FIXME das gibt noch einen fehler (walkthrough holen)
             // boolean isFromSearchResults = true;
             if ((cheatObj.getCheatText() == null) || (cheatObj.getCheatText().length() < 10)) {
                 // if ((isFromSearchResults == true) || (cheat.getFullCheatText() ==
@@ -200,7 +198,7 @@ public class MemberCheatViewFragment extends Fragment {
             editor.putString("cheat" + offset, new Gson().toJson(cheatObj));
             editor.commit();
         } catch (Exception e) {
-            Log.e(TAG, "BB: " + e.getMessage());
+            Log.e(TAG, "onCreateView: ", e);
         }
 
         return linearLayout;
@@ -246,7 +244,7 @@ public class MemberCheatViewFragment extends Fragment {
         mainTable.setVisibility(View.VISIBLE);
         mainTable.setHorizontalScrollBarEnabled(true);
 
-        // Cheat Text oberhalb der Tabelle
+        // Text before the table
         String[] textBeforeTable;
 
         // Einige tabellarische Cheats beginnen direkt mit der Tabelle
@@ -368,87 +366,63 @@ public class MemberCheatViewFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
-        getResources().getConfiguration();
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
-
         }
     }
 
-//    @Override
-//    public void onClick(View v) {
-//        Log.d("onClick", "onClick");
-//        Bundle arguments = new Bundle();
-//        arguments.putInt("CHANGEME", 1);
-//        arguments.putSerializable("cheatObj", cheatObj);
-//    }
-
-//    private class FetchCheatTextTask extends AsyncTask<Void, Void, Void> {
-//
-//        String fullCheatText;
-//
-//        @Override
-//        protected Void doInBackground(Void... params) {
-//            fullCheatText = Webservice.getCheatById(cheatObj.getCheatId());
-//
-//            return null;
-//        }
-//
-//        @Override
-//        protected void onPostExecute(Void result) {
-//            super.onPostExecute(result);
-//            if (fullCheatText.substring(0, 1).equalsIgnoreCase("2")) {
-//                cheatObj.setWalkthroughFormat(true);
-//            }
-//            progressBar.setVisibility(View.GONE);
-//            cheatObj.setCheatText(fullCheatText.substring(1));
-//
-//            populateView();
-//        }
-//    }
-
     private void getCheatBody() {
-        // TODO FIXME dies testen...
-        // TODO FIXME dies testen...
-        // TODO FIXME dies testen...
-        Call<String> call = restApi.getCheatBodyById(cheatObj.getCheatId());
-        call.enqueue(new Callback<String>() {
+        Call<Cheat> call = restApi.getCheatById(cheatObj.getCheatId());
+        call.enqueue(new Callback<Cheat>() {
             @Override
-            public void onResponse(Call<String> metaInfo, Response<String> response) {
-                Log.d(TAG, "XXXXX getCheatBody SUCCESS: " + response.body());
+            public void onResponse(Call<Cheat> metaInfo, Response<Cheat> response) {
                 updateUI(response.body());
             }
 
             @Override
-            public void onFailure(Call<String> call, Throwable e) {
+            public void onFailure(Call<Cheat> call, Throwable e) {
                 Log.e(TAG, "getCheatBody onFailure: " + e.getLocalizedMessage());
                 Tools.showSnackbar(outerLayout, context.getString(R.string.err_somethings_wrong), 5000);
             }
         });
     }
 
-    private void updateUI(String fullCheatText) {
-        if (fullCheatText.substring(0, 1).equalsIgnoreCase("2")) {
+    private void updateUI(Cheat cheat) {
+        if (cheat.getStyle() == Konstanten.CHEAT_TEXT_FORMAT_WALKTHROUGH) {
             cheatObj.setWalkthroughFormat(true);
         }
         progressBar.setVisibility(View.GONE);
-        cheatObj.setCheatText(fullCheatText.substring(1));
+        cheatObj.setCheatText(cheat.getCheatText());
 
         populateView();
     }
 
     private void getCheatRating() {
-        // TODO FIXME umstellen auf restApi....
-        // TODO FIXME umstellen auf restApi....
-        // TODO FIXME umstellen auf restApi....
-        // TODO FIXME umstellen auf restApi....
-        Needle.onBackgroundThread().execute(() -> {
-            float cheatRating = 0;
-            try {
-                cheatRating = Webservice.getCheatRatingByMemberId(member.getMid(), cheatObj.getCheatId());
-            } catch (Exception e) {
-            }
-            updateRatingUI(cheatRating);
-        });
+        // TODO FIXME noch testen was passiert wenn member 1 (ich) eine rating vorhanden hat in der DB.... funktioniert alles?
+        // TODO FIXME noch testen was passiert wenn member 1 (ich) eine rating vorhanden hat in der DB.... funktioniert alles?
+        // TODO FIXME noch testen was passiert wenn member 1 (ich) eine rating vorhanden hat in der DB.... funktioniert alles?
+        // TODO FIXME noch testen was passiert wenn member 1 (ich) eine rating vorhanden hat in der DB.... funktioniert alles?
+        // TODO FIXME noch testen was passiert wenn member 1 (ich) eine rating vorhanden hat in der DB.... funktioniert alles?
+
+        if (member != null) {
+            Log.d(TAG, "XXXXX getCheatRating 1: " + member.getMid());
+            Log.d(TAG, "XXXXX getCheatRating 2: " + cheatObj.getCheatId());
+
+            Call<JsonObject> call = restApi.getMemberRatingByCheatId(member.getMid(), cheatObj.getCheatId());
+            call.enqueue(new Callback<JsonObject>() {
+                @Override
+                public void onResponse(Call<JsonObject> ratingInfo, Response<JsonObject> response) {
+                    JsonObject ratingJsonObj = response.body();
+                    Log.d(TAG, "XXXXX getCheatRating SUCCESS: " + ratingJsonObj.get("rating").getAsFloat());
+                    updateRatingUI(ratingJsonObj.get("rating").getAsFloat());
+                }
+
+                @Override
+                public void onFailure(Call<JsonObject> call, Throwable e) {
+                    Log.e(TAG, "XXXXX getCheatRating onFailure: " + e.getLocalizedMessage());
+                }
+            });
+        }
+
     }
 
     private void updateRatingUI(float cheatRating) {
@@ -520,7 +494,7 @@ public class MemberCheatViewFragment extends Fragment {
     /**
      * Innere Klasse zum Anzeigen der Screenshot-Thumbnails
      * <p/>
-     * Copyright (c) 2010-2018<br>
+     * Copyright (c) 2010-2020<br>
      *
      * @author Dominik Erbsland
      * @version 1.1

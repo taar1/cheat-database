@@ -27,7 +27,7 @@ import javax.inject.Inject;
  */
 public class Cheat extends Game implements Parcelable {
 
-    @SerializedName("id")
+    @SerializedName("cheatId")
     private int cheatId;
     @SerializedName("title")
     private String cheatTitle;
@@ -353,5 +353,11 @@ public class Cheat extends Game implements Parcelable {
         return 0;
     }
 
+    public int getStyle() {
+        return style; // 1 = normal cheat, 2 = walkthrough
+    }
 
+    public void setStyle(int style) {
+        this.style = style;
+    }
 }

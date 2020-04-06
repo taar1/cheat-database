@@ -141,6 +141,16 @@ public class CheatsByMemberListActivity extends AppCompatActivity implements OnC
                 if (response.isSuccessful()) {
                     cheatList = response.body();
 
+                    // TODO FIXME hier ist cheat ID immer "0"... kommt evtl. nicht vom rest backend korrekt zurück?
+                    // TODO FIXME hier ist cheat ID immer "0"... kommt evtl. nicht vom rest backend korrekt zurück?
+                    // TODO FIXME hier ist cheat ID immer "0"... kommt evtl. nicht vom rest backend korrekt zurück?
+                    // TODO FIXME hier ist cheat ID immer "0"... kommt evtl. nicht vom rest backend korrekt zurück?
+                    // TODO FIXME hier ist cheat ID immer "0"... kommt evtl. nicht vom rest backend korrekt zurück?
+                    // TODO FIXME hier ist cheat ID immer "0"... kommt evtl. nicht vom rest backend korrekt zurück?
+                    // TODO FIXME hier ist cheat ID immer "0"... kommt evtl. nicht vom rest backend korrekt zurück?
+                    // TODO FIXME hier ist cheat ID immer "0"... kommt evtl. nicht vom rest backend korrekt zurück?
+
+
                     editor.putString(Konstanten.PREFERENCES_TEMP_CHEAT_ARRAY_OBJECT_VIEW, new Gson().toJson(cheatList));
                     editor.apply();
 
