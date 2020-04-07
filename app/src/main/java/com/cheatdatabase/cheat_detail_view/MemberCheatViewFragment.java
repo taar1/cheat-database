@@ -115,6 +115,8 @@ public class MemberCheatViewFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        Log.d(TAG, "XXXXX onCreateasdfasdfasdf: ");
+
 //        if ((savedInstanceState != null) && savedInstanceState.containsKey(KEY_CONTENT)) {
 //            mContent = savedInstanceState.getString(KEY_CONTENT);
 //        }
@@ -397,37 +399,25 @@ public class MemberCheatViewFragment extends Fragment {
     }
 
     private void getCheatRating() {
-        // TODO FIXME noch testen was passiert wenn member 1 (ich) eine rating vorhanden hat in der DB.... funktioniert alles?
-        // TODO FIXME noch testen was passiert wenn member 1 (ich) eine rating vorhanden hat in der DB.... funktioniert alles?
-        // TODO FIXME noch testen was passiert wenn member 1 (ich) eine rating vorhanden hat in der DB.... funktioniert alles?
-        // TODO FIXME noch testen was passiert wenn member 1 (ich) eine rating vorhanden hat in der DB.... funktioniert alles?
-        // TODO FIXME noch testen was passiert wenn member 1 (ich) eine rating vorhanden hat in der DB.... funktioniert alles?
-
         if (member != null) {
-            Log.d(TAG, "XXXXX getCheatRating 1: " + member.getMid());
-            Log.d(TAG, "XXXXX getCheatRating 2: " + cheatObj.getCheatId());
-
             Call<JsonObject> call = restApi.getMemberRatingByCheatId(member.getMid(), cheatObj.getCheatId());
             call.enqueue(new Callback<JsonObject>() {
                 @Override
                 public void onResponse(Call<JsonObject> ratingInfo, Response<JsonObject> response) {
                     JsonObject ratingJsonObj = response.body();
-                    Log.d(TAG, "XXXXX getCheatRating SUCCESS: " + ratingJsonObj.get("rating").getAsFloat());
-                    updateRatingUI(ratingJsonObj.get("rating").getAsFloat());
+                    Log.d(TAG, "getCheatRating SUCCESS: " + ratingJsonObj.get("rating").getAsFloat());
+
+                    float cheatRating = ratingJsonObj.get("rating").getAsFloat();
+                    if (cheatRating > 0) {
+                        cheatViewPageIndicator.setRating(offset, cheatRating);
+                    }
+
                 }
 
                 @Override
                 public void onFailure(Call<JsonObject> call, Throwable e) {
-                    Log.e(TAG, "XXXXX getCheatRating onFailure: " + e.getLocalizedMessage());
                 }
             });
-        }
-
-    }
-
-    private void updateRatingUI(float cheatRating) {
-        if (cheatRating > 0) {
-            cheatViewPageIndicator.setRating(offset, cheatRating);
         }
     }
 
