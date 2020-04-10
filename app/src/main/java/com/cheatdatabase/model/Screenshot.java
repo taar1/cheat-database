@@ -17,15 +17,17 @@ import java.net.URL;
 import javax.inject.Inject;
 
 /**
- * Screenshot-Objekt eines Cheats.
+ * Screenshot within a Cheat
  *
- * @author erbsland
+ * @author Dominik Erbsland
  */
 public class Screenshot implements Parcelable {
     @SerializedName("kbyteSize")
     private String kbyteSize;
     @SerializedName("filename")
     private String filename;
+    @SerializedName("fullPath")
+    private String fullPath;
     @SerializedName("cheatId")
     private int cheatId;
 
@@ -34,10 +36,11 @@ public class Screenshot implements Parcelable {
 
     }
 
-    public Screenshot(String kbyteSize, String filename, int cheatId) {
+    public Screenshot(String kbyteSize, String filename, String fullPath, int cheatId) {
         super();
         this.kbyteSize = kbyteSize;
         this.filename = filename;
+        this.fullPath = fullPath;
         this.cheatId = cheatId;
     }
 
@@ -45,6 +48,7 @@ public class Screenshot implements Parcelable {
         // Attention: The order of writing and reading the parcel MUST match.
         kbyteSize = in.readString();
         filename = in.readString();
+        fullPath = in.readString();
         cheatId = in.readInt();
     }
 
@@ -53,6 +57,7 @@ public class Screenshot implements Parcelable {
         // Attention: The order of writing and reading the parcel MUST match.
         dest.writeString(kbyteSize);
         dest.writeString(filename);
+        dest.writeString(fullPath);
         dest.writeInt(cheatId);
     }
 
@@ -72,24 +77,16 @@ public class Screenshot implements Parcelable {
         return kbyteSize;
     }
 
-    public void setKbyteSize(String kbyteSize) {
-        this.kbyteSize = kbyteSize;
-    }
-
     public String getFilename() {
         return filename;
-    }
-
-    public void setFilename(String filename) {
-        this.filename = filename;
     }
 
     public int getCheatId() {
         return cheatId;
     }
 
-    public void setCheatId(int cheatId) {
-        this.cheatId = cheatId;
+    public String getFullPath() {
+        return fullPath;
     }
 
     /**

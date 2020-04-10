@@ -112,17 +112,19 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4caff62e-c62f-40ca-acf0-73c680b13375" name="Default" comment="MemberCheatView Anpassungen.">
-      <change beforePath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" afterDir="false" />
+    <list default="true" id="4caff62e-c62f-40ca-acf0-73c680b13375" name="Default" comment="Adding Cheat Detail Image Gallery using Kotlin and RecyclerView">
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/adapters/CheatViewGalleryListAdapter.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/callbacks/CheatViewGalleryImageClickListener.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/cheat_detail_view/ImageGalleryCard.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/holders/CheatViewGalleryCardHolder.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/gallery_card.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/recycler_view_item.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/app.iml" beforeDir="false" afterPath="$PROJECT_DIR$/app/app.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/CheatsByGameListActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/CheatsByGameListActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/callbacks/GalleryLoadingCallback.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/cheat_detail_view/CheatViewFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/cheat_detail_view/CheatViewFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/model/Cheat.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/model/Cheat.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/ratingbarorange_ratingbar_full_holo_dark.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ratingbarorange_ratingbar_full_holo_dark.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_cheat_detail_view.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_cheat_detail_view.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/helpers/Webservice.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/helpers/Webservice.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/model/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/model/Game.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/model/Screenshot.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/model/Screenshot.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -133,7 +135,7 @@
   <component name="CreatePatchCommitExecutor">
     <option name="PATCH_PATH" value="" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="fd8b7031" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="Pixel_3a_API_Q_NO_PROXY" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
@@ -619,13 +621,6 @@
       <option name="presentableId" value="Default" />
       <updated>1487274191999</updated>
     </task>
-    <task id="LOCAL-00040" summary="Free many classes from AndroidAnnotations.">
-      <created>1540670414884</created>
-      <option name="number" value="00040" />
-      <option name="presentableId" value="LOCAL-00040" />
-      <option name="project" value="LOCAL" />
-      <updated>1540670414884</updated>
-    </task>
     <task id="LOCAL-00041" summary="Free many classes from AndroidAnnotations.">
       <created>1540757344098</created>
       <option name="number" value="00041" />
@@ -962,7 +957,14 @@
       <option name="project" value="LOCAL" />
       <updated>1586292850404</updated>
     </task>
-    <option name="localTasksCounter" value="89" />
+    <task id="LOCAL-00089" summary="Adding Cheat Detail Image Gallery using Kotlin and RecyclerView">
+      <created>1586524538634</created>
+      <option name="number" value="00089" />
+      <option name="presentableId" value="LOCAL-00089" />
+      <option name="project" value="LOCAL" />
+      <updated>1586524538635</updated>
+    </task>
+    <option name="localTasksCounter" value="90" />
     <servers />
   </component>
   <component name="TodoView">
@@ -1012,7 +1014,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
-    <MESSAGE value="Crashlytics Bug Fixes&#10;&#10;Version 2.4-preRelease" />
     <MESSAGE value="RELEASE VERSION 2.4" />
     <MESSAGE value="Bug Fixes for upcoming version 2.4.1" />
     <MESSAGE value="Fixing ads, adding InMobie ads for upcoming version 2.4.1" />
@@ -1037,7 +1038,8 @@
     <MESSAGE value="Retrofit weiter einbauen" />
     <MESSAGE value="Fixing DAO structures for Retrofit." />
     <MESSAGE value="MemberCheatView Anpassungen." />
-    <option name="LAST_COMMIT_MESSAGE" value="MemberCheatView Anpassungen." />
+    <MESSAGE value="Adding Cheat Detail Image Gallery using Kotlin and RecyclerView" />
+    <option name="LAST_COMMIT_MESSAGE" value="Adding Cheat Detail Image Gallery using Kotlin and RecyclerView" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
@@ -1069,12 +1071,6 @@
           <line>282</line>
           <properties method="onResponse" />
           <option name="timeStamp" value="167" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/cheat_detail_view/CheatViewFragment.java</url>
-          <line>484</line>
-          <properties class="com.cheatdatabase.cheat_detail_view.CheatViewFragment" />
-          <option name="timeStamp" value="172" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/helpers/Webservice.java</url>
@@ -1145,11 +1141,6 @@
           <url>file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/CheatsByGameListActivity.java</url>
           <line>310</line>
           <option name="timeStamp" value="169" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/cheat_detail_view/CheatViewFragment.java</url>
-          <line>478</line>
-          <option name="timeStamp" value="174" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

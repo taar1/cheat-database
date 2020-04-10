@@ -654,83 +654,83 @@ public class Webservice {
      * @param memberId
      * @return
      */
-    public static void getCheatList(Game game, int memberId, boolean isAchievementsEnabled, final RepositoryEntityListCallback<Cheat> callback) {
-        Log.d(TAG, "XXXXX getCheatList() 1");
-
-        Needle.onBackgroundThread().execute(() -> {
-            String systemString = getCheatListAsString(game.getGameId(), memberId, isAchievementsEnabled);
-
-            List<Cheat> cheatList = new ArrayList<>();
-            JSONArray jArray;
-
-            try {
-                jArray = new JSONArray(systemString);
-
-                for (int i = 0; i < jArray.length(); i++) {
-
-                    JSONObject jsonObject = jArray.getJSONObject(i);
-
-                    int cheatId = jsonObject.getInt("id");
-                    String cheatTitle = jsonObject.getString("title");
-                    String cheatText = jsonObject.getString("cheat");
-                    int language = jsonObject.getInt("lang");
-                    int cheatFormat = jsonObject.getInt("format");
-                    String rating = jsonObject.getString("rating");
-                    String memberRating = jsonObject.getString("member_rating");
-                    String created = jsonObject.getString("created");
-                    int forumCount = jsonObject.getInt("forum_count");
-
-                    Cheat cheat = new Cheat();
-
-                    // Screenshot-Informationen auslesen
-                    JSONArray screenshots = jsonObject.getJSONArray("screenshots");
-                    Screenshot[] screens = new Screenshot[screenshots.length()];
-                    for (int j = 0; j < screenshots.length(); j++) {
-                        JSONArray screenshot = screenshots.getJSONArray(j);
-                        String filename = screenshot.getString(0);
-                        String filesize_kb = screenshot.getString(1);
-
-                        screens[j] = new Screenshot(filesize_kb, filename, cheatId);
-
-                        cheat.setHasScreenshots(true);
-                    }
-                    cheat.setScreenshotList(screens);
-
-                    cheat.setCheatId(cheatId);
-                    cheat.setCheatTitle(cheatTitle.replaceAll("\\\\", ""));
-                    cheat.setCheatText(cheatText.replaceAll("\\\\", ""));
-                    cheat.setLanguageId(language);
-                    cheat.setRatingAverage(Float.parseFloat(rating));
-                    cheat.setMemberRating(Float.parseFloat(memberRating));
-                    cheat.setGameId(game.getGameId());
-                    cheat.setGameName(game.getGameName());
-                    if (cheatFormat == 2) {
-                        cheat.setWalkthroughFormat(true);
-                    } else {
-                        cheat.setWalkthroughFormat(false);
-                    }
-                    cheat.setSystemId(game.getSystemId());
-                    cheat.setSystemName(game.getSystemName());
-                    cheat.setCreated(created);
-                    cheat.setForumCount(forumCount);
-
-                    Member member = new Member();
-                    member.setMid(memberId);
-                    cheat.setMember(member);
-
-                    cheatList.add(cheat);
-                }
-
-                callback.onSuccess(cheatList);
-
-            } catch (JSONException e) {
-                Log.e(TAG, "JSONException: " + e.getLocalizedMessage());
-                Crashlytics.logException(e);
-                callback.onFailure(e);
-            }
-        });
-
-    }
+//    public static void getCheatList(Game game, int memberId, boolean isAchievementsEnabled, final RepositoryEntityListCallback<Cheat> callback) {
+//        Log.d(TAG, "XXXXX getCheatList() 1");
+//
+//        Needle.onBackgroundThread().execute(() -> {
+//            String systemString = getCheatListAsString(game.getGameId(), memberId, isAchievementsEnabled);
+//
+//            List<Cheat> cheatList = new ArrayList<>();
+//            JSONArray jArray;
+//
+//            try {
+//                jArray = new JSONArray(systemString);
+//
+//                for (int i = 0; i < jArray.length(); i++) {
+//
+//                    JSONObject jsonObject = jArray.getJSONObject(i);
+//
+//                    int cheatId = jsonObject.getInt("id");
+//                    String cheatTitle = jsonObject.getString("title");
+//                    String cheatText = jsonObject.getString("cheat");
+//                    int language = jsonObject.getInt("lang");
+//                    int cheatFormat = jsonObject.getInt("format");
+//                    String rating = jsonObject.getString("rating");
+//                    String memberRating = jsonObject.getString("member_rating");
+//                    String created = jsonObject.getString("created");
+//                    int forumCount = jsonObject.getInt("forum_count");
+//
+//                    Cheat cheat = new Cheat();
+//
+//                    // Screenshot-Informationen auslesen
+//                    JSONArray screenshots = jsonObject.getJSONArray("screenshots");
+//                    Screenshot[] screens = new Screenshot[screenshots.length()];
+//                    for (int j = 0; j < screenshots.length(); j++) {
+//                        JSONArray screenshot = screenshots.getJSONArray(j);
+//                        String filename = screenshot.getString(0);
+//                        String filesize_kb = screenshot.getString(1);
+//
+//                        screens[j] = new Screenshot(filesize_kb, filename, cheatId);
+//
+//                        cheat.setHasScreenshots(true);
+//                    }
+//                    cheat.setScreenshotList(screens);
+//
+//                    cheat.setCheatId(cheatId);
+//                    cheat.setCheatTitle(cheatTitle.replaceAll("\\\\", ""));
+//                    cheat.setCheatText(cheatText.replaceAll("\\\\", ""));
+//                    cheat.setLanguageId(language);
+//                    cheat.setRatingAverage(Float.parseFloat(rating));
+//                    cheat.setMemberRating(Float.parseFloat(memberRating));
+//                    cheat.setGameId(game.getGameId());
+//                    cheat.setGameName(game.getGameName());
+//                    if (cheatFormat == 2) {
+//                        cheat.setWalkthroughFormat(true);
+//                    } else {
+//                        cheat.setWalkthroughFormat(false);
+//                    }
+//                    cheat.setSystemId(game.getSystemId());
+//                    cheat.setSystemName(game.getSystemName());
+//                    cheat.setCreated(created);
+//                    cheat.setForumCount(forumCount);
+//
+//                    Member member = new Member();
+//                    member.setMid(memberId);
+//                    cheat.setMember(member);
+//
+//                    cheatList.add(cheat);
+//                }
+//
+//                callback.onSuccess(cheatList);
+//
+//            } catch (JSONException e) {
+//                Log.e(TAG, "JSONException: " + e.getLocalizedMessage());
+//                Crashlytics.logException(e);
+//                callback.onFailure(e);
+//            }
+//        });
+//
+//    }
 
     /**
      * Holt die Meta-Informationen zu einem Cheat.
@@ -819,7 +819,7 @@ public class Webservice {
                 JSONArray screenshotsArray = jsonObject.getJSONArray("screenshots");
                 Screenshot[] screens = new Screenshot[screenshotsArray.length()];
                 for (int x = 0; x < screenshotsArray.length(); x++) {
-                    screens[x] = new Screenshot(screenshotsArray.getJSONObject(x).getString("size"), screenshotsArray.getJSONObject(x).getString("url"), cheatId);
+                    screens[x] = new Screenshot(screenshotsArray.getJSONObject(x).getString("size"), screenshotsArray.getJSONObject(x).getString("url"), screenshotsArray.getJSONObject(x).getString("url"), cheatId);
                     cheat.setHasScreenshots(true);
                 }
 
@@ -1028,78 +1028,78 @@ public class Webservice {
      * @param memberId
      * @return
      */
-    public static List<Cheat> getCheatsByMemberId(int memberId) {
-        List<Cheat> cheats = new ArrayList<>();
-        JSONArray jArray;
-
-        try {
-            String urlParameters = "memberId=" + URLEncoder.encode(String.valueOf(memberId), "UTF-8");
-            String cheatsString = excutePost(Konstanten.BASE_URL_ANDROID + "getCheatsByMemberId.php", urlParameters);
-
-            jArray = new JSONArray(cheatsString);
-
-            for (int i = 0; i < jArray.length(); i++) {
-
-                JSONObject jsonObject = jArray.getJSONObject(i);
-
-                int cheatId = jsonObject.getInt("cheat_id");
-                int gameId = jsonObject.getInt("game_id");
-                String gameName = jsonObject.getString("gamename");
-                String cheatTitle = jsonObject.getString("title");
-                String cheatText = jsonObject.getString("cheat");
-                int language = jsonObject.getInt("lang");
-                int style = jsonObject.getInt("style");
-                String created = jsonObject.getString("created");
-                String rating = jsonObject.optString("rating", "0");
-                String systemName = jsonObject.getString("system");
-                int systemId = jsonObject.getInt("system_id");
-
-                Cheat cheat = new Cheat();
-
-                /*
-                 * Read the screenshot informationen
-                 */
-                JSONArray screenshots = jsonObject.getJSONArray("screenshots");
-                Screenshot[] screens = new Screenshot[screenshots.length()];
-                for (int j = 0; j < screenshots.length(); j++) {
-                    JSONArray screenshot = screenshots.getJSONArray(j);
-                    String filename = screenshot.getString(0);
-                    String filesize_kb = screenshot.getString(1);
-
-                    screens[j] = new Screenshot(filesize_kb, filename, cheatId);
-
-                    cheat.setHasScreenshots(true);
-                }
-                cheat.setScreenshotList(screens);
-
-                cheat.setCheatId(cheatId);
-                cheat.setCheatTitle(cheatTitle);
-                cheat.setCheatText(cheatText);
-                cheat.setLanguageId(language);
-
-                if (style == 1) {
-                    cheat.setWalkthroughFormat(false);
-                } else {
-                    cheat.setWalkthroughFormat(true);
-                }
-
-                cheat.setCreated(created);
-                cheat.setRatingAverage(Float.parseFloat(rating));
-                cheat.setGameId(gameId);
-                cheat.setGameName(gameName);
-                cheat.setSystemId(systemId);
-                cheat.setSystemName(systemName);
-
-                cheats.add(cheat);
-            }
-
-        } catch (JSONException | UnsupportedEncodingException e) {
-            Log.e(TAG, e.getLocalizedMessage());
-            Crashlytics.logException(e);
-        }
-
-        return cheats;
-    }
+//    public static List<Cheat> getCheatsByMemberId(int memberId) {
+//        List<Cheat> cheats = new ArrayList<>();
+//        JSONArray jArray;
+//
+//        try {
+//            String urlParameters = "memberId=" + URLEncoder.encode(String.valueOf(memberId), "UTF-8");
+//            String cheatsString = excutePost(Konstanten.BASE_URL_ANDROID + "getCheatsByMemberId.php", urlParameters);
+//
+//            jArray = new JSONArray(cheatsString);
+//
+//            for (int i = 0; i < jArray.length(); i++) {
+//
+//                JSONObject jsonObject = jArray.getJSONObject(i);
+//
+//                int cheatId = jsonObject.getInt("cheat_id");
+//                int gameId = jsonObject.getInt("game_id");
+//                String gameName = jsonObject.getString("gamename");
+//                String cheatTitle = jsonObject.getString("title");
+//                String cheatText = jsonObject.getString("cheat");
+//                int language = jsonObject.getInt("lang");
+//                int style = jsonObject.getInt("style");
+//                String created = jsonObject.getString("created");
+//                String rating = jsonObject.optString("rating", "0");
+//                String systemName = jsonObject.getString("system");
+//                int systemId = jsonObject.getInt("system_id");
+//
+//                Cheat cheat = new Cheat();
+//
+//                /*
+//                 * Read the screenshot informationen
+//                 */
+//                JSONArray screenshots = jsonObject.getJSONArray("screenshots");
+//                Screenshot[] screens = new Screenshot[screenshots.length()];
+//                for (int j = 0; j < screenshots.length(); j++) {
+//                    JSONArray screenshot = screenshots.getJSONArray(j);
+//                    String filename = screenshot.getString(0);
+//                    String filesize_kb = screenshot.getString(1);
+//
+//                    screens[j] = new Screenshot(filesize_kb, filename, filename, cheatId);
+//
+//                    cheat.setHasScreenshots(true);
+//                }
+//                cheat.setScreenshotList(screens);
+//
+//                cheat.setCheatId(cheatId);
+//                cheat.setCheatTitle(cheatTitle);
+//                cheat.setCheatText(cheatText);
+//                cheat.setLanguageId(language);
+//
+//                if (style == 1) {
+//                    cheat.setWalkthroughFormat(false);
+//                } else {
+//                    cheat.setWalkthroughFormat(true);
+//                }
+//
+//                cheat.setCreated(created);
+//                cheat.setRatingAverage(Float.parseFloat(rating));
+//                cheat.setGameId(gameId);
+//                cheat.setGameName(gameName);
+//                cheat.setSystemId(systemId);
+//                cheat.setSystemName(systemName);
+//
+//                cheats.add(cheat);
+//            }
+//
+//        } catch (JSONException | UnsupportedEncodingException e) {
+//            Log.e(TAG, e.getLocalizedMessage());
+//            Crashlytics.logException(e);
+//        }
+//
+//        return cheats;
+//    }
 
     /**
      * Holt die Top 20 Members

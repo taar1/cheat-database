@@ -103,7 +103,7 @@ public class Game implements Parcelable {
     }
 
     public String getGameName() {
-        return gameName;
+        return gameName.replaceAll("\\\\", "");
     }
 
     public void setCheatsCount(int cheatsCount) {
