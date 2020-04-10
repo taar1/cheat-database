@@ -1,4 +1,5 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -40,8 +41,8 @@
 
             <TextView
                 android:id="@+id/text_cheat_before_table"
-                android:layout_height="wrap_content"
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:textAppearance="@style/NormalTextLight"
                 android:textIsSelectable="true" />
 
@@ -54,9 +55,9 @@
 
             <TextView
                 android:id="@+id/cheat_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:layout_width="match_parent"
                 android:textAppearance="@style/NormalTextLight"
                 android:textIsSelectable="false" />
 
@@ -67,12 +68,16 @@
                 android:layout_gravity="center"
                 android:gravity="top" />
 
-            <Gallery
-                android:id="@+id/gallery"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/gallery_recycler_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
-                android:gravity="bottom" />
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:background="@color/black"
+                tools:layoutManager="GridLayoutManager"
+                tools:listitem="@layout/gallery_card"
+                tools:spanCount="3" />
 
             <TextView
                 android:id="@+id/gallery_info"

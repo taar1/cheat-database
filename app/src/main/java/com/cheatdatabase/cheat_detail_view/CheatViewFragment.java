@@ -1,14 +1,10 @@
 package com.cheatdatabase.cheat_detail_view;
 
-import android.content.ActivityNotFoundException;
-import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
-import android.net.Uri;
 import android.os.Bundle;
 import android.text.Html;
 import android.util.Log;
@@ -17,8 +13,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.webkit.WebView;
-import android.widget.BaseAdapter;
-import android.widget.Gallery;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -28,10 +22,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.Theme;
 import com.cheatdatabase.R;
+import com.cheatdatabase.adapters.CheatViewGalleryListAdapter;
 import com.cheatdatabase.callbacks.GalleryLoadingCallback;
 import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Reachability;
@@ -41,7 +38,6 @@ import com.cheatdatabase.model.Cheat;
 import com.cheatdatabase.model.Game;
 import com.cheatdatabase.model.Member;
 import com.cheatdatabase.model.Screenshot;
-import com.crashlytics.android.Crashlytics;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
@@ -71,13 +67,6 @@ public class CheatViewFragment extends Fragment {
     private static final String TAG = "CheatViewFragment";
     private static final String KEY_CONTENT = "CheatViewFragment:Content";
 
-    // TODO FIXME die member bewertung vom cheat holt es noch nicht....
-    // TODO FIXME die member bewertung vom cheat holt es noch nicht....
-    // TODO FIXME die member bewertung vom cheat holt es noch nicht....
-    // TODO FIXME die member bewertung vom cheat holt es noch nicht....
-    // TODO FIXME die member bewertung vom cheat holt es noch nicht....
-    // TODO FIXME die member bewertung vom cheat holt es noch nicht....
-
     private LinearLayout outerLinearLayout;
 
     @BindView(R.id.table_cheat_list_main)
@@ -90,8 +79,10 @@ public class CheatViewFragment extends Fragment {
     TextView tvCheatTitle;
     @BindView(R.id.gallery_info)
     TextView tvGalleryInfo;
-    @BindView(R.id.gallery)
-    Gallery screenshotGallery;
+    //    @BindView(R.id.gallery)
+//    Gallery screenshotGallery;
+    @BindView(R.id.gallery_recycler_view)
+    RecyclerView galleryRecyclerView;
     @BindView(R.id.progress_bar)
     ProgressBar progressBar;
     @BindView(R.id.reload)
@@ -201,22 +192,43 @@ public class CheatViewFragment extends Fragment {
             biggestHeight = 100; // setMemberList value
             progressBar.setVisibility(View.VISIBLE);
 
-            getScreenshotsOnline(cheatObj, new GalleryLoadingCallback() {
-                @Override
-                public void success(List<Bitmap> bitmapList) {
-                    progressBar.setVisibility(View.GONE);
-                    displayScreenshotsInGallery(bitmapList);
-                }
+            CheatViewGalleryListAdapter cheatViewGalleryListAdapter = new CheatViewGalleryListAdapter();
+            cheatViewGalleryListAdapter.setScreenshotList(cheatObj.getScreenshotList());
 
+            galleryRecyclerView.setAdapter(cheatViewGalleryListAdapter);
+            RecyclerView.LayoutManager gridLayoutManager = new GridLayoutManager(cheatViewPageIndicatorActivity, 2, GridLayoutManager.HORIZONTAL, false);
+            galleryRecyclerView.setLayoutManager(gridLayoutManager);
+            galleryRecyclerView.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void fail(Exception e) {
-                    progressBar.setVisibility(View.GONE);
+                public void onClick(View v) {
+                    Log.d(TAG, "XXXXX IMAGE GALLERY onClick: ");
                 }
             });
+
+            if ((cheatObj.getScreenshotList() == null) || (cheatObj.getScreenshotList().size() <= 1)) {
+                tvGalleryInfo.setVisibility(View.GONE);
+            } else {
+                tvGalleryInfo.setVisibility(View.VISIBLE);
+            }
+
+//            getScreenshotsOnline(cheatObj, new GalleryLoadingCallback() {
+//                @Override
+//                public void success(List<Bitmap> bitmapList) {
+//                    Log.d(TAG, "success: ");
+//                    progressBar.setVisibility(View.GONE);
+//                    displayScreenshotsInGallery(bitmapList);
+//                }
+//
+//                @Override
+//                public void fail(Exception e) {
+//                    Log.e(TAG, "fail: ", e);
+//                    progressBar.setVisibility(View.GONE);
+//                }
+//            });
         } else {
             progressBar.setVisibility(View.GONE);
             tvGalleryInfo.setVisibility(View.GONE);
-            screenshotGallery.setVisibility(View.GONE);
+            galleryRecyclerView.setVisibility(View.GONE);
         }
 
         /**
@@ -402,6 +414,33 @@ public class CheatViewFragment extends Fragment {
         }
     }
 
+
+    // TODO FIXME hier die image view gallery einbauen wie bei cineman
+    // TODO FIXME hier die image view gallery einbauen wie bei cineman
+    // TODO FIXME hier die image view gallery einbauen wie bei cineman
+    // TODO FIXME hier die image view gallery einbauen wie bei cineman
+    // TODO FIXME hier die image view gallery einbauen wie bei cineman
+
+//    void clickMoodImage() {
+//        if (detailMovie != null && detailMovie.getImages() != null) {
+//
+//            int imageListSize = detailMovie.getImages().size();
+//
+//            String[] imageList = new String[imageListSize];
+//            for (int i = 0; i < imageListSize; i++) {
+//                imageList[i] = detailMovie.getImages().get(i).getTeaser().getUrl2x();
+//            }
+//
+//            new StfalconImageViewer.Builder<>(activity, imageList, (imageView, image) -> Picasso.get().load(image).into(imageView)).withTransitionFrom(moodImage).show();
+//        }
+//    }
+//    @OnClick(R.id.moviePoster)
+//    void clickMoviePoster() {
+//        String[] imageList = new String[]{detailMovie.getPoster().getUrl2x().replace("x2/", "x3/")};
+//        new StfalconImageViewer.Builder<>(activity, imageList, (imageView, image) -> Picasso.get().load(image).placeholder(R.mipmap.ic_launcher_simple).into(imageView)).withTransitionFrom(moviePoster).show();
+//    }
+
+
     private void getScreenshotsOnline(Cheat cheat, GalleryLoadingCallback callback) {
         List<Bitmap> bitmapList = new ArrayList<>();
         progressBar.setVisibility(View.VISIBLE);
@@ -442,81 +481,103 @@ public class CheatViewFragment extends Fragment {
         });
     }
 
-    void displayScreenshotsInGallery(List<Bitmap> bitmapList) {
-        imageViews = new ArrayList<>();
+//    void displayScreenshotsInGallery(List<Bitmap> bitmapList) {
+//        imageViews = new ArrayList<>();
+//
+//        for (Bitmap b : bitmapList) {
+//            ImageView iv = new ImageView(cheatViewPageIndicatorActivity);
+//            iv.setScaleType(ImageView.ScaleType.MATRIX);
+//            iv.setLayoutParams(new Gallery.LayoutParams(300, biggestHeight));
+//            iv.setImageBitmap(b);
+//
+//            imageViews.add(iv);
+//        }
+//
+//        if ((cheatObj.getScreenshotList() == null) || (cheatObj.getScreenshotList().size() <= 1)) {
+//            tvGalleryInfo.setVisibility(View.GONE);
+//        } else {
+//            tvGalleryInfo.setVisibility(View.VISIBLE);
+//        }
+//
+//        // TODO fill recyclerlistview
+//        // TODO fill recyclerlistview
+//        // TODO fill recyclerlistview
+//        // TODO fill recyclerlistview
+//
+////        CheatViewGalleryListAdapter cheatViewGalleryListAdapter = new CheatViewGalleryListAdapter();
+////        cheatViewGalleryListAdapter.setScreenshotList(cheatObj.getScreenshotList());
+////
+////        galleryRecyclerView.setAdapter(cheatViewGalleryListAdapter);
+////        RecyclerView.LayoutManager gridLayoutManager = new GridLayoutManager(cheatViewPageIndicatorActivity, 1, GridLayoutManager.HORIZONTAL, false);
+////        galleryRecyclerView.setLayoutManager(gridLayoutManager);
+////        galleryRecyclerView.setOnClickListener(new View.OnClickListener() {
+////            @Override
+////            public void onClick(View v) {
+////                Log.d(TAG, "XXXXX IMAGE GALLERY onClick: ");
+////            }
+////        });
+//
+////        try {
+////            screenshotGallery.setAdapter(new ImageAdapter(cheatViewPageIndicatorActivity));
+////            screenshotGallery.setOnItemClickListener((parent, v, position, id) -> {
+////                Screenshot screenShot = cheatObj.getScreenshotList().get(position);
+////
+////                Uri uri = Uri.parse(Konstanten.SCREENSHOT_ROOT_WEBDIR + screenShot.getCheatId() + screenShot.getFilename());
+////                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+////                cheatViewPageIndicatorActivity.startActivity(intent);
+////
+////
+////                new StfalconImageViewer.Builder<>(getActivity(), bitmapList, (imageView, image) -> Picasso.get().load(image).placeholder(R.drawable.image_placeholder).into(imageView)).withTransitionFrom(screenshotGallery).show();
+////
+////            });
+////        } catch (ActivityNotFoundException e) {
+////            Crashlytics.logException(e);
+////        }
+//    }
 
-        for (Bitmap b : bitmapList) {
-            ImageView iv = new ImageView(cheatViewPageIndicatorActivity);
-            iv.setScaleType(ImageView.ScaleType.MATRIX);
-            iv.setLayoutParams(new Gallery.LayoutParams(300, biggestHeight));
-            iv.setImageBitmap(b);
-
-            imageViews.add(iv);
-        }
-
-        if ((cheatObj.getScreenshotList() == null) || (cheatObj.getScreenshotList().size() <= 1)) {
-            tvGalleryInfo.setVisibility(View.GONE);
-        } else {
-            tvGalleryInfo.setVisibility(View.VISIBLE);
-        }
-
-        try {
-            screenshotGallery.setAdapter(new ImageAdapter(cheatViewPageIndicatorActivity));
-            screenshotGallery.setOnItemClickListener((parent, v, position, id) -> {
-                Screenshot screenShot = cheatObj.getScreenshotList().get(position);
-
-                Uri uri = Uri.parse(Konstanten.SCREENSHOT_ROOT_WEBDIR + screenShot.getCheatId() + screenShot.getFilename());
-                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-                cheatViewPageIndicatorActivity.startActivity(intent);
-            });
-        } catch (ActivityNotFoundException e) {
-            Crashlytics.logException(e);
-        }
-    }
-
-    /**
-     * Inner class to display gallery thumbnails
-     */
-    public class ImageAdapter extends BaseAdapter {
-
-        /**
-         * Simple Constructor saving the 'parent' context.
-         */
-        ImageAdapter(Context c) {
-        }
-
-        @Override
-        public int getCount() {
-            return imageViews.size();
-        }
-
-        @Override
-        public Object getItem(int position) {
-            return position;
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return position;
-        }
-
-        /**
-         * Returns a new ImageView to be displayed, depending on the position passed.
-         */
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            return imageViews.get(position);
-        }
-
-        /**
-         * Returns the size (0.0f to 1.0f) of the views depending on the
-         * 'offset' to the center.
-         */
-        public float getScale(boolean focused, int offset) {
-            /* Formula: 1 / (2 ^ offset) */
-            return Math.max(0, 1.0f / (float) Math.pow(2, Math.abs(offset)));
-        }
-
-    }
+//    /**
+//     * Inner class to display gallery thumbnails
+//     */
+//    public class ImageAdapter extends BaseAdapter {
+//
+//        /**
+//         * Simple Constructor saving the 'parent' context.
+//         */
+//        ImageAdapter(Context c) {
+//        }
+//
+//        @Override
+//        public int getCount() {
+//            return imageViews.size();
+//        }
+//
+//        @Override
+//        public Object getItem(int position) {
+//            return position;
+//        }
+//
+//        @Override
+//        public long getItemId(int position) {
+//            return position;
+//        }
+//
+//        /**
+//         * Returns a new ImageView to be displayed, depending on the position passed.
+//         */
+//        @Override
+//        public View getView(int position, View convertView, ViewGroup parent) {
+//            return imageViews.get(position);
+//        }
+//
+//        /**
+//         * Returns the size (0.0f to 1.0f) of the views depending on the
+//         * 'offset' to the center.
+//         */
+//        public float getScale(boolean focused, int offset) {
+//            /* Formula: 1 / (2 ^ offset) */
+//            return Math.max(0, 1.0f / (float) Math.pow(2, Math.abs(offset)));
+//        }
+//
+//    }
 
 }

@@ -160,11 +160,12 @@ public class Cheat extends Game implements Parcelable {
     }
 
     public String getCheatText() {
-        return cheatText.replaceAll("\r\n", "<br>");
+        cheatText = cheatText.replaceAll("\r\n", "<br>");
+        return cheatText.replaceAll("\\\\", "");
     }
 
     public String getCheatTitle() {
-        return cheatTitle;
+        return cheatTitle.replaceAll("\\\\", "");
     }
 
     public String getCreatedDate() {

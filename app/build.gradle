@@ -9,6 +9,8 @@ buildscript {
 }
 apply plugin: 'com.android.application'
 apply plugin: 'io.fabric'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
 
 String APK_ID = "com.cheatdatabase"
 String APK_NAME = "Cheat-Database"
@@ -132,8 +134,10 @@ dependencies {
     implementation 'com.zsoltsafrany:needle:1.0.0'
     implementation 'com.jakewharton:butterknife:10.2.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.1'
+    kapt "com.jakewharton:butterknife-compiler:10.2.1"
     implementation 'de.hdodenhof:circleimageview:3.1.0'
     api 'com.appbrain:appbrain-sdk:15.00'
+    implementation 'com.github.stfalcon:stfalcon-imageviewer:0.1.0'
 
     //Dagger Dependencies
     def dagger_version = '2.27'
@@ -145,6 +149,8 @@ dependencies {
     implementation "com.google.dagger:dagger-android:$dagger_version"
     implementation "com.google.dagger:dagger-android-support:$dagger_version"
     annotationProcessor "com.google.dagger:dagger-android-processor:$dagger_version"
+    kapt "com.google.dagger:dagger-compiler:$dagger_version"
+    kapt "com.google.dagger:dagger-android-processor:$dagger_version"
 
     // Retrofit
     def retrofitVersion = '2.8.1'
@@ -152,7 +158,7 @@ dependencies {
     implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
 
     //Logging Network Calls
-    implementation 'com.squareup.okhttp3:logging-interceptor:4.4.1'
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.5.0'
 
     // INMOBI ADS START
     implementation 'com.inmobi.monetization:inmobi-ads:8.2.0'
@@ -164,6 +170,10 @@ dependencies {
 
     // ROOM DATABASE DEBUG
     debugImplementation 'com.amitshekhar.android:debug-db:1.0.6'
+
+    implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion"
 }
 
 apply plugin: "com.google.gms.google-services"
+apply plugin: 'kotlin-android-extensions'
