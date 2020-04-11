@@ -22,7 +22,7 @@ public class CheatViewFragmentAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        return com.cheatdatabase.cheat_detail_view.CheatViewFragment.newInstance(cheatArray.get(position).getCheatTitle(), game, position);
+        return CheatViewFragment.newInstance(cheatArray.get(position).getCheatTitle(), game, position);
     }
 
     @Override

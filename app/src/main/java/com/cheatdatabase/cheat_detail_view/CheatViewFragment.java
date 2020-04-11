@@ -31,7 +31,6 @@ import com.cheatdatabase.callbacks.CheatViewGalleryImageClickListener;
 import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.helpers.Tools;
-import com.cheatdatabase.helpers.Webservice;
 import com.cheatdatabase.model.Cheat;
 import com.cheatdatabase.model.Game;
 import com.cheatdatabase.model.Member;
@@ -47,7 +46,6 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import needle.Needle;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -60,9 +58,8 @@ import retrofit2.Response;
  */
 public class CheatViewFragment extends Fragment implements CheatViewGalleryImageClickListener {
     private static final String TAG = "CheatViewFragment";
-    private static final String KEY_CONTENT = "CheatViewFragment:Content";
 
-    private LinearLayout outerLinearLayout;
+    private LinearLayout outerLayout;
 
     @BindView(R.id.table_cheat_list_main)
     TableLayout mainTable;
@@ -81,7 +78,6 @@ public class CheatViewFragment extends Fragment implements CheatViewGalleryImage
     @BindView(R.id.reload)
     ImageView reloadView;
 
-    private int biggestHeight;
     private Cheat cheatObj;
     private List<Cheat> cheatList;
     private Game game;
@@ -91,7 +87,6 @@ public class CheatViewFragment extends Fragment implements CheatViewGalleryImage
     private Member member;
     private SharedPreferences settings;
     private Editor editor;
-    private String mContent = "???";
     private Typeface latoFontBold;
     private Typeface latoFontLight;
     private CheatViewPageIndicatorActivity cheatViewPageIndicatorActivity;
@@ -113,12 +108,13 @@ public class CheatViewFragment extends Fragment implements CheatViewGalleryImage
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        init();
-
-        // TODO hier genauer anschauen wegen dem setzen des contents. TODO TODO
-        if ((savedInstanceState != null) && savedInstanceState.containsKey(KEY_CONTENT)) {
-            mContent = savedInstanceState.getString(KEY_CONTENT);
+        // If the screen has been rotated we re-set the values
+        if (savedInstanceState != null) {
+            game = savedInstanceState.getParcelable("game");
+            offset = savedInstanceState.getInt("offset");
         }
+
+        init();
     }
 
     private void init() {
@@ -133,16 +129,18 @@ public class CheatViewFragment extends Fragment implements CheatViewGalleryImage
         member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
     }
 
+
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putString(KEY_CONTENT, mContent);
+        outState.putParcelable("game", game);
+        outState.putInt("offset", offset);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        outerLinearLayout = (LinearLayout) inflater.inflate(R.layout.fragment_cheat_detail_view, container, false);
-        ButterKnife.bind(this, outerLinearLayout);
+        outerLayout = (LinearLayout) inflater.inflate(R.layout.fragment_cheat_detail_view, container, false);
+        ButterKnife.bind(this, outerLayout);
 
         if (cheatList != null && game != null) {
             cheatList = game.getCheatList();
@@ -160,12 +158,13 @@ public class CheatViewFragment extends Fragment implements CheatViewGalleryImage
                 reloadView.setVisibility(View.VISIBLE);
                 Toast.makeText(cheatViewPageIndicatorActivity, R.string.no_internet, Toast.LENGTH_SHORT).show();
             }
+
+            countForumPosts();
         } else {
-            Tools.showSnackbar(outerLinearLayout, getString(R.string.err_data_not_accessible));
+            Tools.showSnackbar(outerLayout, getString(R.string.err_data_not_accessible));
         }
 
-        countForumPosts();
-        return outerLinearLayout;
+        return outerLayout;
     }
 
     @OnClick(R.id.reload)
@@ -182,8 +181,6 @@ public class CheatViewFragment extends Fragment implements CheatViewGalleryImage
 
         // Get thumbnails if there are screenshots.
         if (cheatObj.isScreenshots()) {
-            biggestHeight = 100; // setMemberList value
-
             CheatViewGalleryListAdapter cheatViewGalleryListAdapter = new CheatViewGalleryListAdapter();
             cheatViewGalleryListAdapter.setScreenshotList(cheatObj.getScreenshotList());
             cheatViewGalleryListAdapter.setClickListener(this);
@@ -203,8 +200,6 @@ public class CheatViewFragment extends Fragment implements CheatViewGalleryImage
             galleryRecyclerView.setVisibility(View.GONE);
         }
 
-        progressBar.setVisibility(View.GONE);
-
         /**
          * If the user came from the search results the cheat-text might not be
          * complete (trimmed for the search results) and therefore has to be
@@ -212,7 +207,7 @@ public class CheatViewFragment extends Fragment implements CheatViewGalleryImage
          */
         if ((cheatObj.getCheatText() == null) || (cheatObj.getCheatText().length() < 10)) {
             progressBar.setVisibility(View.VISIBLE);
-            getCheatText();
+            getCheatBody();
         } else {
             populateView();
         }
@@ -324,6 +319,8 @@ public class CheatViewFragment extends Fragment implements CheatViewGalleryImage
         }
 
         mainTable.setOnClickListener(view -> displayTableInWebview());
+
+        progressBar.setVisibility(View.GONE);
     }
 
     private void fillSimpleContent() {
@@ -338,6 +335,8 @@ public class CheatViewFragment extends Fragment implements CheatViewGalleryImage
                 tvCheatText.setTextAppearance(getContext(), R.style.WalkthroughText);
             }
         }
+
+        progressBar.setVisibility(View.GONE);
     }
 
     private void displayTableInWebview() {
@@ -354,12 +353,23 @@ public class CheatViewFragment extends Fragment implements CheatViewGalleryImage
         webview.loadDataWithBaseURL("", cheatObj.getCheatText(), "text/html", "UTF-8", "");
     }
 
-    private void getCheatText() {
-        Needle.onBackgroundThread().execute(() -> setCheatText(Webservice.getCheatById(cheatObj.getCheatId())));
+    private void getCheatBody() {
+        progressBar.setVisibility(View.VISIBLE);
+        Call<Cheat> call = cheatViewPageIndicatorActivity.getRestApi().getCheatById(cheatObj.getCheatId());
+        call.enqueue(new Callback<Cheat>() {
+            @Override
+            public void onResponse(Call<Cheat> metaInfo, Response<Cheat> response) {
+                setCheatText(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<Cheat> call, Throwable e) {
+                Tools.showSnackbar(outerLayout, getContext().getString(R.string.err_somethings_wrong), 5000);
+            }
+        });
     }
 
     private void countForumPosts() {
-        Log.d(TAG, "countForumPosts: " + cheatObj.getCheatId());
         Call<JsonObject> call = cheatViewPageIndicatorActivity.getRestApi().countForumPosts(cheatObj.getCheatId());
         call.enqueue(new Callback<JsonObject>() {
             @Override
@@ -376,14 +386,11 @@ public class CheatViewFragment extends Fragment implements CheatViewGalleryImage
         });
     }
 
-    private void setCheatText(String fullCheatText) {
-        if (fullCheatText != null && fullCheatText.length() > 1) {
-            if (fullCheatText.substring(0, 1).equalsIgnoreCase("2")) {
-                cheatObj.setWalkthroughFormat(true);
-            }
-            cheatObj.setCheatText(fullCheatText.substring(1));
+    private void setCheatText(Cheat fullCheatText) {
+        if (fullCheatText != null && fullCheatText.getCheatText().length() > 1) {
+            cheatObj.setCheatText(fullCheatText.getCheatText());
 
-            Needle.onMainThread().execute(() -> populateView());
+            populateView();
         }
     }
 

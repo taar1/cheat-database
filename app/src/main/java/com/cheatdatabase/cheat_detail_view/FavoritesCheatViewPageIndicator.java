@@ -444,4 +444,7 @@ public class FavoritesCheatViewPageIndicator extends AppCompatActivity implement
         db.insertFavoriteCheat(visibleCheat);
     }
 
+    public RestApi getRestApi() {
+        return restApi;
+    }
 }

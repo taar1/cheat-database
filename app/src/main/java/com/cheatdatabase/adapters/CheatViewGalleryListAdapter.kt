@@ -25,7 +25,7 @@ internal class CheatViewGalleryListAdapter : RecyclerView.Adapter<RecyclerView.V
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val screenshot: Screenshot = homepagePosterListElementList[position]
         val cheatViewGalleryCardHolder: CheatViewGalleryCardHolder = holder as CheatViewGalleryCardHolder
-        holder.view.setOnClickListener { v -> cheatViewGalleryImageClickListener.onScreenshotClicked(screenshot, position) }
+        holder.view.setOnClickListener { cheatViewGalleryImageClickListener.onScreenshotClicked(screenshot, position) }
 
         cheatViewGalleryCardHolder.screenshot = screenshot
     }

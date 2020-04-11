@@ -69,7 +69,7 @@ import butterknife.ButterKnife;
 import retrofit2.Retrofit;
 
 /**
- * Horizontal sliding through cheats submitted by member.
+ * Horizontal sliding through cheats submitted by members.
  *
  * @author Dominik Erbsland
  */
@@ -172,7 +172,7 @@ public class MemberCheatViewPageIndicator extends AppCompatActivity {
 
     private void initialisePaging() {
         try {
-            memberCheatViewFragmentAdapter = new MemberCheatViewFragmentAdapter(getSupportFragmentManager(), cheatList, restApi, outerLayout, this);
+            memberCheatViewFragmentAdapter = new MemberCheatViewFragmentAdapter(getSupportFragmentManager(), cheatList, outerLayout);
 
             mPager = viewLayout.findViewById(R.id.pager);
             mPager.setAdapter(memberCheatViewFragmentAdapter);
@@ -420,5 +420,9 @@ public class MemberCheatViewPageIndicator extends AppCompatActivity {
             adView.destroy();
         }
         super.onDestroy();
+    }
+
+    public RestApi getRestApi() {
+        return restApi;
     }
 }
