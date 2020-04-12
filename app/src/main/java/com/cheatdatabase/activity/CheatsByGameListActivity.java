@@ -23,6 +23,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.cheatdatabase.CheatDatabaseApplication;
 import com.cheatdatabase.R;
 import com.cheatdatabase.adapters.CheatsByGameRecycleListViewAdapter;
+import com.cheatdatabase.callbacks.GenericCallback;
 import com.cheatdatabase.cheat_detail_view.CheatViewPageIndicatorActivity;
 import com.cheatdatabase.helpers.DatabaseHelper;
 import com.cheatdatabase.helpers.Konstanten;
@@ -392,23 +393,19 @@ public class CheatsByGameListActivity extends AppCompatActivity implements OnChe
     }
 
     void addCheatsToFavoritesTask(Game game) {
-        Needle.onBackgroundThread().execute(() -> {
-            String text;
-            DatabaseHelper db = new DatabaseHelper(this);
-            try {
-                int retVal = db.insertFavoriteCheats(game);
-                if (retVal > 0) {
-                    text = getApplicationContext().getString(R.string.add_favorites_ok);
-                } else {
-                    text = getApplicationContext().getString(R.string.favorite_error);
-                }
-            } catch (Exception e) {
-                Log.e(TAG, e.getLocalizedMessage());
-                text = getApplicationContext().getString(R.string.favorite_error);
+        DatabaseHelper db = new DatabaseHelper(this);
+        db.insertFavoriteCheats(game, sharedPreferences.getBoolean("enable_achievements", true), restApi, new GenericCallback() {
+            @Override
+            public void success() {
+                finishedAddingCheatsToFavorites(getApplicationContext().getString(R.string.add_favorites_ok));
             }
 
-            finishedAddingCheatsToFavorites(text);
+            @Override
+            public void fail(Exception e) {
+                finishedAddingCheatsToFavorites(getApplicationContext().getString(R.string.favorite_error));
+            }
         });
+
     }
 
     void finishedAddingCheatsToFavorites(String text) {

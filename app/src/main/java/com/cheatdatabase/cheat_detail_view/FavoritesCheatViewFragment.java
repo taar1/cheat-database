@@ -55,10 +55,8 @@ import retrofit2.Response;
  */
 public class FavoritesCheatViewFragment extends Fragment implements CheatViewGalleryImageClickListener {
 
-    LinearLayout linearLayout;
+    private static final String TAG = FavoritesCheatViewFragment.class.getSimpleName();
 
-    @BindView(R.id.outer_layout)
-    LinearLayout outerLayout;
     @BindView(R.id.table_cheat_list_main)
     TableLayout mainTable;
     @BindView(R.id.cheat_content)
@@ -83,32 +81,26 @@ public class FavoritesCheatViewFragment extends Fragment implements CheatViewGal
     private int offset;
     private List<ImageView> imageViewList;
     private Member member;
+    private LinearLayout outerLayout;
 
     private SharedPreferences settings;
     private Editor editor;
 
-    private static final String TAG = FavoritesCheatViewFragment.class.getSimpleName();
-
-    public static FavoritesCheatViewFragment newInstance(String content, Game game, int offset) {
-        FavoritesCheatViewFragment fragment = new FavoritesCheatViewFragment();
-
-        Bundle args = new Bundle();
-        args.putParcelable("gameObj", game);
-        args.putInt("offset", offset);
-        fragment.setArguments(args);
-
-        StringBuilder builder = new StringBuilder();
-        for (int i = 0; i < 20; i++) {
-            builder.append(content).append(" ");
-        }
-        builder.deleteCharAt(builder.length() - 1);
-
-        return fragment;
-    }
-
     private Typeface latoFontBold;
     private Typeface latoFontLight;
     private FavoritesCheatViewPageIndicator favoritesCheatViewPageIndicatorActivity;
+
+    // TODO FIXME screenshots should be downloaded to device so the cheat can be displayed without using the internet
+    // TODO FIXME screenshots should be downloaded to device so the cheat can be displayed without using the internet
+    // TODO FIXME screenshots should be downloaded to device so the cheat can be displayed without using the internet
+
+    public static FavoritesCheatViewFragment newInstance(Game game, int offset, LinearLayout outerLayout) {
+        FavoritesCheatViewFragment fragment = new FavoritesCheatViewFragment();
+        fragment.game = game;
+        fragment.offset = offset;
+        fragment.outerLayout = outerLayout;
+        return fragment;
+    }
 
     public FavoritesCheatViewFragment() {
         imageViewList = new ArrayList<>();
@@ -144,10 +136,8 @@ public class FavoritesCheatViewFragment extends Fragment implements CheatViewGal
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        linearLayout = (LinearLayout) inflater.inflate(R.layout.fragment_cheat_detail_view, container, false);
+        LinearLayout linearLayout = (LinearLayout) inflater.inflate(R.layout.fragment_cheat_detail_view, container, false);
         ButterKnife.bind(this, linearLayout);
-
-        getFragmentRelevantData();
 
         cheatList = game.getCheatList();
         cheatObj = cheatList.get(offset);
@@ -172,7 +162,6 @@ public class FavoritesCheatViewFragment extends Fragment implements CheatViewGal
     @OnClick(R.id.text_cheat_before_table)
     void clickTextCheatBeforeTable() {
         Bundle arguments = new Bundle();
-        arguments.putInt("CHANGEME", 1);
         arguments.putParcelable("cheatObj", cheatObj);
     }
 
@@ -224,18 +213,6 @@ public class FavoritesCheatViewFragment extends Fragment implements CheatViewGal
 
         editor.putString("cheat" + offset, new Gson().toJson(cheatObj));
         editor.apply();
-    }
-
-    private void getFragmentRelevantData() {
-        Bundle arguments = getArguments();
-        try {
-            game = arguments.getParcelable("gameObj");
-            offset = arguments.getInt("offset");
-        } catch (Exception e) {
-            offset = 0;
-            // TODO display error message
-            Log.e("Error", e.getLocalizedMessage());
-        }
     }
 
     private void populateView() {
@@ -411,153 +388,5 @@ public class FavoritesCheatViewFragment extends Fragment implements CheatViewGal
     public void onScreenshotClicked(Screenshot screenshot, int position) {
         new StfalconImageViewer.Builder<>(favoritesCheatViewPageIndicatorActivity, cheatObj.getScreenshotList(), (imageView, image) -> Picasso.get().load(image.getFullPath()).placeholder(R.drawable.image_placeholder).into(imageView)).withStartPosition(position).show();
     }
-
-    // TODO FIXME screenshots should be downloaded to device so the cheat can be displayed without using the internet
-    // TODO FIXME screenshots should be downloaded to device so the cheat can be displayed without using the internet
-    // TODO FIXME screenshots should be downloaded to device so the cheat can be displayed without using the internet
-    // TODO FIXME screenshots should be downloaded to device so the cheat can be displayed without using the internet
-    // TODO FIXME screenshots should be downloaded to device so the cheat can be displayed without using the internet
-    // TODO FIXME screenshots should be downloaded to device so the cheat can be displayed without using the internet
-    // TODO FIXME screenshots should be downloaded to device so the cheat can be displayed without using the internet
-    // TODO FIXME screenshots should be downloaded to device so the cheat can be displayed without using the internet
-
-
-//    private void getCheatRating() {
-//        Needle.onBackgroundThread().execute(() -> {
-//            float cheatRating = 0;
-//            try {
-//                cheatRating = Webservice.getCheatRatingByMemberId(member.getMid(), cheatObj.getCheatId());
-//            } catch (Exception e) {
-//            }
-//
-//            setCheatRatingOnUI(cheatRating);
-//        });
-//    }
-//
-//    private void setCheatRatingOnUI(float cheatRating) {
-//        Needle.onMainThread().execute(() -> {
-//            if (cheatRating > 0) {
-//                editor.putFloat("c" + cheatObj.getCheatId(), cheatRating);
-//                editor.apply();
-//
-//                favoritesCheatViewPageIndicatorActivity.setRating(offset, cheatRating);
-//            }
-//        });
-//    }
-//
-//    private void loadScreenshots() {
-//        Needle.onBackgroundThread().execute(() -> {
-//            List<Bitmap> bitmapList = new ArrayList<>();
-//
-//            try {
-//                List<Screenshot> screens = cheatObj.getScreenshotList();
-//
-//                for (int i = 0; i < screens.size(); i++) {
-//                    Screenshot s = screens.get(i);
-//                    String filename = s.getCheatId() + s.getFilename();
-//                    String myRemoteUrl = Konstanten.SCREENSHOT_ROOT_WEBDIR + "image.php?width=150&image=/cheatpics/" + filename;
-//
-//                    /*
-//                     * Open a new URL and get the InputStream to load data from it.
-//                     */
-//                    URL aURL = new URL(myRemoteUrl);
-//                    URLConnection conn = aURL.openConnection();
-//                    conn.connect();
-//                    InputStream is = conn.getInputStream();
-//                    /* Buffered is always good for a performance plus. */
-//                    BufferedInputStream bis = new BufferedInputStream(is);
-//                    /* Decode url-data to a bitmap. */
-//                    Bitmap bm = BitmapFactory.decodeStream(bis);
-//                    bis.close();
-//                    is.close();
-//
-//                    bitmapList.add(bm);
-//
-//                    if (biggestHeight < bm.getHeight()) {
-//                        biggestHeight = bm.getHeight();
-//                    }
-//                }
-//
-//
-//            } catch (IOException e) {
-//                Log.e(TAG, "Remote Image Exception: " + e.getLocalizedMessage());
-//            }
-//
-//
-//            updateUI(bitmapList);
-//        });
-//    }
-//
-//    private void updateUI(List<Bitmap> bitmapList) {
-//        Needle.onMainThread().execute(() -> {
-//            // Apply the Bitmap to the ImageView that will be returned.
-//            for (Bitmap bm : bitmapList) {
-//                ImageView iv = new ImageView(favoritesCheatViewPageIndicatorActivity);
-//                iv.setScaleType(ImageView.ScaleType.MATRIX);
-//                iv.setLayoutParams(new Gallery.LayoutParams(300, biggestHeight));
-//                iv.setImageBitmap(bm);
-//
-//                imageViewList.add(iv);
-//            }
-//
-//            progressBar.setVisibility(View.GONE);
-//            if (cheatObj.getScreenshotList().size() <= 1) {
-//                tvGalleryInfo.setVisibility(View.GONE);
-//            } else {
-//                tvGalleryInfo.setVisibility(View.VISIBLE);
-//            }
-//            buildGallery();
-//        });
-//    }
-//
-//    /**
-//     * Innere Klasse zum Anzeigen der Screenshot-Thumbnails
-//     * <p/>
-//     * Copyright (c) 2010-2018<br>
-//     *
-//     * @author Dominik Erbsland
-//     * @version 1.0
-//     */
-//    public class ImageAdapter extends BaseAdapter {
-//
-//        /**
-//         * Simple Constructor saving the 'parent' context.
-//         */
-//        public ImageAdapter(Context c) {
-//        }
-//
-//        @Override
-//        public int getCount() {
-//            return imageViewList.size();
-//        }
-//
-//        @Override
-//        public Object getItem(int position) {
-//            return position;
-//        }
-//
-//        @Override
-//        public long getItemId(int position) {
-//            return position;
-//        }
-//
-//        /**
-//         * Returns a new ImageView to be displayed, depending on the position passed.
-//         */
-//        @Override
-//        public View getView(int position, View convertView, ViewGroup parent) {
-//            return imageViewList.get(position);
-//        }
-//
-//        /**
-//         * Returns the size (0.0f to 1.0f) of the views depending on the
-//         * 'offset' to the center.
-//         */
-//        public float getScale(boolean focused, int offset) {
-//            /* Formula: 1 / (2 ^ offset) */
-//            return Math.max(0, 1.0f / (float) Math.pow(2, Math.abs(offset)));
-//        }
-//
-//    }
 
 }

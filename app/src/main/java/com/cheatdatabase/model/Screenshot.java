@@ -89,6 +89,18 @@ public class Screenshot implements Parcelable {
         return fullPath;
     }
 
+
+    // TODO FIXME add cheat to favorites crashes!!!
+    // TODO FIXME add cheat to favorites crashes!!!
+    // TODO FIXME add cheat to favorites crashes!!!
+    // TODO FIXME add cheat to favorites crashes!!!
+    // TODO FIXME add cheat to favorites crashes!!!
+    // TODO FIXME add cheat to favorites crashes!!!
+    // TODO FIXME add cheat to favorites crashes!!!
+    // TODO FIXME add cheat to favorites crashes!!!
+    // TODO FIXME add cheat to favorites crashes!!!
+
+
     /**
      * Ladet den Screenshot vom Server und speichert ihn auf die SD Karte.
      *

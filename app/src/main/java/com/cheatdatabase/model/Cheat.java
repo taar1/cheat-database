@@ -361,4 +361,12 @@ public class Cheat extends Game implements Parcelable {
     public void setStyle(int style) {
         this.style = style;
     }
+
+    public void setGame(Game game) {
+        this.game = game;
+    }
+
+    public void setSystem(SystemPlatform system) {
+        this.system = system;
+    }
 }

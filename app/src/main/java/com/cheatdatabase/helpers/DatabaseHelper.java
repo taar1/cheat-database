@@ -7,15 +7,21 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import com.cheatdatabase.callbacks.GenericCallback;
 import com.cheatdatabase.model.Cheat;
 import com.cheatdatabase.model.Game;
 import com.cheatdatabase.model.Screenshot;
 import com.cheatdatabase.model.SystemPlatform;
+import com.cheatdatabase.rest.RestApi;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String TAG = "DatabaseHelper";
@@ -90,6 +96,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public long insertFavoriteCheats(List<Cheat> cheats) {
         long id = 0;
 
+        // TODO FIXME hier noch auf die neue struktur wechseln??
+        // TODO FIXME hier noch auf die neue struktur wechseln??
+        // TODO FIXME hier noch auf die neue struktur wechseln??
+        // TODO FIXME hier noch auf die neue struktur wechseln??
+
         SQLiteDatabase db = this.getWritableDatabase();
 
         for (Cheat cheat : cheats) {
@@ -124,44 +135,52 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return id;
     }
 
-    public int insertFavoriteCheats(Game game) {
-        long id = 0;
-
+    public void insertFavoriteCheats(Game gameObj, boolean isAchievementsEnabled, RestApi restApi, GenericCallback callback) {
         SQLiteDatabase db = this.getWritableDatabase();
 
-        Cheat[] cheats = Webservice.getCheatsByGameId(game.getGameId(), game.getGameName());
+        Call<List<Cheat>> call = restApi.getCheatsByGameId(gameObj.getGameId(), isAchievementsEnabled);
+        call.enqueue(new Callback<List<Cheat>>() {
+            @Override
+            public void onResponse(Call<List<Cheat>> cheats, Response<List<Cheat>> response) {
+                List<Cheat> cheatList = response.body();
 
-        for (int i = 0; i < cheats.length; i++) {
-            Cheat cheat = cheats[i];
+                for (Cheat cheat : cheatList) {
+                    if (cheat.isScreenshots()) {
+                        saveScreenshotsToSdCard(cheat);
+                    }
 
-            if (cheat.isScreenshots()) {
-                saveScreenshotsToSdCard(cheat);
+                    ContentValues initialValues = new ContentValues();
+                    initialValues.put(Favorite.FAV_GAME_ID, cheat.getGame().getGameId());
+                    initialValues.put(Favorite.FAV_GAMENAME, cheat.getGame().getGameName());
+                    initialValues.put(Favorite.FAV_CHEAT_ID, cheat.getCheatId());
+                    initialValues.put(Favorite.FAV_CHEAT_TITLE, cheat.getCheatTitle());
+                    initialValues.put(Favorite.FAV_CHEAT_TEXT, cheat.getCheatText());
+                    initialValues.put(Favorite.FAV_LANGUAGE_ID, cheat.getLanguageId());
+                    initialValues.put(Favorite.FAV_SYSTEM_ID, cheat.getSystem().getSystemId());
+                    initialValues.put(Favorite.FAV_SYSTEM_NAME, cheat.getSystem().getSystemName());
+                    int walkthroughFormat = 0;
+                    if (cheat.isWalkthroughFormat()) {
+                        walkthroughFormat = 1;
+                    }
+                    initialValues.put(Favorite.FAV_WALKTHROUGH_FORMAT, walkthroughFormat);
+
+                    // insert row
+                    long returnValue = db.insert(Favorite.TABLE_NAME, null, initialValues);
+                    callback.success();
+                }
+
+                // close db connection
+                db.close();
             }
 
-            ContentValues initialValues = new ContentValues();
-            initialValues.put(Favorite.FAV_GAME_ID, cheat.getGameId());
-            initialValues.put(Favorite.FAV_GAMENAME, cheat.getGameName());
-            initialValues.put(Favorite.FAV_CHEAT_ID, cheat.getCheatId());
-            initialValues.put(Favorite.FAV_CHEAT_TITLE, cheat.getCheatTitle());
-            initialValues.put(Favorite.FAV_CHEAT_TEXT, cheat.getCheatText());
-            initialValues.put(Favorite.FAV_LANGUAGE_ID, cheat.getLanguageId());
-            initialValues.put(Favorite.FAV_SYSTEM_ID, game.getSystemId());
-            initialValues.put(Favorite.FAV_SYSTEM_NAME, game.getSystemName());
-            int walkthroughFormat = 0;
-            if (cheat.isWalkthroughFormat()) {
-                walkthroughFormat = 1;
+            @Override
+            public void onFailure(Call<List<Cheat>> call, Throwable e) {
+                Log.e(TAG, "insertFavoriteCheats onFailure: " + e.getLocalizedMessage());
+                callback.fail((Exception) e);
             }
-            initialValues.put(Favorite.FAV_WALKTHROUGH_FORMAT, walkthroughFormat);
+        });
 
-            // insert row
-            id = db.insert(Favorite.TABLE_NAME, null, initialValues);
-        }
 
-        // close db connection
-        db.close();
-
-        // return newly inserted row id
-        return Integer.parseInt(String.valueOf(id));
     }
 
     public boolean deleteFavoritedCheat(Cheat cheat) {
@@ -216,7 +235,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         if (countRows == 0) {
             return null;
         } else {
-            List<Cheat> favCheats = new ArrayList<>();
+            List<Cheat> cheatList = new ArrayList<>();
 
             Cursor cur = db.query(Favorite.TABLE_NAME, new String[]{
                             Favorite.FAV_GAME_ID,
@@ -246,12 +265,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                             walkthroughFormat = true;
                         }
 
-                        favCheats.add(new Cheat(gameId, gameName, cheatId, cheatTitle, cheatText, languageId, systemId, systemName, walkthroughFormat));
+                        Game game = new Game(gameId, gameName, systemId, systemName);
+                        SystemPlatform system = new SystemPlatform(systemId, systemName);
+
+                        Cheat cheat = new Cheat(gameId, gameName, cheatId, cheatTitle, cheatText, languageId, systemId, systemName, walkthroughFormat);
+
+                        cheat.setGame(game);
+                        cheat.setSystem(system);
+
+                        cheatList.add(cheat);
                     } while (cur.moveToNext());
                 }
 
                 cur.close();
-                return favCheats;
+                return cheatList;
             }
         }
         return null;

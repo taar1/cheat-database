@@ -175,7 +175,7 @@ public class FavoritesCheatViewPageIndicator extends AppCompatActivity implement
         }
 
         try {
-            mAdapter = new FavoritesCheatViewFragmentAdapter(getSupportFragmentManager(), gameObj, cheatTitles);
+            mAdapter = new FavoritesCheatViewFragmentAdapter(getSupportFragmentManager(), gameObj, outerLayout);
 
             mPager = viewLayout.findViewById(R.id.pager);
             mPager.setAdapter(mAdapter);

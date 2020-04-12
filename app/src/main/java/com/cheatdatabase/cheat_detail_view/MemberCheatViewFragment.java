@@ -1,6 +1,5 @@
 package com.cheatdatabase.cheat_detail_view;
 
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.graphics.Typeface;
@@ -83,7 +82,6 @@ public class MemberCheatViewFragment extends Fragment implements CheatViewGaller
     private MemberCheatViewPageIndicator cheatViewPageIndicatorActivity;
 
     private LinearLayout outerLayout;
-    private Context context;
 
     public MemberCheatViewFragment() {
         imageViews = new ArrayList<>();
@@ -126,63 +124,58 @@ public class MemberCheatViewFragment extends Fragment implements CheatViewGaller
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        linearLayout = (LinearLayout) inflater.inflate(R.layout.fragment_member_cheat_detail, container, false);
+        ButterKnife.bind(this, linearLayout);
 
-        try {
-            linearLayout = (LinearLayout) inflater.inflate(R.layout.fragment_member_cheat_detail, container, false);
-            ButterKnife.bind(this, linearLayout);
+        member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
+        cheatObj = cheats.get(offset);
 
-            member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
-            cheatObj = cheats.get(offset);
+        getCheatRating();
 
-            getCheatRating();
+        tvTextBeforeTable.setVisibility(View.VISIBLE);
+        tvCheatTitle.setText(cheatObj.getCheatTitle());
+        tvGalleryInfo.setVisibility(View.INVISIBLE);
+        progressBar.setVisibility(View.INVISIBLE);
 
-            tvTextBeforeTable.setVisibility(View.VISIBLE);
-            tvCheatTitle.setText(cheatObj.getCheatTitle());
-            tvGalleryInfo.setVisibility(View.INVISIBLE);
-            progressBar.setVisibility(View.INVISIBLE);
+        /**
+         * Get thumbnails if there are screenshots.
+         */
+        if (cheatObj.isScreenshots()) {
+            CheatViewGalleryListAdapter cheatViewGalleryListAdapter = new CheatViewGalleryListAdapter();
+            cheatViewGalleryListAdapter.setScreenshotList(cheatObj.getScreenshotList());
+            cheatViewGalleryListAdapter.setClickListener(this);
 
-            /**
-             * Get thumbnails if there are screenshots.
-             */
-            if (cheatObj.isScreenshots()) {
-                CheatViewGalleryListAdapter cheatViewGalleryListAdapter = new CheatViewGalleryListAdapter();
-                cheatViewGalleryListAdapter.setScreenshotList(cheatObj.getScreenshotList());
-                cheatViewGalleryListAdapter.setClickListener(this);
+            galleryRecyclerView.setAdapter(cheatViewGalleryListAdapter);
+            RecyclerView.LayoutManager gridLayoutManager = new GridLayoutManager(cheatViewPageIndicatorActivity, 2, GridLayoutManager.HORIZONTAL, false);
+            galleryRecyclerView.setLayoutManager(gridLayoutManager);
 
-                galleryRecyclerView.setAdapter(cheatViewGalleryListAdapter);
-                RecyclerView.LayoutManager gridLayoutManager = new GridLayoutManager(cheatViewPageIndicatorActivity, 2, GridLayoutManager.HORIZONTAL, false);
-                galleryRecyclerView.setLayoutManager(gridLayoutManager);
-
-                if ((cheatObj.getScreenshotList() == null) || (cheatObj.getScreenshotList().size() <= 3)) {
-                    tvGalleryInfo.setVisibility(View.GONE);
-                } else {
-                    tvGalleryInfo.setVisibility(View.VISIBLE);
-                }
-
-                progressBar.setVisibility(View.VISIBLE);
-            } else {
+            if ((cheatObj.getScreenshotList() == null) || (cheatObj.getScreenshotList().size() <= 3)) {
                 tvGalleryInfo.setVisibility(View.GONE);
-                galleryRecyclerView.setVisibility(View.GONE);
-            }
-
-            /**
-             * If the user came from the search results the cheat-text might not
-             * be complete (trimmed for the search results) and therefore has to
-             * be re-fetched in a background process.
-             */
-            if ((cheatObj.getCheatText() == null) || (cheatObj.getCheatText().length() < 10)) {
-                progressBar.setVisibility(View.VISIBLE);
-                getCheatBody();
             } else {
-                progressBar.setVisibility(View.GONE);
-                populateView();
+                tvGalleryInfo.setVisibility(View.VISIBLE);
             }
 
-            editor.putString("cheat" + offset, new Gson().toJson(cheatObj));
-            editor.commit();
-        } catch (Exception e) {
-            Log.e(TAG, "onCreateView: ", e);
+            progressBar.setVisibility(View.VISIBLE);
+        } else {
+            tvGalleryInfo.setVisibility(View.GONE);
+            galleryRecyclerView.setVisibility(View.GONE);
         }
+
+        /**
+         * If the user came from the search results the cheat-text might not
+         * be complete (trimmed for the search results) and therefore has to
+         * be re-fetched in a background process.
+         */
+        if ((cheatObj.getCheatText() == null) || (cheatObj.getCheatText().length() < 10)) {
+            progressBar.setVisibility(View.VISIBLE);
+            getCheatBody();
+        } else {
+            progressBar.setVisibility(View.GONE);
+            populateView();
+        }
+
+        editor.putString("cheat" + offset, new Gson().toJson(cheatObj));
+        editor.commit();
 
         return linearLayout;
     }
@@ -333,7 +326,7 @@ public class MemberCheatViewFragment extends Fragment implements CheatViewGaller
             @Override
             public void onFailure(Call<Cheat> call, Throwable e) {
                 Log.e(TAG, "getCheatBody onFailure: " + e.getLocalizedMessage());
-                Tools.showSnackbar(outerLayout, context.getString(R.string.err_somethings_wrong), 5000);
+                Tools.showSnackbar(outerLayout, getContext().getString(R.string.err_somethings_wrong), 5000);
             }
         });
     }

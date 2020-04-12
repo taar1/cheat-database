@@ -207,11 +207,12 @@ public interface RestApi {
      * Gets all cheat from a game.
      *
      * @param gameId Game ID
+     * @param achievementsEnabled 1=yes, 0=no
      * @return List<Cheat>
      */
     @FormUrlEncoded
     @POST("getCheatsByGameId.php")
-    Call<List<Cheat>> getCheatsByGameId(@Field("gameId") int gameId);
+    Call<List<Cheat>> getCheatsByGameId(@Field("gameId") int gameId, @Field("achievementsEnabled") boolean achievementsEnabled);
 
     /**
      * Gets all cheats from a member.

@@ -124,8 +124,6 @@ public class MemberCheatViewPageIndicator extends AppCompatActivity {
             cheatList = intent.getParcelableArrayListExtra("cheatList");
         }
 
-        Log.d(TAG, "onCreate: cheatList: " + cheatList.size());
-
         if ((cheatList == null) || (cheatList.size() < 1)) {
             handleNullPointerException();
         } else {
