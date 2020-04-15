@@ -30,6 +30,7 @@ import androidx.core.view.MenuItemCompat;
 
 import com.cheatdatabase.CheatDatabaseApplication;
 import com.cheatdatabase.R;
+import com.cheatdatabase.callbacks.GenericCallback;
 import com.cheatdatabase.dialogs.CheatMetaDialog;
 import com.cheatdatabase.dialogs.RateCheatMaterialDialog;
 import com.cheatdatabase.dialogs.ReportCheatMaterialDialog;
@@ -68,7 +69,7 @@ import retrofit2.Retrofit;
 /**
  * Displaying the forum of one cheat.
  */
-public class CheatForumActivity extends AppCompatActivity {
+public class CheatForumActivity extends AppCompatActivity implements GenericCallback {
 
     private static String TAG = CheatForumActivity.class.getSimpleName();
 
@@ -392,7 +393,7 @@ public class CheatForumActivity extends AppCompatActivity {
                 return true;
             case R.id.action_add_to_favorites:
                 Tools.showSnackbar(outerLayout, getString(R.string.favorite_adding));
-                Helper.addFavorite(this, outerLayout, cheatObj);
+                Helper.addFavorite(this, cheatObj, this);
                 return true;
             case R.id.action_share:
                 Helper.shareCheat(cheatObj, this);
@@ -532,5 +533,17 @@ public class CheatForumActivity extends AppCompatActivity {
 
     public Retrofit getRetrofit() {
         return retrofit;
+    }
+
+    @Override
+    public void success() {
+        Log.d(TAG, "CheatForumActivity ADD FAV success: ");
+        Tools.showSnackbar(outerLayout, getString(R.string.add_favorite_ok));
+    }
+
+    @Override
+    public void fail(Exception e) {
+        Log.d(TAG, "CheatForumActivity ADD FAV fail: ");
+        Tools.showSnackbar(outerLayout, getString(R.string.error_adding_favorite));
     }
 }

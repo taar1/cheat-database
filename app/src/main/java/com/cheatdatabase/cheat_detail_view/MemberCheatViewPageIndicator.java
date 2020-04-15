@@ -27,6 +27,7 @@ import com.cheatdatabase.R;
 import com.cheatdatabase.activity.CheatForumActivity;
 import com.cheatdatabase.activity.LoginActivity;
 import com.cheatdatabase.activity.SubmitCheatActivity;
+import com.cheatdatabase.callbacks.GenericCallback;
 import com.cheatdatabase.dialogs.CheatMetaDialog;
 import com.cheatdatabase.dialogs.RateCheatMaterialDialog;
 import com.cheatdatabase.dialogs.ReportCheatMaterialDialog;
@@ -73,7 +74,7 @@ import retrofit2.Retrofit;
  *
  * @author Dominik Erbsland
  */
-public class MemberCheatViewPageIndicator extends AppCompatActivity {
+public class MemberCheatViewPageIndicator extends AppCompatActivity implements GenericCallback {
 
     private final String TAG = MemberCheatViewPageIndicator.class.getName();
 
@@ -334,7 +335,7 @@ public class MemberCheatViewPageIndicator extends AppCompatActivity {
                 return true;
             case R.id.action_add_to_favorites:
                 Tools.showSnackbar(outerLayout, getString(R.string.favorite_adding));
-                Helper.addFavorite(this, outerLayout, visibleCheat);
+                Helper.addFavorite(this, visibleCheat, this);
                 return true;
             case R.id.action_report:
                 showReportDialog();
@@ -422,5 +423,17 @@ public class MemberCheatViewPageIndicator extends AppCompatActivity {
 
     public RestApi getRestApi() {
         return restApi;
+    }
+
+    @Override
+    public void success() {
+        Log.d(TAG, "MemberCheatViewPageIndicator ADD FAV success: ");
+        Tools.showSnackbar(outerLayout, getString(R.string.add_favorite_ok));
+    }
+
+    @Override
+    public void fail(Exception e) {
+        Log.d(TAG, "MemberCheatViewPageIndicator ADD FAV fail: ");
+        Tools.showSnackbar(outerLayout, getString(R.string.error_adding_favorite));
     }
 }

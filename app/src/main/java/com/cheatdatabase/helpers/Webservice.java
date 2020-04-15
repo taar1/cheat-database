@@ -48,12 +48,6 @@ public class Webservice {
     @Inject
     public Webservice(RestApi restApi) {
         this.restApi = restApi;
-
-        Log.d(TAG, "XXXXXXXXXXX Webservice()");
-
-        if (restApi == null) {
-            Log.d(TAG, "XXXXXXXXXXX Webservice: REST API IS NULL");
-        }
     }
 
     /**
@@ -128,7 +122,6 @@ public class Webservice {
     }
 
 
-
     /**
      * Universal Search
      *
@@ -170,7 +163,6 @@ public class Webservice {
 
         return ret;
     }
-
 
 
     /**
@@ -246,8 +238,6 @@ public class Webservice {
         return member;
 
     }
-
-
 
 
     /**
@@ -479,7 +469,6 @@ public class Webservice {
 
         return cheats;
     }
-
 
 
 //    /**

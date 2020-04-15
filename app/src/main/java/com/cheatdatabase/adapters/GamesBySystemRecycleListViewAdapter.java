@@ -12,7 +12,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cheatdatabase.R;
-import com.cheatdatabase.model.Game;
 import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Tools;
 import com.cheatdatabase.holders.FacebookNativeAdHolder;
@@ -23,6 +22,7 @@ import com.cheatdatabase.listitems.FacebookNativeAdListItem;
 import com.cheatdatabase.listitems.GameListItem;
 import com.cheatdatabase.listitems.ListItem;
 import com.cheatdatabase.listitems.UkonAdListItem;
+import com.cheatdatabase.model.Game;
 import com.facebook.ads.AdOptionsView;
 import com.facebook.ads.NativeAd;
 import com.facebook.ads.NativeAdLayout;
@@ -159,7 +159,7 @@ public class GamesBySystemRecycleListViewAdapter extends RecyclerView.Adapter<Re
         return 100;
     }
 
-    // Filter List by search qord (not implemented yet)
+    // Filter List by search word (not implemented yet)
     public void filterList(String filter) {
         if ((filter != null) && (filter.trim().length() > 2)) {
             // TODO filter the list and update gameList with filtered List

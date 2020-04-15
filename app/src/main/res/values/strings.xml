@@ -201,4 +201,6 @@
     <string name="ukon_url">http://www.ukon.ch/?lang=en</string>
 
     <string name="err_parameter_too_short">The entered username or email is too short.</string>
+
+    <string name="error_adding_favorite">Error: The cheat could not be added to your favorites.</string>
 </resources>

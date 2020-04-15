@@ -84,7 +84,6 @@ public class SubmitCheatActivity extends AppCompatActivity {
 
         gameObj = getIntent().getParcelableExtra("gameObj");
         if (gameObj == null) {
-            Log.d(TAG, "XXXXX onCreate: GAME OBJ NULL");
             Toast.makeText(SubmitCheatActivity.this, R.string.err_somethings_wrong, Toast.LENGTH_LONG).show();
             finish();
         } else {

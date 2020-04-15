@@ -94,8 +94,7 @@ public class CheatMetaDialog extends Dialog implements OnClickListener {
             @Override
             public void onResponse(Call<JsonObject> metaInfo, Response<JsonObject> response) {
                 JsonObject metaInfoData = response.body();
-
-                Log.d(TAG, "XXXXX onResponse metaInfo: " + metaInfo);
+                Log.d(TAG, "onResponse metaInfo: " + metaInfo);
 
                 if (metaInfoData.get("viewsTotal") != null) {
                     cheat.setViewsTotal(metaInfoData.get("viewsTotal").getAsInt());

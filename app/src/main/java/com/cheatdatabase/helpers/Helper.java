@@ -11,10 +11,10 @@ import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.pm.Signature;
 import android.util.Base64;
 import android.util.Log;
-import android.view.View;
 import android.widget.Toast;
 
 import com.cheatdatabase.R;
+import com.cheatdatabase.callbacks.GenericCallback;
 import com.cheatdatabase.model.Cheat;
 
 import java.security.MessageDigest;
@@ -26,6 +26,8 @@ import java.security.NoSuchAlgorithmException;
  * @author Dominik Erbsland
  */
 public class Helper extends Activity {
+
+    private static final String TAG = "Helper";
 
     public static void startNewActivity(Context context, Class<?> cls) {
         Intent explicitIntent = new Intent(context, cls);
@@ -71,14 +73,9 @@ public class Helper extends Activity {
         }
     }
 
-    public static void addFavorite(Context context, View parentView, Cheat visibleCheat) {
+    public static void addFavorite(Context context, Cheat visibleCheat, GenericCallback callback) {
         DatabaseHelper db = new DatabaseHelper(context);
-
-        if (db.insertFavoriteCheat(visibleCheat) > 0) {
-            Tools.showSnackbar(parentView, context.getString(R.string.add_favorite_ok));
-        } else {
-            Tools.showSnackbar(parentView, context.getString(R.string.favorite_error));
-        }
+        db.insertFavoriteCheat(visibleCheat, callback);
     }
 
     /**

@@ -21,16 +21,16 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.cheatdatabase.R;
 import com.cheatdatabase.adapters.CheatsByGameRecycleListViewAdapter;
-import com.cheatdatabase.model.Cheat;
-import com.cheatdatabase.model.Game;
-import com.cheatdatabase.model.Member;
-import com.cheatdatabase.events.CheatRatingFinishedEvent;
 import com.cheatdatabase.cheat_detail_view.FavoritesCheatViewPageIndicator;
+import com.cheatdatabase.events.CheatRatingFinishedEvent;
 import com.cheatdatabase.helpers.DatabaseHelper;
 import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.helpers.Tools;
 import com.cheatdatabase.listeners.OnCheatListItemSelectedListener;
+import com.cheatdatabase.model.Cheat;
+import com.cheatdatabase.model.Game;
+import com.cheatdatabase.model.Member;
 import com.cheatdatabase.widgets.DividerDecoration;
 import com.facebook.ads.AdSize;
 import com.facebook.ads.AdView;
@@ -87,6 +87,21 @@ public class FavoriteCheatListActivity extends AppCompatActivity implements OnCh
 
         loadCheats();
     }
+
+    // TODO FIXME: AKTUELL ZEIGT ES IN DEN FAVORITES KEINE SCREENSHOTS AN...
+    // TODO FIXME: AKTUELL ZEIGT ES IN DEN FAVORITES KEINE SCREENSHOTS AN...
+    // TODO FIXME: AKTUELL ZEIGT ES IN DEN FAVORITES KEINE SCREENSHOTS AN...
+
+    // TODO: 1) DB wechsel auf ROOM - 2) favorites tabelle mit "screenshots" erweitern
+    // TODO: 1) DB wechsel auf ROOM - 2) favorites tabelle mit "screenshots" erweitern
+    // TODO: 1) DB wechsel auf ROOM - 2) favorites tabelle mit "screenshots" erweitern
+    // TODO: 1) DB wechsel auf ROOM - 2) favorites tabelle mit "screenshots" erweitern
+    // TODO: als zwischenlösung: bei cheat view abfragen online ob es screenshots hat und diese laden... (kein offline mode)
+    // TODO: als zwischenlösung: bei cheat view abfragen online ob es screenshots hat und diese laden... (kein offline mode)
+    // TODO: als zwischenlösung: bei cheat view abfragen online ob es screenshots hat und diese laden... (kein offline mode)
+    // TODO: als zwischenlösung: bei cheat view abfragen online ob es screenshots hat und diese laden... (kein offline mode)
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -441,7 +441,7 @@ public class FavoritesCheatViewPageIndicator extends AppCompatActivity implement
     @Override
     public void onUndo(Parcelable token) {
         DatabaseHelper db = new DatabaseHelper(this);
-        db.insertFavoriteCheat(visibleCheat);
+        db.insertFavoriteCheat(visibleCheat, null);
     }
 
     public RestApi getRestApi() {

@@ -14,11 +14,13 @@ import com.cheatdatabase.model.Screenshot;
 import com.cheatdatabase.model.SystemPlatform;
 import com.cheatdatabase.rest.RestApi;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import needle.Needle;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -49,20 +51,28 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public void saveScreenshotsToSdCard(Cheat cheat) {
-        for (Screenshot s : cheat.getScreenshotList()) {
-            if (Tools.isSdWriteable()) {
-                s.saveToSd();
+    private void saveScreenshotsToSdCard(Cheat cheat, GenericCallback callback) {
+        Needle.onBackgroundThread().execute(() -> {
+            try {
+                for (Screenshot s : cheat.getScreenshotList()) {
+                    if (Tools.isSdWriteable()) {
+                        s.saveToSd();
+                    }
+                }
+
+                callback.success();
+            } catch (IOException e) {
+                callback.fail(e);
             }
-        }
+        });
     }
 
-    public long insertFavoriteCheat(Cheat cheat) {
+    public long insertFavoriteCheat(Cheat cheat, GenericCallback callback) {
         if (cheat == null) {
             return 0;
         } else {
             if (cheat.isScreenshots()) {
-                saveScreenshotsToSdCard(cheat);
+                saveScreenshotsToSdCard(cheat, callback);
             }
 
             SQLiteDatabase db = this.getWritableDatabase();
@@ -93,48 +103,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
-    public long insertFavoriteCheats(List<Cheat> cheats) {
-        long id = 0;
-
-        // TODO FIXME hier noch auf die neue struktur wechseln??
-        // TODO FIXME hier noch auf die neue struktur wechseln??
-        // TODO FIXME hier noch auf die neue struktur wechseln??
-        // TODO FIXME hier noch auf die neue struktur wechseln??
-
-        SQLiteDatabase db = this.getWritableDatabase();
-
-        for (Cheat cheat : cheats) {
-            if (cheat.isScreenshots()) {
-                saveScreenshotsToSdCard(cheat);
-            }
-
-            ContentValues initialValues = new ContentValues();
-            initialValues.put(Favorite.FAV_GAME_ID, cheat.getGameId());
-            initialValues.put(Favorite.FAV_GAMENAME, cheat.getGameName());
-            initialValues.put(Favorite.FAV_CHEAT_ID, cheat.getCheatId());
-            initialValues.put(Favorite.FAV_CHEAT_TITLE, cheat.getCheatTitle());
-            initialValues.put(Favorite.FAV_CHEAT_TEXT, cheat.getCheatText());
-            initialValues.put(Favorite.FAV_LANGUAGE_ID, cheat.getLanguageId());
-            initialValues.put(Favorite.FAV_SYSTEM_ID, cheat.getSystemId());
-            initialValues.put(Favorite.FAV_SYSTEM_NAME, cheat.getSystemName());
-            initialValues.put(Favorite.FAV_MEMBER_ID, cheat.getSubmittingMember().getMid());
-            int walkthroughFormat = 0;
-            if (cheat.isWalkthroughFormat()) {
-                walkthroughFormat = 1;
-            }
-            initialValues.put(Favorite.FAV_WALKTHROUGH_FORMAT, walkthroughFormat);
-
-            // insert row
-            id = db.insert(Favorite.TABLE_NAME, null, initialValues);
-        }
-
-        // close db connection
-        db.close();
-
-        // return newly inserted row id
-        return id;
-    }
-
     public void insertFavoriteCheats(Game gameObj, boolean isAchievementsEnabled, RestApi restApi, GenericCallback callback) {
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -146,7 +114,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
                 for (Cheat cheat : cheatList) {
                     if (cheat.isScreenshots()) {
-                        saveScreenshotsToSdCard(cheat);
+                        // TODO FIXME: currently it ignores success/fail of saving screenshots to SD card...
+                        // TODO FIXME: currently it ignores success/fail of saving screenshots to SD card...
+                        saveScreenshotsToSdCard(cheat, null);
                     }
 
                     ContentValues initialValues = new ContentValues();
@@ -442,7 +412,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 }
             }
         } catch (Exception e) {
-            Log.e(TAG, "XXXXX updateSystemsAndCount: ", e);
+            Log.e(TAG, "updateSystemsAndCount: ", e);
         }
 
 //        db.close();

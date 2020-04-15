@@ -28,6 +28,7 @@ import com.cheatdatabase.R;
 import com.cheatdatabase.activity.CheatForumActivity;
 import com.cheatdatabase.activity.LoginActivity;
 import com.cheatdatabase.activity.SubmitCheatActivity;
+import com.cheatdatabase.callbacks.GenericCallback;
 import com.cheatdatabase.dialogs.CheatMetaDialog;
 import com.cheatdatabase.dialogs.RateCheatMaterialDialog;
 import com.cheatdatabase.dialogs.ReportCheatMaterialDialog;
@@ -73,7 +74,7 @@ import retrofit2.Retrofit;
  * @author Dominik Erbsland
  * @version 1.0
  */
-public class CheatViewPageIndicatorActivity extends AppCompatActivity {
+public class CheatViewPageIndicatorActivity extends AppCompatActivity implements GenericCallback {
 
     private static final String TAG = CheatViewPageIndicatorActivity.class.getSimpleName();
     public static final int FORUM_POST_ADDED_REQUEST = 176;
@@ -366,7 +367,7 @@ public class CheatViewPageIndicatorActivity extends AppCompatActivity {
                 return true;
             case R.id.action_add_to_favorites:
                 Tools.showSnackbar(outerLayout, getString(R.string.favorite_adding));
-                Helper.addFavorite(this, outerLayout, visibleCheat);
+                Helper.addFavorite(this, visibleCheat, this);
                 return true;
             case R.id.action_report:
                 showReportDialog();
@@ -458,5 +459,15 @@ public class CheatViewPageIndicatorActivity extends AppCompatActivity {
 
     public RestApi getRestApi() {
         return restApi;
+    }
+
+    @Override
+    public void success() {
+        Tools.showSnackbar(outerLayout, getString(R.string.add_favorite_ok));
+    }
+
+    @Override
+    public void fail(Exception e) {
+        Tools.showSnackbar(outerLayout, getString(R.string.error_adding_favorite));
     }
 }
