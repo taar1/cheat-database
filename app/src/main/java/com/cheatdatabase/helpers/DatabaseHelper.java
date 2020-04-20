@@ -29,7 +29,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String TAG = "DatabaseHelper";
 
     private static final String DATABASE_NAME = "data";
-    //    private static final int DATABASE_VERSION = 3; // From 30.06.2015
+    //        private static final int DATABASE_VERSION = 3; // From 30.06.2015
     private static final int DATABASE_VERSION = 4; // From 20.04.2020
 
     public DatabaseHelper(Context context) {
@@ -50,12 +50,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             switch (version) {
                 case 2:
                     // Apply changes made in version 2
+                    Log.d(TAG, "onUpgrade to Version 2: ");
                     break;
                 case 3:
                     // Apply changes made in version 3
+                    Log.d(TAG, "onUpgrade to Version 3: ");
                     break;
                 case 4:
                     // Apply changes made in version 4
+                    Log.d(TAG, "onUpgrade to Version 4: ");
                     databaseChangesForVersion4(db);
                     break;
 
@@ -65,19 +68,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     private void databaseChangesForVersion4(SQLiteDatabase database) {
         database.execSQL("CREATE TABLE new_favorites (" +
-                "cheat_id INTEGER PRIMARY KEY NOT NULL," +
-                "cheat_title TEXT," +
-                "cheat_text TEXT," +
-                "game_id INTEGER," +
-                "game_name TEXT," +
-                "system_id INTEGER," +
-                "system_name TEXT," +
-                "language_id INTEGER," +
-                "game_count INTEGER," +
-                "walkthrough_format INTEGER," +
-                "member_id INTEGER)");
-        database.execSQL("INSERT INTO new_favorites (cheat_id, cheat_title, cheat_text, game_id, game_name, system_id, system_name, language_id, game_count, walkthrough_format, member_id) " +
-                "SELECT cheat_id, cheat_title, cheat_text, game_id, game_name, system_id, system_name, language_id, game_count, walkthrough_format, member_id FROM favorites");
+                "cheat_id INTEGER PRIMARY KEY NOT NULL, " +
+                "cheat_title TEXT, " +
+                "cheat_text TEXT, " +
+                "game_id INTEGER NOT NULL DEFAULT 0, " +
+                "game_name TEXT, " +
+                "system_id INTEGER NOT NULL DEFAULT 0, " +
+                "system_name TEXT, " +
+                "language_id INTEGER NOT NULL DEFAULT 1, " +
+                "walkthrough_format BOOLEAN, " +
+                "member_id INTEGER DEFAULT 0)");
+        database.execSQL("INSERT INTO new_favorites (cheat_id, cheat_title, cheat_text, game_id, game_name, system_id, system_name, language_id, walkthrough_format, member_id) " +
+                "SELECT cheat_id, cheat_title, cheat_text, game_id, game_name, system_id, system_name, language_id, walkthrough_format, member_id FROM favorites");
         database.execSQL("DROP TABLE favorites");
         database.execSQL("ALTER TABLE new_favorites RENAME TO favorites");
     }
