@@ -29,7 +29,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String TAG = "DatabaseHelper";
 
     private static final String DATABASE_NAME = "data";
-    private static final int DATABASE_VERSION = 3; // From 30.06.2015
+    //    private static final int DATABASE_VERSION = 3; // From 30.06.2015
+    private static final int DATABASE_VERSION = 4; // From 20.04.2020
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -44,11 +45,41 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        Log.w(TAG, "Upgrading database from version " + oldVersion + " to " + newVersion + ", which will destroy all old data");
-        db.execSQL("DROP TABLE IF EXISTS " + Favorite.TABLE_NAME);
-        db.execSQL("DROP TABLE IF EXISTS " + GameSystemTable.TABLE_NAME);
-        db.execSQL("DROP TABLE IF EXISTS " + SearchHistory.TABLE_NAME);
-        onCreate(db);
+        // Loop through each version when an upgrade occurs.
+        for (int version = oldVersion + 1; version <= newVersion; version++) {
+            switch (version) {
+                case 2:
+                    // Apply changes made in version 2
+                    break;
+                case 3:
+                    // Apply changes made in version 3
+                    break;
+                case 4:
+                    // Apply changes made in version 4
+                    databaseChangesForVersion4(db);
+                    break;
+
+            }
+        }
+    }
+
+    private void databaseChangesForVersion4(SQLiteDatabase database) {
+        database.execSQL("CREATE TABLE new_favorites (" +
+                "cheat_id INTEGER PRIMARY KEY NOT NULL," +
+                "cheat_title TEXT," +
+                "cheat_text TEXT," +
+                "game_id INTEGER," +
+                "game_name TEXT," +
+                "system_id INTEGER," +
+                "system_name TEXT," +
+                "language_id INTEGER," +
+                "game_count INTEGER," +
+                "walkthrough_format INTEGER," +
+                "member_id INTEGER)");
+        database.execSQL("INSERT INTO new_favorites (cheat_id, cheat_title, cheat_text, game_id, game_name, system_id, system_name, language_id, game_count, walkthrough_format, member_id) " +
+                "SELECT cheat_id, cheat_title, cheat_text, game_id, game_name, system_id, system_name, language_id, game_count, walkthrough_format, member_id FROM favorites");
+        database.execSQL("DROP TABLE favorites");
+        database.execSQL("ALTER TABLE new_favorites RENAME TO favorites");
     }
 
     private void saveScreenshotsToSdCard(Cheat cheat, GenericCallback callback) {

@@ -68,3 +68,4 @@ fastlane/readme.md
 /.idea/libraries
 .DS_Store
 /build
+/.idea/
