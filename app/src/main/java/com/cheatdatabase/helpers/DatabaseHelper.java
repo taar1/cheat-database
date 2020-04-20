@@ -29,7 +29,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String TAG = "DatabaseHelper";
 
     private static final String DATABASE_NAME = "data";
-    //                private static final int DATABASE_VERSION = 3; // From 30.06.2015
+    //                    private static final int DATABASE_VERSION = 3; // From 30.06.2015
     private static final int DATABASE_VERSION = 4; // From 20.04.2020
 
     public DatabaseHelper(Context context) {
@@ -76,8 +76,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "system_id INTEGER NOT NULL DEFAULT 0, " +
                 "system_name TEXT, " +
                 "language_id INTEGER NOT NULL DEFAULT 1, " +
-                "walkthrough_format BOOLEAN DEFAULT 0, " +
-                "member_id INTEGER NOT NULL DEFAULT 0)");
+                "walkthrough_format INTEGER NOT NULL DEFAULT 0, " +
+                "member_id INTEGER DEFAULT 0)");
         database.execSQL("INSERT INTO new_favorites (cheat_id, cheat_title, cheat_text, game_id, game_name, system_id, system_name, language_id, walkthrough_format, member_id) " +
                 "SELECT cheat_id, cheat_title, cheat_text, game_id, game_name, system_id, system_name, language_id, walkthrough_format, member_id FROM favorites");
         database.execSQL("DROP TABLE favorites");

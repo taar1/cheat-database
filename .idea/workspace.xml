@@ -112,6 +112,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4caff62e-c62f-40ca-acf0-73c680b13375" name="Default" comment="Improved DB schema">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/helpers/DatabaseHelper.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/helpers/DatabaseHelper.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -609,13 +610,6 @@
       <option name="presentableId" value="Default" />
       <updated>1487274191999</updated>
     </task>
-    <task id="LOCAL-00046" summary="Free many classes from AndroidAnnotations.§">
-      <created>1543178074150</created>
-      <option name="number" value="00046" />
-      <option name="presentableId" value="LOCAL-00046" />
-      <option name="project" value="LOCAL" />
-      <updated>1543178074150</updated>
-    </task>
     <task id="LOCAL-00047" summary="Free from AndroidAnnotations.">
       <created>1543179257137</created>
       <option name="number" value="00047" />
@@ -952,7 +946,14 @@
       <option name="project" value="LOCAL" />
       <updated>1587400135954</updated>
     </task>
-    <option name="localTasksCounter" value="95" />
+    <task id="LOCAL-00095" summary="a try to merge with room">
+      <created>1587413692082</created>
+      <option name="number" value="00095" />
+      <option name="presentableId" value="LOCAL-00095" />
+      <option name="project" value="LOCAL" />
+      <updated>1587413692083</updated>
+    </task>
+    <option name="localTasksCounter" value="96" />
     <servers />
   </component>
   <component name="TodoView">
@@ -1002,7 +1003,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
-    <MESSAGE value="Changing the Listen Item View Adapter / Holder concept" />
     <MESSAGE value="Insert blank list item every 20th position in recycler view" />
     <MESSAGE value="AdView in RecyclerView every 20th position" />
     <MESSAGE value="Implementing Facebook Native Ads (not working yet....)" />
@@ -1027,7 +1027,8 @@
     <MESSAGE value="Fixing cheat detail view for members and favorites." />
     <MESSAGE value="Fixing a lot of bugs of cheat favorites etc." />
     <MESSAGE value="Improved DB schema" />
-    <option name="LAST_COMMIT_MESSAGE" value="Improved DB schema" />
+    <MESSAGE value="a try to merge with room" />
+    <option name="LAST_COMMIT_MESSAGE" value="a try to merge with room" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
