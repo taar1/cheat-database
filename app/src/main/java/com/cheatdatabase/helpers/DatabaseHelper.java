@@ -29,7 +29,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String TAG = "DatabaseHelper";
 
     private static final String DATABASE_NAME = "data";
-    //        private static final int DATABASE_VERSION = 3; // From 30.06.2015
+    //            private static final int DATABASE_VERSION = 3; // From 30.06.2015
     private static final int DATABASE_VERSION = 4; // From 20.04.2020
 
     public DatabaseHelper(Context context) {
