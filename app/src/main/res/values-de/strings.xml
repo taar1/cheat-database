@@ -208,4 +208,5 @@
     <string name="err_parameter_too_short">Der Benutzername oder die E-Mailadresse ist zu kurz.</string>
 
     <string name="error_adding_favorite">Fehler: Der Cheat konnte nicht zu den Favoriten hinzugefügt werden.</string>
+    <string name="error_adding_favorites">Fehler: Die Cheats konnten nicht zu den Favoriten hinzugefügt werden.</string>
 </resources>

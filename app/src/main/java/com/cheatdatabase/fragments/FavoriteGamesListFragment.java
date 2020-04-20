@@ -17,8 +17,9 @@ import androidx.fragment.app.Fragment;
 
 import com.cheatdatabase.R;
 import com.cheatdatabase.adapters.FavoritesExpandableListAdapter;
-import com.cheatdatabase.model.Game;
-import com.cheatdatabase.helpers.DatabaseHelper;
+import com.cheatdatabase.data.RoomCheatDatabase;
+import com.cheatdatabase.data.dao.FavoriteCheatDao;
+import com.cheatdatabase.data.model.FavoriteCheatModel;
 import com.cheatdatabase.helpers.Group;
 
 import java.util.ArrayList;
@@ -32,14 +33,14 @@ import butterknife.ButterKnife;
 import needle.Needle;
 
 public class FavoriteGamesListFragment extends Fragment {
+    private static final String TAG = "FavoriteGamesListFragme";
 
     SparseArray<Group> groups = new SparseArray<>();
 
     private FavoritesExpandableListAdapter adapter;
 
-    private List<Game> gamesFound;
-
-    private DatabaseHelper db;
+    //    private List<Game> gamesFound;
+    private List<FavoriteCheatModel> favoriteCheatsList;
 
     private Activity parentActivity;
 
@@ -54,6 +55,8 @@ public class FavoriteGamesListFragment extends Fragment {
     @BindView(R.id.nothingfound_text)
     TextView nothingFoundText;
 
+    private FavoriteCheatDao dao;
+
 
     public static FavoriteGamesListFragment newInstance() {
         FavoriteGamesListFragment favoriteGamesListFragment = new FavoriteGamesListFragment();
@@ -65,8 +68,9 @@ public class FavoriteGamesListFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_favorites_main_list, container, false);
         ButterKnife.bind(this, view);
 
-        db = new DatabaseHelper(getActivity());
-        gamesFound = db.getAllFavoritedGames();
+        dao = RoomCheatDatabase.getDatabase(getActivity()).favoriteDao();
+        favoriteCheatsList = dao.getAll();
+
         adapter = new FavoritesExpandableListAdapter(parentActivity, groups);
 
         setHasOptionsMenu(true);
@@ -86,7 +90,7 @@ public class FavoriteGamesListFragment extends Fragment {
     }
 
     private void loadGames() {
-        gamesFound = db.getAllFavoritedGames();
+        favoriteCheatsList = dao.getAll();
 
         fillList();
         createData();
@@ -101,15 +105,15 @@ public class FavoriteGamesListFragment extends Fragment {
     }
 
     public void createData() {
-        if (gamesFound == null) {
+        if (favoriteCheatsList == null) {
             handleEmptyState();
         } else {
-            if (gamesFound.size() > 0) {
+            if (favoriteCheatsList.size() > 0) {
                 Set<String> systems = new HashSet<>();
                 // Get system names
-                for (Game game : gamesFound) {
-                    if ((game.getSystemName() != null) && (game.getSystemName().length() > 0)) {
-                        systems.add(game.getSystemName());
+                for (FavoriteCheatModel favoriteCheat : favoriteCheatsList) {
+                    if ((favoriteCheat.getSystemName() != null) && (favoriteCheat.getSystemName().length() > 0)) {
+                        systems.add(favoriteCheat.getSystemName());
                     }
                 }
 
@@ -119,17 +123,17 @@ public class FavoriteGamesListFragment extends Fragment {
 
                 // Go through systems
                 for (int i = 0; i < systemsSorted.size(); i++) {
-                    Log.i("system", systemsSorted.get(i) + "");
+                    Log.i(TAG, "systemsSorted: " + systemsSorted.get(i));
 
                     // Create groups with system names
                     Group group = new Group(systemsSorted.get(i) + "");
 
                     // Fill each group with the game names
-                    for (Game game : gamesFound) {
-                        if ((game.getSystemName() != null) && (game.getSystemName().length() > 0)) {
-                            if (game.getSystemName().equalsIgnoreCase(systemsSorted.get(i))) {
-                                group.children.add(game.getGameName());
-                                group.gameChildren.add(game);
+                    for (FavoriteCheatModel favoriteCheat : favoriteCheatsList) {
+                        if ((favoriteCheat.getSystemName() != null) && (favoriteCheat.getSystemName().length() > 0)) {
+                            if (favoriteCheat.getSystemName().equalsIgnoreCase(systemsSorted.get(i))) {
+                                group.children.add(favoriteCheat.getGameName());
+                                group.gameChildren.add(favoriteCheat.toGame());
                             }
                         }
                     }
@@ -137,7 +141,6 @@ public class FavoriteGamesListFragment extends Fragment {
                 }
             }
         }
-
     }
 
     private void handleEmptyState() {

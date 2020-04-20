@@ -22,8 +22,10 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.cheatdatabase.R;
 import com.cheatdatabase.adapters.CheatsByGameRecycleListViewAdapter;
 import com.cheatdatabase.cheat_detail_view.FavoritesCheatViewPageIndicator;
+import com.cheatdatabase.data.RoomCheatDatabase;
+import com.cheatdatabase.data.dao.FavoriteCheatDao;
+import com.cheatdatabase.data.model.FavoriteCheatModel;
 import com.cheatdatabase.events.CheatRatingFinishedEvent;
-import com.cheatdatabase.helpers.DatabaseHelper;
 import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.helpers.Tools;
@@ -80,10 +82,14 @@ public class FavoriteCheatListActivity extends AppCompatActivity implements OnCh
     @BindView(R.id.banner_container)
     LinearLayout bannerContainerFacebook;
 
+    private FavoriteCheatDao dao;
+
     @Override
     protected void onStart() {
         super.onStart();
         EventBus.getDefault().register(this);
+
+        dao = RoomCheatDatabase.getDatabase(this).favoriteDao();
 
         loadCheats();
     }
@@ -100,7 +106,6 @@ public class FavoriteCheatListActivity extends AppCompatActivity implements OnCh
     // TODO: als zwischenlösung: bei cheat view abfragen online ob es screenshots hat und diese laden... (kein offline mode)
     // TODO: als zwischenlösung: bei cheat view abfragen online ob es screenshots hat und diese laden... (kein offline mode)
     // TODO: als zwischenlösung: bei cheat view abfragen online ob es screenshots hat und diese laden... (kein offline mode)
-
 
 
     @Override
@@ -211,11 +216,15 @@ public class FavoriteCheatListActivity extends AppCompatActivity implements OnCh
 
             if (gameObj != null) {
                 if (gameObj.getCheatList() == null) {
-                    DatabaseHelper db = new DatabaseHelper(this);
-                    gameObj.setCheatList(db.getAllFavoritedCheatsByGame(gameObj.getGameId()));
-                }
 
-                cheatsArrayList = gameObj.getCheatList();
+                    List<FavoriteCheatModel> favcheats = dao.getCheatsByGameId(gameObj.getGameId());
+
+                    for (FavoriteCheatModel fc : favcheats) {
+                        cheatsArrayList.add(fc.toCheat());
+                    }
+
+                    gameObj.setCheatList(cheatsArrayList);
+                }
 
                 updateUI();
             } else {
