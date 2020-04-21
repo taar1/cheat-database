@@ -29,8 +29,8 @@ public class FavoriteCheatModel {
     public String systemName;
     @ColumnInfo(name = "language_id")
     public int languageId;
-    @ColumnInfo(name = "game_count")
-    public int gameCount;
+    //    @ColumnInfo(name = "game_count")
+//    public int gameCount;
     @ColumnInfo(name = "walkthrough_format")
     public Boolean isWalkthrough;
     // Local member who saved the favorite (for syncing online)
@@ -40,7 +40,7 @@ public class FavoriteCheatModel {
 //    public FavoriteCheatModel() {
 //    }
 
-    public FavoriteCheatModel(int gameId, String gameName, int cheatId, String cheatTitle, String cheatText, int systemId, String systemName, int languageId, int gameCount, Boolean isWalkthrough, int memberId) {
+    public FavoriteCheatModel(int gameId, String gameName, int cheatId, String cheatTitle, String cheatText, int systemId, String systemName, int languageId, Boolean isWalkthrough, int memberId) {
         this.gameId = gameId;
         this.gameName = gameName;
         this.cheatId = cheatId;
@@ -49,7 +49,7 @@ public class FavoriteCheatModel {
         this.systemId = systemId;
         this.systemName = systemName;
         this.languageId = languageId;
-        this.gameCount = gameCount;
+//        this.gameCount = gameCount;
         this.isWalkthrough = isWalkthrough;
         this.memberId = memberId;
     }
@@ -87,9 +87,9 @@ public class FavoriteCheatModel {
         return languageId;
     }
 
-    public int getGameCount() {
-        return gameCount;
-    }
+//    public int getGameCount() {
+//        return gameCount;
+//    }
 
     public Boolean isWalkthrough() {
         return isWalkthrough;
