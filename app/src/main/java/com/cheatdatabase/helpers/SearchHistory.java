@@ -11,7 +11,7 @@ public class SearchHistory {
 
     private int id;
     private String searchQuery;
-    private int searchTime;
+    private String searchTime;
 
     // Create table SQL query
     public static final String CREATE_TABLE =
@@ -25,7 +25,7 @@ public class SearchHistory {
     public SearchHistory() {
     }
 
-    public SearchHistory(int id, String searchQuery, int searchTime) {
+    public SearchHistory(int id, String searchQuery, String searchTime) {
         this.id = id;
         this.searchQuery = searchQuery;
         this.searchTime = searchTime;

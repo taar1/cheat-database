@@ -82,6 +82,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "SELECT cheat_id, cheat_title, cheat_text, game_id, game_name, system_id, system_name, language_id, walkthrough_format, member_id FROM favorites");
         database.execSQL("DROP TABLE favorites");
         database.execSQL("ALTER TABLE new_favorites RENAME TO favorites");
+
+
+        database.execSQL("DROP TABLE searchhistory");
+        database.execSQL("CREATE TABLE searchhistory (" +
+                "_id INTEGER PRIMARY KEY NOT NULL, " +
+                "searchquery TEXT, " +
+                "searchtime TEXT)");
     }
 
     private void saveScreenshotsToSdCard(Cheat cheat, GenericCallback callback) {
