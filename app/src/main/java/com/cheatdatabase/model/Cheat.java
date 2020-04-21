@@ -372,6 +372,6 @@ public class Cheat extends Game implements Parcelable {
     }
 
     public FavoriteCheatModel toFavoriteCheatModel(int memberId) {
-        return new FavoriteCheatModel(getGameId(), getGameName(), getCheatId(), getCheatTitle(), getCheatText(), getSystemId(), getSystemName(), getLanguageId(), 0, isWalkthroughFormat(), memberId);
+        return new FavoriteCheatModel(getGameId(), getGameName(), getCheatId(), getCheatTitle(), getCheatText(), getSystemId(), getSystemName(), getLanguageId(), isWalkthroughFormat(), memberId);
     }
 }
