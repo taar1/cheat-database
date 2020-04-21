@@ -106,7 +106,7 @@ public class SystemListFragment extends Fragment implements OnSystemListItemSele
                 // Check how old the database entries are. If over than 24 then
                 // load them again from the webservice.
 
-                long lastmod = systemModels.get(0).getLastmod();
+                long lastmod = Long.parseLong(systemModels.get(0).getLastmod());
                 long now = System.currentTimeMillis();
                 long differenceInHours = (now - lastmod) / (1000 * 60 * 60);
                 long differenceInMins = (now - lastmod) / (1000 * 60);

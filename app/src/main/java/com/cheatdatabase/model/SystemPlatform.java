@@ -143,6 +143,6 @@ public class SystemPlatform implements Parcelable {
     }
 
     public SystemModel toSystemModel() {
-        return new SystemModel(getSystemId(), getSystemName(), getGameCount(), getCheatCount(), getLastModTimeStamp());
+        return new SystemModel(getSystemId(), getSystemName(), getGameCount(), getCheatCount(), String.valueOf(getLastModTimeStamp()));
     }
 }

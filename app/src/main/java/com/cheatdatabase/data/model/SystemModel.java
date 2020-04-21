@@ -21,13 +21,13 @@ public class SystemModel {
     @ColumnInfo(name = "cheatcount")
     public int cheatCount;
     @ColumnInfo(name = "lastmod")
-    public long lastmod;
+    public String lastmod;
 
 
     public SystemModel() {
     }
 
-    public SystemModel(int id, String name, int gamesCount, int cheatCount, long lastmod) {
+    public SystemModel(int id, String name, int gamesCount, int cheatCount, String lastmod) {
         this.id = id;
         this.name = name;
         this.gamesCount = gamesCount;
@@ -51,7 +51,7 @@ public class SystemModel {
         return cheatCount;
     }
 
-    public long getLastmod() {
+    public String getLastmod() {
         return lastmod;
     }
 
