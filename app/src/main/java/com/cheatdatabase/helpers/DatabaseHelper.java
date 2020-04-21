@@ -29,8 +29,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String TAG = "DatabaseHelper";
 
     private static final String DATABASE_NAME = "data";
-    //                    private static final int DATABASE_VERSION = 3; // From 30.06.2015
-    private static final int DATABASE_VERSION = 4; // From 20.04.2020
+    private static final int DATABASE_VERSION = 3; // From 30.06.2015
+//    private static final int DATABASE_VERSION = 4; // From 20.04.2020
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -71,13 +71,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "cheat_id INTEGER PRIMARY KEY NOT NULL, " +
                 "cheat_title TEXT, " +
                 "cheat_text TEXT, " +
-                "game_id INTEGER NOT NULL DEFAULT 0, " +
+                "game_id INTEGER NOT NULL, " +
                 "game_name TEXT, " +
-                "system_id INTEGER NOT NULL DEFAULT 0, " +
+                "system_id INTEGER NOT NULL, " +
                 "system_name TEXT, " +
-                "language_id INTEGER NOT NULL DEFAULT 1, " +
-                "walkthrough_format INTEGER NOT NULL DEFAULT 0, " +
-                "member_id INTEGER DEFAULT 0)");
+                "language_id INTEGER NOT NULL, " +
+                "walkthrough_format INTEGER NOT NULL, " +
+                "member_id INTEGER NOT NULL)");
         database.execSQL("INSERT INTO new_favorites (cheat_id, cheat_title, cheat_text, game_id, game_name, system_id, system_name, language_id, walkthrough_format, member_id) " +
                 "SELECT cheat_id, cheat_title, cheat_text, game_id, game_name, system_id, system_name, language_id, walkthrough_format, member_id FROM favorites");
         database.execSQL("DROP TABLE favorites");
