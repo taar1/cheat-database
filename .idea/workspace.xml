@@ -111,9 +111,9 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4caff62e-c62f-40ca-acf0-73c680b13375" name="Default" comment="Fixing adding favorites partially">
+    <list default="true" id="4caff62e-c62f-40ca-acf0-73c680b13375" name="Default" comment="Remove game_count from favorites DB model">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/data/model/FavoriteCheatModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/data/model/FavoriteCheatModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/data/RoomCheatDatabase.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/data/RoomCheatDatabase.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -610,13 +610,6 @@
       <option name="presentableId" value="Default" />
       <updated>1487274191999</updated>
     </task>
-    <task id="LOCAL-00045" summary="Free many classes from AndroidAnnotations.§">
-      <created>1543177878068</created>
-      <option name="number" value="00045" />
-      <option name="presentableId" value="LOCAL-00045" />
-      <option name="project" value="LOCAL" />
-      <updated>1543177878068</updated>
-    </task>
     <task id="LOCAL-00046" summary="Free many classes from AndroidAnnotations.§">
       <created>1543178074150</created>
       <option name="number" value="00046" />
@@ -953,7 +946,14 @@
       <option name="project" value="LOCAL" />
       <updated>1586984182291</updated>
     </task>
-    <option name="localTasksCounter" value="94" />
+    <task id="LOCAL-00094" summary="Remove game_count from favorites DB model">
+      <created>1587500371425</created>
+      <option name="number" value="00094" />
+      <option name="presentableId" value="LOCAL-00094" />
+      <option name="project" value="LOCAL" />
+      <updated>1587500371425</updated>
+    </task>
+    <option name="localTasksCounter" value="95" />
     <servers />
   </component>
   <component name="TodoView">
@@ -1003,7 +1003,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
-    <MESSAGE value="Changing the Listen Item View Adapter / Holder concept" />
     <MESSAGE value="Insert blank list item every 20th position in recycler view" />
     <MESSAGE value="AdView in RecyclerView every 20th position" />
     <MESSAGE value="Implementing Facebook Native Ads (not working yet....)" />
@@ -1028,7 +1027,8 @@
     <MESSAGE value="Fixing cheat detail view for members and favorites." />
     <MESSAGE value="Fixing a lot of bugs of cheat favorites etc." />
     <MESSAGE value="Fixing adding favorites partially" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixing adding favorites partially" />
+    <MESSAGE value="Remove game_count from favorites DB model" />
+    <option name="LAST_COMMIT_MESSAGE" value="Remove game_count from favorites DB model" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>

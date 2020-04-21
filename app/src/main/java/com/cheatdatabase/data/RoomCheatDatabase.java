@@ -19,8 +19,8 @@ public abstract class RoomCheatDatabase extends androidx.room.RoomDatabase {
 
     private static RoomCheatDatabase INSTANCE;
     private static final String DATABASE_NAME = "data";
-    public static final int DATABASE_VERSION = 3; // From 30.06.2015
-//    public static final int DATABASE_VERSION = 4; // From 20.04.2020
+    //    public static final int DATABASE_VERSION = 3; // From 30.06.2015
+    public static final int DATABASE_VERSION = 4; // From 20.04.2020
 
     public static RoomCheatDatabase getDatabase(final Context context) {
         if (INSTANCE == null) {
