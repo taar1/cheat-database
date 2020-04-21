@@ -2,14 +2,14 @@ package com.cheatdatabase.data.model;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
-import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
 import com.cheatdatabase.model.Cheat;
 import com.cheatdatabase.model.Game;
 
 
-@Entity(tableName = "favorites", indices = {@Index(value = "cheat_id", unique = true)})
+//@Entity(tableName = "favorites", indices = {@Index(value = "cheat_id", unique = true)})
+@Entity(tableName = "favorites")
 public class FavoriteCheatModel {
 
     @PrimaryKey
