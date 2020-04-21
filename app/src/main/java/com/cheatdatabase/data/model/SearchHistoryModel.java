@@ -13,13 +13,13 @@ public class SearchHistoryModel {
     @ColumnInfo(name = "searchquery")
     public String searchQuery;
     @ColumnInfo(name = "searchtime")
-    public Long searchTime;
+    public String searchTime;
 
 
     public SearchHistoryModel() {
     }
 
-    public SearchHistoryModel(int id, String searchQuery, Long searchTime) {
+    public SearchHistoryModel(int id, String searchQuery, String searchTime) {
         this.id = id;
         this.searchQuery = searchQuery;
         this.searchTime = searchTime;
@@ -34,7 +34,7 @@ public class SearchHistoryModel {
         return searchQuery;
     }
 
-    public Long getSearchTime() {
+    public String getSearchTime() {
         return searchTime;
     }
 }
