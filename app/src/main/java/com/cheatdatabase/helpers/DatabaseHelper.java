@@ -29,8 +29,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String TAG = "DatabaseHelper";
 
     private static final String DATABASE_NAME = "data";
-    //    private static final int DATABASE_VERSION = 3; // From 30.06.2015
-    private static final int DATABASE_VERSION = 4; // From 20.04.2020
+    private static final int DATABASE_VERSION = 3; // From 30.06.2015
+//    private static final int DATABASE_VERSION = 4; // From 20.04.2020
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -84,12 +84,25 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         database.execSQL("ALTER TABLE new_favorites RENAME TO favorites");
 
 
+        database.execSQL("CREATE TABLE new_systems (" +
+                "_id INTEGER PRIMARY KEY NOT NULL, " +
+                "name TEXT, " +
+                "gamecount INTEGER, " +
+                "cheatcount INTEGER, " +
+                "lastmod TEXT)");
+        database.execSQL("INSERT INTO new_systems (_id, name, gamecount, cheatcount, lastmod) " +
+                "SELECT _id, name, gamecount, cheatcount, lastmod FROM systems");
+        database.execSQL("DROP TABLE systems");
+        database.execSQL("ALTER TABLE new_systems RENAME TO systems");
+
+
         database.execSQL("DROP TABLE searchhistory");
         database.execSQL("CREATE TABLE searchhistory (" +
                 "_id INTEGER PRIMARY KEY NOT NULL, " +
                 "searchquery TEXT, " +
                 "searchtime TEXT)");
     }
+
 
     private void saveScreenshotsToSdCard(Cheat cheat, GenericCallback callback) {
         Needle.onBackgroundThread().execute(() -> {
