@@ -73,9 +73,9 @@ public class Helper extends Activity {
         }
     }
 
-    public static void addFavorite(Context context, Cheat visibleCheat, GenericCallback callback) {
+    public static void addFavorite(Context context, Cheat visibleCheat, GenericCallback callback, int memberId) {
         DatabaseHelper db = new DatabaseHelper(context);
-        db.insertFavoriteCheat(visibleCheat, callback);
+        db.insertFavoriteCheat(visibleCheat, callback, memberId);
     }
 
     /**

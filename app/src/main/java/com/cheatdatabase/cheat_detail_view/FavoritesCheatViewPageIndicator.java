@@ -440,8 +440,12 @@ public class FavoritesCheatViewPageIndicator extends AppCompatActivity implement
 
     @Override
     public void onUndo(Parcelable token) {
+        int memberId = 0;
+        if (member != null) {
+            memberId = member.getMid();
+        }
         DatabaseHelper db = new DatabaseHelper(this);
-        db.insertFavoriteCheat(visibleCheat, null);
+        db.insertFavoriteCheat(visibleCheat, null, memberId);
     }
 
     public RestApi getRestApi() {

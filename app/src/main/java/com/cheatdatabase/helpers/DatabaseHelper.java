@@ -29,8 +29,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String TAG = "DatabaseHelper";
 
     private static final String DATABASE_NAME = "data";
-    private static final int DATABASE_VERSION = 3; // From 30.06.2015
-//    private static final int DATABASE_VERSION = 4; // From 20.04.2020
+    //    private static final int DATABASE_VERSION = 3; // From 30.06.2015
+    private static final int DATABASE_VERSION = 4; // From 20.04.2020
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -107,7 +107,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         });
     }
 
-    public long insertFavoriteCheat(Cheat cheat, GenericCallback callback) {
+    public long insertFavoriteCheat(Cheat cheat, GenericCallback callback, int memberId) {
         if (cheat == null) {
             return 0;
         } else {
@@ -131,6 +131,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 walkthroughFormat = 1;
             }
             initialValues.put(Favorite.FAV_WALKTHROUGH_FORMAT, walkthroughFormat);
+            initialValues.put(Favorite.FAV_MEMBER_ID, memberId);
 
             // insert row
             long id = db.insert(Favorite.TABLE_NAME, null, initialValues);
@@ -143,7 +144,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
-    public void insertFavoriteCheats(Game gameObj, boolean isAchievementsEnabled, RestApi restApi, GenericCallback callback) {
+    public void insertFavoriteCheats(Game gameObj, boolean isAchievementsEnabled, RestApi restApi, GenericCallback callback, int memberId) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         Call<List<Cheat>> call = restApi.getCheatsByGameId(gameObj.getGameId(), isAchievementsEnabled);
@@ -173,6 +174,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         walkthroughFormat = 1;
                     }
                     initialValues.put(Favorite.FAV_WALKTHROUGH_FORMAT, walkthroughFormat);
+                    initialValues.put(Favorite.FAV_MEMBER_ID, memberId);
 
                     // insert row
                     long returnValue = db.insert(Favorite.TABLE_NAME, null, initialValues);

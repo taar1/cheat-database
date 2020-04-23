@@ -381,6 +381,11 @@ public class CheatsByGameListActivity extends AppCompatActivity implements OnChe
     }
 
     void addCheatsToFavoritesTask(Game game) {
+        int memberId = 0;
+        if (member != null) {
+            memberId = member.getMid();
+        }
+
         DatabaseHelper db = new DatabaseHelper(this);
         db.insertFavoriteCheats(game, sharedPreferences.getBoolean("enable_achievements", true), restApi, new GenericCallback() {
             @Override
@@ -392,7 +397,7 @@ public class CheatsByGameListActivity extends AppCompatActivity implements OnChe
             public void fail(Exception e) {
                 finishedAddingCheatsToFavorites(getApplicationContext().getString(R.string.favorite_error));
             }
-        });
+        }, memberId);
 
     }
 
