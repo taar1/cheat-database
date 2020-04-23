@@ -87,8 +87,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         database.execSQL("CREATE TABLE new_systems (" +
                 "_id INTEGER PRIMARY KEY NOT NULL, " +
                 "name TEXT, " +
-                "gamecount INTEGER, " +
-                "cheatcount INTEGER, " +
+                "gamecount INTEGER NOT NULL, " +
+                "cheatcount INTEGER NOT NULL, " +
                 "lastmod TEXT)");
         database.execSQL("INSERT INTO new_systems (_id, name, gamecount, cheatcount, lastmod) " +
                 "SELECT _id, name, gamecount, cheatcount, lastmod FROM systems");
