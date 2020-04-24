@@ -1,5 +1,6 @@
 package com.cheatdatabase.data.dao;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -15,10 +16,10 @@ import java.util.List;
 public interface SystemDao {
 
     @Query("SELECT * FROM systems")
-    List<SystemModel> getAll();
+    LiveData<List<SystemModel>> getAll();
 
     @Query("SELECT * FROM systems where _id = :systemId")
-    SystemModel getSystemById(int systemId);
+    LiveData<SystemModel> getSystemById(int systemId);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     long insert(SystemModel systemModel);

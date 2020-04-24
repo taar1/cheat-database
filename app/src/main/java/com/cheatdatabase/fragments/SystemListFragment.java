@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LiveData;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -70,9 +71,6 @@ public class SystemListFragment extends Fragment implements OnSystemListItemSele
 
         dao = RoomCheatDatabase.getDatabase(getActivity()).systemDao();
 
-//        ((CheatDatabaseApplication) getApplication()).getNetworkComponent().inject(this);
-//        restApi = retrofit.create(RestApi.class);
-
         mSwipeRefreshLayout.setOnRefreshListener(() -> loadGamesAndCheatsCounterBackground());
 
         initAdapter(Tools.getGameSystemsFromXml(getActivity()));
@@ -95,18 +93,18 @@ public class SystemListFragment extends Fragment implements OnSystemListItemSele
     }
 
     private void loadGamesAndCheatsCounterBackground() {
-        List<SystemModel> systemModels = dao.getAll();
-//        List<SystemModel> systemModels = null;
-
+        LiveData<List<SystemModel>> systemModels = dao.getAll();
         Needle.onBackgroundThread().execute(() -> {
 
-            if (systemModels == null || systemModels.size() < 1) {
+            List<SystemModel> systemModelValue = systemModels.getValue();
+
+            if (systemModelValue == null || systemModelValue.size() < 1) {
                 getSystemsAndCountsOnline = true;
             } else {
                 // Check how old the database entries are. If over than 24 then
                 // load them again from the webservice.
 
-                long lastmod = Long.parseLong(systemModels.get(0).getLastmod());
+                long lastmod = Long.parseLong(systemModelValue.get(0).getLastmod());
                 long now = System.currentTimeMillis();
                 long differenceInHours = (now - lastmod) / (1000 * 60 * 60);
                 long differenceInMins = (now - lastmod) / (1000 * 60);
@@ -133,15 +131,20 @@ public class SystemListFragment extends Fragment implements OnSystemListItemSele
                             systemGameandCheatCounterList = response.body();
 
                             if ((systemGameandCheatCounterList == null) || (systemGameandCheatCounterList.size() < 1)) {
-                                dao.deleteAll();
+                                Needle.onBackgroundThread().execute(() -> {
+                                    dao.deleteAll();
+                                });
+
                             } else {
                                 ArrayList<SystemModel> newSystemModels = new ArrayList<>();
                                 for (SystemPlatform sp : systemGameandCheatCounterList) {
                                     newSystemModels.add(sp.toSystemModel());
                                 }
 
-                                // Update the local database
-                                dao.insertAll(newSystemModels);
+                                Needle.onBackgroundThread().execute(() -> {
+                                    // Update the local database
+                                    dao.insertAll(newSystemModels);
+                                });
 
                                 // Sort the systems by name
                                 Collections.sort(systemGameandCheatCounterList, (system1, system2) -> system1.getSystemName().toLowerCase().compareTo(system2.getSystemName().toLowerCase()));
@@ -160,7 +163,7 @@ public class SystemListFragment extends Fragment implements OnSystemListItemSele
                 });
             } else {
                 systemGameandCheatCounterList = new ArrayList<>();
-                for (SystemModel sm : systemModels) {
+                for (SystemModel sm : systemModelValue) {
                     systemGameandCheatCounterList.add(sm.toSystemPlatform());
                 }
                 updateUI();

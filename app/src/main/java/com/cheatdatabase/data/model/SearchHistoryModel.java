@@ -15,10 +15,6 @@ public class SearchHistoryModel {
     @ColumnInfo(name = "searchtime")
     public String searchTime;
 
-
-    public SearchHistoryModel() {
-    }
-
     public SearchHistoryModel(int id, String searchQuery, String searchTime) {
         this.id = id;
         this.searchQuery = searchQuery;

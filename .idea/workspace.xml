@@ -111,15 +111,15 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4caff62e-c62f-40ca-acf0-73c680b13375" name="Default" comment="Improved DB schema">
+    <list default="true" id="4caff62e-c62f-40ca-acf0-73c680b13375" name="Default" comment="Remove game_count from favorites DB model">
+      <change beforePath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/CheatForumActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/CheatForumActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/CheatsByGameListActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/CheatsByGameListActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/cheat_detail_view/CheatViewPageIndicatorActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/cheat_detail_view/CheatViewPageIndicatorActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/cheat_detail_view/FavoritesCheatViewPageIndicator.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/cheat_detail_view/FavoritesCheatViewPageIndicator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/cheat_detail_view/MemberCheatViewPageIndicator.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/cheat_detail_view/MemberCheatViewPageIndicator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/helpers/DatabaseHelper.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/helpers/DatabaseHelper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/helpers/Helper.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/helpers/Helper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/data/RoomCheatDatabase.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/data/RoomCheatDatabase.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/data/dao/SystemDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/data/dao/SystemDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/data/model/FavoriteCheatModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/data/model/FavoriteCheatModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/data/model/SearchHistoryModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/data/model/SearchHistoryModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/data/model/SystemModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/data/model/SystemModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/fragments/SystemListFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/fragments/SystemListFragment.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -206,14 +206,14 @@
   </component>
   <component name="GenerateSignedApkSettings">
     <option name="EXPORT_PRIVATE_KEY" value="false" />
-    <option name="KEY_STORE_PATH" value="F:\Dokumente\Cheat-Database\Android\Android Keytool Keystore\enature.keystore" />
+    <option name="KEY_STORE_PATH" value="$USER_HOME$/Downloads/enature.keystore" />
     <option name="KEY_ALIAS" value="cheat-database" />
     <option name="REMEMBER_PASSWORDS" value="true" />
   </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="merging_sqlite_and_room" />
+        <entry key="$PROJECT_DIR$" value="sqlite_version" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -224,12 +224,13 @@
     <ConfirmationsSetting value="2" id="Remove" />
   </component>
   <component name="PropertiesComponent">
+    <property name="BundleExportedModule" value="app" />
     <property name="DEBUGGABLE_DEVICE" value="oneplus-hd1900-fd8b7031" />
     <property name="DEBUGGABLE_PROCESS" value="com.cheatdatabase" />
     <property name="DEBUGGER_ID" value="Auto" />
     <property name="DeviceAndSnapshotComboBoxAction.selectedDevice" value="6ea89d94" />
     <property name="DeviceAndSnapshotComboBoxAction.selectionTime" value="2019-08-24T19:02:19.714Z" />
-    <property name="ExportApk.ApkPath" value="D:\Google Drive\Cheat-Database\APK\Cheat-Database APKs\2.5.7" />
+    <property name="ExportApk.ApkPath" value="$PROJECT_DIR$/../../../apk/Cheat-Database/2.5.12" />
     <property name="ExportApk.BuildType" value="release" />
     <property name="ExportApk.BuildVariants" value="amazonFlavorDebug&#10;amazonFlavorRelease&#10;googlePlayFlavorDebug&#10;googlePlayFlavorRelease" />
     <property name="ExportApk.Flavors" value="googlePlayFlavor" />
@@ -598,6 +599,7 @@
     <recent_temporary>
       <list>
         <item itemvalue="Gradle.cheat-database [androidDependencies]" />
+        <item itemvalue="Gradle.cheat-database [androidDependencies]" />
       </list>
     </recent_temporary>
   </component>
@@ -615,20 +617,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1487274191999</updated>
-    </task>
-    <task id="LOCAL-00047" summary="Free from AndroidAnnotations.">
-      <created>1543179257137</created>
-      <option name="number" value="00047" />
-      <option name="presentableId" value="LOCAL-00047" />
-      <option name="project" value="LOCAL" />
-      <updated>1543179257137</updated>
-    </task>
-    <task id="LOCAL-00048" summary="Free from AndroidAnnotations.">
-      <created>1543180017401</created>
-      <option name="number" value="00048" />
-      <option name="presentableId" value="LOCAL-00048" />
-      <option name="project" value="LOCAL" />
-      <updated>1543180017401</updated>
     </task>
     <task id="LOCAL-00049" summary="Fix Crash bei Cheats mit Screenshots.">
       <created>1543763670937</created>
@@ -959,7 +947,21 @@
       <option name="project" value="LOCAL" />
       <updated>1587413692083</updated>
     </task>
-    <option name="localTasksCounter" value="96" />
+    <task id="LOCAL-00096" summary="Version upgrade">
+      <created>1587755678525</created>
+      <option name="number" value="00096" />
+      <option name="presentableId" value="LOCAL-00096" />
+      <option name="project" value="LOCAL" />
+      <updated>1587755678526</updated>
+    </task>
+    <task id="LOCAL-00097" summary="Version upgrade">
+      <created>1587756070218</created>
+      <option name="number" value="00097" />
+      <option name="presentableId" value="LOCAL-00097" />
+      <option name="project" value="LOCAL" />
+      <updated>1587756070218</updated>
+    </task>
+    <option name="localTasksCounter" value="98" />
     <servers />
   </component>
   <component name="TodoView">
@@ -1009,7 +1011,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
-    <MESSAGE value="Insert blank list item every 20th position in recycler view" />
     <MESSAGE value="AdView in RecyclerView every 20th position" />
     <MESSAGE value="Implementing Facebook Native Ads (not working yet....)" />
     <MESSAGE value="Facebook Audience Network Native Ads Implementation" />
@@ -1034,7 +1035,8 @@
     <MESSAGE value="Fixing a lot of bugs of cheat favorites etc." />
     <MESSAGE value="Improved DB schema" />
     <MESSAGE value="a try to merge with room" />
-    <option name="LAST_COMMIT_MESSAGE" value="a try to merge with room" />
+    <MESSAGE value="Version upgrade" />
+    <option name="LAST_COMMIT_MESSAGE" value="Version upgrade" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
@@ -1043,7 +1045,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/helpers/Helper.java</url>
-          <line>75</line>
+          <line>77</line>
           <properties class="com.cheatdatabase.helpers.Helper" method="addFavorite" />
           <option name="timeStamp" value="131" />
         </line-breakpoint>
@@ -1064,13 +1066,11 @@
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/CheatsByGameListActivity.java</url>
           <line>283</line>
-          <properties method="onResponse" />
           <option name="timeStamp" value="173" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/CheatsByGameListActivity.java</url>
           <line>310</line>
-          <properties method="onFailure" />
           <option name="timeStamp" value="174" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
@@ -1080,7 +1080,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/helpers/Tools.java</url>
-          <line>434</line>
+          <line>436</line>
           <option name="timeStamp" value="64" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
@@ -1109,18 +1109,8 @@
           <option name="timeStamp" value="149" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/fragments/SystemListFragment.java</url>
-          <line>130</line>
-          <option name="timeStamp" value="155" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/fragments/SystemListFragment.java</url>
-          <line>133</line>
-          <option name="timeStamp" value="156" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/CheatForumActivity.java</url>
-          <line>514</line>
+          <line>513</line>
           <option name="timeStamp" value="157" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
@@ -1147,11 +1137,6 @@
           <url>file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/cheat_detail_view/MemberCheatViewPageIndicator.java</url>
           <line>121</line>
           <option name="timeStamp" value="183" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/helpers/DatabaseHelper.java</url>
-          <line>119</line>
-          <option name="timeStamp" value="184" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

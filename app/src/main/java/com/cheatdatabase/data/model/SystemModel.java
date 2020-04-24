@@ -23,10 +23,6 @@ public class SystemModel {
     @ColumnInfo(name = "lastmod")
     public String lastmod;
 
-
-    public SystemModel() {
-    }
-
     public SystemModel(int id, String name, int gamesCount, int cheatCount, String lastmod) {
         this.id = id;
         this.name = name;
