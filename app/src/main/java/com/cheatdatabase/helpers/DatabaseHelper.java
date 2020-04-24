@@ -77,7 +77,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "system_name TEXT, " +
                 "language_id INTEGER NOT NULL, " +
                 "walkthrough_format INTEGER, " +
-                "member_id INTEGER NOT NULL)");
+                "member_id INTEGER NOT NULL DEFAULT 0)");
         database.execSQL("INSERT INTO new_favorites (cheat_id, cheat_title, cheat_text, game_id, game_name, system_id, system_name, language_id, walkthrough_format, member_id) " +
                 "SELECT cheat_id, cheat_title, cheat_text, game_id, game_name, system_id, system_name, language_id, walkthrough_format, member_id FROM favorites");
         database.execSQL("DROP TABLE favorites");
