@@ -30,7 +30,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "data";
     //    private static final int DATABASE_VERSION = 3; // From 30.06.2015
-    private static final int DATABASE_VERSION = 4; // From 20.04.2020
+//    private static final int DATABASE_VERSION = 4; // From 20.04.2020
+    private static final int DATABASE_VERSION = 5; // From 24.04.2020
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -41,6 +42,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(Favorite.CREATE_TABLE);
         db.execSQL(GameSystemTable.CREATE_TABLE);
         db.execSQL(SearchHistory.CREATE_TABLE);
+
+        databaseChangesForVersion4And5(db);
     }
 
     @Override
@@ -59,14 +62,22 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 case 4:
                     // Apply changes made in version 4
                     Log.d(TAG, "onUpgrade to Version 4: ");
-                    databaseChangesForVersion4(db);
+                    databaseChangesForVersion4And5(db);
+                    break;
+                case 5:
+                    // Apply changes made in version 5
+                    // People newly installing cheat-database from version 4 did not get the new DB models yet. Fixing this bug
+                    // by adding the update function to the onCreate() method so updating and new users will have
+                    // the new DB schema.
+                    Log.d(TAG, "onUpgrade to Version 5: ");
+                    databaseChangesForVersion4And5(db);
                     break;
 
             }
         }
     }
 
-    private void databaseChangesForVersion4(SQLiteDatabase database) {
+    private void databaseChangesForVersion4And5(SQLiteDatabase database) {
         database.execSQL("CREATE TABLE new_favorites (" +
                 "cheat_id INTEGER PRIMARY KEY NOT NULL, " +
                 "cheat_title TEXT, " +
@@ -77,7 +88,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "system_name TEXT, " +
                 "language_id INTEGER NOT NULL, " +
                 "walkthrough_format INTEGER, " +
-                "member_id INTEGER NOT NULL DEFAULT 0)");
+                "member_id INTEGER NOT NULL)");
         database.execSQL("INSERT INTO new_favorites (cheat_id, cheat_title, cheat_text, game_id, game_name, system_id, system_name, language_id, walkthrough_format, member_id) " +
                 "SELECT cheat_id, cheat_title, cheat_text, game_id, game_name, system_id, system_name, language_id, walkthrough_format, member_id FROM favorites");
         database.execSQL("DROP TABLE favorites");
