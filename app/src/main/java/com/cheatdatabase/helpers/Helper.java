@@ -22,6 +22,8 @@ import com.cheatdatabase.model.Cheat;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+import needle.Needle;
+
 /**
  * Code abstracting helper class
  *
@@ -76,13 +78,15 @@ public class Helper extends Activity {
     }
 
     public static void addFavorite(Context context, Cheat visibleCheat, int memberId, GenericCallback callback) {
-        FavoriteCheatDao dao = RoomCheatDatabase.getDatabase(context).favoriteDao();
-        long insertReturn = dao.insert(visibleCheat.toFavoriteCheatModel(memberId));
-        if (insertReturn > 0) {
-            callback.success();
-        } else {
-            callback.fail(null);
-        }
+        Needle.onBackgroundThread().execute(() -> {
+            FavoriteCheatDao dao = RoomCheatDatabase.getDatabase(context).favoriteDao();
+            long insertReturn = dao.insert(visibleCheat.toFavoriteCheatModel(memberId));
+            if (insertReturn > 0) {
+                callback.success();
+            } else {
+                callback.fail(null);
+            }
+        });
     }
 
     /**

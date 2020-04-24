@@ -111,15 +111,10 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4caff62e-c62f-40ca-acf0-73c680b13375" name="Default" comment="Remove game_count from favorites DB model">
-      <change beforePath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" afterDir="false" />
+    <list default="true" id="4caff62e-c62f-40ca-acf0-73c680b13375" name="Default" comment="SUCCESSFUL MERGING WITH ROOM&#10;Fixing bugs related to DB access on UI thread now.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/data/RoomCheatDatabase.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/data/RoomCheatDatabase.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/data/dao/SystemDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/data/dao/SystemDao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/data/model/FavoriteCheatModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/data/model/FavoriteCheatModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/data/model/SearchHistoryModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/data/model/SearchHistoryModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/data/model/SystemModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/data/model/SystemModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/fragments/SystemListFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/fragments/SystemListFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/CheatsByGameListActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/CheatsByGameListActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/helpers/Helper.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/helpers/Helper.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -618,13 +613,6 @@
       <option name="presentableId" value="Default" />
       <updated>1487274191999</updated>
     </task>
-    <task id="LOCAL-00049" summary="Fix Crash bei Cheats mit Screenshots.">
-      <created>1543763670937</created>
-      <option name="number" value="00049" />
-      <option name="presentableId" value="LOCAL-00049" />
-      <option name="project" value="LOCAL" />
-      <updated>1543763670937</updated>
-    </task>
     <task id="LOCAL-00050" summary="Fix Crash bei Cheats mit Screenshots.">
       <created>1543763880657</created>
       <option name="number" value="00050" />
@@ -961,7 +949,14 @@
       <option name="project" value="LOCAL" />
       <updated>1587756070218</updated>
     </task>
-    <option name="localTasksCounter" value="98" />
+    <task id="LOCAL-00098" summary="SUCCESSFUL MERGING WITH ROOM&#10;Fixing bugs related to DB access on UI thread now.">
+      <created>1587757073424</created>
+      <option name="number" value="00098" />
+      <option name="presentableId" value="LOCAL-00098" />
+      <option name="project" value="LOCAL" />
+      <updated>1587757073424</updated>
+    </task>
+    <option name="localTasksCounter" value="99" />
     <servers />
   </component>
   <component name="TodoView">
@@ -1011,7 +1006,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
-    <MESSAGE value="AdView in RecyclerView every 20th position" />
     <MESSAGE value="Implementing Facebook Native Ads (not working yet....)" />
     <MESSAGE value="Facebook Audience Network Native Ads Implementation" />
     <MESSAGE value="Facebook Audience Network Native Ads Implementation&#10;FACEBOOK NATIVE ADS FINALLY WORKING!" />
@@ -1036,7 +1030,8 @@
     <MESSAGE value="Improved DB schema" />
     <MESSAGE value="a try to merge with room" />
     <MESSAGE value="Version upgrade" />
-    <option name="LAST_COMMIT_MESSAGE" value="Version upgrade" />
+    <MESSAGE value="SUCCESSFUL MERGING WITH ROOM&#10;Fixing bugs related to DB access on UI thread now." />
+    <option name="LAST_COMMIT_MESSAGE" value="SUCCESSFUL MERGING WITH ROOM&#10;Fixing bugs related to DB access on UI thread now." />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
@@ -1045,7 +1040,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/helpers/Helper.java</url>
-          <line>77</line>
+          <line>79</line>
           <properties class="com.cheatdatabase.helpers.Helper" method="addFavorite" />
           <option name="timeStamp" value="131" />
         </line-breakpoint>
@@ -1066,11 +1061,13 @@
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/CheatsByGameListActivity.java</url>
           <line>283</line>
+          <properties method="onResponse" />
           <option name="timeStamp" value="173" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/CheatsByGameListActivity.java</url>
           <line>310</line>
+          <properties method="onFailure" />
           <option name="timeStamp" value="174" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">

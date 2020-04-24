@@ -389,18 +389,28 @@ public class CheatsByGameListActivity extends AppCompatActivity implements OnChe
             public void onResponse(Call<List<Cheat>> cheats, Response<List<Cheat>> response) {
                 List<Cheat> cheatList = response.body();
 
-                int memberId = 0;
-                if (member != null) {
-                    memberId = member.getMid();
-                }
-
                 for (Cheat cheat : cheatList) {
                     if (cheat.isScreenshots()) {
                         // TODO FIXME: currently it ignores success/fail of saving screenshots to SD card...
                         // TODO FIXME: currently it ignores success/fail of saving screenshots to SD card...
                         Tools.saveScreenshotsToSdCard(cheat, null);
                     }
-                    dao.insert(cheat.toFavoriteCheatModel(memberId));
+
+                    Needle.onBackgroundThread().execute(() -> {
+                        int memberId = 0;
+                        if (member != null) {
+                            memberId = member.getMid();
+                        }
+
+                        // TODO FIXME hier gibts ein nullpointer???
+                        // TODO FIXME hier gibts ein nullpointer???
+                        // TODO FIXME hier gibts ein nullpointer???
+                        // TODO FIXME hier gibts ein nullpointer???
+                        // TODO FIXME hier gibts ein nullpointer???
+                        // TODO FIXME hier gibts ein nullpointer???
+                        dao.insert(cheat.toFavoriteCheatModel(memberId));
+                    });
+
                 }
 
                 Tools.showSnackbar(outerLayout, getString(R.string.add_favorites_ok));
