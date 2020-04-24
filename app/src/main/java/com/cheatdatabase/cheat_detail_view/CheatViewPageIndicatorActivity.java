@@ -372,7 +372,7 @@ public class CheatViewPageIndicatorActivity extends AppCompatActivity implements
                 if (member != null) {
                     memberId = member.getMid();
                 }
-                Helper.addFavorite(this, visibleCheat, this, memberId);
+                Helper.addFavorite(this, visibleCheat, memberId, this);
                 return true;
             case R.id.action_report:
                 showReportDialog();

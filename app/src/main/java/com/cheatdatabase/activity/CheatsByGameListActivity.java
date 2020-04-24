@@ -23,9 +23,9 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.cheatdatabase.CheatDatabaseApplication;
 import com.cheatdatabase.R;
 import com.cheatdatabase.adapters.CheatsByGameRecycleListViewAdapter;
-import com.cheatdatabase.callbacks.GenericCallback;
 import com.cheatdatabase.cheat_detail_view.CheatViewPageIndicatorActivity;
-import com.cheatdatabase.helpers.DatabaseHelper;
+import com.cheatdatabase.data.RoomCheatDatabase;
+import com.cheatdatabase.data.dao.FavoriteCheatDao;
 import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.helpers.Tools;
@@ -214,7 +214,7 @@ public class CheatsByGameListActivity extends AppCompatActivity implements OnChe
                 return true;
             case R.id.action_add_to_favorites:
                 Tools.showSnackbar(outerLayout, getString(R.string.favorite_adding));
-                addCheatsToFavoritesTask(gameObj);
+                addCheatsToFavoritesTask();
                 return true;
             case R.id.action_submit_cheat:
                 Intent explicitIntent = new Intent(CheatsByGameListActivity.this, SubmitCheatActivity.class);
@@ -380,29 +380,38 @@ public class CheatsByGameListActivity extends AppCompatActivity implements OnChe
         }
     }
 
-    void addCheatsToFavoritesTask(Game game) {
-        int memberId = 0;
-        if (member != null) {
-            memberId = member.getMid();
-        }
+    void addCheatsToFavoritesTask() {
+        FavoriteCheatDao dao = RoomCheatDatabase.getDatabase(this).favoriteDao();
 
-        DatabaseHelper db = new DatabaseHelper(this);
-        db.insertFavoriteCheats(game, sharedPreferences.getBoolean("enable_achievements", true), restApi, new GenericCallback() {
+        Call<List<Cheat>> call = restApi.getCheatsByGameId(gameObj.getGameId(), sharedPreferences.getBoolean("enable_achievements", true));
+        call.enqueue(new Callback<List<Cheat>>() {
             @Override
-            public void success() {
-                finishedAddingCheatsToFavorites(getApplicationContext().getString(R.string.add_favorites_ok));
+            public void onResponse(Call<List<Cheat>> cheats, Response<List<Cheat>> response) {
+                List<Cheat> cheatList = response.body();
+
+                int memberId = 0;
+                if (member != null) {
+                    memberId = member.getMid();
+                }
+
+                for (Cheat cheat : cheatList) {
+                    if (cheat.isScreenshots()) {
+                        // TODO FIXME: currently it ignores success/fail of saving screenshots to SD card...
+                        // TODO FIXME: currently it ignores success/fail of saving screenshots to SD card...
+                        Tools.saveScreenshotsToSdCard(cheat, null);
+                    }
+                    dao.insert(cheat.toFavoriteCheatModel(memberId));
+                }
+
+                Tools.showSnackbar(outerLayout, getString(R.string.add_favorites_ok));
             }
 
             @Override
-            public void fail(Exception e) {
-                finishedAddingCheatsToFavorites(getApplicationContext().getString(R.string.favorite_error));
+            public void onFailure(Call<List<Cheat>> call, Throwable e) {
+                Log.e(TAG, "insertFavoriteCheats onFailure: " + e.getLocalizedMessage());
+                Tools.showSnackbar(outerLayout, getString(R.string.error_adding_favorites));
             }
-        }, memberId);
-
-    }
-
-    void finishedAddingCheatsToFavorites(String text) {
-        Tools.showSnackbar(outerLayout, text);
+        });
     }
 
     @Override
@@ -427,7 +436,7 @@ public class CheatsByGameListActivity extends AppCompatActivity implements OnChe
             explicitIntent.putExtra("layoutResourceId", R.layout.activity_cheatview_pager);
             startActivity(explicitIntent);
         } else {
-            Toast.makeText(this, R.string.no_internet, Toast.LENGTH_SHORT).show();
+            Tools.showSnackbar(outerLayout, getString(R.string.no_internet));
         }
     }
 }

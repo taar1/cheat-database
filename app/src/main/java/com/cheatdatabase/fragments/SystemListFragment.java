@@ -18,12 +18,15 @@ import com.cheatdatabase.R;
 import com.cheatdatabase.activity.GamesBySystemListActivity;
 import com.cheatdatabase.activity.MainActivity;
 import com.cheatdatabase.adapters.SystemsRecycleListViewAdapter;
-import com.cheatdatabase.helpers.DatabaseHelper;
+import com.cheatdatabase.data.RoomCheatDatabase;
+import com.cheatdatabase.data.dao.SystemDao;
+import com.cheatdatabase.data.model.SystemModel;
 import com.cheatdatabase.helpers.Tools;
 import com.cheatdatabase.listeners.OnSystemListItemSelectedListener;
 import com.cheatdatabase.model.SystemPlatform;
 import com.cheatdatabase.widgets.DividerDecoration;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -37,7 +40,7 @@ import retrofit2.Response;
 public class SystemListFragment extends Fragment implements OnSystemListItemSelectedListener {
     private final String TAG = SystemListFragment.class.getSimpleName();
 
-    boolean getSystemsAndCountsFromWebservice = false;
+    boolean getSystemsAndCountsOnline = false;
 
     private List<SystemPlatform> systemGameandCheatCounterList;
     private SystemsRecycleListViewAdapter systemsRecycleListViewAdapter;
@@ -49,6 +52,8 @@ public class SystemListFragment extends Fragment implements OnSystemListItemSele
     RecyclerView recyclerView;
     @BindView(R.id.swipe_refresh_layout)
     SwipeRefreshLayout mSwipeRefreshLayout;
+
+    private SystemDao dao;
 
     public static SystemListFragment newInstance() {
         return new SystemListFragment();
@@ -62,6 +67,8 @@ public class SystemListFragment extends Fragment implements OnSystemListItemSele
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_systemlist, container, false);
         ButterKnife.bind(this, view);
+
+        dao = RoomCheatDatabase.getDatabase(getActivity()).systemDao();
 
 //        ((CheatDatabaseApplication) getApplication()).getNetworkComponent().inject(this);
 //        restApi = retrofit.create(RestApi.class);
@@ -88,17 +95,18 @@ public class SystemListFragment extends Fragment implements OnSystemListItemSele
     }
 
     private void loadGamesAndCheatsCounterBackground() {
-        Needle.onBackgroundThread().execute(() -> {
-            DatabaseHelper db = new DatabaseHelper(getActivity());
+        List<SystemModel> systemModels = dao.getAll();
+//        List<SystemModel> systemModels = null;
 
-            List<SystemPlatform> systemsLocal = db.getAllSystemsAndCount();
-            if (systemsLocal == null || systemsLocal.size() == 0) {
-                getSystemsAndCountsFromWebservice = true;
+        Needle.onBackgroundThread().execute(() -> {
+
+            if (systemModels == null || systemModels.size() < 1) {
+                getSystemsAndCountsOnline = true;
             } else {
                 // Check how old the database entries are. If over than 24 then
                 // load them again from the webservice.
 
-                long lastmod = systemsLocal.get(0).getLastModTimeStamp();
+                long lastmod = Long.parseLong(systemModels.get(0).getLastmod());
                 long now = System.currentTimeMillis();
                 long differenceInHours = (now - lastmod) / (1000 * 60 * 60);
                 long differenceInMins = (now - lastmod) / (1000 * 60);
@@ -110,13 +118,13 @@ public class SystemListFragment extends Fragment implements OnSystemListItemSele
 
                 if (differenceInHours > 48) {
                     Log.d(TAG, "DIFFERENCE MORE THAN 48 HOURS. LOADING VALUES FROM WEBSERVICE AGAIN");
-                    getSystemsAndCountsFromWebservice = true;
+                    getSystemsAndCountsOnline = true;
                 }
             }
 
-            Log.d(TAG, "getSystemsAndCountsFromWebservice: " + getSystemsAndCountsFromWebservice);
+            Log.d(TAG, "getSystemsAndCountsFromWebservice: " + getSystemsAndCountsOnline);
 
-            if (getSystemsAndCountsFromWebservice) {
+            if (getSystemsAndCountsOnline) {
                 Call<List<SystemPlatform>> call = mainActivity.getRestApi().countGamesAndCheatsOfAllSystems();
                 call.enqueue(new Callback<List<SystemPlatform>>() {
                     @Override
@@ -125,12 +133,15 @@ public class SystemListFragment extends Fragment implements OnSystemListItemSele
                             systemGameandCheatCounterList = response.body();
 
                             if ((systemGameandCheatCounterList == null) || (systemGameandCheatCounterList.size() < 1)) {
-                                db.deleteSystemsAndCount();
+                                dao.deleteAll();
                             } else {
-//                                Log.d(TAG, "System values from RestApi: " + new Gson().toJson(systemGameandCheatCounterList));
+                                ArrayList<SystemModel> newSystemModels = new ArrayList<>();
+                                for (SystemPlatform sp : systemGameandCheatCounterList) {
+                                    newSystemModels.add(sp.toSystemModel());
+                                }
 
                                 // Update the local database
-                                db.updateSystemsAndCount(systemGameandCheatCounterList);
+                                dao.insertAll(newSystemModels);
 
                                 // Sort the systems by name
                                 Collections.sort(systemGameandCheatCounterList, (system1, system2) -> system1.getSystemName().toLowerCase().compareTo(system2.getSystemName().toLowerCase()));
@@ -148,7 +159,10 @@ public class SystemListFragment extends Fragment implements OnSystemListItemSele
                     }
                 });
             } else {
-                systemGameandCheatCounterList = systemsLocal;
+                systemGameandCheatCounterList = new ArrayList<>();
+                for (SystemModel sm : systemModels) {
+                    systemGameandCheatCounterList.add(sm.toSystemPlatform());
+                }
                 updateUI();
             }
         });

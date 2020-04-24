@@ -335,12 +335,12 @@ public class MemberCheatViewPageIndicator extends AppCompatActivity implements G
                 return true;
             case R.id.action_add_to_favorites:
                 Tools.showSnackbar(outerLayout, getString(R.string.favorite_adding));
+
                 int memberId = 0;
                 if (member != null) {
                     memberId = member.getMid();
                 }
-
-                Helper.addFavorite(this, visibleCheat, this, memberId);
+                Helper.addFavorite(this, visibleCheat, memberId, this);
                 return true;
             case R.id.action_report:
                 showReportDialog();

@@ -4,6 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
 
+import com.cheatdatabase.data.model.SystemModel;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.Date;
@@ -139,5 +140,9 @@ public class SystemPlatform implements Parcelable {
         dest.writeSerializable(dateLocallyAdded);
         dest.writeTypedList(games);
         dest.writeSerializable(lastModTimeStamp);
+    }
+
+    public SystemModel toSystemModel() {
+        return new SystemModel(getSystemId(), getSystemName(), getGameCount(), getCheatCount(), String.valueOf(getLastModTimeStamp()));
     }
 }

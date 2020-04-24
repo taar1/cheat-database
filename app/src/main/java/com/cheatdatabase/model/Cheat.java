@@ -5,6 +5,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
 
+import com.cheatdatabase.data.model.FavoriteCheatModel;
 import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Tools;
 import com.google.gson.annotations.SerializedName;
@@ -368,5 +369,9 @@ public class Cheat extends Game implements Parcelable {
 
     public void setSystem(SystemPlatform system) {
         this.system = system;
+    }
+
+    public FavoriteCheatModel toFavoriteCheatModel(int memberId) {
+        return new FavoriteCheatModel(getGameId(), getGameName(), getCheatId(), getCheatTitle(), getCheatText(), getSystemId(), getSystemName(), getLanguageId(), isWalkthroughFormat(), memberId);
     }
 }

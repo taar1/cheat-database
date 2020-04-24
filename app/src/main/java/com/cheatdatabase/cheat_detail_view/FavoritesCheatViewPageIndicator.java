@@ -30,11 +30,12 @@ import com.cheatdatabase.R;
 import com.cheatdatabase.activity.CheatForumActivity;
 import com.cheatdatabase.activity.LoginActivity;
 import com.cheatdatabase.activity.SubmitCheatActivity;
+import com.cheatdatabase.data.RoomCheatDatabase;
+import com.cheatdatabase.data.dao.FavoriteCheatDao;
 import com.cheatdatabase.dialogs.CheatMetaDialog;
 import com.cheatdatabase.dialogs.RateCheatMaterialDialog;
 import com.cheatdatabase.dialogs.ReportCheatMaterialDialog;
 import com.cheatdatabase.events.CheatRatingFinishedEvent;
-import com.cheatdatabase.helpers.DatabaseHelper;
 import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.helpers.Tools;
@@ -79,13 +80,9 @@ public class FavoritesCheatViewPageIndicator extends AppCompatActivity implement
 
     private final String TAG = FavoritesCheatViewPageIndicator.class.getSimpleName();
 
-    // https://code.google.com/p/romannurik-code/source/browse/misc/undobar
     private UndoBarController mUndoBarController;
 
     private Intent intent;
-
-    @BindView(R.id.outer_layout)
-    LinearLayout outerLayout;
 
     private View viewLayout;
     private int pageSelected;
@@ -116,10 +113,16 @@ public class FavoritesCheatViewPageIndicator extends AppCompatActivity implement
     private LinearLayout facebookBanner;
     private AdView adView;
 
+
+    @BindView(R.id.outer_layout)
+    LinearLayout outerLayout;
+
     @Inject
     Retrofit retrofit;
 
     private RestApi restApi;
+
+    private FavoriteCheatDao dao;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -153,6 +156,8 @@ public class FavoritesCheatViewPageIndicator extends AppCompatActivity implement
     private void init() {
         ((CheatDatabaseApplication) getApplication()).getNetworkComponent().inject(this);
         restApi = retrofit.create(RestApi.class);
+
+        dao = RoomCheatDatabase.getDatabase(this).favoriteDao();
 
         settings = getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
         editor = settings.edit();
@@ -334,8 +339,7 @@ public class FavoritesCheatViewPageIndicator extends AppCompatActivity implement
                 }
                 return true;
             case R.id.action_remove_from_favorites:
-                DatabaseHelper db = new DatabaseHelper(this);
-                db.deleteFavoritedCheat(visibleCheat);
+                dao.delete(visibleCheat.toFavoriteCheatModel(0));
                 mUndoBarController.showUndoBar(false, getString(R.string.remove_favorite_neutral_ok), null);
                 return true;
             case R.id.action_report:
@@ -440,12 +444,10 @@ public class FavoritesCheatViewPageIndicator extends AppCompatActivity implement
 
     @Override
     public void onUndo(Parcelable token) {
-        int memberId = 0;
-        if (member != null) {
-            memberId = member.getMid();
-        }
-        DatabaseHelper db = new DatabaseHelper(this);
-        db.insertFavoriteCheat(visibleCheat, null, memberId);
+        dao.insert(visibleCheat.toFavoriteCheatModel((member != null ? member.getMid() : 0)));
+
+        // TODO load screenshots again and save them to the SD card....
+        // TODO load screenshots again and save them to the SD card....
     }
 
     public RestApi getRestApi() {

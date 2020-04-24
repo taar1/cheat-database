@@ -20,8 +20,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.cheatdatabase.R;
+import com.cheatdatabase.callbacks.GenericCallback;
 import com.cheatdatabase.model.Cheat;
 import com.cheatdatabase.model.Game;
+import com.cheatdatabase.model.Screenshot;
 import com.cheatdatabase.model.SystemPlatform;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
@@ -492,5 +494,22 @@ public class Tools {
     public static String getCountryCode(Context context) {
         TelephonyManager tm = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
         return tm.getSimCountryIso();
+    }
+
+    public static void saveScreenshotsToSdCard(Cheat cheat, GenericCallback callback) {
+        // TODO FIXME test if that actually saves screenshots
+        Needle.onBackgroundThread().execute(() -> {
+            try {
+                for (Screenshot s : cheat.getScreenshotList()) {
+                    if (Tools.isSdWriteable()) {
+                        s.saveToSd();
+                    }
+                }
+
+                callback.success();
+            } catch (IOException e) {
+                callback.fail(e);
+            }
+        });
     }
 }

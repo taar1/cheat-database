@@ -15,6 +15,8 @@ import android.widget.Toast;
 
 import com.cheatdatabase.R;
 import com.cheatdatabase.callbacks.GenericCallback;
+import com.cheatdatabase.data.RoomCheatDatabase;
+import com.cheatdatabase.data.dao.FavoriteCheatDao;
 import com.cheatdatabase.model.Cheat;
 
 import java.security.MessageDigest;
@@ -73,9 +75,14 @@ public class Helper extends Activity {
         }
     }
 
-    public static void addFavorite(Context context, Cheat visibleCheat, GenericCallback callback, int memberId) {
-        DatabaseHelper db = new DatabaseHelper(context);
-        db.insertFavoriteCheat(visibleCheat, callback, memberId);
+    public static void addFavorite(Context context, Cheat visibleCheat, int memberId, GenericCallback callback) {
+        FavoriteCheatDao dao = RoomCheatDatabase.getDatabase(context).favoriteDao();
+        long insertReturn = dao.insert(visibleCheat.toFavoriteCheatModel(memberId));
+        if (insertReturn > 0) {
+            callback.success();
+        } else {
+            callback.fail(null);
+        }
     }
 
     /**

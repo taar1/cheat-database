@@ -393,12 +393,11 @@ public class CheatForumActivity extends AppCompatActivity implements GenericCall
                 return true;
             case R.id.action_add_to_favorites:
                 Tools.showSnackbar(outerLayout, getString(R.string.favorite_adding));
-
                 int memberId = 0;
                 if (member != null) {
                     memberId = member.getMid();
                 }
-                Helper.addFavorite(this, cheatObj, this, memberId);
+                Helper.addFavorite(this, cheatObj, memberId, this);
                 return true;
             case R.id.action_share:
                 Helper.shareCheat(cheatObj, this);
