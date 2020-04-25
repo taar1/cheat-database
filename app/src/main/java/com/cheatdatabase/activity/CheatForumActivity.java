@@ -363,7 +363,7 @@ public class CheatForumActivity extends AppCompatActivity implements GenericCall
 
     private void setShareText(Cheat visibleCheat) {
         String cheatShareTitle = String.format(getString(R.string.share_email_subject), visibleCheat.getGameName());
-        String cheatShareBody = visibleCheat.getGameName() + " (" + visibleCheat.getSystemName() + "): " + visibleCheat.getCheatTitle() + "\n";
+        String cheatShareBody = visibleCheat.getGame().getGameName() + " (" + visibleCheat.getSystem().getSystemName() + "): " + visibleCheat.getCheatTitle() + "\n";
         cheatShareBody += Konstanten.BASE_URL + "display/switch.php?id=" + visibleCheat.getCheatId() + "\n\n";
 
         Intent shareIntent = new Intent(Intent.ACTION_SEND);

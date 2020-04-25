@@ -137,11 +137,6 @@ public class CheatViewPageIndicatorActivity extends AppCompatActivity implements
             finish();
         } else {
             for (Cheat cheat : gameObj.getCheatList()) {
-                cheat.setGameId(gameObj.getGameId());
-                cheat.setGameName(gameObj.getGameName());
-                cheat.setSystemId(gameObj.getSystemId());
-                cheat.setSystemName(gameObj.getSystemName());
-
                 if (cheatArray == null) {
                     cheatArray = new ArrayList();
                 }

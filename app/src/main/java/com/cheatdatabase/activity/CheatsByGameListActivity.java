@@ -66,7 +66,7 @@ public class CheatsByGameListActivity extends AppCompatActivity implements OnChe
     private SharedPreferences sharedPreferences;
     private Editor editor;
     private Member member;
-    private List<Cheat> cheatList;
+    private ArrayList<Cheat> cheatList;
 
     private CheatDatabaseApplication cheatDatabaseApplication;
     private CheatsByGameRecycleListViewAdapter cheatsByGameRecycleListViewAdapter;
@@ -237,8 +237,8 @@ public class CheatsByGameListActivity extends AppCompatActivity implements OnChe
 
     private void loadCheats(boolean forceLoadOnline) {
         cheatList = new ArrayList<>();
-        List<Cheat> cachedCheatsCollection;
-        List<Cheat> cheatsFound;
+        ArrayList<Cheat> cachedCheatsCollection;
+        ArrayList<Cheat> cheatsFound;
         boolean isCached = false;
         String achievementsEnabled;
         boolean isAchievementsEnabled = sharedPreferences.getBoolean("enable_achievements", true);
@@ -257,7 +257,7 @@ public class CheatsByGameListActivity extends AppCompatActivity implements OnChe
             if (cheatListTree != null) {
 
                 if (cheatListTree.containsKey(achievementsEnabled)) {
-                    cachedCheatsCollection = (List<Cheat>) cheatListTree.get(achievementsEnabled);
+                    cachedCheatsCollection = (ArrayList<Cheat>) cheatListTree.get(achievementsEnabled);
 
                     if ((cachedCheatsCollection != null) && (cachedCheatsCollection.size() > 0)) {
                         cheatsFound = cachedCheatsCollection;
@@ -282,7 +282,7 @@ public class CheatsByGameListActivity extends AppCompatActivity implements OnChe
             call.enqueue(new Callback<List<Cheat>>() {
                 @Override
                 public void onResponse(Call<List<Cheat>> cheats, Response<List<Cheat>> response) {
-                    cheatList = response.body();
+                    cheatList = (ArrayList) response.body();
 
                     gameObj.setCheatList(cheatList);
 
@@ -402,12 +402,6 @@ public class CheatsByGameListActivity extends AppCompatActivity implements OnChe
                             memberId = member.getMid();
                         }
 
-                        // TODO FIXME hier gibts ein nullpointer???
-                        // TODO FIXME hier gibts ein nullpointer???
-                        // TODO FIXME hier gibts ein nullpointer???
-                        // TODO FIXME hier gibts ein nullpointer???
-                        // TODO FIXME hier gibts ein nullpointer???
-                        // TODO FIXME hier gibts ein nullpointer???
                         dao.insert(cheat.toFavoriteCheatModel(memberId));
                     });
 
@@ -427,14 +421,6 @@ public class CheatsByGameListActivity extends AppCompatActivity implements OnChe
     @Override
     public void onCheatListItemSelected(Cheat cheat, int position) {
         if (Reachability.reachability.isReachable) {
-            int i = 0;
-            for (Cheat c : gameObj.getCheatList()) {
-                if (c == cheat) {
-                    position = i;
-                }
-                i++;
-            }
-
             editor.putInt(Konstanten.PREFERENCES_PAGE_SELECTED, position);
             editor.apply();
 

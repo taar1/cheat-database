@@ -56,6 +56,22 @@ public class SystemPlatform implements Parcelable {
         lastModTimeStamp = (java.util.Date) in.readSerializable();
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(systemId);
+        dest.writeInt(gameCount);
+        dest.writeInt(cheatCount);
+        dest.writeString(systemName);
+        dest.writeSerializable(dateLocallyAdded);
+        dest.writeTypedList(games);
+        dest.writeSerializable(lastModTimeStamp);
+    }
+
     public static final Creator<SystemPlatform> CREATOR = new Creator<SystemPlatform>() {
         @Override
         public SystemPlatform createFromParcel(Parcel in) {
@@ -124,22 +140,6 @@ public class SystemPlatform implements Parcelable {
 
     public void setLastModTimeStamp(Date lastModTimeStamp) {
         this.lastModTimeStamp = lastModTimeStamp;
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(systemId);
-        dest.writeInt(gameCount);
-        dest.writeInt(cheatCount);
-        dest.writeString(systemName);
-        dest.writeSerializable(dateLocallyAdded);
-        dest.writeTypedList(games);
-        dest.writeSerializable(lastModTimeStamp);
     }
 
     public SystemModel toSystemModel() {

@@ -18,7 +18,7 @@ public class Game implements Parcelable {
     @SerializedName("systemName")
     private String systemName;
     @SerializedName("cheats")
-    private List<Cheat> cheatList;
+    private ArrayList<Cheat> cheatList;
     @SerializedName("gameId")
     private int gameId;
     @SerializedName("cheatCount")
@@ -30,6 +30,11 @@ public class Game implements Parcelable {
     public Game() {
         cheatList = new ArrayList<>();
     }
+
+    // TODO FIXME remove systemId and systemName and replace it with SystemPlatform object....
+    // TODO FIXME remove systemId and systemName and replace it with SystemPlatform object....
+    // TODO FIXME remove systemId and systemName and replace it with SystemPlatform object....
+    // TODO FIXME remove systemId and systemName and replace it with SystemPlatform object....
 
     public Game(int gameId, String gameName, int systemId, String systemName) {
         this.gameId = gameId;
@@ -46,6 +51,7 @@ public class Game implements Parcelable {
         gameId = in.readInt();
         cheatsCount = in.readInt();
         gameName = in.readString();
+
     }
 
     @Override
@@ -58,6 +64,35 @@ public class Game implements Parcelable {
         dest.writeInt(cheatsCount);
         dest.writeString(gameName);
     }
+
+
+//    protected Cheat(Parcel in) {
+//        cheatId = in.readInt();
+//        cheatTitle = in.readString();
+//        cheatText = in.readString();
+//        languageId = in.readInt();
+//        walkthroughFormat = in.readByte() != 0;
+//        game = in.readParcelable(Game.class.getClassLoader());
+//        system = in.readParcelable(SystemPlatform.class.getClassLoader());
+//    }
+//
+//
+//    @Override
+//    public int describeContents() {
+//        return 0;
+//    }
+//
+//    @Override
+//    public void writeToParcel(Parcel dest, int flags) {
+//        dest.writeInt(cheatId);
+//        dest.writeString(cheatTitle);
+//        dest.writeString(cheatText);
+//        dest.writeInt(languageId);
+//        dest.writeByte((byte) (walkthroughFormat ? 1 : 0));
+//        dest.writeParcelable(game, flags);
+//        dest.writeParcelable(system, flags);
+//    }
+
 
     @Override
     public int describeContents() {
@@ -120,7 +155,7 @@ public class Game implements Parcelable {
         cheatList.add(cheat);
     }
 
-    public void setCheatList(List<Cheat> cheatList) {
+    public void setCheatList(ArrayList<Cheat> cheatList) {
         this.cheatList = cheatList;
     }
 

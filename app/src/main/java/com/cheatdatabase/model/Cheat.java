@@ -26,7 +26,7 @@ import javax.inject.Inject;
  * @author Dominik Erbsland
  * @since 2010
  */
-public class Cheat extends Game implements Parcelable {
+public class Cheat implements Parcelable {
 
     @SerializedName("cheatId")
     private int cheatId;
@@ -74,71 +74,46 @@ public class Cheat extends Game implements Parcelable {
     public Cheat() {
     }
 
-    public Cheat(int gameId, String gameName, int cheatId, String cheatTitle, String cheatText, int languageId, int systemId, String systemName, boolean walkthroughFormat) {
-        super(gameId, gameName, systemId, systemName);
+    public Cheat(int cheatId, String cheatTitle, String cheatText, int languageId, boolean walkthroughFormat, Game game, SystemPlatform systemPlatform) {
         this.cheatId = cheatId;
         this.cheatTitle = cheatTitle;
         this.cheatText = cheatText;
         this.languageId = languageId;
         this.walkthroughFormat = walkthroughFormat;
+        this.game = game;
+        this.system = systemPlatform;
     }
 
     protected Cheat(Parcel in) {
-        // Attention: The order of writing and reading the parcel MUST match.
-        screenshots = in.readByte() != 0;
-        in.readTypedList(screenshotList, Screenshot.CREATOR);
+        cheatId = in.readInt();
         cheatTitle = in.readString();
         cheatText = in.readString();
-        created = in.readString();
-        author = in.readString();
-        rating = in.readFloat();
-        memberRating = in.readFloat();
-        cheatId = in.readInt();
         languageId = in.readInt();
-        views = in.readInt();
-        votes = in.readInt();
-        viewsLifetime = in.readInt();
-        viewsToday = in.readInt();
-        forumCount = in.readInt();
         walkthroughFormat = in.readByte() != 0;
-        game = in.readTypedObject(Game.CREATOR);
-        system = in.readTypedObject(SystemPlatform.CREATOR);
+        screenshots = in.readByte() != 0;
+        screenshotList = in.createTypedArrayList(Screenshot.CREATOR);
+        game = in.readParcelable(Game.class.getClassLoader());
+        system = in.readParcelable(SystemPlatform.class.getClassLoader());
+    }
+
+
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        // Attention: The order of writing and reading the parcel MUST match.
-        dest.writeByte((byte) (screenshots ? 1 : 0));
-        dest.writeTypedList(screenshotList);
+        dest.writeInt(cheatId);
         dest.writeString(cheatTitle);
         dest.writeString(cheatText);
-        dest.writeString(created);
-        dest.writeString(author);
-        dest.writeFloat(rating);
-        dest.writeFloat(memberRating);
-        dest.writeInt(cheatId);
         dest.writeInt(languageId);
-        dest.writeInt(views);
-        dest.writeInt(votes);
-        dest.writeInt(viewsLifetime);
-        dest.writeInt(viewsToday);
-        dest.writeInt(forumCount);
         dest.writeByte((byte) (walkthroughFormat ? 1 : 0));
-        dest.writeTypedObject(game, Game.PARCELABLE_WRITE_RETURN_VALUE);
-        dest.writeTypedObject(system, SystemPlatform.PARCELABLE_WRITE_RETURN_VALUE);
+        dest.writeByte((byte) (screenshots ? 1 : 0));
+        dest.writeTypedList(screenshotList);
+        dest.writeParcelable(game, flags);
+        dest.writeParcelable(system, flags);
     }
-
-    public static final Creator<Cheat> CREATOR = new Creator<Cheat>() {
-        @Override
-        public Cheat createFromParcel(Parcel in) {
-            return new Cheat(in);
-        }
-
-        @Override
-        public Cheat[] newArray(int size) {
-            return new Cheat[size];
-        }
-    };
 
     public Game getGame() {
         return game;
@@ -213,6 +188,22 @@ public class Cheat extends Game implements Parcelable {
         return votes;
     }
 
+    public String getGameName() {
+        return game.getGameName();
+    }
+
+    public int getGameId() {
+        return game.getGameId();
+    }
+
+    public String getSystemName() {
+        return system.getSystemName();
+    }
+
+    public int getSystemId() {
+        return system.getSystemId();
+    }
+
     /**
      * Returns the age in days of the cheat
      *
@@ -266,6 +257,20 @@ public class Cheat extends Game implements Parcelable {
     public boolean isWalkthroughFormat() {
         return walkthroughFormat;
     }
+
+
+    public static final Creator<Cheat> CREATOR = new Creator<Cheat>() {
+        @Override
+        public Cheat createFromParcel(Parcel in) {
+            return new Cheat(in);
+        }
+
+        @Override
+        public Cheat[] newArray(int size) {
+            return new Cheat[size];
+        }
+    };
+
 
     public void setAuthor(String author) {
         this.author = author;
@@ -348,11 +353,6 @@ public class Cheat extends Game implements Parcelable {
 
     public void setForumCount(int forumCount) {
         this.forumCount = forumCount;
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
     }
 
     public int getStyle() {

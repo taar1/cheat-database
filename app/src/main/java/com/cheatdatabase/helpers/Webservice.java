@@ -9,7 +9,6 @@ import com.cheatdatabase.model.Cheat;
 import com.cheatdatabase.model.ForumPost;
 import com.cheatdatabase.model.Game;
 import com.cheatdatabase.model.Member;
-import com.cheatdatabase.model.Screenshot;
 import com.cheatdatabase.model.SystemPlatform;
 import com.cheatdatabase.model.WelcomeMessage;
 import com.cheatdatabase.rest.RestApi;
@@ -425,52 +424,51 @@ public class Webservice {
     }
 
 
-    /**
-     * Holt drei der 20 neusten Cheats zufüllig aus der Datenbank und liefert
-     * sie als Cheat-Array zurück (inkl. Anzahl Cheats in der DB)
-     *
-     * @return
-     */
-    public static Cheat[] getInitialInformation() {
-        int ANZAHL = 3;
-        String newCheats = executeGet(Konstanten.BASE_URL_ANDROID + "getNewAndTotalCheats.php");
-
-        Cheat[] cheats = new Cheat[ANZAHL];
-
-        JSONArray jArray;
-        try {
-            jArray = new JSONArray(newCheats);
-
-            for (int i = 0; i < ANZAHL; i++) {
-
-                JSONObject jsonObject = jArray.getJSONObject(i);
-
-                int gameIdValue = jsonObject.getInt("gid");
-                int cheatIdValue = jsonObject.getInt("cid");
-                String gameNameValue = jsonObject.getString("name");
-                String titleValue = jsonObject.getString("title");
-                String systemValue = jsonObject.getString("system");
-                // int totalCheats = jsonObject.getInt("t");
-
-                Cheat tmpCheat = new Cheat();
-                tmpCheat.setGameId(gameIdValue);
-                tmpCheat.setCheatId(cheatIdValue);
-                tmpCheat.setGameName(gameNameValue);
-                tmpCheat.setCheatTitle(titleValue);
-                tmpCheat.setSystemName(systemValue);
-
-                cheats[i] = tmpCheat;
-            }
-
-        } catch (JSONException e) {
-            Log.e(TAG, "JSONException: " + e.getLocalizedMessage());
-            Crashlytics.logException(e);
-        }
-
-        return cheats;
-    }
-
-
+//    /**
+//     * Holt drei der 20 neusten Cheats zufüllig aus der Datenbank und liefert
+//     * sie als Cheat-Array zurück (inkl. Anzahl Cheats in der DB)
+//     *
+//     * @return
+//     */
+//    public static Cheat[] getInitialInformation() {
+//        int ANZAHL = 3;
+//        String newCheats = executeGet(Konstanten.BASE_URL_ANDROID + "getNewAndTotalCheats.php");
+//
+//        Cheat[] cheats = new Cheat[ANZAHL];
+//
+//        JSONArray jArray;
+//        try {
+//            jArray = new JSONArray(newCheats);
+//
+//            for (int i = 0; i < ANZAHL; i++) {
+//
+//                JSONObject jsonObject = jArray.getJSONObject(i);
+//
+//                int gameIdValue = jsonObject.getInt("gid");
+//                int cheatIdValue = jsonObject.getInt("cid");
+//                String gameNameValue = jsonObject.getString("name");
+//                String titleValue = jsonObject.getString("title");
+//                String systemValue = jsonObject.getString("system");
+//                // int totalCheats = jsonObject.getInt("t");
+//
+//                Cheat tmpCheat = new Cheat();
+//                tmpCheat.setGameId(gameIdValue);
+//                tmpCheat.setCheatId(cheatIdValue);
+//                tmpCheat.setGameName(gameNameValue);
+//                tmpCheat.setCheatTitle(titleValue);
+//                tmpCheat.setSystemName(systemValue);
+//
+//                cheats[i] = tmpCheat;
+//            }
+//
+//        } catch (JSONException e) {
+//            Log.e(TAG, "JSONException: " + e.getLocalizedMessage());
+//            Crashlytics.logException(e);
+//        }
+//
+//        return cheats;
+//    }
+//
 //    /**
 //     * Holt alle initialen Informationen und speichert sie ins Flat-File: -
 //     * Totale Anzahl Cheats - 3 neuste Cheats - Anzahl Games pro System
@@ -773,72 +771,72 @@ public class Webservice {
         return cheat;
     }
 
-    /**
-     * Holt alle Cheats von einem Game.
-     *
-     * @param gameId
-     * @param gameName
-     * @return
-     */
-    public static Cheat[] getCheatsByGameId(int gameId, String gameName) {
-        Cheat[] cheats = null;
-        JSONArray jArray;
-
-        try {
-            String urlParameters = "gameId=" + URLEncoder.encode(String.valueOf(gameId), "UTF-8");
-            String cheatsString = excutePost(Konstanten.BASE_URL_ANDROID + "getCheatsByGameId.php", urlParameters);
-
-            jArray = new JSONArray(cheatsString);
-            cheats = new Cheat[jArray.length()];
-
-            for (int i = 0; i < jArray.length(); i++) {
-
-                JSONObject jsonObject = jArray.getJSONObject(i);
-
-                int cheatId = jsonObject.getInt("id");
-                String cheatTitle = jsonObject.getString("title");
-                String cheatText = jsonObject.getString("cheat");
-                int language = jsonObject.getInt("lang");
-                int style = jsonObject.getInt("style");
-                String created = jsonObject.getString("created");
-                String rating = jsonObject.getString("rating");
-
-                Cheat cheat = new Cheat();
-
-                JSONArray screenshotsArray = jsonObject.getJSONArray("screenshots");
-                Screenshot[] screens = new Screenshot[screenshotsArray.length()];
-                for (int x = 0; x < screenshotsArray.length(); x++) {
-                    screens[x] = new Screenshot(screenshotsArray.getJSONObject(x).getString("size"), screenshotsArray.getJSONObject(x).getString("url"), screenshotsArray.getJSONObject(x).getString("url"), cheatId);
-                    cheat.setHasScreenshots(true);
-                }
-
-                cheat.setCheatId(cheatId);
-                cheat.setCheatTitle(cheatTitle.replaceAll("\\\\", ""));
-                cheat.setCheatText(cheatText.replaceAll("\\\\", ""));
-                cheat.setLanguageId(language);
-
-                if (style == 1) {
-                    cheat.setWalkthroughFormat(false);
-                } else {
-                    cheat.setWalkthroughFormat(true);
-                }
-
-                cheat.setCreated(created);
-                cheat.setRatingAverage(Float.parseFloat(rating));
-                cheat.setGameId(gameId);
-                cheat.setGameName(gameName);
-
-                cheats[i] = cheat;
-            }
-
-        } catch (JSONException | UnsupportedEncodingException e) {
-            Log.e(TAG, "JSONException | UnsupportedEncodingException: " + e.getLocalizedMessage());
-            Crashlytics.logException(e);
-        }
-
-        return cheats;
-    }
-
+//    /**
+//     * Holt alle Cheats von einem Game.
+//     *
+//     * @param gameId
+//     * @param gameName
+//     * @return
+//     */
+//    public static Cheat[] getCheatsByGameId(int gameId, String gameName) {
+//        Cheat[] cheats = null;
+//        JSONArray jArray;
+//
+//        try {
+//            String urlParameters = "gameId=" + URLEncoder.encode(String.valueOf(gameId), "UTF-8");
+//            String cheatsString = excutePost(Konstanten.BASE_URL_ANDROID + "getCheatsByGameId.php", urlParameters);
+//
+//            jArray = new JSONArray(cheatsString);
+//            cheats = new Cheat[jArray.length()];
+//
+//            for (int i = 0; i < jArray.length(); i++) {
+//
+//                JSONObject jsonObject = jArray.getJSONObject(i);
+//
+//                int cheatId = jsonObject.getInt("id");
+//                String cheatTitle = jsonObject.getString("title");
+//                String cheatText = jsonObject.getString("cheat");
+//                int language = jsonObject.getInt("lang");
+//                int style = jsonObject.getInt("style");
+//                String created = jsonObject.getString("created");
+//                String rating = jsonObject.getString("rating");
+//
+//                Cheat cheat = new Cheat();
+//
+//                JSONArray screenshotsArray = jsonObject.getJSONArray("screenshots");
+//                Screenshot[] screens = new Screenshot[screenshotsArray.length()];
+//                for (int x = 0; x < screenshotsArray.length(); x++) {
+//                    screens[x] = new Screenshot(screenshotsArray.getJSONObject(x).getString("size"), screenshotsArray.getJSONObject(x).getString("url"), screenshotsArray.getJSONObject(x).getString("url"), cheatId);
+//                    cheat.setHasScreenshots(true);
+//                }
+//
+//                cheat.setCheatId(cheatId);
+//                cheat.setCheatTitle(cheatTitle.replaceAll("\\\\", ""));
+//                cheat.setCheatText(cheatText.replaceAll("\\\\", ""));
+//                cheat.setLanguageId(language);
+//
+//                if (style == 1) {
+//                    cheat.setWalkthroughFormat(false);
+//                } else {
+//                    cheat.setWalkthroughFormat(true);
+//                }
+//
+//                cheat.setCreated(created);
+//                cheat.setRatingAverage(Float.parseFloat(rating));
+//                cheat.setGameId(gameId);
+//                cheat.setGameName(gameName);
+//
+//                cheats[i] = cheat;
+//            }
+//
+//        } catch (JSONException | UnsupportedEncodingException e) {
+//            Log.e(TAG, "JSONException | UnsupportedEncodingException: " + e.getLocalizedMessage());
+//            Crashlytics.logException(e);
+//        }
+//
+//        return cheats;
+//    }
+//
 //    /**
 //     * Holt alle Cheats verschachtelt von einem Mitglied.
 //     *

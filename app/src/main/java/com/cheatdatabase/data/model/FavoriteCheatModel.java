@@ -6,6 +6,7 @@ import androidx.room.PrimaryKey;
 
 import com.cheatdatabase.model.Cheat;
 import com.cheatdatabase.model.Game;
+import com.cheatdatabase.model.SystemPlatform;
 
 
 //@Entity(tableName = "favorites", indices = {@Index(value = "cheat_id", unique = true)})
@@ -49,7 +50,6 @@ public class FavoriteCheatModel {
         this.memberId = memberId;
     }
 
-
     public int getGameId() {
         return gameId;
     }
@@ -92,11 +92,15 @@ public class FavoriteCheatModel {
 
     public Cheat toCheat() {
         // TODO add screenshots...
-        return new Cheat(getGameId(), getGameName(), getCheatId(), getCheatTitle(), getCheatText(), getLanguageId(), getSystemId(), getSystemName(), isWalkthrough);
+        return new Cheat(getCheatId(), getCheatTitle(), getCheatText(), getLanguageId(), isWalkthrough(), toGame(), toSystem());
     }
 
     public Game toGame() {
         return new Game(getGameId(), getGameName(), getSystemId(), getSystemName());
+    }
+
+    public SystemPlatform toSystem() {
+        return new SystemPlatform(getSystemId(), getSystemName());
     }
 }
 

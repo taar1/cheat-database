@@ -257,7 +257,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 walkthroughFormat = true;
             }
 
-            Cheat cheat = new Cheat(gameId, gameName, cheatId, cheatTitle, cheatText, languageId, systemId, systemName, walkthroughFormat);
+            Cheat cheat = new Cheat(cheatId, cheatTitle, cheatText, languageId, walkthroughFormat, new Game(gameId, gameName, systemId, systemName), new SystemPlatform(systemId, systemName));
             cur.close();
             return cheat;
         }
@@ -301,14 +301,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                             walkthroughFormat = true;
                         }
 
-                        Game game = new Game(gameId, gameName, systemId, systemName);
-                        SystemPlatform system = new SystemPlatform(systemId, systemName);
-
-                        Cheat cheat = new Cheat(gameId, gameName, cheatId, cheatTitle, cheatText, languageId, systemId, systemName, walkthroughFormat);
-
-                        cheat.setGame(game);
-                        cheat.setSystem(system);
-
+                        Cheat cheat = new Cheat(cheatId, cheatTitle, cheatText, languageId, walkthroughFormat, new Game(gameId, gameName, systemId, systemName), new SystemPlatform(systemId, systemName));
                         cheatList.add(cheat);
                     } while (cur.moveToNext());
                 }
@@ -403,7 +396,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                             walkthroughFormat = true;
                         }
 
-                        favCheats.add(new Cheat(gameId, gameName, cheatId, cheatTitle, cheatText, languageId, systemId, systemName, walkthroughFormat));
+                        Cheat cheat = new Cheat(cheatId, cheatTitle, cheatText, languageId, walkthroughFormat, new Game(gameId, gameName, systemId, systemName), new SystemPlatform(systemId, systemName));
+                        favCheats.add(cheat);
                     } while (cur.moveToNext());
                 }
 

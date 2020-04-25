@@ -66,7 +66,7 @@ public class FavoriteCheatListActivity extends AppCompatActivity implements OnCh
     private Game lastGameObj;
     private Cheat visibleCheat;
 
-    private List<Cheat> cheatsArrayList;
+    private ArrayList<Cheat> cheatsArrayList;
     private AdView facebookAdView;
 
     @BindView(R.id.outer_layout)
