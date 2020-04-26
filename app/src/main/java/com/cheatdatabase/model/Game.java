@@ -65,35 +65,6 @@ public class Game implements Parcelable {
         dest.writeString(gameName);
     }
 
-
-//    protected Cheat(Parcel in) {
-//        cheatId = in.readInt();
-//        cheatTitle = in.readString();
-//        cheatText = in.readString();
-//        languageId = in.readInt();
-//        walkthroughFormat = in.readByte() != 0;
-//        game = in.readParcelable(Game.class.getClassLoader());
-//        system = in.readParcelable(SystemPlatform.class.getClassLoader());
-//    }
-//
-//
-//    @Override
-//    public int describeContents() {
-//        return 0;
-//    }
-//
-//    @Override
-//    public void writeToParcel(Parcel dest, int flags) {
-//        dest.writeInt(cheatId);
-//        dest.writeString(cheatTitle);
-//        dest.writeString(cheatText);
-//        dest.writeInt(languageId);
-//        dest.writeByte((byte) (walkthroughFormat ? 1 : 0));
-//        dest.writeParcelable(game, flags);
-//        dest.writeParcelable(system, flags);
-//    }
-
-
     @Override
     public int describeContents() {
         return 0;

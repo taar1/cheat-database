@@ -108,7 +108,7 @@ public class SearchresultExpandableListAdapter extends BaseExpandableListAdapter
             convertView = inflater.inflate(R.layout.listrow_expandable_group, null);
         }
         Group group = (Group) getGroup(groupPosition);
-        ((CheckedTextView) convertView).setText(group.string);
+        ((CheckedTextView) convertView).setText(group.systemName);
         ((CheckedTextView) convertView).setChecked(isExpanded);
 
         return convertView;

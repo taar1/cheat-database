@@ -1,5 +1,6 @@
 package com.cheatdatabase.data.dao;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -15,13 +16,16 @@ import java.util.List;
 public interface FavoriteCheatDao {
 
     @Query("SELECT * FROM favorites")
-    List<FavoriteCheatModel> getAll();
+    LiveData<List<FavoriteCheatModel>> getAll();
 
     @Query("SELECT * FROM favorites where cheat_id = :cheatId")
-    FavoriteCheatModel getCheatByCheatId(int cheatId);
+    LiveData<FavoriteCheatModel> getCheatByCheatId(int cheatId);
 
     @Query("SELECT * FROM favorites where game_id = :gameId")
-    List<FavoriteCheatModel> getCheatsByGameId(int gameId);
+    LiveData<List<FavoriteCheatModel>> getCheatsByGameId(int gameId);
+
+    @Query("SELECT COUNT(game_id) FROM favorites where game_id = :gameId")
+    int countCheatsByGame(int gameId);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     long insert(FavoriteCheatModel favoriteModel);

@@ -1,79 +1,72 @@
 package com.cheatdatabase.adapters;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.CheckedTextView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.cheatdatabase.activity.FavoriteCheatListActivity;
 import com.cheatdatabase.R;
-import com.cheatdatabase.model.Game;
 import com.cheatdatabase.helpers.Group;
-import com.cheatdatabase.helpers.Reachability;
+import com.cheatdatabase.listeners.OnGameListItemSelectedListener;
+import com.cheatdatabase.model.Game;
 
 public class FavoritesExpandableListAdapter extends BaseExpandableListAdapter {
 
     private final SparseArray<Group> groups;
     public LayoutInflater inflater;
     public Activity activity;
+    private OnGameListItemSelectedListener onGameListItemSelectedListener;
+    private TextView textGameTitle;
+    private TextView textCheatCounter;
 
-    public FavoritesExpandableListAdapter(Activity act, SparseArray<Group> groups) {
-        activity = act;
+    public FavoritesExpandableListAdapter(Activity activity, SparseArray<Group> groups, OnGameListItemSelectedListener onGameListItemSelectedListener) {
+        this.activity = activity;
         this.groups = groups;
-        inflater = act.getLayoutInflater();
+        this.inflater = activity.getLayoutInflater();
+        this.onGameListItemSelectedListener = onGameListItemSelectedListener;
     }
 
     @Override
-    public Object getChild(int groupPosition, int childPosition) {
-        // FIXME hier crash!
+    public View getChildView(int groupPosition, final int childPosition, boolean isLastChild, View view, ViewGroup parent) {
+        final Game game = getChild(groupPosition, childPosition);
+
+        // TODO FIXME hier den cheat count aus DB laden und einfügen.
+        // TODO FIXME hier den cheat count aus DB laden und einfügen.
+        // TODO FIXME hier den cheat count aus DB laden und einfügen.
+
+        if (view == null) {
+            view = inflater.inflate(R.layout.listrow_expandable_item, null);
+        }
+        textGameTitle = view.findViewById(R.id.text_game_name);
+        textGameTitle.setText(game.getGameName());
+
+        // TODO machen wie gamesbystem mit: "5 Cheats" (nicht: Anz. Cheats: 5
+        textCheatCounter = view.findViewById(R.id.text_cheat_counter);
+        textCheatCounter.setText(R.string.cheats_count);
+        textCheatCounter.append(" " + game.getCheatsCount());
+
+        view.setOnClickListener(v -> onGameListItemSelectedListener.onGameListItemSelected(game));
+
+        return view;
+    }
+
+    @Override
+    public Game getChild(int groupPosition, int childPosition) {
         return groups.get(groupPosition).gameChildren.get(childPosition);
     }
 
     @Override
     public long getChildId(int groupPosition, int childPosition) {
-        return 0;
-    }
-
-    @Override
-    public View getChildView(int groupPosition, final int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
-        final Game children = (Game) getChild(groupPosition, childPosition);
-        TextView textGameTitle;
-        TextView textCheatCounter;
-        if (convertView == null) {
-            convertView = inflater.inflate(R.layout.listrow_expandable_item, null);
-        }
-        textGameTitle = convertView.findViewById(R.id.text_game_name);
-        textGameTitle.setText(children.getGameName());
-
-        // TODO machen wie gamesbystem mit: "5 Cheats" (nicht: Anz. Cheats: 5
-        textCheatCounter = convertView.findViewById(R.id.text_cheat_counter);
-        textCheatCounter.setText(R.string.cheats_count);
-        textCheatCounter.append(" " + children.getCheatsCount());
-        convertView.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (Reachability.reachability.isReachable) {
-                    Intent explicitIntent = new Intent(activity, FavoriteCheatListActivity.class);
-                    explicitIntent.putExtra("gameObj", children);
-                    activity.startActivity(explicitIntent);
-                } else {
-                    Toast.makeText(activity, R.string.no_internet, Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-        return convertView;
+        return groups.get(groupPosition).gameChildren.get(childPosition).getGameId();
     }
 
     @Override
     public int getChildrenCount(int groupPosition) {
-        return groups.get(groupPosition).children.size();
+        return groups.get(groupPosition).gameChildren.size();
     }
 
     @Override
@@ -98,7 +91,7 @@ public class FavoritesExpandableListAdapter extends BaseExpandableListAdapter {
 
     @Override
     public long getGroupId(int groupPosition) {
-        return 0;
+        return groups.get(groupPosition).getGame().getSystemId();
     }
 
     @Override
@@ -107,7 +100,7 @@ public class FavoritesExpandableListAdapter extends BaseExpandableListAdapter {
             convertView = inflater.inflate(R.layout.listrow_expandable_group, null);
         }
         Group group = (Group) getGroup(groupPosition);
-        ((CheckedTextView) convertView).setText(group.string);
+        ((CheckedTextView) convertView).setText(group.systemName);
         ((CheckedTextView) convertView).setChecked(isExpanded);
 
         return convertView;

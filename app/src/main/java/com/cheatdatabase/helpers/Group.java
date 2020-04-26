@@ -7,8 +7,17 @@ import java.util.List;
 
 public class Group {
 
-    public String string;
+    public String systemName;
+
     private Game game;
+
+    public final List<String> children = new ArrayList<>();
+
+    public final List<Game> gameChildren = new ArrayList<>();
+
+    public Group(String systemName) {
+        this.systemName = systemName;
+    }
 
     public Game getGame() {
         return game;
@@ -17,12 +26,4 @@ public class Group {
     public void setGame(Game game) {
         this.game = game;
     }
-
-    public final List<String> children = new ArrayList<>();
-    public final List<Game> gameChildren = new ArrayList<>();
-
-    public Group(String string) {
-        this.string = string;
-    }
-
 }

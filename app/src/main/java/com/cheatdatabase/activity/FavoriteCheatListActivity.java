@@ -217,7 +217,9 @@ public class FavoriteCheatListActivity extends AppCompatActivity implements OnCh
             if (gameObj != null) {
                 if (gameObj.getCheatList() == null) {
 
-                    List<FavoriteCheatModel> favcheats = dao.getCheatsByGameId(gameObj.getGameId());
+                    // TODO USE LIVE DATA...
+
+                    List<FavoriteCheatModel> favcheats = dao.getCheatsByGameId(gameObj.getGameId()).getValue();
 
                     for (FavoriteCheatModel fc : favcheats) {
                         cheatsArrayList.add(fc.toCheat());

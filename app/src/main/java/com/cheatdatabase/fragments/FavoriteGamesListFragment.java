@@ -1,6 +1,7 @@
 package com.cheatdatabase.fragments;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.SparseArray;
@@ -16,11 +17,14 @@ import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 
 import com.cheatdatabase.R;
+import com.cheatdatabase.activity.FavoriteCheatListActivity;
 import com.cheatdatabase.adapters.FavoritesExpandableListAdapter;
 import com.cheatdatabase.data.RoomCheatDatabase;
 import com.cheatdatabase.data.dao.FavoriteCheatDao;
 import com.cheatdatabase.data.model.FavoriteCheatModel;
 import com.cheatdatabase.helpers.Group;
+import com.cheatdatabase.listeners.OnGameListItemSelectedListener;
+import com.cheatdatabase.model.Game;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -32,14 +36,13 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import needle.Needle;
 
-public class FavoriteGamesListFragment extends Fragment {
+public class FavoriteGamesListFragment extends Fragment implements OnGameListItemSelectedListener {
     private static final String TAG = "FavoriteGamesListFragme";
 
     SparseArray<Group> groups = new SparseArray<>();
 
     private FavoritesExpandableListAdapter adapter;
 
-    //    private List<Game> gamesFound;
     private List<FavoriteCheatModel> favoriteCheatsList;
 
     private Activity parentActivity;
@@ -68,35 +71,32 @@ public class FavoriteGamesListFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_favorites_main_list, container, false);
         ButterKnife.bind(this, view);
 
+        parentActivity = getActivity();
         dao = RoomCheatDatabase.getDatabase(getActivity()).favoriteDao();
-        favoriteCheatsList = dao.getAll();
 
-        adapter = new FavoritesExpandableListAdapter(parentActivity, groups);
-
-        setHasOptionsMenu(true);
-
+        adapter = new FavoritesExpandableListAdapter(parentActivity, groups, this);
         listView.setAdapter(adapter);
+
+        // TODO fragment soll ein click listener implementieren und den click von den items hier drin handlen
+
         registerForContextMenu(listView);
+        setHasOptionsMenu(true);
 
         loadGames();
 
         return view;
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        parentActivity = getActivity();
-    }
-
     private void loadGames() {
-        favoriteCheatsList = dao.getAll();
+        dao.getAll().observe(this, favoriteCheatsList -> {
+            this.favoriteCheatsList = favoriteCheatsList;
+            fillExpandableList();
+            createData();
+        });
 
-        fillList();
-        createData();
     }
 
-    private void fillList() {
+    private void fillExpandableList() {
         if (groups != null && listView != null) {
             for (int i = 0; i < groups.size(); i++) {
                 listView.expandGroup(i, false);
@@ -105,15 +105,30 @@ public class FavoriteGamesListFragment extends Fragment {
     }
 
     public void createData() {
-        if (favoriteCheatsList == null) {
+        if (this.favoriteCheatsList == null) {
             handleEmptyState();
         } else {
-            if (favoriteCheatsList.size() > 0) {
+            if (this.favoriteCheatsList.size() > 0) {
                 Set<String> systems = new HashSet<>();
+                ArrayList<Game> gameList = new ArrayList<>();
+
                 // Get system names
-                for (FavoriteCheatModel favoriteCheat : favoriteCheatsList) {
+                for (FavoriteCheatModel favoriteCheat : this.favoriteCheatsList) {
                     if ((favoriteCheat.getSystemName() != null) && (favoriteCheat.getSystemName().length() > 0)) {
                         systems.add(favoriteCheat.getSystemName());
+                    }
+
+                    // Create game group without duplicates
+                    boolean addThisGame = true;
+                    Game game = favoriteCheat.toGame();
+                    for (Game g : gameList) {
+                        if (g.getGameId() == game.getGameId()) {
+                            addThisGame = false;
+                        }
+                    }
+
+                    if (addThisGame) {
+                        gameList.add(game);
                     }
                 }
 
@@ -126,14 +141,15 @@ public class FavoriteGamesListFragment extends Fragment {
                     Log.i(TAG, "systemsSorted: " + systemsSorted.get(i));
 
                     // Create groups with system names
-                    Group group = new Group(systemsSorted.get(i) + "");
+                    Group group = new Group(systemsSorted.get(i));
 
                     // Fill each group with the game names
-                    for (FavoriteCheatModel favoriteCheat : favoriteCheatsList) {
-                        if ((favoriteCheat.getSystemName() != null) && (favoriteCheat.getSystemName().length() > 0)) {
-                            if (favoriteCheat.getSystemName().equalsIgnoreCase(systemsSorted.get(i))) {
-                                group.children.add(favoriteCheat.getGameName());
-                                group.gameChildren.add(favoriteCheat.toGame());
+                    for (Game game : gameList) {
+                        if ((game.getSystemName() != null) && (game.getSystemName().length() > 0)) {
+                            if (game.getSystemName().equalsIgnoreCase(systemsSorted.get(i))) {
+
+                                // Add the game to the correct System group
+                                group.gameChildren.add(game);
                             }
                         }
                     }
@@ -167,4 +183,10 @@ public class FavoriteGamesListFragment extends Fragment {
         adapter.notifyDataSetChanged();
     }
 
+    @Override
+    public void onGameListItemSelected(Game game) {
+        Intent explicitIntent = new Intent(parentActivity, FavoriteCheatListActivity.class);
+        explicitIntent.putExtra("gameObj", game);
+        parentActivity.startActivity(explicitIntent);
+    }
 }
