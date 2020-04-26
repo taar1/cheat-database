@@ -43,7 +43,6 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -211,28 +210,24 @@ public class FavoriteCheatListActivity extends AppCompatActivity implements OnCh
     }
 
     private void loadCheats() {
-        Needle.onBackgroundThread().execute(() -> {
-            cheatsArrayList = new ArrayList<>();
+        cheatsArrayList = new ArrayList<>();
 
-            if (gameObj != null) {
-                if (gameObj.getCheatList() == null) {
+        if (gameObj != null) {
+            if (gameObj.getCheatList() == null) {
 
-                    // TODO USE LIVE DATA...
-
-                    List<FavoriteCheatModel> favcheats = dao.getCheatsByGameId(gameObj.getGameId()).getValue();
-
+                dao.getCheatsByGameId(gameObj.getGameId()).observe(this, favcheats -> {
                     for (FavoriteCheatModel fc : favcheats) {
                         cheatsArrayList.add(fc.toCheat());
                     }
 
                     gameObj.setCheatList(cheatsArrayList);
-                }
 
-                updateUI();
-            } else {
-                error();
+                    updateUI();
+                });
             }
-        });
+        } else {
+            error();
+        }
     }
 
     private void updateUI() {

@@ -25,7 +25,7 @@ public interface FavoriteCheatDao {
     LiveData<List<FavoriteCheatModel>> getCheatsByGameId(int gameId);
 
     @Query("SELECT COUNT(game_id) FROM favorites where game_id = :gameId")
-    int countCheatsByGame(int gameId);
+    int countCheats(int gameId);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     long insert(FavoriteCheatModel favoriteModel);

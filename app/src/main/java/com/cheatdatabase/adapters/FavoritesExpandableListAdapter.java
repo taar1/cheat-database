@@ -10,48 +10,65 @@ import android.widget.CheckedTextView;
 import android.widget.TextView;
 
 import com.cheatdatabase.R;
+import com.cheatdatabase.data.dao.FavoriteCheatDao;
+import com.cheatdatabase.fragments.FavoriteGamesListFragment;
 import com.cheatdatabase.helpers.Group;
 import com.cheatdatabase.listeners.OnGameListItemSelectedListener;
 import com.cheatdatabase.model.Game;
 
-public class FavoritesExpandableListAdapter extends BaseExpandableListAdapter {
+import needle.Needle;
 
+public class FavoritesExpandableListAdapter extends BaseExpandableListAdapter {
     private final SparseArray<Group> groups;
     public LayoutInflater inflater;
     public Activity activity;
+    private FavoriteCheatDao dao;
+    private FavoriteGamesListFragment fragment;
     private OnGameListItemSelectedListener onGameListItemSelectedListener;
+
     private TextView textGameTitle;
     private TextView textCheatCounter;
 
-    public FavoritesExpandableListAdapter(Activity activity, SparseArray<Group> groups, OnGameListItemSelectedListener onGameListItemSelectedListener) {
+    public FavoritesExpandableListAdapter(Activity activity, SparseArray<Group> groups, FavoriteCheatDao dao, FavoriteGamesListFragment fragment, OnGameListItemSelectedListener onGameListItemSelectedListener) {
         this.activity = activity;
         this.groups = groups;
+        this.dao = dao;
+        this.fragment = fragment;
         this.inflater = activity.getLayoutInflater();
         this.onGameListItemSelectedListener = onGameListItemSelectedListener;
     }
 
     @Override
     public View getChildView(int groupPosition, final int childPosition, boolean isLastChild, View view, ViewGroup parent) {
-        final Game game = getChild(groupPosition, childPosition);
-
-        // TODO FIXME hier den cheat count aus DB laden und einfügen.
-        // TODO FIXME hier den cheat count aus DB laden und einfügen.
-        // TODO FIXME hier den cheat count aus DB laden und einfügen.
+        Game game = getChild(groupPosition, childPosition);
 
         if (view == null) {
             view = inflater.inflate(R.layout.listrow_expandable_item, null);
         }
+
         textGameTitle = view.findViewById(R.id.text_game_name);
         textGameTitle.setText(game.getGameName());
 
-        // TODO machen wie gamesbystem mit: "5 Cheats" (nicht: Anz. Cheats: 5
-        textCheatCounter = view.findViewById(R.id.text_cheat_counter);
-        textCheatCounter.setText(R.string.cheats_count);
-        textCheatCounter.append(" " + game.getCheatsCount());
+        updateCheatsCounter(game, view);
 
         view.setOnClickListener(v -> onGameListItemSelectedListener.onGameListItemSelected(game));
 
         return view;
+    }
+
+    private void updateCheatsCounter(Game game, View view) {
+        Needle.onBackgroundThread().execute(() -> {
+            setCheatCounterText(dao.countCheats(game.getGameId()), view);
+        });
+    }
+
+    private void setCheatCounterText(int count, View view) {
+        Needle.onMainThread().execute(() -> {
+            // findViewById must be here otherwise the first element doesn't get updated (for whatever reason...)
+            textCheatCounter = view.findViewById(R.id.text_cheat_counter);
+            textCheatCounter.setText(R.string.cheats_count);
+            textCheatCounter.append(" " + count);
+        });
     }
 
     @Override
@@ -91,7 +108,8 @@ public class FavoritesExpandableListAdapter extends BaseExpandableListAdapter {
 
     @Override
     public long getGroupId(int groupPosition) {
-        return groups.get(groupPosition).getGame().getSystemId();
+        //return groups.get(groupPosition).getGame().getSystemId();
+        return 0;
     }
 
     @Override

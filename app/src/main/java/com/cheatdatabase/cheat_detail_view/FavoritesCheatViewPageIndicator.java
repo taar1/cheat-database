@@ -9,7 +9,6 @@ import android.content.SharedPreferences.Editor;
 import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -39,7 +38,6 @@ import com.cheatdatabase.events.CheatRatingFinishedEvent;
 import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.helpers.Tools;
-import com.cheatdatabase.helpers.UndoBarController;
 import com.cheatdatabase.model.Cheat;
 import com.cheatdatabase.model.Game;
 import com.cheatdatabase.model.Member;
@@ -47,6 +45,7 @@ import com.cheatdatabase.rest.RestApi;
 import com.facebook.ads.AdSize;
 import com.facebook.ads.AdView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 
 import net.lucode.hackware.magicindicator.MagicIndicator;
@@ -68,6 +67,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import butterknife.BindView;
+import needle.Needle;
 import retrofit2.Retrofit;
 
 /**
@@ -76,11 +76,9 @@ import retrofit2.Retrofit;
  * @author Dominik Erbsland
  * @version 1.0
  */
-public class FavoritesCheatViewPageIndicator extends AppCompatActivity implements UndoBarController.UndoListener {
+public class FavoritesCheatViewPageIndicator extends AppCompatActivity {
 
     private final String TAG = FavoritesCheatViewPageIndicator.class.getSimpleName();
-
-    private UndoBarController mUndoBarController;
 
     private Intent intent;
 
@@ -135,6 +133,13 @@ public class FavoritesCheatViewPageIndicator extends AppCompatActivity implement
 
         init();
 
+        // TODO FIXME überall undo bar mit snackbar mit undo funktion ersetzen...
+        // TODO FIXME überall undo bar mit snackbar mit undo funktion ersetzen...
+        // TODO FIXME überall undo bar mit snackbar mit undo funktion ersetzen...
+        // TODO FIXME überall undo bar mit snackbar mit undo funktion ersetzen...
+        // TODO FIXME überall undo bar mit snackbar mit undo funktion ersetzen...
+        // TODO FIXME überall undo bar mit snackbar mit undo funktion ersetzen...
+
         try {
             gameObj = intent.getParcelableExtra("gameObj");
             pageSelected = intent.getIntExtra("position", 0);
@@ -150,7 +155,6 @@ public class FavoritesCheatViewPageIndicator extends AppCompatActivity implement
         } catch (Exception e) {
             Log.e(FavoritesCheatViewPageIndicator.class.getName(), e.getMessage() + "");
         }
-        mUndoBarController = new UndoBarController(viewLayout.findViewById(R.id.undobar), this);
     }
 
     private void init() {
@@ -339,8 +343,9 @@ public class FavoritesCheatViewPageIndicator extends AppCompatActivity implement
                 }
                 return true;
             case R.id.action_remove_from_favorites:
-                dao.delete(visibleCheat.toFavoriteCheatModel(0));
-                mUndoBarController.showUndoBar(false, getString(R.string.remove_favorite_neutral_ok), null);
+                Needle.onBackgroundThread().execute(() -> dao.delete(visibleCheat.toFavoriteCheatModel(0)));
+                showUndoSnackbar();
+                //mUndoBarController.showUndoBar(false, getString(R.string.remove_favorite_neutral_ok), null);
                 return true;
             case R.id.action_report:
                 showReportDialog();
@@ -393,8 +398,6 @@ public class FavoritesCheatViewPageIndicator extends AppCompatActivity implement
 
     @Override
     protected void onDestroy() {
-        mUndoBarController.hideUndoBar(true);
-
         if (adView != null) {
             adView.destroy();
         }
@@ -430,22 +433,13 @@ public class FavoritesCheatViewPageIndicator extends AppCompatActivity implement
         invalidateOptionsMenu();
     }
 
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        mUndoBarController.onSaveInstanceState(outState);
-    }
+    private void showUndoSnackbar() {
+        Snackbar mySnackbar = Snackbar.make(findViewById(R.id.outer_layout), R.string.remove_favorite_neutral_ok, Snackbar.LENGTH_INDEFINITE);
+        mySnackbar.setAction(R.string.undo, v -> Needle.onBackgroundThread().execute(() -> dao.insert(visibleCheat.toFavoriteCheatModel((member != null ? member.getMid() : 0)))));
+        mySnackbar.show();
 
-    @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-        mUndoBarController.onRestoreInstanceState(savedInstanceState);
-    }
-
-    @Override
-    public void onUndo(Parcelable token) {
-        dao.insert(visibleCheat.toFavoriteCheatModel((member != null ? member.getMid() : 0)));
-
+        // TODO load screenshots again and save them to the SD card....
+        // TODO load screenshots again and save them to the SD card....
         // TODO load screenshots again and save them to the SD card....
         // TODO load screenshots again and save them to the SD card....
     }

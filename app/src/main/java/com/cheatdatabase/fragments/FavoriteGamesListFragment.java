@@ -74,10 +74,8 @@ public class FavoriteGamesListFragment extends Fragment implements OnGameListIte
         parentActivity = getActivity();
         dao = RoomCheatDatabase.getDatabase(getActivity()).favoriteDao();
 
-        adapter = new FavoritesExpandableListAdapter(parentActivity, groups, this);
+        adapter = new FavoritesExpandableListAdapter(parentActivity, groups, dao, this, this);
         listView.setAdapter(adapter);
-
-        // TODO fragment soll ein click listener implementieren und den click von den items hier drin handlen
 
         registerForContextMenu(listView);
         setHasOptionsMenu(true);

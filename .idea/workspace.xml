@@ -111,18 +111,14 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4caff62e-c62f-40ca-acf0-73c680b13375" name="Default" comment="Fixing bugs related to migration to room.">
+    <list default="true" id="4caff62e-c62f-40ca-acf0-73c680b13375" name="Default" comment="Fixing bugs in favorites activity etc.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/FavoriteCheatListActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/FavoriteCheatListActivity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/adapters/FavoritesExpandableListAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/adapters/FavoritesExpandableListAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/cheat_detail_view/FavoritesCheatViewPageIndicator.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/cheat_detail_view/FavoritesCheatViewPageIndicator.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/data/dao/FavoriteCheatDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/data/dao/FavoriteCheatDao.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/fragments/FavoriteGamesListFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/fragments/FavoriteGamesListFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/helpers/Group.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/helpers/Group.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/model/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/model/Game.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/search/SearchresultExpandableListAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/search/SearchresultExpandableListAdapter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_favorites_main_list.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_favorites_main_list.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/listrow_expandable_group.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/listrow_expandable_group.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/listrow_expandable_item.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/listrow_expandable_item.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/themes.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/themes.xml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -621,13 +617,6 @@
       <option name="presentableId" value="Default" />
       <updated>1487274191999</updated>
     </task>
-    <task id="LOCAL-00052" summary="Crashlytics Bug Fixes">
-      <created>1564155499157</created>
-      <option name="number" value="00052" />
-      <option name="presentableId" value="LOCAL-00052" />
-      <option name="project" value="LOCAL" />
-      <updated>1564155499157</updated>
-    </task>
     <task id="LOCAL-00053" summary="Crashlytics Bug Fixes&#10;Version update to 2.3 (release version)">
       <created>1564327179875</created>
       <option name="number" value="00053" />
@@ -964,7 +953,14 @@
       <option name="project" value="LOCAL" />
       <updated>1587845476921</updated>
     </task>
-    <option name="localTasksCounter" value="101" />
+    <task id="LOCAL-00101" summary="Fixing bugs in favorites activity etc.">
+      <created>1587908642241</created>
+      <option name="number" value="00101" />
+      <option name="presentableId" value="LOCAL-00101" />
+      <option name="project" value="LOCAL" />
+      <updated>1587908642241</updated>
+    </task>
+    <option name="localTasksCounter" value="102" />
     <servers />
   </component>
   <component name="TodoView">
@@ -1014,7 +1010,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
-    <MESSAGE value="Facebook Audience Network Native Ads Implementation&#10;FACEBOOK NATIVE ADS FINALLY WORKING!" />
     <MESSAGE value="Bug fixes for hotfix version 2.5.2" />
     <MESSAGE value="Bug Fix" />
     <MESSAGE value="bug fix" />
@@ -1039,7 +1034,8 @@
     <MESSAGE value="SUCCESSFUL MERGING WITH ROOM&#10;Fixing bugs related to DB access on UI thread now." />
     <MESSAGE value="Fixing bugs related to DB access on UI thread" />
     <MESSAGE value="Fixing bugs related to migration to room." />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixing bugs related to migration to room." />
+    <MESSAGE value="Fixing bugs in favorites activity etc." />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixing bugs in favorites activity etc." />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
@@ -1074,13 +1070,13 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/FavoriteCheatListActivity.java</url>
-          <line>212</line>
+          <line>211</line>
           <properties class="com.cheatdatabase.activity.FavoriteCheatListActivity" method="loadCheats" />
           <option name="timeStamp" value="205" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/adapters/FavoritesExpandableListAdapter.java</url>
-          <line>33</line>
+          <line>41</line>
           <properties class="com.cheatdatabase.adapters.FavoritesExpandableListAdapter" method="getChildView" />
           <option name="timeStamp" value="211" />
         </line-breakpoint>
@@ -1171,23 +1167,13 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/FavoriteCheatListActivity.java</url>
-          <line>221</line>
-          <option name="timeStamp" value="201" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/FavoriteCheatListActivity.java</url>
-          <line>113</line>
+          <line>112</line>
           <option name="timeStamp" value="202" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/FavoriteCheatListActivity.java</url>
-          <line>91</line>
+          <line>90</line>
           <option name="timeStamp" value="203" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/FavoriteCheatListActivity.java</url>
-          <line>214</line>
-          <option name="timeStamp" value="204" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

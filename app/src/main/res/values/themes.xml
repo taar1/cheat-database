@@ -151,14 +151,14 @@
 
     <style name="UndoBar">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">60dp</item>
+        <item name="android:layout_height">120dp</item>
         <item name="android:layout_gravity">bottom</item>
         <item name="android:orientation">horizontal</item>
         <item name="android:background">@drawable/undobar</item>
         <item name="android:clickable">true</item>
         <item name="android:showDividers">middle</item>
         <item name="android:divider">@drawable/undobar_divider</item>
-        <item name="android:dividerPadding">10dp</item>
+        <item name="android:dividerPadding">12dp</item>
         <item name="android:fontFamily">@font/lato_regular</item>
     </style>
 
