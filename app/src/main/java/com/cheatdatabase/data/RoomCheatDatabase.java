@@ -48,28 +48,28 @@ public abstract class RoomCheatDatabase extends androidx.room.RoomDatabase {
     static final Migration MIGRATION_1_2 = new Migration(1, 2) {
         @Override
         public void migrate(SupportSQLiteDatabase database) {
-            // Nothing to do but we are already at database version 3, so.... leave this here.
+            // Nothing to do but we are already at database version 5, so.... leave this here.
         }
     };
 
     static final Migration MIGRATION_2_3 = new Migration(2, 3) {
         @Override
         public void migrate(SupportSQLiteDatabase database) {
-            // Nothing to do but we are already at database version 3, so.... leave this here.
+            // Nothing to do but we are already at database version 5, so.... leave this here.
         }
     };
 
     static final Migration MIGRATION_3_4 = new Migration(3, 4) {
         @Override
         public void migrate(SupportSQLiteDatabase database) {
-            // Nothing to do but we are already at database version 3, so.... leave this here.
+            // Nothing to do but we are already at database version 5, so.... leave this here.
         }
     };
 
     static final Migration MIGRATION_4_5 = new Migration(4, 5) {
         @Override
         public void migrate(SupportSQLiteDatabase database) {
-            // Nothing to do but we are already at database version 3, so.... leave this here.
+            // Nothing to do but we are already at database version 5, so.... leave this here.
         }
     };
 

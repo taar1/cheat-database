@@ -125,14 +125,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         restApi = retrofit.create(RestApi.class);
         // Dagger end
 
-
         mFragmentId = getIntent().getIntExtra("mFragmentId", 0);
 
         init();
         prepareAdBanner();
 
-        SystemListFragment fragment = SystemListFragment.newInstance();
-        fragment.setMainActivity(this);
+        SystemListFragment fragment = SystemListFragment.newInstance(this);
         fragmentTransaction.replace(R.id.content_frame, fragment, SystemListFragment.class.getSimpleName()).commit();
 
         actionBarDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, mToolbar, R.string.drawer_open, R.string.drawer_close);
@@ -462,8 +460,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mToolbar.setTitle(R.string.app_name);
         fragmentTransaction.addToBackStack(SystemListFragment.class.getSimpleName());
 
-        SystemListFragment fragment = SystemListFragment.newInstance();
-        fragment.setMainActivity(this);
+        SystemListFragment fragment = SystemListFragment.newInstance(this);
         fragmentManager.beginTransaction().replace(R.id.content_frame, fragment, SystemListFragment.class.getSimpleName()).commit();
 
         floatingActionButton.show();

@@ -82,7 +82,7 @@ public class Helper extends Activity {
             FavoriteCheatDao dao = RoomCheatDatabase.getDatabase(context).favoriteDao();
             long insertReturn = dao.insert(visibleCheat.toFavoriteCheatModel(memberId));
             if (insertReturn > 0) {
-                callback.success();
+                Tools.saveScreenshotsToSdCard(visibleCheat, callback);
             } else {
                 callback.fail(null);
             }

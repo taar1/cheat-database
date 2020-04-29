@@ -369,4 +369,9 @@ public class MemberCheatViewFragment extends Fragment implements CheatViewGaller
     public void onScreenshotClicked(Screenshot screenshot, int position) {
         new StfalconImageViewer.Builder<>(cheatViewPageIndicatorActivity, cheatObj.getScreenshotList(), (imageView, image) -> Picasso.get().load(image.getFullPath()).placeholder(R.drawable.image_placeholder).into(imageView)).withStartPosition(position).show();
     }
+
+    @Override
+    public void onScreenshotUrlClicked(String screenshot, int position) {
+        // TODO FIXME can either be deleted later on if not used or changing the listener to this method and delete the above method....
+    }
 }

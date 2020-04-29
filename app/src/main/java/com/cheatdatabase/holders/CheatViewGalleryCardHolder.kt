@@ -8,8 +8,6 @@ import androidx.recyclerview.widget.RecyclerView
 import butterknife.BindView
 import butterknife.ButterKnife
 import com.cheatdatabase.R
-import com.cheatdatabase.helpers.Konstanten
-import com.cheatdatabase.model.Screenshot
 import com.squareup.picasso.Picasso
 
 class CheatViewGalleryCardHolder(val view: View) : RecyclerView.ViewHolder(view) {
@@ -26,14 +24,9 @@ class CheatViewGalleryCardHolder(val view: View) : RecyclerView.ViewHolder(view)
     @JvmField
     internal var cardImage: ImageView? = null
 
-    var screenshot: Screenshot? = null
+    var screenshot: String? = null
         set(screenshot) {
-            field = screenshot
-
-            title?.text = screenshot?.filename?.removeSuffix(".png")?.toUpperCase()
-
-            val sceenshotPath: String = Konstanten.SCREENSHOT_ROOT_WEBDIR + "image.php?width=200&image=/cheatpics/" + screenshot?.cheatId + screenshot?.filename
-            Picasso.get().load(sceenshotPath).into(cardImage)
+            Picasso.get().load(screenshot).into(cardImage)
         }
 
     init {
@@ -41,6 +34,6 @@ class CheatViewGalleryCardHolder(val view: View) : RecyclerView.ViewHolder(view)
     }
 
     override fun toString(): String {
-        return super.toString() + " '" + this.screenshot!!.filename + "'"
+        return super.toString() + " '" + this.screenshot + "'"
     }
 }

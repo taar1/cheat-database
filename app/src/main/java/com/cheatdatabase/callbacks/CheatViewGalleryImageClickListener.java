@@ -6,4 +6,6 @@ public interface CheatViewGalleryImageClickListener {
 
     void onScreenshotClicked(Screenshot screenshot, int position);
 
+    void onScreenshotUrlClicked(String screenshot, int position);
+
 }

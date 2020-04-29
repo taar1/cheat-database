@@ -3,6 +3,7 @@ package com.cheatdatabase.model;
 import android.os.Environment;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 
 import com.cheatdatabase.helpers.Konstanten;
 import com.google.gson.annotations.SerializedName;
@@ -91,17 +92,11 @@ public class Screenshot implements Parcelable {
         return fullPath;
     }
 
-
-    // TODO FIXME add cheat to favorites crashes!!!
-    // TODO FIXME add cheat to favorites crashes!!!
-    // TODO FIXME add cheat to favorites crashes!!!
-    // TODO FIXME add cheat to favorites crashes!!!
-    // TODO FIXME add cheat to favorites crashes!!!
-    // TODO FIXME add cheat to favorites crashes!!!
-    // TODO FIXME add cheat to favorites crashes!!!
-    // TODO FIXME add cheat to favorites crashes!!!
-    // TODO FIXME add cheat to favorites crashes!!!
-
+    public String getFullPathOnSdCard() {
+        String fullPathOnSdCard = Environment.getExternalStorageDirectory().getAbsolutePath() + Konstanten.APP_PATH_SD_CARD + getCheatId() + getFilename();
+        Log.d(TAG, "XXXXX getFullPathOnSdCard: " + fullPathOnSdCard);
+        return fullPathOnSdCard;
+    }
 
     /**
      * Ladet den Screenshot vom Server und speichert ihn auf die SD Karte.

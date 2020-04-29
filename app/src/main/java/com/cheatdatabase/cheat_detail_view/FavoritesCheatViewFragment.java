@@ -175,12 +175,29 @@ public class FavoritesCheatViewFragment extends Fragment implements CheatViewGal
     }
 
     private void getOnlineContent() {
+        Log.d(TAG, "XXXXX getOnlineContent: ");
         reloadView.setVisibility(View.GONE);
 
         // Get thumbnails if there are screenshots.
+
+        // TODO FIXME isScreenshots() existiert nicht in der favorites ROOM tabelle... manuell durchgehen und schauen ob screenshots auf der SD karte existieren....
+        // TODO FIXME isScreenshots() existiert nicht in der favorites ROOM tabelle... manuell durchgehen und schauen ob screenshots auf der SD karte existieren....
+        // TODO FIXME isScreenshots() existiert nicht in der favorites ROOM tabelle... manuell durchgehen und schauen ob screenshots auf der SD karte existieren....
+        // TODO FIXME isScreenshots() existiert nicht in der favorites ROOM tabelle... manuell durchgehen und schauen ob screenshots auf der SD karte existieren....
+        // TODO FIXME isScreenshots() existiert nicht in der favorites ROOM tabelle... manuell durchgehen und schauen ob screenshots auf der SD karte existieren....
+        // TODO FIXME isScreenshots() existiert nicht in der favorites ROOM tabelle... manuell durchgehen und schauen ob screenshots auf der SD karte existieren....
+
         if (cheatObj.isScreenshots()) {
             CheatViewGalleryListAdapter cheatViewGalleryListAdapter = new CheatViewGalleryListAdapter();
             cheatViewGalleryListAdapter.setScreenshotList(cheatObj.getScreenshotList());
+
+            ArrayList<String> screenshotUrlList = new ArrayList<>();
+            for (Screenshot s : cheatObj.getScreenshotList()) {
+                Log.d(TAG, "XXXXX path on SD: " + s.getFullPathOnSdCard());
+                screenshotUrlList.add(s.getFullPathOnSdCard());
+            }
+            cheatViewGalleryListAdapter.setScreenshotUrlList(screenshotUrlList);
+
             cheatViewGalleryListAdapter.setClickListener(this);
 
             galleryRecyclerView.setAdapter(cheatViewGalleryListAdapter);
@@ -389,4 +406,8 @@ public class FavoritesCheatViewFragment extends Fragment implements CheatViewGal
         new StfalconImageViewer.Builder<>(favoritesCheatViewPageIndicatorActivity, cheatObj.getScreenshotList(), (imageView, image) -> Picasso.get().load(image.getFullPath()).placeholder(R.drawable.image_placeholder).into(imageView)).withStartPosition(position).show();
     }
 
+    @Override
+    public void onScreenshotUrlClicked(String screenshot, int position) {
+        new StfalconImageViewer.Builder<>(favoritesCheatViewPageIndicatorActivity, cheatObj.getScreenshotList(), (imageView, image) -> Picasso.get().load(image.getFullPath()).placeholder(R.drawable.image_placeholder).into(imageView)).withStartPosition(position).show();
+    }
 }

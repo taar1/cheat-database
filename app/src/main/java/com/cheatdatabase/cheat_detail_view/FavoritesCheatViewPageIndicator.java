@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.graphics.Color;
-import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -95,14 +94,12 @@ public class FavoritesCheatViewPageIndicator extends AppCompatActivity {
     private Member member;
 
     public AlertDialog.Builder builder;
-    public AlertDialog alert;
 
     private FavoritesCheatViewFragmentAdapter mAdapter;
     private ViewPager mPager;
 
     private int activePage;
 
-    private ConnectivityManager cm;
 
     private ShareActionProvider mShare;
 
@@ -132,13 +129,6 @@ public class FavoritesCheatViewPageIndicator extends AppCompatActivity {
         setContentView(viewLayout);
 
         init();
-
-        // TODO FIXME überall undo bar mit snackbar mit undo funktion ersetzen...
-        // TODO FIXME überall undo bar mit snackbar mit undo funktion ersetzen...
-        // TODO FIXME überall undo bar mit snackbar mit undo funktion ersetzen...
-        // TODO FIXME überall undo bar mit snackbar mit undo funktion ersetzen...
-        // TODO FIXME überall undo bar mit snackbar mit undo funktion ersetzen...
-        // TODO FIXME überall undo bar mit snackbar mit undo funktion ersetzen...
 
         try {
             gameObj = intent.getParcelableExtra("gameObj");
@@ -345,7 +335,6 @@ public class FavoritesCheatViewPageIndicator extends AppCompatActivity {
             case R.id.action_remove_from_favorites:
                 Needle.onBackgroundThread().execute(() -> dao.delete(visibleCheat.toFavoriteCheatModel(0)));
                 showUndoSnackbar();
-                //mUndoBarController.showUndoBar(false, getString(R.string.remove_favorite_neutral_ok), null);
                 return true;
             case R.id.action_report:
                 showReportDialog();

@@ -27,10 +27,12 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.cheatdatabase.CheatDatabaseApplication;
 import com.cheatdatabase.R;
+import com.cheatdatabase.activity.CheatsByGameListActivity;
 import com.cheatdatabase.helpers.Group;
 import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.helpers.Tools;
+import com.cheatdatabase.listeners.OnGameListItemSelectedListener;
 import com.cheatdatabase.model.Game;
 import com.cheatdatabase.rest.RestApi;
 
@@ -52,7 +54,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 
 @SuppressLint("NewApi")
-public class SearchResultsActivity extends AppCompatActivity {
+public class SearchResultsActivity extends AppCompatActivity implements OnGameListItemSelectedListener {
     private static final String TAG = "SearchResultsActivity";
 
     SparseArray<Group> groups = new SparseArray<>();
@@ -86,6 +88,7 @@ public class SearchResultsActivity extends AppCompatActivity {
     private Typeface latoFontLight;
 
     private Toolbar toolbar;
+    private SearchresultExpandableListAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,7 +102,8 @@ public class SearchResultsActivity extends AppCompatActivity {
         nothingFoundTitle.setTypeface(latoFontBold);
         nothingFoundText.setTypeface(latoFontLight);
 
-        listView.setAdapter(new SearchresultExpandableListAdapter(SearchResultsActivity.this, groups));
+        adapter = new SearchresultExpandableListAdapter(SearchResultsActivity.this, groups, this);
+        listView.setAdapter(adapter);
 
         handleIntent(getIntent());
     }
@@ -249,6 +253,17 @@ public class SearchResultsActivity extends AppCompatActivity {
                     groups.append(i, group);
                 }
             }
+        }
+    }
+
+    @Override
+    public void onGameListItemSelected(Game game) {
+        if (Reachability.reachability.isReachable) {
+            Intent explicitIntent = new Intent(this, CheatsByGameListActivity.class);
+            explicitIntent.putExtra("gameObj", game);
+            startActivity(explicitIntent);
+        } else {
+            Toast.makeText(this, R.string.no_internet, Toast.LENGTH_SHORT).show();
         }
     }
 }

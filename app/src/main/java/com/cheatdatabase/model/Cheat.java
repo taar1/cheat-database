@@ -168,6 +168,14 @@ public class Cheat implements Parcelable {
         return screenshotList;
     }
 
+    public List<String> getScreenshotUrlList() {
+        ArrayList<String> screenshotUrlList = new ArrayList<>();
+        for (Screenshot s : screenshotList) {
+            screenshotUrlList.add(s.getFullPath());
+        }
+        return screenshotUrlList;
+    }
+
     public int getViews() {
         return views;
     }

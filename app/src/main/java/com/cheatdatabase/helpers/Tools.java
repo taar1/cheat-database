@@ -497,7 +497,6 @@ public class Tools {
     }
 
     public static void saveScreenshotsToSdCard(Cheat cheat, GenericCallback callback) {
-        // TODO FIXME test if that actually saves screenshots
         Needle.onBackgroundThread().execute(() -> {
             try {
                 for (Screenshot s : cheat.getScreenshotList()) {

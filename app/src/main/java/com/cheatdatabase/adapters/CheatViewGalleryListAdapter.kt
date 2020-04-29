@@ -13,21 +13,24 @@ import java.util.*
 
 internal class CheatViewGalleryListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    private var homepagePosterListElementList: List<Screenshot>
+    private var homepagePosterListElementList: List<Screenshot> = ArrayList<Screenshot>()
+    private var screenshotUrlList: List<String> = ArrayList<String>()
+
     private lateinit var cheatViewGalleryImageClickListener: CheatViewGalleryImageClickListener
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-
         val itemView: View = LayoutInflater.from(parent.context).inflate(R.layout.gallery_card, parent, false)
         return CheatViewGalleryCardHolder(itemView)
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        val screenshot: Screenshot = homepagePosterListElementList[position]
-        val cheatViewGalleryCardHolder: CheatViewGalleryCardHolder = holder as CheatViewGalleryCardHolder
-        holder.view.setOnClickListener { cheatViewGalleryImageClickListener.onScreenshotClicked(screenshot, position) }
+        val screenshotUrl: String = screenshotUrlList[position]
 
-        cheatViewGalleryCardHolder.screenshot = screenshot
+        val cheatViewGalleryCardHolder: CheatViewGalleryCardHolder = holder as CheatViewGalleryCardHolder
+        holder.view.setOnClickListener { cheatViewGalleryImageClickListener.onScreenshotUrlClicked(screenshotUrl, position) }
+
+        cheatViewGalleryCardHolder.screenshot = screenshotUrl
+        cheatViewGalleryCardHolder.title?.text = (position + 1).toString() // TODO: proper Captions
     }
 
     fun setClickListener(listener: CheatViewGalleryImageClickListener) {
@@ -38,11 +41,12 @@ internal class CheatViewGalleryListAdapter : RecyclerView.Adapter<RecyclerView.V
         this.homepagePosterListElementList = screenshotList
     }
 
-    override fun getItemCount(): Int {
-        return homepagePosterListElementList.size
+    fun setScreenshotUrlList(screenshotUrlList: List<String>) {
+        this.screenshotUrlList = screenshotUrlList
     }
 
-    init {
-        homepagePosterListElementList = ArrayList<Screenshot>()
+    override fun getItemCount(): Int {
+        return screenshotUrlList.size
     }
+
 }

@@ -182,7 +182,8 @@ public class CheatViewFragment extends Fragment implements CheatViewGalleryImage
         // Get thumbnails if there are screenshots.
         if (cheatObj.isScreenshots()) {
             CheatViewGalleryListAdapter cheatViewGalleryListAdapter = new CheatViewGalleryListAdapter();
-            cheatViewGalleryListAdapter.setScreenshotList(cheatObj.getScreenshotList());
+            //cheatViewGalleryListAdapter.setScreenshotList(cheatObj.getScreenshotList());
+            cheatViewGalleryListAdapter.setScreenshotUrlList(cheatObj.getScreenshotUrlList());
             cheatViewGalleryListAdapter.setClickListener(this);
 
             galleryRecyclerView.setAdapter(cheatViewGalleryListAdapter);
@@ -399,4 +400,10 @@ public class CheatViewFragment extends Fragment implements CheatViewGalleryImage
         new StfalconImageViewer.Builder<>(cheatViewPageIndicatorActivity, cheatObj.getScreenshotList(), (imageView, image) -> Picasso.get().load(image.getFullPath()).placeholder(R.drawable.image_placeholder).into(imageView)).withStartPosition(position).show();
     }
 
+    @Override
+    public void onScreenshotUrlClicked(String screenshot, int position) {
+        new StfalconImageViewer.Builder<>(cheatViewPageIndicatorActivity, cheatObj.getScreenshotUrlList(),
+                (imageView, image) -> Picasso.get().load(image).placeholder(R.drawable.image_placeholder).into(imageView)).withStartPosition(position).show();
+        // TODO FIXME can either be deleted later on if not used or changing the listener to this method and delete the above method....
+    }
 }
