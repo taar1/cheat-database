@@ -37,6 +37,7 @@ import com.cheatdatabase.dialogs.RateAppDialog;
 import com.cheatdatabase.events.GenericEvent;
 import com.cheatdatabase.fragments.ContactFormFragment;
 import com.cheatdatabase.fragments.FavoriteGamesListFragment;
+import com.cheatdatabase.fragments.MyCheatsFragment;
 import com.cheatdatabase.fragments.SubmitCheatFragment;
 import com.cheatdatabase.fragments.SystemListFragment;
 import com.cheatdatabase.fragments.TopMembersFragment;
@@ -429,7 +430,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             WebView webview = dialogView.findViewById(R.id.webview);
             webview.loadUrl("https://www.freeprivacypolicy.com/privacy/view/1ac30e371af5decb7631a29e7eed2d15");
         } else if (id == R.id.nav_my_cheats) {
-            Tools.showSnackbar(mDrawerLayout, getResources().getString(R.string.coming_soon));
+            showMyCheatsFragment();
         } else {
             showGameSystemsFragment();
         }
@@ -441,6 +442,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
 
         return true;
+    }
+
+    private void showMyCheatsFragment() {
+        mToolbar.setTitle(R.string.drawer_my_cheats);
+        fragmentTransaction.addToBackStack(MyCheatsFragment.class.getSimpleName());
+
+        MyCheatsFragment myCheatsFragment = MyCheatsFragment.newInstance();
+        myCheatsFragment.setMainActivity(this);
+
+        fragmentManager.beginTransaction().replace(R.id.content_frame, myCheatsFragment, MyCheatsFragment.class.getSimpleName()).commit();
+
+        floatingActionButton.hide();
+        mDrawerLayout.closeDrawers();
     }
 
     private void showContactFormFragment() {
