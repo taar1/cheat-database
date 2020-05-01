@@ -56,17 +56,15 @@ public class SystemListFragment extends Fragment implements OnSystemListItemSele
 
     private SystemDao dao;
 
-    public SystemListFragment(MainActivity mainActivity) {
+    public static SystemListFragment newInstance(MainActivity mainActivity) {
+        SystemListFragment systemListFragment = new SystemListFragment();
+        systemListFragment.setMainActivity(mainActivity);
+        return systemListFragment;
+    }
+
+    public void setMainActivity(MainActivity mainActivity) {
         this.mainActivity = mainActivity;
     }
-
-    public static SystemListFragment newInstance(MainActivity mainActivity) {
-        return new SystemListFragment(mainActivity);
-    }
-
-//    public void setMainActivity(MainActivity mainActivity) {
-//        this.mainActivity = mainActivity;
-//    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

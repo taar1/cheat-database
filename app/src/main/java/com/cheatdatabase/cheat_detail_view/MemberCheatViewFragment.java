@@ -12,7 +12,6 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.webkit.WebView;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TableLayout;
@@ -39,7 +38,6 @@ import com.google.gson.JsonObject;
 import com.squareup.picasso.Picasso;
 import com.stfalcon.imageviewer.StfalconImageViewer;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -62,7 +60,7 @@ public class MemberCheatViewFragment extends Fragment implements CheatViewGaller
     @BindView(R.id.text_cheat_title)
     TextView tvCheatTitle;
     @BindView(R.id.gallery_info)
-    TextView tvGalleryInfo;
+    TextView tvSwipeHorizontallyInfoText;
     @BindView(R.id.gallery_recycler_view)
     RecyclerView galleryRecyclerView;
     @BindView(R.id.progress_bar)
@@ -71,21 +69,15 @@ public class MemberCheatViewFragment extends Fragment implements CheatViewGaller
     private Cheat cheatObj;
     private List<Cheat> cheats;
     private int offset;
-    private List<ImageView> imageViews;
     private Member member;
 
     private SharedPreferences settings;
     private Editor editor;
 
-    private Typeface latoFontBold;
     private Typeface latoFontLight;
     private MemberCheatViewPageIndicator cheatViewPageIndicatorActivity;
 
     private LinearLayout outerLayout;
-
-    public MemberCheatViewFragment() {
-        imageViews = new ArrayList<>();
-    }
 
     public static MemberCheatViewFragment newInstance(List<Cheat> cheats, int offset, LinearLayout outerLayout) {
         MemberCheatViewFragment fragment = new MemberCheatViewFragment();
@@ -109,7 +101,6 @@ public class MemberCheatViewFragment extends Fragment implements CheatViewGaller
         cheatViewPageIndicatorActivity = (MemberCheatViewPageIndicator) getActivity();
 
         latoFontLight = Tools.getFont(cheatViewPageIndicatorActivity.getAssets(), Konstanten.FONT_LIGHT);
-        latoFontBold = Tools.getFont(cheatViewPageIndicatorActivity.getAssets(), Konstanten.FONT_BOLD);
 
         settings = cheatViewPageIndicatorActivity.getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
         editor = settings.edit();
@@ -134,13 +125,18 @@ public class MemberCheatViewFragment extends Fragment implements CheatViewGaller
 
         tvTextBeforeTable.setVisibility(View.VISIBLE);
         tvCheatTitle.setText(cheatObj.getCheatTitle());
-        tvGalleryInfo.setVisibility(View.INVISIBLE);
+        tvSwipeHorizontallyInfoText.setVisibility(View.INVISIBLE);
         progressBar.setVisibility(View.INVISIBLE);
+
+
+        for (Screenshot s : cheatObj.getScreenshotList()) {
+            Log.d(TAG, "XXXXX onCreateView: screenshot: " + s.getFullPath());
+        }
 
         /**
          * Get thumbnails if there are screenshots.
          */
-        if (cheatObj.isScreenshots()) {
+        if (cheatObj.hasScreenshots()) {
             CheatViewGalleryListAdapter cheatViewGalleryListAdapter = new CheatViewGalleryListAdapter();
             cheatViewGalleryListAdapter.setScreenshotList(cheatObj.getScreenshotList());
             cheatViewGalleryListAdapter.setClickListener(this);
@@ -149,15 +145,15 @@ public class MemberCheatViewFragment extends Fragment implements CheatViewGaller
             RecyclerView.LayoutManager gridLayoutManager = new GridLayoutManager(cheatViewPageIndicatorActivity, 2, GridLayoutManager.HORIZONTAL, false);
             galleryRecyclerView.setLayoutManager(gridLayoutManager);
 
-            if ((cheatObj.getScreenshotList() == null) || (cheatObj.getScreenshotList().size() <= 3)) {
-                tvGalleryInfo.setVisibility(View.GONE);
+            if ((cheatObj.getScreenshotList() == null) || (cheatObj.getScreenshotList().size() < 3)) {
+                tvSwipeHorizontallyInfoText.setVisibility(View.GONE);
             } else {
-                tvGalleryInfo.setVisibility(View.VISIBLE);
+                tvSwipeHorizontallyInfoText.setVisibility(View.VISIBLE);
             }
 
             progressBar.setVisibility(View.VISIBLE);
         } else {
-            tvGalleryInfo.setVisibility(View.GONE);
+            tvSwipeHorizontallyInfoText.setVisibility(View.GONE);
             galleryRecyclerView.setVisibility(View.GONE);
         }
 
@@ -370,8 +366,11 @@ public class MemberCheatViewFragment extends Fragment implements CheatViewGaller
         new StfalconImageViewer.Builder<>(cheatViewPageIndicatorActivity, cheatObj.getScreenshotList(), (imageView, image) -> Picasso.get().load(image.getFullPath()).placeholder(R.drawable.image_placeholder).into(imageView)).withStartPosition(position).show();
     }
 
-    @Override
-    public void onScreenshotUrlClicked(String screenshot, int position) {
-        // TODO FIXME can either be deleted later on if not used or changing the listener to this method and delete the above method....
-    }
+//    @Override
+//    public void onScreenshotUrlClicked(String screenshot, int position) {
+    // TODO FIXME can either be deleted later on if not used or changing the listener to this method and delete the above method....
+    // TODO FIXME can either be deleted later on if not used or changing the listener to this method and delete the above method....
+    // TODO FIXME can either be deleted later on if not used or changing the listener to this method and delete the above method....
+    // TODO FIXME can either be deleted later on if not used or changing the listener to this method and delete the above method....
+//    }
 }

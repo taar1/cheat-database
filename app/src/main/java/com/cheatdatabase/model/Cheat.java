@@ -1,16 +1,13 @@
 package com.cheatdatabase.model;
 
-import android.os.Environment;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
 
 import com.cheatdatabase.data.model.FavoriteCheatModel;
-import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Tools;
 import com.google.gson.annotations.SerializedName;
 
-import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -237,28 +234,24 @@ public class Cheat implements Parcelable {
         return cheatDayAge;
     }
 
-    /**
-     * Schaut, ob auf der SD Karte Screenshots zu dem Cheat existieren.
-     *
-     * @return boolean
-     */
-    public boolean hasScreenshotOnSd() {
-        if (Tools.isSdReadable()) {
-            String fileName = this.getCheatId() + "a.png";
-            File sdCard = Environment.getExternalStorageDirectory();
-            File dir = new File(sdCard.getAbsolutePath() + Konstanten.APP_PATH_SD_CARD + this.getCheatId());
-            File file = new File(dir, fileName);
-            return file.isFile();
-        } else {
-            return false;
-        }
+//    /**
+//     * Schaut, ob auf der SD Karte Screenshots zu dem Cheat existieren.
+//     *
+//     * @return boolean
+//     */
+//    public boolean hasScreenshotOnSd() {
+//        if (Tools.isSdReadable()) {
+//            String fileName = this.getCheatId() + "a.png";
+//            File sdCard = Environment.getExternalStorageDirectory();
+//            File dir = new File(sdCard.getAbsolutePath() + Konstanten.APP_PATH_SD_CARD + this.getCheatId());
+//            File file = new File(dir, fileName);
+//            return file.isFile();
+//        } else {
+//            return false;
+//        }
+//    }
 
-    }
-
-    /**
-     * @return the screenshots
-     */
-    public boolean isScreenshots() {
+    public boolean hasScreenshots() {
         return screenshots;
     }
 

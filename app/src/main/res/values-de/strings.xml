@@ -209,4 +209,7 @@
 
     <string name="error_adding_favorite">Fehler: Der Cheat konnte nicht zu den Favoriten hinzugefügt werden.</string>
     <string name="error_adding_favorites">Fehler: Die Cheats konnten nicht zu den Favoriten hinzugefügt werden.</string>
+
+    <string name="drawer_my_cheats">Meine Cheats</string>
+    <string name="coming_soon">Kommt bald...</string>
 </resources>

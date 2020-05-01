@@ -8,9 +8,13 @@ import androidx.recyclerview.widget.RecyclerView
 import butterknife.BindView
 import butterknife.ButterKnife
 import com.cheatdatabase.R
+import com.cheatdatabase.model.Screenshot
 import com.squareup.picasso.Picasso
+import java.io.File
 
 class CheatViewGalleryCardHolder(val view: View) : RecyclerView.ViewHolder(view) {
+    private val TAG = CheatViewGalleryCardHolder::class.java.simpleName
+
 
     @BindView(R.id.card_title)
     @JvmField
@@ -24,9 +28,14 @@ class CheatViewGalleryCardHolder(val view: View) : RecyclerView.ViewHolder(view)
     @JvmField
     internal var cardImage: ImageView? = null
 
-    var screenshot: String? = null
+    var screenshot: Screenshot? = null
         set(screenshot) {
-            Picasso.get().load(screenshot).into(cardImage)
+            Picasso.get().load(screenshot?.fullPath).into(cardImage)
+        }
+
+    var screenshotFile: File? = null
+        set(screenshotFile) {
+            Picasso.get().load(screenshotFile!!).into(cardImage)
         }
 
     init {

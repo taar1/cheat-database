@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -42,6 +43,7 @@ import com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import butterknife.BindView;
@@ -61,7 +63,6 @@ public class FavoriteCheatListActivity extends AppCompatActivity implements OnCh
     private SharedPreferences.Editor editor;
     private Member member;
 
-    private int lastPosition;
     private Game lastGameObj;
     private Cheat visibleCheat;
 
@@ -92,20 +93,6 @@ public class FavoriteCheatListActivity extends AppCompatActivity implements OnCh
 
         loadCheats();
     }
-
-    // TODO FIXME: AKTUELL ZEIGT ES IN DEN FAVORITES KEINE SCREENSHOTS AN...
-    // TODO FIXME: AKTUELL ZEIGT ES IN DEN FAVORITES KEINE SCREENSHOTS AN...
-    // TODO FIXME: AKTUELL ZEIGT ES IN DEN FAVORITES KEINE SCREENSHOTS AN...
-
-    // TODO: 1) DB wechsel auf ROOM - 2) favorites tabelle mit "screenshots" erweitern
-    // TODO: 1) DB wechsel auf ROOM - 2) favorites tabelle mit "screenshots" erweitern
-    // TODO: 1) DB wechsel auf ROOM - 2) favorites tabelle mit "screenshots" erweitern
-    // TODO: 1) DB wechsel auf ROOM - 2) favorites tabelle mit "screenshots" erweitern
-    // TODO: als zwischenlösung: bei cheat view abfragen online ob es screenshots hat und diese laden... (kein offline mode)
-    // TODO: als zwischenlösung: bei cheat view abfragen online ob es screenshots hat und diese laden... (kein offline mode)
-    // TODO: als zwischenlösung: bei cheat view abfragen online ob es screenshots hat und diese laden... (kein offline mode)
-    // TODO: als zwischenlösung: bei cheat view abfragen online ob es screenshots hat und diese laden... (kein offline mode)
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -217,7 +204,10 @@ public class FavoriteCheatListActivity extends AppCompatActivity implements OnCh
 
                 dao.getCheatsByGameId(gameObj.getGameId()).observe(this, favcheats -> {
                     for (FavoriteCheatModel fc : favcheats) {
-                        cheatsArrayList.add(fc.toCheat());
+                        Cheat cheat = fc.toCheat();
+                        cheat.setHasScreenshots(hasScreenshotsOnSdCard(cheat.getCheatId()));
+
+                        cheatsArrayList.add(cheat);
                     }
 
                     gameObj.setCheatList(cheatsArrayList);
@@ -228,6 +218,7 @@ public class FavoriteCheatListActivity extends AppCompatActivity implements OnCh
         } else {
             error();
         }
+        mSwipeRefreshLayout.setRefreshing(false);
     }
 
     private void updateUI() {
@@ -246,10 +237,18 @@ public class FavoriteCheatListActivity extends AppCompatActivity implements OnCh
         Needle.onMainThread().execute(() -> mSwipeRefreshLayout.setRefreshing(false));
     }
 
+    private boolean hasScreenshotsOnSdCard(int cheatId) {
+        File sdCard = Environment.getExternalStorageDirectory();
+        File dir = new File(sdCard.getAbsolutePath() + Konstanten.APP_PATH_SD_CARD + cheatId);
+        File[] files = dir.listFiles();
+
+        return files != null && files.length > 0;
+    }
+
     // Save the position of the last element
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        outState.putInt("position", lastPosition);
+        //outState.putInt("position", lastPosition);
         outState.putParcelable("gameObj", lastGameObj);
         super.onSaveInstanceState(outState);
     }

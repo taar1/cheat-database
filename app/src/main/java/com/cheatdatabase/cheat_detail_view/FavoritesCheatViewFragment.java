@@ -4,6 +4,7 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.os.Environment;
 import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -23,21 +24,22 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cheatdatabase.R;
-import com.cheatdatabase.adapters.CheatViewGalleryListAdapter;
-import com.cheatdatabase.callbacks.CheatViewGalleryImageClickListener;
+import com.cheatdatabase.adapters.FavoritesCheatViewGalleryListAdapter;
+import com.cheatdatabase.callbacks.FavoritesCheatViewGalleryImageClickListener;
 import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.helpers.Tools;
 import com.cheatdatabase.model.Cheat;
 import com.cheatdatabase.model.Game;
 import com.cheatdatabase.model.Member;
-import com.cheatdatabase.model.Screenshot;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.squareup.picasso.Picasso;
 import com.stfalcon.imageviewer.StfalconImageViewer;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import butterknife.BindView;
@@ -53,7 +55,7 @@ import retrofit2.Response;
  * @author Dominik Erbsland
  * @version 1.0
  */
-public class FavoritesCheatViewFragment extends Fragment implements CheatViewGalleryImageClickListener {
+public class FavoritesCheatViewFragment extends Fragment implements FavoritesCheatViewGalleryImageClickListener {
 
     private static final String TAG = FavoritesCheatViewFragment.class.getSimpleName();
 
@@ -66,7 +68,7 @@ public class FavoritesCheatViewFragment extends Fragment implements CheatViewGal
     @BindView(R.id.text_cheat_title)
     TextView tvCheatTitle;
     @BindView(R.id.gallery_info)
-    TextView tvGalleryInfo;
+    TextView tvSwipeHorizontallyInfoText;
     @BindView(R.id.gallery_recycler_view)
     RecyclerView galleryRecyclerView;
     @BindView(R.id.reload)
@@ -74,12 +76,10 @@ public class FavoritesCheatViewFragment extends Fragment implements CheatViewGal
     @BindView(R.id.progress_bar)
     ProgressBar progressBar;
 
-    private int biggestHeight;
     private Cheat cheatObj;
     private List<Cheat> cheatList;
     private Game game;
     private int offset;
-    private List<ImageView> imageViewList;
     private Member member;
     private LinearLayout outerLayout;
 
@@ -89,10 +89,7 @@ public class FavoritesCheatViewFragment extends Fragment implements CheatViewGal
     private Typeface latoFontBold;
     private Typeface latoFontLight;
     private FavoritesCheatViewPageIndicator favoritesCheatViewPageIndicatorActivity;
-
-    // TODO FIXME screenshots should be downloaded to device so the cheat can be displayed without using the internet
-    // TODO FIXME screenshots should be downloaded to device so the cheat can be displayed without using the internet
-    // TODO FIXME screenshots should be downloaded to device so the cheat can be displayed without using the internet
+    private List<File> screenshotList;
 
     public static FavoritesCheatViewFragment newInstance(Game game, int offset, LinearLayout outerLayout) {
         FavoritesCheatViewFragment fragment = new FavoritesCheatViewFragment();
@@ -103,7 +100,6 @@ public class FavoritesCheatViewFragment extends Fragment implements CheatViewGal
     }
 
     public FavoritesCheatViewFragment() {
-        imageViewList = new ArrayList<>();
     }
 
     @Override
@@ -146,7 +142,7 @@ public class FavoritesCheatViewFragment extends Fragment implements CheatViewGal
         tvCheatTitle.setText(cheatObj.getCheatTitle());
 
         tvTextBeforeTable.setVisibility(View.VISIBLE);
-        tvGalleryInfo.setVisibility(View.INVISIBLE);
+        tvSwipeHorizontallyInfoText.setVisibility(View.INVISIBLE);
         progressBar.setVisibility(View.INVISIBLE);
 
         if (Reachability.reachability.isReachable) {
@@ -175,29 +171,12 @@ public class FavoritesCheatViewFragment extends Fragment implements CheatViewGal
     }
 
     private void getOnlineContent() {
-        Log.d(TAG, "XXXXX getOnlineContent: ");
         reloadView.setVisibility(View.GONE);
 
-        // Get thumbnails if there are screenshots.
-
-        // TODO FIXME isScreenshots() existiert nicht in der favorites ROOM tabelle... manuell durchgehen und schauen ob screenshots auf der SD karte existieren....
-        // TODO FIXME isScreenshots() existiert nicht in der favorites ROOM tabelle... manuell durchgehen und schauen ob screenshots auf der SD karte existieren....
-        // TODO FIXME isScreenshots() existiert nicht in der favorites ROOM tabelle... manuell durchgehen und schauen ob screenshots auf der SD karte existieren....
-        // TODO FIXME isScreenshots() existiert nicht in der favorites ROOM tabelle... manuell durchgehen und schauen ob screenshots auf der SD karte existieren....
-        // TODO FIXME isScreenshots() existiert nicht in der favorites ROOM tabelle... manuell durchgehen und schauen ob screenshots auf der SD karte existieren....
-        // TODO FIXME isScreenshots() existiert nicht in der favorites ROOM tabelle... manuell durchgehen und schauen ob screenshots auf der SD karte existieren....
-
-        if (cheatObj.isScreenshots()) {
-            CheatViewGalleryListAdapter cheatViewGalleryListAdapter = new CheatViewGalleryListAdapter();
-            cheatViewGalleryListAdapter.setScreenshotList(cheatObj.getScreenshotList());
-
-            ArrayList<String> screenshotUrlList = new ArrayList<>();
-            for (Screenshot s : cheatObj.getScreenshotList()) {
-                Log.d(TAG, "XXXXX path on SD: " + s.getFullPathOnSdCard());
-                screenshotUrlList.add(s.getFullPathOnSdCard());
-            }
-            cheatViewGalleryListAdapter.setScreenshotUrlList(screenshotUrlList);
-
+        screenshotList = getScreenshotsOnSdCard();
+        if (screenshotList.size() > 0) {
+            FavoritesCheatViewGalleryListAdapter cheatViewGalleryListAdapter = new FavoritesCheatViewGalleryListAdapter();
+            cheatViewGalleryListAdapter.setScreenshotUrlList(screenshotList);
             cheatViewGalleryListAdapter.setClickListener(this);
 
             galleryRecyclerView.setAdapter(cheatViewGalleryListAdapter);
@@ -205,13 +184,12 @@ public class FavoritesCheatViewFragment extends Fragment implements CheatViewGal
             galleryRecyclerView.setLayoutManager(gridLayoutManager);
 
             if ((cheatObj.getScreenshotList() == null) || (cheatObj.getScreenshotList().size() <= 3)) {
-                tvGalleryInfo.setVisibility(View.GONE);
+                tvSwipeHorizontallyInfoText.setVisibility(View.GONE);
             } else {
-                tvGalleryInfo.setVisibility(View.VISIBLE);
+                tvSwipeHorizontallyInfoText.setVisibility(View.VISIBLE);
             }
-
         } else {
-            tvGalleryInfo.setVisibility(View.GONE);
+            tvSwipeHorizontallyInfoText.setVisibility(View.GONE);
             galleryRecyclerView.setVisibility(View.GONE);
         }
 
@@ -231,6 +209,26 @@ public class FavoritesCheatViewFragment extends Fragment implements CheatViewGal
         editor.putString("cheat" + offset, new Gson().toJson(cheatObj));
         editor.apply();
     }
+
+    private List<File> getScreenshotsOnSdCard() {
+        File sdCard = Environment.getExternalStorageDirectory();
+        File dir = new File(sdCard.getAbsolutePath() + Konstanten.APP_PATH_SD_CARD + cheatObj.getCheatId());
+        File[] files = dir.listFiles();
+
+        ArrayList<File> fileList = new ArrayList<>();
+
+        if (files != null && files.length > 0) {
+            Arrays.sort(files);
+
+            for (File f : files) {
+                Log.d(TAG, "XXXXX getScreenshotsOnSdCard: file: " + f.getAbsolutePath());
+                fileList.add(f);
+            }
+        }
+
+        return fileList;
+    }
+
 
     private void populateView() {
         try {
@@ -402,12 +400,8 @@ public class FavoritesCheatViewFragment extends Fragment implements CheatViewGal
 
 
     @Override
-    public void onScreenshotClicked(Screenshot screenshot, int position) {
-        new StfalconImageViewer.Builder<>(favoritesCheatViewPageIndicatorActivity, cheatObj.getScreenshotList(), (imageView, image) -> Picasso.get().load(image.getFullPath()).placeholder(R.drawable.image_placeholder).into(imageView)).withStartPosition(position).show();
+    public void onScreenshotClicked(File screenshot, int position) {
+        new StfalconImageViewer.Builder<>(favoritesCheatViewPageIndicatorActivity, screenshotList, (imageView, image) -> Picasso.get().load(image).placeholder(R.drawable.image_placeholder).into(imageView)).withStartPosition(position).show();
     }
 
-    @Override
-    public void onScreenshotUrlClicked(String screenshot, int position) {
-        new StfalconImageViewer.Builder<>(favoritesCheatViewPageIndicatorActivity, cheatObj.getScreenshotList(), (imageView, image) -> Picasso.get().load(image.getFullPath()).placeholder(R.drawable.image_placeholder).into(imageView)).withStartPosition(position).show();
-    }
 }

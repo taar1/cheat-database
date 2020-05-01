@@ -36,9 +36,9 @@
             android:id="@+id/add_new_cheat_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_above="@+id/banner_container"
             android:layout_alignRight="@+id/swipe_refresh_layout"
             android:layout_margin="20dp"
-            android:layout_above="@+id/banner_container"
             android:src="@drawable/ic_add_black_48dp" />
 
         <include layout="@layout/adview_facebook" />

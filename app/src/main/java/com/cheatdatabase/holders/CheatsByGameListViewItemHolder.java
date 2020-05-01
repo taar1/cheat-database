@@ -1,5 +1,6 @@
 package com.cheatdatabase.holders;
 
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RatingBar;
@@ -8,14 +9,15 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cheatdatabase.R;
-import com.cheatdatabase.model.Cheat;
 import com.cheatdatabase.helpers.Konstanten;
+import com.cheatdatabase.model.Cheat;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
 public class CheatsByGameListViewItemHolder extends RecyclerView.ViewHolder {
+    private static final String TAG = "CheatsByGameListViewIte";
     public View view;
     private Cheat cheat;
 
@@ -53,7 +55,11 @@ public class CheatsByGameListViewItemHolder extends RecyclerView.ViewHolder {
             mFlagNewAddition.setVisibility(View.GONE);
         }
 
-        if (cheat.isScreenshots()) {
+        // TODO FIXME in den favoriten ist der value hier noch false obwohl es screenshots hat.....
+        // TODO FIXME in den favoriten ist der value hier noch false obwohl es screenshots hat.....
+
+        Log.d(TAG, "XXXXX setCheat: " + cheat.hasScreenshots());
+        if (cheat.hasScreenshots()) {
             mFlagScreenshot.setVisibility(View.VISIBLE);
         } else {
             mFlagScreenshot.setVisibility(View.GONE);

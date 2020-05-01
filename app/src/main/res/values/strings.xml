@@ -204,4 +204,7 @@
 
     <string name="error_adding_favorite">Error: The cheat could not be added to your favorites.</string>
     <string name="error_adding_favorites">Error: The cheats could not be added to your favorites.</string>
+
+    <string name="drawer_my_cheats">My Cheats</string>
+    <string name="coming_soon">Coming soon...</string>
 </resources>

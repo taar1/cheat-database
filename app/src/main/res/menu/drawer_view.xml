@@ -12,6 +12,10 @@
             android:icon="@drawable/ic_drawer_favorites"
             android:title="@string/favorites" />
         <item
+            android:id="@+id/nav_my_cheats"
+            android:icon="@drawable/ic_pencil"
+            android:title="@string/drawer_my_cheats" />
+        <item
             android:id="@+id/nav_members"
             android:icon="@drawable/ic_drawer_members"
             android:title="@string/top_members_title" />
@@ -37,7 +41,7 @@
             android:title="@string/contactform_title" />
         <item
             android:id="@+id/nav_terms_of_use"
-            android:icon="@drawable/ic_drawer_settings"
+            android:icon="@drawable/ic_lock"
             android:title="@string/privacy_policy" />
     </group>
     <group

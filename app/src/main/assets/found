@@ -1,0 +1,5 @@
+Expected:
+    TableInfo{name='searchhistory', columns={searchtime=Column{name='searchtime', type='INTEGER', affinity='3', notNull=false, primaryKeyPosition=0, defaultValue='null'}, searchquery=Column{name='searchquery', type='TEXT', affinity='2', notNull=false, primaryKeyPosition=0, defaultValue='null'}, _id=Column{name='_id', type='INTEGER', affinity='3', notNull=true, primaryKeyPosition=1, defaultValue='null'}}, foreignKeys=[], indices=[]}
+     Found:
+    TableInfo{name='searchhistory', columns={searchtime=Column{name='searchtime', type='TEXT', affinity='2',    notNull=false, primaryKeyPosition=0, defaultValue='null'}, searchquery=Column{name='searchquery', type='TEXT', affinity='2', notNull=false, primaryKeyPosition=0, defaultValue='null'}, _id=Column{name='_id', type='INTEGER', affinity='3', notNull=false, primaryKeyPosition=1, defaultValue='null'}}, foreignKeys=[], indices=[]}
+        at androidx.room.RoomOpenHelper.checkIdentity(RoomOpenHelper.java:163)

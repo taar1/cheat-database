@@ -135,7 +135,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         if (cheat == null) {
             return 0;
         } else {
-            if (cheat.isScreenshots()) {
+            if (cheat.hasScreenshots()) {
                 saveScreenshotsToSdCard(cheat, callback);
             }
 
@@ -178,7 +178,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 List<Cheat> cheatList = response.body();
 
                 for (Cheat cheat : cheatList) {
-                    if (cheat.isScreenshots()) {
+                    if (cheat.hasScreenshots()) {
                         // TODO FIXME: currently it ignores success/fail of saving screenshots to SD card...
                         // TODO FIXME: currently it ignores success/fail of saving screenshots to SD card...
                         saveScreenshotsToSdCard(cheat, null);

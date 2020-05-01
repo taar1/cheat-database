@@ -70,7 +70,7 @@ public class CheatViewFragment extends Fragment implements CheatViewGalleryImage
     @BindView(R.id.text_cheat_title)
     TextView tvCheatTitle;
     @BindView(R.id.gallery_info)
-    TextView tvGalleryInfo;
+    TextView tvSwipeHorizontallyInfoText;
     @BindView(R.id.gallery_recycler_view)
     RecyclerView galleryRecyclerView;
     @BindView(R.id.progress_bar)
@@ -81,25 +81,20 @@ public class CheatViewFragment extends Fragment implements CheatViewGalleryImage
     private Cheat cheatObj;
     private List<Cheat> cheatList;
     private Game game;
-    private String cheatTitle;
     private int offset;
-    private List<ImageView> imageViews;
     private Member member;
     private SharedPreferences settings;
     private Editor editor;
-    private Typeface latoFontBold;
     private Typeface latoFontLight;
     private CheatViewPageIndicatorActivity cheatViewPageIndicatorActivity;
 
     public CheatViewFragment() {
         cheatList = new ArrayList<>();
-        imageViews = new ArrayList<>();
     }
 
-    public static CheatViewFragment newInstance(String cheatTitle, Game gameObj, int offset) {
+    public static CheatViewFragment newInstance(Game gameObj, int offset) {
         CheatViewFragment cheatViewFragment = new CheatViewFragment();
         cheatViewFragment.game = gameObj;
-        cheatViewFragment.cheatTitle = cheatTitle;
         cheatViewFragment.offset = offset;
         return cheatViewFragment;
     }
@@ -121,7 +116,6 @@ public class CheatViewFragment extends Fragment implements CheatViewGalleryImage
         cheatViewPageIndicatorActivity = (CheatViewPageIndicatorActivity) getActivity();
 
         latoFontLight = Tools.getFont(cheatViewPageIndicatorActivity.getAssets(), Konstanten.FONT_LIGHT);
-        latoFontBold = Tools.getFont(cheatViewPageIndicatorActivity.getAssets(), Konstanten.FONT_BOLD);
 
         settings = getActivity().getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
         editor = settings.edit();
@@ -149,7 +143,7 @@ public class CheatViewFragment extends Fragment implements CheatViewGalleryImage
             tvCheatTitle.setText(cheatObj.getCheatTitle());
 
             tvTextBeforeTable.setVisibility(View.VISIBLE);
-            tvGalleryInfo.setVisibility(View.INVISIBLE);
+            tvSwipeHorizontallyInfoText.setVisibility(View.INVISIBLE);
             progressBar.setVisibility(View.INVISIBLE);
 
             if (Reachability.reachability.isReachable) {
@@ -180,10 +174,9 @@ public class CheatViewFragment extends Fragment implements CheatViewGalleryImage
         reloadView.setVisibility(View.GONE);
 
         // Get thumbnails if there are screenshots.
-        if (cheatObj.isScreenshots()) {
+        if (cheatObj.hasScreenshots()) {
             CheatViewGalleryListAdapter cheatViewGalleryListAdapter = new CheatViewGalleryListAdapter();
-            //cheatViewGalleryListAdapter.setScreenshotList(cheatObj.getScreenshotList());
-            cheatViewGalleryListAdapter.setScreenshotUrlList(cheatObj.getScreenshotUrlList());
+            cheatViewGalleryListAdapter.setScreenshotList(cheatObj.getScreenshotList());
             cheatViewGalleryListAdapter.setClickListener(this);
 
             galleryRecyclerView.setAdapter(cheatViewGalleryListAdapter);
@@ -191,13 +184,13 @@ public class CheatViewFragment extends Fragment implements CheatViewGalleryImage
             galleryRecyclerView.setLayoutManager(gridLayoutManager);
 
             if ((cheatObj.getScreenshotList() == null) || (cheatObj.getScreenshotList().size() <= 3)) {
-                tvGalleryInfo.setVisibility(View.GONE);
+                tvSwipeHorizontallyInfoText.setVisibility(View.GONE);
             } else {
-                tvGalleryInfo.setVisibility(View.VISIBLE);
+                tvSwipeHorizontallyInfoText.setVisibility(View.VISIBLE);
             }
 
         } else {
-            tvGalleryInfo.setVisibility(View.GONE);
+            tvSwipeHorizontallyInfoText.setVisibility(View.GONE);
             galleryRecyclerView.setVisibility(View.GONE);
         }
 
@@ -400,10 +393,10 @@ public class CheatViewFragment extends Fragment implements CheatViewGalleryImage
         new StfalconImageViewer.Builder<>(cheatViewPageIndicatorActivity, cheatObj.getScreenshotList(), (imageView, image) -> Picasso.get().load(image.getFullPath()).placeholder(R.drawable.image_placeholder).into(imageView)).withStartPosition(position).show();
     }
 
-    @Override
-    public void onScreenshotUrlClicked(String screenshot, int position) {
-        new StfalconImageViewer.Builder<>(cheatViewPageIndicatorActivity, cheatObj.getScreenshotUrlList(),
-                (imageView, image) -> Picasso.get().load(image).placeholder(R.drawable.image_placeholder).into(imageView)).withStartPosition(position).show();
-        // TODO FIXME can either be deleted later on if not used or changing the listener to this method and delete the above method....
-    }
+//    @Override
+//    public void onScreenshotUrlClicked(String screenshot, int position) {
+//        new StfalconImageViewer.Builder<>(cheatViewPageIndicatorActivity, cheatObj.getScreenshotUrlList(),
+//                (imageView, image) -> Picasso.get().load(image).placeholder(R.drawable.image_placeholder).into(imageView)).withStartPosition(position).show();
+//        // TODO FIXME can either be deleted later on if not used or changing the listener to this method and delete the above method....
+//    }
 }

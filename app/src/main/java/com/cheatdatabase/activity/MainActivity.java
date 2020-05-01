@@ -428,6 +428,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             View dialogView = md.getCustomView();
             WebView webview = dialogView.findViewById(R.id.webview);
             webview.loadUrl("https://www.freeprivacypolicy.com/privacy/view/1ac30e371af5decb7631a29e7eed2d15");
+        } else if (id == R.id.nav_my_cheats) {
+            Tools.showSnackbar(mDrawerLayout, getResources().getString(R.string.coming_soon));
         } else {
             showGameSystemsFragment();
         }

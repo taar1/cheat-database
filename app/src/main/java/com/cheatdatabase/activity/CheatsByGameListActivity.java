@@ -390,7 +390,7 @@ public class CheatsByGameListActivity extends AppCompatActivity implements OnChe
                 List<Cheat> cheatList = response.body();
 
                 for (Cheat cheat : cheatList) {
-                    if (cheat.isScreenshots()) {
+                    if (cheat.hasScreenshots()) {
                         // TODO FIXME: currently it ignores success/fail of saving screenshots to SD card...
                         // TODO FIXME: currently it ignores success/fail of saving screenshots to SD card...
                         Tools.saveScreenshotsToSdCard(cheat, null);

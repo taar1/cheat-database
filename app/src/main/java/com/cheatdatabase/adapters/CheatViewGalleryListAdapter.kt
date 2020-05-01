@@ -12,7 +12,6 @@ import java.util.*
 
 
 internal class CheatViewGalleryListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-
     private var homepagePosterListElementList: List<Screenshot> = ArrayList<Screenshot>()
     private var screenshotUrlList: List<String> = ArrayList<String>()
 
@@ -24,12 +23,13 @@ internal class CheatViewGalleryListAdapter : RecyclerView.Adapter<RecyclerView.V
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        val screenshotUrl: String = screenshotUrlList[position]
+//        val screenshotUrl: String = screenshotUrlList[position]
+        val screenshot: Screenshot = homepagePosterListElementList[position]
 
         val cheatViewGalleryCardHolder: CheatViewGalleryCardHolder = holder as CheatViewGalleryCardHolder
-        holder.view.setOnClickListener { cheatViewGalleryImageClickListener.onScreenshotUrlClicked(screenshotUrl, position) }
+        holder.view.setOnClickListener { cheatViewGalleryImageClickListener.onScreenshotClicked(screenshot, position) }
 
-        cheatViewGalleryCardHolder.screenshot = screenshotUrl
+        cheatViewGalleryCardHolder.screenshot = screenshot
         cheatViewGalleryCardHolder.title?.text = (position + 1).toString() // TODO: proper Captions
     }
 
@@ -46,7 +46,7 @@ internal class CheatViewGalleryListAdapter : RecyclerView.Adapter<RecyclerView.V
     }
 
     override fun getItemCount(): Int {
-        return screenshotUrlList.size
+        return homepagePosterListElementList.size
     }
 
 }

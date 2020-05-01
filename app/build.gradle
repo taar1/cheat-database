@@ -14,8 +14,8 @@ apply plugin: 'kotlin-kapt'
 
 String APK_ID = "com.cheatdatabase"
 String APK_NAME = "Cheat-Database"
-int VERSION_CODE = 60
-String VERSION_NAME = "2.5.14-preRelease"
+int VERSION_CODE = 61
+String VERSION_NAME = "2.5.14"
 
 android {
     compileSdkVersion 28
