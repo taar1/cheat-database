@@ -448,8 +448,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mToolbar.setTitle(R.string.drawer_my_cheats);
         fragmentTransaction.addToBackStack(MyCheatsFragment.class.getSimpleName());
 
-        MyCheatsFragment myCheatsFragment = MyCheatsFragment.newInstance();
-        myCheatsFragment.setMainActivity(this);
+        MyCheatsFragment myCheatsFragment = new MyCheatsFragment(this, settings);
+        //myCheatsFragment.setMainActivity(this);
 
         fragmentManager.beginTransaction().replace(R.id.content_frame, myCheatsFragment, MyCheatsFragment.class.getSimpleName()).commit();
 

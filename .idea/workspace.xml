@@ -111,10 +111,13 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4caff62e-c62f-40ca-acf0-73c680b13375" name="Default" comment="Fixing bugs in favorites activity with screenshot gallery">
+    <list default="true" id="4caff62e-c62f-40ca-acf0-73c680b13375" name="Default" comment="Add &quot;My Cheats&quot; section">
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/fragments/MyCheatsFragment.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/MainActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/themes.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/themes.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/fragments/MyCheatsFragment.java" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -616,13 +619,6 @@
       <option name="presentableId" value="Default" />
       <updated>1487274191999</updated>
     </task>
-    <task id="LOCAL-00055" summary="Crashlytics Bug Fixes&#10;&#10;Version 2.4-preRelease">
-      <created>1565360097658</created>
-      <option name="number" value="00055" />
-      <option name="presentableId" value="LOCAL-00055" />
-      <option name="project" value="LOCAL" />
-      <updated>1565360097658</updated>
-    </task>
     <task id="LOCAL-00056" summary="RELEASE VERSION 2.4">
       <created>1565360444205</created>
       <option name="number" value="00056" />
@@ -959,7 +955,14 @@
       <option name="project" value="LOCAL" />
       <updated>1588188554066</updated>
     </task>
-    <option name="localTasksCounter" value="104" />
+    <task id="LOCAL-00104" summary="Add &quot;My Cheats&quot; section">
+      <created>1588359974275</created>
+      <option name="number" value="00104" />
+      <option name="presentableId" value="LOCAL-00104" />
+      <option name="project" value="LOCAL" />
+      <updated>1588359974275</updated>
+    </task>
+    <option name="localTasksCounter" value="105" />
     <servers />
   </component>
   <component name="TodoView">
@@ -1009,7 +1012,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
-    <MESSAGE value="Bug Fix" />
     <MESSAGE value="bug fix" />
     <MESSAGE value="REMOVING MANY UNUSED RESOURCES!&#10;Bug Fixes" />
     <MESSAGE value="Version 2.5.7" />
@@ -1034,7 +1036,8 @@
     <MESSAGE value="Fixing bugs related to migration to room." />
     <MESSAGE value="Fixing bugs in favorites activity etc." />
     <MESSAGE value="Fixing bugs in favorites activity with screenshot gallery" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixing bugs in favorites activity with screenshot gallery" />
+    <MESSAGE value="Add &quot;My Cheats&quot; section" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add &quot;My Cheats&quot; section" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
