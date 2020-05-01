@@ -212,4 +212,8 @@
 
     <string name="drawer_my_cheats">Meine Cheats</string>
     <string name="coming_soon">Kommt bald...</string>
+    <string name="unpublished_cheats">Unveröffentlichte Cheats</string>
+    <string name="cheats_waiting_for_approval">Cheats die noch geprüft werden und\nabgelehnte Cheats</string>
+    <string name="published_cheats">Veröffentlichte Cheats</string>
+    <string name="list_of_published_cheats">Liste der veröffentlichten Cheats</string>
 </resources>

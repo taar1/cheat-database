@@ -207,4 +207,8 @@
 
     <string name="drawer_my_cheats">My Cheats</string>
     <string name="coming_soon">Coming soon...</string>
+    <string name="unpublished_cheats">Unpublished Cheats</string>
+    <string name="cheats_waiting_for_approval">Cheats waiting for approval and rejected cheats</string>
+    <string name="published_cheats">Published Cheats</string>
+    <string name="list_of_published_cheats">List of your published Cheats</string>
 </resources>

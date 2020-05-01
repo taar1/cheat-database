@@ -111,13 +111,11 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4caff62e-c62f-40ca-acf0-73c680b13375" name="Default" comment="Add &quot;My Cheats&quot; section">
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/fragments/MyCheatsFragment.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" afterDir="false" />
+    <list default="true" id="4caff62e-c62f-40ca-acf0-73c680b13375" name="Default" comment="Add &quot;My Cheats&quot; section. Swichting class to Kotlin.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/MainActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/fragments/MyCheatsFragment.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_my_cheats_overview.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_my_cheats_overview.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/values-de/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values-de/strings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -619,13 +617,6 @@
       <option name="presentableId" value="Default" />
       <updated>1487274191999</updated>
     </task>
-    <task id="LOCAL-00056" summary="RELEASE VERSION 2.4">
-      <created>1565360444205</created>
-      <option name="number" value="00056" />
-      <option name="presentableId" value="LOCAL-00056" />
-      <option name="project" value="LOCAL" />
-      <updated>1565360444205</updated>
-    </task>
     <task id="LOCAL-00057" summary="Bug Fixes for upcoming version 2.4.1">
       <created>1565705982422</created>
       <option name="number" value="00057" />
@@ -962,7 +953,14 @@
       <option name="project" value="LOCAL" />
       <updated>1588359974275</updated>
     </task>
-    <option name="localTasksCounter" value="105" />
+    <task id="LOCAL-00105" summary="Add &quot;My Cheats&quot; section. Swichting class to Kotlin.">
+      <created>1588363025910</created>
+      <option name="number" value="00105" />
+      <option name="presentableId" value="LOCAL-00105" />
+      <option name="project" value="LOCAL" />
+      <updated>1588363025910</updated>
+    </task>
+    <option name="localTasksCounter" value="106" />
     <servers />
   </component>
   <component name="TodoView">
@@ -1012,7 +1010,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
-    <MESSAGE value="bug fix" />
     <MESSAGE value="REMOVING MANY UNUSED RESOURCES!&#10;Bug Fixes" />
     <MESSAGE value="Version 2.5.7" />
     <MESSAGE value="Fixing Login/Register/Recover layouts" />
@@ -1037,7 +1034,8 @@
     <MESSAGE value="Fixing bugs in favorites activity etc." />
     <MESSAGE value="Fixing bugs in favorites activity with screenshot gallery" />
     <MESSAGE value="Add &quot;My Cheats&quot; section" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add &quot;My Cheats&quot; section" />
+    <MESSAGE value="Add &quot;My Cheats&quot; section. Swichting class to Kotlin." />
+    <option name="LAST_COMMIT_MESSAGE" value="Add &quot;My Cheats&quot; section. Swichting class to Kotlin." />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>

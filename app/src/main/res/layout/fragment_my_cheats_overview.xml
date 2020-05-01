@@ -8,7 +8,7 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/card_unpublished_cheats"
         android:layout_width="0dp"
-        android:layout_height="96dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginTop="60dp"
         android:layout_marginEnd="24dp"
@@ -39,8 +39,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
                 android:layout_marginTop="24dp"
-                android:text="Unpublished Cheats"
-                android:textAppearance="@style/NormalTextLight"
+                android:text="@string/unpublished_cheats"
+                android:textAppearance="@style/NormalTextBold"
                 app:layout_constraintStart_toEndOf="@+id/icon_clock"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -49,8 +49,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
-                android:text="List of your unpublished and declined Cheats"
+                android:layout_marginTop="4dp"
+
+                android:layout_marginBottom="24dp"
+                android:maxLines="2"
+                android:text="@string/cheats_waiting_for_approval"
                 android:textAppearance="@style/VerySmallTextLight"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/icon_clock"
                 app:layout_constraintTop_toBottomOf="@+id/unpublished_cheats_title" />
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -91,8 +96,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
                 android:layout_marginTop="24dp"
-                android:text="Published Cheats"
-                android:textAppearance="@style/NormalTextLight"
+                android:text="@string/published_cheats"
+                android:textAppearance="@style/NormalTextBold"
                 app:layout_constraintStart_toEndOf="@+id/icon_published"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -101,7 +106,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
-                android:text="List of your published Cheats"
+                android:layout_marginTop="4dp"
+                android:text="@string/list_of_published_cheats"
                 android:textAppearance="@style/VerySmallTextLight"
                 app:layout_constraintStart_toEndOf="@+id/icon_published"
                 app:layout_constraintTop_toBottomOf="@+id/published_cheats_title" />
