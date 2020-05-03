@@ -24,13 +24,13 @@ import androidx.fragment.app.FragmentManager;
 
 import com.cheatdatabase.CheatDatabaseApplication;
 import com.cheatdatabase.R;
+import com.cheatdatabase.data.model.Member;
 import com.cheatdatabase.dialogs.AlreadyLoggedInDialog;
 import com.cheatdatabase.dialogs.AlreadyLoggedInDialog.AlreadyLoggedInDialogListener;
 import com.cheatdatabase.helpers.AeSimpleMD5;
 import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.helpers.Tools;
-import com.cheatdatabase.model.Member;
 import com.cheatdatabase.rest.RestApi;
 import com.crashlytics.android.Crashlytics;
 import com.google.gson.Gson;

@@ -7,8 +7,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.cheatdatabase.CheatDatabaseApplication;
 import com.cheatdatabase.R;
+import com.cheatdatabase.data.model.Member;
 import com.cheatdatabase.helpers.Konstanten;
-import com.cheatdatabase.model.Member;
 import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;

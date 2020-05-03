@@ -1,6 +1,6 @@
 package com.cheatdatabase.listitems;
 
-import com.cheatdatabase.model.Cheat;
+import com.cheatdatabase.data.model.Cheat;
 
 public class CheatListItem extends ListItem {
 

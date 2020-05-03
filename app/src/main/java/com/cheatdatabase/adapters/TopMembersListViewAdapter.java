@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cheatdatabase.R;
-import com.cheatdatabase.model.Member;
+import com.cheatdatabase.data.model.Member;
 import com.cheatdatabase.holders.TopMembersListViewItemHolder;
 import com.cheatdatabase.listeners.OnTopMemberListItemSelectedListener;
 

@@ -1,4 +1,4 @@
-package com.cheatdatabase.model;
+package com.cheatdatabase.data.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;

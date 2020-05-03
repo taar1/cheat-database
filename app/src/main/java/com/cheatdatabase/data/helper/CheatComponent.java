@@ -1,4 +1,6 @@
-package com.cheatdatabase.model;
+package com.cheatdatabase.data.helper;
+
+import com.cheatdatabase.data.model.Cheat;
 
 import dagger.Component;
 

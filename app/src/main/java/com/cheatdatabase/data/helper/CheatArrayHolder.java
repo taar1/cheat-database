@@ -1,7 +1,9 @@
-package com.cheatdatabase.model;
+package com.cheatdatabase.data.helper;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+
+import com.cheatdatabase.data.model.Cheat;
 
 import java.util.List;
 

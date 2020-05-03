@@ -22,9 +22,9 @@ import com.cheatdatabase.adapters.FavoritesExpandableListAdapter;
 import com.cheatdatabase.data.RoomCheatDatabase;
 import com.cheatdatabase.data.dao.FavoriteCheatDao;
 import com.cheatdatabase.data.model.FavoriteCheatModel;
+import com.cheatdatabase.data.model.Game;
 import com.cheatdatabase.helpers.Group;
 import com.cheatdatabase.listeners.OnGameListItemSelectedListener;
-import com.cheatdatabase.model.Game;
 
 import java.util.ArrayList;
 import java.util.Collections;

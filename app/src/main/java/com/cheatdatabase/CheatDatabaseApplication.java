@@ -8,13 +8,13 @@ import android.net.ConnectivityManager;
 import android.os.Bundle;
 
 import com.cheatdatabase.activity.MainActivity;
+import com.cheatdatabase.data.model.Cheat;
+import com.cheatdatabase.data.model.Game;
 import com.cheatdatabase.di.ApplicationModule;
 import com.cheatdatabase.di.DaggerNetworkComponent;
 import com.cheatdatabase.di.NetworkComponent;
 import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.TrackingUtils;
-import com.cheatdatabase.model.Cheat;
-import com.cheatdatabase.model.Game;
 import com.crashlytics.android.Crashlytics;
 import com.facebook.ads.AudienceNetworkAds;
 import com.google.android.gms.analytics.GoogleAnalytics;

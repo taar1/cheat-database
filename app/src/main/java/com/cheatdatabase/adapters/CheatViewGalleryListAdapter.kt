@@ -6,8 +6,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.cheatdatabase.R
 import com.cheatdatabase.callbacks.CheatViewGalleryImageClickListener
+import com.cheatdatabase.data.model.Screenshot
 import com.cheatdatabase.holders.CheatViewGalleryCardHolder
-import com.cheatdatabase.model.Screenshot
 import java.util.*
 
 

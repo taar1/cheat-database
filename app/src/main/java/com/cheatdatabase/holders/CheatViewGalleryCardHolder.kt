@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import butterknife.BindView
 import butterknife.ButterKnife
 import com.cheatdatabase.R
-import com.cheatdatabase.model.Screenshot
+import com.cheatdatabase.data.model.Screenshot
 import com.squareup.picasso.Picasso
 import java.io.File
 

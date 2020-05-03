@@ -28,12 +28,12 @@ import androidx.appcompat.widget.Toolbar;
 import com.cheatdatabase.CheatDatabaseApplication;
 import com.cheatdatabase.R;
 import com.cheatdatabase.activity.CheatsByGameListActivity;
+import com.cheatdatabase.data.model.Game;
 import com.cheatdatabase.helpers.Group;
 import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.helpers.Tools;
 import com.cheatdatabase.listeners.OnGameListItemSelectedListener;
-import com.cheatdatabase.model.Game;
 import com.cheatdatabase.rest.RestApi;
 
 import java.util.ArrayList;

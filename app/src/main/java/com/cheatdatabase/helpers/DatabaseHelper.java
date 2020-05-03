@@ -8,10 +8,10 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import com.cheatdatabase.callbacks.GenericCallback;
-import com.cheatdatabase.model.Cheat;
-import com.cheatdatabase.model.Game;
-import com.cheatdatabase.model.Screenshot;
-import com.cheatdatabase.model.SystemPlatform;
+import com.cheatdatabase.data.model.Cheat;
+import com.cheatdatabase.data.model.Game;
+import com.cheatdatabase.data.model.Screenshot;
+import com.cheatdatabase.data.model.SystemModel;
 import com.cheatdatabase.rest.RestApi;
 
 import java.io.IOException;
@@ -257,7 +257,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 walkthroughFormat = true;
             }
 
-            Cheat cheat = new Cheat(cheatId, cheatTitle, cheatText, languageId, walkthroughFormat, new Game(gameId, gameName, systemId, systemName), new SystemPlatform(systemId, systemName));
+            Cheat cheat = new Cheat(cheatId, cheatTitle, cheatText, languageId, walkthroughFormat, new Game(gameId, gameName, systemId, systemName), new SystemModel(systemId, systemName));
             cur.close();
             return cheat;
         }
@@ -301,7 +301,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                             walkthroughFormat = true;
                         }
 
-                        Cheat cheat = new Cheat(cheatId, cheatTitle, cheatText, languageId, walkthroughFormat, new Game(gameId, gameName, systemId, systemName), new SystemPlatform(systemId, systemName));
+                        Cheat cheat = new Cheat(cheatId, cheatTitle, cheatText, languageId, walkthroughFormat, new Game(gameId, gameName, systemId, systemName), new SystemModel(systemId, systemName));
                         cheatList.add(cheat);
                     } while (cur.moveToNext());
                 }
@@ -396,7 +396,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                             walkthroughFormat = true;
                         }
 
-                        Cheat cheat = new Cheat(cheatId, cheatTitle, cheatText, languageId, walkthroughFormat, new Game(gameId, gameName, systemId, systemName), new SystemPlatform(systemId, systemName));
+                        Cheat cheat = new Cheat(cheatId, cheatTitle, cheatText, languageId, walkthroughFormat, new Game(gameId, gameName, systemId, systemName), new SystemModel(systemId, systemName));
                         favCheats.add(cheat);
                     } while (cur.moveToNext());
                 }
@@ -409,13 +409,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return null;
     }
 
-    public List<SystemPlatform> getAllSystemsAndCount() {
+    public List<SystemModel> getAllSystemsAndCount() {
         try {
             SQLiteDatabase db = this.getReadableDatabase();
 
             Cursor cur = db.query(GameSystemTable.TABLE_NAME, new String[]{GameSystemTable.SYS_SYSTEM_ID, GameSystemTable.SYS_SYSTEM_NAME, GameSystemTable.SYS_SYSTEM_GAMECOUNT, GameSystemTable.SYS_SYSTEM_CHEATCOUNT, GameSystemTable.SYS_SYSTEM_LASTMOD}, null, null, null, null, GameSystemTable.SYS_SYSTEM_NAME + " COLLATE NOCASE ASC;");
 
-            ArrayList<SystemPlatform> systems = null;
+            ArrayList<SystemModel> systems = null;
 
             if (cur.moveToFirst()) {
                 if (cur.isFirst()) {
@@ -427,10 +427,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         int cheatCount = cur.getInt(cur.getColumnIndex(GameSystemTable.SYS_SYSTEM_CHEATCOUNT));
                         String lastMod = cur.getString(cur.getColumnIndex(GameSystemTable.SYS_SYSTEM_LASTMOD));
 
-                        SystemPlatform sysPla = new SystemPlatform();
+                        SystemModel sysPla = new SystemModel();
                         sysPla.setSystemId(systemId);
                         sysPla.setSystemName(systemName);
-                        sysPla.setGameCount(gameCount);
+                        //sysPla.setGameCount(gameCount);
                         sysPla.setCheatCount(cheatCount);
 
                         // TODO TESTEN OB DAS SO KORREKT FUNKTIONIERT MIT DEM KONVERTIEREN
@@ -451,18 +451,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return null;
     }
 
-    public int updateSystemsAndCount(List<SystemPlatform> systemsAndCount) {
+    public int updateSystemsAndCount(List<SystemModel> systemsAndCount) {
         SQLiteDatabase db = this.getReadableDatabase();
 
         int insertCount = 0;
         deleteSystemsAndCount();
 
         try {
-            for (SystemPlatform sysPla : systemsAndCount) {
+            for (SystemModel sysPla : systemsAndCount) {
                 ContentValues initialValues = new ContentValues();
                 initialValues.put(GameSystemTable.SYS_SYSTEM_ID, sysPla.getSystemId());
                 initialValues.put(GameSystemTable.SYS_SYSTEM_NAME, sysPla.getSystemName());
-                initialValues.put(GameSystemTable.SYS_SYSTEM_GAMECOUNT, sysPla.getGameCount());
+                initialValues.put(GameSystemTable.SYS_SYSTEM_GAMECOUNT, sysPla.getGamesCount());
                 initialValues.put(GameSystemTable.SYS_SYSTEM_CHEATCOUNT, sysPla.getCheatCount());
                 initialValues.put(GameSystemTable.SYS_SYSTEM_LASTMOD, sysPla.getLastModTimeStamp());
 

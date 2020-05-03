@@ -7,8 +7,8 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cheatdatabase.R;
+import com.cheatdatabase.data.model.Cheat;
 import com.cheatdatabase.helpers.Konstanten;
-import com.cheatdatabase.model.Cheat;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

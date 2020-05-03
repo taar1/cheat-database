@@ -17,7 +17,7 @@ import com.cheatdatabase.R;
 import com.cheatdatabase.callbacks.GenericCallback;
 import com.cheatdatabase.data.RoomCheatDatabase;
 import com.cheatdatabase.data.dao.FavoriteCheatDao;
-import com.cheatdatabase.model.Cheat;
+import com.cheatdatabase.data.model.Cheat;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;

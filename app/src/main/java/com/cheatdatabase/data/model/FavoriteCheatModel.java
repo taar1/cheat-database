@@ -4,12 +4,6 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-import com.cheatdatabase.model.Cheat;
-import com.cheatdatabase.model.Game;
-import com.cheatdatabase.model.SystemPlatform;
-
-
-//@Entity(tableName = "favorites", indices = {@Index(value = "cheat_id", unique = true)})
 @Entity(tableName = "favorites")
 public class FavoriteCheatModel {
 
@@ -99,8 +93,8 @@ public class FavoriteCheatModel {
         return new Game(getGameId(), getGameName(), getSystemId(), getSystemName());
     }
 
-    public SystemPlatform toSystem() {
-        return new SystemPlatform(getSystemId(), getSystemName());
+    public SystemModel toSystem() {
+        return new SystemModel(getSystemId(), getSystemName());
     }
 }
 

@@ -26,9 +26,9 @@ import com.cheatdatabase.R;
 import com.cheatdatabase.activity.CheatsByMemberListActivity;
 import com.cheatdatabase.activity.MainActivity;
 import com.cheatdatabase.adapters.TopMembersListViewAdapter;
+import com.cheatdatabase.data.model.Member;
 import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.listeners.OnTopMemberListItemSelectedListener;
-import com.cheatdatabase.model.Member;
 
 import java.util.ArrayList;
 import java.util.List;

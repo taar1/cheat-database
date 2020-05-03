@@ -6,7 +6,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
-import com.cheatdatabase.model.Game;
+import com.cheatdatabase.data.model.Game;
 
 public class FavoritesCheatViewFragmentAdapter extends FragmentPagerAdapter {
     private final LinearLayout outerLayout;

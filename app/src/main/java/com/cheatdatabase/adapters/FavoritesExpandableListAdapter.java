@@ -11,10 +11,10 @@ import android.widget.TextView;
 
 import com.cheatdatabase.R;
 import com.cheatdatabase.data.dao.FavoriteCheatDao;
+import com.cheatdatabase.data.model.Game;
 import com.cheatdatabase.fragments.FavoriteGamesListFragment;
 import com.cheatdatabase.helpers.Group;
 import com.cheatdatabase.listeners.OnGameListItemSelectedListener;
-import com.cheatdatabase.model.Game;
 
 import needle.Needle;
 

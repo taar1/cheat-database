@@ -8,10 +8,10 @@ import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.Theme;
 import com.cheatdatabase.R;
+import com.cheatdatabase.data.model.Cheat;
+import com.cheatdatabase.data.model.Member;
 import com.cheatdatabase.events.CheatRatingFinishedEvent;
 import com.cheatdatabase.helpers.Tools;
-import com.cheatdatabase.model.Cheat;
-import com.cheatdatabase.model.Member;
 import com.cheatdatabase.rest.RestApi;
 import com.google.gson.JsonObject;
 

@@ -20,9 +20,9 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.cheatdatabase.CheatDatabaseApplication;
 import com.cheatdatabase.R;
+import com.cheatdatabase.data.model.Member;
 import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Reachability;
-import com.cheatdatabase.model.Member;
 import com.cheatdatabase.rest.RestApi;
 import com.google.gson.JsonObject;
 

@@ -8,8 +8,8 @@ import androidx.fragment.app.FragmentActivity
 import butterknife.BindView
 import butterknife.ButterKnife
 import com.cheatdatabase.R
+import com.cheatdatabase.data.model.Screenshot
 import com.cheatdatabase.helpers.Konstanten
-import com.cheatdatabase.model.Screenshot
 import com.squareup.picasso.Picasso
 
 class ImageGalleryCard(screenshot: Screenshot, activity: FragmentActivity) : CardView(activity) {

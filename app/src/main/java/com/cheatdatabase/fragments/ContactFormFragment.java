@@ -25,11 +25,11 @@ import androidx.fragment.app.Fragment;
 
 import com.cheatdatabase.R;
 import com.cheatdatabase.activity.MainActivity;
+import com.cheatdatabase.data.model.Member;
 import com.cheatdatabase.events.GenericEvent;
 import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.helpers.Tools;
-import com.cheatdatabase.model.Member;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.gson.Gson;
 

@@ -14,9 +14,9 @@ import butterknife.ButterKnife
 import com.cheatdatabase.R
 import com.cheatdatabase.activity.MainActivity
 import com.cheatdatabase.activity.MyUnpublishedCheatsListActivity
+import com.cheatdatabase.data.model.Member
 import com.cheatdatabase.helpers.Konstanten
 import com.cheatdatabase.helpers.Tools
-import com.cheatdatabase.model.Member
 import com.google.gson.Gson
 
 class MyCheatsFragment(val mainActivity: MainActivity, var settings: SharedPreferences) : Fragment() {

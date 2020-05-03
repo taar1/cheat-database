@@ -4,8 +4,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
-import com.cheatdatabase.model.Cheat;
-import com.cheatdatabase.model.Game;
+import com.cheatdatabase.data.model.Cheat;
+import com.cheatdatabase.data.model.Game;
 
 import java.util.List;
 

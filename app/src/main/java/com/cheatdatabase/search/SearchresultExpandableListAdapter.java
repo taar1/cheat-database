@@ -10,9 +10,9 @@ import android.widget.CheckedTextView;
 import android.widget.TextView;
 
 import com.cheatdatabase.R;
+import com.cheatdatabase.data.model.Game;
 import com.cheatdatabase.helpers.Group;
 import com.cheatdatabase.listeners.OnGameListItemSelectedListener;
-import com.cheatdatabase.model.Game;
 
 public class SearchresultExpandableListAdapter extends BaseExpandableListAdapter {
 

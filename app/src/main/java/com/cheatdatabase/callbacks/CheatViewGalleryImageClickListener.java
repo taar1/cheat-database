@@ -1,6 +1,6 @@
 package com.cheatdatabase.callbacks;
 
-import com.cheatdatabase.model.Screenshot;
+import com.cheatdatabase.data.model.Screenshot;
 
 public interface CheatViewGalleryImageClickListener {
 

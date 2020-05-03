@@ -1,6 +1,6 @@
 package com.cheatdatabase.events;
 
-import com.cheatdatabase.model.Cheat;
+import com.cheatdatabase.data.model.Cheat;
 
 public class CheatListRecyclerViewClickEvent {
 

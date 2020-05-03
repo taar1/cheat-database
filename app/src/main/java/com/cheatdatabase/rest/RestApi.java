@@ -1,11 +1,10 @@
 package com.cheatdatabase.rest;
 
+import com.cheatdatabase.data.model.Cheat;
+import com.cheatdatabase.data.model.ForumPost;
+import com.cheatdatabase.data.model.Game;
+import com.cheatdatabase.data.model.Member;
 import com.cheatdatabase.data.model.SystemModel;
-import com.cheatdatabase.model.Cheat;
-import com.cheatdatabase.model.ForumPost;
-import com.cheatdatabase.model.Game;
-import com.cheatdatabase.model.Member;
-import com.cheatdatabase.model.WelcomeMessage;
 import com.google.gson.JsonObject;
 
 import java.util.List;
@@ -206,7 +205,7 @@ public interface RestApi {
     /**
      * Gets all cheat from a game.
      *
-     * @param gameId Game ID
+     * @param gameId              Game ID
      * @param achievementsEnabled 1=yes, 0=no
      * @return List<Cheat>
      */
@@ -229,9 +228,6 @@ public interface RestApi {
 
     @GET("countGamesAndCheatsOfAllSystems.php")
     Call<List<SystemModel>> countGamesAndCheatsOfAllSystems();
-
-    @GET("getWelcomeMessage.php")
-    Call<WelcomeMessage> getWelcomeMessage();
 
     @FormUrlEncoded
     @POST("getForum.php")

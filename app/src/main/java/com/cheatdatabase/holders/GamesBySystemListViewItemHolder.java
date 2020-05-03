@@ -7,7 +7,7 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cheatdatabase.R;
-import com.cheatdatabase.model.Game;
+import com.cheatdatabase.data.model.Game;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

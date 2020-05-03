@@ -1,10 +1,9 @@
-package com.cheatdatabase.model;
+package com.cheatdatabase.data.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
 
-import com.cheatdatabase.data.model.FavoriteCheatModel;
 import com.cheatdatabase.helpers.Tools;
 import com.google.gson.annotations.SerializedName;
 
@@ -65,13 +64,13 @@ public class Cheat implements Parcelable {
     @SerializedName("game")
     private Game game;
     @SerializedName("system")
-    private SystemPlatform system;
+    private SystemModel system;
 
     @Inject
     public Cheat() {
     }
 
-    public Cheat(int cheatId, String cheatTitle, String cheatText, int languageId, boolean walkthroughFormat, Game game, SystemPlatform systemPlatform) {
+    public Cheat(int cheatId, String cheatTitle, String cheatText, int languageId, boolean walkthroughFormat, Game game, SystemModel systemPlatform) {
         this.cheatId = cheatId;
         this.cheatTitle = cheatTitle;
         this.cheatText = cheatText;
@@ -81,7 +80,7 @@ public class Cheat implements Parcelable {
         this.system = systemPlatform;
     }
 
-    protected Cheat(Parcel in) {
+    public Cheat(Parcel in) {
         cheatId = in.readInt();
         cheatTitle = in.readString();
         cheatText = in.readString();
@@ -90,7 +89,7 @@ public class Cheat implements Parcelable {
         screenshots = in.readByte() != 0;
         screenshotList = in.createTypedArrayList(Screenshot.CREATOR);
         game = in.readParcelable(Game.class.getClassLoader());
-        system = in.readParcelable(SystemPlatform.class.getClassLoader());
+        system = in.readParcelable(SystemModel.class.getClassLoader());
     }
 
 
@@ -116,7 +115,7 @@ public class Cheat implements Parcelable {
         return game;
     }
 
-    public SystemPlatform getSystem() {
+    public SystemModel getSystem() {
         return system;
     }
 
@@ -368,7 +367,7 @@ public class Cheat implements Parcelable {
         this.game = game;
     }
 
-    public void setSystem(SystemPlatform system) {
+    public void setSystem(SystemModel system) {
         this.system = system;
     }
 

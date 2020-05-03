@@ -1,6 +1,6 @@
 package com.cheatdatabase.helpers;
 
-import com.cheatdatabase.model.Game;
+import com.cheatdatabase.data.model.Game;
 
 import java.util.ArrayList;
 import java.util.List;

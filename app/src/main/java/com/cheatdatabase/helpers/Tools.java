@@ -21,10 +21,10 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.cheatdatabase.R;
 import com.cheatdatabase.callbacks.GenericCallback;
+import com.cheatdatabase.data.model.Cheat;
+import com.cheatdatabase.data.model.Game;
+import com.cheatdatabase.data.model.Screenshot;
 import com.cheatdatabase.data.model.SystemModel;
-import com.cheatdatabase.model.Cheat;
-import com.cheatdatabase.model.Game;
-import com.cheatdatabase.model.Screenshot;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 
