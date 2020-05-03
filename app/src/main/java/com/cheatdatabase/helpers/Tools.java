@@ -21,10 +21,10 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.cheatdatabase.R;
 import com.cheatdatabase.callbacks.GenericCallback;
+import com.cheatdatabase.data.model.SystemModel;
 import com.cheatdatabase.model.Cheat;
 import com.cheatdatabase.model.Game;
 import com.cheatdatabase.model.Screenshot;
-import com.cheatdatabase.model.SystemPlatform;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -342,8 +342,8 @@ public class Tools {
      * @param activity
      * @return
      */
-    public static List<SystemPlatform> getGameSystemsFromXml(Activity activity) {
-        ArrayList<SystemPlatform> platformArrayList = new ArrayList<>();
+    public static List<SystemModel> getGameSystemsFromXml(Activity activity) {
+        ArrayList<SystemModel> platformArrayList = new ArrayList<>();
 
         try {
             XmlResourceParser xrp = activity.getResources().getXml(R.xml.systems);
@@ -354,7 +354,7 @@ public class Tools {
                         String systemId = xrp.getAttributeValue(null, "sysId");
                         String systemName = xrp.getAttributeValue(null, "name");
 
-                        SystemPlatform gs = new SystemPlatform();
+                        SystemModel gs = new SystemModel();
                         gs.setSystemId(Integer.parseInt(systemId));
                         gs.setSystemName(systemName);
 
@@ -370,9 +370,9 @@ public class Tools {
         return platformArrayList;
     }
 
-    public SystemPlatform[] getSystems(Activity activity) {
-        List<SystemPlatform> al = getGameSystemsFromXml(activity);
-        SystemPlatform[] gsList = new SystemPlatform[al.size()];
+    public SystemModel[] getSystems(Activity activity) {
+        List<SystemModel> al = getGameSystemsFromXml(activity);
+        SystemModel[] gsList = new SystemModel[al.size()];
 
         for (int i = 0; i < al.size(); i++) {
             gsList[i] = al.get(i);
@@ -381,14 +381,14 @@ public class Tools {
         return gsList;
     }
 
-    public List<SystemPlatform> getSystemNamesFromXml(Activity activity) {
+    public List<SystemModel> getSystemNamesFromXml(Activity activity) {
         return getGameSystemsFromXml(activity);
     }
 
-    public static SystemPlatform getSystemObjectByName(Activity activity, String systemName) {
-        List<SystemPlatform> al = getGameSystemsFromXml(activity);
+    public static SystemModel getSystemObjectByName(Activity activity, String systemName) {
+        List<SystemModel> al = getGameSystemsFromXml(activity);
         for (int i = 0; i < al.size(); i++) {
-            SystemPlatform sys = al.get(i);
+            SystemModel sys = al.get(i);
             if (sys.getSystemName().equalsIgnoreCase(systemName)) {
                 return sys;
             }

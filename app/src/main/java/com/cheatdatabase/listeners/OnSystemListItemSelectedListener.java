@@ -1,7 +1,7 @@
 package com.cheatdatabase.listeners;
 
-import com.cheatdatabase.model.SystemPlatform;
+import com.cheatdatabase.data.model.SystemModel;
 
 public interface OnSystemListItemSelectedListener {
-    void onSystemListItemSelected(SystemPlatform systemPlatform);
+    void onSystemListItemSelected(SystemModel systemPlatform);
 }

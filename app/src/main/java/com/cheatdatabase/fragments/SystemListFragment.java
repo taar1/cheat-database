@@ -24,7 +24,6 @@ import com.cheatdatabase.data.dao.SystemDao;
 import com.cheatdatabase.data.model.SystemModel;
 import com.cheatdatabase.helpers.Tools;
 import com.cheatdatabase.listeners.OnSystemListItemSelectedListener;
-import com.cheatdatabase.model.SystemPlatform;
 import com.cheatdatabase.widgets.DividerDecoration;
 
 import java.util.ArrayList;
@@ -43,7 +42,7 @@ public class SystemListFragment extends Fragment implements OnSystemListItemSele
 
     boolean getSystemsAndCountsOnline = false;
 
-    private List<SystemPlatform> systemGameandCheatCounterList;
+    private List<SystemModel> systemGameandCheatCounterList;
     private SystemsRecycleListViewAdapter systemsRecycleListViewAdapter;
     private MainActivity mainActivity;
 
@@ -83,7 +82,7 @@ public class SystemListFragment extends Fragment implements OnSystemListItemSele
         return view;
     }
 
-    private void initAdapter(List<SystemPlatform> gameSystems) {
+    private void initAdapter(List<SystemModel> gameSystems) {
         systemsRecycleListViewAdapter = new SystemsRecycleListViewAdapter(this);
         systemsRecycleListViewAdapter.setSystemPlatforms(gameSystems);
         recyclerView.setAdapter(systemsRecycleListViewAdapter);
@@ -125,10 +124,10 @@ public class SystemListFragment extends Fragment implements OnSystemListItemSele
             Log.d(TAG, "getSystemsAndCountsFromWebservice: " + getSystemsAndCountsOnline);
 
             if (getSystemsAndCountsOnline) {
-                Call<List<SystemPlatform>> call = mainActivity.getRestApi().countGamesAndCheatsOfAllSystems();
-                call.enqueue(new Callback<List<SystemPlatform>>() {
+                Call<List<SystemModel>> call = mainActivity.getRestApi().countGamesAndCheatsOfAllSystems();
+                call.enqueue(new Callback<List<SystemModel>>() {
                     @Override
-                    public void onResponse(Call<List<SystemPlatform>> cheats, Response<List<SystemPlatform>> response) {
+                    public void onResponse(Call<List<SystemModel>> cheats, Response<List<SystemModel>> response) {
                         if (response.isSuccessful()) {
                             systemGameandCheatCounterList = response.body();
 
@@ -139,7 +138,7 @@ public class SystemListFragment extends Fragment implements OnSystemListItemSele
 
                             } else {
                                 ArrayList<SystemModel> newSystemModels = new ArrayList<>();
-                                for (SystemPlatform sp : systemGameandCheatCounterList) {
+                                for (SystemModel sp : systemGameandCheatCounterList) {
                                     newSystemModels.add(sp.toSystemModel());
                                 }
 
@@ -157,7 +156,7 @@ public class SystemListFragment extends Fragment implements OnSystemListItemSele
                     }
 
                     @Override
-                    public void onFailure(Call<List<SystemPlatform>> call, Throwable t) {
+                    public void onFailure(Call<List<SystemModel>> call, Throwable t) {
                         Log.e(TAG, "Load game and cheats counters failed: " + t.getLocalizedMessage());
 
                         updateUI();
@@ -166,7 +165,7 @@ public class SystemListFragment extends Fragment implements OnSystemListItemSele
             } else {
                 systemGameandCheatCounterList = new ArrayList<>();
                 for (SystemModel sm : systemModelValue) {
-                    systemGameandCheatCounterList.add(sm.toSystemPlatform());
+                    systemGameandCheatCounterList.add(sm.toSystemModel());
                 }
                 updateUI();
             }
@@ -189,7 +188,7 @@ public class SystemListFragment extends Fragment implements OnSystemListItemSele
     }
 
     @Override
-    public void onSystemListItemSelected(SystemPlatform systemPlatform) {
+    public void onSystemListItemSelected(SystemModel systemPlatform) {
         Intent explicitIntent = new Intent(getActivity(), GamesBySystemListActivity.class);
         explicitIntent.putExtra("systemObj", systemPlatform);
         startActivity(explicitIntent, ActivityOptions.makeSceneTransitionAnimation(getActivity()).toBundle());

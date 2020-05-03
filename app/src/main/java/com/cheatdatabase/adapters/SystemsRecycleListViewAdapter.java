@@ -7,9 +7,9 @@ import android.view.ViewGroup;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cheatdatabase.R;
+import com.cheatdatabase.data.model.SystemModel;
 import com.cheatdatabase.holders.SystemListViewItemHolder;
 import com.cheatdatabase.listeners.OnSystemListItemSelectedListener;
-import com.cheatdatabase.model.SystemPlatform;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -20,7 +20,7 @@ import needle.Needle;
 public class SystemsRecycleListViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private static final String TAG = SystemsRecycleListViewAdapter.class.getSimpleName();
 
-    private List<SystemPlatform> systemList;
+    private List<SystemModel> systemList;
     private OnSystemListItemSelectedListener listener;
 
 
@@ -49,7 +49,7 @@ public class SystemsRecycleListViewAdapter extends RecyclerView.Adapter<Recycler
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if (systemList != null && systemList.size() > 0) {
-            SystemPlatform system = systemList.get(position);
+            SystemModel system = systemList.get(position);
 
             SystemListViewItemHolder systemListViewItemHolder = (SystemListViewItemHolder) holder;
             systemListViewItemHolder.setSystemPlatform(system);
@@ -57,7 +57,7 @@ public class SystemsRecycleListViewAdapter extends RecyclerView.Adapter<Recycler
         }
     }
 
-    public void setSystemPlatforms(List<SystemPlatform> systemPlatforms) {
+    public void setSystemPlatforms(List<SystemModel> systemPlatforms) {
         systemList = systemPlatforms;
 
         if ((systemList != null) && (systemList.size() > 0)) {

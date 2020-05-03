@@ -1,10 +1,10 @@
 package com.cheatdatabase.rest;
 
+import com.cheatdatabase.data.model.SystemModel;
 import com.cheatdatabase.model.Cheat;
 import com.cheatdatabase.model.ForumPost;
 import com.cheatdatabase.model.Game;
 import com.cheatdatabase.model.Member;
-import com.cheatdatabase.model.SystemPlatform;
 import com.cheatdatabase.model.WelcomeMessage;
 import com.google.gson.JsonObject;
 
@@ -228,7 +228,7 @@ public interface RestApi {
     Call<List<Member>> getMemberTop20();
 
     @GET("countGamesAndCheatsOfAllSystems.php")
-    Call<List<SystemPlatform>> countGamesAndCheatsOfAllSystems();
+    Call<List<SystemModel>> countGamesAndCheatsOfAllSystems();
 
     @GET("getWelcomeMessage.php")
     Call<WelcomeMessage> getWelcomeMessage();

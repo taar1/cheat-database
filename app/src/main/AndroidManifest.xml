@@ -30,6 +30,7 @@
             android:label="@string/title_activity_main">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
 
                 <action android:name="android.intent.action.VIEW" />
@@ -40,7 +41,6 @@
                 android:name="android.app.default_searchable"
                 android:value="com.cheatdatabase.search.SearchResultsActivity" />
         </activity>
-
         <activity
             android:name=".search.SearchResultsActivity"
             android:label="@string/title_activity_search_result"
@@ -63,7 +63,6 @@
                 android:name="android.app.default_searchable"
                 android:value="com.cheatdatabase.search.SearchResultsActivity" />
         </activity>
-
         <activity android:name=".helpers.Helper" />
         <activity
             android:name=".activity.SubmitCheatActivity"
@@ -153,6 +152,17 @@
                 android:name="android.app.default_searchable"
                 android:value="com.cheatdatabase.search.SearchResultsActivity" />
         </activity>
+
+        <activity
+            android:name=".activity.MyUnpublishedCheatsListActivity"
+            android:label="@string/unpublished_cheats"
+            android:parentActivityName=".activity.MainActivity"
+            android:theme="@style/Theme.Navyblue">
+            <meta-data
+                android:name="android.app.default_searchable"
+                android:value="com.cheatdatabase.search.SearchResultsActivity" />
+        </activity>
+
         <activity
             android:name=".activity.AppPreferencesActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
@@ -188,9 +198,7 @@
             <intent-filter>
                 <action android:name="com.android.vending.INSTALL_REFERRER" />
             </intent-filter>
-        </receiver>
-
-        <!-- GOOGLE ANALYTICS -->
+        </receiver> <!-- GOOGLE ANALYTICS -->
         <!-- Enable background dispatching to improve delivery on non-Google Play devices -->
         <receiver
             android:name="com.google.android.gms.analytics.AnalyticsReceiver"
@@ -199,7 +207,6 @@
                 <action android:name="com.google.android.gms.analytics.ANALYTICS_DISPATCH" />
             </intent-filter>
         </receiver>
-
         <receiver
             android:name="com.google.android.gms.analytics.CampaignTrackingReceiver"
             android:enabled="true"
@@ -209,12 +216,10 @@
             </intent-filter>
         </receiver> <!-- Enable Google Play Store Campaign reports -->
         <service android:name="com.appbrain.AppBrainService" />
-
         <service
             android:name="com.google.android.gms.analytics.AnalyticsService"
             android:enabled="true"
             android:exported="false" />
     </application>
-
 
 </manifest>
