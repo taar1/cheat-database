@@ -385,8 +385,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             floatingActionButton.show();
         } else if (id == R.id.nav_members) {
 
-            TopMembersFragment topMembersFragment = TopMembersFragment.newInstance();
-            topMembersFragment.setMainActivity(this);
+            TopMembersFragment topMembersFragment = TopMembersFragment.newInstance(this);
 
             fragmentTransaction.addToBackStack(TopMembersFragment.class.getSimpleName());
             fragmentManager.beginTransaction().replace(R.id.content_frame, topMembersFragment, TopMembersFragment.class.getSimpleName()).commit();

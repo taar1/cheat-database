@@ -2,9 +2,6 @@ package com.cheatdatabase;
 
 import android.app.Activity;
 import android.app.Application;
-import android.content.Context;
-import android.graphics.Typeface;
-import android.net.ConnectivityManager;
 import android.os.Bundle;
 
 import com.cheatdatabase.activity.MainActivity;
@@ -32,11 +29,7 @@ import io.fabric.sdk.android.Fabric;
 
 public class CheatDatabaseApplication extends Application implements Application.ActivityLifecycleCallbacks {
 
-    private static final String TAG = CheatDatabaseApplication.class.getSimpleName();
-
     private NetworkComponent networkComponent;
-
-    private static Context sAppContext;
 
     static TreeMap<String, TreeMap<String, List<Game>>> gamesBySystemCached = new TreeMap<>();
     static TreeMap<String, TreeMap<String, List<Cheat>>> cheatsByGameCached = new TreeMap<>();
@@ -44,9 +37,7 @@ public class CheatDatabaseApplication extends Application implements Application
     private static CheatDatabaseApplication currentApplicationInstance;
     private Tracker googleAnalyticsTracker;
     private FirebaseAnalytics firebaseAnalytics;
-    private ConnectivityManager connectivityManager;
 
-    private boolean isActivityVisible = false;
 
     /**
      * Gets the default {@link Tracker} for this {@link CheatDatabaseApplication}.
@@ -75,13 +66,8 @@ public class CheatDatabaseApplication extends Application implements Application
         super.onCreate();
 
         networkComponent = DaggerNetworkComponent.builder().applicationModule(new ApplicationModule(this)).build();
-//        mainActivityComponent = DaggerMainActivityComponent.builder().mainActivityModule(new MainActivityModule(this)).build();
-
-        // Reference to the application graph that is used across the whole app
-//        appComponent = DaggerApplicationComponent.builder().build();
 
         currentApplicationInstance = this;
-        sAppContext = getApplicationContext();
 
         init();
     }
@@ -98,9 +84,6 @@ public class CheatDatabaseApplication extends Application implements Application
 
         // Set firebase logging
         firebaseAnalytics = FirebaseAnalytics.getInstance(getApplicationContext());
-
-        // Set the connectivity manager
-        connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 
         // Facebook Native Ads
         // Initialize the Audience Network SDK
@@ -125,7 +108,6 @@ public class CheatDatabaseApplication extends Application implements Application
     @Override
     public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
         if (activity.getClass().equals(MainActivity.class)) {
-            isActivityVisible = true;
         }
     }
 
@@ -142,14 +124,12 @@ public class CheatDatabaseApplication extends Application implements Application
     @Override
     public void onActivityResumed(Activity activity) {
         if (activity.getClass().equals(MainActivity.class)) {
-            isActivityVisible = true;
         }
     }
 
     @Override
     public void onActivityPaused(Activity activity) {
         if (activity.getClass().equals(MainActivity.class)) {
-            isActivityVisible = false;
             TrackingUtils.getInstance().reset();
         }
     }
@@ -169,24 +149,8 @@ public class CheatDatabaseApplication extends Application implements Application
 
     }
 
-    public static Context getAppContext() {
-        return sAppContext;
-    }
-
-    public static Typeface getFontBold() {
-        return Typeface.createFromAsset(getAppContext().getAssets(), Konstanten.FONT_BOLD);
-    }
-
-    public static Typeface getFontLight() {
-        return Typeface.createFromAsset(getAppContext().getAssets(), Konstanten.FONT_LIGHT);
-    }
-
-    public static Typeface getFontRegular() {
-        return Typeface.createFromAsset(getAppContext().getAssets(), Konstanten.FONT_REGULAR);
-    }
-
     /**
-     * Naming convention: systemId, "achievements/noAchievements", Game[]
+     * Naming convention: systemId, "achievements/noAchievements", List<Game>
      *
      * @return
      */
@@ -195,7 +159,7 @@ public class CheatDatabaseApplication extends Application implements Application
     }
 
     /**
-     * Naming convention: systemId, "achievements/noAchievements", Game[]
+     * Naming convention: systemId, "achievements/noAchievements", List<Game>
      *
      * @param gamesBySystemCachedx
      */
@@ -204,7 +168,7 @@ public class CheatDatabaseApplication extends Application implements Application
     }
 
     /**
-     * Naming convention: gameId, "achievements/noAchievements", Cheat[]
+     * Naming convention: gameId, "achievements/noAchievements", List<Cheat>
      *
      * @return
      */
@@ -213,7 +177,7 @@ public class CheatDatabaseApplication extends Application implements Application
     }
 
     /**
-     * Naming convention: gameId, "achievements/noAchievements", Cheat[]
+     * Naming convention: gameId, "achievements/noAchievements", List<Cheat>
      *
      * @param cheatsByGameCachedx
      */

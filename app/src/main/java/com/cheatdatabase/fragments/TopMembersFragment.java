@@ -70,19 +70,17 @@ public class TopMembersFragment extends Fragment implements OnTopMemberListItemS
     @Inject
     Retrofit retrofit;
 
-    private MainActivity mainActivity;
+    private MainActivity activity;
 
-    public TopMembersFragment() {
+    public TopMembersFragment(MainActivity activity) {
+        this.activity = activity;
+
         memberList = new ArrayList<>();
-        topMembersListViewAdapter = new TopMembersListViewAdapter(this);
+        topMembersListViewAdapter = new TopMembersListViewAdapter(this, activity);
     }
 
-    public static TopMembersFragment newInstance() {
-        return new TopMembersFragment();
-    }
-
-    public void setMainActivity(MainActivity mainActivity) {
-        this.mainActivity = mainActivity;
+    public static TopMembersFragment newInstance(MainActivity activity) {
+        return new TopMembersFragment(activity);
     }
 
     @Override
@@ -153,7 +151,7 @@ public class TopMembersFragment extends Fragment implements OnTopMemberListItemS
             mSwipeRefreshLayout.setRefreshing(true);
         }
 
-        Call<List<Member>> call = mainActivity.getRestApi().getMemberTop20();
+        Call<List<Member>> call = activity.getRestApi().getMemberTop20();
         call.enqueue(new Callback<List<Member>>() {
             @Override
             public void onResponse(Call<List<Member>> members, Response<List<Member>> response) {
