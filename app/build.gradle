@@ -145,7 +145,7 @@ dependencies {
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.1'
     kapt "com.jakewharton:butterknife-compiler:10.2.1"
     implementation 'de.hdodenhof:circleimageview:3.1.0'
-    api 'com.appbrain:appbrain-sdk:15.00'
+    api 'com.appbrain:appbrain-sdk:16.02'
     implementation 'com.github.stfalcon:stfalcon-imageviewer:0.1.0'
 
     // Dagger Dependencies
