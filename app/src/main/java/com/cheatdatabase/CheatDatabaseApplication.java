@@ -47,20 +47,6 @@ public class CheatDatabaseApplication extends Application implements Application
     private ConnectivityManager connectivityManager;
 
     private boolean isActivityVisible = false;
-//    private ApplicationComponent appComponent;
-
-
-//    @Override
-//    protected AndroidInjector<? extends DaggerApplication> applicationInjector() {
-////        return DaggerAppComponent.builder().build();
-//        return null;
-//    }
-//
-////    @Override
-////    protected AndroidInjector<? extends DaggerApplication> applicationInjector() {
-////        // TODO FIXME ???
-////        return null;
-////    }
 
     /**
      * Gets the default {@link Tracker} for this {@link CheatDatabaseApplication}.
