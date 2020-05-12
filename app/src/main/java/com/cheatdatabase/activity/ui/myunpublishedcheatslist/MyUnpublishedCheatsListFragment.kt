@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import com.cheatdatabase.R
 import com.cheatdatabase.data.network.MyUnpublishedCheatsNetworkDataSourceImpl
 import com.cheatdatabase.rest.KotlinRestApi
@@ -30,7 +30,7 @@ class MyUnpublishedCheatsListFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(MyUnpublishedCheatsListViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(MyUnpublishedCheatsListViewModel::class.java)
         // TODO: Use the ViewModel
 
         val apiService = KotlinRestApi()

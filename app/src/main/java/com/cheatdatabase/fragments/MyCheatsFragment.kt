@@ -13,7 +13,7 @@ import butterknife.BindView
 import butterknife.ButterKnife
 import com.cheatdatabase.R
 import com.cheatdatabase.activity.MainActivity
-import com.cheatdatabase.activity.MyUnpublishedCheatsListActivity
+import com.cheatdatabase.activity.ui.mvvmexample.MvvmTestActivity
 import com.cheatdatabase.data.model.Member
 import com.cheatdatabase.helpers.Konstanten
 import com.cheatdatabase.helpers.Tools
@@ -43,7 +43,8 @@ class MyCheatsFragment(val mainActivity: MainActivity, var settings: SharedPrefe
         member = Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member::class.java)
 
         unpublishedCheatsCard?.setOnClickListener {
-            onCardClicked(Intent(mainActivity, MyUnpublishedCheatsListActivity::class.java))
+//            onCardClicked(Intent(mainActivity, MyUnpublishedCheatsListActivity::class.java))
+            onCardClicked(Intent(mainActivity, MvvmTestActivity::class.java))
         }
 
         publishedCheatsCard?.setOnClickListener {

@@ -152,7 +152,6 @@
                 android:name="android.app.default_searchable"
                 android:value="com.cheatdatabase.search.SearchResultsActivity" />
         </activity>
-
         <activity
             android:name=".activity.MyUnpublishedCheatsListActivity"
             android:label="@string/unpublished_cheats"
@@ -162,7 +161,6 @@
                 android:name="android.app.default_searchable"
                 android:value="com.cheatdatabase.search.SearchResultsActivity" />
         </activity>
-
         <activity
             android:name=".activity.AppPreferencesActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
@@ -174,6 +172,7 @@
                 android:value="com.cheatdatabase.activity.MainActivity" />
         </activity>
         <activity android:name="com.appbrain.AppBrainActivity" />
+        <activity android:name="com.cheatdatabase.activity.ui.mvvmexample.MvvmTestActivity"></activity>
 
         <meta-data
             android:name="com.google.android.gms.version"

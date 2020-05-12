@@ -10,6 +10,14 @@ class MyUnpublishedCheatsNetworkDataSourceImpl(private val kotlinRestApi: Kotlin
 
     private val _downloadCheatList = MutableLiveData<List<Cheat>>()
 
+
+    // TODO dieses MVVM tutorial anschauen: https://www.youtube.com/watch?v=JLwW5HivZg4
+    // TODO dieses MVVM tutorial anschauen: https://www.youtube.com/watch?v=JLwW5HivZg4
+    // TODO dieses MVVM tutorial anschauen: https://www.youtube.com/watch?v=JLwW5HivZg4
+    // TODO dieses MVVM tutorial anschauen: https://www.youtube.com/watch?v=JLwW5HivZg4
+    // TODO dieses MVVM tutorial anschauen: https://www.youtube.com/watch?v=JLwW5HivZg4
+
+
     override val downloadCheatList: LiveData<List<Cheat>>
         get() = _downloadCheatList
 
