@@ -1,4 +1,4 @@
-package com.cheatdatabase.cheat_detail_view;
+package com.cheatdatabase.cheatdetailview;
 
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -8,16 +8,15 @@ import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.webkit.WebView;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -28,38 +27,29 @@ import com.afollestad.materialdialogs.Theme;
 import com.cheatdatabase.R;
 import com.cheatdatabase.adapters.CheatViewGalleryListAdapter;
 import com.cheatdatabase.callbacks.CheatViewGalleryImageClickListener;
+import com.cheatdatabase.data.helper.CheatArrayHolder;
 import com.cheatdatabase.data.model.Cheat;
-import com.cheatdatabase.data.model.Game;
 import com.cheatdatabase.data.model.Member;
 import com.cheatdatabase.data.model.Screenshot;
 import com.cheatdatabase.helpers.Konstanten;
-import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.helpers.Tools;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.squareup.picasso.Picasso;
 import com.stfalcon.imageviewer.StfalconImageViewer;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-/**
- * Cheat Detail View Fragment.
- *
- * @author Dominik Erbsland
- * @version 1.1
- */
-public class CheatViewFragment extends Fragment implements CheatViewGalleryImageClickListener {
-    private static final String TAG = "CheatViewFragment";
+public class MemberCheatViewFragment extends Fragment implements CheatViewGalleryImageClickListener {
+    private static final String TAG = MemberCheatViewFragment.class.getSimpleName();
 
-    private LinearLayout outerLayout;
+    LinearLayout linearLayout;
 
     @BindView(R.id.table_cheat_list_main)
     TableLayout mainTable;
@@ -75,28 +65,26 @@ public class CheatViewFragment extends Fragment implements CheatViewGalleryImage
     RecyclerView galleryRecyclerView;
     @BindView(R.id.progress_bar)
     ProgressBar progressBar;
-    @BindView(R.id.reload)
-    ImageView reloadView;
 
     private Cheat cheatObj;
-    private List<Cheat> cheatList;
-    private Game game;
+    private List<Cheat> cheats;
     private int offset;
     private Member member;
+
     private SharedPreferences settings;
     private Editor editor;
+
     private Typeface latoFontLight;
-    private CheatViewPageIndicatorActivity cheatViewPageIndicatorActivity;
+    private MemberCheatViewPageIndicator cheatViewPageIndicatorActivity;
 
-    public CheatViewFragment() {
-        cheatList = new ArrayList<>();
-    }
+    private LinearLayout outerLayout;
 
-    public static CheatViewFragment newInstance(Game gameObj, int offset) {
-        CheatViewFragment cheatViewFragment = new CheatViewFragment();
-        cheatViewFragment.game = gameObj;
-        cheatViewFragment.offset = offset;
-        return cheatViewFragment;
+    public static MemberCheatViewFragment newInstance(List<Cheat> cheats, int offset, LinearLayout outerLayout) {
+        MemberCheatViewFragment fragment = new MemberCheatViewFragment();
+        fragment.cheats = cheats;
+        fragment.offset = offset;
+        fragment.outerLayout = outerLayout;
+        return fragment;
     }
 
     @Override
@@ -105,75 +93,49 @@ public class CheatViewFragment extends Fragment implements CheatViewGalleryImage
 
         // If the screen has been rotated we re-set the values
         if (savedInstanceState != null) {
-            game = savedInstanceState.getParcelable("game");
+            CheatArrayHolder cheatArrayHolder = savedInstanceState.getParcelable("cheatArrayHolder");
+            cheats = cheatArrayHolder.getCheatList();
             offset = savedInstanceState.getInt("offset");
         }
 
-        init();
-    }
-
-    private void init() {
-        cheatViewPageIndicatorActivity = (CheatViewPageIndicatorActivity) getActivity();
+        cheatViewPageIndicatorActivity = (MemberCheatViewPageIndicator) getActivity();
 
         latoFontLight = Tools.getFont(cheatViewPageIndicatorActivity.getAssets(), Konstanten.FONT_LIGHT);
 
-        settings = getActivity().getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
+        settings = cheatViewPageIndicatorActivity.getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
         editor = settings.edit();
-
-        member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
     }
-
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putParcelable("game", game);
+        outState.putParcelable("cheatArrayHolder", new CheatArrayHolder(cheats));
         outState.putInt("offset", offset);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        outerLayout = (LinearLayout) inflater.inflate(R.layout.fragment_cheat_detail_view, container, false);
-        ButterKnife.bind(this, outerLayout);
+        linearLayout = (LinearLayout) inflater.inflate(R.layout.fragment_member_cheat_detail, container, false);
+        ButterKnife.bind(this, linearLayout);
 
-        if (cheatList != null && game != null) {
-            cheatList = game.getCheatList();
-            cheatObj = cheatList.get(offset);
+        member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
+        cheatObj = cheats.get(offset);
 
-            tvCheatTitle.setText(cheatObj.getCheatTitle());
+        getCheatRating();
 
-            tvTextBeforeTable.setVisibility(View.VISIBLE);
-            tvSwipeHorizontallyInfoText.setVisibility(View.INVISIBLE);
-            progressBar.setVisibility(View.INVISIBLE);
+        tvTextBeforeTable.setVisibility(View.VISIBLE);
+        tvCheatTitle.setText(cheatObj.getCheatTitle());
+        tvSwipeHorizontallyInfoText.setVisibility(View.INVISIBLE);
+        progressBar.setVisibility(View.INVISIBLE);
 
-            if (Reachability.reachability.isReachable) {
-                getOnlineContent();
-            } else {
-                reloadView.setVisibility(View.VISIBLE);
-                Toast.makeText(cheatViewPageIndicatorActivity, R.string.no_internet, Toast.LENGTH_SHORT).show();
-            }
 
-            countForumPosts();
-        } else {
-            Tools.showSnackbar(outerLayout, getString(R.string.err_data_not_accessible));
+        for (Screenshot s : cheatObj.getScreenshotList()) {
+            Log.d(TAG, "XXXXX onCreateView: screenshot: " + s.getFullPath());
         }
 
-        return outerLayout;
-    }
-
-    @OnClick(R.id.reload)
-    void clickReload() {
-        if (Reachability.reachability.isReachable) {
-            getOnlineContent();
-        } else {
-            Toast.makeText(cheatViewPageIndicatorActivity, R.string.no_internet, Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    private void getOnlineContent() {
-        reloadView.setVisibility(View.GONE);
-
-        // Get thumbnails if there are screenshots.
+        /**
+         * Get thumbnails if there are screenshots.
+         */
         if (cheatObj.hasScreenshots()) {
             CheatViewGalleryListAdapter cheatViewGalleryListAdapter = new CheatViewGalleryListAdapter();
             cheatViewGalleryListAdapter.setScreenshotList(cheatObj.getScreenshotList());
@@ -183,31 +145,35 @@ public class CheatViewFragment extends Fragment implements CheatViewGalleryImage
             RecyclerView.LayoutManager gridLayoutManager = new GridLayoutManager(cheatViewPageIndicatorActivity, 2, GridLayoutManager.HORIZONTAL, false);
             galleryRecyclerView.setLayoutManager(gridLayoutManager);
 
-            if ((cheatObj.getScreenshotList() == null) || (cheatObj.getScreenshotList().size() <= 3)) {
+            if ((cheatObj.getScreenshotList() == null) || (cheatObj.getScreenshotList().size() < 3)) {
                 tvSwipeHorizontallyInfoText.setVisibility(View.GONE);
             } else {
                 tvSwipeHorizontallyInfoText.setVisibility(View.VISIBLE);
             }
 
+            progressBar.setVisibility(View.VISIBLE);
         } else {
             tvSwipeHorizontallyInfoText.setVisibility(View.GONE);
             galleryRecyclerView.setVisibility(View.GONE);
         }
 
         /**
-         * If the user came from the search results the cheat-text might not be
-         * complete (trimmed for the search results) and therefore has to be
-         * re-fetched in a background process.
+         * If the user came from the search results the cheat-text might not
+         * be complete (trimmed for the search results) and therefore has to
+         * be re-fetched in a background process.
          */
         if ((cheatObj.getCheatText() == null) || (cheatObj.getCheatText().length() < 10)) {
             progressBar.setVisibility(View.VISIBLE);
             getCheatBody();
         } else {
+            progressBar.setVisibility(View.GONE);
             populateView();
         }
 
         editor.putString("cheat" + offset, new Gson().toJson(cheatObj));
         editor.commit();
+
+        return linearLayout;
     }
 
     private void populateView() {
@@ -227,10 +193,10 @@ public class CheatViewFragment extends Fragment implements CheatViewGalleryImage
         mainTable.setVisibility(View.VISIBLE);
         mainTable.setHorizontalScrollBarEnabled(true);
 
-        // Cheat text before the table
-        String[] textBeforeTable = null;
+        // Text before the table
+        String[] textBeforeTable;
 
-        // Some cheats start right with a table
+        // Einige tabellarische Cheats beginnen direkt mit der Tabelle
         if (cheatObj.getCheatText().startsWith("<br><table")) {
             tvTextBeforeTable.setVisibility(View.GONE);
         } else {
@@ -291,7 +257,6 @@ public class CheatViewFragment extends Fragment implements CheatViewGalleryImage
             trTd.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
 
             TextView tvFirstTdCol = new TextView(cheatViewPageIndicatorActivity);
-            tvFirstTdCol.setSingleLine(false);
             tvFirstTdCol.setText(firstTdColumn);
             tvFirstTdCol.setPadding(1, 1, 10, 1);
             tvFirstTdCol.setMinimumWidth(Konstanten.TABLE_ROW_MINIMUM_WIDTH);
@@ -312,25 +277,24 @@ public class CheatViewFragment extends Fragment implements CheatViewGalleryImage
             mainTable.addView(trTd, new TableLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
         }
 
-        mainTable.setOnClickListener(view -> displayTableInWebview());
-
-        progressBar.setVisibility(View.GONE);
+        mainTable.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                displayTableInWebview();
+            }
+        });
     }
 
     private void fillSimpleContent() {
         mainTable.setVisibility(View.GONE);
         tvTextBeforeTable.setVisibility(View.GONE);
 
-        if (cheatObj != null) {
-            CharSequence styledText = Html.fromHtml(cheatObj.getCheatText());
-            tvCheatText.setText(styledText);
+        CharSequence styledText = Html.fromHtml(cheatObj.getCheatText());
+        tvCheatText.setText(styledText);
 
-            if (cheatObj.isWalkthroughFormat()) {
-                tvCheatText.setTextAppearance(getContext(), R.style.WalkthroughText);
-            }
+        if (cheatObj.isWalkthroughFormat()) {
+            tvCheatText.setTextAppearance(cheatViewPageIndicatorActivity, R.style.WalkthroughText);
         }
-
-        progressBar.setVisibility(View.GONE);
     }
 
     private void displayTableInWebview() {
@@ -348,45 +312,54 @@ public class CheatViewFragment extends Fragment implements CheatViewGalleryImage
     }
 
     private void getCheatBody() {
-        progressBar.setVisibility(View.VISIBLE);
         Call<Cheat> call = cheatViewPageIndicatorActivity.getRestApi().getCheatById(cheatObj.getCheatId());
         call.enqueue(new Callback<Cheat>() {
             @Override
             public void onResponse(Call<Cheat> metaInfo, Response<Cheat> response) {
-                setCheatText(response.body());
+                updateUI(response.body());
             }
 
             @Override
             public void onFailure(Call<Cheat> call, Throwable e) {
+                Log.e(TAG, "getCheatBody onFailure: " + e.getLocalizedMessage());
                 Tools.showSnackbar(outerLayout, getContext().getString(R.string.err_somethings_wrong), 5000);
             }
         });
     }
 
-    private void countForumPosts() {
-        Call<JsonObject> call = cheatViewPageIndicatorActivity.getRestApi().countForumPosts(cheatObj.getCheatId());
-        call.enqueue(new Callback<JsonObject>() {
-            @Override
-            public void onResponse(Call<JsonObject> forum, Response<JsonObject> response) {
-                JsonObject forumPostsCount = response.body();
-                int forumCount = forumPostsCount.get("forumCount").getAsInt();
-                cheatObj.setForumCount(forumCount);
-            }
+    private void updateUI(Cheat cheat) {
+        if (cheat.getStyle() == Konstanten.CHEAT_TEXT_FORMAT_WALKTHROUGH) {
+            cheatObj.setWalkthroughFormat(true);
+        }
+        progressBar.setVisibility(View.GONE);
+        cheatObj.setCheatText(cheat.getCheatText());
 
-            @Override
-            public void onFailure(Call<JsonObject> call, Throwable e) {
-                // Do nothing
-            }
-        });
+        populateView();
     }
 
-    private void setCheatText(Cheat fullCheatText) {
-        if (fullCheatText != null && fullCheatText.getCheatText().length() > 1) {
-            cheatObj.setCheatText(fullCheatText.getCheatText());
+    private void getCheatRating() {
+        if (member != null) {
+            Call<JsonObject> call = cheatViewPageIndicatorActivity.getRestApi().getMemberRatingByCheatId(member.getMid(), cheatObj.getCheatId());
+            call.enqueue(new Callback<JsonObject>() {
+                @Override
+                public void onResponse(Call<JsonObject> ratingInfo, Response<JsonObject> response) {
+                    JsonObject ratingJsonObj = response.body();
+                    Log.d(TAG, "getCheatRating SUCCESS: " + ratingJsonObj.get("rating").getAsFloat());
 
-            populateView();
+                    float cheatRating = ratingJsonObj.get("rating").getAsFloat();
+                    if (cheatRating > 0) {
+                        cheatViewPageIndicatorActivity.setRating(offset, cheatRating);
+                    }
+
+                }
+
+                @Override
+                public void onFailure(Call<JsonObject> call, Throwable e) {
+                }
+            });
         }
     }
+
 
     @Override
     public void onScreenshotClicked(Screenshot screenshot, int position) {
@@ -395,8 +368,9 @@ public class CheatViewFragment extends Fragment implements CheatViewGalleryImage
 
 //    @Override
 //    public void onScreenshotUrlClicked(String screenshot, int position) {
-//        new StfalconImageViewer.Builder<>(cheatViewPageIndicatorActivity, cheatObj.getScreenshotUrlList(),
-//                (imageView, image) -> Picasso.get().load(image).placeholder(R.drawable.image_placeholder).into(imageView)).withStartPosition(position).show();
-//        // TODO FIXME can either be deleted later on if not used or changing the listener to this method and delete the above method....
+    // TODO FIXME can either be deleted later on if not used or changing the listener to this method and delete the above method....
+    // TODO FIXME can either be deleted later on if not used or changing the listener to this method and delete the above method....
+    // TODO FIXME can either be deleted later on if not used or changing the listener to this method and delete the above method....
+    // TODO FIXME can either be deleted later on if not used or changing the listener to this method and delete the above method....
 //    }
 }

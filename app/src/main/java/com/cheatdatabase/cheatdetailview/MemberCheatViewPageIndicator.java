@@ -1,6 +1,5 @@
-package com.cheatdatabase.cheat_detail_view;
+package com.cheatdatabase.cheatdetailview;
 
-import android.app.AlertDialog;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
@@ -45,6 +44,7 @@ import com.facebook.ads.AdSize;
 import com.facebook.ads.AdView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import net.lucode.hackware.magicindicator.MagicIndicator;
 import net.lucode.hackware.magicindicator.ViewPagerHelper;
@@ -60,7 +60,8 @@ import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.Simple
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
-import java.util.ArrayList;
+import java.lang.reflect.Type;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -69,17 +70,13 @@ import butterknife.ButterKnife;
 import retrofit2.Retrofit;
 
 /**
- * Swipe through cheats horizontally with this CheatViewPageIndicatorActivity.
+ * Horizontal sliding through cheats submitted by members.
  *
  * @author Dominik Erbsland
- * @version 1.0
  */
-public class CheatViewPageIndicatorActivity extends AppCompatActivity implements GenericCallback {
+public class MemberCheatViewPageIndicator extends AppCompatActivity implements GenericCallback {
 
-    private static final String TAG = CheatViewPageIndicatorActivity.class.getSimpleName();
-    public static final int FORUM_POST_ADDED_REQUEST = 176;
-
-    private Intent intent;
+    private final String TAG = MemberCheatViewPageIndicator.class.getName();
 
     @BindView(R.id.outer_layout)
     LinearLayout outerLayout;
@@ -88,16 +85,16 @@ public class CheatViewPageIndicatorActivity extends AppCompatActivity implements
     @BindView(R.id.banner_container)
     LinearLayout facebookBanner;
 
+    private Intent intent;
     private View viewLayout;
     private int pageSelected;
-    private Game gameObj;
-    private ArrayList<Cheat> cheatArray;
+    private List<Cheat> cheatList;
     private Cheat visibleCheat;
-    private SharedPreferences settings;
+    private Game gameObj;
+    private SharedPreferences sharedPreferences;
     private Editor editor;
     private Member member;
-    public AlertDialog.Builder builder;
-    private CheatViewFragmentAdapter mAdapter;
+    private MemberCheatViewFragmentAdapter memberCheatViewFragmentAdapter;
     private ViewPager mPager;
     private int activePage;
     private ShareActionProvider mShare;
@@ -114,57 +111,54 @@ public class CheatViewPageIndicatorActivity extends AppCompatActivity implements
         intent = getIntent();
 
         LayoutInflater inflater = LayoutInflater.from(this);
-        viewLayout = inflater.inflate(intent.getIntExtra("layoutResourceId", R.layout.activity_cheatview_pager), null);
+        viewLayout = inflater.inflate(R.layout.activity_cheatview_pager, null);
         setContentView(viewLayout);
         ButterKnife.bind(this);
 
         init();
 
-        // Bei grossen Game Objekten (wie Pokemon Fire Red) muss das Objekt
-        // aus dem SharedPreferences geholt werden (ansonsten Absturz)
-        gameObj = intent.getParcelableExtra("gameObj");
-        if (gameObj == null) {
-            gameObj = new Gson().fromJson(settings.getString(Konstanten.PREFERENCES_TEMP_GAME_OBJECT_VIEW, null), Game.class);
+        Type type = new TypeToken<List<Cheat>>() {
+        }.getType();
+        cheatList = new Gson().fromJson(sharedPreferences.getString(Konstanten.PREFERENCES_TEMP_CHEAT_ARRAY_OBJECT_VIEW, null), type);
+
+        if ((cheatList == null) || (cheatList.size() < 1)) {
+            cheatList = intent.getParcelableArrayListExtra("cheatList");
         }
 
-        editor.putString(Konstanten.PREFERENCES_TEMP_GAME_OBJECT_VIEW, new Gson().toJson(gameObj));
-        editor.apply();
-
-        pageSelected = intent.getIntExtra("selectedPage", 0);
-        activePage = pageSelected;
-
-        if (gameObj == null) {
-            finish();
+        if ((cheatList == null) || (cheatList.size() < 1)) {
+            handleNullPointerException();
         } else {
-            for (Cheat cheat : gameObj.getCheatList()) {
-                if (cheatArray == null) {
-                    cheatArray = new ArrayList();
-                }
-                cheatArray.add(cheat);
+            pageSelected = intent.getIntExtra("selectedPage", 0);
+            activePage = pageSelected;
+
+            try {
+                visibleCheat = cheatList.get(pageSelected);
+
+                gameObj = visibleCheat.getGame();
+                gameObj.setSystemId(visibleCheat.getSystem().getSystemId());
+                gameObj.setSystemName(visibleCheat.getSystem().getSystemName());
+
+                getSupportActionBar().setTitle(visibleCheat.getGame().getGameName());
+                getSupportActionBar().setSubtitle(visibleCheat.getSystem().getSystemName());
+
+                initialisePaging();
+            } catch (NullPointerException e) {
+                handleNullPointerException();
             }
-
-            if ((cheatArray == null) || (cheatArray.size() < 1)) {
-                onBackPressed();
-            }
-            visibleCheat = cheatArray.get(pageSelected);
-
-            getSupportActionBar().setTitle((gameObj.getGameName() != null ? gameObj.getGameName() : ""));
-            getSupportActionBar().setSubtitle((gameObj.getSystemName() != null ? gameObj.getSystemName() : ""));
-
-            initialisePaging();
         }
     }
 
-    private void init() {
-        if (!Reachability.isRegistered()) {
-            Reachability.registerReachability(this);
-        }
+    private void handleNullPointerException() {
+        Toast.makeText(this, R.string.err_somethings_wrong, Toast.LENGTH_LONG).show();
+        finish();
+    }
 
+    private void init() {
         ((CheatDatabaseApplication) getApplication()).getNetworkComponent().inject(this);
         restApi = retrofit.create(RestApi.class);
 
-        settings = getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
-        editor = settings.edit();
+        sharedPreferences = getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
+        editor = sharedPreferences.edit();
 
         mToolbar = Tools.initToolbarBase(this, mToolbar);
 
@@ -172,35 +166,41 @@ public class CheatViewPageIndicatorActivity extends AppCompatActivity implements
         facebookBanner.addView(adView);
         adView.loadAd();
 
-        member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
-
-        cheatArray = new ArrayList();
+        member = new Gson().fromJson(sharedPreferences.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
     }
 
     private void initialisePaging() {
         try {
-            mAdapter = new CheatViewFragmentAdapter(getSupportFragmentManager(), gameObj, cheatArray);
+            memberCheatViewFragmentAdapter = new MemberCheatViewFragmentAdapter(getSupportFragmentManager(), cheatList, outerLayout);
+
             mPager = viewLayout.findViewById(R.id.pager);
-            mPager.setAdapter(mAdapter);
+            mPager.setAdapter(memberCheatViewFragmentAdapter);
             mPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
                 @Override
                 public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
                 }
 
                 @Override
                 public void onPageSelected(int position) {
-                    // Save the last selected page
+                    // Save selected page
                     editor.putInt(Konstanten.PREFERENCES_PAGE_SELECTED, position);
                     editor.apply();
 
                     activePage = position;
 
                     try {
-                        visibleCheat = cheatArray.get(position);
+                        visibleCheat = cheatList.get(position);
                         invalidateOptionsMenu();
+
+                        gameObj = visibleCheat.getGame();
+                        gameObj.setSystemId(visibleCheat.getSystem().getSystemId());
+                        gameObj.setSystemName(visibleCheat.getSystem().getSystemName());
+
+                        getSupportActionBar().setTitle(visibleCheat.getGame().getGameName());
+                        getSupportActionBar().setSubtitle(visibleCheat.getSystem().getSystemName());
                     } catch (Exception e) {
-                        Toast.makeText(CheatViewPageIndicatorActivity.this, R.string.err_somethings_wrong, Toast.LENGTH_SHORT).show();
+                        Log.e(TAG, e.getMessage());
+                        Toast.makeText(MemberCheatViewPageIndicator.this, R.string.err_somethings_wrong, Toast.LENGTH_SHORT).show();
                     }
                 }
 
@@ -216,18 +216,17 @@ public class CheatViewPageIndicatorActivity extends AppCompatActivity implements
             commonNavigator.setAdapter(new CommonNavigatorAdapter() {
                 @Override
                 public int getCount() {
-                    return cheatArray == null ? 0 : cheatArray.size();
+                    return cheatList == null ? 0 : cheatList.size();
                 }
 
                 @Override
                 public IPagerTitleView getTitleView(Context context, final int index) {
                     SimplePagerTitleView clipPagerTitleView = new ColorTransitionPagerTitleView(context);
-                    clipPagerTitleView.setText(cheatArray.get(index).getCheatTitle());
+                    clipPagerTitleView.setText(cheatList.get(index).getCheatTitle());
                     clipPagerTitleView.setNormalColor(Color.parseColor("#88ffffff")); // White transparent
                     clipPagerTitleView.setSelectedColor(Color.WHITE);
                     clipPagerTitleView.setOnClickListener(v -> mPager.setCurrentItem(index));
                     return clipPagerTitleView;
-
                 }
 
                 @Override
@@ -245,9 +244,9 @@ public class CheatViewPageIndicatorActivity extends AppCompatActivity implements
 
             FloatingActionButton fa = viewLayout.findViewById(R.id.add_new_cheat_button);
             fa.setOnClickListener(v -> {
-                Intent explicitIntent = new Intent(CheatViewPageIndicatorActivity.this, SubmitCheatActivity.class);
-                explicitIntent.putExtra("gameObj", gameObj);
-                startActivity(explicitIntent);
+                Intent intent = new Intent(MemberCheatViewPageIndicator.this, SubmitCheatActivity.class);
+                intent.putExtra("gameObj", gameObj);
+                startActivity(intent);
             });
         } catch (Exception e2) {
             Log.e(TAG, "ERROR: " + getPackageName() + "/" + getTitle() + "... " + e2.getMessage());
@@ -263,16 +262,13 @@ public class CheatViewPageIndicatorActivity extends AppCompatActivity implements
             int intentReturnCode = data.getIntExtra("result", Konstanten.LOGIN_REGISTER_FAIL_RETURN_CODE);
 
             if (requestCode == Konstanten.LOGIN_REGISTER_OK_RETURN_CODE) {
-                member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
+                member = new Gson().fromJson(sharedPreferences.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
                 invalidateOptionsMenu();
                 if ((member != null) && intentReturnCode == Konstanten.REGISTER_SUCCESS_RETURN_CODE) {
-                    Toast.makeText(CheatViewPageIndicatorActivity.this, R.string.register_thanks, Toast.LENGTH_LONG).show();
+                    Toast.makeText(MemberCheatViewPageIndicator.this, R.string.register_thanks, Toast.LENGTH_LONG).show();
                 } else if ((member != null) && intentReturnCode == Konstanten.LOGIN_SUCCESS_RETURN_CODE) {
-                    Toast.makeText(CheatViewPageIndicatorActivity.this, R.string.login_ok, Toast.LENGTH_LONG).show();
+                    Toast.makeText(MemberCheatViewPageIndicator.this, R.string.login_ok, Toast.LENGTH_LONG).show();
                 }
-            } else if (requestCode == FORUM_POST_ADDED_REQUEST) {
-                int newForumCount = data.getIntExtra("newForumCount", visibleCheat.getForumCount());
-                visibleCheat.setForumCount(newForumCount);
             }
         }
     }
@@ -291,13 +287,6 @@ public class CheatViewPageIndicatorActivity extends AppCompatActivity implements
             getMenuInflater().inflate(R.menu.signin_menu, menu);
         }
 
-        String postOrPosts = getString(R.string.forum_many_posts);
-        if (visibleCheat.getForumCount() == 1) {
-            postOrPosts = getString(R.string.forum_single_post);
-        }
-        MenuItem forumMenuItem = menu.findItem(R.id.action_forum);
-        forumMenuItem.setTitle(getString(R.string.forum_amount_posts, visibleCheat.getForumCount(), postOrPosts));
-
         // Locate MenuItem with ShareActionProvider
         MenuItem item = menu.findItem(R.id.action_share);
 
@@ -315,24 +304,11 @@ public class CheatViewPageIndicatorActivity extends AppCompatActivity implements
         return super.onCreateOptionsMenu(menu);
     }
 
-    @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-        super.onPrepareOptionsMenu(menu);
-//        MenuItem item = menu.findItem(R.id.action_share);
-//        mShare = (ShareActionProvider) MenuItemCompat.getActionProvider(item);
-
-        String postOrPosts = getString(R.string.forum_many_posts);
-        if (visibleCheat.getForumCount() == 1) {
-            postOrPosts = getString(R.string.forum_single_post);
-        }
-        MenuItem forumMenuItem = menu.findItem(R.id.action_forum);
-        forumMenuItem.setTitle(getString(R.string.forum_amount_posts, visibleCheat.getForumCount(), postOrPosts));
-        return true;
-    }
-
     // Call to update the share intent
     private void setShareIntent(Intent shareIntent) {
-        mShare.setShareIntent(shareIntent);
+        if (mShare != null) {
+            mShare.setShareIntent(shareIntent);
+        }
     }
 
     @Override
@@ -340,10 +316,10 @@ public class CheatViewPageIndicatorActivity extends AppCompatActivity implements
         Intent explicitIntent;
         switch (item.getItemId()) {
             case android.R.id.home:
-                finish();
+                onBackPressed();
                 return true;
             case R.id.action_submit_cheat:
-                explicitIntent = new Intent(CheatViewPageIndicatorActivity.this, SubmitCheatActivity.class);
+                explicitIntent = new Intent(MemberCheatViewPageIndicator.this, SubmitCheatActivity.class);
                 explicitIntent.putExtra("gameObj", gameObj);
                 startActivity(explicitIntent);
                 return true;
@@ -351,14 +327,11 @@ public class CheatViewPageIndicatorActivity extends AppCompatActivity implements
                 showRatingDialog();
                 return true;
             case R.id.action_forum:
-                if (Reachability.reachability.isReachable) {
-                    explicitIntent = new Intent(CheatViewPageIndicatorActivity.this, CheatForumActivity.class);
-                    explicitIntent.putExtra("gameObj", gameObj);
-                    explicitIntent.putExtra("cheatObj", visibleCheat);
-                    startActivityForResult(explicitIntent, FORUM_POST_ADDED_REQUEST);
-                } else {
-                    Toast.makeText(this, R.string.no_internet, Toast.LENGTH_SHORT).show();
-                }
+                explicitIntent = new Intent(MemberCheatViewPageIndicator.this, CheatForumActivity.class);
+                explicitIntent.putExtra("gameObj", gameObj);
+                explicitIntent.putExtra("cheatObj", visibleCheat);
+                explicitIntent.putExtra("cheatList", new Gson().toJson(cheatList));
+                startActivity(explicitIntent);
                 return true;
             case R.id.action_add_to_favorites:
                 Tools.showSnackbar(outerLayout, getString(R.string.favorite_adding));
@@ -373,44 +346,69 @@ public class CheatViewPageIndicatorActivity extends AppCompatActivity implements
                 showReportDialog();
                 return true;
             case R.id.action_metainfo:
-                if (Reachability.reachability.isReachable) {
-                    CheatMetaDialog cmDialog = new CheatMetaDialog(CheatViewPageIndicatorActivity.this, visibleCheat, restApi, outerLayout);
-                    cmDialog.show();
-                } else {
-                    Toast.makeText(this, R.string.no_internet, Toast.LENGTH_SHORT).show();
-                }
+                CheatMetaDialog cmDialog = new CheatMetaDialog(MemberCheatViewPageIndicator.this, visibleCheat, restApi, outerLayout);
+                cmDialog.show();
                 return true;
             case R.id.action_login:
-                Intent loginIntent = new Intent(CheatViewPageIndicatorActivity.this, LoginActivity.class);
+                Intent loginIntent = new Intent(MemberCheatViewPageIndicator.this, LoginActivity.class);
                 startActivityForResult(loginIntent, Konstanten.LOGIN_REGISTER_OK_RETURN_CODE);
                 return true;
             case R.id.action_logout:
                 member = null;
-                Tools.logout(CheatViewPageIndicatorActivity.this, editor);
+                Tools.logout(MemberCheatViewPageIndicator.this, editor);
                 invalidateOptionsMenu();
                 return true;
             case R.id.action_share:
-                setShareIntent(Tools.setShareText(CheatViewPageIndicatorActivity.this, visibleCheat));
+                setShareIntent(Tools.setShareText(MemberCheatViewPageIndicator.this, visibleCheat));
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
+    public void showReportDialog() {
+        if ((member == null) || (member.getMid() == 0)) {
+            Toast.makeText(MemberCheatViewPageIndicator.this, R.string.error_login_required, Toast.LENGTH_SHORT).show();
+        } else {
+            new ReportCheatMaterialDialog(this, visibleCheat, member, restApi, outerLayout);
+        }
+    }
+
+    public void showRatingDialog() {
+        if ((member == null) || (member.getMid() == 0)) {
+            Toast.makeText(this, R.string.error_login_required, Toast.LENGTH_LONG).show();
+        } else {
+            new RateCheatMaterialDialog(this, visibleCheat, member, restApi, outerLayout);
+        }
+    }
+
+    @Subscribe
+    public void onEvent(CheatRatingFinishedEvent result) {
+        visibleCheat.setMemberRating(result.getRating());
+        cheatList.get(activePage).setMemberRating(result.getRating());
+        invalidateOptionsMenu();
+        Toast.makeText(this, R.string.rating_inserted, Toast.LENGTH_SHORT).show();
+    }
+
+    public void setRating(int position, float rating) {
+        cheatList.get(position).setMemberRating(rating);
+        invalidateOptionsMenu();
+    }
+
     @Override
     public void onResume() {
         super.onResume();
-        member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
+        if (!Reachability.isRegistered()) {
+            Reachability.registerReachability(this);
+        }
+        member = new Gson().fromJson(sharedPreferences.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
         invalidateOptionsMenu();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        try {
-            EventBus.getDefault().register(this);
-        } catch (NullPointerException e) {
-        }
+        EventBus.getDefault().register(this);
     }
 
     @Override
@@ -428,46 +426,19 @@ public class CheatViewPageIndicatorActivity extends AppCompatActivity implements
         super.onDestroy();
     }
 
-    public void showReportDialog() {
-        if ((member == null) || (member.getMid() == 0)) {
-            Toast.makeText(this, R.string.error_login_required, Toast.LENGTH_SHORT).show();
-        } else {
-            new ReportCheatMaterialDialog(this, visibleCheat, member, restApi, outerLayout);
-        }
-    }
-
-    public void showRatingDialog() {
-        if ((member == null) || (member.getMid() == 0)) {
-            Toast.makeText(this, R.string.error_login_required, Toast.LENGTH_LONG).show();
-        } else {
-            new RateCheatMaterialDialog(this, visibleCheat, member, restApi, outerLayout);
-        }
-    }
-
-    @Subscribe
-    public void onEvent(CheatRatingFinishedEvent result) {
-        visibleCheat.setMemberRating(result.getRating());
-        cheatArray.get(activePage).setMemberRating(result.getRating());
-        invalidateOptionsMenu();
-        Toast.makeText(this, R.string.rating_inserted, Toast.LENGTH_SHORT).show();
-    }
-
-    public void setRating(int position, float rating) {
-        cheatArray.get(position).setMemberRating(rating);
-        invalidateOptionsMenu();
-    }
-
     public RestApi getRestApi() {
         return restApi;
     }
 
     @Override
     public void success() {
+        Log.d(TAG, "MemberCheatViewPageIndicator ADD FAV success: ");
         Tools.showSnackbar(outerLayout, getString(R.string.add_favorite_ok));
     }
 
     @Override
     public void fail(Exception e) {
+        Log.d(TAG, "MemberCheatViewPageIndicator ADD FAV fail: ");
         Tools.showSnackbar(outerLayout, getString(R.string.error_adding_favorite));
     }
 }

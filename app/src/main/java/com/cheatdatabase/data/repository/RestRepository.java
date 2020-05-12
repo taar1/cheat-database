@@ -7,9 +7,12 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.cheatdatabase.data.model.Member;
+import com.cheatdatabase.data.model.UnpublishedCheat;
+import com.cheatdatabase.helpers.AeSimpleMD5;
 import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.rest.RestApi;
 
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
 import okhttp3.OkHttpClient;
@@ -55,6 +58,32 @@ public class RestRepository {
         });
 
         return newsData;
+    }
+
+    public MutableLiveData<List<UnpublishedCheat>> getMyUnpublishedCheats(Member member) {
+        MutableLiveData<List<UnpublishedCheat>> unpublishedCheatsLiveData = new MutableLiveData<>();
+        try {
+            String password_md5 = AeSimpleMD5.MD5(member.getPassword());
+
+            Call<List<UnpublishedCheat>> call = restApi.myMyUnpublishedCheats(member.getMid(), password_md5);
+            call.enqueue(new Callback<List<UnpublishedCheat>>() {
+                @Override
+                public void onResponse(Call<List<UnpublishedCheat>> members, Response<List<UnpublishedCheat>> response) {
+                    if (response.isSuccessful()) {
+                        unpublishedCheatsLiveData.setValue(response.body());
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<List<UnpublishedCheat>> call, Throwable e) {
+                    Log.e(TAG, "loadMembersInBackground onFailure: " + e.getLocalizedMessage());
+                }
+            });
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+
+        return unpublishedCheatsLiveData;
     }
 
     private void init() {

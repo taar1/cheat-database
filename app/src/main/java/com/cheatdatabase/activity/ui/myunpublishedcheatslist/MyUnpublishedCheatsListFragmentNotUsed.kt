@@ -15,12 +15,12 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
-class MyUnpublishedCheatsListFragment : Fragment() {
+class MyUnpublishedCheatsListFragmentNotUsed : Fragment() {
 
-    private lateinit var viewModel: MyUnpublishedCheatsListViewModel
+    private lateinit var viewModelNotUsed: MyUnpublishedCheatsListViewModelNotUsed
 
     companion object {
-        fun newInstance() = MyUnpublishedCheatsListFragment()
+        fun newInstance() = MyUnpublishedCheatsListFragmentNotUsed()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -30,7 +30,7 @@ class MyUnpublishedCheatsListFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(MyUnpublishedCheatsListViewModel::class.java)
+        viewModelNotUsed = ViewModelProvider(this).get(MyUnpublishedCheatsListViewModelNotUsed::class.java)
         // TODO: Use the ViewModel
 
         val apiService = KotlinRestApi()

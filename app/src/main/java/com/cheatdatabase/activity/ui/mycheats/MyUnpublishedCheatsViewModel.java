@@ -1,6 +1,7 @@
-package com.cheatdatabase.activity.ui.mvvmexample.ui.mvvmtest;
+package com.cheatdatabase.activity.ui.mycheats;
 
 import android.app.Application;
+import android.content.SharedPreferences;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -8,26 +9,33 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.cheatdatabase.data.model.Member;
+import com.cheatdatabase.data.model.UnpublishedCheat;
 import com.cheatdatabase.data.repository.RestRepository;
+import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.rest.RestApi;
+import com.google.gson.Gson;
 
 import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Retrofit;
 
-public class MvvmTestViewModel extends AndroidViewModel {
-    private static final String TAG = "MvvmTestViewModel";
+public class MyUnpublishedCheatsViewModel extends AndroidViewModel {
+    private static final String TAG = "MyUnpublishedCheatsViewModel";
 
     private Retrofit retrofit;
     private RestApi restApi;
     private Call<List<Member>> allMembers;
-    private MutableLiveData<List<Member>> memberList;
+    private final Member member;
     private RestRepository restRepository;
+    private MutableLiveData<List<UnpublishedCheat>> unpublishedCheatsList;
+    private SharedPreferences settings;
 
-    public MvvmTestViewModel(@NonNull Application application) {
+    public MyUnpublishedCheatsViewModel(@NonNull Application application) {
         super(application);
 
+        settings = application.getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
+        member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
 //        init();
 //        getAllMembers();
     }
@@ -48,12 +56,12 @@ public class MvvmTestViewModel extends AndroidViewModel {
 //    }
 
     public void init() {
-        if (memberList != null) {
+        if (unpublishedCheatsList != null) {
             return;
         }
 
         restRepository = new RestRepository(getApplication());
-        memberList = restRepository.getTopMembers();
+        unpublishedCheatsList = restRepository.getMyUnpublishedCheats(member);
 
 //        OkHttpClient okHttpClient = new OkHttpClient.Builder().build();
 //
@@ -67,7 +75,7 @@ public class MvvmTestViewModel extends AndroidViewModel {
     }
 
     public LiveData<List<Member>> getTopMembersRepository() {
-        return memberList;
+        return unpublishedCheatsList;
     }
 
 }

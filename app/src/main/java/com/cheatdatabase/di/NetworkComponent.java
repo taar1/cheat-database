@@ -6,13 +6,13 @@ import com.cheatdatabase.activity.CheatsByMemberListActivity;
 import com.cheatdatabase.activity.GamesBySystemListActivity;
 import com.cheatdatabase.activity.LoginActivity;
 import com.cheatdatabase.activity.MainActivity;
-import com.cheatdatabase.activity.MyUnpublishedCheatsListActivity;
+import com.cheatdatabase.activity.MyUnpublishedCheatsListActivityNoUsed;
 import com.cheatdatabase.activity.RecoverActivity;
 import com.cheatdatabase.activity.RegisterActivity;
 import com.cheatdatabase.activity.SubmitCheatActivity;
-import com.cheatdatabase.cheat_detail_view.CheatViewPageIndicatorActivity;
-import com.cheatdatabase.cheat_detail_view.FavoritesCheatViewPageIndicator;
-import com.cheatdatabase.cheat_detail_view.MemberCheatViewPageIndicator;
+import com.cheatdatabase.cheatdetailview.CheatViewPageIndicatorActivity;
+import com.cheatdatabase.cheatdetailview.FavoritesCheatViewPageIndicator;
+import com.cheatdatabase.cheatdetailview.MemberCheatViewPageIndicator;
 import com.cheatdatabase.dialogs.CheatMetaDialog;
 import com.cheatdatabase.search.SearchResultsActivity;
 
@@ -48,7 +48,7 @@ public interface NetworkComponent {
 
     void inject(CheatsByMemberListActivity activity);
 
-    void inject(MyUnpublishedCheatsListActivity activity);
+    void inject(MyUnpublishedCheatsListActivityNoUsed activity);
 
     void inject(FavoritesCheatViewPageIndicator favoritesCheatViewPageIndicator);
 

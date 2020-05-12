@@ -3,7 +3,7 @@ package com.cheatdatabase.activity.ui.myunpublishedcheatslist
 import androidx.lifecycle.ViewModel
 
 
-class MyUnpublishedCheatsListViewModel : ViewModel() {
+class MyUnpublishedCheatsListViewModelNotUsed : ViewModel() {
     // TODO: Implement the ViewModel
 
 

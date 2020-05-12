@@ -1,13 +1,12 @@
-package com.cheatdatabase.activity.ui.mvvmexample;
+package com.cheatdatabase.activity.ui.mycheats;
 
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.cheatdatabase.R;
-import com.cheatdatabase.activity.ui.mvvmexample.ui.mvvmtest.MvvmTestFragment;
 
-public class MvvmTestActivity extends AppCompatActivity {
+public class MyUnpublishedCheatsActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -16,7 +15,7 @@ public class MvvmTestActivity extends AppCompatActivity {
 
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.container, MvvmTestFragment.newInstance())
+                    .replace(R.id.container, MyUnpublishedCheatsFragment.newInstance())
                     .commitNow();
         }
     }

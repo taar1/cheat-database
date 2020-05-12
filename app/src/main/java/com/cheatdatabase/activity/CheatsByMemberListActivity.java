@@ -19,7 +19,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.cheatdatabase.CheatDatabaseApplication;
 import com.cheatdatabase.R;
 import com.cheatdatabase.adapters.MemberCheatRecycleListViewAdapter;
-import com.cheatdatabase.cheat_detail_view.MemberCheatViewPageIndicator;
+import com.cheatdatabase.cheatdetailview.MemberCheatViewPageIndicator;
 import com.cheatdatabase.data.model.Cheat;
 import com.cheatdatabase.data.model.Member;
 import com.cheatdatabase.helpers.Konstanten;

@@ -5,6 +5,7 @@ import com.cheatdatabase.data.model.ForumPost;
 import com.cheatdatabase.data.model.Game;
 import com.cheatdatabase.data.model.Member;
 import com.cheatdatabase.data.model.SystemModel;
+import com.cheatdatabase.data.model.UnpublishedCheat;
 import com.google.gson.JsonObject;
 
 import java.util.List;
@@ -225,6 +226,10 @@ public interface RestApi {
 
     @GET("getMemberTop20.php")
     Call<List<Member>> getMemberTop20();
+
+    @FormUrlEncoded
+    @POST("myUnpublishedCheats.php")
+    Call<List<UnpublishedCheat>> myMyUnpublishedCheats(@Field("memberId") int memberId, @Field("pw") String password_md5);
 
     @GET("countGamesAndCheatsOfAllSystems.php")
     Call<List<SystemModel>> countGamesAndCheatsOfAllSystems();

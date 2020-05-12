@@ -22,7 +22,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.cheatdatabase.R;
 import com.cheatdatabase.adapters.CheatsByGameRecycleListViewAdapter;
-import com.cheatdatabase.cheat_detail_view.FavoritesCheatViewPageIndicator;
+import com.cheatdatabase.cheatdetailview.FavoritesCheatViewPageIndicator;
 import com.cheatdatabase.data.RoomCheatDatabase;
 import com.cheatdatabase.data.dao.FavoriteCheatDao;
 import com.cheatdatabase.data.model.Cheat;

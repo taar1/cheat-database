@@ -1,4 +1,4 @@
-package com.cheatdatabase.cheat_detail_view;
+package com.cheatdatabase.cheatdetailview;
 
 import android.app.AlertDialog;
 import android.app.SearchManager;

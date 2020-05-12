@@ -1,4 +1,4 @@
-package com.cheatdatabase.activity.ui.mvvmexample.ui.mvvmtest;
+package com.cheatdatabase.activity.ui.mycheats;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -26,17 +26,17 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
-public class MvvmTestFragment extends Fragment implements OnTopMemberListItemSelectedListener {
-    private static final String TAG = "MvvmTestFragment";
+public class MyUnpublishedCheatsFragment extends Fragment implements OnTopMemberListItemSelectedListener {
+    private static final String TAG = "MyUnpublishedCheatsFragment";
 
-    private MvvmTestViewModel mvvmTestViewModel;
+    private MyUnpublishedCheatsViewModel myUnpublishedCheatsViewModel;
     private TopMembersListViewAdapter topMembersListViewAdapter;
 
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
 
-    public static MvvmTestFragment newInstance() {
-        return new MvvmTestFragment();
+    public static MyUnpublishedCheatsFragment newInstance() {
+        return new MyUnpublishedCheatsFragment();
     }
 
     @Nullable
@@ -45,7 +45,6 @@ public class MvvmTestFragment extends Fragment implements OnTopMemberListItemSel
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.mvvm_test_fragment, container, false);
         ButterKnife.bind(this, view);
-
 
         return view;
     }
@@ -62,12 +61,10 @@ public class MvvmTestFragment extends Fragment implements OnTopMemberListItemSel
         Log.d(TAG, "onActivityCreated: ");
         setupRecyclerView();
 
+        myUnpublishedCheatsViewModel = new ViewModelProvider(this).get(MyUnpublishedCheatsViewModel.class);
+        myUnpublishedCheatsViewModel.init();
 
-        mvvmTestViewModel = new ViewModelProvider(this).get(MvvmTestViewModel.class);
-        mvvmTestViewModel.init();
-
-
-        mvvmTestViewModel.getTopMembersRepository().observe(getActivity(), new Observer<List<Member>>() {
+        myUnpublishedCheatsViewModel.getTopMembersRepository().observe(getActivity(), new Observer<List<Member>>() {
             @Override
             public void onChanged(List<Member> members) {
                 Toast.makeText(getContext(), "Top Members onChanged", Toast.LENGTH_LONG).show();

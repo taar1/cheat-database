@@ -94,12 +94,12 @@
             android:windowSoftInputMode="adjustResize|stateVisible" />
         <activity
             android:name=".activity.CheatForumActivity"
-            android:parentActivityName=".cheat_detail_view.CheatViewPageIndicatorActivity"
+            android:parentActivityName=".cheatdetailview.CheatViewPageIndicatorActivity"
             android:uiOptions="splitActionBarWhenNarrow"
             android:windowSoftInputMode="adjustResize|stateHidden">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.cheatdatabase.cheat_detail_view.CheatViewPageIndicatorActivity" />
+                android:value="com.cheatdatabase.cheatdetailview.CheatViewPageIndicatorActivity" />
             <meta-data
                 android:name="android.app.default_searchable"
                 android:value="com.cheatdatabase.search.SearchResultsActivity" />
@@ -112,7 +112,7 @@
                 android:value="com.cheatdatabase.search.SearchResultsActivity" />
         </activity>
         <activity
-            android:name=".cheat_detail_view.MemberCheatViewPageIndicator"
+            android:name=".cheatdetailview.MemberCheatViewPageIndicator"
             android:parentActivityName=".activity.CheatsByMemberListActivity"
             android:uiOptions="splitActionBarWhenNarrow">
             <meta-data
@@ -120,7 +120,7 @@
                 android:value="com.cheatdatabase.search.SearchResultsActivity" />
         </activity>
         <activity
-            android:name=".cheat_detail_view.CheatViewPageIndicatorActivity"
+            android:name=".cheatdetailview.CheatViewPageIndicatorActivity"
             android:label="@string/title_cheat_detail"
             android:parentActivityName=".activity.CheatsByGameListActivity"
             android:uiOptions="splitActionBarWhenNarrow">
@@ -144,7 +144,7 @@
                 android:value="com.cheatdatabase.search.SearchResultsActivity" />
         </activity>
         <activity
-            android:name=".cheat_detail_view.FavoritesCheatViewPageIndicator"
+            android:name=".cheatdetailview.FavoritesCheatViewPageIndicator"
             android:label="@string/title_cheat_detail"
             android:theme="@style/Theme.Navyblue"
             android:uiOptions="splitActionBarWhenNarrow">
@@ -153,7 +153,7 @@
                 android:value="com.cheatdatabase.search.SearchResultsActivity" />
         </activity>
         <activity
-            android:name=".activity.MyUnpublishedCheatsListActivity"
+            android:name=".activity.MyUnpublishedCheatsListActivityNoUsed"
             android:label="@string/unpublished_cheats"
             android:parentActivityName=".activity.MainActivity"
             android:theme="@style/Theme.Navyblue">
@@ -172,7 +172,7 @@
                 android:value="com.cheatdatabase.activity.MainActivity" />
         </activity>
         <activity android:name="com.appbrain.AppBrainActivity" />
-        <activity android:name="com.cheatdatabase.activity.ui.mvvmexample.MvvmTestActivity"></activity>
+        <activity android:name="com.cheatdatabase.activity.ui.mycheats.MyUnpublishedCheatsActivity"></activity>
 
         <meta-data
             android:name="com.google.android.gms.version"

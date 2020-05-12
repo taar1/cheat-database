@@ -3,9 +3,9 @@ package com.cheatdatabase.activity
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.cheatdatabase.R
-import com.cheatdatabase.activity.ui.myunpublishedcheatslist.MyUnpublishedCheatsListFragment
+import com.cheatdatabase.activity.ui.myunpublishedcheatslist.MyUnpublishedCheatsListFragmentNotUsed
 
-class MyUnpublishedCheatsListActivity : AppCompatActivity() {
+class MyUnpublishedCheatsListActivityNoUsed : AppCompatActivity() {
 
     //    @Inject
 //    var retrofit: Retrofit? = null
@@ -23,7 +23,7 @@ class MyUnpublishedCheatsListActivity : AppCompatActivity() {
 
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
-                    .replace(R.id.container, MyUnpublishedCheatsListFragment.newInstance())
+                    .replace(R.id.container, MyUnpublishedCheatsListFragmentNotUsed.newInstance())
                     .commitNow()
         }
     }
