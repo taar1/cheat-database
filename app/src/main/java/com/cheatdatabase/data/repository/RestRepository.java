@@ -65,10 +65,21 @@ public class RestRepository {
         try {
             String password_md5 = AeSimpleMD5.MD5(member.getPassword());
 
-            Call<List<UnpublishedCheat>> call = restApi.myMyUnpublishedCheats(member.getMid(), password_md5);
+            Log.d(TAG, "XXXXX getMyUnpublishedCheats MID: " + member.getMid());
+            Log.d(TAG, "XXXXX getMyUnpublishedCheats MD5: " + password_md5);
+
+            // TODO FIXME konvertieren zu UnpublishedCheat schlägt noch fehl....
+            // TODO FIXME konvertieren zu UnpublishedCheat schlägt noch fehl....
+            // TODO FIXME konvertieren zu UnpublishedCheat schlägt noch fehl....
+            // TODO FIXME konvertieren zu UnpublishedCheat schlägt noch fehl....
+            // TODO FIXME konvertieren zu UnpublishedCheat schlägt noch fehl....
+            // TODO FIXME konvertieren zu UnpublishedCheat schlägt noch fehl....
+
+            Call<List<UnpublishedCheat>> call = restApi.getMyUnpublishedCheats(member.getMid(), password_md5);
             call.enqueue(new Callback<List<UnpublishedCheat>>() {
                 @Override
-                public void onResponse(Call<List<UnpublishedCheat>> members, Response<List<UnpublishedCheat>> response) {
+                public void onResponse(Call<List<UnpublishedCheat>> unpublishedCheats, Response<List<UnpublishedCheat>> response) {
+                    Log.d(TAG, "XXXXX onResponse: ");
                     if (response.isSuccessful()) {
                         unpublishedCheatsLiveData.setValue(response.body());
                     }
@@ -76,7 +87,7 @@ public class RestRepository {
 
                 @Override
                 public void onFailure(Call<List<UnpublishedCheat>> call, Throwable e) {
-                    Log.e(TAG, "loadMembersInBackground onFailure: " + e.getLocalizedMessage());
+                    Log.e(TAG, "XXXXX getMyUnpublishedCheats onFailure: " + e.getLocalizedMessage());
                 }
             });
         } catch (NoSuchAlgorithmException e) {

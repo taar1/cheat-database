@@ -229,7 +229,7 @@ public interface RestApi {
 
     @FormUrlEncoded
     @POST("myUnpublishedCheats.php")
-    Call<List<UnpublishedCheat>> myMyUnpublishedCheats(@Field("memberId") int memberId, @Field("pw") String password_md5);
+    Call<List<UnpublishedCheat>> getMyUnpublishedCheats(@Field("memberId") int memberId, @Field("pw") String password_md5);
 
     @GET("countGamesAndCheatsOfAllSystems.php")
     Call<List<SystemModel>> countGamesAndCheatsOfAllSystems();

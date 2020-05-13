@@ -16,10 +16,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cheatdatabase.R;
-import com.cheatdatabase.adapters.TopMembersListViewAdapter;
-import com.cheatdatabase.data.model.Member;
 import com.cheatdatabase.data.model.UnpublishedCheat;
-import com.cheatdatabase.listeners.OnTopMemberListItemSelectedListener;
+import com.cheatdatabase.listeners.MyUnpublishedCheatsListItemSelectedListener;
 
 import java.util.List;
 
@@ -27,11 +25,11 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
-public class MyUnpublishedCheatsFragment extends Fragment implements OnTopMemberListItemSelectedListener {
+public class MyUnpublishedCheatsFragment extends Fragment implements MyUnpublishedCheatsListItemSelectedListener {
     private static final String TAG = "MyUnpublishedCheatsFragment";
 
     private MyUnpublishedCheatsViewModel myUnpublishedCheatsViewModel;
-    private TopMembersListViewAdapter topMembersListViewAdapter;
+    private MyUnpublishedCheatsListViewAdapter myUnpublishedCheatsListViewAdapter;
 
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
@@ -50,16 +48,12 @@ public class MyUnpublishedCheatsFragment extends Fragment implements OnTopMember
         return view;
     }
 
-    // TODO continue here: https://www.youtube.com/watch?v=JLwW5HivZg4
-    // TODO continue here: https://www.youtube.com/watch?v=JLwW5HivZg4
-    // TODO continue here: https://www.youtube.com/watch?v=JLwW5HivZg4
-    // TODO continue here: https://www.youtube.com/watch?v=JLwW5HivZg4
-
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        Log.d(TAG, "onActivityCreated: ");
+        Log.d(TAG, "XXXXX onActivityCreated: ");
+
         setupRecyclerView();
 
         myUnpublishedCheatsViewModel = new ViewModelProvider(this).get(MyUnpublishedCheatsViewModel.class);
@@ -68,14 +62,14 @@ public class MyUnpublishedCheatsFragment extends Fragment implements OnTopMember
         myUnpublishedCheatsViewModel.getTopMembersRepository().observe(getActivity(), new Observer<List<UnpublishedCheat>>() {
             @Override
             public void onChanged(List<UnpublishedCheat> unpublishedCheats) {
-                Toast.makeText(getContext(), "Top Members onChanged", Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), "XXXXX Unpublished Cheats onChanged", Toast.LENGTH_LONG).show();
 
                 // TODO FIXME
                 // TODO FIXME
                 // TODO FIXME
                 // TODO FIXME
-                topMembersListViewAdapter.setMemberList(unpublishedCheats);
-                topMembersListViewAdapter.notifyDataSetChanged();
+                myUnpublishedCheatsListViewAdapter.setUnpublishedCheats(unpublishedCheats);
+                myUnpublishedCheatsListViewAdapter.notifyDataSetChanged();
             }
         });
 
@@ -83,24 +77,26 @@ public class MyUnpublishedCheatsFragment extends Fragment implements OnTopMember
 
 
     private void setupRecyclerView() {
-        if (topMembersListViewAdapter == null) {
-            topMembersListViewAdapter = new TopMembersListViewAdapter(this, getActivity());
+        if (myUnpublishedCheatsListViewAdapter == null) {
+            myUnpublishedCheatsListViewAdapter = new MyUnpublishedCheatsListViewAdapter(this, getActivity());
             RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
             recyclerView.setLayoutManager(layoutManager);
             recyclerView.setHasFixedSize(true);
-            recyclerView.setAdapter(topMembersListViewAdapter);
+            recyclerView.setAdapter(myUnpublishedCheatsListViewAdapter);
         } else {
-            topMembersListViewAdapter.notifyDataSetChanged();
+            myUnpublishedCheatsListViewAdapter.notifyDataSetChanged();
         }
     }
 
+
     @Override
-    public void onMemberClicked(Member member) {
-        Log.d(TAG, "onMemberClicked: ");
+    public void onCheatClicked(UnpublishedCheat cheat) {
+        Log.d(TAG, "onCheatClicked: ");
     }
 
     @Override
-    public void onWebsiteClicked(Member member) {
-        Log.d(TAG, "onWebsiteClicked: ");
+    public void onRejectReasonButtonClicked(UnpublishedCheat cheat) {
+        Log.d(TAG, "onRejectReasonButtonClicked: ");
+
     }
 }

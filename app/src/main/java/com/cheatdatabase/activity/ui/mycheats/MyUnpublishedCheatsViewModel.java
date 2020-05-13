@@ -2,6 +2,7 @@ package com.cheatdatabase.activity.ui.mycheats;
 
 import android.app.Application;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -56,13 +57,16 @@ public class MyUnpublishedCheatsViewModel extends AndroidViewModel {
 //    }
 
     public void init() {
+        Log.d(TAG, "XXXXX init: 1");
         if (unpublishedCheatsList != null) {
             return;
         }
 
+        Log.d(TAG, "XXXXX init: 2");
         restRepository = new RestRepository(getApplication());
         unpublishedCheatsList = restRepository.getMyUnpublishedCheats(member);
 
+        Log.d(TAG, "XXXXX init: 3");
 //        OkHttpClient okHttpClient = new OkHttpClient.Builder().build();
 //
 //        retrofit = new Retrofit.Builder()

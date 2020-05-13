@@ -14,46 +14,55 @@ import java.util.Date;
 @Entity(tableName = "UnpublishedCheats")
 public class UnpublishedCheat implements Parcelable {
 
-    public static final Creator<UnpublishedCheat> CREATOR = new Creator<UnpublishedCheat>() {
-        @Override
-        public UnpublishedCheat createFromParcel(Parcel in) {
-            return new UnpublishedCheat(in);
-        }
-
-        @Override
-        public UnpublishedCheat[] newArray(int size) {
-            return new UnpublishedCheat[size];
-        }
-    };
     // This auto generate ID is needed because in theory the cheatId can be the same for several entries
     // because the query on the server is done on two different tables (SELECT UNION)
     @PrimaryKey(autoGenerate = true)
     public int id;
+
     @ColumnInfo(name = "cheatId")
     @SerializedName("cheatId")
     public int cheatId;
+
+    @ColumnInfo(name = "game")
+    @SerializedName("game")
+    private Game game;
+
     @ColumnInfo(name = "title")
+    @SerializedName("title")
     public String title;
 
-    @ColumnInfo(name = "cheatText")
+    @ColumnInfo(name = "cheat")
+    @SerializedName("cheat")
     public String cheat;
 
-    @ColumnInfo(name = "languageId")
+    @ColumnInfo(name = "lang")
     @SerializedName("lang")
     public int lang;
 
     @ColumnInfo(name = "style")
+    @SerializedName("style")
     public int style;
-    @ColumnInfo(name = "reject_reason")
-    public String rejectReason;
-    @ColumnInfo(name = "table_info")
-    public String tableInfo;
-    @SerializedName("game")
-    private Game game;
+
+    @ColumnInfo(name = "created")
+    @SerializedName("created")
     private Date created;
+
+    @ColumnInfo(name = "system")
+    @SerializedName("system")
     private SystemModel system;
+
+    @ColumnInfo(name = "checkedDate")
     @SerializedName("checked_date")
     private Date checkedDate;
+
+    @ColumnInfo(name = "rejectReason")
+    @SerializedName("checked_date")
+    public String rejectReason;
+
+    @ColumnInfo(name = "tableInfo")
+    @SerializedName("table_info")
+    public String tableInfo;
+
 
     protected UnpublishedCheat(Parcel in) {
         id = in.readInt();
@@ -90,4 +99,16 @@ public class UnpublishedCheat implements Parcelable {
         dest.writeString(rejectReason);
         dest.writeString(tableInfo);
     }
+
+    public static final Creator<UnpublishedCheat> CREATOR = new Creator<UnpublishedCheat>() {
+        @Override
+        public UnpublishedCheat createFromParcel(Parcel in) {
+            return new UnpublishedCheat(in);
+        }
+
+        @Override
+        public UnpublishedCheat[] newArray(int size) {
+            return new UnpublishedCheat[size];
+        }
+    };
 }
