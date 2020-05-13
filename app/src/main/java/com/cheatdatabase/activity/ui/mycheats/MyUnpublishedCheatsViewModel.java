@@ -74,7 +74,7 @@ public class MyUnpublishedCheatsViewModel extends AndroidViewModel {
 //        restApi = retrofit.create(RestApi.class);
     }
 
-    public LiveData<List<Member>> getTopMembersRepository() {
+    public LiveData<List<UnpublishedCheat>> getTopMembersRepository() {
         return unpublishedCheatsList;
     }
 

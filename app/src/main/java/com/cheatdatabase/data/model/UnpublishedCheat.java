@@ -3,6 +3,10 @@ package com.cheatdatabase.data.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 import com.google.gson.annotations.SerializedName;
 
 import java.util.Date;
@@ -75,13 +79,13 @@ public class UnpublishedCheat implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(id);
         dest.writeInt(cheatId);
-        dest.writeTypedObject(game);
+        dest.writeParcelable(game, flags);
         dest.writeString(title);
         dest.writeString(cheat);
         dest.writeInt(lang);
         dest.writeInt(style);
         dest.writeSerializable(created);
-        dest.writeSerializable(system);
+        dest.writeParcelable(system, flags);
         dest.writeSerializable(checkedDate);
         dest.writeString(rejectReason);
         dest.writeString(tableInfo);

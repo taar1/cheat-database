@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.cheatdatabase.R;
 import com.cheatdatabase.adapters.TopMembersListViewAdapter;
 import com.cheatdatabase.data.model.Member;
+import com.cheatdatabase.data.model.UnpublishedCheat;
 import com.cheatdatabase.listeners.OnTopMemberListItemSelectedListener;
 
 import java.util.List;
@@ -64,12 +65,16 @@ public class MyUnpublishedCheatsFragment extends Fragment implements OnTopMember
         myUnpublishedCheatsViewModel = new ViewModelProvider(this).get(MyUnpublishedCheatsViewModel.class);
         myUnpublishedCheatsViewModel.init();
 
-        myUnpublishedCheatsViewModel.getTopMembersRepository().observe(getActivity(), new Observer<List<Member>>() {
+        myUnpublishedCheatsViewModel.getTopMembersRepository().observe(getActivity(), new Observer<List<UnpublishedCheat>>() {
             @Override
-            public void onChanged(List<Member> members) {
+            public void onChanged(List<UnpublishedCheat> unpublishedCheats) {
                 Toast.makeText(getContext(), "Top Members onChanged", Toast.LENGTH_LONG).show();
 
-                topMembersListViewAdapter.setMemberList(members);
+                // TODO FIXME
+                // TODO FIXME
+                // TODO FIXME
+                // TODO FIXME
+                topMembersListViewAdapter.setMemberList(unpublishedCheats);
                 topMembersListViewAdapter.notifyDataSetChanged();
             }
         });
