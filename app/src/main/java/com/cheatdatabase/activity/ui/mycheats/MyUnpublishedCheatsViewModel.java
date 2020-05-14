@@ -22,7 +22,7 @@ import retrofit2.Call;
 import retrofit2.Retrofit;
 
 public class MyUnpublishedCheatsViewModel extends AndroidViewModel {
-    private static final String TAG = "MyUnpublishedCheatsViewModel";
+    private static final String TAG = "MyUnpublishedCheatsView";
 
     private Retrofit retrofit;
     private RestApi restApi;

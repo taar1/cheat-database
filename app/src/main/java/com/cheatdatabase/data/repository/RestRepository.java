@@ -87,11 +87,13 @@ public class RestRepository {
 
                 @Override
                 public void onFailure(Call<List<UnpublishedCheat>> call, Throwable e) {
-                    Log.e(TAG, "XXXXX getMyUnpublishedCheats onFailure: " + e.getLocalizedMessage());
+
+
+                    Log.e(TAG, "XXXXX getMyUnpublishedCheats onFailure: " + e.getLocalizedMessage(), e);
                 }
             });
         } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
+            Log.e(TAG, "XXXXX NoSuchAlgorithmException: " + e.getLocalizedMessage());
         }
 
         return unpublishedCheatsLiveData;

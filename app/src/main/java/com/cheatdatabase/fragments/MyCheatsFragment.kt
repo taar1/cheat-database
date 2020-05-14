@@ -3,6 +3,7 @@ package com.cheatdatabase.fragments
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,6 +21,7 @@ import com.cheatdatabase.helpers.Tools
 import com.google.gson.Gson
 
 class MyCheatsFragment(val mainActivity: MainActivity, var settings: SharedPreferences) : Fragment() {
+    val TAG = "MyCheatsFragment"
 
     @JvmField
     @BindView(R.id.outer_layout)
@@ -60,6 +62,12 @@ class MyCheatsFragment(val mainActivity: MainActivity, var settings: SharedPrefe
         } else {
             startActivity(intent)
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Log.d(TAG, "onResume")
+        member = Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member::class.java)
     }
 
 }

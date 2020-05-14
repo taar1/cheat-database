@@ -6,7 +6,9 @@ import android.os.Parcelable;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
+import androidx.room.TypeConverters;
 
+import com.cheatdatabase.data.RoomDateConverter;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.Date;
@@ -45,6 +47,7 @@ public class UnpublishedCheat implements Parcelable {
 
     @ColumnInfo(name = "created")
     @SerializedName("created")
+    @TypeConverters(RoomDateConverter.class)
     private Date created;
 
     @ColumnInfo(name = "system")
@@ -53,10 +56,11 @@ public class UnpublishedCheat implements Parcelable {
 
     @ColumnInfo(name = "checkedDate")
     @SerializedName("checked_date")
+    @TypeConverters(RoomDateConverter.class)
     private Date checkedDate;
 
     @ColumnInfo(name = "rejectReason")
-    @SerializedName("checked_date")
+    @SerializedName("reject_reason")
     public String rejectReason;
 
     @ColumnInfo(name = "tableInfo")
