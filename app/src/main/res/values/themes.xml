@@ -1,7 +1,7 @@
 <resources>
 
     <!-- Application theme. -->
-    <style name="AppThemeBase" parent="Theme.AppCompat.NoActionBar">
+    <style name="AppThemeBase" parent="Theme.MaterialComponents.NoActionBar">
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
         <item name="colorAccent">@color/color_accent</item>
         <item name="android:windowNoTitle">true</item>

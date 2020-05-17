@@ -172,7 +172,7 @@
                 android:value="com.cheatdatabase.activity.MainActivity" />
         </activity>
         <activity android:name="com.appbrain.AppBrainActivity" />
-        <activity android:name="com.cheatdatabase.activity.ui.mycheats.MyUnpublishedCheatsActivity"></activity>
+        <activity android:name="com.cheatdatabase.activity.ui.mycheats.MyUnpublishedCheatsListActivity"></activity>
 
         <meta-data
             android:name="com.google.android.gms.version"

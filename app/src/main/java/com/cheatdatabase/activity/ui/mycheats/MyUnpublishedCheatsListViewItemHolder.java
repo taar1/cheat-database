@@ -52,7 +52,7 @@ public class MyUnpublishedCheatsListViewItemHolder extends RecyclerView.ViewHold
 
     public void updateUI(final UnpublishedCheat unpublishedCheat) {
 
-        deleteButton.setText("Delete XXX");
+        //deleteButton.setText("Delete XXX");
 
 //        memberName.setText(unpublishedCheat.getUsername().toUpperCase());
 //        cheatCount.setText(activity.getString(R.string.top_members_cheats_count) + ": " + unpublishedCheat.getCheatSubmissionCount());

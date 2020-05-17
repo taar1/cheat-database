@@ -32,7 +32,7 @@ public class MyUnpublishedCheatsViewModel extends AndroidViewModel {
     public MutableLiveData<List<UnpublishedCheat>> unpublishedCheatsList;
     private SharedPreferences settings;
 
-    public MyUnpublishedCheatsViewModel(@NonNull Application application, MyUnpublishedCheatsRepository myUnpublishedCheatsRepository) {
+    public MyUnpublishedCheatsViewModel(@NonNull Application application) {
         super(application);
 
         settings = application.getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
