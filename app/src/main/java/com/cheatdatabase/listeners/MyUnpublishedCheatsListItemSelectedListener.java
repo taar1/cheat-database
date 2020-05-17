@@ -6,4 +6,6 @@ public interface MyUnpublishedCheatsListItemSelectedListener {
     void onCheatClicked(UnpublishedCheat cheat);
 
     void onRejectReasonButtonClicked(UnpublishedCheat cheat);
+
+    void onDeleteButtonClicked(UnpublishedCheat cheat);
 }

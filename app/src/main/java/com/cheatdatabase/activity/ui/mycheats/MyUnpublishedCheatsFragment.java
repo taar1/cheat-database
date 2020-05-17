@@ -24,9 +24,11 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-
+/**
+ * This is the MODEL of MVVM.
+ */
 public class MyUnpublishedCheatsFragment extends Fragment implements MyUnpublishedCheatsListItemSelectedListener {
-    private static final String TAG = "MyUnpublishedCheatsFragment";
+    private static final String TAG = "MyUnpublishedCheatsFt";
 
     private MyUnpublishedCheatsViewModel myUnpublishedCheatsViewModel;
     private MyUnpublishedCheatsListViewAdapter myUnpublishedCheatsListViewAdapter;
@@ -42,8 +44,11 @@ public class MyUnpublishedCheatsFragment extends Fragment implements MyUnpublish
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.mvvm_test_fragment, container, false);
+        View view = inflater.inflate(R.layout.unpublished_cheats_fragment, container, false);
         ButterKnife.bind(this, view);
+
+//         MyUnpublishedCheatsFragment binding =  DataBindingUtil.setContentView(this, R.layout.unpublished_cheats_fragment);
+
 
         return view;
     }
@@ -52,29 +57,23 @@ public class MyUnpublishedCheatsFragment extends Fragment implements MyUnpublish
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        Log.d(TAG, "XXXXX onActivityCreated: ");
-
-        setupRecyclerView();
-
         myUnpublishedCheatsViewModel = new ViewModelProvider(this).get(MyUnpublishedCheatsViewModel.class);
         myUnpublishedCheatsViewModel.init();
 
-        myUnpublishedCheatsViewModel.getTopMembersRepository().observe(getActivity(), new Observer<List<UnpublishedCheat>>() {
+
+        setupRecyclerView();
+
+        myUnpublishedCheatsViewModel.getMyUnpublishedCheatsRepository().observe(getActivity(), new Observer<List<UnpublishedCheat>>() {
             @Override
             public void onChanged(List<UnpublishedCheat> unpublishedCheats) {
                 Toast.makeText(getContext(), "XXXXX Unpublished Cheats onChanged", Toast.LENGTH_LONG).show();
 
-                // TODO FIXME
-                // TODO FIXME
-                // TODO FIXME
-                // TODO FIXME
                 myUnpublishedCheatsListViewAdapter.setUnpublishedCheats(unpublishedCheats);
                 myUnpublishedCheatsListViewAdapter.notifyDataSetChanged();
             }
         });
 
     }
-
 
     private void setupRecyclerView() {
         if (myUnpublishedCheatsListViewAdapter == null) {
@@ -98,5 +97,10 @@ public class MyUnpublishedCheatsFragment extends Fragment implements MyUnpublish
     public void onRejectReasonButtonClicked(UnpublishedCheat cheat) {
         Log.d(TAG, "onRejectReasonButtonClicked: ");
 
+    }
+
+    @Override
+    public void onDeleteButtonClicked(UnpublishedCheat cheat) {
+        Log.d(TAG, "onDeleteButtonClicked: ");
     }
 }

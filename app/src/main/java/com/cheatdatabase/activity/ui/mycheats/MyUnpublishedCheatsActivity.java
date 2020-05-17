@@ -11,7 +11,7 @@ public class MyUnpublishedCheatsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.mvvm_test_activity);
+        setContentView(R.layout.unpublished_cheats_activity);
 
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()

@@ -27,7 +27,7 @@ public class UnpublishedCheat implements Parcelable {
 
     @ColumnInfo(name = "game")
     @SerializedName("game")
-    private Game game;
+    public Game game;
 
     @ColumnInfo(name = "title")
     @SerializedName("title")
@@ -48,16 +48,16 @@ public class UnpublishedCheat implements Parcelable {
     @ColumnInfo(name = "created")
     @SerializedName("created")
     @TypeConverters(RoomDateConverter.class)
-    private Date created;
+    public Date created;
 
     @ColumnInfo(name = "system")
     @SerializedName("system")
-    private SystemModel system;
+    public SystemModel system;
 
     @ColumnInfo(name = "checkedDate")
     @SerializedName("checked_date")
     @TypeConverters(RoomDateConverter.class)
-    private Date checkedDate;
+    public Date checkedDate;
 
     @ColumnInfo(name = "rejectReason")
     @SerializedName("reject_reason")
@@ -115,4 +115,104 @@ public class UnpublishedCheat implements Parcelable {
             return new UnpublishedCheat[size];
         }
     };
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getCheatId() {
+        return cheatId;
+    }
+
+    public void setCheatId(int cheatId) {
+        this.cheatId = cheatId;
+    }
+
+    public Game getGame() {
+        return game;
+    }
+
+    public void setGame(Game game) {
+        this.game = game;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getCheat() {
+        return cheat;
+    }
+
+    public void setCheat(String cheat) {
+        this.cheat = cheat;
+    }
+
+    public int getLang() {
+        return lang;
+    }
+
+    public void setLang(int lang) {
+        this.lang = lang;
+    }
+
+    public int getStyle() {
+        return style;
+    }
+
+    public void setStyle(int style) {
+        this.style = style;
+    }
+
+    public Date getCreated() {
+        return created;
+    }
+
+    public void setCreated(Date created) {
+        this.created = created;
+    }
+
+    public SystemModel getSystem() {
+        return system;
+    }
+
+    public void setSystem(SystemModel system) {
+        this.system = system;
+    }
+
+    public Date getCheckedDate() {
+        return checkedDate;
+    }
+
+    public void setCheckedDate(Date checkedDate) {
+        this.checkedDate = checkedDate;
+    }
+
+    public String getRejectReason() {
+        return rejectReason;
+    }
+
+    public void setRejectReason(String rejectReason) {
+        this.rejectReason = rejectReason;
+    }
+
+    public String getTableInfo() {
+        return tableInfo;
+    }
+
+    public void setTableInfo(String tableInfo) {
+        this.tableInfo = tableInfo;
+    }
+
+    public static Creator<UnpublishedCheat> getCREATOR() {
+        return CREATOR;
+    }
 }

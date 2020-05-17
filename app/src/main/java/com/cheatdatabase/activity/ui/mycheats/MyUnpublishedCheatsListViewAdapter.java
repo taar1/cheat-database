@@ -28,7 +28,7 @@ public class MyUnpublishedCheatsListViewAdapter extends RecyclerView.Adapter<MyU
 
     @Override
     public MyUnpublishedCheatsListViewItemHolder onCreateViewHolder(final ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.topmembers_list_item, parent, false);
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.unpublished_cheat_list_item, parent, false);
         return new MyUnpublishedCheatsListViewItemHolder(itemView, activity);
     }
 

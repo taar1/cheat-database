@@ -227,10 +227,6 @@ public interface RestApi {
     @GET("getMemberTop20.php")
     Call<List<Member>> getMemberTop20();
 
-    @FormUrlEncoded
-    @POST("myUnpublishedCheats.php")
-    Call<List<UnpublishedCheat>> getMyUnpublishedCheats(@Field("memberId") int memberId, @Field("pw") String password_md5);
-
     @GET("countGamesAndCheatsOfAllSystems.php")
     Call<List<SystemModel>> countGamesAndCheatsOfAllSystems();
 
@@ -297,5 +293,16 @@ public interface RestApi {
     @POST("submitMessage.php")
     Call<Void> submitContactForm(@Field("email") String email, @Field("subject") String subject, @Field("message") String message);
 
+    /**
+     * UNPUBLISHED CHEATS
+     */
+
+    @FormUrlEncoded
+    @POST("myUnpublishedCheats.php")
+    Call<List<UnpublishedCheat>> getMyUnpublishedCheats(@Field("memberId") int memberId, @Field("pw") String password_md5);
+
+    @FormUrlEncoded
+    @POST("deleteMyUnpublishedCheat.php")
+    Call<JsonObject> deleteUnpublishedCheat(@Field("memberId") int memberId, @Field("pw") String password_md5, @Field("id") int id, @Field("gameId") int gameId, @Field("tableInfo") String tableInfo);
 
 }

@@ -29,10 +29,10 @@ public class MyUnpublishedCheatsViewModel extends AndroidViewModel {
     private Call<List<Member>> allMembers;
     private final Member member;
     private RestRepository restRepository;
-    private MutableLiveData<List<UnpublishedCheat>> unpublishedCheatsList;
+    public MutableLiveData<List<UnpublishedCheat>> unpublishedCheatsList;
     private SharedPreferences settings;
 
-    public MyUnpublishedCheatsViewModel(@NonNull Application application) {
+    public MyUnpublishedCheatsViewModel(@NonNull Application application, MyUnpublishedCheatsRepository myUnpublishedCheatsRepository) {
         super(application);
 
         settings = application.getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
@@ -62,11 +62,8 @@ public class MyUnpublishedCheatsViewModel extends AndroidViewModel {
             return;
         }
 
-        Log.d(TAG, "XXXXX init: 2");
         restRepository = new RestRepository(getApplication());
-        unpublishedCheatsList = restRepository.getMyUnpublishedCheats(member);
 
-        Log.d(TAG, "XXXXX init: 3");
 //        OkHttpClient okHttpClient = new OkHttpClient.Builder().build();
 //
 //        retrofit = new Retrofit.Builder()
@@ -78,8 +75,19 @@ public class MyUnpublishedCheatsViewModel extends AndroidViewModel {
 //        restApi = retrofit.create(RestApi.class);
     }
 
-    public LiveData<List<UnpublishedCheat>> getTopMembersRepository() {
+    public LiveData<List<UnpublishedCheat>> getMyUnpublishedCheatsRepository() {
+        unpublishedCheatsList = restRepository.getMyUnpublishedCheats(member);
         return unpublishedCheatsList;
+    }
+
+
+    public String deleteUnpublishedCheat(UnpublishedCheat unpublishedCheat) {
+        deleteUnpublishedCheatFromRepository(unpublishedCheat);
+        return "test";
+    }
+
+    public void deleteUnpublishedCheatFromRepository(UnpublishedCheat unpublishedCheat) {
+        restRepository.deleteUnpublishedCheat(unpublishedCheat, member);
     }
 
 }
