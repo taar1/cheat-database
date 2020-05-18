@@ -24,9 +24,9 @@ class MyUnpublishedCheatsFragment : Fragment(), MyUnpublishedCheatsListItemSelec
     private var myUnpublishedCheatsViewModel: MyUnpublishedCheatsViewModel? = null
     private var myUnpublishedCheatsListViewAdapter: MyUnpublishedCheatsListViewAdapter? = null
 
-    @JvmField
     @BindView(R.id.recycler_view)
-    var recyclerView: RecyclerView? = null
+    lateinit var recyclerView: RecyclerView
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -58,9 +58,9 @@ class MyUnpublishedCheatsFragment : Fragment(), MyUnpublishedCheatsListItemSelec
         if (myUnpublishedCheatsListViewAdapter == null) {
             myUnpublishedCheatsListViewAdapter = MyUnpublishedCheatsListViewAdapter(this, activity)
             val layoutManager: RecyclerView.LayoutManager = LinearLayoutManager(activity)
-            recyclerView!!.layoutManager = layoutManager
-            recyclerView!!.setHasFixedSize(true)
-            recyclerView!!.adapter = myUnpublishedCheatsListViewAdapter
+            recyclerView.layoutManager = layoutManager
+            recyclerView.setHasFixedSize(true)
+            recyclerView.adapter = myUnpublishedCheatsListViewAdapter
         } else {
             myUnpublishedCheatsListViewAdapter!!.notifyDataSetChanged()
         }
