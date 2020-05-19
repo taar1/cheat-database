@@ -110,25 +110,21 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4caff62e-c62f-40ca-acf0-73c680b13375" name="Default" comment="Working on the UnpublishedCheats section.">
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/ui/mycheats/MyUnpublishedCheatsFragment.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/ui/mycheats/MyUnpublishedCheatsListActivity.kt" afterDir="false" />
+    <list default="true" id="4caff62e-c62f-40ca-acf0-73c680b13375" name="Default" comment="Working on getting UnpublishedCheat.java model class to work with room">
       <change beforePath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/app.iml" beforeDir="false" afterPath="$PROJECT_DIR$/app/app.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/ui/mycheats/MyUnpublishedCheatsActivity.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/ui/mycheats/MyUnpublishedCheatsFragment.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/ui/mycheats/MyUnpublishedCheatsListViewItemHolder.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/ui/mycheats/MyUnpublishedCheatsListViewItemHolder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/ui/mycheats/MyUnpublishedCheatsRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/ui/mycheats/MyUnpublishedCheatsViewModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/ui/mycheats/MyUnpublishedCheatsViewModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/fragments/MyCheatsFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/fragments/MyCheatsFragment.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/rest/KotlinRestApi.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/rest/KotlinRestApi.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/MyUnpublishedCheatsListActivityNoUsed.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/ui/mycheats/MyUnpublishedCheatsFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/ui/mycheats/MyUnpublishedCheatsFragment.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/ui/myunpublishedcheatslist/MyUnpublishedCheatsListFragmentNotUsed.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/ui/myunpublishedcheatslist/MyUnpublishedCheatsListViewModelNotUsed.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/di/NetworkComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/di/NetworkComponent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout-large-land/adview.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout-xlarge-land/adview.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/adview.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/adview_amazon.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/unpublished_cheat_list_item.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/unpublished_cheat_list_item.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/unpublished_cheats_activity.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/unpublished_cheats_activity.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/themes.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/themes.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradle.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gradle.properties" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -139,7 +135,7 @@
   <component name="CreatePatchCommitExecutor">
     <option name="PATCH_PATH" value="" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="fd8b7031" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="Pixel_3a_API_Q_NO_PROXY" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
@@ -161,6 +157,35 @@
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
                 <item name="cheat-database" type="f1a62948:ProjectNode" />
               </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="cheat-database" type="f1a62948:ProjectNode" />
+                <item name="cheat-database" type="2d1252cf:ModuleNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="cheat-database" type="f1a62948:ProjectNode" />
+                <item name="cheat-database" type="2d1252cf:ModuleNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="cheat-database" type="f1a62948:ProjectNode" />
+                <item name="cheat-database" type="2d1252cf:ModuleNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="android" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="cheat-database" type="f1a62948:ProjectNode" />
+                <item name=":app" type="2d1252cf:ModuleNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="cheat-database" type="f1a62948:ProjectNode" />
+                <item name=":app" type="2d1252cf:ModuleNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+              </path>
             </expand>
             <select />
           </tree_state>
@@ -176,13 +201,13 @@
       <list>
         <option value="resourceFile" />
         <option value="valueResourceFile" />
+        <option value="Interface" />
         <option value="layoutResourceFile" />
         <option value="layoutResourceFile_vertical" />
-        <option value="Kotlin Interface" />
-        <option value="Singleton" />
-        <option value="Class" />
-        <option value="Interface" />
         <option value="Kotlin Class" />
+        <option value="Kotlin Interface" />
+        <option value="Class" />
+        <option value="Singleton" />
       </list>
     </option>
   </component>
@@ -211,7 +236,7 @@
     <property name="DEBUGGABLE_PROCESS" value="com.cheatdatabase" />
     <property name="DEBUGGER_ID" value="Auto" />
     <property name="DeviceAndSnapshotComboBoxAction.selectedDevice" value="fd8b7031" />
-    <property name="DeviceAndSnapshotComboBoxAction.selectionTime" value="2020-05-14T19:55:24.115Z" />
+    <property name="DeviceAndSnapshotComboBoxAction.selectionTime" value="2020-05-19T19:14:11.265Z" />
     <property name="ExportApk.ApkPath" value="$PROJECT_DIR$/../../../apk/Cheat-Database/2.5.14" />
     <property name="ExportApk.BuildType" value="release" />
     <property name="ExportApk.BuildVariants" value="amazonFlavorDebug&#10;amazonFlavorRelease&#10;googlePlayFlavorDebug&#10;googlePlayFlavorRelease" />
@@ -272,11 +297,11 @@
       <recent name="com.cheatdatabase.listitems" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\Development\Android\Workspaces\cheat-database\app\src\main\res\layout" />
       <recent name="$PROJECT_DIR$/app/src/main/res/layout" />
       <recent name="$PROJECT_DIR$/app/libs" />
       <recent name="$PROJECT_DIR$/app/src/main/res/layout-xlarge-land" />
       <recent name="$PROJECT_DIR$/app/src/main/res/xml" />
+      <recent name="C:\Users\taar1\Development\Android\GitHub\cheat-database\app\libs" />
     </key>
     <key name="android.template.parentActivityClass">
       <recent name="" />
@@ -613,13 +638,6 @@
       <option name="presentableId" value="Default" />
       <updated>1487274191999</updated>
     </task>
-    <task id="LOCAL-00066" summary="AdView in RecyclerView every 20th position">
-      <created>1566506673918</created>
-      <option name="number" value="00066" />
-      <option name="presentableId" value="LOCAL-00066" />
-      <option name="project" value="LOCAL" />
-      <updated>1566506673918</updated>
-    </task>
     <task id="LOCAL-00067" summary="Implementing Facebook Native Ads (not working yet....)">
       <created>1566676193815</created>
       <option name="number" value="00067" />
@@ -942,21 +960,28 @@
       <option name="project" value="LOCAL" />
       <updated>1589351609967</updated>
     </task>
-    <task id="LOCAL-00113" summary="Working on the UnpublishedCheats section. (crash while getting cheats through the API)">
-      <created>1589488757005</created>
+    <task id="LOCAL-00113" summary="Working on getting UnpublishedCheat.java model class to work with room">
+      <created>1589398492124</created>
       <option name="number" value="00113" />
       <option name="presentableId" value="LOCAL-00113" />
       <option name="project" value="LOCAL" />
-      <updated>1589488757007</updated>
+      <updated>1589398492125</updated>
     </task>
-    <task id="LOCAL-00114" summary="Working on the UnpublishedCheats section.">
-      <created>1589738506949</created>
+    <task id="LOCAL-00114" summary="remove deprecated line">
+      <created>1589790252629</created>
       <option name="number" value="00114" />
       <option name="presentableId" value="LOCAL-00114" />
       <option name="project" value="LOCAL" />
-      <updated>1589738506950</updated>
+      <updated>1589790252629</updated>
     </task>
-    <option name="localTasksCounter" value="115" />
+    <task id="LOCAL-00115" summary="Comment out unneeded gradle code">
+      <created>1589790280261</created>
+      <option name="number" value="00115" />
+      <option name="presentableId" value="LOCAL-00115" />
+      <option name="project" value="LOCAL" />
+      <updated>1589790280261</updated>
+    </task>
+    <option name="localTasksCounter" value="116" />
     <servers />
   </component>
   <component name="TodoView">
@@ -1006,7 +1031,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
-    <MESSAGE value="Fixing DAO structures for Retrofit." />
     <MESSAGE value="MemberCheatView Anpassungen." />
     <MESSAGE value="Adding Cheat Detail Image Gallery using Kotlin and RecyclerView" />
     <MESSAGE value="Completely new cheat screenshot gallery with viewer made with kotlin" />
@@ -1029,9 +1053,10 @@
     <MESSAGE value="Code optimization" />
     <MESSAGE value="Add MVVM Classes" />
     <MESSAGE value="Fixing some bugs" />
-    <MESSAGE value="Working on the UnpublishedCheats section. (crash while getting cheats through the API)" />
-    <MESSAGE value="Working on the UnpublishedCheats section." />
-    <option name="LAST_COMMIT_MESSAGE" value="Working on the UnpublishedCheats section." />
+    <MESSAGE value="Working on getting UnpublishedCheat.java model class to work with room" />
+    <MESSAGE value="remove deprecated line" />
+    <MESSAGE value="Comment out unneeded gradle code" />
+    <option name="LAST_COMMIT_MESSAGE" value="Comment out unneeded gradle code" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
@@ -1041,7 +1066,7 @@
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/helpers/Helper.java</url>
           <line>79</line>
-          <properties class="com.cheatdatabase.helpers.Helper" method="addFavorite" />
+          <properties class="com.cheatdatabase.helpers.Helper" />
           <option name="timeStamp" value="131" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
@@ -1055,19 +1080,18 @@
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/CheatsByGameListActivity.java</url>
           <line>413</line>
-          <properties method="onFailure" />
           <option name="timeStamp" value="187" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/adapters/FavoritesExpandableListAdapter.java</url>
           <line>41</line>
-          <properties class="com.cheatdatabase.adapters.FavoritesExpandableListAdapter" method="getChildView" />
+          <properties class="com.cheatdatabase.adapters.FavoritesExpandableListAdapter" />
           <option name="timeStamp" value="211" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/helpers/Tools.java</url>
           <line>498</line>
-          <properties class="com.cheatdatabase.helpers.Tools" method="saveScreenshotsToSdCard" />
+          <properties class="com.cheatdatabase.helpers.Tools" />
           <option name="timeStamp" value="213" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">

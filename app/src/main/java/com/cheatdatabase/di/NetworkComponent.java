@@ -6,7 +6,6 @@ import com.cheatdatabase.activity.CheatsByMemberListActivity;
 import com.cheatdatabase.activity.GamesBySystemListActivity;
 import com.cheatdatabase.activity.LoginActivity;
 import com.cheatdatabase.activity.MainActivity;
-import com.cheatdatabase.activity.MyUnpublishedCheatsListActivityNoUsed;
 import com.cheatdatabase.activity.RecoverActivity;
 import com.cheatdatabase.activity.RegisterActivity;
 import com.cheatdatabase.activity.SubmitCheatActivity;
@@ -47,8 +46,6 @@ public interface NetworkComponent {
     void inject(SubmitCheatActivity activity);
 
     void inject(CheatsByMemberListActivity activity);
-
-    void inject(MyUnpublishedCheatsListActivityNoUsed activity);
 
     void inject(FavoritesCheatViewPageIndicator favoritesCheatViewPageIndicator);
 

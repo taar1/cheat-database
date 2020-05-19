@@ -54,6 +54,10 @@ android {
         enabled = true
     }
 
+    viewBinding {
+        enabled = true
+    }
+
     buildTypes {
         debug {
             debuggable true
@@ -165,7 +169,7 @@ dependencies {
     // Butterknife
     implementation 'com.jakewharton:butterknife:10.2.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.1'
-    kapt 'com.jakewharton:butterknife-compiler:10.2.1'
+    //kapt 'com.jakewharton:butterknife-compiler:10.2.1'
 
 
     implementation 'de.hdodenhof:circleimageview:3.1.0'

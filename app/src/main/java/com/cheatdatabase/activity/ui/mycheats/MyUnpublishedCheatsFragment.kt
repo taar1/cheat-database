@@ -11,10 +11,9 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import butterknife.BindView
-import butterknife.ButterKnife
 import com.cheatdatabase.R
 import com.cheatdatabase.data.model.UnpublishedCheat
+import com.cheatdatabase.databinding.UnpublishedCheatsFragmentBinding
 import com.cheatdatabase.listeners.MyUnpublishedCheatsListItemSelectedListener
 
 /**
@@ -24,15 +23,16 @@ class MyUnpublishedCheatsFragment : Fragment(), MyUnpublishedCheatsListItemSelec
     private var myUnpublishedCheatsViewModel: MyUnpublishedCheatsViewModel? = null
     private var myUnpublishedCheatsListViewAdapter: MyUnpublishedCheatsListViewAdapter? = null
 
-    @BindView(R.id.recycler_view)
     lateinit var recyclerView: RecyclerView
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.unpublished_cheats_fragment, container, false)
-        ButterKnife.bind(this, view)
+
+        val binding = UnpublishedCheatsFragmentBinding.inflate(layoutInflater)
+        recyclerView = binding.recyclerView
+
         return view
     }
 
