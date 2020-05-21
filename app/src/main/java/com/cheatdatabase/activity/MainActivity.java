@@ -128,6 +128,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         mFragmentId = getIntent().getIntExtra("mFragmentId", 0);
 
+
         init();
         prepareAdBanner();
 
@@ -165,7 +166,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
      */
     private void prepareAdBanner() {
         Random r = new Random();
-        int randomNumber = r.nextInt((1 - 0) + 1) + 0;
+        int randomNumber = r.nextInt((1) + 1);
 
         if (randomNumber == 0) {
             Log.d(TAG, "Banner: Using InMobi Version: " + InMobiSdk.getVersion());

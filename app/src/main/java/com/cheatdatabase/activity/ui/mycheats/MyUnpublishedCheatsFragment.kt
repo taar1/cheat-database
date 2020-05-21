@@ -13,8 +13,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.cheatdatabase.R
 import com.cheatdatabase.data.model.UnpublishedCheat
-import com.cheatdatabase.databinding.UnpublishedCheatsFragmentBinding
 import com.cheatdatabase.listeners.MyUnpublishedCheatsListItemSelectedListener
+import kotlinx.android.synthetic.main.unpublished_cheats_fragment.view.*
 
 /**
  * This is the MODEL of MVVM.
@@ -30,8 +30,10 @@ class MyUnpublishedCheatsFragment : Fragment(), MyUnpublishedCheatsListItemSelec
     ): View? {
         val view = inflater.inflate(R.layout.unpublished_cheats_fragment, container, false)
 
-        val binding = UnpublishedCheatsFragmentBinding.inflate(layoutInflater)
-        recyclerView = binding.recyclerView
+        recyclerView = view.recycler_view
+
+//        val binding = UnpublishedCheatsFragmentBinding.inflate(layoutInflater)
+//        recyclerView = binding.recyclerView
 
         return view
     }
