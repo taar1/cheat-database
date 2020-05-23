@@ -4,7 +4,7 @@
     <style name="AppThemeBase" parent="Theme.MaterialComponents.NoActionBar">
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
         <item name="colorAccent">@color/color_accent</item>
-<!--        <item name="android:windowNoTitle">true</item>-->
+        <!--        <item name="android:windowNoTitle">true</item>-->
         <item name="android:windowActionBar">false</item>
         <!--<item name="android:textColorPrimary">#fff</item>-->
         <item name="colorControlNormal">#fff</item>
@@ -201,6 +201,18 @@
         <item name="android:textColor">#fff</item>
         <item name="android:text">@string/undo</item>
         <item name="android:fontFamily">@font/lato_regular</item>
+    </style>
+
+    <style name="DefaultButtonStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:paddingLeft">16dp</item>
+        <item name="android:paddingRight">16dp</item>
+        <item name="android:backgroundTint">@color/color_primary_light</item>
+        <item name="android:textAppearance">?android:textAppearanceSmall</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textColor">#fff</item>
+        <item name="android:fontFamily">@font/lato_bold</item>
     </style>
 
     <style name="cheat_detail_view_page_indicator">

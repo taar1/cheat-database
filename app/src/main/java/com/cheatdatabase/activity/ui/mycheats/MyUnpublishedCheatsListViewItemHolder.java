@@ -2,7 +2,7 @@ package com.cheatdatabase.activity.ui.mycheats;
 
 import android.app.Activity;
 import android.view.View;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.cheatdatabase.R;
 import com.cheatdatabase.data.model.UnpublishedCheat;
+import com.google.android.material.button.MaterialButton;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -25,7 +26,7 @@ public class MyUnpublishedCheatsListViewItemHolder extends RecyclerView.ViewHold
     @BindView(R.id.submission_status_text)
     TextView submissionStatusText;
     @BindView(R.id.details_button)
-    Button detailsButton;
+    ImageButton detailsButton;
     @BindView(R.id.game_and_system)
     TextView gameAndSystem;
     @BindView(R.id.cheat_title)
@@ -35,9 +36,9 @@ public class MyUnpublishedCheatsListViewItemHolder extends RecyclerView.ViewHold
     @BindView(R.id.submission_date)
     TextView submissionDate;
     @BindView(R.id.delete_button)
-    Button deleteButton;
+    MaterialButton deleteButton;
     @BindView(R.id.edit_button)
-    Button editButton;
+    MaterialButton editButton;
 
     public final View view;
     private Activity activity;

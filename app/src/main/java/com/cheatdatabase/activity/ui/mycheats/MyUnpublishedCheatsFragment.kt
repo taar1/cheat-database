@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.cheatdatabase.R
 import com.cheatdatabase.data.model.UnpublishedCheat
 import com.cheatdatabase.listeners.MyUnpublishedCheatsListItemSelectedListener
+import kotlinx.android.synthetic.main.toolbar.view.*
 import kotlinx.android.synthetic.main.unpublished_cheats_fragment.view.*
 
 /**
@@ -24,6 +25,7 @@ class MyUnpublishedCheatsFragment : Fragment(), MyUnpublishedCheatsListItemSelec
     private var myUnpublishedCheatsListViewAdapter: MyUnpublishedCheatsListViewAdapter? = null
 
     lateinit var recyclerView: RecyclerView
+    lateinit var mToolbar: androidx.appcompat.widget.Toolbar
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -31,9 +33,20 @@ class MyUnpublishedCheatsFragment : Fragment(), MyUnpublishedCheatsListItemSelec
         val view = inflater.inflate(R.layout.unpublished_cheats_fragment, container, false)
 
         recyclerView = view.recycler_view
+        mToolbar = view.toolbar
 
-//        val binding = UnpublishedCheatsFragmentBinding.inflate(layoutInflater)
-//        recyclerView = binding.recyclerView
+        mToolbar.title = getString(R.string.unpublished_cheats)
+
+
+        // TODO FIXME hier noch "home as up" in toolbar irgendwie einbauen....
+        // TODO FIXME hier noch "home as up" in toolbar irgendwie einbauen....
+        // TODO FIXME hier noch "home as up" in toolbar irgendwie einbauen....
+
+
+        // TODO unpublished cheat card item layout verbessern
+        // TODO unpublished cheat card item layout verbessern
+        // TODO unpublished cheat card item layout verbessern
+
 
         return view
     }
@@ -47,7 +60,7 @@ class MyUnpublishedCheatsFragment : Fragment(), MyUnpublishedCheatsListItemSelec
         setupRecyclerView()
 
         myUnpublishedCheatsViewModel!!.myUnpublishedCheatsRepository.observe(
-            activity!!,
+            requireActivity(),
             Observer { unpublishedCheats ->
                 Toast.makeText(context, "XXXXX Unpublished Cheats onChanged", Toast.LENGTH_LONG)
                     .show()

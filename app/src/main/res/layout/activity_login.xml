@@ -43,7 +43,7 @@
         <LinearLayout
             android:id="@+id/login_form"
             style="@style/LoginFormContainer"
-            android:gravity="end"
+            android:layout_margin="12dp"
             android:orientation="vertical">
 
             <EditText
@@ -74,31 +74,28 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="16dp"
+                android:layout_marginEnd="12dp"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="24dp"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
-                <Button
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/cancel_button"
+                    style="@style/DefaultButtonStyle"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="top"
+                    android:layout_height="48dp"
+                    android:layout_marginRight="8dp"
                     android:layout_weight="1"
-                    android:paddingLeft="32dp"
-                    android:paddingEnd="32dp"
-                    android:paddingRight="32dp"
                     android:text="@string/cancel" />
 
-                <Button
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/login_button"
+                    style="@style/DefaultButtonStyle"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="top"
+                    android:layout_height="48dp"
+                    android:layout_marginLeft="8dp"
                     android:layout_weight="1"
-                    android:background="@drawable/bluedark01_btn_default_holo_dark"
-                    android:paddingLeft="32dp"
-                    android:paddingEnd="32dp"
-                    android:paddingRight="32dp"
                     android:text="@string/action_sign_in_short" />
             </LinearLayout>
 
@@ -107,6 +104,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
+                android:layout_marginEnd="12dp"
                 android:paddingTop="20dp"
                 android:text="@string/login_forgot_password"
                 android:textAppearance="@style/NormalText" />

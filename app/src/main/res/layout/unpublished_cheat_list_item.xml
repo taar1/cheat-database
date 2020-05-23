@@ -5,9 +5,10 @@
         android:id="@+id/card_layout"
         android:layout_width="match_parent"
         android:layout_height="300dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginBottom="8sp"
         android:minHeight="300dp"
         android:orientation="vertical"
         android:padding="2dp"
@@ -129,8 +130,9 @@
                 app:layout_constraintBottom_toTopOf="@+id/delete_button"
                 app:layout_constraintStart_toStartOf="@+id/cheat_title" />
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/delete_button"
+                style="@style/DefaultButtonStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
@@ -138,8 +140,9 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/cheat_title" />
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/edit_button"
+                style="@style/DefaultButtonStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"

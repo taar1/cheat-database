@@ -110,17 +110,22 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4caff62e-c62f-40ca-acf0-73c680b13375" name="Default" comment="Removed unused ad layout files. Builds again!!">
+    <list default="true" id="4caff62e-c62f-40ca-acf0-73c680b13375" name="Default" comment="Fixing instant app crash because of binding. Removing viewBinding in gradle because Kotlin can bind more easily.">
       <change beforePath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/app.iml" beforeDir="false" afterPath="$PROJECT_DIR$/app/app.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/MainActivity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/ui/mycheats/MyUnpublishedCheatsFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/ui/mycheats/MyUnpublishedCheatsFragment.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/ui/mycheats/MyUnpublishedCheatsListActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/ui/mycheats/MyUnpublishedCheatsListActivity.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/ui/mycheats/MyUnpublishedCheatsListViewItemHolder.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/ui/mycheats/MyUnpublishedCheatsListViewItemHolder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/ui/mycheats/UnpublishedCheatsRepository.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/ui/mycheats/UnpublishedCheatsRepository.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/rest/KotlinRestApi.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/rest/KotlinRestApi.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/rest/SafeApiRequest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/rest/SafeApiRequest.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_login.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_login.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_my_cheats_overview.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_my_cheats_overview.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/toolbar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/toolbar.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/unpublished_cheat_list_item.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/unpublished_cheat_list_item.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/unpublished_cheats_fragment.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/unpublished_cheats_fragment.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/res/values/themes.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/themes.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -634,13 +639,6 @@
       <option name="presentableId" value="Default" />
       <updated>1487274191999</updated>
     </task>
-    <task id="LOCAL-00068" summary="Facebook Audience Network Native Ads Implementation">
-      <created>1566849531630</created>
-      <option name="number" value="00068" />
-      <option name="presentableId" value="LOCAL-00068" />
-      <option name="project" value="LOCAL" />
-      <updated>1566849531631</updated>
-    </task>
     <task id="LOCAL-00069" summary="Facebook Audience Network Native Ads Implementation">
       <created>1567230821376</created>
       <option name="number" value="00069" />
@@ -977,7 +975,14 @@
       <option name="project" value="LOCAL" />
       <updated>1589916904974</updated>
     </task>
-    <option name="localTasksCounter" value="117" />
+    <task id="LOCAL-00117" summary="Fixing instant app crash because of binding. Removing viewBinding in gradle because Kotlin can bind more easily.">
+      <created>1590094215737</created>
+      <option name="number" value="00117" />
+      <option name="presentableId" value="LOCAL-00117" />
+      <option name="project" value="LOCAL" />
+      <updated>1590094215739</updated>
+    </task>
+    <option name="localTasksCounter" value="118" />
     <servers />
   </component>
   <component name="TodoView">
@@ -1027,7 +1032,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
-    <MESSAGE value="Adding Cheat Detail Image Gallery using Kotlin and RecyclerView" />
     <MESSAGE value="Completely new cheat screenshot gallery with viewer made with kotlin" />
     <MESSAGE value="Fixing cheat detail view for members and favorites." />
     <MESSAGE value="Fixing a lot of bugs of cheat favorites etc." />
@@ -1052,7 +1056,8 @@
     <MESSAGE value="remove deprecated line" />
     <MESSAGE value="Comment out unneeded gradle code" />
     <MESSAGE value="Removed unused ad layout files. Builds again!!" />
-    <option name="LAST_COMMIT_MESSAGE" value="Removed unused ad layout files. Builds again!!" />
+    <MESSAGE value="Fixing instant app crash because of binding. Removing viewBinding in gradle because Kotlin can bind more easily." />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixing instant app crash because of binding. Removing viewBinding in gradle because Kotlin can bind more easily." />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
@@ -1197,6 +1202,7 @@
     <watches-manager>
       <configuration name="Remote">
         <watch expression="((java.util.ArrayList)cheatList).get(11)" custom="java.util.ArrayList" />
+        <watch expression="((CoordinatorLayout)view).mStatusBarBackground" custom="androidx.coordinatorlayout.widget.CoordinatorLayout" />
       </configuration>
     </watches-manager>
   </component>

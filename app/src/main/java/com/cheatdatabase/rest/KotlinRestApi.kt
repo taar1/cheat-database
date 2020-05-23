@@ -1,6 +1,7 @@
 package com.cheatdatabase.rest
 
 import com.cheatdatabase.data.model.Cheat
+import com.cheatdatabase.data.model.Member
 import com.cheatdatabase.data.model.UnpublishedCheat
 import com.cheatdatabase.helpers.Konstanten
 import com.google.gson.JsonObject
@@ -11,6 +12,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
+import retrofit2.http.GET
 import retrofit2.http.POST
 
 interface KotlinRestApi {
@@ -24,7 +26,7 @@ interface KotlinRestApi {
     @FormUrlEncoded
     @POST("getCheatsByMemberId.php")
     fun getCheatsByMemberId(
-            @Field("memberId") memberId: Int
+        @Field("memberId") memberId: Int
     ): Deferred<List<Cheat>>
 
 
@@ -34,6 +36,13 @@ interface KotlinRestApi {
     @FormUrlEncoded
     @POST("myUnpublishedCheats.php")
     fun getMyUnpublishedCheats(
+        @Field("memberId") memberId: Int,
+        @Field("pw") password_md5: String
+    ): Response<List<UnpublishedCheat>>
+
+    @FormUrlEncoded
+    @POST("myUnpublishedCheats.php")
+    suspend fun getMyUnpublishedCheatsSuspended(
         @Field("memberId") memberId: Int,
         @Field("pw") password_md5: String
     ): Response<List<UnpublishedCheat>>
@@ -49,20 +58,18 @@ interface KotlinRestApi {
     ): Response<JsonObject>
 
 
+    @GET("getMemberTop20.php")
+    suspend fun getTopMembers(): Response<List<Member>>
+
     companion object {
         operator fun invoke(): KotlinRestApi {
 
-//            val okHttpClient = OkHttpClient.Builder()
-//                    //.addInterceptor(requestInterceptor)
-//                    .build()
-
             return Retrofit.Builder()
-//                    .client(okHttpClient)
-                    .baseUrl(Konstanten.BASE_URL_REST)
-                    .addCallAdapterFactory(CoroutineCallAdapterFactory())
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .build()
-                    .create(KotlinRestApi::class.java)
+                .baseUrl(Konstanten.BASE_URL_REST)
+                .addCallAdapterFactory(CoroutineCallAdapterFactory())
+                .addConverterFactory(GsonConverterFactory.create())
+                .build()
+                .create(KotlinRestApi::class.java)
 
         }
     }
