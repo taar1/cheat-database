@@ -5,7 +5,7 @@
     android:id="@+id/outer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.cheatdatabase.activity.ui.mycheats.MyUnpublishedCheatsFragment">
+    tools:context="com.cheatdatabase.activity.ui.mycheats.MyUnpublishedCheatsListFragment">
 
     <include layout="@layout/toolbar" />
 

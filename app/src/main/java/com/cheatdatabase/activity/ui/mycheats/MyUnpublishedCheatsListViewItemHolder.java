@@ -19,12 +19,10 @@ import butterknife.ButterKnife;
 public class MyUnpublishedCheatsListViewItemHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.card_layout)
     CardView cardLayout;
-    @BindView(R.id.reject_reason_layout)
-    RelativeLayout rejectReasonLayout;
+    @BindView(R.id.submission_status_layout)
+    RelativeLayout submissionStatusLayout;
     @BindView(R.id.submission_status)
     TextView submissionStatus;
-    //    @BindView(R.id.submission_status_text)
-//    TextView submissionStatusText;
     @BindView(R.id.details_button)
     ImageButton detailsButton;
     @BindView(R.id.game_and_system)
@@ -51,7 +49,15 @@ public class MyUnpublishedCheatsListViewItemHolder extends RecyclerView.ViewHold
         this.activity = activity;
     }
 
-    public void updateUI(final UnpublishedCheat unpublishedCheat) {
+    public void updateUI(final UnpublishedCheat uc) {
+
+        if (uc.tableInfo.equalsIgnoreCase("cheat_submissions")) {
+            submissionStatus.setText(R.string.pending_approval);
+            submissionStatusLayout.setBackgroundColor(activity.getResources().getColor(R.color.dark_gray, null));
+        } else if (uc.tableInfo.equalsIgnoreCase("rejected_cheats")) {
+            submissionStatus.setText(uc.rejectReason);
+            submissionStatusLayout.setBackgroundColor(activity.getResources().getColor(R.color.dark_red, null));
+        }
 
         //deleteButton.setText("Delete XXX");
 

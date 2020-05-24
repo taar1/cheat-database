@@ -34,7 +34,7 @@ class MyUnpublishedCheatsListActivity : AppCompatActivity() {
 
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
-                .replace(R.id.container, MyUnpublishedCheatsFragment.newInstance())
+                .replace(R.id.container, MyUnpublishedCheatsListFragment.newInstance())
                 .commitNow()
         }
     }

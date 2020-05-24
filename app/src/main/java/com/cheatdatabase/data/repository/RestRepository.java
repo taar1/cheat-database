@@ -62,8 +62,8 @@ public class RestRepository {
         try {
             String password_md5 = AeSimpleMD5.MD5(member.getPassword());
 
-//            Log.d(TAG, "XXXXX getMyUnpublishedCheats MID: " + member.getMid());
-//            Log.d(TAG, "XXXXX getMyUnpublishedCheats MD5: " + password_md5);
+            Log.d(TAG, "XXXXX getMyUnpublishedCheats MID: " + member.getMid());
+            Log.d(TAG, "XXXXX getMyUnpublishedCheats MD5: " + password_md5);
 
             Call<List<UnpublishedCheat>> call = restApi.getMyUnpublishedCheats(member.getMid(), password_md5);
             call.enqueue(new Callback<List<UnpublishedCheat>>() {
@@ -71,6 +71,11 @@ public class RestRepository {
                 public void onResponse(Call<List<UnpublishedCheat>> unpublishedCheats, Response<List<UnpublishedCheat>> response) {
                     Log.d(TAG, "XXXXX onResponse: ");
                     if (response.isSuccessful()) {
+
+                        for (UnpublishedCheat uc : response.body()) {
+                            Log.d(TAG, "XXXXX onResponse: UnpublishedCheat: " + uc.title + " / table info: " + uc.tableInfo + " / cheat-id: " + uc.cheatId);
+                        }
+
                         unpublishedCheatsLiveData.setValue(response.body());
                     }
                 }

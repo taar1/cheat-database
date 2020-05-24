@@ -20,7 +20,7 @@ import kotlinx.android.synthetic.main.unpublished_cheats_fragment.view.*
 /**
  * This is the MODEL of MVVM.
  */
-class MyUnpublishedCheatsFragment : Fragment(), MyUnpublishedCheatsListItemSelectedListener {
+class MyUnpublishedCheatsListFragment : Fragment(), MyUnpublishedCheatsListItemSelectedListener {
     private var myUnpublishedCheatsViewModel: MyUnpublishedCheatsViewModel? = null
     private var myUnpublishedCheatsListViewAdapter: MyUnpublishedCheatsListViewAdapter? = null
 
@@ -28,7 +28,8 @@ class MyUnpublishedCheatsFragment : Fragment(), MyUnpublishedCheatsListItemSelec
     lateinit var mToolbar: androidx.appcompat.widget.Toolbar
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.unpublished_cheats_fragment, container, false)
 
@@ -41,12 +42,6 @@ class MyUnpublishedCheatsFragment : Fragment(), MyUnpublishedCheatsListItemSelec
         // TODO FIXME hier noch "home as up" in toolbar irgendwie einbauen....
         // TODO FIXME hier noch "home as up" in toolbar irgendwie einbauen....
         // TODO FIXME hier noch "home as up" in toolbar irgendwie einbauen....
-
-
-        // TODO unpublished cheat card item layout verbessern
-        // TODO unpublished cheat card item layout verbessern
-        // TODO unpublished cheat card item layout verbessern
-
 
         return view
     }
@@ -95,8 +90,8 @@ class MyUnpublishedCheatsFragment : Fragment(), MyUnpublishedCheatsListItemSelec
 
     companion object {
         private const val TAG = "MyUnpublishedCheatsFt"
-        fun newInstance(): MyUnpublishedCheatsFragment {
-            return MyUnpublishedCheatsFragment()
+        fun newInstance(): MyUnpublishedCheatsListFragment {
+            return MyUnpublishedCheatsListFragment()
         }
     }
 }

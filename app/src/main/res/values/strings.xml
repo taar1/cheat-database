@@ -211,4 +211,5 @@
     <string name="cheats_waiting_for_approval">Cheats waiting for approval and rejected cheats</string>
     <string name="published_cheats">Published Cheats</string>
     <string name="list_of_published_cheats">List of your published Cheats</string>
+    <string name="pending_approval">Pending Approval</string>
 </resources>

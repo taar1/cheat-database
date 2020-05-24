@@ -24,7 +24,7 @@
             app:cardCornerRadius="8dp">
 
             <RelativeLayout
-                android:id="@+id/reject_reason_layout"
+                android:id="@+id/submission_status_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/dark_gray"
@@ -76,8 +76,8 @@
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:text="GameCube // Pikmin"
-                app:layout_constraintStart_toStartOf="@id/reject_reason_layout"
-                app:layout_constraintTop_toBottomOf="@id/reject_reason_layout" />
+                app:layout_constraintStart_toStartOf="@id/submission_status_layout"
+                app:layout_constraintTop_toBottomOf="@id/submission_status_layout" />
 
             <TextView
                 android:id="@+id/cheat_title"
