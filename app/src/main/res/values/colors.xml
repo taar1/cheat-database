@@ -4,6 +4,7 @@
     <color name="gold">#E5C100</color>
     <color name="red">#DD0000</color>
     <color name="gray">#808080</color>
+    <color name="dark_gray">#77808080</color>
     <color name="green">#008000</color>
     <color name="blue">#0000FF</color>
     <color name="black">#000000</color>
@@ -18,6 +19,7 @@
 
     <!-- COLOR THEME - BLUE -->
     <color name="standard_background">#000000</color>
+    <color name="standard_background_transparent">#99000000</color>
     <color name="action_bar">#003160</color>
     <color name="scrollbar">#002447</color>
     <color name="accent_color">#d5e3f2</color>

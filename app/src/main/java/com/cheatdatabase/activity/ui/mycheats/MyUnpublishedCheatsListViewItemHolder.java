@@ -23,8 +23,8 @@ public class MyUnpublishedCheatsListViewItemHolder extends RecyclerView.ViewHold
     RelativeLayout rejectReasonLayout;
     @BindView(R.id.submission_status)
     TextView submissionStatus;
-    @BindView(R.id.submission_status_text)
-    TextView submissionStatusText;
+    //    @BindView(R.id.submission_status_text)
+//    TextView submissionStatusText;
     @BindView(R.id.details_button)
     ImageButton detailsButton;
     @BindView(R.id.game_and_system)

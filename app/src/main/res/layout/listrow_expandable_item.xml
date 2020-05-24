@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:text="Game Name"
-        android:textAppearance="@style/SearchResultListItemTitle"
+        android:textAppearance="@style/MediumTitleBold"
         android:textIsSelectable="false" />
 
     <TextView

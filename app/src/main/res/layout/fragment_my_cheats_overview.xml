@@ -21,7 +21,8 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:background="?android:attr/selectableItemBackground">
 
             <ImageView
                 android:id="@+id/icon_clock"
@@ -77,7 +78,8 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:background="?android:attr/selectableItemBackground">
 
             <ImageView
                 android:id="@+id/icon_published"

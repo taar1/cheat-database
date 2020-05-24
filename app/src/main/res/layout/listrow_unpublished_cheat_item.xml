@@ -20,7 +20,7 @@
         android:ellipsize="end"
         android:maxLines="1"
         android:text="@{cheat.game.gameName.concat(@string/space).concat('('+cheat.system.systemName+')')}"
-        android:textAppearance="@style/SearchResultListItemTitle"
+        android:textAppearance="@style/MediumTitleBold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
