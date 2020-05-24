@@ -112,18 +112,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4caff62e-c62f-40ca-acf0-73c680b13375" name="Default" comment="Improving unpublished cheats card layouts etc.">
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/ui/mycheats/MyUnpublishedCheatsListViewItemHolder.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/ui/mycheats/MyUnpublishedCheatsFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/ui/mycheats/MyUnpublishedCheatsListFragment.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/ui/mycheats/MyUnpublishedCheatsListActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/ui/mycheats/MyUnpublishedCheatsListActivity.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/ui/mycheats/MyUnpublishedCheatsListViewItemHolder.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/ui/mycheats/MyUnpublishedCheatsListViewItemHolder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/ui/mycheats/UnpublishedCheatsRepository.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/ui/mycheats/UnpublishedCheatsRepository.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/data/repository/RestRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/data/repository/RestRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/ui/mycheats/MyUnpublishedCheatsListViewAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/ui/mycheats/MyUnpublishedCheatsListViewAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/ui/mycheats/MyUnpublishedCheatsListViewItemHolder.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/unpublished_cheat_list_item.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/unpublished_cheat_list_item.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/unpublished_cheats_fragment.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/unpublished_cheats_fragment.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/res/values-de/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values-de/strings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/res/values/colors.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/colors.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/themes.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/themes.xml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -637,13 +634,6 @@
       <option name="presentableId" value="Default" />
       <updated>1487274191999</updated>
     </task>
-    <task id="LOCAL-00071" summary="Facebook Audience Network Native Ads Implementation&#10;FACEBOOK NATIVE ADS FINALLY WORKING!">
-      <created>1567540958490</created>
-      <option name="number" value="00071" />
-      <option name="presentableId" value="LOCAL-00071" />
-      <option name="project" value="LOCAL" />
-      <updated>1567540958491</updated>
-    </task>
     <task id="LOCAL-00072" summary="Facebook Audience Network Native Ads Implementation&#10;FACEBOOK NATIVE ADS FINALLY WORKING!">
       <created>1567629798327</created>
       <option name="number" value="00072" />
@@ -980,7 +970,14 @@
       <option name="project" value="LOCAL" />
       <updated>1590322867230</updated>
     </task>
-    <option name="localTasksCounter" value="120" />
+    <task id="LOCAL-00120" summary="Improving unpublished cheats card layouts etc.">
+      <created>1590345437019</created>
+      <option name="number" value="00120" />
+      <option name="presentableId" value="LOCAL-00120" />
+      <option name="project" value="LOCAL" />
+      <updated>1590345437019</updated>
+    </task>
+    <option name="localTasksCounter" value="121" />
     <servers />
   </component>
   <component name="TodoView">
