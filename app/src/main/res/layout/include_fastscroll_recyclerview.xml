@@ -10,7 +10,7 @@
     app:fastScrollPopupBackgroundSize="88dp"
     app:fastScrollPopupBgColor="@color/color_primary_light"
     app:fastScrollPopupPosition="adjacent"
-    app:fastScrollPopupTextColor="@color/accent_color"
+    app:fastScrollPopupTextColor="@color/color_accent"
     app:fastScrollPopupTextSize="44sp"
     app:fastScrollThumbColor="@color/color_primary_light"
     app:fastScrollTrackColor="@color/scrollbar" />

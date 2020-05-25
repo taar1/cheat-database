@@ -220,4 +220,6 @@
     <string name="rejected">Rejected</string>
     <string name="details">Details</string>
     <string name="submitted">Submitted</string>
+    <string name="delete">Delete</string>
+    <string name="unpublished_cheat_are_you_sure_delete">Are you sure to delete this unpublished cheat?</string>
 </resources>

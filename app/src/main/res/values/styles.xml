@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!--OGURY ADS START-->
-    <!--OGURY ADS END-->
-
-
     <style name="BlueRatingBar" parent="Theme.AppCompat">
         <item name="colorControlNormal">#757575</item>
         <item name="colorControlActivated">#0068bf</item>

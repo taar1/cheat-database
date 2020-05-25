@@ -16,6 +16,7 @@
 
     <color name="color_primary_light">#005694</color>
     <color name="color_primary_dark">#003366</color>
+    <color name="color_primary_dark_transparent">#DD003366</color>
     <color name="color_accent">#d5e3f2</color>
     <color name="color_navigation_bar">@color/color_primary_light</color>
 
@@ -24,7 +25,6 @@
     <color name="standard_background_transparent">#99000000</color>
     <color name="action_bar">#003160</color>
     <color name="scrollbar">#002447</color>
-    <color name="accent_color">#d5e3f2</color>
     <!-- COLOR THEME - BLUE - END -->x
 
 </resources>

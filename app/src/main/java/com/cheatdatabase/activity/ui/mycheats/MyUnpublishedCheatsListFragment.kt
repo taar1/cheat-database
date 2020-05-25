@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.cheatdatabase.R
 import com.cheatdatabase.data.model.UnpublishedCheat
 import com.cheatdatabase.listeners.MyUnpublishedCheatsListItemSelectedListener
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.android.synthetic.main.toolbar.view.*
 import kotlinx.android.synthetic.main.unpublished_cheats_fragment.view.*
 
@@ -37,7 +38,6 @@ class MyUnpublishedCheatsListFragment : Fragment(), MyUnpublishedCheatsListItemS
         mToolbar = view.toolbar
 
         mToolbar.title = getString(R.string.unpublished_cheats)
-
 
         // TODO FIXME hier noch "home as up" in toolbar irgendwie einbauen....
         // TODO FIXME hier noch "home as up" in toolbar irgendwie einbauen....
@@ -76,16 +76,31 @@ class MyUnpublishedCheatsListFragment : Fragment(), MyUnpublishedCheatsListItemS
         }
     }
 
-    override fun onCheatClicked(cheat: UnpublishedCheat) {
-        Log.d(TAG, "onCheatClicked: ")
+    override fun onEditCheatButtonClicked(cheat: UnpublishedCheat) {
+        Log.d(TAG, "XXXXX onEditCheatButtonClicked: ")
     }
 
     override fun onRejectReasonButtonClicked(cheat: UnpublishedCheat) {
-        Log.d(TAG, "onRejectReasonButtonClicked: ")
+        Log.d(TAG, "XXXXX onRejectReasonButtonClicked: ")
     }
 
     override fun onDeleteButtonClicked(cheat: UnpublishedCheat) {
-        Log.d(TAG, "onDeleteButtonClicked: ")
+        Log.d(TAG, "XXXXX onDeleteButtonClicked: ")
+
+        MaterialAlertDialogBuilder(context, R.style.SimpleAlertDialog)
+            .setTitle("\"".plus(cheat.title).plus("\""))
+            .setMessage(getString(R.string.unpublished_cheat_are_you_sure_delete))
+            .setNegativeButton(getString(R.string.cancel)) { dialog, which ->
+                // do nothing
+            }
+            .setPositiveButton(getString(R.string.delete)) { dialog, which ->
+                // TODO: delete unpublished cheat and refresh list...
+                // TODO: delete unpublished cheat and refresh list...
+                // TODO: delete unpublished cheat and refresh list...
+                Log.d(TAG, "XXXXX onDeleteButtonClicked: DELETE")
+            }
+            .show()
+
     }
 
     companion object {

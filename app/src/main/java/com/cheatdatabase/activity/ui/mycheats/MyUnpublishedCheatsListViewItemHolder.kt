@@ -13,24 +13,25 @@ import java.text.DateFormat
 import java.util.*
 
 class MyUnpublishedCheatsListViewItemHolder(
-    view: View, activity: Activity
+    val view: View, val activity: Activity
 ) : RecyclerView.ViewHolder(view) {
 
-    val view: View = view
-    val activity: Activity = activity
+    lateinit var deleteButton: MaterialButton
+    lateinit var editButton: MaterialButton
+    lateinit var detailsButton: MaterialButton
 
     var submissionStatusLayout: RelativeLayout? = view.submission_status_layout
     var submissionStatus: TextView? = view.submission_status
-    var detailsButton: MaterialButton? = view.details_button
     var gameAndSystem: TextView? = view.game_and_system
     var cheatTitle: TextView? = view.cheat_title
     var cheatText: TextView? = view.cheat_text
     var submissionDate: TextView? = view.submission_date
-    var deleteButton: MaterialButton? = view.delete_button
-    var editButton: MaterialButton? = view.edit_button
+    //var deleteButton: MaterialButton? = view.delete_button
 
     init {
-        // do some init stuff
+        deleteButton = view.delete_button
+        editButton = view.edit_button
+        detailsButton = view.details_button
     }
 
     fun updateUI(uc: UnpublishedCheat) {
@@ -50,7 +51,7 @@ class MyUnpublishedCheatsListViewItemHolder(
 
 
         if (uc.tableInfo.equals("cheat_submissions", ignoreCase = true)) {
-            detailsButton?.visibility = View.GONE
+            detailsButton.visibility = View.GONE
 
             submissionStatus?.setText(R.string.pending_approval)
 
@@ -62,15 +63,16 @@ class MyUnpublishedCheatsListViewItemHolder(
             submissionStatus?.setText(R.string.rejected)
 
             if (uc.rejectReason.isNullOrEmpty()) {
-                detailsButton?.visibility = View.GONE
+                detailsButton.visibility = View.GONE
             } else {
-                detailsButton?.visibility = View.VISIBLE
+                detailsButton.visibility = View.VISIBLE
             }
 
             submissionStatusLayout?.setBackgroundColor(
                 activity.resources.getColor(R.color.dark_red, null)
             )
         }
+
     }
 
     private fun formatDateToString(date: Date): String? {

@@ -13,6 +13,7 @@
 
         <!-- Star Rating Bar Color -->
         <item name="colorControlActivated">@color/gold</item>
+
     </style>
 
     <style name="GameTitle">
@@ -246,5 +247,13 @@
         <item name="android:textStyle">italic</item>
         <item name="android:textSize">12sp</item>
         <item name="android:fontFamily">@font/lato_regular</item>
+    </style>
+
+    <style name="SimpleAlertDialog">
+        <item name="colorPrimary">@color/color_accent</item> <!-- Button Text -->
+        <item name="colorSecondary">@color/black</item>
+        <item name="colorSurface">@color/color_primary_dark_transparent
+        </item> <!-- Dialog Background -->
+        <item name="colorOnSurface">@color/white</item> <!-- Text -->
     </style>
 </resources>
