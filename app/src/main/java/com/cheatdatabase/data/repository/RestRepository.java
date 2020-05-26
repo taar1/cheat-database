@@ -60,22 +60,15 @@ public class RestRepository {
     public MutableLiveData<List<UnpublishedCheat>> getMyUnpublishedCheats(Member member) {
         MutableLiveData<List<UnpublishedCheat>> unpublishedCheatsLiveData = new MutableLiveData<>();
         try {
-            String password_md5 = AeSimpleMD5.MD5(member.getPassword());
+//            String password_md5 = AeSimpleMD5.MD5(member.getPassword());
+//            Log.d(TAG, "XXXXX getMyUnpublishedCheats MID: " + member.getMid());
+//            Log.d(TAG, "XXXXX getMyUnpublishedCheats MD5: " + password_md5);
 
-            Log.d(TAG, "XXXXX getMyUnpublishedCheats MID: " + member.getMid());
-            Log.d(TAG, "XXXXX getMyUnpublishedCheats MD5: " + password_md5);
-
-            Call<List<UnpublishedCheat>> call = restApi.getMyUnpublishedCheats(member.getMid(), password_md5);
+            Call<List<UnpublishedCheat>> call = restApi.getMyUnpublishedCheats(member.getMid(), AeSimpleMD5.MD5(member.getPassword()));
             call.enqueue(new Callback<List<UnpublishedCheat>>() {
                 @Override
                 public void onResponse(Call<List<UnpublishedCheat>> unpublishedCheats, Response<List<UnpublishedCheat>> response) {
-                    Log.d(TAG, "XXXXX onResponse: ");
                     if (response.isSuccessful()) {
-
-                        for (UnpublishedCheat uc : response.body()) {
-                            Log.d(TAG, "XXXXX onResponse: UnpublishedCheat: " + uc.title + " / table info: " + uc.tableInfo + " / cheat-id: " + uc.cheatId);
-                        }
-
                         unpublishedCheatsLiveData.setValue(response.body());
                     }
                 }
@@ -92,14 +85,14 @@ public class RestRepository {
         return unpublishedCheatsLiveData;
     }
 
+    /**
+     * Deletes an unpublished cheat of a member.
+     *
+     * @param unpublishedCheat
+     * @param member
+     * @return delete_ok | delete_nok | wrong_pw | member_banned | member_not_exist | no_database_access
+     */
     public String deleteUnpublishedCheat(UnpublishedCheat unpublishedCheat, Member member) {
-        // TODO FIXME wie korrekt einen value zurückgeben???
-        // TODO FIXME wie korrekt einen value zurückgeben???
-        // TODO FIXME wie korrekt einen value zurückgeben???
-        // TODO FIXME wie korrekt einen value zurückgeben???
-        // TODO FIXME wie korrekt einen value zurückgeben???
-        // TODO FIXME wie korrekt einen value zurückgeben???
-
         StringBuilder returnValue = new StringBuilder();
         try {
             Call<JsonObject> call = restApi.deleteUnpublishedCheat(member.getMid(), AeSimpleMD5.MD5(member.getPassword()), unpublishedCheat.getId(), unpublishedCheat.getGame().getGameId(), unpublishedCheat.getTableInfo());
@@ -112,7 +105,6 @@ public class RestRepository {
 
                         returnValue.append(responseJsonObject.get("returnValue").getAsString());
                         Log.d(TAG, "deleteUnpublishedCheat SUCCESS: " + returnValue);
-
                     }
                 }
 
@@ -122,7 +114,7 @@ public class RestRepository {
                 }
             });
         } catch (NoSuchAlgorithmException e) {
-            Log.e(TAG, "XXXXX NoSuchAlgorithmException: " + e.getLocalizedMessage());
+            Log.e(TAG, "XXXXX NoSuchAlgorithmException (MD5 Hash of pw error): " + e.getLocalizedMessage());
         }
 
         return returnValue.toString();

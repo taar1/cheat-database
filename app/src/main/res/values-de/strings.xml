@@ -210,7 +210,7 @@
     <string name="error_adding_favorite">Fehler: Der Cheat konnte nicht zu den Favoriten hinzugefügt werden.</string>
     <string name="error_adding_favorites">Fehler: Die Cheats konnten nicht zu den Favoriten hinzugefügt werden.</string>
 
-    <string name="drawer_my_cheats">Meine Cheats</string>
+    <string name="drawer_my_cheats">Meine Cheats <sup><small>BETA</small></sup></string>
     <string name="coming_soon">Kommt bald...</string>
     <string name="unpublished_cheats">Unveröffentlichte Cheats</string>
     <string name="cheats_waiting_for_approval">Cheats die noch geprüft werden und\nabgelehnte Cheats</string>
@@ -222,4 +222,6 @@
     <string name="submitted">Submitted</string>
     <string name="delete">Delete</string>
     <string name="unpublished_cheat_are_you_sure_delete">Are you sure to delete this unpublished cheat?</string>
+    <string name="cheat_deleted">The cheat has been deleted.</string>
+    <string name="no_database_access">Problem accessing the database.</string>
 </resources>

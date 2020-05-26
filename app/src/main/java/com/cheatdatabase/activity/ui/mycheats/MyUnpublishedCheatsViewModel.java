@@ -82,12 +82,15 @@ public class MyUnpublishedCheatsViewModel extends AndroidViewModel {
 
 
     public String deleteUnpublishedCheat(UnpublishedCheat unpublishedCheat) {
-        deleteUnpublishedCheatFromRepository(unpublishedCheat);
-        return "test";
+//        deleteUnpublishedCheatFromRepository(unpublishedCheat);
+//        return "test";
+
+
+        return restRepository.deleteUnpublishedCheat(unpublishedCheat, member);
     }
 
-    public void deleteUnpublishedCheatFromRepository(UnpublishedCheat unpublishedCheat) {
-        restRepository.deleteUnpublishedCheat(unpublishedCheat, member);
-    }
+//    public void deleteUnpublishedCheatFromRepository(UnpublishedCheat unpublishedCheat) {
+//        restRepository.deleteUnpublishedCheat(unpublishedCheat, member);
+//    }
 
 }

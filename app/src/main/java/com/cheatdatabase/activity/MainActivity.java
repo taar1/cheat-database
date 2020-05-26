@@ -11,6 +11,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.SearchRecentSuggestions;
+import android.text.Html;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -445,7 +446,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void showMyCheatsFragment() {
-        mToolbar.setTitle(R.string.drawer_my_cheats);
+        mToolbar.setTitle(Html.fromHtml(getString(R.string.drawer_my_cheats)));
         fragmentTransaction.addToBackStack(MyCheatsFragment.class.getSimpleName());
 
         MyCheatsFragment myCheatsFragment = new MyCheatsFragment(this, settings);
