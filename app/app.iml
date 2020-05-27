@@ -72,10 +72,10 @@
       <sourceFolder url="file://$MODULE_DIR$/build/generated/source/kapt/googlePlayFlavorDebug" isTestSource="false" generated="true" />
       <sourceFolder url="file://$MODULE_DIR$/build/generated/source/buildConfig/googlePlayFlavor/debug" isTestSource="false" generated="true" />
       <sourceFolder url="file://$MODULE_DIR$/build/generated/aidl_source_output_dir/googlePlayFlavorDebug/out" isTestSource="false" generated="true" />
-      <sourceFolder url="file://$MODULE_DIR$/build/generated/source/kaptKotlin/googlePlayFlavorDebug" isTestSource="false" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/build/generated/ap_generated_sources/googlePlayFlavorDebug/out" isTestSource="false" generated="true" />
       <sourceFolder url="file://$MODULE_DIR$/build/generated/renderscript_source_output_dir/googlePlayFlavorDebug/out" isTestSource="false" generated="true" />
       <sourceFolder url="file://$MODULE_DIR$/build/generated/source/navigation-args/googlePlayFlavor/debug" isTestSource="false" generated="true" />
-      <sourceFolder url="file://$MODULE_DIR$/build/generated/ap_generated_sources/googlePlayFlavorDebug/out" isTestSource="false" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/build/generated/source/kaptKotlin/googlePlayFlavorDebug" isTestSource="false" generated="true" />
       <sourceFolder url="file://$MODULE_DIR$/build/generated/fabric/res/googlePlayFlavor/debug" type="java-resource" generated="true" />
       <sourceFolder url="file://$MODULE_DIR$/build/generated/res/google-services/googlePlayFlavor/debug" type="java-resource" generated="true" />
       <sourceFolder url="file://$MODULE_DIR$/build/generated/res/rs/googlePlayFlavor/debug" type="java-resource" generated="true" />
@@ -179,15 +179,15 @@
       <library name="Gradle: kaptGeneratedClasses">
         <CLASSES>
           <root url="file://$MODULE_DIR$/build/tmp/kapt3/classes/googlePlayFlavorDebugAndroidTest" />
-          <root url="file://$MODULE_DIR$/build/tmp/kapt3/classes/googlePlayFlavorReleaseUnitTest" />
           <root url="file://$MODULE_DIR$/build/tmp/kapt3/classes/amazonFlavorDebug" />
           <root url="file://$MODULE_DIR$/build/tmp/kapt3/classes/googlePlayFlavorDebugUnitTest" />
           <root url="file://$MODULE_DIR$/build/tmp/kapt3/classes/amazonFlavorRelease" />
           <root url="file://$MODULE_DIR$/build/tmp/kapt3/classes/amazonFlavorReleaseUnitTest" />
-          <root url="file://$MODULE_DIR$/build/tmp/kapt3/classes/googlePlayFlavorDebug" />
-          <root url="file://$MODULE_DIR$/build/tmp/kapt3/classes/amazonFlavorDebugUnitTest" />
-          <root url="file://$MODULE_DIR$/build/tmp/kapt3/classes/amazonFlavorDebugAndroidTest" />
           <root url="file://$MODULE_DIR$/build/tmp/kapt3/classes/googlePlayFlavorRelease" />
+          <root url="file://$MODULE_DIR$/build/tmp/kapt3/classes/amazonFlavorDebugAndroidTest" />
+          <root url="file://$MODULE_DIR$/build/tmp/kapt3/classes/amazonFlavorDebugUnitTest" />
+          <root url="file://$MODULE_DIR$/build/tmp/kapt3/classes/googlePlayFlavorDebug" />
+          <root url="file://$MODULE_DIR$/build/tmp/kapt3/classes/googlePlayFlavorReleaseUnitTest" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />

@@ -135,7 +135,7 @@ class MyUnpublishedCheatsListFragment : Fragment(), MyUnpublishedCheatsListItemS
             .show()
     }
 
-    fun displaySnackbarWithTranslatedMessage(stringResourceKey: String) {
+    private fun displaySnackbarWithTranslatedMessage(stringResourceKey: String) {
 
         val translatedReturnValue: String = when (stringResourceKey) {
             "delete_ok" -> getString(R.string.cheat_deleted)

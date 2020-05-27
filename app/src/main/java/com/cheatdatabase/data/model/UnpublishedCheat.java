@@ -21,6 +21,9 @@ public class UnpublishedCheat implements Parcelable {
     @PrimaryKey(autoGenerate = true)
     public int id;
 
+    /**
+     * Unique ID in table cheat_submissions or rejected_cheats in the server database.
+     */
     @ColumnInfo(name = "cheatId")
     @SerializedName("cheatId")
     public int cheatId;

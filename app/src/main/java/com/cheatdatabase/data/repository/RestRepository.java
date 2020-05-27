@@ -94,8 +94,14 @@ public class RestRepository {
      */
     public String deleteUnpublishedCheat(UnpublishedCheat unpublishedCheat, Member member) {
         StringBuilder returnValue = new StringBuilder();
+
+        // TODO FIXME wie komme ich an den return value can? callbacks??
+        // TODO FIXME wie komme ich an den return value can? callbacks??
+        // TODO FIXME wie komme ich an den return value can? callbacks??
+        // TODO FIXME wie komme ich an den return value can? callbacks??
+
         try {
-            Call<JsonObject> call = restApi.deleteUnpublishedCheat(member.getMid(), AeSimpleMD5.MD5(member.getPassword()), unpublishedCheat.getId(), unpublishedCheat.getGame().getGameId(), unpublishedCheat.getTableInfo());
+            Call<JsonObject> call = restApi.deleteUnpublishedCheat(member.getMid(), AeSimpleMD5.MD5(member.getPassword()), unpublishedCheat.getCheatId(), unpublishedCheat.getGame().getGameId(), unpublishedCheat.getTableInfo());
             call.enqueue(new Callback<JsonObject>() {
                 @Override
                 public void onResponse(Call<JsonObject> unpublishedCheats, Response<JsonObject> response) {
@@ -104,7 +110,7 @@ public class RestRepository {
                         JsonObject responseJsonObject = response.body();
 
                         returnValue.append(responseJsonObject.get("returnValue").getAsString());
-                        Log.d(TAG, "deleteUnpublishedCheat SUCCESS: " + returnValue);
+                        Log.d(TAG, "XXXXX deleteUnpublishedCheat SUCCESS: " + returnValue);
                     }
                 }
 
