@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.cheatdatabase.data.model.Member
 
-class TopMembersViewModel(private val repository: UnpublishedCheatsRepository) :
+class TopMembersViewModel(private val repositoryUnused: UnpublishedCheatsRepositoryUnused) :
     ViewModel() {
 
     // Beispiel anhand dieses tutorials: https://www.youtube.com/watch?v=3Uhorh2o1dg&list=PLk7v1Z2rk4hjtIT9TCKIcl2YJYfDlZ_4v&index=3
@@ -16,7 +16,7 @@ class TopMembersViewModel(private val repository: UnpublishedCheatsRepository) :
         get() = _topMembers
 
     suspend fun getTopMembers() {
-        val topMembers = repository.getTopMembers()
+        val topMembers = repositoryUnused.getTopMembers()
         _topMembers.value = topMembers
     }
 

@@ -92,39 +92,49 @@ public class RestRepository {
      * @param member
      * @return delete_ok | delete_nok | wrong_pw | member_banned | member_not_exist | no_database_access
      */
-    public String deleteUnpublishedCheat(UnpublishedCheat unpublishedCheat, Member member) {
-        StringBuilder returnValue = new StringBuilder();
-
-        // TODO FIXME wie komme ich an den return value can? callbacks??
-        // TODO FIXME wie komme ich an den return value can? callbacks??
-        // TODO FIXME wie komme ich an den return value can? callbacks??
-        // TODO FIXME wie komme ich an den return value can? callbacks??
-
+    public Call<JsonObject> deleteUnpublishedCheat(UnpublishedCheat unpublishedCheat, Member member) {
+        Call<JsonObject> call = null;
         try {
-            Call<JsonObject> call = restApi.deleteUnpublishedCheat(member.getMid(), AeSimpleMD5.MD5(member.getPassword()), unpublishedCheat.getCheatId(), unpublishedCheat.getGame().getGameId(), unpublishedCheat.getTableInfo());
-            call.enqueue(new Callback<JsonObject>() {
-                @Override
-                public void onResponse(Call<JsonObject> unpublishedCheats, Response<JsonObject> response) {
-                    Log.d(TAG, "XXXXX onResponse: ");
-                    if (response.isSuccessful()) {
-                        JsonObject responseJsonObject = response.body();
-
-                        returnValue.append(responseJsonObject.get("returnValue").getAsString());
-                        Log.d(TAG, "XXXXX deleteUnpublishedCheat SUCCESS: " + returnValue);
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<JsonObject> call, Throwable e) {
-                    Log.e(TAG, "XXXXX getMyUnpublishedCheats onFailure: " + e.getLocalizedMessage(), e);
-                }
-            });
+            call = restApi.deleteUnpublishedCheat(member.getMid(), AeSimpleMD5.MD5(member.getPassword()), unpublishedCheat.getCheatId(), unpublishedCheat.getGame().getGameId(), unpublishedCheat.getTableInfo());
         } catch (NoSuchAlgorithmException e) {
-            Log.e(TAG, "XXXXX NoSuchAlgorithmException (MD5 Hash of pw error): " + e.getLocalizedMessage());
+            e.printStackTrace();
         }
-
-        return returnValue.toString();
+        return call;
     }
+
+//    public String deleteUnpublishedCheat(UnpublishedCheat unpublishedCheat, Member member) {
+//        StringBuilder returnValue = new StringBuilder();
+//
+//        // TODO FIXME wie komme ich an den return value can? callbacks??
+//        // TODO FIXME wie komme ich an den return value can? callbacks??
+//        // TODO FIXME wie komme ich an den return value can? callbacks??
+//        // TODO FIXME wie komme ich an den return value can? callbacks??
+//
+//        try {
+//            Call<JsonObject> call = restApi.deleteUnpublishedCheat(member.getMid(), AeSimpleMD5.MD5(member.getPassword()), unpublishedCheat.getCheatId(), unpublishedCheat.getGame().getGameId(), unpublishedCheat.getTableInfo());
+//            call.enqueue(new Callback<JsonObject>() {
+//                @Override
+//                public void onResponse(Call<JsonObject> unpublishedCheats, Response<JsonObject> response) {
+//                    Log.d(TAG, "XXXXX onResponse: ");
+//                    if (response.isSuccessful()) {
+//                        JsonObject responseJsonObject = response.body();
+//
+//                        returnValue.append(responseJsonObject.get("returnValue").getAsString());
+//                        Log.d(TAG, "XXXXX deleteUnpublishedCheat SUCCESS: " + returnValue);
+//                    }
+//                }
+//
+//                @Override
+//                public void onFailure(Call<JsonObject> call, Throwable e) {
+//                    Log.e(TAG, "XXXXX getMyUnpublishedCheats onFailure: " + e.getLocalizedMessage(), e);
+//                }
+//            });
+//        } catch (NoSuchAlgorithmException e) {
+//            Log.e(TAG, "XXXXX NoSuchAlgorithmException (MD5 Hash of pw error): " + e.getLocalizedMessage());
+//        }
+//
+//        return returnValue.toString();
+//    }
 
     private void init() {
         OkHttpClient okHttpClient = new OkHttpClient.Builder().build();

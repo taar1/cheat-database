@@ -6,8 +6,7 @@
     </shared>
   </component>
   <component name="AndroidLogFilters">
-    <option name="TOOL_WINDOW_CUSTOM_FILTER" value="XXXXX" />
-    <option name="TOOL_WINDOW_LOG_LEVEL" value="verbose" />
+    <option name="TOOL_WINDOW_LOG_LEVEL" value="error" />
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="No Filters" />
   </component>
   <component name="AvailableLibraryUpdateStorage">
@@ -111,11 +110,16 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4caff62e-c62f-40ca-acf0-73c680b13375" name="Default" comment="Few small code improvements">
+    <list default="true" id="4caff62e-c62f-40ca-acf0-73c680b13375" name="Default" comment="UnpublishedCheats. created alert dialog for deleting unpublished cheat. updated themes.xml and style.xml, removed unused files, added more colors.">
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/ui/mycheats/MyUnpublishedCheatsViewModel.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/app.iml" beforeDir="false" afterPath="$PROJECT_DIR$/app/app.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/ui/mycheats/MyUnpublishedCheatsListActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/ui/mycheats/MyUnpublishedCheatsListActivity.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/ui/mycheats/MyUnpublishedCheatsListFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/ui/mycheats/MyUnpublishedCheatsListFragment.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/data/model/UnpublishedCheat.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/data/model/UnpublishedCheat.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/ui/mycheats/MyUnpublishedCheatsViewModel.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/ui/mycheats/TopMembersViewModel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/ui/mycheats/TopMembersViewModel.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/ui/mycheats/UnpublishedCheatsRepository.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/ui/mycheats/UnpublishedCheatsRepositoryUnused.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/data/repository/RestRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/data/repository/RestRepository.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -127,7 +131,6 @@
   <component name="CreatePatchCommitExecutor">
     <option name="PATCH_PATH" value="" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="fd8b7031" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
@@ -149,35 +152,6 @@
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
                 <item name="cheat-database" type="f1a62948:ProjectNode" />
               </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="cheat-database" type="f1a62948:ProjectNode" />
-                <item name="cheat-database" type="2d1252cf:ModuleNode" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="cheat-database" type="f1a62948:ProjectNode" />
-                <item name="cheat-database" type="2d1252cf:ModuleNode" />
-                <item name="Tasks" type="e4a08cd1:TasksNode" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="cheat-database" type="f1a62948:ProjectNode" />
-                <item name="cheat-database" type="2d1252cf:ModuleNode" />
-                <item name="Tasks" type="e4a08cd1:TasksNode" />
-                <item name="android" type="c8890929:TasksNode$1" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="cheat-database" type="f1a62948:ProjectNode" />
-                <item name=":app" type="2d1252cf:ModuleNode" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="cheat-database" type="f1a62948:ProjectNode" />
-                <item name=":app" type="2d1252cf:ModuleNode" />
-                <item name="Tasks" type="e4a08cd1:TasksNode" />
-              </path>
             </expand>
             <select />
           </tree_state>
@@ -196,10 +170,11 @@
         <option value="Interface" />
         <option value="layoutResourceFile" />
         <option value="layoutResourceFile_vertical" />
-        <option value="Kotlin Interface" />
         <option value="Class" />
         <option value="Singleton" />
         <option value="Kotlin Class" />
+        <option value="Kotlin Object" />
+        <option value="Kotlin Interface" />
       </list>
     </option>
   </component>
@@ -237,7 +212,6 @@
     <property name="SHOW_ALL_PROCESSES" value="false" />
     <property name="ScreenshotViewer.SavePath" value="$USER_HOME$/Desktop" />
     <property name="SearchEverywhereHistoryKey" value="adapter&#9;FILE&#9;file:///Users/dominikerbsland/workspace/app/Android/cheat-database/app/src/main/java/com/cheatdatabase/adapters/GamesBySystemRecycleListViewAdapter.java&#10;Androidman&#9;FILE&#9;file:///Users/dominikerbsland/workspace/app/Android/cheat-database/app/src/main/AndroidManifest.xml&#10;topada&#9;FILE&#9;file:///Users/dominikerbsland/workspace/app/Android/cheat-database/app/src/main/java/com/cheatdatabase/adapters/TopMembersListViewAdapter.java&#10;topm&#9;FILE&#9;file:///Users/dominikerbsland/workspace/app/Android/cheat-database/app/src/main/res/layout/topmembers_list_item.xml&#10;drawer&#9;FILE&#9;file:///Users/dominikerbsland/workspace/app/Android/cheat-database/app/src/main/res/layout/drawer_header.xml&#10;_main&#9;FILE&#9;file:///Users/dominikerbsland/workspace/app/Android/cheat-database/app/src/main/res/layout/activity_main.xml&#10;manifest&#9;FILE&#9;file:///Users/dominikerbsland/workspace/app/Android/cheat-database/app/src/main/AndroidManifest.xml&#10;style&#9;FILE&#9;file:///Users/dominikerbsland/workspace/app/Android/cheat-database/app/src/main/res/values/styles.xml&#10;rating&#9;PSI&#9;JAVA://com.cheatdatabase.R.id#rating_layout&#10;include&#9;FILE&#9;file:///Users/dominikerbsland/workspace/app/Android/cheat-database/app/src/main/res/layout/include_fastscroll_recyclerview.xml&#10;cheatlist&#9;FILE&#9;file:///Users/dominikerbsland/workspace/app/Android/cheat-database/app/src/main/res/layout/activity_cheat_list.xml&#10;actigame&#9;FILE&#9;file:///Users/dominikerbsland/workspace/app/Android/cheat-database/app/src/main/res/layout/activity_game_list.xml&#10;string&#9;FILE&#9;file:///Users/dominikerbsland/workspace/app/Android/cheat-database/app/src/main/res/values/strings.xml&#10;main&#9;FILE&#9;file:///Users/dominikerbsland/workspace/app/Android/cheat-database/app/src/main/res/layout/activity_main.xml&#10;ma&#9;FILE&#9;file://C:/Users/taar1/Development/Android/GitHub/cheat-database/app/src/main/res/layout/activity_main.xml&#10;actimain&#9;FILE&#9;file://C:/Users/taar1/Development/Android/GitHub/cheat-database/app/src/main/res/layout/activity_main.xml&#10;activity_game&#9;FILE&#9;file://C:/Users/taar1/Development/Android/AndroidStudioProjects/Cheat-Database/app/src/main/res/layout-large-land/activity_gamelist.xml&#10;listrow_gamelist&#9;PSI&#9;JAVA://com.cheatdatabase.R.layout#listrow_gamelist&#10;listrow_game_item&#9;FILE&#9;file://C:/Users/taar1/Development/Android/AndroidStudioProjects/Cheat-Database/app/src/main/res/layout/listrow_game_item.xml&#10;game list&#9;PSI&#9;JAVA://com.cheatdatabase.R.layout#gamesearch_listrow_details&#10;gamelist&#9;PSI&#9;JAVA://com.cheatdatabase.R.layout#listrow_gamelist" />
-    <property name="SelectDeploymentTargetsDialog.selectedDevices" value="6ea89d94&#10;fd8b7031" />
     <property name="UI_DESIGNER_EDITOR_MODE.NlPaletteManager-NlEditorPanel.WIDTH" value="661" />
     <property name="UI_DESIGNER_EDITOR_MODE.NlPaletteManager-NlPreviewForm.SHOW" value="false" />
     <property name="UI_DESIGNER_EDITOR_MODE.NlPropertiesWindowManager-NlEditorPanel.WIDTH" value="460" />
@@ -253,7 +227,7 @@
     <property name="project.structure.last.edited" value="Suggestions" />
     <property name="project.structure.proportion" value="0.17" />
     <property name="project.structure.side.proportion" value="0.2" />
-    <property name="settings.editor.selected.configurable" value="preferences.sourceCode.Kotlin" />
+    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
   </component>
   <component name="PsdUISettings">
     <option name="LAST_EDITED_BUILD_TYPE" value="debug" />
@@ -266,6 +240,7 @@
       <recent name="com.cheatdatabase.data.network" />
     </key>
     <key name="CopyKotlinDeclarationDialog.RECENTS_KEY">
+      <recent name="com.cheatdatabase.activity.ui.mycheats" />
       <recent name="com.cheatdatabase.adapters" />
     </key>
     <key name="android.template.packageName">
@@ -631,6 +606,27 @@
       <option name="presentableId" value="Default" />
       <updated>1487274191999</updated>
     </task>
+    <task id="LOCAL-00072" summary="Facebook Audience Network Native Ads Implementation&#10;FACEBOOK NATIVE ADS FINALLY WORKING!">
+      <created>1567629798327</created>
+      <option name="number" value="00072" />
+      <option name="presentableId" value="LOCAL-00072" />
+      <option name="project" value="LOCAL" />
+      <updated>1567629798327</updated>
+    </task>
+    <task id="LOCAL-00073" summary="Facebook Audience Network Native Ads Implementation&#10;FACEBOOK NATIVE ADS FINALLY WORKING!">
+      <created>1567712952533</created>
+      <option name="number" value="00073" />
+      <option name="presentableId" value="LOCAL-00073" />
+      <option name="project" value="LOCAL" />
+      <updated>1567712952535</updated>
+    </task>
+    <task id="LOCAL-00074" summary="Bug fixes for hotfix version 2.5.2">
+      <created>1568042217801</created>
+      <option name="number" value="00074" />
+      <option name="presentableId" value="LOCAL-00074" />
+      <option name="project" value="LOCAL" />
+      <updated>1568042217801</updated>
+    </task>
     <task id="LOCAL-00075" summary="Bug Fix">
       <created>1568060841210</created>
       <option name="number" value="00075" />
@@ -953,28 +949,7 @@
       <option name="project" value="LOCAL" />
       <updated>1590345437019</updated>
     </task>
-    <task id="LOCAL-00121" summary="Further improving the unpublished cheats view(s)">
-      <created>1590352430645</created>
-      <option name="number" value="00121" />
-      <option name="presentableId" value="LOCAL-00121" />
-      <option name="project" value="LOCAL" />
-      <updated>1590352430645</updated>
-    </task>
-    <task id="LOCAL-00122" summary="Implement delete unpublished cheat functionality (not working yet)">
-      <created>1590523885033</created>
-      <option name="number" value="00122" />
-      <option name="presentableId" value="LOCAL-00122" />
-      <option name="project" value="LOCAL" />
-      <updated>1590523885033</updated>
-    </task>
-    <task id="LOCAL-00123" summary="Few small code improvements">
-      <created>1590556839173</created>
-      <option name="number" value="00123" />
-      <option name="presentableId" value="LOCAL-00123" />
-      <option name="project" value="LOCAL" />
-      <updated>1590556839173</updated>
-    </task>
-    <option name="localTasksCounter" value="124" />
+    <option name="localTasksCounter" value="121" />
     <servers />
   </component>
   <component name="TodoView">
@@ -1024,6 +999,9 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
+    <MESSAGE value="Fixing a lot of bugs of cheat favorites etc." />
+    <MESSAGE value="Improved DB schema" />
+    <MESSAGE value="a try to merge with room" />
     <MESSAGE value="Version upgrade" />
     <MESSAGE value="SUCCESSFUL MERGING WITH ROOM&#10;Fixing bugs related to DB access on UI thread now." />
     <MESSAGE value="Fixing bugs related to DB access on UI thread" />
@@ -1046,10 +1024,7 @@
     <MESSAGE value="Fixing instant app crash because of binding. Removing viewBinding in gradle because Kotlin can bind more easily." />
     <MESSAGE value="Bug fixes in &quot;my cheats&quot; section." />
     <MESSAGE value="Improving unpublished cheats card layouts etc." />
-    <MESSAGE value="Further improving the unpublished cheats view(s)" />
-    <MESSAGE value="Implement delete unpublished cheat functionality (not working yet)" />
-    <MESSAGE value="Few small code improvements" />
-    <option name="LAST_COMMIT_MESSAGE" value="Few small code improvements" />
+    <option name="LAST_COMMIT_MESSAGE" value="Improving unpublished cheats card layouts etc." />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
@@ -1087,42 +1062,6 @@
           <line>498</line>
           <properties class="com.cheatdatabase.helpers.Tools" method="saveScreenshotsToSdCard" />
           <option name="timeStamp" value="213" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/data/repository/RestRepository.java</url>
-          <line>116</line>
-          <properties method="onFailure" />
-          <option name="timeStamp" value="223" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/data/repository/RestRepository.java</url>
-          <line>105</line>
-          <properties method="onResponse" />
-          <option name="timeStamp" value="224" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/data/repository/RestRepository.java</url>
-          <line>94</line>
-          <properties class="com.cheatdatabase.data.repository.RestRepository" method="deleteUnpublishedCheat" />
-          <option name="timeStamp" value="225" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/data/repository/RestRepository.java</url>
-          <line>69</line>
-          <properties method="onResponse" />
-          <option name="timeStamp" value="226" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/data/repository/RestRepository.java</url>
-          <line>76</line>
-          <properties method="onFailure" />
-          <option name="timeStamp" value="227" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/data/repository/RestRepository.java</url>
-          <line>59</line>
-          <properties class="com.cheatdatabase.data.repository.RestRepository" method="getMyUnpublishedCheats" />
-          <option name="timeStamp" value="228" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/helpers/Tools.java</url>
@@ -1199,16 +1138,6 @@
           <line>41</line>
           <option name="timeStamp" value="218" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/data/repository/RestRepository.java</url>
-          <line>106</line>
-          <option name="timeStamp" value="230" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/data/repository/RestRepository.java</url>
-          <line>117</line>
-          <option name="timeStamp" value="231" />
-        </line-breakpoint>
         <line-breakpoint enabled="true" type="kotlin-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/holders/CheatViewGalleryCardHolder.kt</url>
           <line>33</line>
@@ -1220,9 +1149,9 @@
           <option name="timeStamp" value="220" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="kotlin-line">
-          <url>file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/ui/mycheats/MyUnpublishedCheatsListFragment.kt</url>
-          <line>139</line>
-          <option name="timeStamp" value="229" />
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/ui/mycheats/UnpublishedCheatsRepositoryKotlin.kt</url>
+          <line>16</line>
+          <option name="timeStamp" value="223" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="kotlin-function">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/adapters/CheatViewGalleryListAdapter.kt</url>

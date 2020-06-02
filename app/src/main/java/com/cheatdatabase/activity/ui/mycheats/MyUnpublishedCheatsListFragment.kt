@@ -8,35 +8,38 @@ import android.view.ViewGroup
 import android.widget.ProgressBar
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.cheatdatabase.R
 import com.cheatdatabase.data.model.UnpublishedCheat
 import com.cheatdatabase.helpers.Tools
 import com.cheatdatabase.listeners.MyUnpublishedCheatsListItemSelectedListener
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.gson.JsonObject
 import kotlinx.android.synthetic.main.toolbar.view.*
 import kotlinx.android.synthetic.main.unpublished_cheats_fragment.view.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 
 /**
  * This is the MODEL of MVVM.
  */
-class MyUnpublishedCheatsListFragment : Fragment(), MyUnpublishedCheatsListItemSelectedListener {
+class MyUnpublishedCheatsListFragment : Fragment(), MyUnpublishedCheatsListItemSelectedListener,
+    MyUnpublishedCheatsListener {
     private var myUnpublishedCheatsViewModel: MyUnpublishedCheatsViewModel? = null
     private var myUnpublishedCheatsListViewAdapter: MyUnpublishedCheatsListViewAdapter? = null
 
     //    lateinit var emptyListLayout: RelativeLayout
 //    lateinit var emptyLabel: TextView
+//    lateinit var swipeRefreshLayout: SwipeRefreshLayout
     lateinit var outerLayout: CoordinatorLayout
     lateinit var recyclerView: RecyclerView
     lateinit var progressBar: ProgressBar
     lateinit var mToolbar: androidx.appcompat.widget.Toolbar
-    lateinit var swipeRefreshLayout: SwipeRefreshLayout
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -73,21 +76,26 @@ class MyUnpublishedCheatsListFragment : Fragment(), MyUnpublishedCheatsListItemS
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+
+
         myUnpublishedCheatsViewModel =
             ViewModelProvider(this).get(MyUnpublishedCheatsViewModel::class.java)
-        myUnpublishedCheatsViewModel!!.init()
+//        myUnpublishedCheatsViewModel!!.init()
+        myUnpublishedCheatsViewModel!!.fetchListener = this
 
         setupRecyclerView()
 
-        // Getting unpublished cheats from server
-        myUnpublishedCheatsViewModel!!.myUnpublishedCheatsRepository.observe(
-            requireActivity(),
-            Observer { unpublishedCheats ->
-                myUnpublishedCheatsListViewAdapter!!.setUnpublishedCheats(unpublishedCheats)
-                myUnpublishedCheatsListViewAdapter!!.notifyDataSetChanged()
+        myUnpublishedCheatsViewModel?.getMyUnpublishedCheatsByCoroutines()
 
-                progressBar.visibility = View.GONE
-            })
+        // Getting unpublished cheats from server
+//        myUnpublishedCheatsViewModel!!.myUnpublishedCheats!!.observe(
+//            requireActivity(),
+//            Observer { unpublishedCheats ->
+//                myUnpublishedCheatsListViewAdapter!!.setUnpublishedCheats(unpublishedCheats)
+//                myUnpublishedCheatsListViewAdapter!!.notifyDataSetChanged()
+//
+//                progressBar.visibility = View.GONE
+//            })
     }
 
     private fun setupRecyclerView() {
@@ -104,6 +112,19 @@ class MyUnpublishedCheatsListFragment : Fragment(), MyUnpublishedCheatsListItemS
         }
     }
 
+    override fun fetchUnpublishedCheatsSuccess(unpublishedCheats: List<UnpublishedCheat>) {
+        myUnpublishedCheatsListViewAdapter!!.setUnpublishedCheats(unpublishedCheats)
+        myUnpublishedCheatsListViewAdapter!!.notifyDataSetChanged()
+
+        progressBar.visibility = View.GONE
+
+        Tools.showSnackbar(outerLayout, "SSUCCESSSSSSSSS")
+    }
+
+    override fun fetchUnpublishedCheatsFail(message: String) {
+        Tools.showSnackbar(outerLayout, message)
+    }
+
     override fun onEditCheatButtonClicked(cheat: UnpublishedCheat) {
         Log.d(TAG, "XXXXX onEditCheatButtonClicked: ")
     }
@@ -118,36 +139,54 @@ class MyUnpublishedCheatsListFragment : Fragment(), MyUnpublishedCheatsListItemS
         MaterialAlertDialogBuilder(context, R.style.SimpleAlertDialog)
             .setTitle("\"".plus(cheat.title).plus("\""))
             .setMessage(getString(R.string.unpublished_cheat_are_you_sure_delete))
-            .setNegativeButton(getString(R.string.cancel)) { dialog, which ->
+            .setNegativeButton(getString(R.string.cancel)) { _, _ ->
                 // do nothing
             }
             .setPositiveButton(getString(R.string.delete)) { dialog, which ->
-                // TODO: delete unpublished cheat and refresh list...
                 Log.d(TAG, "XXXXX onDeleteButtonClicked: DELETE")
-
-                displaySnackbarWithTranslatedMessage(
-                    myUnpublishedCheatsViewModel!!.deleteUnpublishedCheat(
-                        cheat
-                    )
-                )
-                myUnpublishedCheatsListViewAdapter!!.notifyDataSetChanged()
+                deleteUnpublishedCheatAndDisplaySnackbar(cheat)
             }
             .show()
     }
 
-    private fun displaySnackbarWithTranslatedMessage(stringResourceKey: String) {
+    private fun deleteUnpublishedCheatAndDisplaySnackbar(cheat: UnpublishedCheat) {
+        myUnpublishedCheatsViewModel!!.deleteUnpublishedCheat(cheat)
+            .enqueue(object : Callback<JsonObject?> {
+                override fun onResponse(
+                    unpublishedCheats: Call<JsonObject?>,
+                    response: Response<JsonObject?>
+                ) {
+                    Log.d(TAG, "XXXXX onResponse: ")
+                    if (response.isSuccessful) {
+                        val responseJsonObject = response.body()
 
-        val translatedReturnValue: String = when (stringResourceKey) {
-            "delete_ok" -> getString(R.string.cheat_deleted)
-            "delete_nok" -> getString(R.string.cheat_delete_nok)
-            "wrong_pw" -> getString(R.string.error_incorrect_password)
-            "member_banned" -> getString(R.string.member_banned)
-            "member_not_exist" -> getString(R.string.err_no_member_data)
-            "no_database_access" -> getString(R.string.no_database_access)
-            else -> getString(R.string.err_occurred)
-        }
+                        val translatedReturnValue: String =
+                            when (responseJsonObject!!["returnValue"].asString) {
+                                "delete_ok" -> getString(R.string.cheat_deleted)
+                                "delete_nok" -> getString(R.string.cheat_delete_nok)
+                                "wrong_pw" -> getString(R.string.error_incorrect_password)
+                                "member_banned" -> getString(R.string.member_banned)
+                                "member_not_exist" -> getString(R.string.err_no_member_data)
+                                "no_database_access" -> getString(R.string.no_database_access)
+                                else -> getString(R.string.err_occurred)
+                            }
 
-        Tools.showSnackbar(outerLayout, translatedReturnValue)
+                        Tools.showSnackbar(outerLayout, translatedReturnValue)
+
+                        // TODO refresh list without the deleted cheat...
+                        // TODO refresh list without the deleted cheat...
+                        // TODO refresh list without the deleted cheat...
+                        // TODO refresh list without the deleted cheat...
+                        myUnpublishedCheatsListViewAdapter!!.notifyDataSetChanged()
+                    }
+                }
+
+                override fun onFailure(call: Call<JsonObject?>, e: Throwable) {
+                    Log.e(TAG, "XXXXX getMyUnpublishedCheats onFailure: " + e.localizedMessage, e)
+                }
+            })
+
+
     }
 
     companion object {
@@ -156,4 +195,6 @@ class MyUnpublishedCheatsListFragment : Fragment(), MyUnpublishedCheatsListItemS
             return MyUnpublishedCheatsListFragment()
         }
     }
+
+
 }
