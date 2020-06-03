@@ -34,9 +34,9 @@ public class MyUnpublishedCheatsListViewAdapter extends RecyclerView.Adapter<MyU
 
     public void onBindViewHolder(MyUnpublishedCheatsListViewItemHolder myUnpublishedCheatsListViewItemHolder, final int position) {
         myUnpublishedCheatsListViewItemHolder.updateUI(unpublishedCheats.get(position));
-        myUnpublishedCheatsListViewItemHolder.detailsButton.setOnClickListener(v -> myUnpublishedCheatsListItemSelectedListener.onRejectReasonButtonClicked(unpublishedCheats.get(position)));
-        myUnpublishedCheatsListViewItemHolder.editButton.setOnClickListener(v -> myUnpublishedCheatsListItemSelectedListener.onEditCheatButtonClicked(unpublishedCheats.get(position)));
-        myUnpublishedCheatsListViewItemHolder.deleteButton.setOnClickListener(v -> myUnpublishedCheatsListItemSelectedListener.onDeleteButtonClicked(unpublishedCheats.get(position)));
+        myUnpublishedCheatsListViewItemHolder.getDetailsButton().setOnClickListener(v -> myUnpublishedCheatsListItemSelectedListener.onRejectReasonButtonClicked(unpublishedCheats.get(position)));
+        myUnpublishedCheatsListViewItemHolder.getEditButton().setOnClickListener(v -> myUnpublishedCheatsListItemSelectedListener.onEditCheatButtonClicked(unpublishedCheats.get(position)));
+        myUnpublishedCheatsListViewItemHolder.getDeleteButton().setOnClickListener(v -> myUnpublishedCheatsListItemSelectedListener.onDeleteButtonClicked(unpublishedCheats.get(position)));
     }
 
     public void setUnpublishedCheats(List<UnpublishedCheat> unpublishedCheats) {

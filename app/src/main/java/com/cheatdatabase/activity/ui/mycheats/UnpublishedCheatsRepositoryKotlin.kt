@@ -1,20 +1,25 @@
 package com.cheatdatabase.activity.ui.mycheats
 
+import com.cheatdatabase.data.model.Member
 import com.cheatdatabase.data.model.UnpublishedCheat
 import com.cheatdatabase.rest.KotlinRestApi
+import com.cheatdatabase.rest.SafeApiRequest
 import retrofit2.Response
 
-class UnpublishedCheatsRepositoryKotlin {
+class UnpublishedCheatsRepositoryKotlin : SafeApiRequest() {
 
     suspend fun getMyUnpublishedCheats(
         memberId: Int,
         passwordMd5: String
     ): Response<List<UnpublishedCheat>> {
-        // TODO FIXME hier gibts ein fehler wenn man die cheats laden will.
-        // TODO FIXME https://www.youtube.com/watch?v=EQvLP5BThZ0 das video nochmals genau anschauen beim API teil
-        // TODO FIXME vermutlich fehlt eine implementation von einer helferklasse...?
-
-        return KotlinRestApi().getMyUnpublishedCheats(memberId, passwordMd5)
+        return KotlinRestApi().getMyUnpublishedCheatsSuspended(memberId, passwordMd5)
     }
 
+    suspend fun getTopMembers(): Response<List<Member>> {
+        return KotlinRestApi().getTopMembers()
+    }
+
+    suspend fun getTopMembersUsingSafeApiRequest(): List<Member> {
+        return apiRequest { KotlinRestApi().getTopMembers() }
+    }
 }

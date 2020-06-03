@@ -1,11 +1,16 @@
 package com.cheatdatabase.activity.ui.mycheats
 
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -117,8 +122,6 @@ class MyUnpublishedCheatsListFragment : Fragment(), MyUnpublishedCheatsListItemS
         myUnpublishedCheatsListViewAdapter!!.notifyDataSetChanged()
 
         progressBar.visibility = View.GONE
-
-        Tools.showSnackbar(outerLayout, "SSUCCESSSSSSSSS")
     }
 
     override fun fetchUnpublishedCheatsFail(message: String) {
@@ -131,19 +134,41 @@ class MyUnpublishedCheatsListFragment : Fragment(), MyUnpublishedCheatsListItemS
 
     override fun onRejectReasonButtonClicked(cheat: UnpublishedCheat) {
         Log.d(TAG, "XXXXX onRejectReasonButtonClicked: ")
+
+        val clipboard = context?.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+        val clip: ClipData = ClipData.newPlainText(cheat.game.gameName, cheat.rejectReason)
+
+        val dialog = MaterialAlertDialogBuilder(context, R.style.SimpleAlertDialog)
+            .setTitle(getString(R.string.why_was_cheat_rejected))
+            .setMessage(cheat.rejectReason)
+            .setPositiveButton(getString(R.string.ok)) { _, _ ->
+                // just close dialog
+            }
+            .setNegativeButton(getString(R.string.copy_to_clipboard), null)
+            .show()
+
+
+        val copyToClipboardButton = dialog.getButton(AlertDialog.BUTTON_NEGATIVE)
+        copyToClipboardButton.setOnClickListener {
+            clipboard.primaryClip = clip
+            Toast.makeText(context, getString(R.string.text_copied_to_clipboard), Toast.LENGTH_SHORT).show()
+        }
     }
 
     override fun onDeleteButtonClicked(cheat: UnpublishedCheat) {
-        Log.d(TAG, "XXXXX onDeleteButtonClicked: ")
-
         MaterialAlertDialogBuilder(context, R.style.SimpleAlertDialog)
             .setTitle("\"".plus(cheat.title).plus("\""))
             .setMessage(getString(R.string.unpublished_cheat_are_you_sure_delete))
             .setNegativeButton(getString(R.string.cancel)) { _, _ ->
-                // do nothing
+                // just close dialog
             }
             .setPositiveButton(getString(R.string.delete)) { dialog, which ->
                 Log.d(TAG, "XXXXX onDeleteButtonClicked: DELETE")
+
+                // TODO FIXME hier noch mit coroutines den cheat deleten und liste refreshen...
+                // TODO FIXME hier noch mit coroutines den cheat deleten und liste refreshen...
+                // TODO FIXME hier noch mit coroutines den cheat deleten und liste refreshen...
+
                 deleteUnpublishedCheatAndDisplaySnackbar(cheat)
             }
             .show()

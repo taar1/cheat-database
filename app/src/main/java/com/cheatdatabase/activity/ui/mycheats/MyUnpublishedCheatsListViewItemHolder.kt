@@ -16,9 +16,9 @@ class MyUnpublishedCheatsListViewItemHolder(
     val view: View, val activity: Activity
 ) : RecyclerView.ViewHolder(view) {
 
-    lateinit var deleteButton: MaterialButton
-    lateinit var editButton: MaterialButton
-    lateinit var detailsButton: MaterialButton
+    var deleteButton: MaterialButton = view.delete_button
+    var editButton: MaterialButton = view.edit_button
+    var detailsButton: MaterialButton = view.details_button
 
     var submissionStatusLayout: RelativeLayout? = view.submission_status_layout
     var submissionStatus: TextView? = view.submission_status
@@ -26,13 +26,6 @@ class MyUnpublishedCheatsListViewItemHolder(
     var cheatTitle: TextView? = view.cheat_title
     var cheatText: TextView? = view.cheat_text
     var submissionDate: TextView? = view.submission_date
-    //var deleteButton: MaterialButton? = view.delete_button
-
-    init {
-        deleteButton = view.delete_button
-        editButton = view.edit_button
-        detailsButton = view.details_button
-    }
 
     fun updateUI(uc: UnpublishedCheat) {
 

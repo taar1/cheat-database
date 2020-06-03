@@ -4,6 +4,7 @@ import com.cheatdatabase.data.model.Cheat
 import com.cheatdatabase.data.model.Member
 import com.cheatdatabase.data.model.UnpublishedCheat
 import com.cheatdatabase.helpers.Konstanten
+import com.google.gson.GsonBuilder
 import com.google.gson.JsonObject
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import kotlinx.coroutines.Deferred
@@ -63,11 +64,13 @@ interface KotlinRestApi {
 
     companion object {
         operator fun invoke(): KotlinRestApi {
+            val gsonBuilder = GsonBuilder()
+            gsonBuilder.setDateFormat("yyyy-MM-dd HH:mm:ss")
 
             return Retrofit.Builder()
                 .baseUrl(Konstanten.BASE_URL_REST)
                 .addCallAdapterFactory(CoroutineCallAdapterFactory())
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(gsonBuilder.create()))
                 .build()
                 .create(KotlinRestApi::class.java)
 

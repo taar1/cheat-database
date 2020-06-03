@@ -220,4 +220,7 @@
     <string name="cheat_deleted">The cheat has been deleted.</string>
     <string name="no_database_access">Problem accessing the database.</string>
     <string name="cheat_delete_nok">Cheat could not be deleted</string>
+    <string name="copy_to_clipboard">Copy to clipboard</string>
+    <string name="text_copied_to_clipboard">Text copied to clipboard</string>
+    <string name="why_was_cheat_rejected">Warum wurde mein Cheat abgelehnt?</string>
 </resources>
