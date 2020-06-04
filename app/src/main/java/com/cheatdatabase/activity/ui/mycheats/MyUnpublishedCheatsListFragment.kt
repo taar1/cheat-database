@@ -33,10 +33,14 @@ import retrofit2.Response
 /**
  * This is the MODEL of MVVM.
  */
-class MyUnpublishedCheatsListFragment : Fragment(), MyUnpublishedCheatsListItemSelectedListener,
+class MyUnpublishedCheatsListFragment(val activity: MyUnpublishedCheatsListActivity) : Fragment(),
+    MyUnpublishedCheatsListItemSelectedListener,
     MyUnpublishedCheatsListener {
-    private var myUnpublishedCheatsViewModel: MyUnpublishedCheatsViewModel? = null
-    private var myUnpublishedCheatsListViewAdapter: MyUnpublishedCheatsListViewAdapter? = null
+
+    val TAG = "MyUnpublishedCheatsFt"
+
+    var myUnpublishedCheatsViewModel: MyUnpublishedCheatsViewModel? = null
+    var myUnpublishedCheatsListViewAdapter: MyUnpublishedCheatsListViewAdapter? = null
 
     //    lateinit var emptyListLayout: RelativeLayout
 //    lateinit var emptyLabel: TextView
@@ -82,25 +86,24 @@ class MyUnpublishedCheatsListFragment : Fragment(), MyUnpublishedCheatsListItemS
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-
         myUnpublishedCheatsViewModel =
             ViewModelProvider(this).get(MyUnpublishedCheatsViewModel::class.java)
-//        myUnpublishedCheatsViewModel!!.init()
         myUnpublishedCheatsViewModel!!.fetchListener = this
 
         setupRecyclerView()
 
         myUnpublishedCheatsViewModel?.getMyUnpublishedCheatsByCoroutines()
+    }
 
-        // Getting unpublished cheats from server
-//        myUnpublishedCheatsViewModel!!.myUnpublishedCheats!!.observe(
-//            requireActivity(),
-//            Observer { unpublishedCheats ->
-//                myUnpublishedCheatsListViewAdapter!!.setUnpublishedCheats(unpublishedCheats)
-//                myUnpublishedCheatsListViewAdapter!!.notifyDataSetChanged()
-//
-//                progressBar.visibility = View.GONE
-//            })
+    override fun fetchUnpublishedCheatsSuccess(unpublishedCheats: List<UnpublishedCheat>) {
+        myUnpublishedCheatsListViewAdapter!!.unpublishedCheats = unpublishedCheats
+        myUnpublishedCheatsListViewAdapter!!.notifyDataSetChanged()
+
+        progressBar.visibility = View.GONE
+    }
+
+    override fun fetchUnpublishedCheatsFail(message: String) {
+        Tools.showSnackbar(outerLayout, message)
     }
 
     private fun setupRecyclerView() {
@@ -117,24 +120,13 @@ class MyUnpublishedCheatsListFragment : Fragment(), MyUnpublishedCheatsListItemS
         }
     }
 
-    override fun fetchUnpublishedCheatsSuccess(unpublishedCheats: List<UnpublishedCheat>) {
-        myUnpublishedCheatsListViewAdapter!!.setUnpublishedCheats(unpublishedCheats)
-        myUnpublishedCheatsListViewAdapter!!.notifyDataSetChanged()
-
-        progressBar.visibility = View.GONE
-    }
-
-    override fun fetchUnpublishedCheatsFail(message: String) {
-        Tools.showSnackbar(outerLayout, message)
-    }
-
     override fun onEditCheatButtonClicked(cheat: UnpublishedCheat) {
+        Log.d(TAG, "XXXXX onEditCheatButtonClicked: ")
+        Log.d(TAG, "XXXXX onEditCheatButtonClicked: ")
         Log.d(TAG, "XXXXX onEditCheatButtonClicked: ")
     }
 
     override fun onRejectReasonButtonClicked(cheat: UnpublishedCheat) {
-        Log.d(TAG, "XXXXX onRejectReasonButtonClicked: ")
-
         val clipboard = context?.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
         val clip: ClipData = ClipData.newPlainText(cheat.game.gameName, cheat.rejectReason)
 
@@ -151,37 +143,35 @@ class MyUnpublishedCheatsListFragment : Fragment(), MyUnpublishedCheatsListItemS
         val copyToClipboardButton = dialog.getButton(AlertDialog.BUTTON_NEGATIVE)
         copyToClipboardButton.setOnClickListener {
             clipboard.primaryClip = clip
-            Toast.makeText(context, getString(R.string.text_copied_to_clipboard), Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                context,
+                getString(R.string.text_copied_to_clipboard),
+                Toast.LENGTH_SHORT
+            ).show()
         }
     }
 
-    override fun onDeleteButtonClicked(cheat: UnpublishedCheat) {
+    override fun onDeleteButtonClicked(cheat: UnpublishedCheat, position: Int) {
         MaterialAlertDialogBuilder(context, R.style.SimpleAlertDialog)
             .setTitle("\"".plus(cheat.title).plus("\""))
             .setMessage(getString(R.string.unpublished_cheat_are_you_sure_delete))
             .setNegativeButton(getString(R.string.cancel)) { _, _ ->
                 // just close dialog
             }
-            .setPositiveButton(getString(R.string.delete)) { dialog, which ->
+            .setPositiveButton(getString(R.string.delete)) { _, _ ->
                 Log.d(TAG, "XXXXX onDeleteButtonClicked: DELETE")
-
-                // TODO FIXME hier noch mit coroutines den cheat deleten und liste refreshen...
-                // TODO FIXME hier noch mit coroutines den cheat deleten und liste refreshen...
-                // TODO FIXME hier noch mit coroutines den cheat deleten und liste refreshen...
-
-                deleteUnpublishedCheatAndDisplaySnackbar(cheat)
+                deleteUnpublishedCheatAndDisplaySnackbar(cheat, position)
             }
             .show()
     }
 
-    private fun deleteUnpublishedCheatAndDisplaySnackbar(cheat: UnpublishedCheat) {
+    private fun deleteUnpublishedCheatAndDisplaySnackbar(cheat: UnpublishedCheat, position: Int) {
         myUnpublishedCheatsViewModel!!.deleteUnpublishedCheat(cheat)
             .enqueue(object : Callback<JsonObject?> {
                 override fun onResponse(
                     unpublishedCheats: Call<JsonObject?>,
                     response: Response<JsonObject?>
                 ) {
-                    Log.d(TAG, "XXXXX onResponse: ")
                     if (response.isSuccessful) {
                         val responseJsonObject = response.body()
 
@@ -198,11 +188,7 @@ class MyUnpublishedCheatsListFragment : Fragment(), MyUnpublishedCheatsListItemS
 
                         Tools.showSnackbar(outerLayout, translatedReturnValue)
 
-                        // TODO refresh list without the deleted cheat...
-                        // TODO refresh list without the deleted cheat...
-                        // TODO refresh list without the deleted cheat...
-                        // TODO refresh list without the deleted cheat...
-                        myUnpublishedCheatsListViewAdapter!!.notifyDataSetChanged()
+                        removeCheatFromList(position)
                     }
                 }
 
@@ -210,16 +196,33 @@ class MyUnpublishedCheatsListFragment : Fragment(), MyUnpublishedCheatsListItemS
                     Log.e(TAG, "XXXXX getMyUnpublishedCheats onFailure: " + e.localizedMessage, e)
                 }
             })
-
-
     }
 
-    companion object {
-        private const val TAG = "MyUnpublishedCheatsFt"
-        fun newInstance(): MyUnpublishedCheatsListFragment {
-            return MyUnpublishedCheatsListFragment()
+    private fun removeCheatFromList(position: Int) {
+
+        // TODO FIXME ein einzelner cheat aus der liste austragen geht (nicht mehr, es ging als ich myUnpublishedCheatsListViewAdapter noch im java format hatte....)
+        // TODO FIXME es entfernt ihn aus der liste aber beim neuladen (automatisch) bleibt der gelöschte cheat in der liste.
+        // TODO FIXME erst beim schliessen und neu öffnen der view stimmt die liste dann wieder...
+
+        // TODO FIXME ein einzelner cheat aus der liste austragen geht (nicht mehr, es ging als ich myUnpublishedCheatsListViewAdapter noch im java format hatte....)
+        // TODO FIXME es entfernt ihn aus der liste aber beim neuladen (automatisch) bleibt der gelöschte cheat in der liste.
+        // TODO FIXME erst beim schliessen und neu öffnen der view stimmt die liste dann wieder...
+
+
+        myUnpublishedCheatsListViewAdapter?.unpublishedCheats?.drop(position)
+        myUnpublishedCheatsListViewAdapter?.notifyItemRemoved(position)
+        myUnpublishedCheatsListViewAdapter?.unpublishedCheats?.size?.let {
+            myUnpublishedCheatsListViewAdapter?.notifyItemRangeChanged(
+                position,
+                it
+            )
         }
     }
 
+    companion object {
+        fun newInstance(activity: MyUnpublishedCheatsListActivity): MyUnpublishedCheatsListFragment {
+            return MyUnpublishedCheatsListFragment(activity)
+        }
+    }
 
 }

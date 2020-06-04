@@ -1,6 +1,5 @@
 package com.cheatdatabase.activity.ui.mycheats
 
-import android.app.Activity
 import android.view.View
 import android.widget.RelativeLayout
 import android.widget.TextView
@@ -13,7 +12,7 @@ import java.text.DateFormat
 import java.util.*
 
 class MyUnpublishedCheatsListViewItemHolder(
-    val view: View, val activity: Activity
+    val view: View, val activity: MyUnpublishedCheatsListActivity
 ) : RecyclerView.ViewHolder(view) {
 
     var deleteButton: MaterialButton = view.delete_button
@@ -41,7 +40,6 @@ class MyUnpublishedCheatsListViewItemHolder(
 
         submissionDate?.text = activity.resources.getString(R.string.submitted).plus(": ")
             .plus(formatDateToString(uc.created))
-
 
         if (uc.tableInfo.equals("cheat_submissions", ignoreCase = true)) {
             detailsButton.visibility = View.GONE

@@ -14,25 +14,10 @@ class MyUnpublishedCheatsListActivity : AppCompatActivity() {
         // TODO FIXME hier noch "home as up" in toolbar irgendwie einbauen....
         // TODO FIXME hier noch "home as up" in toolbar irgendwie einbauen....
 
-//        val repository = UnpublishedCheatsRepositoryUnused(KotlinRestApi())
-
-//        GlobalScope.launch(Dispatchers.Main) {
-//            //val cheats = repository.getMyUnpublishedCheats(1, "7695b843af98811d4c95c8f6a08541dd")
-//            val cheats = repository.getTopMembers()
-//
-////            Toast.makeText(
-////                this@MyUnpublishedCheatsListActivity,
-////                cheats.toString(),
-////                Toast.LENGTH_LONG
-////            ).show()
-//        }
-
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
-                .replace(R.id.container, MyUnpublishedCheatsListFragment.newInstance())
+                .replace(R.id.container, MyUnpublishedCheatsListFragment.newInstance(this))
                 .commitNow()
         }
     }
-
-
 }
