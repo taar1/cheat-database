@@ -37,7 +37,6 @@ class MyCheatsFragment(val mainActivity: MainActivity, var settings: SharedPrefe
 
     var member: Member? = null
 
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_my_cheats_overview, container, false)
         ButterKnife.bind(this, view)
@@ -46,7 +45,6 @@ class MyCheatsFragment(val mainActivity: MainActivity, var settings: SharedPrefe
         member = Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member::class.java)
 
         unpublishedCheatsCard?.setOnClickListener {
-//            onCardClicked(Intent(mainActivity, MyUnpublishedCheatsListActivity::class.java))
             onCardClicked(Intent(mainActivity, MyUnpublishedCheatsListActivity::class.java))
         }
 

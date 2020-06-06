@@ -129,7 +129,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         mFragmentId = getIntent().getIntExtra("mFragmentId", 0);
 
-
         init();
         prepareAdBanner();
 
@@ -450,7 +449,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         fragmentTransaction.addToBackStack(MyCheatsFragment.class.getSimpleName());
 
         MyCheatsFragment myCheatsFragment = new MyCheatsFragment(this, settings);
-        //myCheatsFragment.setMainActivity(this);
 
         fragmentManager.beginTransaction().replace(R.id.content_frame, myCheatsFragment, MyCheatsFragment.class.getSimpleName()).commit();
 
