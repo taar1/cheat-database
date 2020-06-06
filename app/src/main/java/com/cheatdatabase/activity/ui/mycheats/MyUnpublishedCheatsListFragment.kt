@@ -21,6 +21,7 @@ import com.cheatdatabase.R
 import com.cheatdatabase.data.model.UnpublishedCheat
 import com.cheatdatabase.helpers.Tools
 import com.cheatdatabase.listeners.MyUnpublishedCheatsListItemSelectedListener
+import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.gson.JsonObject
 import kotlinx.android.synthetic.main.toolbar.view.*
@@ -48,7 +49,8 @@ class MyUnpublishedCheatsListFragment(val activity: MyUnpublishedCheatsListActiv
     lateinit var outerLayout: CoordinatorLayout
     lateinit var recyclerView: RecyclerView
     lateinit var progressBar: ProgressBar
-    lateinit var mToolbar: androidx.appcompat.widget.Toolbar
+    lateinit var toolbar: androidx.appcompat.widget.Toolbar
+    lateinit var appBar: AppBarLayout
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -61,11 +63,12 @@ class MyUnpublishedCheatsListFragment(val activity: MyUnpublishedCheatsListActiv
 //        emptyLabel = view.empty_label
         outerLayout = view.outer_layout
         recyclerView = view.recycler_view
-        mToolbar = view.toolbar
+        toolbar = view.toolbar
         progressBar = view.progress_bar
 //        swipeRefreshLayout = view.swipe_refresh_layout
 
-        mToolbar.title = getString(R.string.unpublished_cheats)
+        toolbar.title = getString(R.string.unpublished_cheats)
+
 
         // TODO FIXME hier noch "home as up" in toolbar irgendwie einbauen....
         // TODO FIXME hier noch "home as up" in toolbar irgendwie einbauen....
