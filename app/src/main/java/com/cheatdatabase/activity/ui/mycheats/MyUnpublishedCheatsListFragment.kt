@@ -99,6 +99,13 @@ class MyUnpublishedCheatsListFragment(val activity: MyUnpublishedCheatsListActiv
         myUnpublishedCheatsListViewAdapter!!.unpublishedCheats = unpublishedCheats
         myUnpublishedCheatsListViewAdapter!!.notifyDataSetChanged()
 
+        for (u in unpublishedCheats) {
+            Log.d(
+                TAG, "XXXXX LIST 0 ITEM: " + u.game.gameName + " / " + u.title
+            )
+        }
+
+
         progressBar.visibility = View.GONE
     }
 
@@ -199,23 +206,18 @@ class MyUnpublishedCheatsListFragment(val activity: MyUnpublishedCheatsListActiv
     }
 
     private fun removeCheatFromList(position: Int) {
+        val mutableArrayList = ArrayList<UnpublishedCheat>()
+        myUnpublishedCheatsListViewAdapter?.unpublishedCheats?.let {
+            mutableArrayList.addAll(it)
 
-        // TODO FIXME ein einzelner cheat aus der liste austragen geht (nicht mehr, es ging als ich myUnpublishedCheatsListViewAdapter noch im java format hatte....)
-        // TODO FIXME es entfernt ihn aus der liste aber beim neuladen (automatisch) bleibt der gelöschte cheat in der liste.
-        // TODO FIXME erst beim schliessen und neu öffnen der view stimmt die liste dann wieder...
+            if (position < mutableArrayList.size) {
+                mutableArrayList.removeAt(position)
 
-        // TODO FIXME ein einzelner cheat aus der liste austragen geht (nicht mehr, es ging als ich myUnpublishedCheatsListViewAdapter noch im java format hatte....)
-        // TODO FIXME es entfernt ihn aus der liste aber beim neuladen (automatisch) bleibt der gelöschte cheat in der liste.
-        // TODO FIXME erst beim schliessen und neu öffnen der view stimmt die liste dann wieder...
-
-
-        myUnpublishedCheatsListViewAdapter?.unpublishedCheats?.drop(position)
-        myUnpublishedCheatsListViewAdapter?.notifyItemRemoved(position)
-        myUnpublishedCheatsListViewAdapter?.unpublishedCheats?.size?.let {
-            myUnpublishedCheatsListViewAdapter?.notifyItemRangeChanged(
-                position,
-                it
-            )
+                myUnpublishedCheatsListViewAdapter?.unpublishedCheats = mutableArrayList
+                myUnpublishedCheatsListViewAdapter?.notifyItemRemoved(position)
+            } else {
+                myUnpublishedCheatsListViewAdapter?.notifyDataSetChanged()
+            }
         }
     }
 
