@@ -21,10 +21,8 @@ import com.cheatdatabase.R
 import com.cheatdatabase.data.model.UnpublishedCheat
 import com.cheatdatabase.helpers.Tools
 import com.cheatdatabase.listeners.MyUnpublishedCheatsListItemSelectedListener
-import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.gson.JsonObject
-import kotlinx.android.synthetic.main.toolbar.view.*
 import kotlinx.android.synthetic.main.unpublished_cheats_fragment.view.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -49,8 +47,7 @@ class MyUnpublishedCheatsListFragment(val activity: MyUnpublishedCheatsListActiv
     lateinit var outerLayout: CoordinatorLayout
     lateinit var recyclerView: RecyclerView
     lateinit var progressBar: ProgressBar
-    lateinit var toolbar: androidx.appcompat.widget.Toolbar
-    lateinit var appBar: AppBarLayout
+//    lateinit var toolbar: androidx.appcompat.widget.Toolbar
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -63,18 +60,13 @@ class MyUnpublishedCheatsListFragment(val activity: MyUnpublishedCheatsListActiv
 //        emptyLabel = view.empty_label
         outerLayout = view.outer_layout
         recyclerView = view.recycler_view
-        toolbar = view.toolbar
+//        toolbar = view.toolbar
         progressBar = view.progress_bar
 //        swipeRefreshLayout = view.swipe_refresh_layout
 
-        toolbar.title = getString(R.string.unpublished_cheats)
+//        toolbar.title = getString(R.string.unpublished_cheats)
 
-
-        // TODO FIXME hier noch "home as up" in toolbar irgendwie einbauen....
-        // TODO FIXME hier noch "home as up" in toolbar irgendwie einbauen....
-        // TODO FIXME hier noch "home as up" in toolbar irgendwie einbauen....
-
-        setHasOptionsMenu(true)
+        activity.setToolbarTitle(getString(R.string.unpublished_cheats))
 
         // TODO
 //        swipeRefreshLayout.setOnRefreshListener {

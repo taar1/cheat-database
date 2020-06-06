@@ -110,17 +110,18 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4caff62e-c62f-40ca-acf0-73c680b13375" name="Default" comment="Switching to coroutines (not working yet).">
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/ui/mycheats/MyUnpublishedCheatsListViewAdapter.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/listeners/MyUnpublishedCheatsListItemSelectedListener.kt" afterDir="false" />
+    <list default="true" id="4caff62e-c62f-40ca-acf0-73c680b13375" name="Default" comment="Remove cheat from list functionality (needs to be changed to coroutines)&#10;currently bug in removing one item from the list in MyUnpublishedCheatsListFragment.kt">
+      <change beforePath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/app.iml" beforeDir="false" afterPath="$PROJECT_DIR$/app/app.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/ui/mycheats/MyUnpublishedCheatsListActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/ui/mycheats/MyUnpublishedCheatsListActivity.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/ui/mycheats/MyUnpublishedCheatsListFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/ui/mycheats/MyUnpublishedCheatsListFragment.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/ui/mycheats/MyUnpublishedCheatsListViewAdapter.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/ui/mycheats/MyUnpublishedCheatsListViewItemHolder.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/ui/mycheats/MyUnpublishedCheatsListViewItemHolder.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/ui/mycheats/MyUnpublishedCheatsViewModel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/ui/mycheats/MyUnpublishedCheatsViewModel.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/listeners/MyUnpublishedCheatsListItemSelectedListener.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/toolbar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/toolbar.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/unpublished_cheat_list_item.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/unpublished_cheat_list_item.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/unpublished_cheats_activity.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/unpublished_cheats_activity.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/unpublished_cheats_fragment.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/unpublished_cheats_fragment.xml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -245,11 +246,11 @@
       <recent name="com.cheatdatabase.adapters" />
     </key>
     <key name="android.template.packageName">
+      <recent name="com.cheatdatabase.activity.ui.mycheats" />
       <recent name="com.cheatdatabase.activity.ui.mvvmexample" />
       <recent name="com.cheatdatabase.activity" />
       <recent name="com.cheatdatabase.ads" />
       <recent name="com.cheatdatabase" />
-      <recent name="com.cheatdatabase.fragments" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/app/src/main/res/layout-v17" />
@@ -607,27 +608,6 @@
       <option name="presentableId" value="Default" />
       <updated>1487274191999</updated>
     </task>
-    <task id="LOCAL-00073" summary="Facebook Audience Network Native Ads Implementation&#10;FACEBOOK NATIVE ADS FINALLY WORKING!">
-      <created>1567712952533</created>
-      <option name="number" value="00073" />
-      <option name="presentableId" value="LOCAL-00073" />
-      <option name="project" value="LOCAL" />
-      <updated>1567712952535</updated>
-    </task>
-    <task id="LOCAL-00074" summary="Bug fixes for hotfix version 2.5.2">
-      <created>1568042217801</created>
-      <option name="number" value="00074" />
-      <option name="presentableId" value="LOCAL-00074" />
-      <option name="project" value="LOCAL" />
-      <updated>1568042217801</updated>
-    </task>
-    <task id="LOCAL-00075" summary="Bug Fix">
-      <created>1568060841210</created>
-      <option name="number" value="00075" />
-      <option name="presentableId" value="LOCAL-00075" />
-      <option name="project" value="LOCAL" />
-      <updated>1568060841211</updated>
-    </task>
     <task id="LOCAL-00076" summary="bug fix">
       <created>1568316605080</created>
       <option name="number" value="00076" />
@@ -950,7 +930,28 @@
       <option name="project" value="LOCAL" />
       <updated>1591120902766</updated>
     </task>
-    <option name="localTasksCounter" value="122" />
+    <task id="LOCAL-00122" summary="Remove cheat from list functionality (needs to be changed to coroutines)&#10;currently bug in removing one item from the list in MyUnpublishedCheatsListFragment.kt">
+      <created>1591303552984</created>
+      <option name="number" value="00122" />
+      <option name="presentableId" value="LOCAL-00122" />
+      <option name="project" value="LOCAL" />
+      <updated>1591303552985</updated>
+    </task>
+    <task id="LOCAL-00123" summary="Fixing the feature for removing an item from the unpublished cheats list. the list will remove the item and refresh with an animation.">
+      <created>1591456642494</created>
+      <option name="number" value="00123" />
+      <option name="presentableId" value="LOCAL-00123" />
+      <option name="project" value="LOCAL" />
+      <updated>1591456642494</updated>
+    </task>
+    <task id="LOCAL-00124" summary="Add app bar layout to toolbar layout xml file">
+      <created>1591458604265</created>
+      <option name="number" value="00124" />
+      <option name="presentableId" value="LOCAL-00124" />
+      <option name="project" value="LOCAL" />
+      <updated>1591458604265</updated>
+    </task>
+    <option name="localTasksCounter" value="125" />
     <servers />
   </component>
   <component name="TodoView">
@@ -1000,9 +1001,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
-    <MESSAGE value="Improved DB schema" />
-    <MESSAGE value="a try to merge with room" />
-    <MESSAGE value="Version upgrade" />
     <MESSAGE value="SUCCESSFUL MERGING WITH ROOM&#10;Fixing bugs related to DB access on UI thread now." />
     <MESSAGE value="Fixing bugs related to DB access on UI thread" />
     <MESSAGE value="Fixing bugs related to migration to room." />
@@ -1025,7 +1023,10 @@
     <MESSAGE value="Bug fixes in &quot;my cheats&quot; section." />
     <MESSAGE value="Improving unpublished cheats card layouts etc." />
     <MESSAGE value="Switching to coroutines (not working yet)." />
-    <option name="LAST_COMMIT_MESSAGE" value="Switching to coroutines (not working yet)." />
+    <MESSAGE value="Remove cheat from list functionality (needs to be changed to coroutines)&#10;currently bug in removing one item from the list in MyUnpublishedCheatsListFragment.kt" />
+    <MESSAGE value="Fixing the feature for removing an item from the unpublished cheats list. the list will remove the item and refresh with an animation." />
+    <MESSAGE value="Add app bar layout to toolbar layout xml file" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add app bar layout to toolbar layout xml file" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>

@@ -20,6 +20,7 @@ class MyUnpublishedCheatsListViewItemHolder(
     var detailsButton: MaterialButton = view.details_button
 
     var submissionStatusLayout: RelativeLayout? = view.submission_status_layout
+    var cardBottomLine: View? = view.submission_status_layout_bottom
     var submissionStatus: TextView? = view.submission_status
     var gameAndSystem: TextView? = view.game_and_system
     var cheatTitle: TextView? = view.cheat_title
@@ -43,6 +44,7 @@ class MyUnpublishedCheatsListViewItemHolder(
 
         if (uc.tableInfo.equals("cheat_submissions", ignoreCase = true)) {
             detailsButton.visibility = View.GONE
+            cardBottomLine?.setBackgroundColor(activity.resources.getColor(R.color.dark_gray))
 
             submissionStatus?.setText(R.string.pending_approval)
 
@@ -50,6 +52,7 @@ class MyUnpublishedCheatsListViewItemHolder(
                 activity.resources.getColor(R.color.dark_gray, null)
             )
         } else if (uc.tableInfo.equals("rejected_cheats", ignoreCase = true)) {
+            cardBottomLine?.setBackgroundColor(activity.resources.getColor(R.color.dark_red))
 
             submissionStatus?.setText(R.string.rejected)
 

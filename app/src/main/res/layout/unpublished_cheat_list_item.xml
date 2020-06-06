@@ -121,7 +121,7 @@
                 style="@style/DefaultButtonStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
+                android:layout_marginBottom="16dp"
                 android:drawableLeft="@drawable/ic_pencil"
                 android:text="Edit and Re-Submit"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -134,13 +134,21 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
-                android:layout_marginBottom="8dp"
+                android:layout_marginBottom="16dp"
                 android:drawableLeft="@drawable/ic_delete"
                 android:text="@string/delete"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/submission_status_layout_bottom"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:rippleColor="@color/gray" />
 
+            <View
+                android:id="@+id/submission_status_layout_bottom"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@color/dark_gray"
+                app:layout_constraintBottom_toBottomOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+
     </androidx.cardview.widget.CardView>
 </layout>
