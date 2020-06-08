@@ -1,11 +1,11 @@
 package com.cheatdatabase.rest
 
 import com.cheatdatabase.data.model.Cheat
+import com.cheatdatabase.data.model.HttpPostReturnValue
 import com.cheatdatabase.data.model.Member
 import com.cheatdatabase.data.model.UnpublishedCheat
 import com.cheatdatabase.helpers.Konstanten
 import com.google.gson.GsonBuilder
-import com.google.gson.JsonObject
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import kotlinx.coroutines.Deferred
 import retrofit2.Response
@@ -30,13 +30,12 @@ interface KotlinRestApi {
         @Field("memberId") memberId: Int
     ): Deferred<List<Cheat>>
 
-
     /**
      * UNPUBLISHED CHEATS
      */
     @FormUrlEncoded
     @POST("myUnpublishedCheats.php")
-    fun getMyUnpublishedCheats(
+    suspend fun getMyUnpublishedCheats(
         @Field("memberId") memberId: Int,
         @Field("pw") password_md5: String
     ): Response<List<UnpublishedCheat>>
@@ -50,14 +49,13 @@ interface KotlinRestApi {
 
     @FormUrlEncoded
     @POST("deleteMyUnpublishedCheat.php")
-    fun deleteUnpublishedCheat(
+    suspend fun deleteUnpublishedCheat(
         @Field("memberId") memberId: Int,
         @Field("pw") password_md5: String,
         @Field("id") id: Int,
         @Field("gameId") gameId: Int,
         @Field("tableInfo") tableInfo: String
-    ): Response<JsonObject>
-
+    ): Response<HttpPostReturnValue>
 
     @GET("getMemberTop20.php")
     suspend fun getTopMembers(): Response<List<Member>>

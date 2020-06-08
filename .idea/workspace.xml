@@ -6,7 +6,7 @@
     </shared>
   </component>
   <component name="AndroidLogFilters">
-    <option name="TOOL_WINDOW_LOG_LEVEL" value="error" />
+    <option name="TOOL_WINDOW_LOG_LEVEL" value="verbose" />
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="No Filters" />
   </component>
   <component name="AvailableLibraryUpdateStorage">
@@ -110,12 +110,19 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4caff62e-c62f-40ca-acf0-73c680b13375" name="Default" comment="Back arrow in actionbar in unpublished cheats list view added.&#10;Improved look of the card.">
+    <list default="true" id="4caff62e-c62f-40ca-acf0-73c680b13375" name="Default" comment="Code Cleanup">
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/data/model/HttpPostReturnValue.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/MainActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/ui/mycheats/MyUnpublishedCheatsListViewItemHolder.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/ui/mycheats/MyUnpublishedCheatsListViewItemHolder.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/ui/mycheats/TopMembersViewModel.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/fragments/MyCheatsFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/fragments/MyCheatsFragment.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/app.iml" beforeDir="false" afterPath="$PROJECT_DIR$/app/app.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/ui/mycheats/MyUnpublishedCheatsListActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/ui/mycheats/MyUnpublishedCheatsListActivity.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/ui/mycheats/MyUnpublishedCheatsListFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/ui/mycheats/MyUnpublishedCheatsListFragment.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/ui/mycheats/MyUnpublishedCheatsListener.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/ui/mycheats/MyUnpublishedCheatsListener.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/ui/mycheats/MyUnpublishedCheatsViewModel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/ui/mycheats/MyUnpublishedCheatsViewModel.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/ui/mycheats/UnpublishedCheatsRepositoryKotlin.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/ui/mycheats/UnpublishedCheatsRepositoryKotlin.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/data/repository/RestRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/data/repository/RestRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/rest/KotlinRestApi.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/rest/KotlinRestApi.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -168,9 +175,9 @@
         <option value="layoutResourceFile_vertical" />
         <option value="Class" />
         <option value="Singleton" />
-        <option value="Kotlin Class" />
         <option value="Kotlin Object" />
         <option value="Kotlin Interface" />
+        <option value="Kotlin Class" />
       </list>
     </option>
   </component>
@@ -236,6 +243,7 @@
       <recent name="com.cheatdatabase.data.network" />
     </key>
     <key name="CopyKotlinDeclarationDialog.RECENTS_KEY">
+      <recent name="com.cheatdatabase.rest" />
       <recent name="com.cheatdatabase.activity.ui.mycheats" />
       <recent name="com.cheatdatabase.adapters" />
     </key>
@@ -602,13 +610,6 @@
       <option name="presentableId" value="Default" />
       <updated>1487274191999</updated>
     </task>
-    <task id="LOCAL-00077" summary="REMOVING MANY UNUSED RESOURCES!&#10;Bug Fixes">
-      <created>1569157367392</created>
-      <option name="number" value="00077" />
-      <option name="presentableId" value="LOCAL-00077" />
-      <option name="project" value="LOCAL" />
-      <updated>1569157367392</updated>
-    </task>
     <task id="LOCAL-00078" summary="Version 2.5.7">
       <created>1569180830341</created>
       <option name="number" value="00078" />
@@ -945,7 +946,14 @@
       <option name="project" value="LOCAL" />
       <updated>1591471986040</updated>
     </task>
-    <option name="localTasksCounter" value="126" />
+    <task id="LOCAL-00126" summary="Code Cleanup">
+      <created>1591473298770</created>
+      <option name="number" value="00126" />
+      <option name="presentableId" value="LOCAL-00126" />
+      <option name="project" value="LOCAL" />
+      <updated>1591473298770</updated>
+    </task>
+    <option name="localTasksCounter" value="127" />
     <servers />
   </component>
   <component name="TodoView">
@@ -970,6 +978,31 @@
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
       <map>
+        <entry key="1">
+          <value>
+            <State>
+              <option name="SHOW_ONLY_AFFECTED_CHANGES" value="true" />
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="HEAD" />
+                      </list>
+                    </value>
+                  </entry>
+                  <entry key="structure">
+                    <value>
+                      <list>
+                        <option value="dir:D:/Development/Android/Workspaces/cheat-database/app" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
         <entry key="MAIN">
           <value>
             <State>
@@ -978,6 +1011,11 @@
           </value>
         </entry>
       </map>
+    </option>
+    <option name="OPEN_TABS">
+      <set>
+        <option value="1" />
+      </set>
     </option>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -995,7 +1033,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
-    <MESSAGE value="Fixing bugs related to DB access on UI thread" />
     <MESSAGE value="Fixing bugs related to migration to room." />
     <MESSAGE value="Fixing bugs in favorites activity etc." />
     <MESSAGE value="Fixing bugs in favorites activity with screenshot gallery" />
@@ -1020,7 +1057,8 @@
     <MESSAGE value="Fixing the feature for removing an item from the unpublished cheats list. the list will remove the item and refresh with an animation." />
     <MESSAGE value="Add app bar layout to toolbar layout xml file" />
     <MESSAGE value="Back arrow in actionbar in unpublished cheats list view added.&#10;Improved look of the card." />
-    <option name="LAST_COMMIT_MESSAGE" value="Back arrow in actionbar in unpublished cheats list view added.&#10;Improved look of the card." />
+    <MESSAGE value="Code Cleanup" />
+    <option name="LAST_COMMIT_MESSAGE" value="Code Cleanup" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
@@ -1143,11 +1181,6 @@
           <url>file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/adapters/CheatViewGalleryListAdapter.kt</url>
           <line>26</line>
           <option name="timeStamp" value="220" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="kotlin-line">
-          <url>file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/ui/mycheats/UnpublishedCheatsRepositoryKotlin.kt</url>
-          <line>17</line>
-          <option name="timeStamp" value="223" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="kotlin-function">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/adapters/CheatViewGalleryListAdapter.kt</url>

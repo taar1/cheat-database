@@ -11,8 +11,6 @@ import com.cheatdatabase.helpers.AeSimpleMD5
 import com.cheatdatabase.helpers.Coroutines
 import com.cheatdatabase.helpers.Konstanten
 import com.google.gson.Gson
-import com.google.gson.JsonObject
-import retrofit2.Call
 
 class MyUnpublishedCheatsViewModel(application: Application) :
     AndroidViewModel(application) {
@@ -27,6 +25,7 @@ class MyUnpublishedCheatsViewModel(application: Application) :
     private val member: Member
     private var restRepository: RestRepository? = null
     var fetchListener: MyUnpublishedCheatsListener? = null
+
     private val settings: SharedPreferences =
         application.getSharedPreferences(Konstanten.PREFERENCES_FILE, 0)
 
@@ -36,22 +35,42 @@ class MyUnpublishedCheatsViewModel(application: Application) :
                 member.mid,
                 AeSimpleMD5.MD5(member.password)
             )
+
             if (response.isSuccessful) {
                 Log.d(TAG, "XXXXX SUCCESS UNPUBLISHED: " + response.body()!!)
 
                 fetchListener?.fetchUnpublishedCheatsSuccess(response.body()!!)
             } else {
                 Log.d(TAG, "XXXXX ERROR UNPUBLISHED")
+                // TODO FIXME handle error...
+                // TODO FIXME handle error...
+                // TODO FIXME handle error...
+                // TODO FIXME handle error...
                 fetchListener?.fetchUnpublishedCheatsFail("TODO XXXXXX")
             }
         }
     }
 
-    // TODO delete unpublished cheat through coroutines (UnpublishedCheatsRepositoryKotlin)
-    // TODO delete unpublished cheat through coroutines (UnpublishedCheatsRepositoryKotlin)
-    // TODO delete unpublished cheat through coroutines (UnpublishedCheatsRepositoryKotlin)
-    fun deleteUnpublishedCheat(unpublishedCheat: UnpublishedCheat?): Call<JsonObject> {
-        return restRepository!!.deleteUnpublishedCheat(unpublishedCheat, member)
+    fun deleteUnpublishedCheat(unpublishedCheat: UnpublishedCheat) {
+        Log.d(TAG, "XXXXX deleteUnpublishedCheat: DELETE: " + unpublishedCheat)
+
+        //return restRepository!!.deleteUnpublishedCheat(unpublishedCheat, member)
+        Coroutines.main {
+            val response = UnpublishedCheatsRepositoryKotlin().deleteUnpublishedCheat(
+                unpublishedCheat, member
+            )
+
+            if (response.isSuccessful) {
+                val responseJsonObject = response.body()!!
+                Log.d(TAG, "XXXXX SUCCESS UNPUBLISHED: $responseJsonObject.returnValue")
+                fetchListener?.deleteUnpublishedCheatSuccess(responseJsonObject.returnValue)
+            } else {
+                Log.d(TAG, "XXXXX ERROR UNPUBLISHED")
+                // TODO FIXME handle error...
+                // TODO FIXME handle error...
+                fetchListener?.deleteUnpublishedCheatFailed("TODO XXXXXX deleteUnpublishedCheatFailed")
+            }
+        }
     }
 
     init {

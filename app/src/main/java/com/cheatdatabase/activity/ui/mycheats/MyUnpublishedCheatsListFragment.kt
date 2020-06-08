@@ -22,11 +22,7 @@ import com.cheatdatabase.data.model.UnpublishedCheat
 import com.cheatdatabase.helpers.Tools
 import com.cheatdatabase.listeners.MyUnpublishedCheatsListItemSelectedListener
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.gson.JsonObject
 import kotlinx.android.synthetic.main.unpublished_cheats_fragment.view.*
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 
 /**
@@ -38,6 +34,7 @@ class MyUnpublishedCheatsListFragment(val activity: MyUnpublishedCheatsListActiv
 
     val TAG = "MyUnpublishedCheatsFt"
 
+    var cheatPositionInList: Int = 0
     var myUnpublishedCheatsViewModel: MyUnpublishedCheatsViewModel? = null
     var myUnpublishedCheatsListViewAdapter: MyUnpublishedCheatsListViewAdapter? = null
 
@@ -93,13 +90,6 @@ class MyUnpublishedCheatsListFragment(val activity: MyUnpublishedCheatsListActiv
     override fun fetchUnpublishedCheatsSuccess(unpublishedCheats: List<UnpublishedCheat>) {
         myUnpublishedCheatsListViewAdapter!!.unpublishedCheats = unpublishedCheats
         myUnpublishedCheatsListViewAdapter!!.notifyDataSetChanged()
-
-        for (u in unpublishedCheats) {
-            Log.d(
-                TAG, "XXXXX LIST 0 ITEM: " + u.game.gameName + " / " + u.title
-            )
-        }
-
 
         progressBar.visibility = View.GONE
     }
@@ -168,36 +158,29 @@ class MyUnpublishedCheatsListFragment(val activity: MyUnpublishedCheatsListActiv
     }
 
     private fun deleteUnpublishedCheatAndDisplaySnackbar(cheat: UnpublishedCheat, position: Int) {
-        myUnpublishedCheatsViewModel!!.deleteUnpublishedCheat(cheat)
-            .enqueue(object : Callback<JsonObject?> {
-                override fun onResponse(
-                    unpublishedCheats: Call<JsonObject?>,
-                    response: Response<JsonObject?>
-                ) {
-                    if (response.isSuccessful) {
-                        val responseJsonObject = response.body()
+        myUnpublishedCheatsViewModel?.deleteUnpublishedCheat(cheat)
+        this.cheatPositionInList = position
+    }
 
-                        val translatedReturnValue: String =
-                            when (responseJsonObject!!["returnValue"].asString) {
-                                "delete_ok" -> getString(R.string.cheat_deleted)
-                                "delete_nok" -> getString(R.string.cheat_delete_nok)
-                                "wrong_pw" -> getString(R.string.error_incorrect_password)
-                                "member_banned" -> getString(R.string.member_banned)
-                                "member_not_exist" -> getString(R.string.err_no_member_data)
-                                "no_database_access" -> getString(R.string.no_database_access)
-                                else -> getString(R.string.err_occurred)
-                            }
+    override fun deleteUnpublishedCheatSuccess(message: String) {
+        val translatedReturnValue: String =
+            when (message) {
+                "delete_ok" -> getString(R.string.cheat_deleted)
+                "delete_nok" -> getString(R.string.cheat_delete_nok)
+                "wrong_pw" -> getString(R.string.error_incorrect_password)
+                "member_banned" -> getString(R.string.member_banned)
+                "member_not_exist" -> getString(R.string.err_no_member_data)
+                "no_database_access" -> getString(R.string.no_database_access)
+                else -> getString(R.string.err_occurred)
+            }
 
-                        Tools.showSnackbar(outerLayout, translatedReturnValue)
+        Tools.showSnackbar(outerLayout, translatedReturnValue)
 
-                        removeCheatFromList(position)
-                    }
-                }
+        removeCheatFromList(cheatPositionInList)
+    }
 
-                override fun onFailure(call: Call<JsonObject?>, e: Throwable) {
-                    Log.e(TAG, "XXXXX getMyUnpublishedCheats onFailure: " + e.localizedMessage, e)
-                }
-            })
+    override fun deleteUnpublishedCheatFailed(message: String) {
+        Tools.showSnackbar(outerLayout, getString(R.string.err_occurred))
     }
 
     private fun removeCheatFromList(position: Int) {
@@ -210,6 +193,10 @@ class MyUnpublishedCheatsListFragment(val activity: MyUnpublishedCheatsListActiv
 
                 myUnpublishedCheatsListViewAdapter?.unpublishedCheats = mutableArrayList
                 myUnpublishedCheatsListViewAdapter?.notifyItemRemoved(position)
+                myUnpublishedCheatsListViewAdapter?.notifyItemRangeChanged(
+                    position,
+                    myUnpublishedCheatsListViewAdapter?.unpublishedCheats!!.size
+                )
             } else {
                 myUnpublishedCheatsListViewAdapter?.notifyDataSetChanged()
             }

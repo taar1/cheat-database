@@ -23,7 +23,6 @@ class MyUnpublishedCheatsListActivity : AppCompatActivity() {
                 .replace(R.id.container, MyUnpublishedCheatsListFragment.newInstance(this))
                 .commitNow()
         }
-
     }
 
     fun setToolbarTitle(title: String) {

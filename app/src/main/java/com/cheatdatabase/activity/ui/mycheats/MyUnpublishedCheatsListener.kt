@@ -7,4 +7,6 @@ interface MyUnpublishedCheatsListener {
     fun fetchUnpublishedCheatsSuccess(unpublishedCheats: List<UnpublishedCheat>)
     fun fetchUnpublishedCheatsFail(message: String)
 
+    fun deleteUnpublishedCheatSuccess(message: String)
+    fun deleteUnpublishedCheatFailed(message: String)
 }
