@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -17,6 +18,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.cheatdatabase.R
 import com.cheatdatabase.data.model.UnpublishedCheat
 import com.cheatdatabase.helpers.Tools
@@ -38,13 +40,11 @@ class MyUnpublishedCheatsListFragment(val activity: MyUnpublishedCheatsListActiv
     var myUnpublishedCheatsViewModel: MyUnpublishedCheatsViewModel? = null
     var myUnpublishedCheatsListViewAdapter: MyUnpublishedCheatsListViewAdapter? = null
 
-    //    lateinit var emptyListLayout: RelativeLayout
-//    lateinit var emptyLabel: TextView
-//    lateinit var swipeRefreshLayout: SwipeRefreshLayout
+    lateinit var emptyLabel: TextView
+    lateinit var swipeRefreshLayout: SwipeRefreshLayout
     lateinit var outerLayout: CoordinatorLayout
     lateinit var recyclerView: RecyclerView
     lateinit var progressBar: ProgressBar
-//    lateinit var toolbar: androidx.appcompat.widget.Toolbar
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -52,28 +52,24 @@ class MyUnpublishedCheatsListFragment(val activity: MyUnpublishedCheatsListActiv
     ): View? {
         val view = inflater.inflate(R.layout.unpublished_cheats_fragment, container, false)
 
-//        emptyListLayout = view.empty
-//        emptyListLayout.visibility = View.GONE
-//        emptyLabel = view.empty_label
+        emptyLabel = view.empty_labely
         outerLayout = view.outer_layout
         recyclerView = view.recycler_view
-//        toolbar = view.toolbar
         progressBar = view.progress_bar
-//        swipeRefreshLayout = view.swipe_refresh_layout
+        swipeRefreshLayout = view.swipe_refresh_layout
 
-//        toolbar.title = getString(R.string.unpublished_cheats)
-
-        activity.setToolbarTitle(getString(R.string.unpublished_cheats))
-
-        // TODO
-//        swipeRefreshLayout.setOnRefreshListener {
-//            swipeRefreshLayout.visibility = View.VISIBLE
-//            myUnpublishedCheatsListViewAdapter!!.notifyDataSetChanged()
-//            swipeRefreshLayout.visibility = View.GONE
-//        }
+        swipeRefreshLayout.setOnRefreshListener {
+            reloadData()
+        }
 
         return view
     }
+
+    // TODO FIXME floating action button einbauen...
+    // TODO FIXME floating action button einbauen...
+    // TODO FIXME floating action button einbauen...
+    // TODO FIXME floating action button einbauen...
+    // TODO FIXME floating action button einbauen...
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
@@ -87,15 +83,44 @@ class MyUnpublishedCheatsListFragment(val activity: MyUnpublishedCheatsListActiv
         myUnpublishedCheatsViewModel?.getMyUnpublishedCheatsByCoroutines()
     }
 
-    override fun fetchUnpublishedCheatsSuccess(unpublishedCheats: List<UnpublishedCheat>) {
-        myUnpublishedCheatsListViewAdapter!!.unpublishedCheats = unpublishedCheats
-        myUnpublishedCheatsListViewAdapter!!.notifyDataSetChanged()
+    private fun reloadData() {
+        progressBar.visibility = View.VISIBLE
+        myUnpublishedCheatsViewModel?.getMyUnpublishedCheatsByCoroutines()
+        swipeRefreshLayout.isRefreshing = false
+    }
 
-        progressBar.visibility = View.GONE
+    override fun fetchUnpublishedCheatsSuccess(unpublishedCheats: List<UnpublishedCheat>) {
+        if (unpublishedCheats.isEmpty()) {
+            showEmptyListView()
+        } else {
+            hideEmptyListView()
+
+            myUnpublishedCheatsListViewAdapter!!.unpublishedCheats = unpublishedCheats
+            myUnpublishedCheatsListViewAdapter!!.notifyDataSetChanged()
+        }
     }
 
     override fun fetchUnpublishedCheatsFail(message: String) {
+        showEmptyListView()
         Tools.showSnackbar(outerLayout, message)
+    }
+
+    private fun showEmptyListView() {
+        emptyLabel.visibility = View.VISIBLE
+        recyclerView.visibility = View.GONE
+
+        hideProgressBar()
+    }
+
+    private fun hideEmptyListView() {
+        emptyLabel.visibility = View.GONE
+        recyclerView.visibility = View.VISIBLE
+
+        hideProgressBar()
+    }
+
+    private fun hideProgressBar() {
+        progressBar.visibility = View.GONE
     }
 
     private fun setupRecyclerView() {

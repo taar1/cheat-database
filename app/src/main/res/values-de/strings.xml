@@ -216,15 +216,16 @@
     <string name="cheats_waiting_for_approval">Cheats die noch geprüft werden und\nabgelehnte Cheats</string>
     <string name="published_cheats">Veröffentlichte Cheats</string>
     <string name="list_of_published_cheats">Liste der veröffentlichten Cheats</string>
-    <string name="pending_approval">Pending Approval</string>
-    <string name="rejected">Rejected</string>
+    <string name="pending_approval">Genehmigung ausstehend</string>
+    <string name="rejected">Abgelehnt</string>
     <string name="details">Details</string>
     <string name="submitted">Submitted</string>
-    <string name="delete">Delete</string>
-    <string name="unpublished_cheat_are_you_sure_delete">Are you sure to delete this unpublished cheat?</string>
-    <string name="cheat_deleted">The cheat has been deleted.</string>
-    <string name="no_database_access">Problem accessing the database.</string>
-    <string name="copy_to_clipboard">Copy to clipboard</string>
-    <string name="text_copied_to_clipboard">Text copied to clipboard</string>
+    <string name="delete">Löschen</string>
+    <string name="unpublished_cheat_are_you_sure_delete">Bist du sicher, dass du diesen unveröffentlichten Cheat löschen möchtest?</string>
+    <string name="cheat_deleted">Der Cheat wurde gelöscht.</string>
+    <string name="no_database_access">Fehler beim Datenbankzugriff.</string>
+    <string name="copy_to_clipboard">In Zwischenablage kopieren</string>
+    <string name="text_copied_to_clipboard">Text wurde in die Zwischenablage kopiert</string>
     <string name="why_was_cheat_rejected">Warum wurde mein Cheat abgelehnt?</string>
+    <string name="no_unpublished_cheats">Du hast zur Zeit keine unveröffentlichten Cheats. Klicke unten auf den Button, um einen Cheat einzusenden.</string>
 </resources>

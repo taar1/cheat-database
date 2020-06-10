@@ -223,4 +223,5 @@
     <string name="copy_to_clipboard">Copy to clipboard</string>
     <string name="text_copied_to_clipboard">Text copied to clipboard</string>
     <string name="why_was_cheat_rejected">Warum wurde mein Cheat abgelehnt?</string>
+    <string name="no_unpublished_cheats">You currently do not have any unpublished cheats. Use the button below to submit a cheat.</string>
 </resources>

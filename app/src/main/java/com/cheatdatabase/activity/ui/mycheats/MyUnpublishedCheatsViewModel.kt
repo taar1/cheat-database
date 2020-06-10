@@ -30,11 +30,15 @@ class MyUnpublishedCheatsViewModel(application: Application) :
         application.getSharedPreferences(Konstanten.PREFERENCES_FILE, 0)
 
     fun getMyUnpublishedCheatsByCoroutines() {
+        Log.d(TAG, "XXXXX getMyUnpublishedCheatsByCoroutines")
+
         Coroutines.main {
             val response = UnpublishedCheatsRepositoryKotlin().getMyUnpublishedCheats(
                 member.mid,
                 AeSimpleMD5.MD5(member.password)
             )
+
+            Log.d(TAG, "XXXXX getMyUnpublishedCheatsByCoroutines 1")
 
             if (response.isSuccessful) {
                 Log.d(TAG, "XXXXX SUCCESS UNPUBLISHED: " + response.body()!!)
@@ -52,9 +56,6 @@ class MyUnpublishedCheatsViewModel(application: Application) :
     }
 
     fun deleteUnpublishedCheat(unpublishedCheat: UnpublishedCheat) {
-        Log.d(TAG, "XXXXX deleteUnpublishedCheat: DELETE: " + unpublishedCheat)
-
-        //return restRepository!!.deleteUnpublishedCheat(unpublishedCheat, member)
         Coroutines.main {
             val response = UnpublishedCheatsRepositoryKotlin().deleteUnpublishedCheat(
                 unpublishedCheat, member
