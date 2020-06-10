@@ -3,6 +3,7 @@ package com.cheatdatabase.activity.ui.mycheats
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -20,10 +21,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.cheatdatabase.R
+import com.cheatdatabase.activity.SubmitCheatSelectGameActivity
 import com.cheatdatabase.data.model.UnpublishedCheat
 import com.cheatdatabase.helpers.Tools
 import com.cheatdatabase.listeners.MyUnpublishedCheatsListItemSelectedListener
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import kotlinx.android.synthetic.main.unpublished_cheats_fragment.view.*
 
 
@@ -45,6 +48,7 @@ class MyUnpublishedCheatsListFragment(val activity: MyUnpublishedCheatsListActiv
     lateinit var outerLayout: CoordinatorLayout
     lateinit var recyclerView: RecyclerView
     lateinit var progressBar: ProgressBar
+    lateinit var fab: ExtendedFloatingActionButton
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -57,19 +61,16 @@ class MyUnpublishedCheatsListFragment(val activity: MyUnpublishedCheatsListActiv
         recyclerView = view.recycler_view
         progressBar = view.progress_bar
         swipeRefreshLayout = view.swipe_refresh_layout
+        fab = view.fab_submit_cheat
 
         swipeRefreshLayout.setOnRefreshListener {
             reloadData()
         }
 
+        fab.setOnClickListener { submitCheat() }
+
         return view
     }
-
-    // TODO FIXME floating action button einbauen...
-    // TODO FIXME floating action button einbauen...
-    // TODO FIXME floating action button einbauen...
-    // TODO FIXME floating action button einbauen...
-    // TODO FIXME floating action button einbauen...
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
@@ -226,6 +227,11 @@ class MyUnpublishedCheatsListFragment(val activity: MyUnpublishedCheatsListActiv
                 myUnpublishedCheatsListViewAdapter?.notifyDataSetChanged()
             }
         }
+    }
+
+    fun submitCheat() {
+        val explicitIntent = Intent(activity, SubmitCheatSelectGameActivity::class.java)
+        startActivity(explicitIntent)
     }
 
     companion object {

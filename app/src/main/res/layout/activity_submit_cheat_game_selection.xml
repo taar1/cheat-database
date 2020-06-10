@@ -1,39 +1,53 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg"
-    android:gravity="top"
-    android:orientation="vertical"
-    android:padding="16dp">
+    android:background="@drawable/bg">
 
     <TextView
         android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingBottom="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="16dp"
+        android:paddingStart="32dp"
+        android:paddingEnd="32dp"
         android:text="@string/submit_cheat_instructions_activity_title"
-        android:textAppearance="@style/ActivityMainTitle" />
+        android:textAppearance="@style/NormalTextBold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/subtitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingBottom="24dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="24dp"
+        android:paddingStart="32dp"
+        android:paddingEnd="32dp"
         android:text="@string/submit_cheat_instructions_activity_subtitle"
-        android:textAppearance="@style/NormalTextLight" />
-
+        android:textAppearance="@style/NormalTextLight"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/title" />
 
     <Button
         android:id="@+id/search_button"
+        style="@style/FAButton"
         android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:layout_gravity="center"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
+        android:layout_height="64dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="32dp"
         android:background="@drawable/bluedark01_btn_default_holo_dark"
+        android:drawableLeft="@drawable/ic_search"
         android:text="@string/search_game"
-        android:textAppearance="@style/NormalTextBold"
-        android:textSize="20sp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/subtitle" />
 
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

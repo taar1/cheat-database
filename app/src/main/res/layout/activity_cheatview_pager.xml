@@ -1,4 +1,5 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/outer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -42,14 +43,18 @@
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/add_new_cheat_button"
+            style="@style/FAButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginEnd="20dp"
+            android:layout_marginEnd="24dp"
             android:layout_marginBottom="72dp"
-            android:alpha="0.8"
-            android:src="@drawable/ic_add_black_48dp" />
+            app:backgroundTint="@color/color_primary_light"
+            app:fabSize="normal"
+            app:rippleColor="@color/white"
+            app:srcCompat="@drawable/ic_add"
+            app:tint="@color/white" />
 
         <include layout="@layout/adview_facebook" />
     </RelativeLayout>

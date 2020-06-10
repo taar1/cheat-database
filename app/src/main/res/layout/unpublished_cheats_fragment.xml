@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/outer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/bg"
     tools:context="com.cheatdatabase.activity.ui.mycheats.MyUnpublishedCheatsListFragment">
 
 
@@ -18,7 +20,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="?attr/actionBarSize"
-            android:background="@drawable/bg"
             tools:listitem="@layout/unpublished_cheat_list_item" />
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
@@ -40,5 +41,17 @@
         android:text="@string/no_unpublished_cheats"
         android:textAppearance="@style/NormalText"
         android:visibility="invisible" />
+
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/fab_submit_cheat"
+        style="@style/FAButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="32dp"
+        android:text="@string/submit_cheat_short"
+        app:icon="@drawable/ic_add"
+        app:iconTint="@color/white"
+        app:rippleColor="@color/white" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
