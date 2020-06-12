@@ -173,7 +173,16 @@
         <activity
             android:name="com.cheatdatabase.activity.SubmitCheatSelectGameActivity"
             android:label="@string/submit_cheat_title"
-            android:theme="@style/Theme.Navyblue" />
+            android:theme="@style/Theme.Navyblue">
+
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/searchable" />
+
+            <meta-data
+                android:name="android.app.default_searchable"
+                android:value=".search.SearchResultsActivity" />
+        </activity>
 
         <meta-data
             android:name="com.google.android.gms.version"

@@ -12,6 +12,7 @@
     <color name="black">#000000</color>
     <color name="navy_blue_medium">#005694</color>
     <color name="navy_blue_medium_dark">#003160</color>
+    <color name="navy_blue_medium_dark_transparent">#66003160</color>
     <color name="subtitle">#BBBBBB</color>
 
     <color name="color_primary_light">#005694</color>

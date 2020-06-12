@@ -229,7 +229,7 @@ class MyUnpublishedCheatsListFragment(val activity: MyUnpublishedCheatsListActiv
         }
     }
 
-    fun submitCheat() {
+    private fun submitCheat() {
         val explicitIntent = Intent(activity, SubmitCheatSelectGameActivity::class.java)
         startActivity(explicitIntent)
     }

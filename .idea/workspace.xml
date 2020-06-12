@@ -6,7 +6,7 @@
     </shared>
   </component>
   <component name="AndroidLogFilters">
-    <option name="TOOL_WINDOW_LOG_LEVEL" value="error" />
+    <option name="TOOL_WINDOW_LOG_LEVEL" value="verbose" />
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="No Filters" />
   </component>
   <component name="AvailableLibraryUpdateStorage">
@@ -110,8 +110,21 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4caff62e-c62f-40ca-acf0-73c680b13375" name="Default" comment="Fixed Floating Action Buttons in the app. Added function to submit cheat from the my cheats page (not working yet).">
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/SubmitCheatSelectGameActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/SubmitCheatSelectGameActivity.kt" afterDir="false" />
+    <list default="true" id="4caff62e-c62f-40ca-acf0-73c680b13375" name="Default" comment="deleteUnpublishedCheat using COROUTINES: WORKING NOW">
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/submit_cheat_activity.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/app.iml" beforeDir="false" afterPath="$PROJECT_DIR$/app/app.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/ui/mycheats/MyUnpublishedCheatsListActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/ui/mycheats/MyUnpublishedCheatsListActivity.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/ui/mycheats/MyUnpublishedCheatsListFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/ui/mycheats/MyUnpublishedCheatsListFragment.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/fragments/MyCheatsFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/fragments/MyCheatsFragment.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_submit_cheat_game_selection.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_submit_cheat_game_selection.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_my_cheats_overview.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_my_cheats_overview.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/unpublished_cheats_activity.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/unpublished_cheats_activity.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/values-de/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values-de/strings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/colors.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/colors.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -158,14 +171,15 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="resourceFile" />
+        <option value="valueResourceFile" />
         <option value="Interface" />
-        <option value="layoutResourceFile" />
         <option value="layoutResourceFile_vertical" />
-        <option value="Kotlin Interface" />
         <option value="Class" />
         <option value="Singleton" />
+        <option value="Kotlin Object" />
+        <option value="Kotlin Interface" />
         <option value="Kotlin Class" />
-        <option value="valueResourceFile" />
+        <option value="layoutResourceFile" />
       </list>
     </option>
   </component>
@@ -203,7 +217,6 @@
     <property name="SHOW_ALL_PROCESSES" value="false" />
     <property name="ScreenshotViewer.SavePath" value="$USER_HOME$/Desktop" />
     <property name="SearchEverywhereHistoryKey" value="adapter&#9;FILE&#9;file:///Users/dominikerbsland/workspace/app/Android/cheat-database/app/src/main/java/com/cheatdatabase/adapters/GamesBySystemRecycleListViewAdapter.java&#10;Androidman&#9;FILE&#9;file:///Users/dominikerbsland/workspace/app/Android/cheat-database/app/src/main/AndroidManifest.xml&#10;topada&#9;FILE&#9;file:///Users/dominikerbsland/workspace/app/Android/cheat-database/app/src/main/java/com/cheatdatabase/adapters/TopMembersListViewAdapter.java&#10;topm&#9;FILE&#9;file:///Users/dominikerbsland/workspace/app/Android/cheat-database/app/src/main/res/layout/topmembers_list_item.xml&#10;drawer&#9;FILE&#9;file:///Users/dominikerbsland/workspace/app/Android/cheat-database/app/src/main/res/layout/drawer_header.xml&#10;_main&#9;FILE&#9;file:///Users/dominikerbsland/workspace/app/Android/cheat-database/app/src/main/res/layout/activity_main.xml&#10;manifest&#9;FILE&#9;file:///Users/dominikerbsland/workspace/app/Android/cheat-database/app/src/main/AndroidManifest.xml&#10;style&#9;FILE&#9;file:///Users/dominikerbsland/workspace/app/Android/cheat-database/app/src/main/res/values/styles.xml&#10;rating&#9;PSI&#9;JAVA://com.cheatdatabase.R.id#rating_layout&#10;include&#9;FILE&#9;file:///Users/dominikerbsland/workspace/app/Android/cheat-database/app/src/main/res/layout/include_fastscroll_recyclerview.xml&#10;cheatlist&#9;FILE&#9;file:///Users/dominikerbsland/workspace/app/Android/cheat-database/app/src/main/res/layout/activity_cheat_list.xml&#10;actigame&#9;FILE&#9;file:///Users/dominikerbsland/workspace/app/Android/cheat-database/app/src/main/res/layout/activity_game_list.xml&#10;string&#9;FILE&#9;file:///Users/dominikerbsland/workspace/app/Android/cheat-database/app/src/main/res/values/strings.xml&#10;main&#9;FILE&#9;file:///Users/dominikerbsland/workspace/app/Android/cheat-database/app/src/main/res/layout/activity_main.xml&#10;ma&#9;FILE&#9;file://C:/Users/taar1/Development/Android/GitHub/cheat-database/app/src/main/res/layout/activity_main.xml&#10;actimain&#9;FILE&#9;file://C:/Users/taar1/Development/Android/GitHub/cheat-database/app/src/main/res/layout/activity_main.xml&#10;activity_game&#9;FILE&#9;file://C:/Users/taar1/Development/Android/AndroidStudioProjects/Cheat-Database/app/src/main/res/layout-large-land/activity_gamelist.xml&#10;listrow_gamelist&#9;PSI&#9;JAVA://com.cheatdatabase.R.layout#listrow_gamelist&#10;listrow_game_item&#9;FILE&#9;file://C:/Users/taar1/Development/Android/AndroidStudioProjects/Cheat-Database/app/src/main/res/layout/listrow_game_item.xml&#10;game list&#9;PSI&#9;JAVA://com.cheatdatabase.R.layout#gamesearch_listrow_details&#10;gamelist&#9;PSI&#9;JAVA://com.cheatdatabase.R.layout#listrow_gamelist" />
-    <property name="SelectDeploymentTargetsDialog.selectedDevices" value="6ea89d94&#10;fd8b7031" />
     <property name="UI_DESIGNER_EDITOR_MODE.NlPaletteManager-NlEditorPanel.WIDTH" value="661" />
     <property name="UI_DESIGNER_EDITOR_MODE.NlPaletteManager-NlPreviewForm.SHOW" value="false" />
     <property name="UI_DESIGNER_EDITOR_MODE.NlPropertiesWindowManager-NlEditorPanel.WIDTH" value="460" />
@@ -216,32 +229,32 @@
     <property name="extract.method.default.visibility" value="private" />
     <property name="ignore.virus.scanning.warn.message" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/app/src/main/res/layout" />
-    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.last.edited" value="Suggestions" />
     <property name="project.structure.proportion" value="0.17" />
     <property name="project.structure.side.proportion" value="0.2" />
-    <property name="settings.editor.selected.configurable" value="preferences.sourceCode.Kotlin" />
+    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
   </component>
   <component name="PsdUISettings">
     <option name="LAST_EDITED_BUILD_TYPE" value="debug" />
   </component>
   <component name="RecentsManager">
     <key name="MoveKotlinTopLevelDeclarationsDialog.RECENTS_KEY">
-      <recent name="com.cheatdatabase.activity" />
       <recent name="com.cheatdatabase.data.repository" />
     </key>
     <key name="CreateKotlinClassDialog.RecentsKey">
       <recent name="com.cheatdatabase.data.network" />
     </key>
     <key name="CopyKotlinDeclarationDialog.RECENTS_KEY">
+      <recent name="com.cheatdatabase.rest" />
       <recent name="com.cheatdatabase.activity.ui.mycheats" />
       <recent name="com.cheatdatabase.adapters" />
     </key>
     <key name="android.template.packageName">
+      <recent name="com.cheatdatabase.activity.ui.mycheats" />
       <recent name="com.cheatdatabase.activity.ui.mvvmexample" />
       <recent name="com.cheatdatabase.activity" />
       <recent name="com.cheatdatabase.ads" />
       <recent name="com.cheatdatabase" />
-      <recent name="com.cheatdatabase.fragments" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/app/src/main/res/layout-v17" />
@@ -258,11 +271,11 @@
       <recent name="com.cheatdatabase.listitems" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Development\Android\Workspaces\cheat-database\app\src\main\res\layout" />
       <recent name="$PROJECT_DIR$/app/src/main/res/layout" />
       <recent name="$PROJECT_DIR$/app/libs" />
       <recent name="$PROJECT_DIR$/app/src/main/res/layout-xlarge-land" />
       <recent name="$PROJECT_DIR$/app/src/main/res/xml" />
-      <recent name="C:\Users\taar1\Development\Android\GitHub\cheat-database\app\libs" />
     </key>
     <key name="android.template.parentActivityClass">
       <recent name="" />
@@ -585,7 +598,7 @@
     </recent_temporary>
   </component>
   <component name="StructureViewFactory">
-    <option name="ACTIVE_ACTIONS" value=",ALPHA_COMPARATOR,SHOW_FIELDS" />
+    <option name="ACTIVE_ACTIONS" value=",ALPHA_COMPARATOR,SHOW_FIELDS,VISIBILITY_SORTER" />
   </component>
   <component name="SvnConfiguration" cleanupOnStartRun="true">
     <configuration>$USER_HOME$/.subversion</configuration>
@@ -893,54 +906,54 @@
       <option name="project" value="LOCAL" />
       <updated>1590345437019</updated>
     </task>
-    <task id="LOCAL-00121" summary="Further improving the unpublished cheats view(s)">
-      <created>1590352430645</created>
+    <task id="LOCAL-00121" summary="Switching to coroutines (not working yet).">
+      <created>1591120902765</created>
       <option name="number" value="00121" />
       <option name="presentableId" value="LOCAL-00121" />
       <option name="project" value="LOCAL" />
-      <updated>1590352430645</updated>
+      <updated>1591120902766</updated>
     </task>
-    <task id="LOCAL-00122" summary="Implement delete unpublished cheat functionality (not working yet)">
-      <created>1590523885033</created>
+    <task id="LOCAL-00122" summary="Remove cheat from list functionality (needs to be changed to coroutines)&#10;currently bug in removing one item from the list in MyUnpublishedCheatsListFragment.kt">
+      <created>1591303552984</created>
       <option name="number" value="00122" />
       <option name="presentableId" value="LOCAL-00122" />
       <option name="project" value="LOCAL" />
-      <updated>1590523885033</updated>
+      <updated>1591303552985</updated>
     </task>
-    <task id="LOCAL-00123" summary="Few small code improvements">
-      <created>1590556839173</created>
+    <task id="LOCAL-00123" summary="Fixing the feature for removing an item from the unpublished cheats list. the list will remove the item and refresh with an animation.">
+      <created>1591456642494</created>
       <option name="number" value="00123" />
       <option name="presentableId" value="LOCAL-00123" />
       <option name="project" value="LOCAL" />
-      <updated>1590556839173</updated>
+      <updated>1591456642494</updated>
     </task>
-    <task id="LOCAL-00124" summary="Fixing the delete unpublished cheat api call">
-      <created>1590611280530</created>
+    <task id="LOCAL-00124" summary="Add app bar layout to toolbar layout xml file">
+      <created>1591458604265</created>
       <option name="number" value="00124" />
       <option name="presentableId" value="LOCAL-00124" />
       <option name="project" value="LOCAL" />
-      <updated>1590611280530</updated>
+      <updated>1591458604265</updated>
     </task>
-    <task id="LOCAL-00125" summary="Unpublished cheats laden per Coroutines. Reject Reason button eingebaut mit Copy to Clipboard Funktion.">
-      <created>1591216274663</created>
+    <task id="LOCAL-00125" summary="Back arrow in actionbar in unpublished cheats list view added.&#10;Improved look of the card.">
+      <created>1591471986040</created>
       <option name="number" value="00125" />
       <option name="presentableId" value="LOCAL-00125" />
       <option name="project" value="LOCAL" />
-      <updated>1591216274664</updated>
+      <updated>1591471986040</updated>
     </task>
-    <task id="LOCAL-00126" summary="Fixing empty view display &amp; pull to refresh action.">
-      <created>1591773146874</created>
+    <task id="LOCAL-00126" summary="Code Cleanup">
+      <created>1591473298770</created>
       <option name="number" value="00126" />
       <option name="presentableId" value="LOCAL-00126" />
       <option name="project" value="LOCAL" />
-      <updated>1591773146875</updated>
+      <updated>1591473298770</updated>
     </task>
-    <task id="LOCAL-00127" summary="Fixed Floating Action Buttons in the app. Added function to submit cheat from the my cheats page (not working yet).">
-      <created>1591821891202</created>
+    <task id="LOCAL-00127" summary="deleteUnpublishedCheat using COROUTINES: WORKING NOW">
+      <created>1591647269516</created>
       <option name="number" value="00127" />
       <option name="presentableId" value="LOCAL-00127" />
       <option name="project" value="LOCAL" />
-      <updated>1591821891202</updated>
+      <updated>1591647269519</updated>
     </task>
     <option name="localTasksCounter" value="128" />
     <servers />
@@ -967,6 +980,31 @@
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
       <map>
+        <entry key="1">
+          <value>
+            <State>
+              <option name="SHOW_ONLY_AFFECTED_CHANGES" value="true" />
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="HEAD" />
+                      </list>
+                    </value>
+                  </entry>
+                  <entry key="structure">
+                    <value>
+                      <list>
+                        <option value="dir:D:/Development/Android/Workspaces/cheat-database/app" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
         <entry key="MAIN">
           <value>
             <State>
@@ -975,6 +1013,11 @@
           </value>
         </entry>
       </map>
+    </option>
+    <option name="OPEN_TABS">
+      <set>
+        <option value="1" />
+      </set>
     </option>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -1010,14 +1053,14 @@
     <MESSAGE value="Fixing instant app crash because of binding. Removing viewBinding in gradle because Kotlin can bind more easily." />
     <MESSAGE value="Bug fixes in &quot;my cheats&quot; section." />
     <MESSAGE value="Improving unpublished cheats card layouts etc." />
-    <MESSAGE value="Further improving the unpublished cheats view(s)" />
-    <MESSAGE value="Implement delete unpublished cheat functionality (not working yet)" />
-    <MESSAGE value="Few small code improvements" />
-    <MESSAGE value="Fixing the delete unpublished cheat api call" />
-    <MESSAGE value="Unpublished cheats laden per Coroutines. Reject Reason button eingebaut mit Copy to Clipboard Funktion." />
-    <MESSAGE value="Fixing empty view display &amp; pull to refresh action." />
-    <MESSAGE value="Fixed Floating Action Buttons in the app. Added function to submit cheat from the my cheats page (not working yet)." />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed Floating Action Buttons in the app. Added function to submit cheat from the my cheats page (not working yet)." />
+    <MESSAGE value="Switching to coroutines (not working yet)." />
+    <MESSAGE value="Remove cheat from list functionality (needs to be changed to coroutines)&#10;currently bug in removing one item from the list in MyUnpublishedCheatsListFragment.kt" />
+    <MESSAGE value="Fixing the feature for removing an item from the unpublished cheats list. the list will remove the item and refresh with an animation." />
+    <MESSAGE value="Add app bar layout to toolbar layout xml file" />
+    <MESSAGE value="Back arrow in actionbar in unpublished cheats list view added.&#10;Improved look of the card." />
+    <MESSAGE value="Code Cleanup" />
+    <MESSAGE value="deleteUnpublishedCheat using COROUTINES: WORKING NOW" />
+    <option name="LAST_COMMIT_MESSAGE" value="deleteUnpublishedCheat using COROUTINES: WORKING NOW" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
@@ -1055,30 +1098,6 @@
           <line>498</line>
           <properties class="com.cheatdatabase.helpers.Tools" method="saveScreenshotsToSdCard" />
           <option name="timeStamp" value="213" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/data/repository/RestRepository.java</url>
-          <line>84</line>
-          <properties class="com.cheatdatabase.data.repository.RestRepository" />
-          <option name="timeStamp" value="223" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/data/repository/RestRepository.java</url>
-          <line>68</line>
-          <properties method="onResponse" />
-          <option name="timeStamp" value="226" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/data/repository/RestRepository.java</url>
-          <line>75</line>
-          <properties method="onFailure" />
-          <option name="timeStamp" value="227" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/data/repository/RestRepository.java</url>
-          <line>58</line>
-          <properties class="com.cheatdatabase.data.repository.RestRepository" method="getMyUnpublishedCheats" />
-          <option name="timeStamp" value="228" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/helpers/Tools.java</url>

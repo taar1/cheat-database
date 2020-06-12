@@ -165,7 +165,7 @@
     <string name="clear_search_history">Lösche den Suchverlauf</string>
     <string name="search_history_cleared">Suchverlauf gelöscht.</string>
     <string name="submit_cheat_instructions_activity_title">Für welches Game möchtest du einen Cheat einsenden?</string>
-    <string name="submit_cheat_instructions_activity_subtitle">Um einen Cheat einsenden zu können musst du zuerst die Datenbank nach dem passenden Game durchsuchen. In der Game-Ansicht befindet sich ein Link, um für dieses Game einen Cheat einzusenden. Beachte bitte, dass du für diese Aktion eingeloggt sein musst.</string>
+    <string name="submit_cheat_instructions_activity_subtitle">Um einen Cheat einsenden zu können musst du zuerst in der Datenbank nach dem entsprechenden Game suchen. Wähle in der Game-Ansicht im Menü \"Cheat einsenden\", um zur Eingabemaske zu gelangen.\n\nBeachte bitte, dass du für diese Aktion eingeloggt sein musst.</string>
     <string name="already_logged_in">Du bist bereits als %s eingeloggt. Möchtest du ausloggen?</string>
 
     <string name="sign_out">Ausloggen</string>
@@ -228,4 +228,6 @@
     <string name="text_copied_to_clipboard">Text wurde in die Zwischenablage kopiert</string>
     <string name="why_was_cheat_rejected">Warum wurde mein Cheat abgelehnt?</string>
     <string name="no_unpublished_cheats">Du hast zur Zeit keine unveröffentlichten Cheats. Klicke unten auf den Button, um einen Cheat einzusenden.</string>
+    <string name="my_score">My Score: -</string>
+    <string name="earn_points_submitting_cheats">Earn points by submitting your own cheats and redeem them for actual money! Coming soon!</string>
 </resources>
