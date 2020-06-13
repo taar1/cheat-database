@@ -10,7 +10,7 @@
         android:id="@+id/somethingfound_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/standard_background"
+        android:background="@drawable/bg"
         android:paddingStart="@dimen/activity_searchresult_horizontal_margin"
         android:paddingLeft="@dimen/activity_searchresult_horizontal_margin"
         android:paddingTop="@dimen/activity_searchresult_vertical_margin"

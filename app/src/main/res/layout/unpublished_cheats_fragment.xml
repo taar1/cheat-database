@@ -51,7 +51,7 @@
         android:layout_margin="32dp"
         android:text="@string/submit_cheat_short"
         app:icon="@drawable/ic_add"
-        app:iconTint="@color/white"
+        app:iconTint="@color/black"
         app:rippleColor="@color/white" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -151,7 +151,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.app_icon_fox);
 
         fragmentManager = getSupportFragmentManager();
         fragmentTransaction = fragmentManager.beginTransaction();
@@ -383,7 +382,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             fragmentManager.beginTransaction().replace(R.id.content_frame, FavoriteGamesListFragment.newInstance(), FavoriteGamesListFragment.class.getSimpleName()).commit();
 
             mToolbar.setTitle(R.string.favorites);
-            floatingActionButton.show();
+            floatingActionButton.hide();
         } else if (id == R.id.nav_members) {
 
             TopMembersFragment topMembersFragment = TopMembersFragment.newInstance(this);

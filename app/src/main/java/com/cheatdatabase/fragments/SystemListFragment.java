@@ -61,7 +61,7 @@ public class SystemListFragment extends Fragment implements OnSystemListItemSele
         return systemListFragment;
     }
 
-    public void setMainActivity(MainActivity mainActivity) {
+    private void setMainActivity(MainActivity mainActivity) {
         this.mainActivity = mainActivity;
     }
 

@@ -13,16 +13,7 @@ class SubmitCheatSelectGameActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // TODO eigenes activity-layout machen für cheat-submissions
-        // TODO eigenes activity-layout machen für cheat-submissions
-        // TODO eigenes activity-layout machen für cheat-submissions
-        // TODO eigenes activity-layout machen für cheat-submissions
-        setContentView(R.layout.unpublished_cheats_activity)
-
-        // TODO "cheat-score" hinzufügen bei den "my cheats" oben im layout (coming soon feature)
-        // TODO "cheat-score" hinzufügen bei den "my cheats" oben im layout (coming soon feature)
-        // TODO "cheat-score" hinzufügen bei den "my cheats" oben im layout (coming soon feature)
-        // TODO "cheat-score" hinzufügen bei den "my cheats" oben im layout (coming soon feature)
+        setContentView(R.layout.submit_cheat_activity)
 
         toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
