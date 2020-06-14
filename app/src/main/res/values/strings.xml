@@ -226,4 +226,5 @@
     <string name="no_unpublished_cheats">You currently do not have any unpublished cheats. Use the button below to submit a cheat.</string>
     <string name="my_score">My Score: -</string>
     <string name="earn_points_submitting_cheats">Earn points by submitting your own cheats and redeem them for actual money! Coming soon!</string>
+    <string name="enter_cheat_here">Enter your cheat here:</string>
 </resources>

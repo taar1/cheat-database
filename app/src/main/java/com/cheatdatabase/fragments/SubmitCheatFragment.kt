@@ -22,7 +22,7 @@ class SubmitCheatFragment(val activity: SubmitCheatSelectGameActivity) : Fragmen
         searchButton = view.search_button
 
         searchButton.setOnClickListener {
-            activity.menux.findItem(R.id.search).expandActionView()
+            activity.toolbarMenu.findItem(R.id.search).expandActionView()
         }
 
         return view

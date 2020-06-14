@@ -12,6 +12,7 @@ import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import com.cheatdatabase.R
+import com.cheatdatabase.activity.CheatsByMemberListActivity
 import com.cheatdatabase.activity.MainActivity
 import com.cheatdatabase.activity.ui.mycheats.MyUnpublishedCheatsListActivity
 import com.cheatdatabase.data.model.Member
@@ -55,7 +56,9 @@ class MyCheatsFragment(val mainActivity: MainActivity, var settings: SharedPrefe
         }
 
         publishedCheatsCard.setOnClickListener {
-            onCardClicked(Intent(mainActivity, MainActivity::class.java))
+            val myCheatsIntent = Intent(mainActivity, CheatsByMemberListActivity::class.java)
+            myCheatsIntent.putExtra("member", member)
+            onCardClicked(myCheatsIntent)
         }
 
         return view

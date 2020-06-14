@@ -29,4 +29,6 @@
     <color name="scrollbar">#002447</color>
     <!-- COLOR THEME - BLUE - END -->x
 
+    <color name="navigation_drawer_background">#EE303030</color>
+
 </resources>

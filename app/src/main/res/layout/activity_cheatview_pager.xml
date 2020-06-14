@@ -54,7 +54,7 @@
             app:fabSize="normal"
             app:rippleColor="@color/white"
             app:srcCompat="@drawable/ic_add"
-            app:tint="@color/white" />
+            app:tint="@color/black" />
 
         <include layout="@layout/adview_facebook" />
     </RelativeLayout>

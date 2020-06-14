@@ -90,7 +90,7 @@
 - Bitte verwende Grossbuchstaben für Personennamen oder Gegenstände. Nach einem Punkt sollte der Satz ebenfalls mit einem Grossbuchstaben anfangen.\n\n
 - Schreibe kurze Sätze. Lange Sätze mit Kommas verbunden sind schwieriger zu verstehen.\n\n
 - Schreibe die Sätze nicht in der &#8220;ich&#8221;-Form wie zum Beispiel &#8220;es hat mir geholfen&#8221; oder &#8220;es hat mir 1000 Gold eingebracht&#8221;.</string>
-    <string name="thanks">Thank you!</string>
+    <string name="thanks">Vielen Dank!</string>
     <string name="fill_everything">Bitte fülle alle Felder aus.</string>
     <string name="submit_cheat_consent_title">Einverständniserklärung</string>
     <string name="submit_cheat_consent_text">Ich bin damit einverstanden, dass mein eingesandter Cheat korrigiert und unter Umständen angepasst werden kann, damit er den minimalen Qualitätsanforderungen von Cheat-Database entspricht.\n\nDurch das Übermitteln des Cheats gewährst du Cheat-Database das Recht der Verwendung und Verbreitung des Inhaltes via App und Website. Für den Autor entstehen dadurch keinerlei finanziellen Ansprüche von Cheat-Database.\n\nAlle eingeschickten Cheats werden in Deinem Cheat-Database Account gespeichert. Wenn ein eingesendeter Cheat geprüft und aufgenommen wurde, wirst du per E-Mail darüber informiert.\n\nWenn du nachträglich irgendwelche Änderungen am Cheat vornehmen willst, kannst du dich via Webbrowser auf www.cheat-database.com einloggen. Im Member-Bereich kannst du Deine Cheats editieren, Screenshots hinzufügen/ändern oder den kompletten Cheat aus der Datenbank entfernen.</string>
@@ -230,4 +230,5 @@
     <string name="no_unpublished_cheats">Du hast zur Zeit keine unveröffentlichten Cheats. Klicke unten auf den Button, um einen Cheat einzusenden.</string>
     <string name="my_score">My Score: -</string>
     <string name="earn_points_submitting_cheats">Earn points by submitting your own cheats and redeem them for actual money! Coming soon!</string>
+    <string name="enter_cheat_here">Gib hier deinen Cheat ein:</string>
 </resources>

@@ -8,12 +8,12 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.CheckBox;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.Theme;
@@ -49,7 +49,7 @@ public class SubmitCheatFormActivity extends AppCompatActivity {
     private static final String TAG = "SubmitCheatActivity";
 
     @BindView(R.id.outer_layout)
-    RelativeLayout outerLayout;
+    ConstraintLayout outerLayout;
     @BindView(R.id.text_cheat_submission_title)
     TextView textCheatTitle;
     @BindView(R.id.edit_cheat_title)
@@ -59,7 +59,7 @@ public class SubmitCheatFormActivity extends AppCompatActivity {
     @BindView(R.id.checkbox_terms)
     CheckBox checkBoxTerms;
     @BindView(R.id.toolbar)
-    Toolbar mToolbar;
+    Toolbar toolbar;
 
     private Game gameObj;
     private Member member;
@@ -83,18 +83,20 @@ public class SubmitCheatFormActivity extends AppCompatActivity {
         // Dagger end
 
         gameObj = getIntent().getParcelableExtra("gameObj");
+        toolbar.setTitle(gameObj.getGameName());
+        toolbar.setSubtitle(gameObj.getSystemName());
+
         if (gameObj == null) {
             Toast.makeText(SubmitCheatFormActivity.this, R.string.err_somethings_wrong, Toast.LENGTH_LONG).show();
             finish();
         } else {
             init();
-            textCheatTitle.setText(gameObj.getGameName() + " (" + gameObj.getSystemName() + ")");
         }
     }
 
     private void init() {
-        if (mToolbar != null) {
-            setSupportActionBar(mToolbar);
+        if (toolbar != null) {
+            setSupportActionBar(toolbar);
         }
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);

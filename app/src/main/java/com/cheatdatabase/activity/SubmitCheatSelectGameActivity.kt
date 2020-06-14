@@ -12,7 +12,7 @@ import com.cheatdatabase.fragments.SubmitCheatFragment
 
 class SubmitCheatSelectGameActivity : AppCompatActivity() {
 
-    lateinit var menux: Menu
+    lateinit var toolbarMenu: Menu
     lateinit var searchView: SearchView
     lateinit var toolbar: Toolbar
 
@@ -36,7 +36,7 @@ class SubmitCheatSelectGameActivity : AppCompatActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menux = menu
+        toolbarMenu = menu
         menu.clear()
         menuInflater.inflate(R.menu.search_menu, menu)
 

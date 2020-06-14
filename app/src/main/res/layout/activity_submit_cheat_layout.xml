@@ -1,31 +1,42 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/outer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bg">
 
-    <include layout="@layout/toolbar" />
+    <include
+        android:id="@+id/include"
+        layout="@layout/toolbar" />
 
     <TextView
         android:id="@+id/text_cheat_submission_title"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/toolbar"
-        android:layout_margin="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
         android:singleLine="true"
-        android:text="@string/submit_cheat_title"
-        android:textAppearance="@style/GameTitle" />
+        android:text="@string/enter_cheat_here"
+        android:textAppearance="@style/NormalTextBold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/cheat_input_layout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/include" />
 
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/title_input_layout"
+        style="@style/CheatInputFormStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/text_cheat_submission_title"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="8dp"
-        android:textAppearance="@style/NormalTextLight">
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_cheat_submission_title">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edit_cheat_title"
@@ -36,27 +47,28 @@
             android:imeOptions="actionNext"
             android:inputType="textCapWords|textAutoCorrect"
             android:maxLines="1"
-            android:paddingTop="16dp"
-            android:paddingBottom="16dp"
+            android:paddingTop="32dp"
             android:singleLine="true"
             android:textAppearance="@style/WalkthroughText">
 
             <requestFocus />
         </com.google.android.material.textfield.TextInputEditText>
-
-
     </com.google.android.material.textfield.TextInputLayout>
 
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/cheat_input_layout"
+        style="@style/CheatInputFormStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/title_input_layout"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="8dp"
-        android:textAppearance="@style/NormalTextLight">
+        android:layout_marginEnd="16dp"
+        android:textAppearance="@style/NormalTextLight"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/title_input_layout">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edit_cheat_text"
@@ -66,7 +78,7 @@
             android:gravity="top"
             android:hint="@string/submit_cheat_your_body"
             android:inputType="textCapSentences|textAutoCorrect|textMultiLine"
-            android:minHeight="200dp"
+            android:minHeight="300dp"
             android:textAppearance="@style/WalkthroughText" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -75,9 +87,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/cheat_input_layout"
-        android:layout_margin="16dp"
-        android:text="@string/submit_cheat_agree_terms_conditions" />
-
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:text="@string/submit_cheat_agree_terms_conditions"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cheat_input_layout" />
 
     <TextView
         android:id="@+id/guidelines"
@@ -85,9 +101,14 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/checkbox_terms"
         android:layout_marginStart="24dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
         android:singleLine="true"
         android:text="@string/guidelines"
-        android:textAppearance="@style/SmallTextLight" />
+        android:textAppearance="@style/SmallTextLight"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/checkbox_terms" />
 
     <TextView
         android:id="@+id/terms_conditions"
@@ -95,10 +116,14 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/guidelines"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
         android:singleLine="true"
         android:text="@string/submit_cheat_consent_title"
-        android:textAppearance="@style/SmallTextLight" />
+        android:textAppearance="@style/SmallTextLight"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/guidelines" />
 
 
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
