@@ -284,7 +284,7 @@ public class FavoriteCheatListActivity extends AppCompatActivity implements OnCh
 
     @OnClick(R.id.add_new_cheat_button)
     void addNewCheat() {
-        Intent explicitIntent = new Intent(FavoriteCheatListActivity.this, SubmitCheatActivity.class);
+        Intent explicitIntent = new Intent(FavoriteCheatListActivity.this, SubmitCheatFormActivity.class);
         explicitIntent.putExtra("gameObj", gameObj);
         startActivity(explicitIntent);
     }

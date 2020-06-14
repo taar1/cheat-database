@@ -266,4 +266,10 @@ public class SearchResultsActivity extends AppCompatActivity implements OnGameLi
             Toast.makeText(this, R.string.no_internet, Toast.LENGTH_SHORT).show();
         }
     }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
 }

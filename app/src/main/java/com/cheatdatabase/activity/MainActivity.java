@@ -40,7 +40,6 @@ import com.cheatdatabase.events.GenericEvent;
 import com.cheatdatabase.fragments.ContactFormFragment;
 import com.cheatdatabase.fragments.FavoriteGamesListFragment;
 import com.cheatdatabase.fragments.MyCheatsFragment;
-import com.cheatdatabase.fragments.SubmitCheatFragment;
 import com.cheatdatabase.fragments.SystemListFragment;
 import com.cheatdatabase.fragments.TopMembersFragment;
 import com.cheatdatabase.helpers.DistinctValues;
@@ -193,11 +192,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @OnClick(R.id.add_new_cheat_button)
     void clickedAddNewCheatFloatingButton() {
-        mToolbar.setTitle(R.string.submit_cheat_short);
-        fragmentTransaction.addToBackStack(SubmitCheatFragment.class.getSimpleName());
-        fragmentManager.beginTransaction().replace(R.id.content_frame, SubmitCheatFragment.newInstance(), SubmitCheatFragment.class.getSimpleName()).commit();
-
-        floatingActionButton.hide();
+        Intent explicitIntent = new Intent(this, SubmitCheatSelectGameActivity.class);
+        startActivity(explicitIntent);
     }
 
     @Override
@@ -395,12 +391,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else if (id == R.id.nav_rate) {
             new RateAppDialog(this, () -> showContactFormFragment());
             return true;
-        } else if (id == R.id.nav_submit) {
-            fragmentTransaction.addToBackStack(SubmitCheatFragment.class.getSimpleName());
-            fragmentManager.beginTransaction().replace(R.id.content_frame, SubmitCheatFragment.newInstance(), SubmitCheatFragment.class.getSimpleName()).commit();
-
-            mToolbar.setTitle(R.string.submit_cheat_short);
-            floatingActionButton.hide();
         } else if (id == R.id.nav_contact) {
             showContactFormFragment();
         } else if (id == R.id.nav_settings) {

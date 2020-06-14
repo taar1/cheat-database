@@ -27,7 +27,7 @@ import com.cheatdatabase.CheatDatabaseApplication;
 import com.cheatdatabase.R;
 import com.cheatdatabase.activity.CheatForumActivity;
 import com.cheatdatabase.activity.LoginActivity;
-import com.cheatdatabase.activity.SubmitCheatActivity;
+import com.cheatdatabase.activity.SubmitCheatFormActivity;
 import com.cheatdatabase.data.RoomCheatDatabase;
 import com.cheatdatabase.data.dao.FavoriteCheatDao;
 import com.cheatdatabase.data.model.Cheat;
@@ -240,7 +240,7 @@ public class FavoritesCheatViewPageIndicator extends AppCompatActivity {
 
             FloatingActionButton fa = viewLayout.findViewById(R.id.add_new_cheat_button);
             fa.setOnClickListener(v -> {
-                Intent intent = new Intent(FavoritesCheatViewPageIndicator.this, SubmitCheatActivity.class);
+                Intent intent = new Intent(FavoritesCheatViewPageIndicator.this, SubmitCheatFormActivity.class);
                 intent.putExtra("gameObj", gameObj);
                 startActivity(intent);
             });
@@ -315,7 +315,7 @@ public class FavoritesCheatViewPageIndicator extends AppCompatActivity {
                 finish();
                 return true;
             case R.id.action_submit_cheat:
-                explicitIntent = new Intent(FavoritesCheatViewPageIndicator.this, SubmitCheatActivity.class);
+                explicitIntent = new Intent(FavoritesCheatViewPageIndicator.this, SubmitCheatFormActivity.class);
                 explicitIntent.putExtra("gameObj", gameObj);
                 startActivity(explicitIntent);
                 return true;

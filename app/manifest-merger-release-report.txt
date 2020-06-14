@@ -136,7 +136,7 @@ activity#com.cheatdatabase.helpers.Helper
 ADDED from AndroidManifest.xml:66:9
 	android:name
 		ADDED from AndroidManifest.xml:66:19
-activity#com.cheatdatabase.activity.SubmitCheatActivity
+activity#com.cheatdatabase.activity.SubmitCheatFormActivity
 ADDED from AndroidManifest.xml:67:9
 	android:name
 		ADDED from AndroidManifest.xml:68:13

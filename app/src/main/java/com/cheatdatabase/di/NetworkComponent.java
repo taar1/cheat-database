@@ -8,7 +8,7 @@ import com.cheatdatabase.activity.LoginActivity;
 import com.cheatdatabase.activity.MainActivity;
 import com.cheatdatabase.activity.RecoverActivity;
 import com.cheatdatabase.activity.RegisterActivity;
-import com.cheatdatabase.activity.SubmitCheatActivity;
+import com.cheatdatabase.activity.SubmitCheatFormActivity;
 import com.cheatdatabase.cheatdetailview.CheatViewPageIndicatorActivity;
 import com.cheatdatabase.cheatdetailview.FavoritesCheatViewPageIndicator;
 import com.cheatdatabase.cheatdetailview.MemberCheatViewPageIndicator;
@@ -43,7 +43,7 @@ public interface NetworkComponent {
 
     void inject(RecoverActivity activity);
 
-    void inject(SubmitCheatActivity activity);
+    void inject(SubmitCheatFormActivity activity);
 
     void inject(CheatsByMemberListActivity activity);
 

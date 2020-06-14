@@ -45,7 +45,7 @@ import retrofit2.Retrofit;
  *
  * @author erbsland
  */
-public class SubmitCheatActivity extends AppCompatActivity {
+public class SubmitCheatFormActivity extends AppCompatActivity {
     private static final String TAG = "SubmitCheatActivity";
 
     @BindView(R.id.outer_layout)
@@ -84,7 +84,7 @@ public class SubmitCheatActivity extends AppCompatActivity {
 
         gameObj = getIntent().getParcelableExtra("gameObj");
         if (gameObj == null) {
-            Toast.makeText(SubmitCheatActivity.this, R.string.err_somethings_wrong, Toast.LENGTH_LONG).show();
+            Toast.makeText(SubmitCheatFormActivity.this, R.string.err_somethings_wrong, Toast.LENGTH_LONG).show();
             finish();
         } else {
             init();
@@ -131,7 +131,7 @@ public class SubmitCheatActivity extends AppCompatActivity {
                 return true;
             case R.id.action_logout:
                 member = null;
-                Tools.logout(SubmitCheatActivity.this, settings.edit());
+                Tools.logout(SubmitCheatFormActivity.this, settings.edit());
                 invalidateOptionsMenu();
                 return true;
             default:
@@ -237,7 +237,7 @@ public class SubmitCheatActivity extends AppCompatActivity {
     }
 
     private void showAlertDialog(int title, int text) {
-        new MaterialDialog.Builder(SubmitCheatActivity.this)
+        new MaterialDialog.Builder(SubmitCheatFormActivity.this)
                 .title(title)
                 .content(text)
                 .positiveText(R.string.ok)
@@ -267,7 +267,7 @@ public class SubmitCheatActivity extends AppCompatActivity {
     }
 
     private void login() {
-        Intent loginIntent = new Intent(SubmitCheatActivity.this, LoginActivity.class);
+        Intent loginIntent = new Intent(SubmitCheatFormActivity.this, LoginActivity.class);
         startActivityForResult(loginIntent, Konstanten.LOGIN_REGISTER_OK_RETURN_CODE);
     }
 
@@ -279,11 +279,11 @@ public class SubmitCheatActivity extends AppCompatActivity {
 
         if (resultCode == Konstanten.LOGIN_SUCCESS_RETURN_CODE) {
             if (member != null) {
-                Toast.makeText(SubmitCheatActivity.this, R.string.login_ok, Toast.LENGTH_LONG).show();
+                Toast.makeText(SubmitCheatFormActivity.this, R.string.login_ok, Toast.LENGTH_LONG).show();
             }
         } else if (resultCode == Konstanten.REGISTER_SUCCESS_RETURN_CODE) {
             if (member != null) {
-                Toast.makeText(SubmitCheatActivity.this, R.string.register_thanks, Toast.LENGTH_LONG).show();
+                Toast.makeText(SubmitCheatFormActivity.this, R.string.register_thanks, Toast.LENGTH_LONG).show();
             }
         }
 

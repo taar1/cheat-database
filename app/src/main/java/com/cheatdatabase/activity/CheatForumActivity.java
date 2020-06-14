@@ -410,7 +410,7 @@ public class CheatForumActivity extends AppCompatActivity implements GenericCall
                 showReportDialog();
                 return true;
             case R.id.action_submit_cheat:
-                Intent explicitIntent = new Intent(this, SubmitCheatActivity.class);
+                Intent explicitIntent = new Intent(this, SubmitCheatFormActivity.class);
                 explicitIntent.putExtra("gameObj", gameObj);
                 startActivity(explicitIntent);
                 return true;

@@ -217,7 +217,7 @@ public class CheatsByGameListActivity extends AppCompatActivity implements OnChe
                 addCheatsToFavoritesTask();
                 return true;
             case R.id.action_submit_cheat:
-                Intent explicitIntent = new Intent(CheatsByGameListActivity.this, SubmitCheatActivity.class);
+                Intent explicitIntent = new Intent(CheatsByGameListActivity.this, SubmitCheatFormActivity.class);
                 explicitIntent.putExtra("gameObj", gameObj);
                 startActivity(explicitIntent);
                 return true;
@@ -361,7 +361,7 @@ public class CheatsByGameListActivity extends AppCompatActivity implements OnChe
 
     @OnClick(R.id.add_new_cheat_button)
     void addNewCheat() {
-        Intent explicitIntent = new Intent(CheatsByGameListActivity.this, SubmitCheatActivity.class);
+        Intent explicitIntent = new Intent(CheatsByGameListActivity.this, SubmitCheatFormActivity.class);
         explicitIntent.putExtra("gameObj", gameObj);
         startActivity(explicitIntent);
     }

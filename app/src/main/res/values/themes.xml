@@ -13,7 +13,7 @@
 
         <!-- Star Rating Bar Color -->
         <item name="colorControlActivated">@color/gold</item>
-
+        <item name="searchViewStyle">@style/SearchStyle</item>
     </style>
 
     <style name="GameTitle">

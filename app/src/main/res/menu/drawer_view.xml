@@ -19,10 +19,6 @@
             android:id="@+id/nav_members"
             android:icon="@drawable/ic_drawer_members"
             android:title="@string/top_members_title" />
-        <item
-            android:id="@+id/nav_submit"
-            android:icon="@drawable/ic_drawer_upload"
-            android:title="@string/submit_cheat_title" />
     </group>
     <group
         android:id="@+id/nav_group_other"
