@@ -55,7 +55,7 @@ class MyUnpublishedCheatsListFragment(val activity: MyUnpublishedCheatsListActiv
     ): View? {
         val view = inflater.inflate(R.layout.unpublished_cheats_fragment, container, false)
 
-        emptyLabel = view.empty_labely
+        emptyLabel = view.empty_label
         outerLayout = view.outer_layout
         recyclerView = view.recycler_view
         progressBar = view.progress_bar
@@ -95,6 +95,13 @@ class MyUnpublishedCheatsListFragment(val activity: MyUnpublishedCheatsListActiv
         } else {
             hideEmptyListView()
 
+            activity.setToolbarSubtitle(
+                getString(
+                    R.string.number_of_cheats,
+                    unpublishedCheats.size
+                )
+            )
+
             myUnpublishedCheatsListViewAdapter!!.unpublishedCheats = unpublishedCheats
             myUnpublishedCheatsListViewAdapter!!.notifyDataSetChanged()
         }
@@ -108,6 +115,7 @@ class MyUnpublishedCheatsListFragment(val activity: MyUnpublishedCheatsListActiv
     private fun showEmptyListView() {
         emptyLabel.visibility = View.VISIBLE
         recyclerView.visibility = View.GONE
+        activity.setToolbarSubtitle("")
 
         hideProgressBar()
     }
@@ -225,6 +233,13 @@ class MyUnpublishedCheatsListFragment(val activity: MyUnpublishedCheatsListActiv
             } else {
                 myUnpublishedCheatsListViewAdapter?.notifyDataSetChanged()
             }
+
+            activity.setToolbarSubtitle(
+                getString(
+                    R.string.number_of_cheats,
+                    mutableArrayList.size
+                )
+            )
         }
     }
 

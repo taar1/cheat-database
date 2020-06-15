@@ -7,7 +7,7 @@
     <string name="app_name">Cheat-Database</string>
     <string name="ok">OK</string>
     <string name="no_internet">Zur Zeit besteht keine Internetverbindung.</string>
-    <string name="members_cheats_title">%1$s\'s Tricks</string>
+    <string name="members_cheats_title">%1$s\'s Cheats</string>
     <string name="placeholder">Platzhalter</string>
 
     <!-- ADS TEXT -->
@@ -21,7 +21,7 @@
     <string name="favorites">Meine Favoriten</string>
     <string name="goto_cheat">Zum Cheat</string>
     <string name="goto_news">News</string>
-    <string name="goto_games_and_cheats">Games &amp; Tricks</string>
+    <string name="goto_games_and_cheats">Games &amp; Cheats</string>
     <string name="menu_more_apps">Mehr Apps von uns</string>
 
     <!-- REPORT CHEAT -->
@@ -228,7 +228,10 @@
     <string name="text_copied_to_clipboard">Text wurde in die Zwischenablage kopiert</string>
     <string name="why_was_cheat_rejected">Warum wurde mein Cheat abgelehnt?</string>
     <string name="no_unpublished_cheats">Du hast zur Zeit keine unveröffentlichten Cheats. Klicke unten auf den Button, um einen Cheat einzusenden.</string>
+    <string name="no_member_cheats">Leider hat %1$s keine veröffentlichte Cheats.</string>
     <string name="my_score">My Score: -</string>
     <string name="earn_points_submitting_cheats">Earn points by submitting your own cheats and redeem them for actual money! Coming soon!</string>
     <string name="enter_cheat_here">Gib hier deinen Cheat ein:</string>
+    <string name="number_of_cheats">%1$d Cheats</string>
+    <string name="error_loading_cheats">Error loading the Cheats. Please try again later.</string>
 </resources>

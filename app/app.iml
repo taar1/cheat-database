@@ -180,13 +180,13 @@
         <CLASSES>
           <root url="file://$MODULE_DIR$/build/tmp/kapt3/classes/googlePlayFlavorDebugUnitTest" />
           <root url="file://$MODULE_DIR$/build/tmp/kapt3/classes/amazonFlavorDebug" />
-          <root url="file://$MODULE_DIR$/build/tmp/kapt3/classes/amazonFlavorRelease" />
           <root url="file://$MODULE_DIR$/build/tmp/kapt3/classes/amazonFlavorDebugAndroidTest" />
-          <root url="file://$MODULE_DIR$/build/tmp/kapt3/classes/googlePlayFlavorDebugAndroidTest" />
+          <root url="file://$MODULE_DIR$/build/tmp/kapt3/classes/googlePlayFlavorDebug" />
           <root url="file://$MODULE_DIR$/build/tmp/kapt3/classes/googlePlayFlavorReleaseUnitTest" />
           <root url="file://$MODULE_DIR$/build/tmp/kapt3/classes/amazonFlavorReleaseUnitTest" />
-          <root url="file://$MODULE_DIR$/build/tmp/kapt3/classes/googlePlayFlavorDebug" />
           <root url="file://$MODULE_DIR$/build/tmp/kapt3/classes/googlePlayFlavorRelease" />
+          <root url="file://$MODULE_DIR$/build/tmp/kapt3/classes/googlePlayFlavorDebugAndroidTest" />
+          <root url="file://$MODULE_DIR$/build/tmp/kapt3/classes/amazonFlavorRelease" />
           <root url="file://$MODULE_DIR$/build/tmp/kapt3/classes/amazonFlavorDebugUnitTest" />
         </CLASSES>
         <JAVADOC />

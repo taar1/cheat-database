@@ -6,6 +6,7 @@ import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -14,7 +15,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.cheatdatabase.CheatDatabaseApplication;
 import com.cheatdatabase.R;
@@ -52,13 +52,13 @@ public class CheatsByMemberListActivity extends AppCompatActivity implements OnC
     private final String TAG = CheatsByMemberListActivity.class.getSimpleName();
 
     @BindView(R.id.my_recycler_view)
-    FastScrollRecyclerView mRecyclerView;
-    @BindView(R.id.swipe_refresh_layout)
-    SwipeRefreshLayout mSwipeRefreshLayout;
+    FastScrollRecyclerView recyclerView;
+    //    @BindView(R.id.swipe_refresh_layout)
+//    SwipeRefreshLayout swipeRefreshLayout;
     @BindView(R.id.toolbar)
-    Toolbar mToolbar;
+    Toolbar toolbar;
     @BindView(R.id.item_list_empty_view)
-    TextView mEmptyView;
+    TextView emptyView;
     @BindView(R.id.banner_container)
     LinearLayout facebookBanner;
     @BindView(R.id.outer_layout)
@@ -95,20 +95,27 @@ public class CheatsByMemberListActivity extends AppCompatActivity implements OnC
 
             memberCheatRecycleListViewAdapter = new MemberCheatRecycleListViewAdapter(this);
 
-            mSwipeRefreshLayout.setRefreshing(true);
-            mSwipeRefreshLayout.setOnRefreshListener(() -> getCheats());
+            // TODO FIXME anstatt swipeRefreshLayout ein ProgressBar einbauen. -> unpublished_cheats_fragment.xml
+            // TODO FIXME anstatt swipeRefreshLayout ein ProgressBar einbauen. -> unpublished_cheats_fragment.xml
+            // TODO FIXME anstatt swipeRefreshLayout ein ProgressBar einbauen. -> unpublished_cheats_fragment.xml
+            // TODO FIXME anstatt swipeRefreshLayout ein ProgressBar einbauen. -> unpublished_cheats_fragment.xml
+            // TODO FIXME anstatt swipeRefreshLayout ein ProgressBar einbauen. -> unpublished_cheats_fragment.xml
+
+//            swipeRefreshLayout.setRefreshing(true);
+//            swipeRefreshLayout.setOnRefreshListener(() -> getCheats());
 
             // use this setting to improve performance if you know that changes
             // in content do not change the layout size of the RecyclerView
-            mRecyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
-            mRecyclerView.addItemDecoration(new DividerDecoration(this));
-            mRecyclerView.getItemAnimator().setRemoveDuration(50);
-            mRecyclerView.setHasFixedSize(true);
+            recyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
+            recyclerView.addItemDecoration(new DividerDecoration(this));
+            recyclerView.getItemAnimator().setRemoveDuration(50);
+            recyclerView.setHasFixedSize(true);
 
             if (Reachability.reachability.isReachable) {
                 getCheats();
             } else {
                 Toast.makeText(this, R.string.no_internet, Toast.LENGTH_SHORT).show();
+//                swipeRefreshLayout.setRefreshing(false);
             }
         } else {
             finish();
@@ -116,7 +123,10 @@ public class CheatsByMemberListActivity extends AppCompatActivity implements OnC
     }
 
     private void init() {
-        mToolbar = Tools.initToolbarBase(this, mToolbar);
+        toolbar = Tools.initToolbarBase(this, toolbar);
+
+        emptyView.setText(getString(R.string.no_member_cheats, member.getUsername()));
+        emptyView.setVisibility(View.GONE);
 
         SharedPreferences settings = getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
         editor = settings.edit();
@@ -125,8 +135,8 @@ public class CheatsByMemberListActivity extends AppCompatActivity implements OnC
         facebookBanner.addView(adView);
         adView.loadAd();
 
-        if (mToolbar != null) {
-            setSupportActionBar(mToolbar);
+        if (toolbar != null) {
+            setSupportActionBar(toolbar);
         }
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
@@ -134,39 +144,64 @@ public class CheatsByMemberListActivity extends AppCompatActivity implements OnC
     }
 
     void getCheats() {
+//        swipeRefreshLayout.setRefreshing(true);
+
         Call<List<Cheat>> call = apiService.getCheatsByMemberId(member.getMid());
         call.enqueue(new Callback<List<Cheat>>() {
             @Override
             public void onResponse(Call<List<Cheat>> games, Response<List<Cheat>> response) {
+
+                // TODO FIXME schauen was REST PHP zurück gibt wenn es keine member cheats gibt. müsste korrekterweise ein empty JSON liefern und keinen damit es kein error gibt....
+                // TODO FIXME schauen was REST PHP zurück gibt wenn es keine member cheats gibt. müsste korrekterweise ein empty JSON liefern und keinen damit es kein error gibt....
+                // TODO FIXME schauen was REST PHP zurück gibt wenn es keine member cheats gibt. müsste korrekterweise ein empty JSON liefern und keinen damit es kein error gibt....
+                // TODO FIXME schauen was REST PHP zurück gibt wenn es keine member cheats gibt. müsste korrekterweise ein empty JSON liefern und keinen damit es kein error gibt....
+                // TODO FIXME schauen was REST PHP zurück gibt wenn es keine member cheats gibt. müsste korrekterweise ein empty JSON liefern und keinen damit es kein error gibt....
+
+                Log.d(TAG, "XXXXX onResponse SUCCESS");
+
                 if (response.isSuccessful()) {
+                    Log.d(TAG, "XXXXX onResponse SUCCESS 1");
                     cheatList = response.body();
 
                     editor.putString(Konstanten.PREFERENCES_TEMP_CHEAT_ARRAY_OBJECT_VIEW, new Gson().toJson(cheatList));
                     editor.apply();
 
                     updateUI();
+                    Log.d(TAG, "XXXXX onResponse SUCCESS 2");
+                } else {
+                    Log.d(TAG, "XXXXX onResponse SUCCESS 3");
+                    emptyView.setVisibility(View.GONE);
                 }
+
+//                swipeRefreshLayout.setRefreshing(false);
             }
 
             @Override
             public void onFailure(Call<List<Cheat>> call, Throwable t) {
-                Log.e(TAG, "getting member cheats has failed: " + t.getLocalizedMessage());
-                Tools.showSnackbar(outerLayout, getString(R.string.no_internet));
+                Log.e(TAG, "XXXXX getting member cheats has failed: " + t.getLocalizedMessage());
+                emptyView.setVisibility(View.VISIBLE);
+//                swipeRefreshLayout.setRefreshing(false);
+
+                Tools.showSnackbar(outerLayout, getString(R.string.error_loading_cheats));
             }
         });
     }
 
     private void updateUI() {
+        Log.d(TAG, "XXXXX updateUI 1: " + cheatList.size());
+
         if ((cheatList != null) && (cheatList.size() > 0)) {
+            Log.d(TAG, "XXXXX updateUI 2");
             memberCheatRecycleListViewAdapter.setCheatList(cheatList);
-            mRecyclerView.setAdapter(memberCheatRecycleListViewAdapter);
+            recyclerView.setAdapter(memberCheatRecycleListViewAdapter);
 
             memberCheatRecycleListViewAdapter.notifyDataSetChanged();
-        } else {
-            Tools.showSnackbar(outerLayout, getString(R.string.err_data_not_accessible));
-        }
 
-        mSwipeRefreshLayout.setRefreshing(false);
+            emptyView.setVisibility(View.GONE);
+        } else {
+            Log.d(TAG, "XXXXX updateUI 3");
+            emptyView.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override

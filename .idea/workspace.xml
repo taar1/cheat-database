@@ -6,7 +6,8 @@
     </shared>
   </component>
   <component name="AndroidLogFilters">
-    <option name="TOOL_WINDOW_LOG_LEVEL" value="error" />
+    <option name="TOOL_WINDOW_CUSTOM_FILTER" value="XXXXX" />
+    <option name="TOOL_WINDOW_LOG_LEVEL" value="verbose" />
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="No Filters" />
   </component>
   <component name="AvailableLibraryUpdateStorage">
@@ -110,20 +111,17 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4caff62e-c62f-40ca-acf0-73c680b13375" name="Default" comment="Fixed the search for game button searchview layout.">
+    <list default="true" id="4caff62e-c62f-40ca-acf0-73c680b13375" name="Default" comment="Improved cheat submission form style, navigation drawer style improvement, display my published cheats works now.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/SubmitCheatFormActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/SubmitCheatFormActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/SubmitCheatSelectGameActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/SubmitCheatSelectGameActivity.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/fragments/MyCheatsFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/fragments/MyCheatsFragment.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/fragments/SubmitCheatFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/fragments/SubmitCheatFragment.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_cheat_list.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_cheat_list.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_cheatview_pager.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_cheatview_pager.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_submit_cheat_layout.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_submit_cheat_layout.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/app.iml" beforeDir="false" afterPath="$PROJECT_DIR$/app/app.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/CheatsByMemberListActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/CheatsByMemberListActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/ui/mycheats/MyUnpublishedCheatsListActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/ui/mycheats/MyUnpublishedCheatsListActivity.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/ui/mycheats/MyUnpublishedCheatsListFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/ui/mycheats/MyUnpublishedCheatsListFragment.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_member_cheat_list.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_member_cheat_list.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/include_fastscroll_recyclerview.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/include_fastscroll_recyclerview.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/unpublished_cheats_fragment.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/unpublished_cheats_fragment.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/res/values-de/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values-de/strings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/colors.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/colors.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/themes.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/themes.xml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -611,13 +609,6 @@
       <option name="presentableId" value="Default" />
       <updated>1487274191999</updated>
     </task>
-    <task id="LOCAL-00082" summary="Switching to RetroFit &amp; Dagger">
-      <created>1579989869182</created>
-      <option name="number" value="00082" />
-      <option name="presentableId" value="LOCAL-00082" />
-      <option name="project" value="LOCAL" />
-      <updated>1579989869184</updated>
-    </task>
     <task id="LOCAL-00083" summary="Dagger &amp; Retrofit usage. Working version (halfway)">
       <created>1580677917744</created>
       <option name="number" value="00083" />
@@ -954,7 +945,14 @@
       <option name="project" value="LOCAL" />
       <updated>1592148745353</updated>
     </task>
-    <option name="localTasksCounter" value="131" />
+    <task id="LOCAL-00131" summary="Improved cheat submission form style, navigation drawer style improvement, display my published cheats works now.">
+      <created>1592166192939</created>
+      <option name="number" value="00131" />
+      <option name="presentableId" value="LOCAL-00131" />
+      <option name="project" value="LOCAL" />
+      <updated>1592166192939</updated>
+    </task>
+    <option name="localTasksCounter" value="132" />
     <servers />
   </component>
   <component name="TodoView">
@@ -1034,7 +1032,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
-    <MESSAGE value="Add &quot;My Cheats&quot; section. Swichting class to Kotlin." />
     <MESSAGE value="Fix the &quot;my cheats&quot; buttons (flexible height for german language)" />
     <MESSAGE value="Removing old model classes (SystemPlatform, Cheat, Game etc.). Using the model classes from Room database now (remove redundancy)" />
     <MESSAGE value="Refactoring. Removing unused classes." />
@@ -1059,7 +1056,8 @@
     <MESSAGE value="MyCheatsFragment überarbeitet, Layouts gefixt etc." />
     <MESSAGE value="Changing style of FAB (now yellow (accent color) with black text)" />
     <MESSAGE value="Fixed the search for game button searchview layout." />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed the search for game button searchview layout." />
+    <MESSAGE value="Improved cheat submission form style, navigation drawer style improvement, display my published cheats works now." />
+    <option name="LAST_COMMIT_MESSAGE" value="Improved cheat submission form style, navigation drawer style improvement, display my published cheats works now." />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
@@ -1112,16 +1110,6 @@
           <url>file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/CheatForumActivity.java</url>
           <line>513</line>
           <option name="timeStamp" value="157" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/CheatsByMemberListActivity.java</url>
-          <line>141</line>
-          <option name="timeStamp" value="163" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/CheatsByMemberListActivity.java</url>
-          <line>152</line>
-          <option name="timeStamp" value="179" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/cheat_detail_view/MemberCheatViewPageIndicator.java</url>
