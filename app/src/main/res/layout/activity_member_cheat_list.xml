@@ -1,31 +1,72 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/outer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg"
-    android:orientation="vertical">
+    android:background="@drawable/bg">
 
-    <include layout="@layout/toolbar" />
+    <include
+        android:id="@+id/include3"
+        layout="@layout/toolbar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_gravity="center"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/item_list_empty_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:padding="60dp"
+        android:text="@string/no_member_cheats"
+        android:textAppearance="@style/NormalText"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/include3" />
+
+    <com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView
+        android:id="@+id/my_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:fastScrollAutoHideDelay="500"
+        app:fastScrollPopupBackgroundSize="88dp"
+        app:fastScrollPopupBgColor="@color/color_primary_light"
+        app:fastScrollPopupPosition="adjacent"
+        app:fastScrollPopupTextColor="@color/color_accent"
+        app:fastScrollPopupTextSize="44sp"
+        app:fastScrollThumbColor="@color/color_primary_light"
+        app:fastScrollTrackColor="@color/scrollbar"
+        app:layout_constraintBottom_toTopOf="@id/banner_container"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/include3"
+        tools:listitem="@layout/listrow_member_cheat_item" />
+
 
     <LinearLayout
+        android:id="@+id/banner_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginBottom="52dp"
-        android:orientation="vertical">
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_weight="1"
+        android:background="@android:color/transparent"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
-        <TextView
-            android:id="@+id/item_list_empty_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center_horizontal"
-            android:padding="60dp"
-            android:text="@string/no_member_cheats"
-            android:textAppearance="@style/NormalText"
-            android:visibility="visible" />
-
-        <!-- List item layout: member_cheatlist_item.xml -->
-        <include layout="@layout/include_fastscroll_recyclerview" />
-    </LinearLayout>
-
-    <include layout="@layout/adview_facebook" />
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

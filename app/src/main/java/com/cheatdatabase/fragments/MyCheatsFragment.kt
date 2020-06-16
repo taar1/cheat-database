@@ -3,7 +3,6 @@ package com.cheatdatabase.fragments
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -30,7 +29,6 @@ class MyCheatsFragment(val mainActivity: MainActivity, var settings: SharedPrefe
     lateinit var unpublishedCheatsCard: CardView
     lateinit var publishedCheatsCard: CardView
 
-    var member: Member? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -44,39 +42,36 @@ class MyCheatsFragment(val mainActivity: MainActivity, var settings: SharedPrefe
         publishedCheatsCard = view.card_published_cheats
 
         settings = this.mainActivity.getSharedPreferences(Konstanten.PREFERENCES_FILE, 0)
-        member =
-            Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member::class.java)
 
         myScoreLayout.setOnClickListener {
             Tools.showSnackbar(outerLayout, getString(R.string.earn_points_submitting_cheats))
         }
 
         unpublishedCheatsCard.setOnClickListener {
-            onCardClicked(Intent(mainActivity, MyUnpublishedCheatsListActivity::class.java))
+            startActivityIfLoggedIn(getMember(), Intent(mainActivity, MyUnpublishedCheatsListActivity::class.java))
         }
 
         publishedCheatsCard.setOnClickListener {
+            val member = getMember()
+
             val myCheatsIntent = Intent(mainActivity, CheatsByMemberListActivity::class.java)
             myCheatsIntent.putExtra("member", member)
-            onCardClicked(myCheatsIntent)
+            startActivityIfLoggedIn(member, myCheatsIntent)
         }
 
         return view
     }
 
-    private fun onCardClicked(intent: Intent) {
-        if (member == null || member?.mid == 0) {
+    private fun startActivityIfLoggedIn(member: Member?, myCheatsIntent: Intent) {
+        if (member == null || member.mid == 0) {
             Tools.showSnackbar(outerLayout, getString(R.string.error_login_required))
         } else {
-            startActivity(intent)
+            startActivity(myCheatsIntent)
         }
     }
 
-    override fun onResume() {
-        super.onResume()
-        Log.d(TAG, "onResume")
-        member =
-            Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member::class.java)
+    private fun getMember(): Member? {
+        return Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member::class.java)
     }
 
 }

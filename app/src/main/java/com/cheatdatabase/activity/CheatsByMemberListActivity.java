@@ -8,11 +8,13 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -51,10 +53,10 @@ public class CheatsByMemberListActivity extends AppCompatActivity implements OnC
 
     private final String TAG = CheatsByMemberListActivity.class.getSimpleName();
 
+    @BindView(R.id.progress_bar)
+    ProgressBar progressBar;
     @BindView(R.id.my_recycler_view)
     FastScrollRecyclerView recyclerView;
-    //    @BindView(R.id.swipe_refresh_layout)
-//    SwipeRefreshLayout swipeRefreshLayout;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     @BindView(R.id.item_list_empty_view)
@@ -62,7 +64,7 @@ public class CheatsByMemberListActivity extends AppCompatActivity implements OnC
     @BindView(R.id.banner_container)
     LinearLayout facebookBanner;
     @BindView(R.id.outer_layout)
-    LinearLayout outerLayout;
+    ConstraintLayout outerLayout;
 
     AdView adView;
 
@@ -95,15 +97,6 @@ public class CheatsByMemberListActivity extends AppCompatActivity implements OnC
 
             memberCheatRecycleListViewAdapter = new MemberCheatRecycleListViewAdapter(this);
 
-            // TODO FIXME anstatt swipeRefreshLayout ein ProgressBar einbauen. -> unpublished_cheats_fragment.xml
-            // TODO FIXME anstatt swipeRefreshLayout ein ProgressBar einbauen. -> unpublished_cheats_fragment.xml
-            // TODO FIXME anstatt swipeRefreshLayout ein ProgressBar einbauen. -> unpublished_cheats_fragment.xml
-            // TODO FIXME anstatt swipeRefreshLayout ein ProgressBar einbauen. -> unpublished_cheats_fragment.xml
-            // TODO FIXME anstatt swipeRefreshLayout ein ProgressBar einbauen. -> unpublished_cheats_fragment.xml
-
-//            swipeRefreshLayout.setRefreshing(true);
-//            swipeRefreshLayout.setOnRefreshListener(() -> getCheats());
-
             // use this setting to improve performance if you know that changes
             // in content do not change the layout size of the RecyclerView
             recyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
@@ -115,7 +108,6 @@ public class CheatsByMemberListActivity extends AppCompatActivity implements OnC
                 getCheats();
             } else {
                 Toast.makeText(this, R.string.no_internet, Toast.LENGTH_SHORT).show();
-//                swipeRefreshLayout.setRefreshing(false);
             }
         } else {
             finish();
@@ -144,12 +136,18 @@ public class CheatsByMemberListActivity extends AppCompatActivity implements OnC
     }
 
     void getCheats() {
-//        swipeRefreshLayout.setRefreshing(true);
+        progressBar.setVisibility(View.VISIBLE);
 
         Call<List<Cheat>> call = apiService.getCheatsByMemberId(member.getMid());
         call.enqueue(new Callback<List<Cheat>>() {
             @Override
             public void onResponse(Call<List<Cheat>> games, Response<List<Cheat>> response) {
+
+                // TODO FIXME wenn der user keine cheats hat gibts hier glaube ich ein onFailure()... dem nachgehen...
+                // TODO FIXME wenn der user keine cheats hat gibts hier glaube ich ein onFailure()... dem nachgehen...
+                // TODO FIXME wenn der user keine cheats hat gibts hier glaube ich ein onFailure()... dem nachgehen...
+                // TODO FIXME wenn der user keine cheats hat gibts hier glaube ich ein onFailure()... dem nachgehen...
+                // TODO FIXME wenn der user keine cheats hat gibts hier glaube ich ein onFailure()... dem nachgehen...
 
                 // TODO FIXME schauen was REST PHP zurück gibt wenn es keine member cheats gibt. müsste korrekterweise ein empty JSON liefern und keinen damit es kein error gibt....
                 // TODO FIXME schauen was REST PHP zurück gibt wenn es keine member cheats gibt. müsste korrekterweise ein empty JSON liefern und keinen damit es kein error gibt....
@@ -173,14 +171,14 @@ public class CheatsByMemberListActivity extends AppCompatActivity implements OnC
                     emptyView.setVisibility(View.GONE);
                 }
 
-//                swipeRefreshLayout.setRefreshing(false);
+                progressBar.setVisibility(View.GONE);
             }
 
             @Override
             public void onFailure(Call<List<Cheat>> call, Throwable t) {
                 Log.e(TAG, "XXXXX getting member cheats has failed: " + t.getLocalizedMessage());
                 emptyView.setVisibility(View.VISIBLE);
-//                swipeRefreshLayout.setRefreshing(false);
+                progressBar.setVisibility(View.GONE);
 
                 Tools.showSnackbar(outerLayout, getString(R.string.error_loading_cheats));
             }
