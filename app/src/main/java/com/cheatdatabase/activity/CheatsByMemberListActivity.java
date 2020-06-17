@@ -142,32 +142,14 @@ public class CheatsByMemberListActivity extends AppCompatActivity implements OnC
         call.enqueue(new Callback<List<Cheat>>() {
             @Override
             public void onResponse(Call<List<Cheat>> games, Response<List<Cheat>> response) {
-
-                // TODO FIXME wenn der user keine cheats hat gibts hier glaube ich ein onFailure()... dem nachgehen...
-                // TODO FIXME wenn der user keine cheats hat gibts hier glaube ich ein onFailure()... dem nachgehen...
-                // TODO FIXME wenn der user keine cheats hat gibts hier glaube ich ein onFailure()... dem nachgehen...
-                // TODO FIXME wenn der user keine cheats hat gibts hier glaube ich ein onFailure()... dem nachgehen...
-                // TODO FIXME wenn der user keine cheats hat gibts hier glaube ich ein onFailure()... dem nachgehen...
-
-                // TODO FIXME schauen was REST PHP zurück gibt wenn es keine member cheats gibt. müsste korrekterweise ein empty JSON liefern und keinen damit es kein error gibt....
-                // TODO FIXME schauen was REST PHP zurück gibt wenn es keine member cheats gibt. müsste korrekterweise ein empty JSON liefern und keinen damit es kein error gibt....
-                // TODO FIXME schauen was REST PHP zurück gibt wenn es keine member cheats gibt. müsste korrekterweise ein empty JSON liefern und keinen damit es kein error gibt....
-                // TODO FIXME schauen was REST PHP zurück gibt wenn es keine member cheats gibt. müsste korrekterweise ein empty JSON liefern und keinen damit es kein error gibt....
-                // TODO FIXME schauen was REST PHP zurück gibt wenn es keine member cheats gibt. müsste korrekterweise ein empty JSON liefern und keinen damit es kein error gibt....
-
-                Log.d(TAG, "XXXXX onResponse SUCCESS");
-
                 if (response.isSuccessful()) {
-                    Log.d(TAG, "XXXXX onResponse SUCCESS 1");
                     cheatList = response.body();
 
                     editor.putString(Konstanten.PREFERENCES_TEMP_CHEAT_ARRAY_OBJECT_VIEW, new Gson().toJson(cheatList));
                     editor.apply();
 
                     updateUI();
-                    Log.d(TAG, "XXXXX onResponse SUCCESS 2");
                 } else {
-                    Log.d(TAG, "XXXXX onResponse SUCCESS 3");
                     emptyView.setVisibility(View.GONE);
                 }
 
@@ -176,7 +158,7 @@ public class CheatsByMemberListActivity extends AppCompatActivity implements OnC
 
             @Override
             public void onFailure(Call<List<Cheat>> call, Throwable t) {
-                Log.e(TAG, "XXXXX getting member cheats has failed: " + t.getLocalizedMessage());
+                Log.e(TAG, "getting member cheats has failed: " + t.getLocalizedMessage());
                 emptyView.setVisibility(View.VISIBLE);
                 progressBar.setVisibility(View.GONE);
 
@@ -186,10 +168,7 @@ public class CheatsByMemberListActivity extends AppCompatActivity implements OnC
     }
 
     private void updateUI() {
-        Log.d(TAG, "XXXXX updateUI 1: " + cheatList.size());
-
         if ((cheatList != null) && (cheatList.size() > 0)) {
-            Log.d(TAG, "XXXXX updateUI 2");
             memberCheatRecycleListViewAdapter.setCheatList(cheatList);
             recyclerView.setAdapter(memberCheatRecycleListViewAdapter);
 
@@ -197,7 +176,6 @@ public class CheatsByMemberListActivity extends AppCompatActivity implements OnC
 
             emptyView.setVisibility(View.GONE);
         } else {
-            Log.d(TAG, "XXXXX updateUI 3");
             emptyView.setVisibility(View.VISIBLE);
         }
     }

@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.cheatdatabase.R
+import com.cheatdatabase.activity.SubmitCheatFormActivity
 import com.cheatdatabase.activity.SubmitCheatSelectGameActivity
 import com.cheatdatabase.data.model.UnpublishedCheat
 import com.cheatdatabase.helpers.Tools
@@ -96,9 +97,11 @@ class MyUnpublishedCheatsListFragment(val activity: MyUnpublishedCheatsListActiv
             hideEmptyListView()
 
             activity.setToolbarSubtitle(
-                getString(
-                    R.string.number_of_cheats,
-                    unpublishedCheats.size
+                unpublishedCheats.size.toString().plus(" ").plus(
+                    resources.getQuantityString(
+                        R.plurals.cheats,
+                        unpublishedCheats.size
+                    )
                 )
             )
 
@@ -147,8 +150,33 @@ class MyUnpublishedCheatsListFragment(val activity: MyUnpublishedCheatsListActiv
 
     override fun onEditCheatButtonClicked(cheat: UnpublishedCheat) {
         Log.d(TAG, "XXXXX onEditCheatButtonClicked: ")
-        Log.d(TAG, "XXXXX onEditCheatButtonClicked: ")
-        Log.d(TAG, "XXXXX onEditCheatButtonClicked: ")
+
+        // TODO FIXME bei SubmitCheatFormActivity.java ist der Intent value NULL... crash....
+        // TODO FIXME bei SubmitCheatFormActivity.java ist der Intent value NULL... crash....
+        // TODO FIXME bei SubmitCheatFormActivity.java ist der Intent value NULL... crash....
+        // TODO FIXME bei SubmitCheatFormActivity.java ist der Intent value NULL... crash....
+        // TODO FIXME bei SubmitCheatFormActivity.java ist der Intent value NULL... crash....
+        // TODO FIXME bei SubmitCheatFormActivity.java ist der Intent value NULL... crash....
+        // TODO FIXME bei SubmitCheatFormActivity.java ist der Intent value NULL... crash....
+        // TODO FIXME bei SubmitCheatFormActivity.java ist der Intent value NULL... crash....
+        // TODO FIXME bei SubmitCheatFormActivity.java ist der Intent value NULL... crash....
+
+
+//        val explicitIntent = Intent(activity, SubmitCheatFormActivity::class.java)
+//        Log.d(TAG, "XXXXX onEditCheatButtonClicked: 1")
+//        explicitIntent.putExtra("gameObj", cheat.toGame())
+//        Log.d(TAG, "XXXXX onEditCheatButtonClicked: 2")
+//        explicitIntent.putExtra("unpublishedCheat", cheat)
+//        Log.d(TAG, "XXXXX onEditCheatButtonClicked: 3")
+//        startActivity(explicitIntent)
+
+
+        val intent = Intent(activity, SubmitCheatFormActivity::class.java).apply {
+            putExtra("gameObj", cheat.toGame())
+            putExtra("unpublishedCheat", cheat)
+        }
+        startActivity(intent)
+
     }
 
     override fun onRejectReasonButtonClicked(cheat: UnpublishedCheat) {
@@ -235,9 +263,11 @@ class MyUnpublishedCheatsListFragment(val activity: MyUnpublishedCheatsListActiv
             }
 
             activity.setToolbarSubtitle(
-                getString(
-                    R.string.number_of_cheats,
-                    mutableArrayList.size
+                mutableArrayList.size.toString().plus(" ").plus(
+                    resources.getQuantityString(
+                        R.plurals.cheats,
+                        mutableArrayList.size
+                    )
                 )
             )
         }

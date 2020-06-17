@@ -230,4 +230,9 @@
     <string name="enter_cheat_here">Enter your cheat here:</string>
     <string name="number_of_cheats">%1$d Cheats</string>
     <string name="error_loading_cheats">Error loading the Cheats. Please try again later.</string>
+
+    <plurals name="cheats">
+        <item quantity="one">Cheat</item>
+        <item quantity="other">Cheats</item>
+    </plurals>
 </resources>

@@ -218,4 +218,9 @@ public class UnpublishedCheat implements Parcelable {
     public static Creator<UnpublishedCheat> getCREATOR() {
         return CREATOR;
     }
+
+    public Game toGame() {
+        return new Game(game.getGameId(), game.getGameName(), system.getSystemId(), system.getSystemName());
+    }
+
 }
