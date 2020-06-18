@@ -8,7 +8,6 @@
   <component name="AndroidLogFilters">
     <option name="TOOL_WINDOW_LOG_LEVEL" value="error" />
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="No Filters" />
-    <option name="TOOL_WINDOW_REGEXP_FILTER" value="false" />
   </component>
   <component name="AvailableLibraryUpdateStorage">
     <library-updates>
@@ -111,15 +110,22 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4caff62e-c62f-40ca-acf0-73c680b13375" name="Default" comment="Improved cheat submission form style, navigation drawer style improvement, display my published cheats works now.">
+    <list default="true" id="4caff62e-c62f-40ca-acf0-73c680b13375" name="Default" comment="Added my published cheat error handling, updated top member cheats list error handling.">
       <change beforePath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/app.iml" beforeDir="false" afterPath="$PROJECT_DIR$/app/app.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/CheatsByMemberListActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/CheatsByMemberListActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/SubmitCheatFormActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/SubmitCheatFormActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/ui/mycheats/MyUnpublishedCheatsListActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/ui/mycheats/MyUnpublishedCheatsListActivity.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/ui/mycheats/MyUnpublishedCheatsListFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/ui/mycheats/MyUnpublishedCheatsListFragment.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/ui/mycheats/MyUnpublishedCheatsListener.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/ui/mycheats/MyUnpublishedCheatsListener.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/ui/mycheats/MyUnpublishedCheatsViewModel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/ui/mycheats/MyUnpublishedCheatsViewModel.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/ui/mycheats/UnpublishedCheatsRepositoryUnused.kt" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/data/model/UnpublishedCheat.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/data/model/UnpublishedCheat.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/res/values-de/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values-de/strings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -179,7 +185,6 @@
     </option>
   </component>
   <component name="GenerateSignedApkSettings">
-    <option name="EXPORT_PRIVATE_KEY" value="false" />
     <option name="KEY_STORE_PATH" value="$USER_HOME$/Downloads/enature.keystore" />
     <option name="KEY_ALIAS" value="cheat-database" />
     <option name="REMEMBER_PASSWORDS" value="true" />
@@ -187,7 +192,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="refactoring_model_classes" />
+        <entry key="$PROJECT_DIR$" value="master" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -204,7 +209,7 @@
     <property name="DEBUGGER_ID" value="Auto" />
     <property name="DeviceAndSnapshotComboBoxAction.selectedDevice" value="fd8b7031" />
     <property name="DeviceAndSnapshotComboBoxAction.selectionTime" value="2020-05-19T19:14:11.265Z" />
-    <property name="ExportApk.ApkPath" value="$PROJECT_DIR$/../../../apk/Cheat-Database/2.5.14" />
+    <property name="ExportApk.ApkPath" value="D:\Development\Android\APK\Cheat-Database\2.5.15" />
     <property name="ExportApk.BuildType" value="release" />
     <property name="ExportApk.BuildVariants" value="amazonFlavorDebug&#10;amazonFlavorRelease&#10;googlePlayFlavorDebug&#10;googlePlayFlavorRelease" />
     <property name="ExportApk.Flavors" value="googlePlayFlavor" />
@@ -943,12 +948,12 @@
       <option name="project" value="LOCAL" />
       <updated>1592166192939</updated>
     </task>
-    <task id="LOCAL-00132" summary="Removed some unused classes.&#10;Changed LinearLayout to ConstraintLayout for member cheats. Fixed some crashes and bugs.">
-      <created>1592340663854</created>
+    <task id="LOCAL-00132" summary="Added my published cheat error handling, updated top member cheats list error handling.">
+      <created>1592254892548</created>
       <option name="number" value="00132" />
       <option name="presentableId" value="LOCAL-00132" />
       <option name="project" value="LOCAL" />
-      <updated>1592340663854</updated>
+      <updated>1592254892549</updated>
     </task>
     <option name="localTasksCounter" value="133" />
     <servers />
@@ -1054,8 +1059,8 @@
     <MESSAGE value="Changing style of FAB (now yellow (accent color) with black text)" />
     <MESSAGE value="Fixed the search for game button searchview layout." />
     <MESSAGE value="Improved cheat submission form style, navigation drawer style improvement, display my published cheats works now." />
-    <MESSAGE value="Removed some unused classes.&#10;Changed LinearLayout to ConstraintLayout for member cheats. Fixed some crashes and bugs." />
-    <option name="LAST_COMMIT_MESSAGE" value="Removed some unused classes.&#10;Changed LinearLayout to ConstraintLayout for member cheats. Fixed some crashes and bugs." />
+    <MESSAGE value="Added my published cheat error handling, updated top member cheats list error handling." />
+    <option name="LAST_COMMIT_MESSAGE" value="Added my published cheat error handling, updated top member cheats list error handling." />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
@@ -1169,11 +1174,6 @@
           <line>26</line>
           <option name="timeStamp" value="220" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" type="kotlin-line">
-          <url>file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/ui/mycheats/MyUnpublishedCheatsListFragment.kt</url>
-          <line>170</line>
-          <option name="timeStamp" value="225" />
-        </line-breakpoint>
         <line-breakpoint enabled="true" type="kotlin-function">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/adapters/CheatViewGalleryListAdapter.kt</url>
           <line>24</line>
@@ -1195,7 +1195,7 @@
     <watches-manager>
       <configuration name="Remote">
         <watch expression="((java.util.ArrayList)cheatList).get(11)" custom="java.util.ArrayList" />
-        <watch expression="((CoordinatorLayout)view).mStatusBarBackground" custom="androidx.coordinatorlayout.widget.CoordinatorLayout" />
+        <watch expression="((CoordinatorLayout)view).mStatusBarBackground" language="JAVA" custom="androidx.coordinatorlayout.widget.CoordinatorLayout" />
       </configuration>
     </watches-manager>
   </component>

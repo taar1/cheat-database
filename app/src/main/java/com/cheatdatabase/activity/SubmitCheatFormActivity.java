@@ -21,6 +21,7 @@ import com.cheatdatabase.CheatDatabaseApplication;
 import com.cheatdatabase.R;
 import com.cheatdatabase.data.model.Game;
 import com.cheatdatabase.data.model.Member;
+import com.cheatdatabase.data.model.UnpublishedCheat;
 import com.cheatdatabase.dialogs.PlainInformationDialog;
 import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Reachability;
@@ -51,7 +52,7 @@ public class SubmitCheatFormActivity extends AppCompatActivity {
     @BindView(R.id.outer_layout)
     ConstraintLayout outerLayout;
     @BindView(R.id.text_cheat_submission_title)
-    TextView textCheatTitle;
+    TextView textStaticCheatTitle;
     @BindView(R.id.edit_cheat_title)
     TextInputEditText cheatTitle;
     @BindView(R.id.edit_cheat_text)
@@ -63,6 +64,7 @@ public class SubmitCheatFormActivity extends AppCompatActivity {
 
     private Game gameObj;
     private Member member;
+    private UnpublishedCheat unpublishedCheat;
 
     private SharedPreferences settings;
 
@@ -82,7 +84,10 @@ public class SubmitCheatFormActivity extends AppCompatActivity {
         apiService = retrofit.create(RestApi.class);
         // Dagger end
 
-        gameObj = getIntent().getParcelableExtra("gameObj");
+        Intent intent = getIntent();
+        gameObj = intent.getParcelableExtra("gameObj");
+        unpublishedCheat = intent.getParcelableExtra("unpublishedCheat");
+
         toolbar.setTitle(gameObj.getGameName());
         toolbar.setSubtitle(gameObj.getSystemName());
 
@@ -91,6 +96,11 @@ public class SubmitCheatFormActivity extends AppCompatActivity {
             finish();
         } else {
             init();
+
+            if (unpublishedCheat != null) {
+                cheatTitle.setText(unpublishedCheat.getTitle());
+                cheatText.setText(unpublishedCheat.getCheat());
+            }
         }
     }
 
@@ -103,20 +113,6 @@ public class SubmitCheatFormActivity extends AppCompatActivity {
 
         settings = getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
         member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        Reachability.unregister(this);
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if (!Reachability.isRegistered()) {
-            Reachability.registerReachability(this);
-        }
     }
 
     @Override

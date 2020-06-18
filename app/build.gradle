@@ -34,10 +34,6 @@ android {
         enabled = true
     }
 
-//    viewBinding {
-//        enabled = true
-//    }
-
     buildTypes {
         debug {
             debuggable true

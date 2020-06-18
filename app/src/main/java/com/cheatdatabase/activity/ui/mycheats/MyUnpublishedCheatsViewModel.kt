@@ -2,7 +2,6 @@ package com.cheatdatabase.activity.ui.mycheats
 
 import android.app.Application
 import android.content.SharedPreferences
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import com.cheatdatabase.data.model.Member
 import com.cheatdatabase.data.model.UnpublishedCheat
@@ -17,11 +16,6 @@ class MyUnpublishedCheatsViewModel(application: Application) :
 
     val TAG = "MyUnpublishedCheatsView"
 
-//    private val retrofit: Retrofit? = null
-//    private val restApi: RestApi? = null
-//    private val allMembers: Call<List<Member>>? =  null
-//    var unpublishedCheatsList: MutableLiveData<List<UnpublishedCheat>>? = null
-
     private val member: Member
     private var restRepository: RestRepository? = null
     var fetchListener: MyUnpublishedCheatsListener? = null
@@ -30,27 +24,16 @@ class MyUnpublishedCheatsViewModel(application: Application) :
         application.getSharedPreferences(Konstanten.PREFERENCES_FILE, 0)
 
     fun getMyUnpublishedCheatsByCoroutines() {
-        Log.d(TAG, "XXXXX getMyUnpublishedCheatsByCoroutines")
-
         Coroutines.main {
             val response = UnpublishedCheatsRepositoryKotlin().getMyUnpublishedCheats(
                 member.mid,
                 AeSimpleMD5.MD5(member.password)
             )
 
-            Log.d(TAG, "XXXXX getMyUnpublishedCheatsByCoroutines 1")
-
             if (response.isSuccessful) {
-                Log.d(TAG, "XXXXX SUCCESS UNPUBLISHED: " + response.body()!!)
-
                 fetchListener?.fetchUnpublishedCheatsSuccess(response.body()!!)
             } else {
-                Log.d(TAG, "XXXXX ERROR UNPUBLISHED")
-                // TODO FIXME handle error...
-                // TODO FIXME handle error...
-                // TODO FIXME handle error...
-                // TODO FIXME handle error...
-                fetchListener?.fetchUnpublishedCheatsFail("TODO XXXXXX")
+                fetchListener?.fetchUnpublishedCheatsFail()
             }
         }
     }
@@ -63,13 +46,10 @@ class MyUnpublishedCheatsViewModel(application: Application) :
 
             if (response.isSuccessful) {
                 val responseJsonObject = response.body()!!
-                Log.d(TAG, "XXXXX SUCCESS UNPUBLISHED: $responseJsonObject.returnValue")
+                //Log.d(TAG, "XXXXX SUCCESS UNPUBLISHED: $responseJsonObject.returnValue")
                 fetchListener?.deleteUnpublishedCheatSuccess(responseJsonObject.returnValue)
             } else {
-                Log.d(TAG, "XXXXX ERROR UNPUBLISHED")
-                // TODO FIXME handle error...
-                // TODO FIXME handle error...
-                fetchListener?.deleteUnpublishedCheatFailed("TODO XXXXXX deleteUnpublishedCheatFailed")
+                fetchListener?.deleteUnpublishedCheatFailed()
             }
         }
     }

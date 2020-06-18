@@ -70,7 +70,6 @@ public class UnpublishedCheat implements Parcelable {
     @SerializedName("table_info")
     public String tableInfo;
 
-
     protected UnpublishedCheat(Parcel in) {
         id = in.readInt();
         cheatId = in.readInt();
@@ -95,13 +94,13 @@ public class UnpublishedCheat implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(id);
         dest.writeInt(cheatId);
-        dest.writeParcelable(game, flags);
+        dest.writeTypedObject(game, flags);
         dest.writeString(title);
         dest.writeString(cheat);
         dest.writeInt(lang);
         dest.writeInt(style);
         dest.writeSerializable(created);
-        dest.writeParcelable(system, flags);
+        dest.writeTypedObject(system, flags);
         dest.writeSerializable(checkedDate);
         dest.writeString(rejectReason);
         dest.writeString(tableInfo);

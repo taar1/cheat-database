@@ -33,6 +33,7 @@ class MyUnpublishedCheatsListActivity : AppCompatActivity() {
         toolbar.subtitle = subtitle
     }
 
+
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return true

@@ -30,7 +30,6 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import kotlinx.android.synthetic.main.unpublished_cheats_fragment.view.*
 
-
 /**
  * This is the MODEL of MVVM.
  */
@@ -110,9 +109,9 @@ class MyUnpublishedCheatsListFragment(val activity: MyUnpublishedCheatsListActiv
         }
     }
 
-    override fun fetchUnpublishedCheatsFail(message: String) {
+    override fun fetchUnpublishedCheatsFail() {
         showEmptyListView()
-        Tools.showSnackbar(outerLayout, message)
+        Tools.showSnackbar(outerLayout, getString(R.string.error_fetch_unpublished_cheats))
     }
 
     private fun showEmptyListView() {
@@ -149,34 +148,16 @@ class MyUnpublishedCheatsListFragment(val activity: MyUnpublishedCheatsListActiv
     }
 
     override fun onEditCheatButtonClicked(cheat: UnpublishedCheat) {
-        Log.d(TAG, "XXXXX onEditCheatButtonClicked: ")
-
-        // TODO FIXME bei SubmitCheatFormActivity.java ist der Intent value NULL... crash....
-        // TODO FIXME bei SubmitCheatFormActivity.java ist der Intent value NULL... crash....
-        // TODO FIXME bei SubmitCheatFormActivity.java ist der Intent value NULL... crash....
-        // TODO FIXME bei SubmitCheatFormActivity.java ist der Intent value NULL... crash....
-        // TODO FIXME bei SubmitCheatFormActivity.java ist der Intent value NULL... crash....
-        // TODO FIXME bei SubmitCheatFormActivity.java ist der Intent value NULL... crash....
-        // TODO FIXME bei SubmitCheatFormActivity.java ist der Intent value NULL... crash....
-        // TODO FIXME bei SubmitCheatFormActivity.java ist der Intent value NULL... crash....
-        // TODO FIXME bei SubmitCheatFormActivity.java ist der Intent value NULL... crash....
-
-
-//        val explicitIntent = Intent(activity, SubmitCheatFormActivity::class.java)
-//        Log.d(TAG, "XXXXX onEditCheatButtonClicked: 1")
-//        explicitIntent.putExtra("gameObj", cheat.toGame())
-//        Log.d(TAG, "XXXXX onEditCheatButtonClicked: 2")
-//        explicitIntent.putExtra("unpublishedCheat", cheat)
-//        Log.d(TAG, "XXXXX onEditCheatButtonClicked: 3")
-//        startActivity(explicitIntent)
-
-
         val intent = Intent(activity, SubmitCheatFormActivity::class.java).apply {
-            putExtra("gameObj", cheat.toGame())
             putExtra("unpublishedCheat", cheat)
+            putExtra("gameObj", cheat.toGame())
         }
-        startActivity(intent)
+        startActivityForResult(intent, 9)
+    }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        reloadData()
     }
 
     override fun onRejectReasonButtonClicked(cheat: UnpublishedCheat) {
@@ -240,8 +221,8 @@ class MyUnpublishedCheatsListFragment(val activity: MyUnpublishedCheatsListActiv
         removeCheatFromList(cheatPositionInList)
     }
 
-    override fun deleteUnpublishedCheatFailed(message: String) {
-        Tools.showSnackbar(outerLayout, getString(R.string.err_occurred))
+    override fun deleteUnpublishedCheatFailed() {
+        Tools.showSnackbar(outerLayout, getString(R.string.error_deleting_cheat))
     }
 
     private fun removeCheatFromList(position: Int) {
