@@ -217,6 +217,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             Reachability.registerReachability(this);
         }
         member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
+
+        // Dagger start
+        ((CheatDatabaseApplication) getApplication()).getNetworkComponent().inject(this);
+        restApi = retrofit.create(RestApi.class);
+        // Dagger end
     }
 
     @Override

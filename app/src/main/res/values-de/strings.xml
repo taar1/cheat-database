@@ -211,7 +211,7 @@
     <string name="error_adding_favorites">Fehler: Die Cheats konnten nicht zu den Favoriten hinzugefügt werden.</string>
 
     <string name="drawer_my_cheats">Meine Cheats <sup><small>BETA</small></sup></string>
-    <string name="coming_soon">Kommt bald...</string>
+    <string name="coming_soon">Kommt bald…</string>
     <string name="unpublished_cheats">Unveröffentlichte Cheats</string>
     <string name="cheats_waiting_for_approval">Cheats die noch geprüft werden und\nabgelehnte Cheats</string>
     <string name="published_cheats">Veröffentlichte Cheats</string>
@@ -219,23 +219,23 @@
     <string name="pending_approval">Genehmigung ausstehend</string>
     <string name="rejected">Abgelehnt</string>
     <string name="details">Details</string>
-    <string name="submitted">Submitted</string>
+    <string name="submitted">Eingeschickt</string>
     <string name="delete">Löschen</string>
     <string name="unpublished_cheat_are_you_sure_delete">Bist du sicher, dass du diesen unveröffentlichten Cheat löschen möchtest?</string>
     <string name="cheat_deleted">Der Cheat wurde gelöscht.</string>
-    <string name="no_database_access">Fehler beim Datenbankzugriff.</string>
+    <string name="no_database_access">Fehler beim Zugriff auf die Datenbank.</string>
     <string name="copy_to_clipboard">In Zwischenablage kopieren</string>
     <string name="text_copied_to_clipboard">Text wurde in die Zwischenablage kopiert</string>
     <string name="why_was_cheat_rejected">Warum wurde mein Cheat abgelehnt?</string>
     <string name="no_unpublished_cheats">Du hast zur Zeit keine unveröffentlichten Cheats. Klicke unten auf den Button, um einen Cheat einzusenden.</string>
     <string name="no_member_cheats">Leider hat %1$s keine veröffentlichte Cheats.</string>
-    <string name="my_score">My Score: -</string>
-    <string name="earn_points_submitting_cheats">Earn points by submitting your own cheats and redeem them for actual money! Coming soon!</string>
+    <string name="my_score">Punkte: -</string>
+    <string name="earn_points_submitting_cheats">Verdiene Punkte durch Einsenden von Cheats und löse diese gegen echtes Geld ein! Coming soon!</string>
     <string name="enter_cheat_here">Gib hier deinen Cheat ein:</string>
     <string name="number_of_cheats">%1$d Cheats</string>
-    <string name="error_loading_cheats">Error loading the Cheats. Please try again later.</string>
-    <string name="error_fetch_unpublished_cheats">There was a problem fetching your cheats. Try again alter.</string>
-    <string name="error_deleting_cheat">There was an error deleting this cheat. Please try again later.</string>
+    <string name="error_loading_cheats">Fehler beim Laden der Cheats. Versuche es später nochmals.</string>
+    <string name="error_fetch_unpublished_cheats">Fehler beim Laden deiner Cheats. Versuche es später nochmals.</string>
+    <string name="error_deleting_cheat">Fehler beim Löschen des Cheats. Versuche es später nochmals.</string>
 
     <plurals name="cheats">
         <item quantity="one">Cheat</item>
