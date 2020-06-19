@@ -48,6 +48,7 @@
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
         android:maxWidth="300dp"
+        android:clipToPadding="false"
         app:headerLayout="@layout/drawer_header"
         app:menu="@menu/drawer_view" />
 

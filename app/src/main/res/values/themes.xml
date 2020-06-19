@@ -13,6 +13,17 @@
         <item name="colorControlActivated">@color/gold</item>
         <item name="searchViewStyle">@style/SearchStyle</item>
         <item name="android:textCursorDrawable">@null</item>
+
+        <!-- NAVIGATION DRAWER -->
+        <item name="colorNavigationItem">@color/white</item>
+        <item name="colorNavigationItemSelected">@color/color_accent</item>
+        <item name="drawableNavigationItemBackground">@drawable/menu_background_color_state</item>
+    </style>
+
+    <style name="Widget.Custom.NavigationView" parent="Widget.Design.NavigationView">
+        <item name="itemIconTint">?attr/colorNavigationItem</item>
+        <item name="itemTextColor">?attr/colorNavigationItem</item>
+        <item name="itemBackground">?attr/drawableNavigationItemBackground</item>
     </style>
 
     <style name="GameTitle">
@@ -278,12 +289,10 @@
     </style>
 
     <style name="NavigationDrawer">
-        <item name="android:textAppearance">@style/WalkthroughText</item>
-        <item name="android:textColor">@color/white</item>
         <item name="android:background">@color/navigation_drawer_background</item>
-        <item name="android:buttonTint">@color/white</item>
-        <item name="helperTextTextColor">@color/white</item>
-        <item name="hintTextColor">@color/gray</item>
-        <item name="android:tint">@color/color_accent</item>
+
+        <item name="itemIconTint">?attr/colorNavigationItem</item>
+        <item name="itemTextColor">?attr/colorNavigationItem</item>
+        <item name="itemBackground">?attr/drawableNavigationItemBackground</item>
     </style>
 </resources>
