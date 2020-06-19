@@ -16,8 +16,8 @@ apply plugin: 'androidx.navigation.safeargs'
 
 String APK_ID = "com.cheatdatabase"
 String APK_NAME = "Cheat-Database"
-int VERSION_CODE = 61
-String VERSION_NAME = "2.5.15-preRelease"
+int VERSION_CODE = 62
+String VERSION_NAME = "2.5.16-preRelease"
 
 android {
     compileSdkVersion 28
