@@ -29,11 +29,13 @@ buildscript {
         classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$nav_version"
     }
 }
+
 allprojects {
     repositories {
         mavenCentral()
         maven { url 'https://maven.google.com/' }
         jcenter()
+        google()
     }
 }
 
