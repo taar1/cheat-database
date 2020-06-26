@@ -114,7 +114,7 @@ public class CheatsByGameListActivity extends AppCompatActivity implements OnChe
 
         gameObj = getIntent().getParcelableExtra("gameObj");
 
-        ((CheatDatabaseApplication) getApplication()).getNetworkComponent().inject(this);
+        //((CheatDatabaseApplication) getApplication()).getNetworkComponent().inject(this);
         restApi = retrofit.create(RestApi.class);
 
         if (gameObj == null) {

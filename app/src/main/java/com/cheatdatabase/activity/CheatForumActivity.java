@@ -28,7 +28,6 @@ import androidx.appcompat.widget.ShareActionProvider;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.MenuItemCompat;
 
-import com.cheatdatabase.CheatDatabaseApplication;
 import com.cheatdatabase.R;
 import com.cheatdatabase.callbacks.GenericCallback;
 import com.cheatdatabase.data.model.Cheat;
@@ -157,7 +156,7 @@ public class CheatForumActivity extends AppCompatActivity implements GenericCall
             Reachability.registerReachability(this);
         }
 
-        ((CheatDatabaseApplication) getApplication()).getNetworkComponent().inject(this);
+        //((CheatDatabaseApplication) getApplication()).getNetworkComponent().inject(this);
         restApi = retrofit.create(RestApi.class);
 
         settings = getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);

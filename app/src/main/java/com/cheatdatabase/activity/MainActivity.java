@@ -32,8 +32,8 @@ import androidx.fragment.app.FragmentTransaction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.Theme;
 import com.appbrain.AppBrain;
-import com.cheatdatabase.CheatDatabaseApplication;
 import com.cheatdatabase.R;
+import com.cheatdatabase.data.RetrofitClientInstance;
 import com.cheatdatabase.data.model.Member;
 import com.cheatdatabase.dialogs.RateAppDialog;
 import com.cheatdatabase.events.GenericEvent;
@@ -62,8 +62,6 @@ import org.greenrobot.eventbus.Subscribe;
 
 import java.util.Random;
 
-import javax.inject.Inject;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -90,12 +88,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private FragmentManager fragmentManager;
     private FragmentTransaction fragmentTransaction;
 
-    @Inject
-    Retrofit retrofit;
-
-    @Inject
-    Application application;
-
+    private Application application;
+    private Retrofit retrofit;
     private RestApi restApi;
 
     @BindView(R.id.toolbar)
@@ -121,10 +115,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-        // Dagger start
-        ((CheatDatabaseApplication) getApplication()).getNetworkComponent().inject(this);
-        restApi = retrofit.create(RestApi.class);
-        // Dagger end
+        restApi = RetrofitClientInstance.getRetrofitInstance().create(RestApi.class);
 
         mFragmentId = getIntent().getIntExtra("mFragmentId", 0);
 
@@ -218,10 +209,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
         member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
 
-        // Dagger start
-        ((CheatDatabaseApplication) getApplication()).getNetworkComponent().inject(this);
-        restApi = retrofit.create(RestApi.class);
-        // Dagger end
+//        // Dagger start
+//        //((CheatDatabaseApplication) getApplication()).getNetworkComponent().inject(this);
+//        restApi = retrofit.create(RestApi.class);
+//        // Dagger end
     }
 
     @Override

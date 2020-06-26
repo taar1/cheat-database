@@ -96,7 +96,7 @@ public class GamesBySystemListActivity extends AppCompatActivity implements OnGa
         ButterKnife.bind(this);
 
         // Dagger start
-        ((CheatDatabaseApplication) getApplication()).getNetworkComponent().inject(this);
+        //((CheatDatabaseApplication) getApplication()).getNetworkComponent().inject(this);
         apiService = retrofit.create(RestApi.class);
         // Dagger end
 

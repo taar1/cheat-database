@@ -22,7 +22,6 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.MenuItemCompat;
 import androidx.viewpager.widget.ViewPager;
 
-import com.cheatdatabase.CheatDatabaseApplication;
 import com.cheatdatabase.R;
 import com.cheatdatabase.activity.CheatForumActivity;
 import com.cheatdatabase.activity.LoginActivity;
@@ -154,7 +153,7 @@ public class MemberCheatViewPageIndicator extends AppCompatActivity implements G
     }
 
     private void init() {
-        ((CheatDatabaseApplication) getApplication()).getNetworkComponent().inject(this);
+        //((CheatDatabaseApplication) getApplication()).getNetworkComponent().inject(this);
         restApi = retrofit.create(RestApi.class);
 
         sharedPreferences = getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);

@@ -17,7 +17,6 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.Theme;
-import com.cheatdatabase.CheatDatabaseApplication;
 import com.cheatdatabase.R;
 import com.cheatdatabase.data.model.Game;
 import com.cheatdatabase.data.model.Member;
@@ -80,7 +79,7 @@ public class SubmitCheatFormActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         // Dagger start
-        ((CheatDatabaseApplication) getApplication()).getNetworkComponent().inject(this);
+        //((CheatDatabaseApplication) getApplication()).getNetworkComponent().inject(this);
         apiService = retrofit.create(RestApi.class);
         // Dagger end
 

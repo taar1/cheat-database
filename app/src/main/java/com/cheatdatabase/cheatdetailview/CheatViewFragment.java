@@ -207,7 +207,7 @@ public class CheatViewFragment extends Fragment implements CheatViewGalleryImage
         }
 
         editor.putString("cheat" + offset, new Gson().toJson(cheatObj));
-        editor.commit();
+        editor.apply();
     }
 
     private void populateView() {

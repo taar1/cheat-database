@@ -23,7 +23,6 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.MenuItemCompat;
 import androidx.viewpager.widget.ViewPager;
 
-import com.cheatdatabase.CheatDatabaseApplication;
 import com.cheatdatabase.R;
 import com.cheatdatabase.activity.CheatForumActivity;
 import com.cheatdatabase.activity.LoginActivity;
@@ -148,7 +147,7 @@ public class FavoritesCheatViewPageIndicator extends AppCompatActivity {
     }
 
     private void init() {
-        ((CheatDatabaseApplication) getApplication()).getNetworkComponent().inject(this);
+        //((CheatDatabaseApplication) getApplication()).getNetworkComponent().inject(this);
         restApi = retrofit.create(RestApi.class);
 
         dao = RoomCheatDatabase.getDatabase(this).favoriteDao();

@@ -22,7 +22,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentManager;
 
-import com.cheatdatabase.CheatDatabaseApplication;
 import com.cheatdatabase.R;
 import com.cheatdatabase.data.model.Member;
 import com.cheatdatabase.dialogs.AlreadyLoggedInDialog;
@@ -135,7 +134,7 @@ public class LoginActivity extends AppCompatActivity implements AlreadyLoggedInD
     }
 
     private void init() {
-        ((CheatDatabaseApplication) getApplication()).getNetworkComponent().inject(this);
+        //((CheatDatabaseApplication) getApplication()).getNetworkComponent().inject(this);
         restApi = retrofit.create(RestApi.class);
 
         if (mToolbar != null) {

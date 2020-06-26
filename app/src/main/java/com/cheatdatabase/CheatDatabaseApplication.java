@@ -7,9 +7,6 @@ import android.os.Bundle;
 import com.cheatdatabase.activity.MainActivity;
 import com.cheatdatabase.data.model.Cheat;
 import com.cheatdatabase.data.model.Game;
-import com.cheatdatabase.di.ApplicationModule;
-import com.cheatdatabase.di.DaggerNetworkComponent;
-import com.cheatdatabase.di.NetworkComponent;
 import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.TrackingUtils;
 import com.crashlytics.android.Crashlytics;
@@ -29,7 +26,7 @@ import io.fabric.sdk.android.Fabric;
 
 public class CheatDatabaseApplication extends Application implements Application.ActivityLifecycleCallbacks {
 
-    private NetworkComponent networkComponent;
+//    private NetworkComponent networkComponent;
 
     static TreeMap<String, TreeMap<String, List<Game>>> gamesBySystemCached = new TreeMap<>();
     static TreeMap<String, TreeMap<String, List<Cheat>>> cheatsByGameCached = new TreeMap<>();
@@ -65,16 +62,16 @@ public class CheatDatabaseApplication extends Application implements Application
     public void onCreate() {
         super.onCreate();
 
-        networkComponent = DaggerNetworkComponent.builder().applicationModule(new ApplicationModule(this)).build();
+//        networkComponent = DaggerNetworkComponent.builder().applicationModule(new ApplicationModule(this)).build();
 
         currentApplicationInstance = this;
 
         init();
     }
 
-    public NetworkComponent getNetworkComponent() {
-        return networkComponent;
-    }
+//    public NetworkComponent getNetworkComponent() {
+//        return networkComponent;
+//    }
 
     private void init() {
         Fabric.with(this, new Crashlytics());

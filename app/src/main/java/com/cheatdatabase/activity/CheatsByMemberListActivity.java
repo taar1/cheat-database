@@ -18,7 +18,6 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.cheatdatabase.CheatDatabaseApplication;
 import com.cheatdatabase.R;
 import com.cheatdatabase.adapters.MemberCheatRecycleListViewAdapter;
 import com.cheatdatabase.cheatdetailview.MemberCheatViewPageIndicator;
@@ -87,7 +86,7 @@ public class CheatsByMemberListActivity extends AppCompatActivity implements OnC
         ButterKnife.bind(this);
 
         // Dagger start
-        ((CheatDatabaseApplication) getApplication()).getNetworkComponent().inject(this);
+        //((CheatDatabaseApplication) getApplication()).getNetworkComponent().inject(this);
         apiService = retrofit.create(RestApi.class);
         // Dagger end
 

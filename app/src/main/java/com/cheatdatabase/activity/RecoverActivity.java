@@ -16,7 +16,6 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import com.cheatdatabase.CheatDatabaseApplication;
 import com.cheatdatabase.R;
 import com.cheatdatabase.helpers.AeSimpleMD5;
 import com.cheatdatabase.helpers.Konstanten;
@@ -104,7 +103,7 @@ public class RecoverActivity extends AppCompatActivity {
     }
 
     private void init() {
-        ((CheatDatabaseApplication) getApplication()).getNetworkComponent().inject(this);
+        //((CheatDatabaseApplication) getApplication()).getNetworkComponent().inject(this);
         restApi = retrofit.create(RestApi.class);
 
         if (mToolbar != null) {

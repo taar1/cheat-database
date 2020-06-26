@@ -25,7 +25,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 
-import com.cheatdatabase.CheatDatabaseApplication;
 import com.cheatdatabase.R;
 import com.cheatdatabase.activity.CheatsByGameListActivity;
 import com.cheatdatabase.data.model.Game;
@@ -113,7 +112,7 @@ public class SearchResultsActivity extends AppCompatActivity implements OnGameLi
             Reachability.registerReachability(this);
         }
 
-        ((CheatDatabaseApplication) getApplication()).getNetworkComponent().inject(this);
+//        //((CheatDatabaseApplication) getApplication()).getNetworkComponent().inject(this);
         restApi = retrofit.create(RestApi.class);
 
         latoFontLight = Tools.getFont(getAssets(), Konstanten.FONT_LIGHT);
