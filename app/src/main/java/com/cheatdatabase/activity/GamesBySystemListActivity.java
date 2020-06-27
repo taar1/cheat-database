@@ -22,6 +22,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.cheatdatabase.CheatDatabaseApplication;
 import com.cheatdatabase.R;
 import com.cheatdatabase.adapters.GamesBySystemRecycleListViewAdapter;
+import com.cheatdatabase.data.RetrofitClientInstance;
 import com.cheatdatabase.data.model.Game;
 import com.cheatdatabase.data.model.Member;
 import com.cheatdatabase.data.model.SystemModel;
@@ -40,15 +41,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeMap;
 
-import javax.inject.Inject;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import needle.Needle;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
 
 public class GamesBySystemListActivity extends AppCompatActivity implements OnGameListItemSelectedListener {
 
@@ -73,10 +71,7 @@ public class GamesBySystemListActivity extends AppCompatActivity implements OnGa
     @BindView(R.id.item_list_empty_view)
     TextView mEmptyView;
 
-    @Inject
-    Retrofit retrofit;
-
-    private RestApi apiService;
+    private RestApi restApi;
 
     @Override
     protected void onStart() {
@@ -95,10 +90,7 @@ public class GamesBySystemListActivity extends AppCompatActivity implements OnGa
         setContentView(R.layout.activity_game_list);
         ButterKnife.bind(this);
 
-        // Dagger start
-        //((CheatDatabaseApplication) getApplication()).getNetworkComponent().inject(this);
-        apiService = retrofit.create(RestApi.class);
-        // Dagger end
+        restApi = RetrofitClientInstance.getRetrofitInstance().create(RestApi.class);
 
         NativeAdsManager nativeAdsManager = new NativeAdsManager(this, Konstanten.FACEBOOK_AUDIENCE_NETWORK_NATIVE_AD_IN_RECYCLER_VIEW, 5);
         nativeAdsManager.loadAds(NativeAd.MediaCacheFlag.ALL);
@@ -234,7 +226,7 @@ public class GamesBySystemListActivity extends AppCompatActivity implements OnGa
             gameList = new ArrayList<>();
             TreeMap finalGameListTree = gameListTree;
 
-            Call<List<Game>> call = apiService.getGameListBySystemId(systemObj.getSystemId(), isAchievementsEnabled);
+            Call<List<Game>> call = restApi.getGameListBySystemId(systemObj.getSystemId(), isAchievementsEnabled);
             call.enqueue(new Callback<List<Game>>() {
                 @Override
                 public void onResponse(Call<List<Game>> games, Response<List<Game>> response) {

@@ -27,6 +27,7 @@ import com.cheatdatabase.R;
 import com.cheatdatabase.activity.CheatForumActivity;
 import com.cheatdatabase.activity.LoginActivity;
 import com.cheatdatabase.activity.SubmitCheatFormActivity;
+import com.cheatdatabase.data.RetrofitClientInstance;
 import com.cheatdatabase.data.RoomCheatDatabase;
 import com.cheatdatabase.data.dao.FavoriteCheatDao;
 import com.cheatdatabase.data.model.Cheat;
@@ -62,11 +63,8 @@ import org.greenrobot.eventbus.Subscribe;
 
 import java.util.List;
 
-import javax.inject.Inject;
-
 import butterknife.BindView;
 import needle.Needle;
-import retrofit2.Retrofit;
 
 /**
  * Horizontal sliding gallery of cheats from a game.
@@ -111,9 +109,6 @@ public class FavoritesCheatViewPageIndicator extends AppCompatActivity {
     @BindView(R.id.outer_layout)
     LinearLayout outerLayout;
 
-    @Inject
-    Retrofit retrofit;
-
     private RestApi restApi;
 
     private FavoriteCheatDao dao;
@@ -147,8 +142,7 @@ public class FavoritesCheatViewPageIndicator extends AppCompatActivity {
     }
 
     private void init() {
-        //((CheatDatabaseApplication) getApplication()).getNetworkComponent().inject(this);
-        restApi = retrofit.create(RestApi.class);
+        restApi = RetrofitClientInstance.getRetrofitInstance().create(RestApi.class);
 
         dao = RoomCheatDatabase.getDatabase(this).favoriteDao();
 
@@ -340,7 +334,7 @@ public class FavoritesCheatViewPageIndicator extends AppCompatActivity {
                 return true;
             case R.id.action_metainfo:
                 if (Reachability.reachability.isReachable) {
-                    CheatMetaDialog cmDialog = new CheatMetaDialog(FavoritesCheatViewPageIndicator.this, visibleCheat, restApi, outerLayout);
+                    CheatMetaDialog cmDialog = new CheatMetaDialog(FavoritesCheatViewPageIndicator.this, visibleCheat, outerLayout);
                     cmDialog.show();
                 } else {
                     Toast.makeText(this, R.string.no_internet, Toast.LENGTH_SHORT).show();
@@ -396,7 +390,7 @@ public class FavoritesCheatViewPageIndicator extends AppCompatActivity {
         if ((member == null) || (member.getMid() == 0)) {
             Toast.makeText(this, R.string.error_login_required, Toast.LENGTH_SHORT).show();
         } else {
-            new ReportCheatMaterialDialog(this, visibleCheat, member, restApi, outerLayout);
+            new ReportCheatMaterialDialog(this, visibleCheat, member, outerLayout);
         }
     }
 
@@ -404,7 +398,7 @@ public class FavoritesCheatViewPageIndicator extends AppCompatActivity {
         if ((member == null) || (member.getMid() == 0)) {
             Toast.makeText(this, R.string.error_login_to_rate, Toast.LENGTH_LONG).show();
         } else {
-            new RateCheatMaterialDialog(this, visibleCheat, member, restApi, outerLayout);
+            new RateCheatMaterialDialog(this, visibleCheat, member, outerLayout);
         }
     }
 

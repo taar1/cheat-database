@@ -1,7 +1,6 @@
 package com.cheatdatabase.activity;
 
 import android.annotation.TargetApi;
-import android.app.Application;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
@@ -65,7 +64,6 @@ import java.util.Random;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import retrofit2.Retrofit;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -88,8 +86,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private FragmentManager fragmentManager;
     private FragmentTransaction fragmentTransaction;
 
-    private Application application;
-    private Retrofit retrofit;
     private RestApi restApi;
 
     @BindView(R.id.toolbar)
@@ -208,11 +204,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             Reachability.registerReachability(this);
         }
         member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
-
-//        // Dagger start
-//        //((CheatDatabaseApplication) getApplication()).getNetworkComponent().inject(this);
-//        restApi = retrofit.create(RestApi.class);
-//        // Dagger end
     }
 
     @Override

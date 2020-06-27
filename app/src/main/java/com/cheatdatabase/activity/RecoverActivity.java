@@ -17,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.cheatdatabase.R;
+import com.cheatdatabase.data.RetrofitClientInstance;
 import com.cheatdatabase.helpers.AeSimpleMD5;
 import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Reachability;
@@ -25,15 +26,12 @@ import com.google.gson.JsonObject;
 
 import java.security.NoSuchAlgorithmException;
 
-import javax.inject.Inject;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
 
 /**
  * Activity which displays a login screen to the user, offering registration as
@@ -62,9 +60,6 @@ public class RecoverActivity extends AppCompatActivity {
     Toolbar mToolbar;
 
     private String mEmail;
-
-    @Inject
-    Retrofit retrofit;
 
     private RestApi restApi;
 
@@ -103,8 +98,7 @@ public class RecoverActivity extends AppCompatActivity {
     }
 
     private void init() {
-        //((CheatDatabaseApplication) getApplication()).getNetworkComponent().inject(this);
-        restApi = retrofit.create(RestApi.class);
+        restApi = RetrofitClientInstance.getRetrofitInstance().create(RestApi.class);
 
         if (mToolbar != null) {
             setSupportActionBar(mToolbar);
@@ -163,6 +157,7 @@ public class RecoverActivity extends AppCompatActivity {
 
     /**
      * Shows the progress UI and hides the login form.
+     *
      * @param show or not show
      */
     private void showProgress(final boolean show) {

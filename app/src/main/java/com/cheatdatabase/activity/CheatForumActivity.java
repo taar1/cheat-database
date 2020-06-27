@@ -30,6 +30,7 @@ import androidx.core.view.MenuItemCompat;
 
 import com.cheatdatabase.R;
 import com.cheatdatabase.callbacks.GenericCallback;
+import com.cheatdatabase.data.RetrofitClientInstance;
 import com.cheatdatabase.data.model.Cheat;
 import com.cheatdatabase.data.model.ForumPost;
 import com.cheatdatabase.data.model.Game;
@@ -55,15 +56,12 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Calendar;
 import java.util.List;
 
-import javax.inject.Inject;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import needle.Needle;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
 
 /**
  * Displaying the forum of one cheat.
@@ -100,9 +98,6 @@ public class CheatForumActivity extends AppCompatActivity implements GenericCall
     LinearLayout facebookBanner;
     private AdView adView;
 
-    @Inject
-    Retrofit retrofit;
-
     private RestApi restApi;
 
     @Override
@@ -110,6 +105,8 @@ public class CheatForumActivity extends AppCompatActivity implements GenericCall
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cheat_forum);
         ButterKnife.bind(this);
+
+        restApi = RetrofitClientInstance.getRetrofitInstance().create(RestApi.class);
 
         cheatObj = getIntent().getParcelableExtra("cheatObj");
         gameObj = getIntent().getParcelableExtra("gameObj");
@@ -156,8 +153,7 @@ public class CheatForumActivity extends AppCompatActivity implements GenericCall
             Reachability.registerReachability(this);
         }
 
-        //((CheatDatabaseApplication) getApplication()).getNetworkComponent().inject(this);
-        restApi = retrofit.create(RestApi.class);
+        restApi = RetrofitClientInstance.getRetrofitInstance().create(RestApi.class);
 
         settings = getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
 
@@ -402,7 +398,7 @@ public class CheatForumActivity extends AppCompatActivity implements GenericCall
                 Helper.shareCheat(cheatObj, this);
                 return true;
             case R.id.action_metainfo:
-                CheatMetaDialog cmDialog = new CheatMetaDialog(this, cheatObj, restApi, outerLayout);
+                CheatMetaDialog cmDialog = new CheatMetaDialog(this, cheatObj, outerLayout);
                 cmDialog.show();
                 return true;
             case R.id.action_report:
@@ -451,7 +447,7 @@ public class CheatForumActivity extends AppCompatActivity implements GenericCall
         if ((member == null) || (member.getMid() == 0)) {
             Toast.makeText(this, R.string.error_login_required, Toast.LENGTH_LONG).show();
         } else {
-            new ReportCheatMaterialDialog(this, cheatObj, member, restApi, outerLayout);
+            new ReportCheatMaterialDialog(this, cheatObj, member, outerLayout);
         }
     }
 
@@ -459,7 +455,7 @@ public class CheatForumActivity extends AppCompatActivity implements GenericCall
         if ((member == null) || (member.getMid() == 0)) {
             Toast.makeText(this, R.string.error_login_required, Toast.LENGTH_LONG).show();
         } else {
-            new RateCheatMaterialDialog(this, cheatObj, member, restApi, outerLayout);
+            new RateCheatMaterialDialog(this, cheatObj, member, outerLayout);
         }
     }
 
@@ -532,10 +528,6 @@ public class CheatForumActivity extends AppCompatActivity implements GenericCall
                 tvEmpty.setVisibility(View.VISIBLE);
             }
         });
-    }
-
-    public Retrofit getRetrofit() {
-        return retrofit;
     }
 
     @Override

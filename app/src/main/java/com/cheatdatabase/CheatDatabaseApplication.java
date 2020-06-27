@@ -25,16 +25,12 @@ import java.util.TreeMap;
 import io.fabric.sdk.android.Fabric;
 
 public class CheatDatabaseApplication extends Application implements Application.ActivityLifecycleCallbacks {
-
-//    private NetworkComponent networkComponent;
-
     static TreeMap<String, TreeMap<String, List<Game>>> gamesBySystemCached = new TreeMap<>();
     static TreeMap<String, TreeMap<String, List<Cheat>>> cheatsByGameCached = new TreeMap<>();
 
     private static CheatDatabaseApplication currentApplicationInstance;
     private Tracker googleAnalyticsTracker;
     private FirebaseAnalytics firebaseAnalytics;
-
 
     /**
      * Gets the default {@link Tracker} for this {@link CheatDatabaseApplication}.
@@ -62,16 +58,10 @@ public class CheatDatabaseApplication extends Application implements Application
     public void onCreate() {
         super.onCreate();
 
-//        networkComponent = DaggerNetworkComponent.builder().applicationModule(new ApplicationModule(this)).build();
-
         currentApplicationInstance = this;
 
         init();
     }
-
-//    public NetworkComponent getNetworkComponent() {
-//        return networkComponent;
-//    }
 
     private void init() {
         Fabric.with(this, new Crashlytics());

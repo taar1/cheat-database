@@ -27,6 +27,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.cheatdatabase.R;
 import com.cheatdatabase.activity.CheatsByGameListActivity;
+import com.cheatdatabase.data.RetrofitClientInstance;
 import com.cheatdatabase.data.model.Game;
 import com.cheatdatabase.helpers.Group;
 import com.cheatdatabase.helpers.Konstanten;
@@ -42,15 +43,12 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
-import javax.inject.Inject;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import needle.Needle;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
 
 @SuppressLint("NewApi")
 public class SearchResultsActivity extends AppCompatActivity implements OnGameListItemSelectedListener {
@@ -72,9 +70,6 @@ public class SearchResultsActivity extends AppCompatActivity implements OnGameLi
     ImageView reloadView;
     @BindView(R.id.listView)
     ExpandableListView listView;
-
-    @Inject
-    Retrofit retrofit;
 
     private RestApi restApi;
 
@@ -112,8 +107,7 @@ public class SearchResultsActivity extends AppCompatActivity implements OnGameLi
             Reachability.registerReachability(this);
         }
 
-//        //((CheatDatabaseApplication) getApplication()).getNetworkComponent().inject(this);
-        restApi = retrofit.create(RestApi.class);
+        restApi = RetrofitClientInstance.getRetrofitInstance().create(RestApi.class);
 
         latoFontLight = Tools.getFont(getAssets(), Konstanten.FONT_LIGHT);
         latoFontBold = Tools.getFont(getAssets(), Konstanten.FONT_BOLD);

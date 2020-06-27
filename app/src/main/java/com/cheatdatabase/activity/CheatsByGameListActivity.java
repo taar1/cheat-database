@@ -24,6 +24,7 @@ import com.cheatdatabase.CheatDatabaseApplication;
 import com.cheatdatabase.R;
 import com.cheatdatabase.adapters.CheatsByGameRecycleListViewAdapter;
 import com.cheatdatabase.cheatdetailview.CheatViewPageIndicatorActivity;
+import com.cheatdatabase.data.RetrofitClientInstance;
 import com.cheatdatabase.data.RoomCheatDatabase;
 import com.cheatdatabase.data.dao.FavoriteCheatDao;
 import com.cheatdatabase.data.model.Cheat;
@@ -48,8 +49,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeMap;
 
-import javax.inject.Inject;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -57,7 +56,6 @@ import needle.Needle;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
 
 public class CheatsByGameListActivity extends AppCompatActivity implements OnCheatListItemSelectedListener {
 
@@ -87,9 +85,6 @@ public class CheatsByGameListActivity extends AppCompatActivity implements OnChe
     @BindView(R.id.banner_container)
     LinearLayout bannerContainerFacebook;
 
-    @Inject
-    Retrofit retrofit;
-
     private RestApi restApi;
 
     @Override
@@ -109,13 +104,12 @@ public class CheatsByGameListActivity extends AppCompatActivity implements OnChe
         setContentView(R.layout.activity_cheat_list);
         ButterKnife.bind(this);
 
+        restApi = RetrofitClientInstance.getRetrofitInstance().create(RestApi.class);
+
         NativeAdsManager nativeAdsManager = new NativeAdsManager(this, Konstanten.FACEBOOK_AUDIENCE_NETWORK_NATIVE_AD_IN_RECYCLER_VIEW, 5);
         nativeAdsManager.loadAds(NativeAd.MediaCacheFlag.ALL);
 
         gameObj = getIntent().getParcelableExtra("gameObj");
-
-        //((CheatDatabaseApplication) getApplication()).getNetworkComponent().inject(this);
-        restApi = retrofit.create(RestApi.class);
 
         if (gameObj == null) {
             Toast.makeText(this, R.string.err_somethings_wrong, Toast.LENGTH_LONG).show();

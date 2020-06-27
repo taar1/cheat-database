@@ -6,6 +6,7 @@ import android.view.View;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.Theme;
 import com.cheatdatabase.R;
+import com.cheatdatabase.data.RetrofitClientInstance;
 import com.cheatdatabase.data.model.Cheat;
 import com.cheatdatabase.data.model.Member;
 import com.cheatdatabase.helpers.Tools;
@@ -26,10 +27,11 @@ public class ReportCheatMaterialDialog {
     Activity activity;
     RestApi restApi;
 
-    public ReportCheatMaterialDialog(final Activity activity, final Cheat cheat, final Member member, RestApi restApi, View view) {
+    public ReportCheatMaterialDialog(final Activity activity, final Cheat cheat, final Member member, View view) {
         this.activity = activity;
-        this.restApi = restApi;
         this.view = view;
+
+        restApi = RetrofitClientInstance.getRetrofitInstance().create(RestApi.class);
 
         final String[] reasons = activity.getResources().getStringArray(R.array.report_reasons);
 

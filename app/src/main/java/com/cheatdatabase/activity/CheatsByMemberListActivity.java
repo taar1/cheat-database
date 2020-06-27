@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.cheatdatabase.R;
 import com.cheatdatabase.adapters.MemberCheatRecycleListViewAdapter;
 import com.cheatdatabase.cheatdetailview.MemberCheatViewPageIndicator;
+import com.cheatdatabase.data.RetrofitClientInstance;
 import com.cheatdatabase.data.model.Cheat;
 import com.cheatdatabase.data.model.Member;
 import com.cheatdatabase.helpers.Konstanten;
@@ -36,14 +37,11 @@ import com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView;
 
 import java.util.List;
 
-import javax.inject.Inject;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
 
 /**
  * Shows all cheats of one particular member.
@@ -74,10 +72,7 @@ public class CheatsByMemberListActivity extends AppCompatActivity implements OnC
 
     private Editor editor;
 
-    @Inject
-    Retrofit retrofit;
-
-    private RestApi apiService;
+    private RestApi restApi;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,10 +80,7 @@ public class CheatsByMemberListActivity extends AppCompatActivity implements OnC
         setContentView(R.layout.activity_member_cheat_list);
         ButterKnife.bind(this);
 
-        // Dagger start
-        //((CheatDatabaseApplication) getApplication()).getNetworkComponent().inject(this);
-        apiService = retrofit.create(RestApi.class);
-        // Dagger end
+        restApi = RetrofitClientInstance.getRetrofitInstance().create(RestApi.class);
 
         member = getIntent().getParcelableExtra("member");
         if (member != null) {
@@ -137,7 +129,7 @@ public class CheatsByMemberListActivity extends AppCompatActivity implements OnC
     void getCheats() {
         progressBar.setVisibility(View.VISIBLE);
 
-        Call<List<Cheat>> call = apiService.getCheatsByMemberId(member.getMid());
+        Call<List<Cheat>> call = restApi.getCheatsByMemberId(member.getMid());
         call.enqueue(new Callback<List<Cheat>>() {
             @Override
             public void onResponse(Call<List<Cheat>> games, Response<List<Cheat>> response) {

@@ -33,14 +33,11 @@ import com.cheatdatabase.listeners.OnTopMemberListItemSelectedListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.inject.Inject;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
 
 /**
  * Show Top 20 helping memberList in a list.
@@ -66,9 +63,6 @@ public class TopMembersFragment extends Fragment implements OnTopMemberListItemS
     View emptyView;
     @BindView(R.id.empty_label)
     TextView emptyLabel;
-
-    @Inject
-    Retrofit retrofit;
 
     private MainActivity activity;
 

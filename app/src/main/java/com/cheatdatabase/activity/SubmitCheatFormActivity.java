@@ -18,6 +18,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.Theme;
 import com.cheatdatabase.R;
+import com.cheatdatabase.data.RetrofitClientInstance;
 import com.cheatdatabase.data.model.Game;
 import com.cheatdatabase.data.model.Member;
 import com.cheatdatabase.data.model.UnpublishedCheat;
@@ -30,15 +31,12 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
-import javax.inject.Inject;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
 
 /**
  * Form to submit a cheat for a game.
@@ -67,10 +65,7 @@ public class SubmitCheatFormActivity extends AppCompatActivity {
 
     private SharedPreferences settings;
 
-    @Inject
-    Retrofit retrofit;
-
-    private RestApi apiService;
+    private RestApi restApi;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,10 +73,7 @@ public class SubmitCheatFormActivity extends AppCompatActivity {
         setContentView(R.layout.activity_submit_cheat_layout);
         ButterKnife.bind(this);
 
-        // Dagger start
-        //((CheatDatabaseApplication) getApplication()).getNetworkComponent().inject(this);
-        apiService = retrofit.create(RestApi.class);
-        // Dagger end
+        restApi = RetrofitClientInstance.getRetrofitInstance().create(RestApi.class);
 
         Intent intent = getIntent();
         gameObj = intent.getParcelableExtra("gameObj");
@@ -170,7 +162,7 @@ public class SubmitCheatFormActivity extends AppCompatActivity {
 
     private void checkMemberPermissions() {
         Log.d(TAG, "checkMemberPermissions: 1");
-        Call<JsonObject> call = apiService.getMemberPermissions(member.getMid());
+        Call<JsonObject> call = restApi.getMemberPermissions(member.getMid());
         call.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> games, Response<JsonObject> response) {
@@ -202,7 +194,7 @@ public class SubmitCheatFormActivity extends AppCompatActivity {
 
     private void submitCheatNow() {
         Log.d(TAG, "submitCheatNow: 1");
-        Call<JsonObject> call = apiService.insertCheat(member.getMid(), gameObj.getGameId(), cheatTitle.getText().toString().trim(), cheatText.getText().toString().trim());
+        Call<JsonObject> call = restApi.insertCheat(member.getMid(), gameObj.getGameId(), cheatTitle.getText().toString().trim(), cheatText.getText().toString().trim());
         call.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> games, Response<JsonObject> response) {

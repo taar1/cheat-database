@@ -27,6 +27,7 @@ import com.cheatdatabase.activity.CheatForumActivity;
 import com.cheatdatabase.activity.LoginActivity;
 import com.cheatdatabase.activity.SubmitCheatFormActivity;
 import com.cheatdatabase.callbacks.GenericCallback;
+import com.cheatdatabase.data.RetrofitClientInstance;
 import com.cheatdatabase.data.model.Cheat;
 import com.cheatdatabase.data.model.Game;
 import com.cheatdatabase.data.model.Member;
@@ -62,11 +63,8 @@ import org.greenrobot.eventbus.Subscribe;
 import java.lang.reflect.Type;
 import java.util.List;
 
-import javax.inject.Inject;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import retrofit2.Retrofit;
 
 /**
  * Horizontal sliding through cheats submitted by members.
@@ -98,9 +96,6 @@ public class MemberCheatViewPageIndicator extends AppCompatActivity implements G
     private int activePage;
     private ShareActionProvider mShare;
     private AdView adView;
-
-    @Inject
-    Retrofit retrofit;
 
     private RestApi restApi;
 
@@ -153,8 +148,7 @@ public class MemberCheatViewPageIndicator extends AppCompatActivity implements G
     }
 
     private void init() {
-        //((CheatDatabaseApplication) getApplication()).getNetworkComponent().inject(this);
-        restApi = retrofit.create(RestApi.class);
+        restApi = RetrofitClientInstance.getRetrofitInstance().create(RestApi.class);
 
         sharedPreferences = getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
         editor = sharedPreferences.edit();
@@ -345,7 +339,7 @@ public class MemberCheatViewPageIndicator extends AppCompatActivity implements G
                 showReportDialog();
                 return true;
             case R.id.action_metainfo:
-                CheatMetaDialog cmDialog = new CheatMetaDialog(MemberCheatViewPageIndicator.this, visibleCheat, restApi, outerLayout);
+                CheatMetaDialog cmDialog = new CheatMetaDialog(MemberCheatViewPageIndicator.this, visibleCheat, outerLayout);
                 cmDialog.show();
                 return true;
             case R.id.action_login:
@@ -369,7 +363,7 @@ public class MemberCheatViewPageIndicator extends AppCompatActivity implements G
         if ((member == null) || (member.getMid() == 0)) {
             Toast.makeText(MemberCheatViewPageIndicator.this, R.string.error_login_required, Toast.LENGTH_SHORT).show();
         } else {
-            new ReportCheatMaterialDialog(this, visibleCheat, member, restApi, outerLayout);
+            new ReportCheatMaterialDialog(this, visibleCheat, member, outerLayout);
         }
     }
 
@@ -377,7 +371,7 @@ public class MemberCheatViewPageIndicator extends AppCompatActivity implements G
         if ((member == null) || (member.getMid() == 0)) {
             Toast.makeText(this, R.string.error_login_required, Toast.LENGTH_LONG).show();
         } else {
-            new RateCheatMaterialDialog(this, visibleCheat, member, restApi, outerLayout);
+            new RateCheatMaterialDialog(this, visibleCheat, member, outerLayout);
         }
     }
 

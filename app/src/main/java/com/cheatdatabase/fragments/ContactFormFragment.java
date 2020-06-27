@@ -35,14 +35,11 @@ import com.google.gson.Gson;
 
 import org.greenrobot.eventbus.EventBus;
 
-import javax.inject.Inject;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
 
 public class ContactFormFragment extends Fragment {
 
@@ -66,9 +63,6 @@ public class ContactFormFragment extends Fragment {
     View mContactStatusView;
     @BindView(R.id.thank_you)
     View mThankyouView;
-
-    @Inject
-    Retrofit retrofit;
 
     private MainActivity mainActivity;
 

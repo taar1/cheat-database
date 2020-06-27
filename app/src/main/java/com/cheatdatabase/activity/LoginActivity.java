@@ -23,6 +23,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentManager;
 
 import com.cheatdatabase.R;
+import com.cheatdatabase.data.RetrofitClientInstance;
 import com.cheatdatabase.data.model.Member;
 import com.cheatdatabase.dialogs.AlreadyLoggedInDialog;
 import com.cheatdatabase.dialogs.AlreadyLoggedInDialog.AlreadyLoggedInDialogListener;
@@ -38,8 +39,6 @@ import com.google.gson.JsonObject;
 import java.security.NoSuchAlgorithmException;
 import java.util.Objects;
 
-import javax.inject.Inject;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -47,7 +46,6 @@ import needle.Needle;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
 
 /**
  * Activity which displays a login screen to the user, offering registration as
@@ -83,9 +81,6 @@ public class LoginActivity extends AppCompatActivity implements AlreadyLoggedInD
     private Member member;
     private SharedPreferences settings;
     private Editor editor;
-
-    @Inject
-    Retrofit retrofit;
 
     private RestApi restApi;
 
@@ -134,8 +129,7 @@ public class LoginActivity extends AppCompatActivity implements AlreadyLoggedInD
     }
 
     private void init() {
-        //((CheatDatabaseApplication) getApplication()).getNetworkComponent().inject(this);
-        restApi = retrofit.create(RestApi.class);
+        restApi = RetrofitClientInstance.getRetrofitInstance().create(RestApi.class);
 
         if (mToolbar != null) {
             setSupportActionBar(mToolbar);
