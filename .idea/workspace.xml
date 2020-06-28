@@ -110,7 +110,12 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4caff62e-c62f-40ca-acf0-73c680b13375" name="Default" comment="Working Version 2.5.17!&#10;FIXED ON APP START CRASH (room database upgrade crashed -&gt; favorites -&gt; member_id NonNull)" />
+    <list default="true" id="4caff62e-c62f-40ca-acf0-73c680b13375" name="Default" comment="Working Version 2.5.17!&#10;FIXED ON APP START CRASH (room database upgrade crashed -&gt; favorites -&gt; member_id NonNull)">
+      <change beforePath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/helpers/DatabaseHelper.java" beforeDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -598,13 +603,6 @@
       <option name="presentableId" value="Default" />
       <updated>1487274191999</updated>
     </task>
-    <task id="LOCAL-00088" summary="MemberCheatView Anpassungen.">
-      <created>1586292850403</created>
-      <option name="number" value="00088" />
-      <option name="presentableId" value="LOCAL-00088" />
-      <option name="project" value="LOCAL" />
-      <updated>1586292850404</updated>
-    </task>
     <task id="LOCAL-00089" summary="Adding Cheat Detail Image Gallery using Kotlin and RecyclerView">
       <created>1586524538634</created>
       <option name="number" value="00089" />
@@ -941,7 +939,14 @@
       <option name="project" value="LOCAL" />
       <updated>1593351054611</updated>
     </task>
-    <option name="localTasksCounter" value="137" />
+    <task id="LOCAL-00137" summary="Working Version 2.5.17!&#10;FIXED ON APP START CRASH (room database upgrade crashed -&gt; favorites -&gt; member_id NonNull)">
+      <created>1593351280799</created>
+      <option name="number" value="00137" />
+      <option name="presentableId" value="LOCAL-00137" />
+      <option name="project" value="LOCAL" />
+      <updated>1593351280799</updated>
+    </task>
+    <option name="localTasksCounter" value="138" />
     <servers />
   </component>
   <component name="TodoView">

@@ -20,7 +20,7 @@ apply plugin: 'dagger.hilt.android.plugin'
 String APK_ID = "com.cheatdatabase"
 String APK_NAME = "Cheat-Database"
 int VERSION_CODE = 64
-String VERSION_NAME = "2.5.17"
+String VERSION_NAME = "2.5.18-preRelease"
 
 android {
     compileSdkVersion 28
