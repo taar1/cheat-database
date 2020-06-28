@@ -30,7 +30,6 @@ public class FavoriteCheatModel {
     @ColumnInfo(name = "member_id")
     public int memberId;
 
-
     public FavoriteCheatModel(int gameId, String gameName, int cheatId, String cheatTitle, String cheatText, int systemId, String systemName, int languageId, Boolean isWalkthrough, int memberId) {
         this.gameId = gameId;
         this.gameName = gameName;

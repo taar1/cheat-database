@@ -39,6 +39,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
+        Log.d(TAG, "XXXXX onCreate...");
+
         db.execSQL(Favorite.CREATE_TABLE);
         db.execSQL(GameSystemTable.CREATE_TABLE);
         db.execSQL(SearchHistory.CREATE_TABLE);
@@ -48,6 +50,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        Log.d(TAG, "XXXXX onUpgrade...");
+
         // Loop through each version when an upgrade occurs.
         for (int version = oldVersion + 1; version <= newVersion; version++) {
             switch (version) {
