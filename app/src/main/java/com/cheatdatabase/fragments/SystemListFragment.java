@@ -19,11 +19,13 @@ import com.cheatdatabase.R;
 import com.cheatdatabase.activity.GamesBySystemListActivity;
 import com.cheatdatabase.activity.MainActivity;
 import com.cheatdatabase.adapters.SystemsRecycleListViewAdapter;
+import com.cheatdatabase.data.RetrofitClientInstance;
 import com.cheatdatabase.data.RoomCheatDatabase;
 import com.cheatdatabase.data.dao.SystemDao;
 import com.cheatdatabase.data.model.SystemModel;
 import com.cheatdatabase.helpers.Tools;
 import com.cheatdatabase.listeners.OnSystemListItemSelectedListener;
+import com.cheatdatabase.rest.RestApi;
 import com.cheatdatabase.widgets.DividerDecoration;
 
 import java.util.ArrayList;
@@ -94,6 +96,8 @@ public class SystemListFragment extends Fragment implements OnSystemListItemSele
     }
 
     private void loadGamesAndCheatsCounterBackground() {
+        RestApi restApi = RetrofitClientInstance.getRetrofitInstance().create(RestApi.class);
+
         LiveData<List<SystemModel>> systemModels = dao.getAll();
         Needle.onBackgroundThread().execute(() -> {
 
@@ -124,7 +128,7 @@ public class SystemListFragment extends Fragment implements OnSystemListItemSele
             Log.d(TAG, "getSystemsAndCountsFromWebservice: " + getSystemsAndCountsOnline);
 
             if (getSystemsAndCountsOnline) {
-                Call<List<SystemModel>> call = mainActivity.getRestApi().countGamesAndCheatsOfAllSystems();
+                Call<List<SystemModel>> call = restApi.countGamesAndCheatsOfAllSystems();
                 call.enqueue(new Callback<List<SystemModel>>() {
                     @Override
                     public void onResponse(Call<List<SystemModel>> cheats, Response<List<SystemModel>> response) {

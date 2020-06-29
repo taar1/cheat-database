@@ -32,7 +32,6 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.Theme;
 import com.appbrain.AppBrain;
 import com.cheatdatabase.R;
-import com.cheatdatabase.data.RetrofitClientInstance;
 import com.cheatdatabase.data.model.Member;
 import com.cheatdatabase.dialogs.RateAppDialog;
 import com.cheatdatabase.events.GenericEvent;
@@ -46,7 +45,6 @@ import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.helpers.Tools;
 import com.cheatdatabase.helpers.TrackingUtils;
-import com.cheatdatabase.rest.RestApi;
 import com.cheatdatabase.search.SearchSuggestionProvider;
 import com.facebook.ads.AdSize;
 import com.facebook.ads.AdView;
@@ -86,8 +84,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private FragmentManager fragmentManager;
     private FragmentTransaction fragmentTransaction;
 
-    private RestApi restApi;
-
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
     @BindView(R.id.drawer_layout)
@@ -110,8 +106,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-
-        restApi = RetrofitClientInstance.getRetrofitInstance().create(RestApi.class);
 
         mFragmentId = getIntent().getIntExtra("mFragmentId", 0);
 
@@ -458,8 +452,5 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mDrawerLayout.closeDrawers();
     }
 
-    public RestApi getRestApi() {
-        return restApi;
-    }
 }
 

@@ -25,11 +25,13 @@ import androidx.fragment.app.Fragment;
 
 import com.cheatdatabase.R;
 import com.cheatdatabase.activity.MainActivity;
+import com.cheatdatabase.data.RetrofitClientInstance;
 import com.cheatdatabase.data.model.Member;
 import com.cheatdatabase.events.GenericEvent;
 import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.helpers.Tools;
+import com.cheatdatabase.rest.RestApi;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.gson.Gson;
 
@@ -251,7 +253,8 @@ public class ContactFormFragment extends Fragment {
     }
 
     private void submitContactForm() {
-        Call<Void> call = mainActivity.getRestApi().submitContactForm(mEmailView.getText().toString().trim(), "Contact through Android App", mMessageView.getText().toString().trim());
+        RestApi restApi = RetrofitClientInstance.getRetrofitInstance().create(RestApi.class);
+        Call<Void> call = restApi.submitContactForm(mEmailView.getText().toString().trim(), "Contact through Android App", mMessageView.getText().toString().trim());
         call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> voidValue, Response<Void> response) {

@@ -26,9 +26,11 @@ import com.cheatdatabase.R;
 import com.cheatdatabase.activity.CheatsByMemberListActivity;
 import com.cheatdatabase.activity.MainActivity;
 import com.cheatdatabase.adapters.TopMembersListViewAdapter;
+import com.cheatdatabase.data.RetrofitClientInstance;
 import com.cheatdatabase.data.model.Member;
 import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.listeners.OnTopMemberListItemSelectedListener;
+import com.cheatdatabase.rest.RestApi;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -145,7 +147,9 @@ public class TopMembersFragment extends Fragment implements OnTopMemberListItemS
             mSwipeRefreshLayout.setRefreshing(true);
         }
 
-        Call<List<Member>> call = activity.getRestApi().getMemberTop20();
+        RestApi restApi = RetrofitClientInstance.getRetrofitInstance().create(RestApi.class);
+
+        Call<List<Member>> call = restApi.getMemberTop20();
         call.enqueue(new Callback<List<Member>>() {
             @Override
             public void onResponse(Call<List<Member>> members, Response<List<Member>> response) {
