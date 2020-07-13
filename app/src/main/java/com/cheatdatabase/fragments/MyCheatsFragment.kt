@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
@@ -28,7 +29,7 @@ class MyCheatsFragment(val mainActivity: MainActivity, var settings: SharedPrefe
     lateinit var outerLayout: ConstraintLayout
     lateinit var unpublishedCheatsCard: CardView
     lateinit var publishedCheatsCard: CardView
-
+    lateinit var unpublishedCheatsSubtitle: TextView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,6 +41,13 @@ class MyCheatsFragment(val mainActivity: MainActivity, var settings: SharedPrefe
         outerLayout = view.outer_layout
         unpublishedCheatsCard = view.card_unpublished_cheats
         publishedCheatsCard = view.card_published_cheats
+        unpublishedCheatsSubtitle = view.unpublished_cheats_subtitle
+
+        // TODO hier die zahlen ersetzen mit: https://cheat-database.com/rest/v1/countMyCheats.php?memberId=1&pw=7695b843af98811d4c95c8f6a08541dd
+        // TODO hier die zahlen ersetzen mit: https://cheat-database.com/rest/v1/countMyCheats.php?memberId=1&pw=7695b843af98811d4c95c8f6a08541dd
+        // TODO hier die zahlen ersetzen mit: https://cheat-database.com/rest/v1/countMyCheats.php?memberId=1&pw=7695b843af98811d4c95c8f6a08541dd
+        unpublishedCheatsSubtitle.text =
+            getString(R.string.cheats_waiting_for_approval, "(5)", "(11)")
 
         settings = this.mainActivity.getSharedPreferences(Konstanten.PREFERENCES_FILE, 0)
 

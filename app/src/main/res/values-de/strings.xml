@@ -213,7 +213,7 @@
     <string name="drawer_my_cheats">Meine Cheats <sup><small>BETA</small></sup></string>
     <string name="coming_soon">Kommt bald…</string>
     <string name="unpublished_cheats">Unveröffentlichte Cheats</string>
-    <string name="cheats_waiting_for_approval">Cheats die noch geprüft werden und\nabgelehnte Cheats</string>
+    <string name="cheats_waiting_for_approval">Cheats die noch geprüft werden %1$s \nund abgelehnte Cheats %2$s</string>
     <string name="published_cheats">Veröffentlichte Cheats</string>
     <string name="list_of_published_cheats">Liste der veröffentlichten Cheats</string>
     <string name="pending_approval">Genehmigung ausstehend</string>

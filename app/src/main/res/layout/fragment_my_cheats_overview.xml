@@ -67,6 +67,17 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
+                android:id="@+id/unpublished_cheats_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="24dp"
+                android:text="(4)"
+                android:textAppearance="@style/NormalTextBold"
+                app:layout_constraintStart_toEndOf="@+id/unpublished_cheats_title"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
                 android:id="@+id/unpublished_cheats_subtitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -121,6 +132,17 @@
                 android:text="@string/published_cheats"
                 android:textAppearance="@style/NormalTextBold"
                 app:layout_constraintStart_toEndOf="@+id/icon_published"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/published_cheats_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="24dp"
+                android:text="(427)"
+                android:textAppearance="@style/NormalTextBold"
+                app:layout_constraintStart_toEndOf="@+id/published_cheats_title"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
