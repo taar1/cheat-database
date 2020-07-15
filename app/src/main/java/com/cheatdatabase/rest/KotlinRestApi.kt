@@ -1,5 +1,6 @@
 package com.cheatdatabase.rest
 
+import com.cheatdatabase.activity.ui.mycheats.UnpublishedCheatsRepositoryKotlin
 import com.cheatdatabase.data.model.Cheat
 import com.cheatdatabase.data.model.HttpPostReturnValue
 import com.cheatdatabase.data.model.Member
@@ -59,6 +60,14 @@ interface KotlinRestApi {
 
     @GET("getMemberTop20.php")
     suspend fun getTopMembers(): Response<List<Member>>
+
+
+    @FormUrlEncoded
+    @POST("countMyCheats.php")
+    suspend fun countMyCheats(
+        @Field("memberId") memberId: Int,
+        @Field("pw") password_md5: String
+    ): Response<UnpublishedCheatsRepositoryKotlin.MyCheatsCount>
 
     companion object {
         operator fun invoke(): KotlinRestApi {

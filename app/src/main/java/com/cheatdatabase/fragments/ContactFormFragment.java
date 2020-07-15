@@ -21,8 +21,6 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import androidx.fragment.app.Fragment;
-
 import com.cheatdatabase.R;
 import com.cheatdatabase.activity.MainActivity;
 import com.cheatdatabase.data.RetrofitClientInstance;
@@ -43,7 +41,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ContactFormFragment extends Fragment {
+public class ContactFormFragment extends MainFragment {
 
     private static final String TAG = "ContactFormFragment";
 
@@ -80,6 +78,7 @@ public class ContactFormFragment extends Fragment {
         return new ContactFormFragment();
     }
 
+    @Override
     public void setMainActivity(MainActivity mainActivity) {
         this.mainActivity = mainActivity;
     }
@@ -280,5 +279,10 @@ public class ContactFormFragment extends Fragment {
 
         Handler handler = new Handler();
         handler.postDelayed(() -> EventBus.getDefault().post(new GenericEvent(GenericEvent.Action.CLICK_CHEATS_DRAWER)), 1500);
+    }
+
+    @Override
+    public void forceRefresh() {
+
     }
 }

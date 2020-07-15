@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
-import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LiveData;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -39,7 +38,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class SystemListFragment extends Fragment implements OnSystemListItemSelectedListener {
+public class SystemListFragment extends MainFragment implements OnSystemListItemSelectedListener {
     private final String TAG = SystemListFragment.class.getSimpleName();
 
     boolean getSystemsAndCountsOnline = false;
@@ -63,7 +62,8 @@ public class SystemListFragment extends Fragment implements OnSystemListItemSele
         return systemListFragment;
     }
 
-    private void setMainActivity(MainActivity mainActivity) {
+    @Override
+    public void setMainActivity(MainActivity mainActivity) {
         this.mainActivity = mainActivity;
     }
 
@@ -196,5 +196,10 @@ public class SystemListFragment extends Fragment implements OnSystemListItemSele
         Intent explicitIntent = new Intent(getActivity(), GamesBySystemListActivity.class);
         explicitIntent.putExtra("systemObj", systemPlatform);
         startActivity(explicitIntent, ActivityOptions.makeSceneTransitionAnimation(getActivity()).toBundle());
+    }
+
+    @Override
+    public void forceRefresh() {
+
     }
 }

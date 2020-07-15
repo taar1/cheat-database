@@ -218,7 +218,19 @@ public class Member implements Parcelable {
         SharedPreferences.Editor editor = settings.edit();
 
         editor.putString(Konstanten.MEMBER_OBJECT, new Gson().toJson(member));
-        editor.commit();
+        editor.apply();
+    }
+
+    /**
+     * Removes the member data from the shared preferences (Logout).
+     *
+     * @param settings
+     */
+    public void removeMemberData(SharedPreferences settings) {
+        SharedPreferences.Editor editor = settings.edit();
+
+        editor.remove(Konstanten.MEMBER_OBJECT);
+        editor.apply();
     }
 
     @Override

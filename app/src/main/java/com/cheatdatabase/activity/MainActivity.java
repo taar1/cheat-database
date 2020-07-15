@@ -37,6 +37,7 @@ import com.cheatdatabase.dialogs.RateAppDialog;
 import com.cheatdatabase.events.GenericEvent;
 import com.cheatdatabase.fragments.ContactFormFragment;
 import com.cheatdatabase.fragments.FavoriteGamesListFragment;
+import com.cheatdatabase.fragments.MainFragment;
 import com.cheatdatabase.fragments.MyCheatsFragment;
 import com.cheatdatabase.fragments.SystemListFragment;
 import com.cheatdatabase.fragments.TopMembersFragment;
@@ -83,6 +84,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private FragmentManager fragmentManager;
     private FragmentTransaction fragmentTransaction;
+    private MainFragment fragment;
 
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
@@ -281,6 +283,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 member = null;
                 Tools.logout(MainActivity.this, settings.edit());
                 invalidateOptionsMenu();
+
+                // TODO FIXME beim logout stürzt es bei diversen fragments noch ab...
+                // TODO FIXME beim logout stürzt es bei diversen fragments noch ab...
+                // TODO FIXME beim logout stürzt es bei diversen fragments noch ab...
+                // TODO FIXME beim logout stürzt es bei diversen fragments noch ab...
+                // TODO FIXME beim logout stürzt es bei diversen fragments noch ab...
+                fragment.forceRefresh();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -418,9 +427,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mToolbar.setTitle(Html.fromHtml(getString(R.string.drawer_my_cheats)));
         fragmentTransaction.addToBackStack(MyCheatsFragment.class.getSimpleName());
 
-        MyCheatsFragment myCheatsFragment = new MyCheatsFragment(this, settings);
+        fragment = new MyCheatsFragment(this, settings);
 
-        fragmentManager.beginTransaction().replace(R.id.content_frame, myCheatsFragment, MyCheatsFragment.class.getSimpleName()).commit();
+        fragmentManager.beginTransaction().replace(R.id.content_frame, fragment, MyCheatsFragment.class.getSimpleName()).commit();
 
         floatingActionButton.hide();
         mDrawerLayout.closeDrawers();
@@ -430,10 +439,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mToolbar.setTitle(R.string.contactform_title);
         fragmentTransaction.addToBackStack(ContactFormFragment.class.getSimpleName());
 
-        ContactFormFragment contactFormFragment = ContactFormFragment.newInstance();
-        contactFormFragment.setMainActivity(this);
+        fragment = ContactFormFragment.newInstance();
+        fragment.setMainActivity(this);
 
-        fragmentManager.beginTransaction().replace(R.id.content_frame, contactFormFragment, ContactFormFragment.class.getSimpleName()).commit();
+        fragmentManager.beginTransaction().replace(R.id.content_frame, fragment, ContactFormFragment.class.getSimpleName()).commit();
 
         mixedBannerContainer.setVisibility(View.GONE);
 
@@ -445,7 +454,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mToolbar.setTitle(R.string.app_name);
         fragmentTransaction.addToBackStack(SystemListFragment.class.getSimpleName());
 
-        SystemListFragment fragment = SystemListFragment.newInstance(this);
+        fragment = SystemListFragment.newInstance(this);
         fragmentManager.beginTransaction().replace(R.id.content_frame, fragment, SystemListFragment.class.getSimpleName()).commit();
 
         floatingActionButton.show();
