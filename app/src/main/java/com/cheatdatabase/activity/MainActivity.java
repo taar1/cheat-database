@@ -17,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -25,6 +26,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -32,20 +34,23 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.Theme;
 import com.appbrain.AppBrain;
 import com.cheatdatabase.R;
+import com.cheatdatabase.activity.ui.mycheats.UnpublishedCheatsRepositoryKotlin;
+import com.cheatdatabase.data.RetrofitClientInstance;
 import com.cheatdatabase.data.model.Member;
 import com.cheatdatabase.dialogs.RateAppDialog;
 import com.cheatdatabase.events.GenericEvent;
 import com.cheatdatabase.fragments.ContactFormFragment;
 import com.cheatdatabase.fragments.FavoriteGamesListFragment;
-import com.cheatdatabase.fragments.MainFragment;
 import com.cheatdatabase.fragments.MyCheatsFragment;
 import com.cheatdatabase.fragments.SystemListFragment;
 import com.cheatdatabase.fragments.TopMembersFragment;
+import com.cheatdatabase.helpers.AeSimpleMD5;
 import com.cheatdatabase.helpers.DistinctValues;
 import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.helpers.Tools;
 import com.cheatdatabase.helpers.TrackingUtils;
+import com.cheatdatabase.rest.RestApi;
 import com.cheatdatabase.search.SearchSuggestionProvider;
 import com.facebook.ads.AdSize;
 import com.facebook.ads.AdView;
@@ -58,11 +63,15 @@ import com.inmobi.sdk.InMobiSdk;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import java.security.NoSuchAlgorithmException;
 import java.util.Random;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -75,6 +84,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private ActionBarDrawerToggle actionBarDrawerToggle;
 
     private Member member;
+    private UnpublishedCheatsRepositoryKotlin.MyCheatsCount myCheatsCount;
 
     private SharedPreferences settings;
     private SharedPreferences.Editor editor;
@@ -84,7 +94,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private FragmentManager fragmentManager;
     private FragmentTransaction fragmentTransaction;
-    private MainFragment fragment;
 
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
@@ -140,6 +149,24 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         TrackingUtils.getInstance().init(this);
 
         AppBrain.init(this);
+    }
+
+    private void updateMyCheatsDrawerNavigationItemCount() {
+        Menu menu = navigationView.getMenu();
+        MenuItem navMyCheats = menu.findItem(R.id.nav_my_cheats);
+        TextView myCheatsNavDrawerCounter = navMyCheats.getActionView().findViewById(R.id.nav_drawer_item_counter);
+
+        if (myCheatsCount != null) {
+            int allUnpublishedCheats = myCheatsCount.getUncheckedCheats() + myCheatsCount.getRejectedCheats();
+
+            if (allUnpublishedCheats > 0) {
+                myCheatsNavDrawerCounter.setText(getString(R.string.braces_with_text_in_the_middle, allUnpublishedCheats));
+            } else {
+                myCheatsNavDrawerCounter.setText("");
+            }
+        } else {
+            myCheatsNavDrawerCounter.setText("");
+        }
     }
 
     /**
@@ -199,7 +226,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (!Reachability.isRegistered()) {
             Reachability.registerReachability(this);
         }
+
         member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
+        countMyCheats();
     }
 
     @Override
@@ -284,12 +313,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 Tools.logout(MainActivity.this, settings.edit());
                 invalidateOptionsMenu();
 
-                // TODO FIXME beim logout stürzt es bei diversen fragments noch ab...
-                // TODO FIXME beim logout stürzt es bei diversen fragments noch ab...
-                // TODO FIXME beim logout stürzt es bei diversen fragments noch ab...
-                // TODO FIXME beim logout stürzt es bei diversen fragments noch ab...
-                // TODO FIXME beim logout stürzt es bei diversen fragments noch ab...
-                fragment.forceRefresh();
+                // If you log out we are updating the text in "MyCheatsFragment" so we have to inform the fragment that the login-state has changed.
+                Fragment myCheatsFragment = getSupportFragmentManager().findFragmentById(R.id.content_frame);
+                if (myCheatsFragment != null) {
+                    if (myCheatsFragment instanceof MyCheatsFragment) {
+                        MyCheatsFragment mmyCheatsFragment = (MyCheatsFragment) myCheatsFragment;
+                        mmyCheatsFragment.forceRefresh();
+                    }
+                }
+
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -427,7 +459,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mToolbar.setTitle(Html.fromHtml(getString(R.string.drawer_my_cheats)));
         fragmentTransaction.addToBackStack(MyCheatsFragment.class.getSimpleName());
 
-        fragment = new MyCheatsFragment(this, settings);
+        MyCheatsFragment fragment = new MyCheatsFragment(this, settings, myCheatsCount);
 
         fragmentManager.beginTransaction().replace(R.id.content_frame, fragment, MyCheatsFragment.class.getSimpleName()).commit();
 
@@ -439,7 +471,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mToolbar.setTitle(R.string.contactform_title);
         fragmentTransaction.addToBackStack(ContactFormFragment.class.getSimpleName());
 
-        fragment = ContactFormFragment.newInstance();
+        ContactFormFragment fragment = ContactFormFragment.newInstance();
         fragment.setMainActivity(this);
 
         fragmentManager.beginTransaction().replace(R.id.content_frame, fragment, ContactFormFragment.class.getSimpleName()).commit();
@@ -454,12 +486,51 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mToolbar.setTitle(R.string.app_name);
         fragmentTransaction.addToBackStack(SystemListFragment.class.getSimpleName());
 
-        fragment = SystemListFragment.newInstance(this);
+        SystemListFragment fragment = SystemListFragment.newInstance(this);
         fragmentManager.beginTransaction().replace(R.id.content_frame, fragment, SystemListFragment.class.getSimpleName()).commit();
 
         floatingActionButton.show();
         mDrawerLayout.closeDrawers();
     }
 
+    /**
+     * Loads the member's unpublished, rejected and published cheats count.
+     *
+     * @return UnpublishedCheatsRepositoryKotlin.MyCheatsCount
+     */
+    private void countMyCheats() {
+        if ((member != null) && (member.getMid() != 0)) {
+            RestApi restApi = RetrofitClientInstance.getRetrofitInstance().create(RestApi.class);
+            Call<UnpublishedCheatsRepositoryKotlin.MyCheatsCount> call;
+            try {
+                call = restApi.countMyCheats(member.getMid(), AeSimpleMD5.MD5(member.getPassword()));
+                call.enqueue(new Callback<UnpublishedCheatsRepositoryKotlin.MyCheatsCount>() {
+                    @Override
+                    public void onResponse(Call<UnpublishedCheatsRepositoryKotlin.MyCheatsCount> countValue, Response<UnpublishedCheatsRepositoryKotlin.MyCheatsCount> response) {
+                        if (response.isSuccessful()) {
+                            myCheatsCount = response.body();
+                        } else {
+                            myCheatsCount = null;
+                        }
+
+                        updateMyCheatsDrawerNavigationItemCount();
+                    }
+
+                    @Override
+                    public void onFailure(Call<UnpublishedCheatsRepositoryKotlin.MyCheatsCount> call, Throwable e) {
+                        Log.e(TAG, "countMyCheats onFailure: " + e.getLocalizedMessage());
+                        updateMyCheatsDrawerNavigationItemCount();
+                    }
+                });
+            } catch (NoSuchAlgorithmException e) {
+                myCheatsCount = null;
+                updateMyCheatsDrawerNavigationItemCount();
+            }
+
+        } else {
+            myCheatsCount = null;
+            updateMyCheatsDrawerNavigationItemCount();
+        }
+    }
 }
 

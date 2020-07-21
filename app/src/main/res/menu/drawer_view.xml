@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <group
         android:id="@+id/nav_group_main"
         android:checkableBehavior="single">
@@ -14,7 +15,8 @@
         <item
             android:id="@+id/nav_my_cheats"
             android:icon="@drawable/ic_pencil"
-            android:title="@string/drawer_my_cheats" />
+            android:title="@string/drawer_my_cheats"
+            app:actionLayout="@layout/menu_counter" />
         <item
             android:id="@+id/nav_members"
             android:icon="@drawable/ic_drawer_members"

@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -45,7 +46,7 @@ import retrofit2.Response;
  *
  * @author Dominik Erbsland
  */
-public class TopMembersFragment extends MainFragment implements OnTopMemberListItemSelectedListener {
+public class TopMembersFragment extends Fragment implements OnTopMemberListItemSelectedListener {
     private static final String TAG = TopMembersFragment.class.getSimpleName();
     private final int VISIT_WEBSITE = 0;
     private Context context;
@@ -218,8 +219,4 @@ public class TopMembersFragment extends MainFragment implements OnTopMemberListI
         this.context = context;
     }
 
-    @Override
-    public void forceRefresh() {
-
-    }
 }

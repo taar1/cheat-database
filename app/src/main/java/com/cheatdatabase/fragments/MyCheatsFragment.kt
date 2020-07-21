@@ -10,6 +10,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.fragment.app.Fragment
 import com.cheatdatabase.R
 import com.cheatdatabase.activity.CheatsByMemberListActivity
 import com.cheatdatabase.activity.MainActivity
@@ -23,8 +24,12 @@ import com.cheatdatabase.helpers.Tools
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.fragment_my_cheats_overview.view.*
 
-class MyCheatsFragment(val mainActivity: MainActivity, var settings: SharedPreferences) :
-    MainFragment() {
+class MyCheatsFragment(
+    val mainActivity: MainActivity,
+    var settings: SharedPreferences,
+    val myCheatsCountx: UnpublishedCheatsRepositoryKotlin.MyCheatsCount?
+) :
+    Fragment() {
     val TAG = "MyCheatsFragment"
 
     lateinit var myScoreLayout: LinearLayout
@@ -51,8 +56,8 @@ class MyCheatsFragment(val mainActivity: MainActivity, var settings: SharedPrefe
         unpublishedCheatsCount = view.unpublished_cheats_count
         unpublishedCheatsSubtitle = view.unpublished_cheats_subtitle
 
-        showLoggedOutText()
-        getMyUnpublishedCheatsByCoroutines()
+        //showLoggedOutText()
+        //getMyUnpublishedCheatsByCoroutines()
 
         settings = this.mainActivity.getSharedPreferences(Konstanten.PREFERENCES_FILE, 0)
 
@@ -61,7 +66,10 @@ class MyCheatsFragment(val mainActivity: MainActivity, var settings: SharedPrefe
         }
 
         unpublishedCheatsCard.setOnClickListener {
-            startActivityIfLoggedIn(getMember(), Intent(mainActivity, MyUnpublishedCheatsListActivity::class.java))
+            startActivityIfLoggedIn(
+                getMember(),
+                Intent(mainActivity, MyUnpublishedCheatsListActivity::class.java)
+            )
         }
 
         publishedCheatsCard.setOnClickListener {
@@ -72,6 +80,7 @@ class MyCheatsFragment(val mainActivity: MainActivity, var settings: SharedPrefe
             startActivityIfLoggedIn(member, myCheatsIntent)
         }
 
+        updateText()
         return view
     }
 
@@ -84,16 +93,14 @@ class MyCheatsFragment(val mainActivity: MainActivity, var settings: SharedPrefe
     }
 
     private fun getMember(): Member? {
-        return Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member::class.java)
+        return Gson().fromJson(
+            settings.getString(Konstanten.MEMBER_OBJECT, null),
+            Member::class.java
+        )
     }
 
-    override fun forceRefresh() {
-        getMyUnpublishedCheatsByCoroutines()
-    }
-
-    override fun onResume() {
-        super.onResume()
-        getMyUnpublishedCheatsByCoroutines()
+    fun forceRefresh() {
+//        getMyUnpublishedCheatsByCoroutines()
     }
 
     fun getMyUnpublishedCheatsByCoroutines() {
@@ -109,7 +116,9 @@ class MyCheatsFragment(val mainActivity: MainActivity, var settings: SharedPrefe
                     myCheatCount = response.body()!!
 
                     publishedCheatsCount.text = "(".plus(myCheatCount.publishedCheats).plus(")")
-                    unpublishedCheatsCount.text = "(".plus((myCheatCount.uncheckedCheats + myCheatCount.rejectedCheats)).plus(")")
+                    unpublishedCheatsCount.text =
+                        "(".plus((myCheatCount.uncheckedCheats + myCheatCount.rejectedCheats))
+                            .plus(")")
 
                     unpublishedCheatsSubtitle.text =
                         getString(
@@ -124,10 +133,38 @@ class MyCheatsFragment(val mainActivity: MainActivity, var settings: SharedPrefe
         }
     }
 
+    private fun updateText() {
+        // TODO wenn eine zahl 0 ist muss man den ganzen klammernblock ausblenden...
+        // TODO wenn eine zahl 0 ist muss man den ganzen klammernblock ausblenden...
+        // TODO wenn eine zahl 0 ist muss man den ganzen klammernblock ausblenden...
+        // TODO wenn eine zahl 0 ist muss man den ganzen klammernblock ausblenden...
+
+        // TODO was passiert wenn man ausloggt?
+        // TODO was passiert wenn man ausloggt?
+        // TODO was passiert wenn man ausloggt?
+        
+        if (myCheatsCountx != null) {
+            publishedCheatsCount.text = "(".plus(myCheatsCountx.publishedCheats).plus(")")
+            unpublishedCheatsCount.text =
+                "(".plus((myCheatsCountx.uncheckedCheats + myCheatsCountx.rejectedCheats))
+                    .plus(")")
+
+            unpublishedCheatsSubtitle.text =
+                getString(
+                    R.string.cheats_waiting_for_approval,
+                    "(".plus(myCheatsCountx.uncheckedCheats).plus(") "),
+                    "(".plus(myCheatsCountx.rejectedCheats).plus(")")
+                )
+        } else {
+            showLoggedOutText()
+        }
+    }
+
     private fun showLoggedOutText() {
         publishedCheatsCount.text = ""
         unpublishedCheatsCount.text = ""
         unpublishedCheatsSubtitle.text =
             getString(R.string.cheats_waiting_for_approval, "", "")
     }
+
 }

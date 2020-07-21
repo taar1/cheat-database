@@ -1,5 +1,6 @@
 package com.cheatdatabase.rest;
 
+import com.cheatdatabase.activity.ui.mycheats.UnpublishedCheatsRepositoryKotlin;
 import com.cheatdatabase.data.model.Cheat;
 import com.cheatdatabase.data.model.ForumPost;
 import com.cheatdatabase.data.model.Game;
@@ -304,5 +305,11 @@ public interface RestApi {
     @FormUrlEncoded
     @POST("deleteMyUnpublishedCheat.php")
     Call<JsonObject> deleteUnpublishedCheat(@Field("memberId") int memberId, @Field("pw") String password_md5, @Field("id") int id, @Field("gameId") int gameId, @Field("tableInfo") String tableInfo);
+
+
+    @FormUrlEncoded
+    @POST("countMyCheats.php")
+    Call<UnpublishedCheatsRepositoryKotlin.MyCheatsCount> countMyCheats(@Field("memberId") int memberId, @Field("pw") String password_md5);
+
 
 }
