@@ -17,8 +17,6 @@ import com.cheatdatabase.activity.MainActivity
 import com.cheatdatabase.activity.ui.mycheats.MyUnpublishedCheatsListActivity
 import com.cheatdatabase.activity.ui.mycheats.UnpublishedCheatsRepositoryKotlin
 import com.cheatdatabase.data.model.Member
-import com.cheatdatabase.helpers.AeSimpleMD5
-import com.cheatdatabase.helpers.Coroutines
 import com.cheatdatabase.helpers.Konstanten
 import com.cheatdatabase.helpers.Tools
 import com.google.gson.Gson
@@ -27,7 +25,7 @@ import kotlinx.android.synthetic.main.fragment_my_cheats_overview.view.*
 class MyCheatsFragment(
     val mainActivity: MainActivity,
     var settings: SharedPreferences,
-    val myCheatsCountx: UnpublishedCheatsRepositoryKotlin.MyCheatsCount?
+    var myCheatsCount: UnpublishedCheatsRepositoryKotlin.MyCheatsCount?
 ) :
     Fragment() {
     val TAG = "MyCheatsFragment"
@@ -39,8 +37,6 @@ class MyCheatsFragment(
     lateinit var publishedCheatsCount: TextView
     lateinit var unpublishedCheatsCount: TextView
     lateinit var unpublishedCheatsSubtitle: TextView
-
-    lateinit var myCheatCount: UnpublishedCheatsRepositoryKotlin.MyCheatsCount
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -55,9 +51,6 @@ class MyCheatsFragment(
         publishedCheatsCount = view.published_cheats_count
         unpublishedCheatsCount = view.unpublished_cheats_count
         unpublishedCheatsSubtitle = view.unpublished_cheats_subtitle
-
-        //showLoggedOutText()
-        //getMyUnpublishedCheatsByCoroutines()
 
         settings = this.mainActivity.getSharedPreferences(Konstanten.PREFERENCES_FILE, 0)
 
@@ -99,61 +92,50 @@ class MyCheatsFragment(
         )
     }
 
-    fun forceRefresh() {
-//        getMyUnpublishedCheatsByCoroutines()
-    }
+//    // The cheats count is executed in MainActivity.java
+//    fun getMyUnpublishedCheatsByCoroutines() {
+//        val member = getMember()
+//        if ((member != null) && (member.mid != 0)) {
+//            Coroutines.main {
+//                val response = UnpublishedCheatsRepositoryKotlin().countMyCheats(
+//                    member.mid,
+//                    AeSimpleMD5.MD5(member.password)
+//                )
+//
+//                if (response.isSuccessful) {
+//                    myCheatCount = response.body()!!
+//
+//                    publishedCheatsCount.text = "(".plus(myCheatCount.publishedCheats).plus(")")
+//                    unpublishedCheatsCount.text =
+//                        "(".plus((myCheatCount.uncheckedCheats + myCheatCount.rejectedCheats))
+//                            .plus(")")
+//
+//                    unpublishedCheatsSubtitle.text =
+//                        getString(
+//                            R.string.cheats_waiting_for_approval,
+//                            "(".plus(myCheatCount.uncheckedCheats).plus(") "),
+//                            "(".plus(myCheatCount.rejectedCheats).plus(")")
+//                        )
+//                }
+//            }
+//        } else {
+//            showLoggedOutText()
+//        }
+//    }
 
-    fun getMyUnpublishedCheatsByCoroutines() {
-        val member = getMember()
-        if ((member != null) && (member.mid != 0)) {
-            Coroutines.main {
-                val response = UnpublishedCheatsRepositoryKotlin().countMyCheats(
-                    member.mid,
-                    AeSimpleMD5.MD5(member.password)
-                )
+    fun updateText() {
+        if (myCheatsCount != null) {
 
-                if (response.isSuccessful) {
-                    myCheatCount = response.body()!!
+            val unpublishedCheatsSum: Int = myCheatsCount!!.uncheckedCheats + myCheatsCount!!.rejectedCheats
 
-                    publishedCheatsCount.text = "(".plus(myCheatCount.publishedCheats).plus(")")
-                    unpublishedCheatsCount.text =
-                        "(".plus((myCheatCount.uncheckedCheats + myCheatCount.rejectedCheats))
-                            .plus(")")
-
-                    unpublishedCheatsSubtitle.text =
-                        getString(
-                            R.string.cheats_waiting_for_approval,
-                            "(".plus(myCheatCount.uncheckedCheats).plus(") "),
-                            "(".plus(myCheatCount.rejectedCheats).plus(")")
-                        )
-                }
-            }
-        } else {
-            showLoggedOutText()
-        }
-    }
-
-    private fun updateText() {
-        // TODO wenn eine zahl 0 ist muss man den ganzen klammernblock ausblenden...
-        // TODO wenn eine zahl 0 ist muss man den ganzen klammernblock ausblenden...
-        // TODO wenn eine zahl 0 ist muss man den ganzen klammernblock ausblenden...
-        // TODO wenn eine zahl 0 ist muss man den ganzen klammernblock ausblenden...
-
-        // TODO was passiert wenn man ausloggt?
-        // TODO was passiert wenn man ausloggt?
-        // TODO was passiert wenn man ausloggt?
-        
-        if (myCheatsCountx != null) {
-            publishedCheatsCount.text = "(".plus(myCheatsCountx.publishedCheats).plus(")")
-            unpublishedCheatsCount.text =
-                "(".plus((myCheatsCountx.uncheckedCheats + myCheatsCountx.rejectedCheats))
-                    .plus(")")
+            publishedCheatsCount.text = "(".plus(myCheatsCount?.publishedCheats).plus(")")
+            unpublishedCheatsCount.text = "(".plus(unpublishedCheatsSum).plus(")")
 
             unpublishedCheatsSubtitle.text =
                 getString(
                     R.string.cheats_waiting_for_approval,
-                    "(".plus(myCheatsCountx.uncheckedCheats).plus(") "),
-                    "(".plus(myCheatsCountx.rejectedCheats).plus(")")
+                    "(".plus(myCheatsCount?.uncheckedCheats).plus(") "),
+                    "(".plus(myCheatsCount?.rejectedCheats).plus(")")
                 )
         } else {
             showLoggedOutText()

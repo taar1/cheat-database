@@ -1,13 +1,11 @@
 package com.cheatdatabase.activity;
 
-import android.annotation.TargetApi;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.provider.SearchRecentSuggestions;
 import android.text.Html;
@@ -167,6 +165,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else {
             myCheatsNavDrawerCounter.setText("");
         }
+
+        refreshMyCheatsFragment();
+    }
+
+    private void refreshMyCheatsFragment() {
+        // If you log out we are updating the text in "MyCheatsFragment" so we have to inform the fragment that the login-state has changed.
+        Fragment myCheatsFragment = getSupportFragmentManager().findFragmentById(R.id.content_frame);
+        if (myCheatsFragment != null) {
+            if (myCheatsFragment instanceof MyCheatsFragment) {
+                MyCheatsFragment mmyCheatsFragment = (MyCheatsFragment) myCheatsFragment;
+                mmyCheatsFragment.setMyCheatsCount(myCheatsCount);
+                mmyCheatsFragment.updateText();
+            }
+        }
     }
 
     /**
@@ -313,29 +325,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 Tools.logout(MainActivity.this, settings.edit());
                 invalidateOptionsMenu();
 
-                // If you log out we are updating the text in "MyCheatsFragment" so we have to inform the fragment that the login-state has changed.
-                Fragment myCheatsFragment = getSupportFragmentManager().findFragmentById(R.id.content_frame);
-                if (myCheatsFragment != null) {
-                    if (myCheatsFragment instanceof MyCheatsFragment) {
-                        MyCheatsFragment mmyCheatsFragment = (MyCheatsFragment) myCheatsFragment;
-                        mmyCheatsFragment.forceRefresh();
-                    }
-                }
-
+                countMyCheats();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
-    }
-
-    /**
-     * Backward-compatible version of {@link android.app.ActionBar#getThemedContext()} that
-     * simply returns the {@link android.app.Activity} if
-     * <code>getThemedContext</code> is unavailable.
-     */
-    @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
-    private Context getActionBarThemedContextCompat() {
-        return getActionBar().getThemedContext();
     }
 
     @Override
@@ -348,6 +342,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else if (resultCode == Konstanten.REGISTER_SUCCESS_RETURN_CODE) {
             Toast.makeText(MainActivity.this, R.string.register_thanks, Toast.LENGTH_LONG).show();
         }
+
+        countMyCheats();
     }
 
 
@@ -503,6 +499,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             RestApi restApi = RetrofitClientInstance.getRetrofitInstance().create(RestApi.class);
             Call<UnpublishedCheatsRepositoryKotlin.MyCheatsCount> call;
             try {
+                //Log.d(TAG, "XXXXX countMyCheats: " + AeSimpleMD5.MD5(member.getPassword()));
                 call = restApi.countMyCheats(member.getMid(), AeSimpleMD5.MD5(member.getPassword()));
                 call.enqueue(new Callback<UnpublishedCheatsRepositoryKotlin.MyCheatsCount>() {
                     @Override
@@ -519,6 +516,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     @Override
                     public void onFailure(Call<UnpublishedCheatsRepositoryKotlin.MyCheatsCount> call, Throwable e) {
                         Log.e(TAG, "countMyCheats onFailure: " + e.getLocalizedMessage());
+                        myCheatsCount = null;
                         updateMyCheatsDrawerNavigationItemCount();
                     }
                 });
