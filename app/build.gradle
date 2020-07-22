@@ -19,8 +19,8 @@ apply plugin: 'dagger.hilt.android.plugin'
 
 String APK_ID = "com.cheatdatabase"
 String APK_NAME = "Cheat-Database"
-int VERSION_CODE = 64
-String VERSION_NAME = "2.5.18-preRelease"
+int VERSION_CODE = 65
+String VERSION_NAME = "2.5.18"
 
 android {
     compileSdkVersion 28
@@ -137,7 +137,7 @@ dependencies {
     implementation 'com.afollestad.material-dialogs:core:0.9.6.0'
     implementation 'com.google.code.gson:gson:2.8.6'
     api 'com.google.android.gms:play-services-analytics:17.0.0'
-    implementation 'com.google.android.gms:play-services-auth:18.0.0'
+    implementation 'com.google.android.gms:play-services-auth:18.1.0'
     implementation 'com.squareup.picasso:picasso:2.71828'
     implementation 'org.greenrobot:eventbus:3.2.0'
     implementation 'com.github.SherlockGougou:MagicIndicator:1.6.0'
@@ -145,7 +145,7 @@ dependencies {
     implementation('com.crashlytics.sdk.android:crashlytics:2.10.1@aar') {
         transitive = true
     }
-    implementation 'com.facebook.android:audience-network-sdk:5.10.0'
+    implementation 'com.facebook.android:audience-network-sdk:5.10.1'
     implementation 'com.zsoltsafrany:needle:1.0.0'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
