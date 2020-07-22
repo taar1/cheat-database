@@ -2,7 +2,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg"
     android:orientation="vertical"
     tools:context=".activity.MainActivity">
 
@@ -10,13 +9,13 @@
         android:id="@+id/somethingfound_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/bg"
         android:paddingStart="@dimen/activity_searchresult_horizontal_margin"
         android:paddingLeft="@dimen/activity_searchresult_horizontal_margin"
         android:paddingTop="@dimen/activity_searchresult_vertical_margin"
         android:paddingEnd="@dimen/activity_searchresult_horizontal_margin"
         android:paddingRight="@dimen/activity_searchresult_horizontal_margin"
         android:paddingBottom="@dimen/activity_searchresult_vertical_margin"
+        android:visibility="visible"
         tools:context="com.cheatdatabase.activity.MainActivity">
 
         <ExpandableListView
@@ -30,30 +29,17 @@
         android:id="@+id/nothingfound_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_margin="60dp"
         android:gravity="top"
         android:orientation="vertical"
-        android:paddingStart="@dimen/activity_horizontal_margin"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingTop="@dimen/activity_vertical_margin"
-        android:paddingEnd="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
-        android:paddingBottom="@dimen/activity_vertical_margin"
         android:visibility="gone">
-
-        <TextView
-            android:id="@+id/nothingfound_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingBottom="10sp"
-            android:text="@string/error_nothing_found_title"
-            android:textAppearance="@style/ActivityMainTitle" />
 
         <TextView
             android:id="@+id/nothingfound_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingBottom="30sp"
-            android:text="@string/error_nothing_found_text"
+            android:gravity="center"
+            android:text="@string/favorite_empty"
             android:textAppearance="@style/NormalText" />
 
     </LinearLayout>

@@ -80,7 +80,7 @@
     <string name="cheat_submit_ok">感谢您的提交！在把它添加到数据库之前我们会审核这个秘籍并通知您。顺便说一句，您还可以访问我们的网站www.cheat-database.com来编辑或删除您提交的秘籍。</string>
     <string name="cheat_submit_nok">秘籍提交过程中出现了一些问题。请稍后重试。</string>
     <string name="submit_cheat_instructions_title">关于秘籍提交的信息</string>
-    <string name="submit_cheat_guidelines">Thanks for submitting a cheat to us, we really appreciate your help! However, before you write a cheat, please read our short writing guidelines which makes your submitted cheatList easier to understand for other readers.\n\n
+    <string name="submit_cheat_guidelines">Thanks for submitting a cheat to us, we really appreciate your help! However, before you write a cheat, please read our short writing guidelines which makes your submitted cheats easier to understand for other readers.\n\n
 - Use capital letters for character or object names. Always use a capital letter after a full stop.\n\n
 - Try not to make long sentences. Short sentences are easier to understand. Try not to use \"then\" to connect sentences either.\n\n
 - Don\'t use \"I did\" or \"it helped me\" etc. in sentences. Use the third person for instructions.</string>

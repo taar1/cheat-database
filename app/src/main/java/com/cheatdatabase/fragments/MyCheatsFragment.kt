@@ -125,11 +125,15 @@ class MyCheatsFragment(
 
     fun updateText() {
         if (myCheatsCount != null) {
-
             val unpublishedCheatsSum: Int = myCheatsCount!!.uncheckedCheats + myCheatsCount!!.rejectedCheats
 
+            if (unpublishedCheatsSum != 0) {
+                unpublishedCheatsCount.text = "(".plus(unpublishedCheatsSum).plus(")")
+            } else {
+                unpublishedCheatsCount.text = ""
+            }
+
             publishedCheatsCount.text = "(".plus(myCheatsCount?.publishedCheats).plus(")")
-            unpublishedCheatsCount.text = "(".plus(unpublishedCheatsSum).plus(")")
 
             unpublishedCheatsSubtitle.text =
                 getString(

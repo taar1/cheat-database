@@ -53,8 +53,6 @@ public class FavoriteGamesListFragment extends Fragment implements OnGameListIte
     RelativeLayout somethingfoundLayout;
     @BindView(R.id.nothingfound_layout)
     LinearLayout nothingFoundLayout;
-    @BindView(R.id.nothingfound_title)
-    TextView nothingFoundTitle;
     @BindView(R.id.nothingfound_text)
     TextView nothingFoundText;
 
@@ -153,13 +151,14 @@ public class FavoriteGamesListFragment extends Fragment implements OnGameListIte
                     }
                     groups.append(i, group);
                 }
+            } else {
+                handleEmptyState();
             }
         }
     }
 
     private void handleEmptyState() {
         Needle.onMainThread().execute(() -> {
-            nothingFoundText.setText(R.string.favorite_empty);
             somethingfoundLayout.setVisibility(View.GONE);
             nothingFoundLayout.setVisibility(View.VISIBLE);
         });

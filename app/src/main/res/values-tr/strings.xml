@@ -49,7 +49,7 @@
     <string name="favorite_error">İpucu zaten Favori Listesinde kayıtlı.</string>
     <string name="favorite_empty">Henüz bir Favori Listeniz yok. Bu kısma ulaşmadan önce Favori listenize birkaç ipucu eklemelisiniz.</string>
     <string name="add_favorites_ok">Cheats successfully added to your favorites.</string>
-    <string name="add_all_favorites">Add all cheatList to favorites</string>
+    <string name="add_all_favorites">Add all cheats to favorites</string>
     <string name="favorite_adding">Adding favorites&#8230;</string>
     <string name="forum_goto">Foruma Git</string>
     <string name="forum_button_submit">Postala</string>
@@ -88,10 +88,10 @@
     <string name="meta_unknown">Unknown</string>
     <string name="meta_submission_date">Date of submission</string>
     <string name="meta_submitted_by">Submitted by</string>
-    <string name="meta_submission_total">Total submitted cheatList by member</string>
+    <string name="meta_submission_total">Total submitted cheats by member</string>
     <string name="meta_views_lifetime">Lifetime views</string>
     <string name="meta_views_today">Views today</string>
-    <string name="meta_show_all_cheats">Show all cheatList</string>
+    <string name="meta_show_all_cheats">Show all cheats</string>
     <string name="meta_rating_average">Average cheat rating by members</string>
     <string name="meta_average_rating1">%1$d out of 10</string>
     <string name="meta_average_rating2">based on %s votes</string>
@@ -101,7 +101,7 @@
     <string name="top_members_title">Members Top 20</string>
     <string name="top_members_visit_website">Visit %1$s\'s website</string>
     <string name="top_members_no_website">Member %s has no website</string>
-    <string name="top_members_cheats_count"># of cheatList</string>
+    <string name="top_members_cheats_count"># of cheats</string>
 
     <!-- SHARE CHEAT -->
     <string name="share_title">Share cheat</string>

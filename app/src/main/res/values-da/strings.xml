@@ -62,7 +62,7 @@
     <string name="favorite_error">Cheaten kunne ikke blive tilføjet, fordi den allerede er en favorit.</string>
     <string name="favorite_empty">Der er ingen favoritter i listen endnu. Tilføj en cheat til listen først.</string>
     <string name="add_favorites_ok">Cheats successfully added to your favorites.</string>
-    <string name="add_all_favorites">Add all cheatList to favorites</string>
+    <string name="add_all_favorites">Add all cheats to favorites</string>
     <string name="favorite_adding">Adding favorites&#8230;</string>
 
     <!-- FORUM -->
@@ -81,10 +81,10 @@
     <string name="submit_cheat_your_title">Cheatens titel:</string>
     <string name="submit_cheat_your_body">Cheatens indhold:</string>
     <string name="submit_cheat_review">Afsend cheat til kontrol</string>
-    <string name="cheat_submit_ok">Tusind tak for din indsendelse! Vi kontrollerer cheaten og informerer dig via e-mail, hvis den bliver tilføjet til vores database. Du kan rette eller slette alle dine indsendte cheatList på www.cheat-database.com.</string>
+    <string name="cheat_submit_ok">Tusind tak for din indsendelse! Vi kontrollerer cheaten og informerer dig via e-mail, hvis den bliver tilføjet til vores database. Du kan rette eller slette alle dine indsendte cheats på www.cheat-database.com.</string>
     <string name="cheat_submit_nok">Der opstod en fejl. Prøv venligst igen.</string>
-    <string name="submit_cheat_instructions_title">Om indsendelse af cheatList</string>
-    <string name="submit_cheat_guidelines">Thanks for submitting a cheat to us, we really appreciate your help! However, before you write a cheat, please read our short writing guidelines which makes your submitted cheatList easier to understand for other readers.\n\n
+    <string name="submit_cheat_instructions_title">Om indsendelse af cheats</string>
+    <string name="submit_cheat_guidelines">Thanks for submitting a cheat to us, we really appreciate your help! However, before you write a cheat, please read our short writing guidelines which makes your submitted cheats easier to understand for other readers.\n\n
 - Use capital letters for character or object names. Always use a capital letter after a full stop.\n\n
 - Try not to make long sentences. Short sentences are easier to understand. Try not to use \"then\" to connect sentences either.\n\n
 - Don\'t use \"I did\" or \"it helped me\" etc. in sentences. Use the third person for instructions.</string>
@@ -111,10 +111,10 @@
     <string name="meta_unknown">Unknown</string>
     <string name="meta_submission_date">Date of submission</string>
     <string name="meta_submitted_by">Submitted by</string>
-    <string name="meta_submission_total">Total submitted cheatList by member</string>
+    <string name="meta_submission_total">Total submitted cheats by member</string>
     <string name="meta_views_lifetime">Lifetime views</string>
     <string name="meta_views_today">Views today</string>
-    <string name="meta_show_all_cheats">Show all cheatList</string>
+    <string name="meta_show_all_cheats">Show all cheats</string>
     <string name="meta_rating_average">Average cheat rating by members</string>
     <string name="meta_average_rating1">%1$d out of 10</string>
     <string name="meta_average_rating2">based on %s votes</string>
@@ -124,7 +124,7 @@
     <string name="top_members_title">Members Top 20</string>
     <string name="top_members_visit_website">Visit %1$s\'s website</string>
     <string name="top_members_no_website">Member %s has no website</string>
-    <string name="top_members_cheats_count"># of cheatList</string>
+    <string name="top_members_cheats_count"># of cheats</string>
 
     <!-- SHARE CHEAT -->
     <string name="share_title">Share cheat</string>

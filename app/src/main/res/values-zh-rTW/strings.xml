@@ -58,7 +58,7 @@
     <string name="favorite_error">此秘籍已經存在於個人收藏中了。</string>
     <string name="favorite_empty">您尚沒有任何收藏。當檢視這個檢視之前您需要新增一些密接到個人收藏中。</string>
     <string name="add_favorites_ok">Cheats successfully added to your favorites.</string>
-    <string name="add_all_favorites">Add all cheatList to favorites</string>
+    <string name="add_all_favorites">Add all cheats to favorites</string>
     <string name="favorite_adding">Adding favorites&#8230;</string>
 
     <!-- FORUM -->
@@ -79,7 +79,7 @@
     <string name="cheat_submit_ok">感謝您的提交！在把它新增到資料庫之前我們會審核這個秘籍並通知您。順便說一句，您還可以存取我們的網站www.cheat-database.com來編輯或刪除您提交的秘籍。</string>
     <string name="cheat_submit_nok">秘籍提交過程中出現了一些問題。請稍後重試。</string>
     <string name="submit_cheat_instructions_title">關於秘籍提交的訊息</string>
-    <string name="submit_cheat_guidelines">Thanks for submitting a cheat to us, we really appreciate your help! However, before you write a cheat, please read our short writing guidelines which makes your submitted cheatList easier to understand for other readers.\n\n
+    <string name="submit_cheat_guidelines">Thanks for submitting a cheat to us, we really appreciate your help! However, before you write a cheat, please read our short writing guidelines which makes your submitted cheats easier to understand for other readers.\n\n
 - Use capital letters for character or object names. Always use a capital letter after a full stop.\n\n
 - Try not to make long sentences. Short sentences are easier to understand. Try not to use \"then\" to connect sentences either.\n\n
 - Don\'t use \"I did\" or \"it helped me\" etc. in sentences. Use the third person for instructions.</string>
@@ -101,10 +101,10 @@
     <string name="meta_unknown">Unknown</string>
     <string name="meta_submission_date">Date of submission</string>
     <string name="meta_submitted_by">Submitted by</string>
-    <string name="meta_submission_total">Total submitted cheatList by member</string>
+    <string name="meta_submission_total">Total submitted cheats by member</string>
     <string name="meta_views_lifetime">Lifetime views</string>
     <string name="meta_views_today">Views today</string>
-    <string name="meta_show_all_cheats">Show all cheatList</string>
+    <string name="meta_show_all_cheats">Show all cheats</string>
     <string name="meta_rating_average">Average cheat rating by members</string>
     <string name="meta_average_rating1">%1$d out of 10</string>
     <string name="meta_average_rating2">based on %s votes</string>
@@ -114,7 +114,7 @@
     <string name="top_members_title">Members Top 20</string>
     <string name="top_members_visit_website">Visit %1$s\'s website</string>
     <string name="top_members_no_website">Member %s has no website</string>
-    <string name="top_members_cheats_count"># of cheatList</string>
+    <string name="top_members_cheats_count"># of cheats</string>
 
     <!-- SHARE CHEAT -->
     <string name="share_title">Share cheat</string>

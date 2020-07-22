@@ -36,7 +36,6 @@ import com.cheatdatabase.activity.ui.mycheats.UnpublishedCheatsRepositoryKotlin;
 import com.cheatdatabase.data.RetrofitClientInstance;
 import com.cheatdatabase.data.model.Member;
 import com.cheatdatabase.dialogs.RateAppDialog;
-import com.cheatdatabase.events.GenericEvent;
 import com.cheatdatabase.fragments.ContactFormFragment;
 import com.cheatdatabase.fragments.FavoriteGamesListFragment;
 import com.cheatdatabase.fragments.MyCheatsFragment;
@@ -57,9 +56,6 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.gson.Gson;
 import com.inmobi.ads.InMobiBanner;
 import com.inmobi.sdk.InMobiSdk;
-
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
 
 import java.security.NoSuchAlgorithmException;
 import java.util.Random;
@@ -365,24 +361,25 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         void showContactFormFragmentCallback();
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        EventBus.getDefault().register(this);
-    }
-
-    @Override
-    protected void onStop() {
-        EventBus.getDefault().unregister(this);
-        super.onStop();
-    }
-
-    @Subscribe
-    public void onEvent(GenericEvent event) {
-        if (event.getAction() == GenericEvent.Action.CLICK_CHEATS_DRAWER) {
-            showGameSystemsFragment();
-        }
-    }
+//    @Override
+//    protected void onStart() {
+//        super.onStart();
+//        EventBus.getDefault().register(this);
+//    }
+//
+//    @Override
+//    protected void onStop() {
+//        EventBus.getDefault().unregister(this);
+//        super.onStop();
+//    }
+//
+//    @Subscribe
+//    public void onEvent(GenericEvent event) {
+//        Log.d(TAG, "XXXXX onEvent: 2222" );
+//        if (event.getAction() == GenericEvent.Action.CLICK_CHEATS_DRAWER) {
+//            showGameSystemsFragment();
+//        }
+//    }
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {

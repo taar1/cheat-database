@@ -59,7 +59,7 @@
     <string name="favorite_error">Cheat already exists in your favorites.</string>
     <string name="favorite_empty">Wala pang napiling favorites. Bago ma access ang view na ito kailangan mo magdagdag ng favorite muna.</string>
     <string name="add_favorites_ok">Cheats successfully added sa favorites.</string>
-    <string name="add_all_favorites">Add all cheatList to favorites</string>
+    <string name="add_all_favorites">Add all cheats to favorites</string>
     <string name="favorite_adding">Adding favorites&#8230;</string>
 
     <!-- FORUM -->
@@ -77,10 +77,10 @@
     <string name="submit_cheat_your_title">Cheat Title</string>
     <string name="submit_cheat_your_body">Your Cheat Content</string>
     <string name="submit_cheat_review">Submit cheat for review</string>
-    <string name="cheat_submit_ok">Salamat sa pag submit! We will review the cheat and will inform you by email if we are going to add it to the database. By the way: You can edit or delete your submitted cheatList via our website www.cheat-database.com.</string>
+    <string name="cheat_submit_ok">Salamat sa pag submit! We will review the cheat and will inform you by email if we are going to add it to the database. By the way: You can edit or delete your submitted cheats via our website www.cheat-database.com.</string>
     <string name="cheat_submit_nok">Meron mali sa pag submit ng  cheat. Please try again.</string>
     <string name="submit_cheat_instructions_title">Information sa pag submit ng cheat</string>
-    <string name="submit_cheat_guidelines">Thanks for submitting a cheat to us, we really appreciate your help! However, before you write a cheat, please read our short writing guidelines which makes your submitted cheatList easier to understand for other readers.\n\n
+    <string name="submit_cheat_guidelines">Thanks for submitting a cheat to us, we really appreciate your help! However, before you write a cheat, please read our short writing guidelines which makes your submitted cheats easier to understand for other readers.\n\n
 - Use capital letters for character or object names. Always use a capital letter after a full stop.\n\n
 - Try not to make long sentences. Short sentences are easier to understand. Try not to use \"then\" to connect sentences either.\n\n
 - Don\'t use \"I did\" or \"it helped me\" etc. in sentences. Use the third person for instructions.</string>
@@ -102,10 +102,10 @@
     <string name="meta_unknown">Unknown</string>
     <string name="meta_submission_date">Petsa ng pag sumbit</string>
     <string name="meta_submitted_by">Submitted by</string>
-    <string name="meta_submission_total">Total submitted cheatList ng member</string>
+    <string name="meta_submission_total">Total submitted cheats ng member</string>
     <string name="meta_views_lifetime">Lifetime views</string>
     <string name="meta_views_today">Views ngayon</string>
-    <string name="meta_show_all_cheats">Show all cheatList</string>
+    <string name="meta_show_all_cheats">Show all cheats</string>
     <string name="meta_rating_average">Average cheat rating by members</string>
     <string name="meta_average_rating1">%1$d out of 10</string>
     <string name="meta_average_rating2">based on %s votes</string>
@@ -115,7 +115,7 @@
     <string name="top_members_title">Members Top 20</string>
     <string name="top_members_visit_website">Visit %1$s\'s website</string>
     <string name="top_members_no_website">Member %s walang website</string>
-    <string name="top_members_cheats_count"># of cheatList</string>
+    <string name="top_members_cheats_count"># of cheats</string>
 
     <!-- SHARE CHEAT -->
     <string name="share_title">Share cheat</string>
