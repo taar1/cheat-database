@@ -19,16 +19,16 @@ apply plugin: 'dagger.hilt.android.plugin'
 
 String APK_ID = "com.cheatdatabase"
 String APK_NAME = "Cheat-Database"
-int VERSION_CODE = 65
-String VERSION_NAME = "2.5.18"
+int VERSION_CODE = 66
+String VERSION_NAME = "2.5.19-preRelease"
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 29
     defaultConfig {
         applicationId APK_ID
         archivesBaseName = APK_NAME
         minSdkVersion 23
-        targetSdkVersion 28
+        targetSdkVersion 29
         versionCode VERSION_CODE
         versionName VERSION_NAME
     }

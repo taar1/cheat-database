@@ -176,7 +176,7 @@ class MyUnpublishedCheatsListFragment(val activity: MyUnpublishedCheatsListActiv
 
         val copyToClipboardButton = dialog.getButton(AlertDialog.BUTTON_NEGATIVE)
         copyToClipboardButton.setOnClickListener {
-            clipboard.primaryClip = clip
+            clipboard.setPrimaryClip(clip)
             Toast.makeText(
                 context,
                 getString(R.string.text_copied_to_clipboard),
