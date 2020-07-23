@@ -77,7 +77,6 @@ public class FavoritesCheatViewFragment extends Fragment implements FavoritesChe
     ProgressBar progressBar;
 
     private Cheat cheatObj;
-    private List<Cheat> cheatList;
     private Game game;
     private int offset;
     private Member member;
@@ -86,7 +85,6 @@ public class FavoritesCheatViewFragment extends Fragment implements FavoritesChe
     private SharedPreferences settings;
     private Editor editor;
 
-    private Typeface latoFontBold;
     private Typeface latoFontLight;
     private FavoritesCheatViewPageIndicator favoritesCheatViewPageIndicatorActivity;
     private List<File> screenshotList;
@@ -115,10 +113,8 @@ public class FavoritesCheatViewFragment extends Fragment implements FavoritesChe
         favoritesCheatViewPageIndicatorActivity = (FavoritesCheatViewPageIndicator) getActivity();
 
         latoFontLight = Tools.getFont(favoritesCheatViewPageIndicatorActivity.getAssets(), Konstanten.FONT_LIGHT);
-        latoFontBold = Tools.getFont(favoritesCheatViewPageIndicatorActivity.getAssets(), Konstanten.FONT_BOLD);
 
         settings = getActivity().getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
-        editor = settings.edit();
 
         member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
     }
@@ -135,7 +131,7 @@ public class FavoritesCheatViewFragment extends Fragment implements FavoritesChe
         LinearLayout linearLayout = (LinearLayout) inflater.inflate(R.layout.fragment_cheat_detail_view, container, false);
         ButterKnife.bind(this, linearLayout);
 
-        cheatList = game.getCheatList();
+        List<Cheat> cheatList = game.getCheatList();
         cheatObj = cheatList.get(offset);
         getCheatRating();
 
@@ -206,6 +202,7 @@ public class FavoritesCheatViewFragment extends Fragment implements FavoritesChe
             populateView();
         }
 
+        editor = settings.edit();
         editor.putString("cheat" + offset, new Gson().toJson(cheatObj));
         editor.apply();
     }

@@ -1,6 +1,5 @@
 package com.cheatdatabase.holders;
 
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RatingBar;
@@ -58,7 +57,7 @@ public class CheatsByGameListViewItemHolder extends RecyclerView.ViewHolder {
         // TODO FIXME in den favoriten ist der value hier noch false obwohl es screenshots hat.....
         // TODO FIXME in den favoriten ist der value hier noch false obwohl es screenshots hat.....
 
-        Log.d(TAG, "XXXXX setCheat: " + cheat.hasScreenshots());
+        //Log.d(TAG, "XXXXX setCheat: " + cheat.hasScreenshots());
         if (cheat.hasScreenshots()) {
             mFlagScreenshot.setVisibility(View.VISIBLE);
         } else {

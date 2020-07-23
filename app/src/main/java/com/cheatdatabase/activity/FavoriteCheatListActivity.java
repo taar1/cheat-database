@@ -59,7 +59,6 @@ public class FavoriteCheatListActivity extends AppCompatActivity implements OnCh
 
     private CheatsByGameRecycleListViewAdapter cheatsByGameRecycleListViewAdapter;
 
-    private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
     private Member member;
 
@@ -101,6 +100,7 @@ public class FavoriteCheatListActivity extends AppCompatActivity implements OnCh
         ButterKnife.bind(this);
 
         gameObj = getIntent().getParcelableExtra("gameObj");
+
         if (gameObj == null) {
             Toast.makeText(this, R.string.err_somethings_wrong, Toast.LENGTH_LONG).show();
             finish();
@@ -125,7 +125,7 @@ public class FavoriteCheatListActivity extends AppCompatActivity implements OnCh
     }
 
     private void init() {
-        sharedPreferences = getSharedPreferences(Konstanten.PREFERENCES_FILE, MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getSharedPreferences(Konstanten.PREFERENCES_FILE, MODE_PRIVATE);
         editor = sharedPreferences.edit();
 
         facebookAdView = new AdView(this, Konstanten.FACEBOOK_AUDIENCE_NETWORK_NATIVE_BANNER_ID, AdSize.BANNER_HEIGHT_50);
@@ -200,7 +200,7 @@ public class FavoriteCheatListActivity extends AppCompatActivity implements OnCh
         cheatsArrayList = new ArrayList<>();
 
         if (gameObj != null) {
-            if (gameObj.getCheatList() == null) {
+            if ((gameObj.getCheatList() == null) || (gameObj.getCheatList().size() == 0)) {
 
                 dao.getCheatsByGameId(gameObj.getGameId()).observe(this, favcheats -> {
                     for (FavoriteCheatModel fc : favcheats) {
@@ -211,13 +211,16 @@ public class FavoriteCheatListActivity extends AppCompatActivity implements OnCh
                     }
 
                     gameObj.setCheatList(cheatsArrayList);
-
                     updateUI();
                 });
+            } else {
+                cheatsArrayList.addAll(gameObj.getCheatList());
+                updateUI();
             }
         } else {
             error();
         }
+
         mSwipeRefreshLayout.setRefreshing(false);
     }
 
@@ -230,7 +233,7 @@ public class FavoriteCheatListActivity extends AppCompatActivity implements OnCh
                 error();
             }
         } catch (Exception e) {
-            Log.e(TAG, e.getLocalizedMessage());
+            Log.e(TAG, "updateUI Exception:" + e.getLocalizedMessage());
             error();
         }
 

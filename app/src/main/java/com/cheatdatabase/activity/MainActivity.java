@@ -361,26 +361,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         void showContactFormFragmentCallback();
     }
 
-//    @Override
-//    protected void onStart() {
-//        super.onStart();
-//        EventBus.getDefault().register(this);
-//    }
-//
-//    @Override
-//    protected void onStop() {
-//        EventBus.getDefault().unregister(this);
-//        super.onStop();
-//    }
-//
-//    @Subscribe
-//    public void onEvent(GenericEvent event) {
-//        Log.d(TAG, "XXXXX onEvent: 2222" );
-//        if (event.getAction() == GenericEvent.Action.CLICK_CHEATS_DRAWER) {
-//            showGameSystemsFragment();
-//        }
-//    }
-
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         // Handle navigation view item clicks here.
