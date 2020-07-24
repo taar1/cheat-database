@@ -3,7 +3,6 @@ package com.cheatdatabase.activity;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -47,7 +46,6 @@ import com.cheatdatabase.helpers.Tools;
 import com.cheatdatabase.rest.RestApi;
 import com.facebook.ads.AdSize;
 import com.facebook.ads.AdView;
-import com.google.gson.Gson;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -56,8 +54,11 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Calendar;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import dagger.hilt.android.AndroidEntryPoint;
 import needle.Needle;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -66,15 +67,18 @@ import retrofit2.Response;
 /**
  * Displaying the forum of one cheat.
  */
+@AndroidEntryPoint
 public class CheatForumActivity extends AppCompatActivity implements GenericCallback {
 
     private static String TAG = CheatForumActivity.class.getSimpleName();
 
     private Cheat cheatObj;
     private Game gameObj;
-    private SharedPreferences settings;
     private ShareActionProvider mShare;
     private Member member;
+
+    @Inject
+    Tools tools;
 
     @BindView(R.id.outer_layout)
     LinearLayout outerLayout;
@@ -155,13 +159,11 @@ public class CheatForumActivity extends AppCompatActivity implements GenericCall
 
         restApi = RetrofitClientInstance.getRetrofitInstance().create(RestApi.class);
 
-        settings = getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
-
         adView = new AdView(this, Konstanten.FACEBOOK_AUDIENCE_NETWORK_NATIVE_BANNER_ID, AdSize.BANNER_HEIGHT_50);
         facebookBanner.addView(adView);
         adView.loadAd();
 
-        member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
+        member = tools.getMember();
 
         if (mToolbar != null) {
             setSupportActionBar(mToolbar);
@@ -304,7 +306,7 @@ public class CheatForumActivity extends AppCompatActivity implements GenericCall
         if (!Reachability.isRegistered()) {
             Reachability.registerReachability(this);
         }
-        member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
+        member = tools.getMember();
     }
 
     @Override
@@ -415,7 +417,8 @@ public class CheatForumActivity extends AppCompatActivity implements GenericCall
                 return true;
             case R.id.action_logout:
                 member = null;
-                Tools.logout(CheatForumActivity.this, settings.edit());
+//                Tools.logout(CheatForumActivity.this, settings.edit());
+                tools.logout();
                 invalidateOptionsMenu();
                 return true;
             default:
@@ -432,7 +435,7 @@ public class CheatForumActivity extends AppCompatActivity implements GenericCall
             int intentReturnCode = data.getIntExtra("result", Konstanten.LOGIN_REGISTER_FAIL_RETURN_CODE);
 
             if (requestCode == Konstanten.LOGIN_REGISTER_OK_RETURN_CODE) {
-                member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
+                member = tools.getMember();
                 invalidateOptionsMenu();
                 if ((member != null) && intentReturnCode == Konstanten.REGISTER_SUCCESS_RETURN_CODE) {
                     Toast.makeText(CheatForumActivity.this, R.string.register_thanks, Toast.LENGTH_LONG).show();

@@ -3,7 +3,6 @@ package com.cheatdatabase.activity;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
@@ -53,20 +52,23 @@ import com.facebook.ads.AdSize;
 import com.facebook.ads.AdView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
-import com.google.gson.Gson;
 import com.inmobi.ads.InMobiBanner;
 import com.inmobi.sdk.InMobiSdk;
 
 import java.security.NoSuchAlgorithmException;
 import java.util.Random;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import dagger.hilt.android.AndroidEntryPoint;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+@AndroidEntryPoint
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private static final String TAG = MainActivity.class.getSimpleName();
@@ -80,14 +82,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private Member member;
     private UnpublishedCheatsRepositoryKotlin.MyCheatsCount myCheatsCount;
 
-    private SharedPreferences settings;
-    private SharedPreferences.Editor editor;
-
     private SearchManager searchManager;
     private SearchView searchView;
 
     private FragmentManager fragmentManager;
     private FragmentTransaction fragmentTransaction;
+
+    @Inject
+    Tools tools;
 
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
@@ -128,9 +130,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void init() {
-        settings = getSharedPreferences(Konstanten.PREFERENCES_FILE, MODE_PRIVATE);
-        editor = settings.edit();
-
         if (mToolbar != null) {
             setSupportActionBar(mToolbar);
         }
@@ -217,8 +216,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public void onSaveInstanceState(Bundle outState) {
         outState.putInt("mFragmentId", mFragmentId);
-        editor.putInt(Konstanten.PREFERENCES_SELECTED_DRAWER_FRAGMENT_ID, mFragmentId);
-        editor.apply();
+
+        tools.putInt(Konstanten.PREFERENCES_SELECTED_DRAWER_FRAGMENT_ID, mFragmentId);
         super.onSaveInstanceState(outState);
     }
 
@@ -235,7 +234,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             Reachability.registerReachability(this);
         }
 
-        member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
+        member = tools.getMember();
         countMyCheats();
     }
 
@@ -244,8 +243,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (adView != null) {
             adView.destroy();
         }
-        editor.putInt(Konstanten.PREFERENCES_SELECTED_DRAWER_FRAGMENT_ID, 0);
-        editor.apply();
+
+        tools.putInt(Konstanten.PREFERENCES_SELECTED_DRAWER_FRAGMENT_ID, 0);
         super.onDestroy();
     }
 
@@ -318,7 +317,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 return true;
             case R.id.action_logout:
                 member = null;
-                Tools.logout(MainActivity.this, settings.edit());
+                tools.logout();
                 invalidateOptionsMenu();
 
                 countMyCheats();
@@ -331,7 +330,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
+        member = tools.getMember();
 
         if (resultCode == Konstanten.LOGIN_SUCCESS_RETURN_CODE) {
             Toast.makeText(MainActivity.this, R.string.login_ok, Toast.LENGTH_LONG).show();
@@ -432,7 +431,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mToolbar.setTitle(Html.fromHtml(getString(R.string.drawer_my_cheats)));
         fragmentTransaction.addToBackStack(MyCheatsFragment.class.getSimpleName());
 
-        MyCheatsFragment fragment = new MyCheatsFragment(this, settings, myCheatsCount);
+        MyCheatsFragment fragment = new MyCheatsFragment(this, tools.getSharedPreferences(), myCheatsCount);
 
         fragmentManager.beginTransaction().replace(R.id.content_frame, fragment, MyCheatsFragment.class.getSimpleName()).commit();
 

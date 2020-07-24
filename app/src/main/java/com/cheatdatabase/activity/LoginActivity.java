@@ -3,8 +3,6 @@ package com.cheatdatabase.activity;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -33,15 +31,17 @@ import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.helpers.Tools;
 import com.cheatdatabase.rest.RestApi;
 import com.crashlytics.android.Crashlytics;
-import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
 import java.security.NoSuchAlgorithmException;
 import java.util.Objects;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import dagger.hilt.android.AndroidEntryPoint;
 import needle.Needle;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -51,6 +51,7 @@ import retrofit2.Response;
  * Activity which displays a login screen to the user, offering registration as
  * well.
  */
+@AndroidEntryPoint
 public class LoginActivity extends AppCompatActivity implements AlreadyLoggedInDialogListener {
 
     private static final String TAG = "LoginActivity";
@@ -58,6 +59,9 @@ public class LoginActivity extends AppCompatActivity implements AlreadyLoggedInD
 
     // Values for email and password at the time of the login attempt.
     private String mEmail;
+
+    @Inject
+    Tools tools;
 
     @BindView(R.id.email)
     EditText mEmailView;
@@ -79,8 +83,6 @@ public class LoginActivity extends AppCompatActivity implements AlreadyLoggedInD
     Toolbar mToolbar;
 
     private Member member;
-    private SharedPreferences settings;
-    private Editor editor;
 
     private RestApi restApi;
 
@@ -137,10 +139,7 @@ public class LoginActivity extends AppCompatActivity implements AlreadyLoggedInD
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
-        settings = getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
-        editor = settings.edit();
-
-        member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
+        member = tools.getMember();
     }
 
     @OnClick(R.id.txt_send_login)
@@ -204,7 +203,7 @@ public class LoginActivity extends AppCompatActivity implements AlreadyLoggedInD
                 return true;
             case R.id.action_logout:
                 member = null;
-                Tools.logout(LoginActivity.this, settings.edit());
+                tools.logout();
                 invalidateOptionsMenu();
                 return true;
             default:
@@ -309,7 +308,7 @@ public class LoginActivity extends AppCompatActivity implements AlreadyLoggedInD
                         member.setUsername(registerResponse.get("username").getAsString());
                         member.setEmail(registerResponse.get("email").getAsString());
                         member.setPassword(password);
-                        member.writeMemberData(member, settings);
+                        member.writeMemberData(member, tools.getSharedPreferences());
 
                         afterLogin(true, 0);
                     } else if (returnValue.equalsIgnoreCase("wrong_pw")) {
@@ -394,8 +393,7 @@ public class LoginActivity extends AppCompatActivity implements AlreadyLoggedInD
     @Override
     public void onFinishDialog(boolean signOutNow) {
         if (signOutNow) {
-            editor.remove(Konstanten.MEMBER_OBJECT);
-            editor.apply();
+            tools.removeValue(Konstanten.MEMBER_OBJECT);
 
             mEmailView.setText("");
             mEmailView.setEnabled(true);

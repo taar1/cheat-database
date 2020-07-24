@@ -3,7 +3,7 @@ package com.cheatdatabase.helpers;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences.Editor;
+import android.content.SharedPreferences;
 import android.content.res.AssetManager;
 import android.content.res.Resources;
 import android.content.res.XmlResourceParser;
@@ -23,10 +23,12 @@ import com.cheatdatabase.R;
 import com.cheatdatabase.callbacks.GenericCallback;
 import com.cheatdatabase.data.model.Cheat;
 import com.cheatdatabase.data.model.Game;
+import com.cheatdatabase.data.model.Member;
 import com.cheatdatabase.data.model.Screenshot;
 import com.cheatdatabase.data.model.SystemModel;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -48,6 +50,7 @@ import java.util.regex.Pattern;
 
 import javax.inject.Inject;
 
+import dagger.hilt.android.qualifiers.ActivityContext;
 import needle.Needle;
 
 /**
@@ -55,14 +58,56 @@ import needle.Needle;
  *
  * @version 1.0
  */
+//@Module
+//@InstallIn(ApplicationComponent.class)
 public class Tools {
     private final String TAG = Tools.class.getSimpleName();
 
+    private SharedPreferences sharedPreferences;
+    private SharedPreferences.Editor editor;
+
+    private Context context;
+
     @Inject
-    public Tools() {
+    public Tools(@ActivityContext Context context) {
+        this.context = context;
+
+        sharedPreferences = context.getSharedPreferences(Konstanten.PREFERENCES_FILE, Context.MODE_PRIVATE);
+        editor = sharedPreferences.edit();
     }
 
-    public static boolean isEmailValid(String email) {
+    public SharedPreferences getSharedPreferences() {
+        return sharedPreferences;
+    }
+
+    public SharedPreferences.Editor getPreferencesEditor() {
+        return editor;
+    }
+
+    public boolean getBooleanFromSharedPreferences(String key, boolean defaultValue) {
+        return sharedPreferences.getBoolean(key, defaultValue);
+    }
+
+    public Member getMember() {
+        return new Gson().fromJson(sharedPreferences.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
+    }
+
+    public void putInt(String key, int value) {
+        editor.putInt(key, value);
+        editor.apply();
+    }
+
+    public void putString(String key, String value) {
+        editor.putString(key, value);
+        editor.apply();
+    }
+
+    public void removeValue(String key) {
+        editor.remove(key);
+        editor.apply();
+    }
+
+    public boolean isEmailValid(String email) {
         boolean isValid = false;
 
         /*
@@ -434,11 +479,9 @@ public class Tools {
         return null;
     }
 
-    public static void logout(Activity activity, Editor editor) {
-        editor.remove(Konstanten.MEMBER_OBJECT);
-        editor.apply();
-
-        Toast.makeText(activity, R.string.logout_ok, Toast.LENGTH_LONG).show();
+    public void logout() {
+        removeValue(Konstanten.MEMBER_OBJECT);
+        Toast.makeText(context, R.string.logout_ok, Toast.LENGTH_LONG).show();
     }
 
     public static Toolbar initToolbarBase(AppCompatActivity a, Toolbar toolbar) {

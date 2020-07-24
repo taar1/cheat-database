@@ -3,8 +3,6 @@ package com.cheatdatabase.activity;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -40,7 +38,6 @@ import com.facebook.ads.AdSize;
 import com.facebook.ads.AdView;
 import com.facebook.ads.NativeAd;
 import com.facebook.ads.NativeAdsManager;
-import com.google.gson.Gson;
 import com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView;
 
 import org.greenrobot.eventbus.EventBus;
@@ -49,20 +46,22 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeMap;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import dagger.hilt.android.AndroidEntryPoint;
 import needle.Needle;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+@AndroidEntryPoint
 public class CheatsByGameListActivity extends AppCompatActivity implements OnCheatListItemSelectedListener {
 
     private static String TAG = CheatsByGameListActivity.class.getSimpleName();
 
-    private SharedPreferences sharedPreferences;
-    private Editor editor;
     private Member member;
     private ArrayList<Cheat> cheatList;
 
@@ -71,6 +70,9 @@ public class CheatsByGameListActivity extends AppCompatActivity implements OnChe
 
     private Game gameObj;
     private AdView facebookAdView;
+
+    @Inject
+    Tools tools;
 
     @BindView(R.id.outer_layout)
     LinearLayout outerLayout;
@@ -136,9 +138,6 @@ public class CheatsByGameListActivity extends AppCompatActivity implements OnChe
     }
 
     private void init() {
-        sharedPreferences = getSharedPreferences(Konstanten.PREFERENCES_FILE, MODE_PRIVATE);
-        editor = sharedPreferences.edit();
-
         cheatDatabaseApplication = CheatDatabaseApplication.getCurrentAppInstance();
 
         facebookAdView = new AdView(this, Konstanten.FACEBOOK_AUDIENCE_NETWORK_NATIVE_BANNER_ID, AdSize.BANNER_HEIGHT_50);
@@ -152,7 +151,7 @@ public class CheatsByGameListActivity extends AppCompatActivity implements OnChe
         getSupportActionBar().setHomeButtonEnabled(true);
 
         if (member == null) {
-            member = new Gson().fromJson(sharedPreferences.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
+            member = tools.getMember();
         }
     }
 
@@ -202,8 +201,7 @@ public class CheatsByGameListActivity extends AppCompatActivity implements OnChe
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                editor.remove(Konstanten.PREFERENCES_TEMP_GAME_OBJECT_VIEW);
-                editor.apply();
+                tools.removeValue(Konstanten.PREFERENCES_TEMP_GAME_OBJECT_VIEW);
                 finish();
                 return true;
             case R.id.action_add_to_favorites:
@@ -221,7 +219,7 @@ public class CheatsByGameListActivity extends AppCompatActivity implements OnChe
                 return true;
             case R.id.action_logout:
                 member = null;
-                Tools.logout(CheatsByGameListActivity.this, editor);
+                tools.logout();
                 invalidateOptionsMenu();
                 return true;
             default:
@@ -235,7 +233,7 @@ public class CheatsByGameListActivity extends AppCompatActivity implements OnChe
         ArrayList<Cheat> cheatsFound;
         boolean isCached = false;
         String achievementsEnabled;
-        boolean isAchievementsEnabled = sharedPreferences.getBoolean("enable_achievements", true);
+        boolean isAchievementsEnabled = tools.getBooleanFromSharedPreferences("enable_achievements", true);
 
         if (isAchievementsEnabled) {
             achievementsEnabled = Konstanten.ACHIEVEMENTS;
@@ -363,7 +361,7 @@ public class CheatsByGameListActivity extends AppCompatActivity implements OnChe
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        member = new Gson().fromJson(sharedPreferences.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
+        member = tools.getMember();
 
         if (requestCode == Konstanten.LOGIN_REGISTER_OK_RETURN_CODE) {
             if (resultCode == Konstanten.LOGIN_SUCCESS_RETURN_CODE) {
@@ -377,7 +375,7 @@ public class CheatsByGameListActivity extends AppCompatActivity implements OnChe
     void addCheatsToFavoritesTask() {
         FavoriteCheatDao dao = RoomCheatDatabase.getDatabase(this).favoriteDao();
 
-        Call<List<Cheat>> call = restApi.getCheatsByGameId(gameObj.getGameId(), sharedPreferences.getBoolean("enable_achievements", true));
+        Call<List<Cheat>> call = restApi.getCheatsByGameId(gameObj.getGameId(), tools.getBooleanFromSharedPreferences("enable_achievements", true));
         call.enqueue(new Callback<List<Cheat>>() {
             @Override
             public void onResponse(Call<List<Cheat>> cheats, Response<List<Cheat>> response) {
@@ -415,8 +413,7 @@ public class CheatsByGameListActivity extends AppCompatActivity implements OnChe
     @Override
     public void onCheatListItemSelected(Cheat cheat, int position) {
         if (Reachability.reachability.isReachable) {
-            editor.putInt(Konstanten.PREFERENCES_PAGE_SELECTED, position);
-            editor.apply();
+            tools.putInt(Konstanten.PREFERENCES_PAGE_SELECTED, position);
 
             // Using local Preferences to pass data for large game objects
             // (instead of intent) such as Pokemon

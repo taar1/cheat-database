@@ -3,7 +3,6 @@ package com.cheatdatabase.activity;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -34,20 +33,23 @@ import com.cheatdatabase.rest.RestApi;
 import com.cheatdatabase.widgets.DividerDecoration;
 import com.facebook.ads.NativeAd;
 import com.facebook.ads.NativeAdsManager;
-import com.google.gson.Gson;
 import com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeMap;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import dagger.hilt.android.AndroidEntryPoint;
 import needle.Needle;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+@AndroidEntryPoint
 public class GamesBySystemListActivity extends AppCompatActivity implements OnGameListItemSelectedListener {
 
     private static final String TAG = GamesBySystemListActivity.class.getSimpleName();
@@ -57,8 +59,8 @@ public class GamesBySystemListActivity extends AppCompatActivity implements OnGa
     private SystemModel systemObj;
     private Member member;
 
-    private SharedPreferences sharedPreferences;
-    private SharedPreferences.Editor editor;
+    @Inject
+    Tools tools;
 
     @BindView(R.id.outer_layout)
     LinearLayout outerLayout;
@@ -118,9 +120,6 @@ public class GamesBySystemListActivity extends AppCompatActivity implements OnGa
     }
 
     private void init() {
-        sharedPreferences = getSharedPreferences(Konstanten.PREFERENCES_FILE, MODE_PRIVATE);
-        editor = sharedPreferences.edit();
-
         if (mToolbar != null) {
             setSupportActionBar(mToolbar);
         }
@@ -128,7 +127,7 @@ public class GamesBySystemListActivity extends AppCompatActivity implements OnGa
         getSupportActionBar().setHomeButtonEnabled(true);
 
         if (member == null) {
-            member = new Gson().fromJson(sharedPreferences.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
+            member = tools.getMember();
         }
     }
 
@@ -181,7 +180,7 @@ public class GamesBySystemListActivity extends AppCompatActivity implements OnGa
                 return true;
             case R.id.action_logout:
                 member = null;
-                Tools.logout(GamesBySystemListActivity.this, editor);
+                tools.logout();
                 invalidateOptionsMenu();
                 return true;
             default:
@@ -196,7 +195,7 @@ public class GamesBySystemListActivity extends AppCompatActivity implements OnGa
         List<Game> cachedGamesCollection;
         boolean isCached = false;
         String achievementsEnabled;
-        boolean isAchievementsEnabled = sharedPreferences.getBoolean("enable_achievements", true);
+        boolean isAchievementsEnabled = tools.getBooleanFromSharedPreferences("enable_achievements", true);
 
         if (isAchievementsEnabled) {
             achievementsEnabled = Konstanten.ACHIEVEMENTS;
@@ -309,7 +308,7 @@ public class GamesBySystemListActivity extends AppCompatActivity implements OnGa
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        member = new Gson().fromJson(sharedPreferences.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
+        member = tools.getMember();
 
         if (requestCode == Konstanten.LOGIN_REGISTER_OK_RETURN_CODE) {
             if (resultCode == Konstanten.LOGIN_SUCCESS_RETURN_CODE) {

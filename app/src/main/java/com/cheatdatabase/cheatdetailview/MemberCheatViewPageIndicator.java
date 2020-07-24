@@ -63,17 +63,24 @@ import org.greenrobot.eventbus.Subscribe;
 import java.lang.reflect.Type;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import dagger.hilt.android.AndroidEntryPoint;
 
 /**
  * Horizontal sliding through cheats submitted by members.
  *
  * @author Dominik Erbsland
  */
+@AndroidEntryPoint
 public class MemberCheatViewPageIndicator extends AppCompatActivity implements GenericCallback {
 
     private final String TAG = MemberCheatViewPageIndicator.class.getName();
+
+    @Inject
+    Tools tools;
 
     @BindView(R.id.outer_layout)
     LinearLayout outerLayout;
@@ -348,7 +355,7 @@ public class MemberCheatViewPageIndicator extends AppCompatActivity implements G
                 return true;
             case R.id.action_logout:
                 member = null;
-                Tools.logout(MemberCheatViewPageIndicator.this, editor);
+                tools.logout();
                 invalidateOptionsMenu();
                 return true;
             case R.id.action_share:

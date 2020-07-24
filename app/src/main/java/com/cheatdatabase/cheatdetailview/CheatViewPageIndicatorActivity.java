@@ -62,8 +62,11 @@ import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import dagger.hilt.android.AndroidEntryPoint;
 
 /**
  * Swipe through cheats horizontally with this CheatViewPageIndicatorActivity.
@@ -71,12 +74,17 @@ import butterknife.ButterKnife;
  * @author Dominik Erbsland
  * @version 1.0
  */
+@AndroidEntryPoint
 public class CheatViewPageIndicatorActivity extends AppCompatActivity implements GenericCallback {
 
     private static final String TAG = CheatViewPageIndicatorActivity.class.getSimpleName();
     public static final int FORUM_POST_ADDED_REQUEST = 176;
 
     private Intent intent;
+
+    @Inject
+    Tools tools;
+
 
     @BindView(R.id.outer_layout)
     LinearLayout outerLayout;
@@ -379,7 +387,7 @@ public class CheatViewPageIndicatorActivity extends AppCompatActivity implements
                 return true;
             case R.id.action_logout:
                 member = null;
-                Tools.logout(CheatViewPageIndicatorActivity.this, editor);
+                tools.logout();
                 invalidateOptionsMenu();
                 return true;
             case R.id.action_share:

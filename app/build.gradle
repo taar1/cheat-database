@@ -93,9 +93,14 @@ android {
         abortOnError false
         disable 'MissingTranslation'
     }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
     }
 }
 
@@ -156,18 +161,6 @@ dependencies {
     api 'com.appbrain:appbrain-sdk:16.02'
     implementation 'com.github.stfalcon:stfalcon-imageviewer:0.1.0'
 
-    // Dagger Dependencies
-    // Dagger2 core
-    implementation "com.google.dagger:dagger:$dagger_version"
-    annotationProcessor "com.google.dagger:dagger-compiler:$dagger_version"
-
-    // Dagger Android
-    implementation "com.google.dagger:dagger-android:$dagger_version"
-    implementation "com.google.dagger:dagger-android-support:$dagger_version"
-    annotationProcessor "com.google.dagger:dagger-android-processor:$dagger_version"
-    kapt "com.google.dagger:dagger-compiler:$dagger_version"
-    kapt "com.google.dagger:dagger-android-processor:$dagger_version"
-
     // Retrofit
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
     implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
@@ -181,7 +174,7 @@ dependencies {
     implementation 'com.google.android.gms:play-services-basement:17.3.0'
     implementation 'com.google.android.gms:play-services-ads-identifier:17.0.0'
     implementation 'com.google.android.gms:play-services-location:17.0.0'
-    implementation 'com.android.support:customtabs:28.0.0'
+//    implementation 'com.android.support:customtabs:28.0.0'
     // INMOBI ADS END
 
     // ROOM DATABASE DEBUG
@@ -223,4 +216,12 @@ dependencies {
     implementation "com.google.dagger:hilt-android:$hilt_version"
     kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
 
+    implementation "androidx.hilt:hilt-lifecycle-viewmodel:$hilt_lifecycle_version"
+    kapt "androidx.hilt:hilt-compiler:$hilt_lifecycle_version"
+    annotationProcessor "androidx.hilt:hilt-compiler:$hilt_lifecycle_version"
+
+}
+
+kapt {
+    correctErrorTypes true
 }

@@ -4,8 +4,6 @@ import android.app.AlertDialog;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -45,7 +43,6 @@ import com.facebook.ads.AdSize;
 import com.facebook.ads.AdView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
-import com.google.gson.Gson;
 
 import net.lucode.hackware.magicindicator.MagicIndicator;
 import net.lucode.hackware.magicindicator.ViewPagerHelper;
@@ -63,7 +60,10 @@ import org.greenrobot.eventbus.Subscribe;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
+import dagger.hilt.android.AndroidEntryPoint;
 import needle.Needle;
 
 /**
@@ -72,6 +72,7 @@ import needle.Needle;
  * @author Dominik Erbsland
  * @version 1.0
  */
+@AndroidEntryPoint
 public class FavoritesCheatViewPageIndicator extends AppCompatActivity {
 
     private final String TAG = FavoritesCheatViewPageIndicator.class.getSimpleName();
@@ -84,9 +85,6 @@ public class FavoritesCheatViewPageIndicator extends AppCompatActivity {
     private Game gameObj;
     private List<Cheat> cheatArray;
     private Cheat visibleCheat;
-
-    private SharedPreferences settings;
-    private Editor editor;
 
     private Member member;
 
@@ -105,6 +103,8 @@ public class FavoritesCheatViewPageIndicator extends AppCompatActivity {
     private LinearLayout facebookBanner;
     private AdView adView;
 
+    @Inject
+    Tools tools;
 
     @BindView(R.id.outer_layout)
     LinearLayout outerLayout;
@@ -146,9 +146,6 @@ public class FavoritesCheatViewPageIndicator extends AppCompatActivity {
 
         dao = RoomCheatDatabase.getDatabase(this).favoriteDao();
 
-        settings = getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
-        editor = settings.edit();
-
         mToolbar = Tools.initToolbarBase(this, mToolbar);
 
         facebookBanner = findViewById(R.id.banner_container);
@@ -156,7 +153,7 @@ public class FavoritesCheatViewPageIndicator extends AppCompatActivity {
         facebookBanner.addView(adView);
         adView.loadAd();
 
-        member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
+        member = tools.getMember();
     }
 
     private void initialisePaging() {
@@ -180,8 +177,7 @@ public class FavoritesCheatViewPageIndicator extends AppCompatActivity {
                 @Override
                 public void onPageSelected(int position) {
                     // Save the last selected page
-                    editor.putInt(Konstanten.PREFERENCES_PAGE_SELECTED, position);
-                    editor.apply();
+                    tools.putInt(Konstanten.PREFERENCES_PAGE_SELECTED, position);
 
                     activePage = position;
 
@@ -251,7 +247,8 @@ public class FavoritesCheatViewPageIndicator extends AppCompatActivity {
             int intentReturnCode = data.getIntExtra("result", Konstanten.LOGIN_REGISTER_FAIL_RETURN_CODE);
 
             if (requestCode == Konstanten.LOGIN_REGISTER_OK_RETURN_CODE) {
-                member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
+                member = tools.getMember();
+
                 invalidateOptionsMenu();
                 if ((member != null) && intentReturnCode == Konstanten.REGISTER_SUCCESS_RETURN_CODE) {
                     Toast.makeText(FavoritesCheatViewPageIndicator.this, R.string.register_thanks, Toast.LENGTH_LONG).show();
@@ -346,7 +343,7 @@ public class FavoritesCheatViewPageIndicator extends AppCompatActivity {
                 return true;
             case R.id.action_logout:
                 member = null;
-                Tools.logout(FavoritesCheatViewPageIndicator.this, editor);
+                tools.logout();
                 invalidateOptionsMenu();
                 return true;
             case R.id.action_share:
@@ -361,7 +358,7 @@ public class FavoritesCheatViewPageIndicator extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         Reachability.registerReachability(this);
-        member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
+        member = tools.getMember();
         invalidateOptionsMenu();
     }
 

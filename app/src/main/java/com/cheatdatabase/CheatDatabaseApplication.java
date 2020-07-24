@@ -22,8 +22,10 @@ import org.json.JSONObject;
 import java.util.List;
 import java.util.TreeMap;
 
+import dagger.hilt.android.HiltAndroidApp;
 import io.fabric.sdk.android.Fabric;
 
+@HiltAndroidApp
 public class CheatDatabaseApplication extends Application implements Application.ActivityLifecycleCallbacks {
     static TreeMap<String, TreeMap<String, List<Game>>> gamesBySystemCached = new TreeMap<>();
     static TreeMap<String, TreeMap<String, List<Cheat>>> cheatsByGameCached = new TreeMap<>();
@@ -171,4 +173,5 @@ public class CheatDatabaseApplication extends Application implements Application
     public void setCheatsByGameCached(TreeMap<String, TreeMap<String, List<Cheat>>> cheatsByGameCachedx) {
         cheatsByGameCached = cheatsByGameCachedx;
     }
+
 }

@@ -1,7 +1,6 @@
 package com.cheatdatabase.activity;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -28,12 +27,14 @@ import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.helpers.Tools;
 import com.cheatdatabase.rest.RestApi;
 import com.google.android.material.textfield.TextInputEditText;
-import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import dagger.hilt.android.AndroidEntryPoint;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -43,8 +44,12 @@ import retrofit2.Response;
  *
  * @author erbsland
  */
+@AndroidEntryPoint
 public class SubmitCheatFormActivity extends AppCompatActivity {
     private static final String TAG = "SubmitCheatActivity";
+
+    @Inject
+    Tools tools;
 
     @BindView(R.id.outer_layout)
     ConstraintLayout outerLayout;
@@ -62,8 +67,6 @@ public class SubmitCheatFormActivity extends AppCompatActivity {
     private Game gameObj;
     private Member member;
     private UnpublishedCheat unpublishedCheat;
-
-    private SharedPreferences settings;
 
     private RestApi restApi;
 
@@ -102,8 +105,7 @@ public class SubmitCheatFormActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
-        settings = getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
-        member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
+        member = tools.getMember();
     }
 
     @Override
@@ -120,7 +122,7 @@ public class SubmitCheatFormActivity extends AppCompatActivity {
                 return true;
             case R.id.action_logout:
                 member = null;
-                Tools.logout(SubmitCheatFormActivity.this, settings.edit());
+                tools.logout();
                 invalidateOptionsMenu();
                 return true;
             default:
@@ -264,7 +266,7 @@ public class SubmitCheatFormActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
+        member = tools.getMember();
 
         if (resultCode == Konstanten.LOGIN_SUCCESS_RETURN_CODE) {
             if (member != null) {
