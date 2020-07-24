@@ -65,7 +65,6 @@
                 android:name="android.app.default_searchable"
                 android:value="com.cheatdatabase.search.SearchResultsActivity" />
         </activity>
-        <activity android:name=".helpers.Helper" />
         <activity
             android:name=".activity.SubmitCheatFormActivity"
             android:label="@string/submit_cheat_title" />

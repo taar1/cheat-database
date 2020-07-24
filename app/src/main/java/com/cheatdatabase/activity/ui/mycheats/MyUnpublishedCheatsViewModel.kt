@@ -5,7 +5,6 @@ import android.content.SharedPreferences
 import androidx.lifecycle.AndroidViewModel
 import com.cheatdatabase.data.model.Member
 import com.cheatdatabase.data.model.UnpublishedCheat
-import com.cheatdatabase.data.repository.RestRepository
 import com.cheatdatabase.helpers.AeSimpleMD5
 import com.cheatdatabase.helpers.Coroutines
 import com.cheatdatabase.helpers.Konstanten
@@ -17,7 +16,7 @@ class MyUnpublishedCheatsViewModel(application: Application) :
     val TAG = "MyUnpublishedCheatsView"
 
     private val member: Member
-    private var restRepository: RestRepository? = null
+
     var fetchListener: MyUnpublishedCheatsListener? = null
 
     private val settings: SharedPreferences =
@@ -55,13 +54,13 @@ class MyUnpublishedCheatsViewModel(application: Application) :
     }
 
     init {
+        // TODO use tools.getMember()
         member = Gson().fromJson(
             settings.getString(
                 Konstanten.MEMBER_OBJECT,
                 null
             ), Member::class.java
         )
-        restRepository = RestRepository(getApplication())
     }
 
 }

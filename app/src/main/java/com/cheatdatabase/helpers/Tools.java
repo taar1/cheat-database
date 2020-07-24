@@ -88,10 +88,6 @@ public class Tools {
         return sharedPreferences.getBoolean(key, defaultValue);
     }
 
-//    public String getStringFromSharedPreferences(String key, Type type) {
-//        return new Gson().fromJson(sharedPreferences.getString(key, null), type);
-//    }
-
     public Member getMember() {
         return new Gson().fromJson(sharedPreferences.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
     }

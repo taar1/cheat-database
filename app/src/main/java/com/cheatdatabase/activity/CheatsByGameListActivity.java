@@ -74,6 +74,9 @@ public class CheatsByGameListActivity extends AppCompatActivity implements OnChe
     @Inject
     Tools tools;
 
+//    @Inject
+//    NetworkModule networkModule;
+
     @BindView(R.id.outer_layout)
     LinearLayout outerLayout;
     @BindView(R.id.my_recycler_view)
@@ -86,6 +89,7 @@ public class CheatsByGameListActivity extends AppCompatActivity implements OnChe
     TextView mEmptyView;
     @BindView(R.id.banner_container)
     LinearLayout bannerContainerFacebook;
+
 
     private RestApi restApi;
 
