@@ -23,13 +23,16 @@ import retrofit2.Response;
 public class ReportCheatMaterialDialog {
     private static final String TAG = "ReportCheatMaterialDial";
 
+    private Tools tools;
+
     private final View view;
     Activity activity;
     RestApi restApi;
 
-    public ReportCheatMaterialDialog(final Activity activity, final Cheat cheat, final Member member, View view) {
+    public ReportCheatMaterialDialog(final Activity activity, final Cheat cheat, final Member member, View view, Tools tools) {
         this.activity = activity;
         this.view = view;
+        this.tools = tools;
 
         restApi = RetrofitClientInstance.getRetrofitInstance().create(RestApi.class);
 
@@ -74,9 +77,9 @@ public class ReportCheatMaterialDialog {
 
     private void postReporting(final boolean isSuccess) {
         if (isSuccess) {
-            Tools.showSnackbar(view, activity.getString(R.string.thanks_for_reporting));
+            tools.showSnackbar(view, activity.getString(R.string.thanks_for_reporting));
         } else {
-            Tools.showSnackbar(view, activity.getString(R.string.err_occurred));
+            tools.showSnackbar(view, activity.getString(R.string.err_occurred));
         }
     }
 }

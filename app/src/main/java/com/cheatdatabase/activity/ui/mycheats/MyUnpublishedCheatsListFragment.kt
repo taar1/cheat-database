@@ -28,16 +28,22 @@ import com.cheatdatabase.helpers.Tools
 import com.cheatdatabase.listeners.MyUnpublishedCheatsListItemSelectedListener
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.unpublished_cheats_fragment.view.*
+import javax.inject.Inject
 
 /**
  * This is the MODEL of MVVM.
  */
+@AndroidEntryPoint
 class MyUnpublishedCheatsListFragment(val activity: MyUnpublishedCheatsListActivity) : Fragment(),
     MyUnpublishedCheatsListItemSelectedListener,
     MyUnpublishedCheatsListener {
 
     val TAG = "MyUnpublishedCheatsFt"
+
+    @Inject
+    lateinit var tools: Tools
 
     var cheatPositionInList: Int = 0
     var myUnpublishedCheatsViewModel: MyUnpublishedCheatsViewModel? = null
@@ -111,7 +117,7 @@ class MyUnpublishedCheatsListFragment(val activity: MyUnpublishedCheatsListActiv
 
     override fun fetchUnpublishedCheatsFail() {
         showEmptyListView()
-        Tools.showSnackbar(outerLayout, getString(R.string.error_fetch_unpublished_cheats))
+        tools.showSnackbar(outerLayout, getString(R.string.error_fetch_unpublished_cheats))
     }
 
     private fun showEmptyListView() {
@@ -216,13 +222,13 @@ class MyUnpublishedCheatsListFragment(val activity: MyUnpublishedCheatsListActiv
                 else -> getString(R.string.err_occurred)
             }
 
-        Tools.showSnackbar(outerLayout, translatedReturnValue)
+        tools.showSnackbar(outerLayout, translatedReturnValue)
 
         removeCheatFromList(cheatPositionInList)
     }
 
     override fun deleteUnpublishedCheatFailed() {
-        Tools.showSnackbar(outerLayout, getString(R.string.error_deleting_cheat))
+        tools.showSnackbar(outerLayout, getString(R.string.error_deleting_cheat))
     }
 
     private fun removeCheatFromList(position: Int) {

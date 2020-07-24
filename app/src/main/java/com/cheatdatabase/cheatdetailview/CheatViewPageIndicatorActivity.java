@@ -36,7 +36,6 @@ import com.cheatdatabase.dialogs.CheatMetaDialog;
 import com.cheatdatabase.dialogs.RateCheatMaterialDialog;
 import com.cheatdatabase.dialogs.ReportCheatMaterialDialog;
 import com.cheatdatabase.events.CheatRatingFinishedEvent;
-import com.cheatdatabase.helpers.Helper;
 import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.helpers.Tools;
@@ -167,7 +166,7 @@ public class CheatViewPageIndicatorActivity extends AppCompatActivity implements
         settings = getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
         editor = settings.edit();
 
-        mToolbar = Tools.initToolbarBase(this, mToolbar);
+        mToolbar = tools.initToolbarBase(this, mToolbar);
 
         adView = new AdView(this, Konstanten.FACEBOOK_AUDIENCE_NETWORK_NATIVE_BANNER_ID, AdSize.BANNER_HEIGHT_50);
         facebookBanner.addView(adView);
@@ -362,20 +361,20 @@ public class CheatViewPageIndicatorActivity extends AppCompatActivity implements
                 }
                 return true;
             case R.id.action_add_to_favorites:
-                Tools.showSnackbar(outerLayout, getString(R.string.favorite_adding));
+                tools.showSnackbar(outerLayout, getString(R.string.favorite_adding));
 
                 int memberId = 0;
                 if (member != null) {
                     memberId = member.getMid();
                 }
-                Helper.addFavorite(this, visibleCheat, memberId, this);
+                tools.addFavorite(visibleCheat, memberId, this);
                 return true;
             case R.id.action_report:
                 showReportDialog();
                 return true;
             case R.id.action_metainfo:
                 if (Reachability.reachability.isReachable) {
-                    CheatMetaDialog cmDialog = new CheatMetaDialog(CheatViewPageIndicatorActivity.this, visibleCheat, outerLayout);
+                    CheatMetaDialog cmDialog = new CheatMetaDialog(CheatViewPageIndicatorActivity.this, visibleCheat, outerLayout, tools);
                     cmDialog.show();
                 } else {
                     Toast.makeText(this, R.string.no_internet, Toast.LENGTH_SHORT).show();
@@ -391,7 +390,7 @@ public class CheatViewPageIndicatorActivity extends AppCompatActivity implements
                 invalidateOptionsMenu();
                 return true;
             case R.id.action_share:
-                setShareIntent(Tools.setShareText(CheatViewPageIndicatorActivity.this, visibleCheat));
+                setShareIntent(tools.setShareText(visibleCheat));
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -433,7 +432,7 @@ public class CheatViewPageIndicatorActivity extends AppCompatActivity implements
         if ((member == null) || (member.getMid() == 0)) {
             Toast.makeText(this, R.string.error_login_required, Toast.LENGTH_SHORT).show();
         } else {
-            new ReportCheatMaterialDialog(this, visibleCheat, member, outerLayout);
+            new ReportCheatMaterialDialog(this, visibleCheat, member, outerLayout, tools);
         }
     }
 
@@ -441,7 +440,7 @@ public class CheatViewPageIndicatorActivity extends AppCompatActivity implements
         if ((member == null) || (member.getMid() == 0)) {
             Toast.makeText(this, R.string.error_login_required, Toast.LENGTH_LONG).show();
         } else {
-            new RateCheatMaterialDialog(this, visibleCheat, member, outerLayout);
+            new RateCheatMaterialDialog(this, visibleCheat, member, outerLayout, tools);
         }
     }
 
@@ -464,11 +463,11 @@ public class CheatViewPageIndicatorActivity extends AppCompatActivity implements
 
     @Override
     public void success() {
-        Tools.showSnackbar(outerLayout, getString(R.string.add_favorite_ok));
+        tools.showSnackbar(outerLayout, getString(R.string.add_favorite_ok));
     }
 
     @Override
     public void fail(Exception e) {
-        Tools.showSnackbar(outerLayout, getString(R.string.error_adding_favorite));
+        tools.showSnackbar(outerLayout, getString(R.string.error_adding_favorite));
     }
 }

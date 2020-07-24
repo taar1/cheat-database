@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -43,18 +42,25 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import dagger.hilt.android.AndroidEntryPoint;
 import needle.Needle;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 @SuppressLint("NewApi")
+@AndroidEntryPoint
 public class SearchResultsActivity extends AppCompatActivity implements OnGameListItemSelectedListener {
     private static final String TAG = "SearchResultsActivity";
 
     SparseArray<Group> groups = new SparseArray<>();
+
+    @Inject
+    Tools tools;
 
     @BindView(R.id.nothingfound_layout)
     LinearLayout nothingFoundLayout;
@@ -78,9 +84,6 @@ public class SearchResultsActivity extends AppCompatActivity implements OnGameLi
 
     protected final int STEP_ONE_COMPLETE = 1;
 
-    private Typeface latoFontBold;
-    private Typeface latoFontLight;
-
     private Toolbar toolbar;
     private SearchresultExpandableListAdapter adapter;
 
@@ -91,10 +94,6 @@ public class SearchResultsActivity extends AppCompatActivity implements OnGameLi
         ButterKnife.bind(this);
 
         init();
-
-        searchButton.setTypeface(latoFontBold);
-        nothingFoundTitle.setTypeface(latoFontBold);
-        nothingFoundText.setTypeface(latoFontLight);
 
         adapter = new SearchresultExpandableListAdapter(SearchResultsActivity.this, groups, this);
         listView.setAdapter(adapter);
@@ -109,10 +108,7 @@ public class SearchResultsActivity extends AppCompatActivity implements OnGameLi
 
         restApi = RetrofitClientInstance.getRetrofitInstance().create(RestApi.class);
 
-        latoFontLight = Tools.getFont(getAssets(), Konstanten.FONT_LIGHT);
-        latoFontBold = Tools.getFont(getAssets(), Konstanten.FONT_BOLD);
-
-        Tools.initToolbarBase(this, toolbar);
+        tools.initToolbarBase(this, toolbar);
     }
 
     @Override

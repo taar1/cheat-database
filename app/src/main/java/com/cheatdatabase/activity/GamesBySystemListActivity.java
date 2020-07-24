@@ -108,7 +108,7 @@ public class GamesBySystemListActivity extends AppCompatActivity implements OnGa
             mSwipeRefreshLayout.setRefreshing(true);
             mSwipeRefreshLayout.setOnRefreshListener(() -> loadGames(true));
 
-            gamesBySystemRecycleListViewAdapter = new GamesBySystemRecycleListViewAdapter(this, nativeAdsManager, this);
+            gamesBySystemRecycleListViewAdapter = new GamesBySystemRecycleListViewAdapter(this, nativeAdsManager, tools, this);
             recyclerView.setAdapter(gamesBySystemRecycleListViewAdapter);
 
             recyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
@@ -287,7 +287,7 @@ public class GamesBySystemListActivity extends AppCompatActivity implements OnGa
     private void error() {
         Log.e(TAG, "Caught error: " + getPackageName() + "/" + getTitle());
         Needle.onMainThread().execute(() -> {
-            Tools.showSnackbar(outerLayout, getString(R.string.err_data_not_accessible));
+            tools.showSnackbar(outerLayout, getString(R.string.err_data_not_accessible));
         });
     }
 

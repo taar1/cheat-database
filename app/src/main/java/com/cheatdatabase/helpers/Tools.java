@@ -4,10 +4,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.AssetManager;
 import android.content.res.Resources;
 import android.content.res.XmlResourceParser;
-import android.graphics.Typeface;
 import android.os.Environment;
 import android.telephony.TelephonyManager;
 import android.text.format.DateFormat;
@@ -21,6 +19,8 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.cheatdatabase.R;
 import com.cheatdatabase.callbacks.GenericCallback;
+import com.cheatdatabase.data.RoomCheatDatabase;
+import com.cheatdatabase.data.dao.FavoriteCheatDao;
 import com.cheatdatabase.data.model.Cheat;
 import com.cheatdatabase.data.model.Game;
 import com.cheatdatabase.data.model.Member;
@@ -87,6 +87,10 @@ public class Tools {
     public boolean getBooleanFromSharedPreferences(String key, boolean defaultValue) {
         return sharedPreferences.getBoolean(key, defaultValue);
     }
+
+//    public String getStringFromSharedPreferences(String key, Type type) {
+//        return new Gson().fromJson(sharedPreferences.getString(key, null), type);
+//    }
 
     public Member getMember() {
         return new Gson().fromJson(sharedPreferences.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
@@ -441,26 +445,13 @@ public class Tools {
         return null;
     }
 
-//    public static void initGA(Activity activity, Tracker tracker, String screenLabel, String title, String description) {
-//        tracker = GoogleAnalytics.getInstance(activity).getTracker(Konstanten.GOOGLE_ANALYTICS_ID);
-//        HashMap<String, String> hitParameters = new HashMap<String, String>();
-//        hitParameters.put(Fields.HIT_TYPE, "appview");
-//        hitParameters.put(Fields.APP_VERSION, Konstanten.CURRENT_VERSION);
-//        hitParameters.put(Fields.SCREEN_NAME, screenLabel);
-//        hitParameters.put(Fields.DESCRIPTION, description);
-//        hitParameters.put(Fields.TITLE, title);
-//
-//        tracker.send(hitParameters);
-//    }
-
     /**
      * Convert unconverted Date to user's set Locale date format.
      *
      * @param unformatedDate , format yyyy-MM-dd HH:mm:ss
-     * @param context
      * @return
      */
-    public static String convertDateToLocaleDateFormat(String unformatedDate, Context context) {
+    public String convertDateToLocaleDateFormat(String unformatedDate) {
         Calendar cal = Calendar.getInstance();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         try {
@@ -474,17 +465,12 @@ public class Tools {
         return unformatedDate;
     }
 
-    public static Typeface getFont(AssetManager assetManager, String fontName) {
-//        return Typeface.createFromAsset(assetManager, fontName);
-        return null;
-    }
-
     public void logout() {
         removeValue(Konstanten.MEMBER_OBJECT);
         Toast.makeText(context, R.string.logout_ok, Toast.LENGTH_LONG).show();
     }
 
-    public static Toolbar initToolbarBase(AppCompatActivity a, Toolbar toolbar) {
+    public Toolbar initToolbarBase(AppCompatActivity a, Toolbar toolbar) {
         toolbar = a.findViewById(R.id.toolbar);
         if (toolbar != null) {
             a.setSupportActionBar(toolbar);
@@ -495,8 +481,8 @@ public class Tools {
         return toolbar;
     }
 
-    public static Intent setShareText(Activity act, Cheat visibleCheat) {
-        String cheatShareTitle = String.format(act.getString(R.string.share_email_subject), visibleCheat.getGameName());
+    public Intent setShareText(Cheat visibleCheat) {
+        String cheatShareTitle = String.format(context.getString(R.string.share_email_subject), visibleCheat.getGameName());
         String cheatShareBody = visibleCheat.getGameName() + " (" + visibleCheat.getSystemName() + "): " + visibleCheat.getCheatTitle() + "\n";
         cheatShareBody += Konstanten.BASE_URL + "display/switch.php?id=" + visibleCheat.getCheatId() + "\n\n";
 
@@ -508,11 +494,11 @@ public class Tools {
         return shareIntent;
     }
 
-    public static void showSnackbar(View fromView, String message) {
+    public void showSnackbar(View fromView, String message) {
         showSnackbar(fromView, message, BaseTransientBottomBar.LENGTH_LONG);
     }
 
-    public static void showSnackbar(View fromView, String message, int duration) {
+    public void showSnackbar(View fromView, String message, int duration) {
         Needle.onMainThread().execute(() -> {
             if ((message != null) && (fromView != null)) {
                 Snackbar snackbar = Snackbar.make(fromView, message, Snackbar.LENGTH_LONG);
@@ -521,25 +507,24 @@ public class Tools {
                 snackbar.show();
             }
         });
-
     }
 
-    public static void showKeyboard(Context context, View view) {
+    public void showKeyboard(Context context, View view) {
         InputMethodManager imm = (InputMethodManager) context.getSystemService(Activity.INPUT_METHOD_SERVICE);
         imm.showSoftInput(view, 0);
     }
 
-    public static void hideKeyboard(Context context, View view) {
+    public void hideKeyboard(Context context, View view) {
         InputMethodManager imm = (InputMethodManager) context.getSystemService(Activity.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
-    public static String getCountryCode(Context context) {
+    public String getCountryCode(Context context) {
         TelephonyManager tm = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
         return tm.getSimCountryIso();
     }
 
-    public static void saveScreenshotsToSdCard(Cheat cheat, GenericCallback callback) {
+    public void saveScreenshotsToSdCard(Cheat cheat, GenericCallback callback) {
         Needle.onBackgroundThread().execute(() -> {
             try {
                 for (Screenshot s : cheat.getScreenshotList()) {
@@ -551,6 +536,39 @@ public class Tools {
                 callback.success();
             } catch (IOException e) {
                 callback.fail(e);
+            }
+        });
+    }
+
+    /**
+     * Sharing feature for tablets where the sharing button is not inside the action bar.
+     *
+     * @param cheat
+     */
+    public void shareCheat(Cheat cheat) {
+        String fullBody = cheat.getGameName() + " (" + cheat.getSystemName() + "): " + cheat.getCheatTitle() + "\n";
+        fullBody += Konstanten.BASE_URL + "display/switch.php?id=" + cheat.getCheatId() + "\n\n";
+
+        Intent shareIntent = new Intent(Intent.ACTION_SEND);
+        shareIntent.setType("text/plain");
+        String result = String.format(context.getString(R.string.share_email_subject), cheat.getGameName());
+        shareIntent.putExtra(Intent.EXTRA_SUBJECT, result);
+        shareIntent.putExtra(Intent.EXTRA_TEXT, fullBody);
+        try {
+            context.startActivity(Intent.createChooser(shareIntent, context.getString(R.string.share_title)));
+        } catch (android.content.ActivityNotFoundException ex) {
+            Toast.makeText(context, context.getString(R.string.share_error_no_client), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public void addFavorite(Cheat visibleCheat, int memberId, GenericCallback callback) {
+        Needle.onBackgroundThread().execute(() -> {
+            FavoriteCheatDao dao = RoomCheatDatabase.getDatabase(context).favoriteDao();
+            long insertReturn = dao.insert(visibleCheat.toFavoriteCheatModel(memberId));
+            if (insertReturn > 0) {
+                saveScreenshotsToSdCard(visibleCheat, callback);
+            } else {
+                callback.fail(null);
             }
         });
     }

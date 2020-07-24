@@ -2,13 +2,11 @@ package com.cheatdatabase.cheatdetailview;
 
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.webkit.WebView;
@@ -40,14 +38,21 @@ import com.stfalcon.imageviewer.StfalconImageViewer;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import dagger.hilt.android.AndroidEntryPoint;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+@AndroidEntryPoint
 public class MemberCheatViewFragment extends Fragment implements CheatViewGalleryImageClickListener {
     private static final String TAG = MemberCheatViewFragment.class.getSimpleName();
+
+    @Inject
+    Tools tools;
 
     LinearLayout linearLayout;
 
@@ -74,7 +79,6 @@ public class MemberCheatViewFragment extends Fragment implements CheatViewGaller
     private SharedPreferences settings;
     private Editor editor;
 
-    private Typeface latoFontLight;
     private MemberCheatViewPageIndicator cheatViewPageIndicatorActivity;
 
     private LinearLayout outerLayout;
@@ -99,8 +103,6 @@ public class MemberCheatViewFragment extends Fragment implements CheatViewGaller
         }
 
         cheatViewPageIndicatorActivity = (MemberCheatViewPageIndicator) getActivity();
-
-        latoFontLight = Tools.getFont(cheatViewPageIndicatorActivity.getAssets(), Konstanten.FONT_LIGHT);
 
         settings = cheatViewPageIndicatorActivity.getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
         editor = settings.edit();
@@ -230,14 +232,12 @@ public class MemberCheatViewFragment extends Fragment implements CheatViewGaller
         tvFirstThCol.setPadding(1, 1, 5, 1);
         tvFirstThCol.setMinimumWidth(Konstanten.TABLE_ROW_MINIMUM_WIDTH);
         tvFirstThCol.setTextAppearance(cheatViewPageIndicatorActivity, R.style.NormalText);
-        tvFirstThCol.setTypeface(latoFontLight);
         trTh.addView(tvFirstThCol);
 
         TextView tvSecondThCol = new TextView(cheatViewPageIndicatorActivity);
         tvSecondThCol.setText(Html.fromHtml(secondThColumn));
         tvSecondThCol.setPadding(5, 1, 1, 1);
         tvSecondThCol.setTextAppearance(getContext(), R.style.NormalText);
-        tvSecondThCol.setTypeface(latoFontLight);
         trTh.addView(tvSecondThCol);
 
         /* Add row to TableLayout. */
@@ -261,7 +261,6 @@ public class MemberCheatViewFragment extends Fragment implements CheatViewGaller
             tvFirstTdCol.setPadding(1, 1, 10, 1);
             tvFirstTdCol.setMinimumWidth(Konstanten.TABLE_ROW_MINIMUM_WIDTH);
             tvFirstTdCol.setTextAppearance(getContext(), R.style.NormalText);
-            tvFirstTdCol.setTypeface(latoFontLight);
             trTd.addView(tvFirstTdCol);
 
             TextView tvSecondTdCol = new TextView(cheatViewPageIndicatorActivity);
@@ -270,19 +269,13 @@ public class MemberCheatViewFragment extends Fragment implements CheatViewGaller
             tvSecondTdCol.canScrollHorizontally(1);
             tvSecondTdCol.setPadding(10, 1, 30, 1);
             tvSecondTdCol.setTextAppearance(getContext(), R.style.NormalText);
-            tvSecondTdCol.setTypeface(latoFontLight);
             trTd.addView(tvSecondTdCol);
 
             /* Add row to TableLayout. */
             mainTable.addView(trTd, new TableLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
         }
 
-        mainTable.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                displayTableInWebview();
-            }
-        });
+        mainTable.setOnClickListener(view -> displayTableInWebview());
     }
 
     private void fillSimpleContent() {
@@ -322,7 +315,7 @@ public class MemberCheatViewFragment extends Fragment implements CheatViewGaller
             @Override
             public void onFailure(Call<Cheat> call, Throwable e) {
                 Log.e(TAG, "getCheatBody onFailure: " + e.getLocalizedMessage());
-                Tools.showSnackbar(outerLayout, getContext().getString(R.string.err_somethings_wrong), 5000);
+                tools.showSnackbar(outerLayout, getContext().getString(R.string.err_somethings_wrong), 5000);
             }
         });
     }

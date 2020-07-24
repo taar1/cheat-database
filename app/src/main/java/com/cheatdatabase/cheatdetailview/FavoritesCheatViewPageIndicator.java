@@ -146,7 +146,7 @@ public class FavoritesCheatViewPageIndicator extends AppCompatActivity {
 
         dao = RoomCheatDatabase.getDatabase(this).favoriteDao();
 
-        mToolbar = Tools.initToolbarBase(this, mToolbar);
+        mToolbar = tools.initToolbarBase(this, mToolbar);
 
         facebookBanner = findViewById(R.id.banner_container);
         adView = new AdView(this, Konstanten.FACEBOOK_AUDIENCE_NETWORK_NATIVE_BANNER_ID, AdSize.BANNER_HEIGHT_50);
@@ -331,7 +331,7 @@ public class FavoritesCheatViewPageIndicator extends AppCompatActivity {
                 return true;
             case R.id.action_metainfo:
                 if (Reachability.reachability.isReachable) {
-                    CheatMetaDialog cmDialog = new CheatMetaDialog(FavoritesCheatViewPageIndicator.this, visibleCheat, outerLayout);
+                    CheatMetaDialog cmDialog = new CheatMetaDialog(FavoritesCheatViewPageIndicator.this, visibleCheat, outerLayout, tools);
                     cmDialog.show();
                 } else {
                     Toast.makeText(this, R.string.no_internet, Toast.LENGTH_SHORT).show();
@@ -347,7 +347,7 @@ public class FavoritesCheatViewPageIndicator extends AppCompatActivity {
                 invalidateOptionsMenu();
                 return true;
             case R.id.action_share:
-                setShareIntent(Tools.setShareText(FavoritesCheatViewPageIndicator.this, visibleCheat));
+                setShareIntent(tools.setShareText(visibleCheat));
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -387,7 +387,7 @@ public class FavoritesCheatViewPageIndicator extends AppCompatActivity {
         if ((member == null) || (member.getMid() == 0)) {
             Toast.makeText(this, R.string.error_login_required, Toast.LENGTH_SHORT).show();
         } else {
-            new ReportCheatMaterialDialog(this, visibleCheat, member, outerLayout);
+            new ReportCheatMaterialDialog(this, visibleCheat, member, outerLayout, tools);
         }
     }
 
@@ -395,7 +395,7 @@ public class FavoritesCheatViewPageIndicator extends AppCompatActivity {
         if ((member == null) || (member.getMid() == 0)) {
             Toast.makeText(this, R.string.error_login_to_rate, Toast.LENGTH_LONG).show();
         } else {
-            new RateCheatMaterialDialog(this, visibleCheat, member, outerLayout);
+            new RateCheatMaterialDialog(this, visibleCheat, member, outerLayout, tools);
         }
     }
 

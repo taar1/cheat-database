@@ -3,8 +3,6 @@ package com.cheatdatabase.cheatdetailview;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -35,7 +33,6 @@ import com.cheatdatabase.dialogs.CheatMetaDialog;
 import com.cheatdatabase.dialogs.RateCheatMaterialDialog;
 import com.cheatdatabase.dialogs.ReportCheatMaterialDialog;
 import com.cheatdatabase.events.CheatRatingFinishedEvent;
-import com.cheatdatabase.helpers.Helper;
 import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.helpers.Tools;
@@ -95,8 +92,6 @@ public class MemberCheatViewPageIndicator extends AppCompatActivity implements G
     private List<Cheat> cheatList;
     private Cheat visibleCheat;
     private Game gameObj;
-    private SharedPreferences sharedPreferences;
-    private Editor editor;
     private Member member;
     private MemberCheatViewFragmentAdapter memberCheatViewFragmentAdapter;
     private ViewPager mPager;
@@ -120,7 +115,7 @@ public class MemberCheatViewPageIndicator extends AppCompatActivity implements G
 
         Type type = new TypeToken<List<Cheat>>() {
         }.getType();
-        cheatList = new Gson().fromJson(sharedPreferences.getString(Konstanten.PREFERENCES_TEMP_CHEAT_ARRAY_OBJECT_VIEW, null), type);
+        cheatList = new Gson().fromJson(tools.getSharedPreferences().getString(Konstanten.PREFERENCES_TEMP_CHEAT_ARRAY_OBJECT_VIEW, null), type);
 
         if ((cheatList == null) || (cheatList.size() < 1)) {
             cheatList = intent.getParcelableArrayListExtra("cheatList");
@@ -157,16 +152,13 @@ public class MemberCheatViewPageIndicator extends AppCompatActivity implements G
     private void init() {
         restApi = RetrofitClientInstance.getRetrofitInstance().create(RestApi.class);
 
-        sharedPreferences = getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
-        editor = sharedPreferences.edit();
-
-        mToolbar = Tools.initToolbarBase(this, mToolbar);
+        mToolbar = tools.initToolbarBase(this, mToolbar);
 
         adView = new AdView(this, Konstanten.FACEBOOK_AUDIENCE_NETWORK_NATIVE_BANNER_ID, AdSize.BANNER_HEIGHT_50);
         facebookBanner.addView(adView);
         adView.loadAd();
 
-        member = new Gson().fromJson(sharedPreferences.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
+        member = tools.getMember();
     }
 
     private void initialisePaging() {
@@ -183,8 +175,7 @@ public class MemberCheatViewPageIndicator extends AppCompatActivity implements G
                 @Override
                 public void onPageSelected(int position) {
                     // Save selected page
-                    editor.putInt(Konstanten.PREFERENCES_PAGE_SELECTED, position);
-                    editor.apply();
+                    tools.putInt(Konstanten.PREFERENCES_PAGE_SELECTED, position);
 
                     activePage = position;
 
@@ -262,7 +253,8 @@ public class MemberCheatViewPageIndicator extends AppCompatActivity implements G
             int intentReturnCode = data.getIntExtra("result", Konstanten.LOGIN_REGISTER_FAIL_RETURN_CODE);
 
             if (requestCode == Konstanten.LOGIN_REGISTER_OK_RETURN_CODE) {
-                member = new Gson().fromJson(sharedPreferences.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
+                member = tools.getMember();
+
                 invalidateOptionsMenu();
                 if ((member != null) && intentReturnCode == Konstanten.REGISTER_SUCCESS_RETURN_CODE) {
                     Toast.makeText(MemberCheatViewPageIndicator.this, R.string.register_thanks, Toast.LENGTH_LONG).show();
@@ -334,19 +326,19 @@ public class MemberCheatViewPageIndicator extends AppCompatActivity implements G
                 startActivity(explicitIntent);
                 return true;
             case R.id.action_add_to_favorites:
-                Tools.showSnackbar(outerLayout, getString(R.string.favorite_adding));
+                tools.showSnackbar(outerLayout, getString(R.string.favorite_adding));
 
                 int memberId = 0;
                 if (member != null) {
                     memberId = member.getMid();
                 }
-                Helper.addFavorite(this, visibleCheat, memberId, this);
+                tools.addFavorite(visibleCheat, memberId, this);
                 return true;
             case R.id.action_report:
                 showReportDialog();
                 return true;
             case R.id.action_metainfo:
-                CheatMetaDialog cmDialog = new CheatMetaDialog(MemberCheatViewPageIndicator.this, visibleCheat, outerLayout);
+                CheatMetaDialog cmDialog = new CheatMetaDialog(MemberCheatViewPageIndicator.this, visibleCheat, outerLayout, tools);
                 cmDialog.show();
                 return true;
             case R.id.action_login:
@@ -359,7 +351,7 @@ public class MemberCheatViewPageIndicator extends AppCompatActivity implements G
                 invalidateOptionsMenu();
                 return true;
             case R.id.action_share:
-                setShareIntent(Tools.setShareText(MemberCheatViewPageIndicator.this, visibleCheat));
+                setShareIntent(tools.setShareText(visibleCheat));
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -370,7 +362,7 @@ public class MemberCheatViewPageIndicator extends AppCompatActivity implements G
         if ((member == null) || (member.getMid() == 0)) {
             Toast.makeText(MemberCheatViewPageIndicator.this, R.string.error_login_required, Toast.LENGTH_SHORT).show();
         } else {
-            new ReportCheatMaterialDialog(this, visibleCheat, member, outerLayout);
+            new ReportCheatMaterialDialog(this, visibleCheat, member, outerLayout, tools);
         }
     }
 
@@ -378,7 +370,7 @@ public class MemberCheatViewPageIndicator extends AppCompatActivity implements G
         if ((member == null) || (member.getMid() == 0)) {
             Toast.makeText(this, R.string.error_login_required, Toast.LENGTH_LONG).show();
         } else {
-            new RateCheatMaterialDialog(this, visibleCheat, member, outerLayout);
+            new RateCheatMaterialDialog(this, visibleCheat, member, outerLayout, tools);
         }
     }
 
@@ -401,7 +393,8 @@ public class MemberCheatViewPageIndicator extends AppCompatActivity implements G
         if (!Reachability.isRegistered()) {
             Reachability.registerReachability(this);
         }
-        member = new Gson().fromJson(sharedPreferences.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
+        member = tools.getMember();
+
         invalidateOptionsMenu();
     }
 
@@ -433,12 +426,12 @@ public class MemberCheatViewPageIndicator extends AppCompatActivity implements G
     @Override
     public void success() {
         Log.d(TAG, "MemberCheatViewPageIndicator ADD FAV success: ");
-        Tools.showSnackbar(outerLayout, getString(R.string.add_favorite_ok));
+        tools.showSnackbar(outerLayout, getString(R.string.add_favorite_ok));
     }
 
     @Override
     public void fail(Exception e) {
         Log.d(TAG, "MemberCheatViewPageIndicator ADD FAV fail: ");
-        Tools.showSnackbar(outerLayout, getString(R.string.error_adding_favorite));
+        tools.showSnackbar(outerLayout, getString(R.string.error_adding_favorite));
     }
 }

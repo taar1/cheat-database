@@ -4,7 +4,9 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import com.cheatdatabase.R
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MyUnpublishedCheatsListActivity : AppCompatActivity() {
 
     lateinit var toolbar: Toolbar

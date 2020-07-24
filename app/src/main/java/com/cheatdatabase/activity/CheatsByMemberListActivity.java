@@ -37,8 +37,11 @@ import com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import dagger.hilt.android.AndroidEntryPoint;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -46,9 +49,13 @@ import retrofit2.Response;
 /**
  * Shows all cheats of one particular member.
  */
+@AndroidEntryPoint
 public class CheatsByMemberListActivity extends AppCompatActivity implements OnCheatListItemSelectedListener {
 
     private final String TAG = CheatsByMemberListActivity.class.getSimpleName();
+
+    @Inject
+    Tools tools;
 
     @BindView(R.id.progress_bar)
     ProgressBar progressBar;
@@ -106,7 +113,7 @@ public class CheatsByMemberListActivity extends AppCompatActivity implements OnC
     }
 
     private void init() {
-        toolbar = Tools.initToolbarBase(this, toolbar);
+        toolbar = tools.initToolbarBase(this, toolbar);
 
         emptyView.setText(getString(R.string.no_member_cheats, member.getUsername()));
         emptyView.setVisibility(View.GONE);
@@ -153,7 +160,7 @@ public class CheatsByMemberListActivity extends AppCompatActivity implements OnC
                 emptyView.setVisibility(View.VISIBLE);
                 progressBar.setVisibility(View.GONE);
 
-                Tools.showSnackbar(outerLayout, getString(R.string.error_loading_cheats));
+                tools.showSnackbar(outerLayout, getString(R.string.error_loading_cheats));
             }
         });
     }

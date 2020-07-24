@@ -32,15 +32,22 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import dagger.hilt.android.AndroidEntryPoint;
 import needle.Needle;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+@AndroidEntryPoint
 public class SystemListFragment extends Fragment implements OnSystemListItemSelectedListener {
     private final String TAG = SystemListFragment.class.getSimpleName();
+
+    @Inject
+    Tools tools;
 
     boolean getSystemsAndCountsOnline = false;
 
@@ -183,7 +190,7 @@ public class SystemListFragment extends Fragment implements OnSystemListItemSele
 
             if ((systemGameandCheatCounterList == null) || (systemGameandCheatCounterList.size() < 1)) {
                 try {
-                    Tools.showSnackbar(outerLayout, getString(R.string.err_data_not_accessible));
+                    tools.showSnackbar(outerLayout, getString(R.string.err_data_not_accessible));
                 } catch (NullPointerException | IllegalStateException e) {
                     Log.e(TAG, "NullPointerException or IllegalStateException: " + e.getLocalizedMessage());
                 }

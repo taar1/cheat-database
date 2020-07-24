@@ -2,7 +2,6 @@ package com.cheatdatabase.cheatdetailview;
 
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.Html;
 import android.util.Log;
@@ -43,9 +42,12 @@ import com.stfalcon.imageviewer.StfalconImageViewer;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import dagger.hilt.android.AndroidEntryPoint;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -56,8 +58,12 @@ import retrofit2.Response;
  * @author Dominik Erbsland
  * @version 1.1
  */
+@AndroidEntryPoint
 public class CheatViewFragment extends Fragment implements CheatViewGalleryImageClickListener {
     private static final String TAG = "CheatViewFragment";
+
+    @Inject
+    Tools tools;
 
     private LinearLayout outerLayout;
 
@@ -85,7 +91,6 @@ public class CheatViewFragment extends Fragment implements CheatViewGalleryImage
     private Member member;
     private SharedPreferences settings;
     private Editor editor;
-    private Typeface latoFontLight;
     private CheatViewPageIndicatorActivity cheatViewPageIndicatorActivity;
 
     public CheatViewFragment() {
@@ -114,8 +119,6 @@ public class CheatViewFragment extends Fragment implements CheatViewGalleryImage
 
     private void init() {
         cheatViewPageIndicatorActivity = (CheatViewPageIndicatorActivity) getActivity();
-
-        latoFontLight = Tools.getFont(cheatViewPageIndicatorActivity.getAssets(), Konstanten.FONT_LIGHT);
 
         settings = getActivity().getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
         editor = settings.edit();
@@ -155,7 +158,7 @@ public class CheatViewFragment extends Fragment implements CheatViewGalleryImage
 
             countForumPosts();
         } else {
-            Tools.showSnackbar(outerLayout, getString(R.string.err_data_not_accessible));
+            tools.showSnackbar(outerLayout, getString(R.string.err_data_not_accessible));
         }
 
         return outerLayout;
@@ -264,14 +267,12 @@ public class CheatViewFragment extends Fragment implements CheatViewGalleryImage
         tvFirstThCol.setPadding(1, 1, 5, 1);
         tvFirstThCol.setMinimumWidth(Konstanten.TABLE_ROW_MINIMUM_WIDTH);
         tvFirstThCol.setTextAppearance(cheatViewPageIndicatorActivity, R.style.NormalText);
-        tvFirstThCol.setTypeface(latoFontLight);
         trTh.addView(tvFirstThCol);
 
         TextView tvSecondThCol = new TextView(cheatViewPageIndicatorActivity);
         tvSecondThCol.setText(Html.fromHtml(secondThColumn));
         tvSecondThCol.setPadding(5, 1, 1, 1);
         tvSecondThCol.setTextAppearance(getContext(), R.style.NormalText);
-        tvSecondThCol.setTypeface(latoFontLight);
         trTh.addView(tvSecondThCol);
 
         /* Add row to TableLayout. */
@@ -296,7 +297,6 @@ public class CheatViewFragment extends Fragment implements CheatViewGalleryImage
             tvFirstTdCol.setPadding(1, 1, 10, 1);
             tvFirstTdCol.setMinimumWidth(Konstanten.TABLE_ROW_MINIMUM_WIDTH);
             tvFirstTdCol.setTextAppearance(getContext(), R.style.NormalText);
-            tvFirstTdCol.setTypeface(latoFontLight);
             trTd.addView(tvFirstTdCol);
 
             TextView tvSecondTdCol = new TextView(cheatViewPageIndicatorActivity);
@@ -305,7 +305,6 @@ public class CheatViewFragment extends Fragment implements CheatViewGalleryImage
             tvSecondTdCol.canScrollHorizontally(1);
             tvSecondTdCol.setPadding(10, 1, 30, 1);
             tvSecondTdCol.setTextAppearance(getContext(), R.style.NormalText);
-            tvSecondTdCol.setTypeface(latoFontLight);
             trTd.addView(tvSecondTdCol);
 
             /* Add row to TableLayout. */
@@ -358,7 +357,7 @@ public class CheatViewFragment extends Fragment implements CheatViewGalleryImage
 
             @Override
             public void onFailure(Call<Cheat> call, Throwable e) {
-                Tools.showSnackbar(outerLayout, getContext().getString(R.string.err_somethings_wrong), 5000);
+                tools.showSnackbar(outerLayout, getContext().getString(R.string.err_somethings_wrong), 5000);
             }
         });
     }

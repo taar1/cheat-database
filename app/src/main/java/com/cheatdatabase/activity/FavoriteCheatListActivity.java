@@ -46,11 +46,15 @@ import org.greenrobot.eventbus.Subscribe;
 import java.io.File;
 import java.util.ArrayList;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import dagger.hilt.android.AndroidEntryPoint;
 import needle.Needle;
 
+@AndroidEntryPoint
 public class FavoriteCheatListActivity extends AppCompatActivity implements OnCheatListItemSelectedListener {
 
     private final String TAG = this.getClass().getSimpleName();
@@ -67,6 +71,9 @@ public class FavoriteCheatListActivity extends AppCompatActivity implements OnCh
 
     private ArrayList<Cheat> cheatsArrayList;
     private AdView facebookAdView;
+
+    @Inject
+    Tools tools;
 
     @BindView(R.id.outer_layout)
     LinearLayout outerLayout;
@@ -259,7 +266,7 @@ public class FavoriteCheatListActivity extends AppCompatActivity implements OnCh
     @Subscribe
     public void onEvent(CheatRatingFinishedEvent result) {
         visibleCheat.setMemberRating(result.getRating());
-        Tools.showSnackbar(outerLayout, getString(R.string.rating_inserted));
+        tools.showSnackbar(outerLayout, getString(R.string.rating_inserted));
     }
 
     @Override
@@ -295,7 +302,7 @@ public class FavoriteCheatListActivity extends AppCompatActivity implements OnCh
     private void error() {
         Log.e(TAG, "Caught error: " + getPackageName() + "/" + getTitle());
         Needle.onMainThread().execute(() -> {
-            Tools.showSnackbar(outerLayout, getString(R.string.err_data_not_accessible));
+            tools.showSnackbar(outerLayout, getString(R.string.err_data_not_accessible));
         });
     }
 
@@ -325,7 +332,7 @@ public class FavoriteCheatListActivity extends AppCompatActivity implements OnCh
             explicitIntent.putExtra("layoutResourceId", R.layout.activity_cheatview_pager);
             startActivity(explicitIntent);
         } else {
-            Tools.showSnackbar(outerLayout, getString(R.string.no_internet));
+            tools.showSnackbar(outerLayout, getString(R.string.no_internet));
         }
 
 

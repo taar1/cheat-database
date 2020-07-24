@@ -2,7 +2,6 @@ package com.cheatdatabase.cheatdetailview;
 
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Environment;
 import android.text.Html;
@@ -42,9 +41,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import dagger.hilt.android.AndroidEntryPoint;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -55,9 +57,13 @@ import retrofit2.Response;
  * @author Dominik Erbsland
  * @version 1.0
  */
+@AndroidEntryPoint
 public class FavoritesCheatViewFragment extends Fragment implements FavoritesCheatViewGalleryImageClickListener {
 
     private static final String TAG = FavoritesCheatViewFragment.class.getSimpleName();
+
+    @Inject
+    Tools tools;
 
     @BindView(R.id.table_cheat_list_main)
     TableLayout mainTable;
@@ -85,7 +91,6 @@ public class FavoritesCheatViewFragment extends Fragment implements FavoritesChe
     private SharedPreferences settings;
     private Editor editor;
 
-    private Typeface latoFontLight;
     private FavoritesCheatViewPageIndicator favoritesCheatViewPageIndicatorActivity;
     private List<File> screenshotList;
 
@@ -111,8 +116,6 @@ public class FavoritesCheatViewFragment extends Fragment implements FavoritesChe
         }
 
         favoritesCheatViewPageIndicatorActivity = (FavoritesCheatViewPageIndicator) getActivity();
-
-        latoFontLight = Tools.getFont(favoritesCheatViewPageIndicatorActivity.getAssets(), Konstanten.FONT_LIGHT);
 
         settings = getActivity().getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
 
@@ -283,14 +286,12 @@ public class FavoritesCheatViewFragment extends Fragment implements FavoritesChe
         tvFirstThCol.setPadding(1, 1, 5, 1);
         tvFirstThCol.setMinimumWidth(Konstanten.TABLE_ROW_MINIMUM_WIDTH);
         tvFirstThCol.setTextAppearance(favoritesCheatViewPageIndicatorActivity, R.style.NormalText);
-        tvFirstThCol.setTypeface(latoFontLight);
         trTh.addView(tvFirstThCol);
 
         TextView tvSecondThCol = new TextView(favoritesCheatViewPageIndicatorActivity);
         tvSecondThCol.setText(Html.fromHtml(secondThColumn));
         tvSecondThCol.setPadding(5, 1, 1, 1);
         tvSecondThCol.setTextAppearance(favoritesCheatViewPageIndicatorActivity, R.style.NormalText);
-        tvSecondThCol.setTypeface(latoFontLight);
         trTh.addView(tvSecondThCol);
 
         /* Add row to TableLayout. */
@@ -314,14 +315,12 @@ public class FavoritesCheatViewFragment extends Fragment implements FavoritesChe
             tvFirstTdCol.setPadding(1, 1, 10, 1);
             tvFirstTdCol.setMinimumWidth(Konstanten.TABLE_ROW_MINIMUM_WIDTH);
             tvFirstTdCol.setTextAppearance(favoritesCheatViewPageIndicatorActivity, R.style.NormalText);
-            tvFirstTdCol.setTypeface(latoFontLight);
             trTd.addView(tvFirstTdCol);
 
             TextView tvSecondTdCol = new TextView(favoritesCheatViewPageIndicatorActivity);
             tvSecondTdCol.setText(secondTdColumn);
             tvSecondTdCol.setPadding(10, 1, 30, 1);
             tvSecondTdCol.setTextAppearance(favoritesCheatViewPageIndicatorActivity, R.style.NormalText);
-            tvSecondTdCol.setTypeface(latoFontLight);
             trTd.addView(tvSecondTdCol);
 
             /* Add row to TableLayout. */
@@ -352,7 +351,7 @@ public class FavoritesCheatViewFragment extends Fragment implements FavoritesChe
             @Override
             public void onFailure(Call<Cheat> call, Throwable e) {
                 Log.e(TAG, "getCheatBody onFailure: " + e.getLocalizedMessage());
-                Tools.showSnackbar(outerLayout, getContext().getString(R.string.err_somethings_wrong), 5000);
+                tools.showSnackbar(outerLayout, getContext().getString(R.string.err_somethings_wrong), 5000);
             }
         });
     }

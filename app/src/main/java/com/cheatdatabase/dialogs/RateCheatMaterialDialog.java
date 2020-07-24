@@ -28,6 +28,8 @@ import retrofit2.Response;
 public class RateCheatMaterialDialog {
     private static final String TAG = "RateCheatMaterialDialog";
 
+    private Tools tools;
+
     Activity activity;
     Cheat cheat;
     Member member;
@@ -35,11 +37,12 @@ public class RateCheatMaterialDialog {
     View view;
     private int newRatingBarValue;
 
-    public RateCheatMaterialDialog(final Activity activity, Cheat cheat, Member member, View view) {
+    public RateCheatMaterialDialog(final Activity activity, Cheat cheat, Member member, View view, Tools tools) {
         this.activity = activity;
         this.cheat = cheat;
         this.member = member;
         this.view = view;
+        this.tools = tools;
 
         restApi = RetrofitClientInstance.getRetrofitInstance().create(RestApi.class);
 
@@ -85,7 +88,7 @@ public class RateCheatMaterialDialog {
                 String cheatRatingResponseValue = cheatRatingResponse.get("successMessage").getAsString(); // inserted|updated
 
                 cheat.setMemberRating(rating);
-                Tools.showSnackbar(view, activity.getString(R.string.rating_inserted));
+                tools.showSnackbar(view, activity.getString(R.string.rating_inserted));
             }
 
             @Override

@@ -396,7 +396,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             if (intentMoreApps.resolveActivity(getPackageManager()) != null) {
                 startActivity(intentMoreApps);
             } else {
-                Tools.showSnackbar(mDrawerLayout, getResources().getString(R.string.err_other_problem));
+                tools.showSnackbar(mDrawerLayout, getResources().getString(R.string.err_other_problem));
             }
             mDrawerLayout.closeDrawers();
         } else if (id == R.id.nav_terms_of_use) {

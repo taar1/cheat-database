@@ -39,6 +39,7 @@ public class CheatMetaDialog extends Dialog implements OnClickListener {
     private Member member;
     private RestApi restApi;
     private View view;
+    private Tools tools;
 
     private ConstraintLayout outerLayout;
     private TextView averageRatingTitle;
@@ -61,11 +62,12 @@ public class CheatMetaDialog extends Dialog implements OnClickListener {
     private View divider5;
     private View divider6;
 
-    public CheatMetaDialog(Context context, Cheat cheat, View view) {
+    public CheatMetaDialog(Context context, Cheat cheat, View view, Tools tools) {
         super(context);
         this.context = context;
         this.cheat = cheat;
         this.view = view;
+        this.tools = tools;
 
         restApi = RetrofitClientInstance.getRetrofitInstance().create(RestApi.class);
         member = cheat.getSubmittingMember();
@@ -137,8 +139,7 @@ public class CheatMetaDialog extends Dialog implements OnClickListener {
             @Override
             public void onFailure(Call<JsonObject> call, Throwable e) {
                 Log.e(TAG, "getCheatList onFailure: " + e.getLocalizedMessage());
-//                Toast.makeText(context, R.string.err_somethings_wrong, Toast.LENGTH_LONG).show();
-                Tools.showSnackbar(view, context.getString(R.string.err_somethings_wrong), 5000);
+                tools.showSnackbar(view, context.getString(R.string.err_somethings_wrong), 5000);
             }
         });
     }

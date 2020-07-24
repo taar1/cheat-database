@@ -154,7 +154,7 @@ public class SubmitCheatFormActivity extends AppCompatActivity {
                 if (Reachability.reachability.isReachable) {
                     checkMemberPermissions();
                 } else {
-                    Tools.showSnackbar(outerLayout, getString(R.string.no_internet));
+                    tools.showSnackbar(outerLayout, getString(R.string.no_internet));
                 }
             }
         } else {
@@ -189,7 +189,7 @@ public class SubmitCheatFormActivity extends AppCompatActivity {
             public void onFailure(Call<JsonObject> call, Throwable t) {
                 Log.d(TAG, "checkMemberPermissions: 3");
                 Log.e(TAG, "Get user permissions failed: " + t.getLocalizedMessage());
-                Tools.showSnackbar(outerLayout, getString(R.string.no_internet));
+                tools.showSnackbar(outerLayout, getString(R.string.no_internet));
             }
         });
     }
@@ -222,7 +222,7 @@ public class SubmitCheatFormActivity extends AppCompatActivity {
             public void onFailure(Call<JsonObject> call, Throwable t) {
                 Log.d(TAG, "submitCheatNow: 3");
                 Log.e(TAG, "Submitting the cheat has failed: " + t.getLocalizedMessage());
-                Tools.showSnackbar(outerLayout, getString(R.string.no_internet));
+                tools.showSnackbar(outerLayout, getString(R.string.no_internet));
             }
         });
     }

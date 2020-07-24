@@ -37,15 +37,22 @@ import com.google.gson.Gson;
 
 import org.greenrobot.eventbus.EventBus;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import dagger.hilt.android.AndroidEntryPoint;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+@AndroidEntryPoint
 public class ContactFormFragment extends Fragment {
 
     private static final String TAG = "ContactFormFragment";
+
+    @Inject
+    Tools tools;
 
     @BindView(R.id.outer_layout)
     LinearLayout outerLayout;
@@ -116,7 +123,7 @@ public class ContactFormFragment extends Fragment {
         });
         Linkify.addLinks(mEmailaddressView, Linkify.ALL);
 
-        Tools.showKeyboard(mainActivity, outerLayout);
+        tools.showKeyboard(mainActivity, outerLayout);
 
         return view;
     }
@@ -265,7 +272,7 @@ public class ContactFormFragment extends Fragment {
             public void onFailure(Call<Void> call, Throwable e) {
                 Log.e(TAG, "submitContactForm onFailure: " + e.getLocalizedMessage());
 
-                Tools.showSnackbar(outerLayout, mainActivity.getString(R.string.err_submit_contactform), 5000);
+                tools.showSnackbar(outerLayout, mainActivity.getString(R.string.err_submit_contactform), 5000);
             }
         });
     }
@@ -276,7 +283,7 @@ public class ContactFormFragment extends Fragment {
             InputMethodManager imm = (InputMethodManager) mainActivity.getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
-        Tools.showSnackbar(outerLayout, mainActivity.getString(R.string.contactform_thanks), 5000);
+        tools.showSnackbar(outerLayout, mainActivity.getString(R.string.contactform_thanks), 5000);
 
         Handler handler = new Handler();
         handler.postDelayed(() -> EventBus.getDefault().post(new GenericEvent(GenericEvent.Action.CLICK_CHEATS_DRAWER)), 1500);

@@ -20,8 +20,11 @@ import com.cheatdatabase.data.model.Member
 import com.cheatdatabase.helpers.Konstanten
 import com.cheatdatabase.helpers.Tools
 import com.google.gson.Gson
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_my_cheats_overview.view.*
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class MyCheatsFragment(
     val mainActivity: MainActivity,
     var settings: SharedPreferences,
@@ -29,6 +32,9 @@ class MyCheatsFragment(
 ) :
     Fragment() {
     val TAG = "MyCheatsFragment"
+
+    @Inject
+    lateinit var tools: Tools
 
     lateinit var myScoreLayout: LinearLayout
     lateinit var outerLayout: ConstraintLayout
@@ -55,7 +61,7 @@ class MyCheatsFragment(
         settings = this.mainActivity.getSharedPreferences(Konstanten.PREFERENCES_FILE, 0)
 
         myScoreLayout.setOnClickListener {
-            Tools.showSnackbar(outerLayout, getString(R.string.earn_points_submitting_cheats))
+            tools.showSnackbar(outerLayout, getString(R.string.earn_points_submitting_cheats))
         }
 
         unpublishedCheatsCard.setOnClickListener {
@@ -79,7 +85,7 @@ class MyCheatsFragment(
 
     private fun startActivityIfLoggedIn(member: Member?, myCheatsIntent: Intent) {
         if (member == null || member.mid == 0) {
-            Tools.showSnackbar(outerLayout, getString(R.string.error_login_required))
+            tools.showSnackbar(outerLayout, getString(R.string.error_login_required))
         } else {
             startActivity(myCheatsIntent)
         }

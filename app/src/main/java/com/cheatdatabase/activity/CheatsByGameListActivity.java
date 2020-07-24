@@ -205,7 +205,7 @@ public class CheatsByGameListActivity extends AppCompatActivity implements OnChe
                 finish();
                 return true;
             case R.id.action_add_to_favorites:
-                Tools.showSnackbar(outerLayout, getString(R.string.favorite_adding));
+                tools.showSnackbar(outerLayout, getString(R.string.favorite_adding));
                 addCheatsToFavoritesTask();
                 return true;
             case R.id.action_submit_cheat:
@@ -324,7 +324,7 @@ public class CheatsByGameListActivity extends AppCompatActivity implements OnChe
     private void error() {
         Log.e(TAG, "Caught error: " + getPackageName() + "/" + getTitle());
         Needle.onMainThread().execute(() -> {
-            Tools.showSnackbar(outerLayout, getString(R.string.err_data_not_accessible));
+            tools.showSnackbar(outerLayout, getString(R.string.err_data_not_accessible));
         });
     }
 
@@ -385,7 +385,7 @@ public class CheatsByGameListActivity extends AppCompatActivity implements OnChe
                     if (cheat.hasScreenshots()) {
                         // TODO FIXME: currently it ignores success/fail of saving screenshots to SD card...
                         // TODO FIXME: currently it ignores success/fail of saving screenshots to SD card...
-                        Tools.saveScreenshotsToSdCard(cheat, null);
+                        tools.saveScreenshotsToSdCard(cheat, null);
                     }
 
                     Needle.onBackgroundThread().execute(() -> {
@@ -399,13 +399,13 @@ public class CheatsByGameListActivity extends AppCompatActivity implements OnChe
 
                 }
 
-                Tools.showSnackbar(outerLayout, getString(R.string.add_favorites_ok));
+                tools.showSnackbar(outerLayout, getString(R.string.add_favorites_ok));
             }
 
             @Override
             public void onFailure(Call<List<Cheat>> call, Throwable e) {
                 Log.e(TAG, "insertFavoriteCheats onFailure: " + e.getLocalizedMessage());
-                Tools.showSnackbar(outerLayout, getString(R.string.error_adding_favorites));
+                tools.showSnackbar(outerLayout, getString(R.string.error_adding_favorites));
             }
         });
     }
@@ -423,7 +423,7 @@ public class CheatsByGameListActivity extends AppCompatActivity implements OnChe
             explicitIntent.putExtra("layoutResourceId", R.layout.activity_cheatview_pager);
             startActivity(explicitIntent);
         } else {
-            Tools.showSnackbar(outerLayout, getString(R.string.no_internet));
+            tools.showSnackbar(outerLayout, getString(R.string.no_internet));
         }
     }
 }

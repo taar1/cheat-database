@@ -46,9 +46,12 @@ public class GamesBySystemRecycleListViewAdapter extends RecyclerView.Adapter<Re
 
     private NativeAdsManager mNativeAdsManager;
 
-    public GamesBySystemRecycleListViewAdapter(Activity activity, NativeAdsManager nativeAdsManager, OnGameListItemSelectedListener listener) {
+    private Tools tools;
+
+    public GamesBySystemRecycleListViewAdapter(Activity activity, NativeAdsManager nativeAdsManager, Tools tools, OnGameListItemSelectedListener listener) {
         this.activity = activity;
         this.mNativeAdsManager = nativeAdsManager;
+        this.tools = tools;
         this.listener = listener;
         gameList = new ArrayList<>();
         listItems = new ArrayList<>();
@@ -174,7 +177,7 @@ public class GamesBySystemRecycleListViewAdapter extends RecyclerView.Adapter<Re
         final List<ListItem> newListItems = new ArrayList<>();
         boolean showUkonAds = true;
 
-        if (Tools.getCountryCode(activity).equalsIgnoreCase("us")) {
+        if (tools.getCountryCode(activity).equalsIgnoreCase("us")) {
             showUkonAds = false;
         }
 

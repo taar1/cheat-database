@@ -39,7 +39,6 @@ import com.cheatdatabase.dialogs.RateCheatMaterialDialog;
 import com.cheatdatabase.dialogs.ReportCheatMaterialDialog;
 import com.cheatdatabase.events.CheatRatingFinishedEvent;
 import com.cheatdatabase.helpers.AeSimpleMD5;
-import com.cheatdatabase.helpers.Helper;
 import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.helpers.Tools;
@@ -389,18 +388,18 @@ public class CheatForumActivity extends AppCompatActivity implements GenericCall
                 showRatingDialog();
                 return true;
             case R.id.action_add_to_favorites:
-                Tools.showSnackbar(outerLayout, getString(R.string.favorite_adding));
+                tools.showSnackbar(outerLayout, getString(R.string.favorite_adding));
                 int memberId = 0;
                 if (member != null) {
                     memberId = member.getMid();
                 }
-                Helper.addFavorite(this, cheatObj, memberId, this);
+                tools.addFavorite(cheatObj, memberId, this);
                 return true;
             case R.id.action_share:
-                Helper.shareCheat(cheatObj, this);
+                tools.shareCheat(cheatObj);
                 return true;
             case R.id.action_metainfo:
-                CheatMetaDialog cmDialog = new CheatMetaDialog(this, cheatObj, outerLayout);
+                CheatMetaDialog cmDialog = new CheatMetaDialog(this, cheatObj, outerLayout, tools);
                 cmDialog.show();
                 return true;
             case R.id.action_report:
@@ -450,7 +449,7 @@ public class CheatForumActivity extends AppCompatActivity implements GenericCall
         if ((member == null) || (member.getMid() == 0)) {
             Toast.makeText(this, R.string.error_login_required, Toast.LENGTH_LONG).show();
         } else {
-            new ReportCheatMaterialDialog(this, cheatObj, member, outerLayout);
+            new ReportCheatMaterialDialog(this, cheatObj, member, outerLayout, tools);
         }
     }
 
@@ -458,7 +457,7 @@ public class CheatForumActivity extends AppCompatActivity implements GenericCall
         if ((member == null) || (member.getMid() == 0)) {
             Toast.makeText(this, R.string.error_login_required, Toast.LENGTH_LONG).show();
         } else {
-            new RateCheatMaterialDialog(this, cheatObj, member, outerLayout);
+            new RateCheatMaterialDialog(this, cheatObj, member, outerLayout, tools);
         }
     }
 
@@ -536,12 +535,12 @@ public class CheatForumActivity extends AppCompatActivity implements GenericCall
     @Override
     public void success() {
         Log.d(TAG, "CheatForumActivity ADD FAV success: ");
-        Tools.showSnackbar(outerLayout, getString(R.string.add_favorite_ok));
+        tools.showSnackbar(outerLayout, getString(R.string.add_favorite_ok));
     }
 
     @Override
     public void fail(Exception e) {
         Log.d(TAG, "CheatForumActivity ADD FAV fail: ");
-        Tools.showSnackbar(outerLayout, getString(R.string.error_adding_favorite));
+        tools.showSnackbar(outerLayout, getString(R.string.error_adding_favorite));
     }
 }
