@@ -3,8 +3,6 @@ package com.cheatdatabase.activity;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -19,12 +17,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.cheatdatabase.R;
-import com.cheatdatabase.data.RetrofitClientInstance;
 import com.cheatdatabase.data.model.Member;
 import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Reachability;
+import com.cheatdatabase.helpers.Tools;
 import com.cheatdatabase.rest.RestApi;
 import com.google.gson.JsonObject;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -45,6 +45,12 @@ public class RegisterActivity extends AppCompatActivity {
      */
     public static final String EXTRA_EMAIL = "com.example.android.authenticatordemo.extra.EMAIL";
 
+    @Inject
+    Tools tools;
+
+    @Inject
+    RestApi restApi;
+
     // Values for email and password at the time of the login attempt.
     private String mEmail;
 
@@ -63,11 +69,6 @@ public class RegisterActivity extends AppCompatActivity {
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
 
-    private Member member;
-    private SharedPreferences settings;
-    private Editor editor;
-
-    private RestApi restApi;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,16 +115,11 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void init() {
-        restApi = RetrofitClientInstance.getRetrofitInstance().create(RestApi.class);
-
         if (mToolbar != null) {
             setSupportActionBar(mToolbar);
         }
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
-
-        settings = getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
-        editor = settings.edit();
     }
 
     @Override
@@ -186,8 +182,7 @@ public class RegisterActivity extends AppCompatActivity {
             focusView.requestFocus();
         } else {
             // Delete locally saved member object
-            editor.remove(Konstanten.MEMBER_OBJECT);
-            editor.commit();
+            tools.removeValue(Konstanten.MEMBER_OBJECT);
 
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
@@ -240,12 +235,14 @@ public class RegisterActivity extends AppCompatActivity {
 
                 if (returnValue.equalsIgnoreCase("register_ok")) {
 
-                    member = new Member();
+                    Member member = new Member();
                     member.setMid(registerResponse.get("memberId").getAsInt());
                     member.setUsername(registerResponse.get("username").getAsString());
                     member.setEmail(registerResponse.get("email").getAsString());
                     member.setPassword(registerResponse.get("pw").getAsString());
-                    member.writeMemberData(member, settings);
+                    //member.writeMemberData(member, tools.getSharedPreferences());
+
+                    tools.putMember(member);
 
                     registerTaskFinished(true, 0);
                 } else if (returnValue.equalsIgnoreCase("username_already_exists")) {

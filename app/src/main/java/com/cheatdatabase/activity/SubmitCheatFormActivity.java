@@ -17,7 +17,6 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.Theme;
 import com.cheatdatabase.R;
-import com.cheatdatabase.data.RetrofitClientInstance;
 import com.cheatdatabase.data.model.Game;
 import com.cheatdatabase.data.model.Member;
 import com.cheatdatabase.data.model.UnpublishedCheat;
@@ -51,6 +50,9 @@ public class SubmitCheatFormActivity extends AppCompatActivity {
     @Inject
     Tools tools;
 
+    @Inject
+    RestApi restApi;
+
     @BindView(R.id.outer_layout)
     ConstraintLayout outerLayout;
     @BindView(R.id.text_cheat_submission_title)
@@ -68,15 +70,11 @@ public class SubmitCheatFormActivity extends AppCompatActivity {
     private Member member;
     private UnpublishedCheat unpublishedCheat;
 
-    private RestApi restApi;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_submit_cheat_layout);
         ButterKnife.bind(this);
-
-        restApi = RetrofitClientInstance.getRetrofitInstance().create(RestApi.class);
 
         Intent intent = getIntent();
         gameObj = intent.getParcelableExtra("gameObj");

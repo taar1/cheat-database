@@ -29,7 +29,6 @@ import androidx.core.view.MenuItemCompat;
 
 import com.cheatdatabase.R;
 import com.cheatdatabase.callbacks.GenericCallback;
-import com.cheatdatabase.data.RetrofitClientInstance;
 import com.cheatdatabase.data.model.Cheat;
 import com.cheatdatabase.data.model.ForumPost;
 import com.cheatdatabase.data.model.Game;
@@ -79,6 +78,9 @@ public class CheatForumActivity extends AppCompatActivity implements GenericCall
     @Inject
     Tools tools;
 
+    @Inject
+    RestApi restApi;
+
     @BindView(R.id.outer_layout)
     LinearLayout outerLayout;
     @BindView(R.id.toolbar)
@@ -101,7 +103,6 @@ public class CheatForumActivity extends AppCompatActivity implements GenericCall
     LinearLayout facebookBanner;
     private AdView adView;
 
-    private RestApi restApi;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,7 +110,6 @@ public class CheatForumActivity extends AppCompatActivity implements GenericCall
         setContentView(R.layout.activity_cheat_forum);
         ButterKnife.bind(this);
 
-        restApi = RetrofitClientInstance.getRetrofitInstance().create(RestApi.class);
 
         cheatObj = getIntent().getParcelableExtra("cheatObj");
         gameObj = getIntent().getParcelableExtra("gameObj");
@@ -155,8 +155,6 @@ public class CheatForumActivity extends AppCompatActivity implements GenericCall
         if (!Reachability.isRegistered()) {
             Reachability.registerReachability(this);
         }
-
-        restApi = RetrofitClientInstance.getRetrofitInstance().create(RestApi.class);
 
         adView = new AdView(this, Konstanten.FACEBOOK_AUDIENCE_NETWORK_NATIVE_BANNER_ID, AdSize.BANNER_HEIGHT_50);
         facebookBanner.addView(adView);

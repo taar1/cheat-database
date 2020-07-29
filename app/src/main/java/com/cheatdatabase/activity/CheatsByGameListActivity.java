@@ -22,7 +22,6 @@ import com.cheatdatabase.CheatDatabaseApplication;
 import com.cheatdatabase.R;
 import com.cheatdatabase.adapters.CheatsByGameRecycleListViewAdapter;
 import com.cheatdatabase.cheatdetailview.CheatViewPageIndicatorActivity;
-import com.cheatdatabase.data.RetrofitClientInstance;
 import com.cheatdatabase.data.RoomCheatDatabase;
 import com.cheatdatabase.data.dao.FavoriteCheatDao;
 import com.cheatdatabase.data.model.Cheat;
@@ -74,8 +73,8 @@ public class CheatsByGameListActivity extends AppCompatActivity implements OnChe
     @Inject
     Tools tools;
 
-//    @Inject
-//    NetworkModule networkModule;
+    @Inject
+    RestApi restApi;
 
     @BindView(R.id.outer_layout)
     LinearLayout outerLayout;
@@ -89,9 +88,6 @@ public class CheatsByGameListActivity extends AppCompatActivity implements OnChe
     TextView mEmptyView;
     @BindView(R.id.banner_container)
     LinearLayout bannerContainerFacebook;
-
-
-    private RestApi restApi;
 
     @Override
     protected void onStart() {
@@ -109,8 +105,6 @@ public class CheatsByGameListActivity extends AppCompatActivity implements OnChe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cheat_list);
         ButterKnife.bind(this);
-
-        restApi = RetrofitClientInstance.getRetrofitInstance().create(RestApi.class);
 
         NativeAdsManager nativeAdsManager = new NativeAdsManager(this, Konstanten.FACEBOOK_AUDIENCE_NETWORK_NATIVE_AD_IN_RECYCLER_VIEW, 5);
         nativeAdsManager.loadAds(NativeAd.MediaCacheFlag.ALL);
@@ -274,11 +268,13 @@ public class CheatsByGameListActivity extends AppCompatActivity implements OnChe
 
             TreeMap finalCheatListTree = cheatListTree;
 
+            Log.d(TAG, "XXXXXX GGGGG loadCheats: ");
+
             Call<List<Cheat>> call = restApi.getCheatsAndRatings(gameObj.getGameId(), memberId, (isAchievementsEnabled ? 1 : 0));
             call.enqueue(new Callback<List<Cheat>>() {
                 @Override
                 public void onResponse(Call<List<Cheat>> cheats, Response<List<Cheat>> response) {
-                    cheatList = (ArrayList) response.body();
+                    cheatList = (ArrayList<Cheat>) response.body();
 
                     gameObj.setCheatList(cheatList);
 

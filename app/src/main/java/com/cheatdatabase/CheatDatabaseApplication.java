@@ -34,6 +34,7 @@ public class CheatDatabaseApplication extends Application implements Application
     private Tracker googleAnalyticsTracker;
     private FirebaseAnalytics firebaseAnalytics;
 
+
     /**
      * Gets the default {@link Tracker} for this {@link CheatDatabaseApplication}.
      *

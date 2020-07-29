@@ -14,18 +14,9 @@ import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
 
-@Module
 @InstallIn(ApplicationComponent::class)
+@Module
 class NetworkModule {
-
-    // https://www.youtube.com/watch?v=8vAQrgbh6YM
-    // https://www.youtube.com/watch?v=8vAQrgbh6YM
-    // https://www.youtube.com/watch?v=8vAQrgbh6YM
-    // https://www.youtube.com/watch?v=8vAQrgbh6YM
-
-
-    private val okHttpClient = OkHttpClient.Builder().build()
-//    private val gson = GsonBuilder().setDateFormat("yyyy-MM-dd").create()
 
     @Provides
     @Singleton
@@ -40,36 +31,26 @@ class NetworkModule {
     @Singleton
     fun providesGsonBuilder(): Gson {
         return GsonBuilder()
-            .excludeFieldsWithoutExposeAnnotation()
+            //.excludeFieldsWithoutExposeAnnotation()
             .setDateFormat("yyyy-MM-dd")
             .create()
     }
 
-    //    @Provides
-//    @Singleton
-    fun provideRestApiService(gson: Gson): RestApi? {
+    @Provides
+    @Singleton
+    fun provideRestApiService(gson: Gson, okHttpClient: OkHttpClient): Retrofit {
+
         return Retrofit.Builder()
             .client(okHttpClient)
             .baseUrl(Konstanten.BASE_URL_REST)
             .addConverterFactory(GsonConverterFactory.create(gson))
             .build()
-            .create(RestApi::class.java)
     }
 
-
-//    private var retrofit: Retrofit? = null
-//    private val okHttpClient = OkHttpClient.Builder().build()
-//    private val gson = GsonBuilder().setDateFormat("yyyy-MM-dd").create()
-//
-//    fun getRetrofitInstance(): Retrofit? {
-//        if (retrofit == null) {
-//            retrofit = Retrofit.Builder()
-//                .client(okHttpClient)
-//                .baseUrl(Konstanten.BASE_URL_REST)
-//                .addConverterFactory(GsonConverterFactory.create(gson))
-//                .build()
-//        }
-//        return retrofit
-//    }
+    @Provides
+    @Singleton
+    fun provideApiService(retrofit: Retrofit): RestApi {
+        return retrofit.create(RestApi::class.java)
+    }
 
 }

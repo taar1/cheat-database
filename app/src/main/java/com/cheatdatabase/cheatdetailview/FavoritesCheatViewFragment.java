@@ -31,6 +31,7 @@ import com.cheatdatabase.data.model.Member;
 import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.helpers.Tools;
+import com.cheatdatabase.rest.RestApi;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.squareup.picasso.Picasso;
@@ -64,6 +65,9 @@ public class FavoritesCheatViewFragment extends Fragment implements FavoritesChe
 
     @Inject
     Tools tools;
+
+    @Inject
+    RestApi restApi;
 
     @BindView(R.id.table_cheat_list_main)
     TableLayout mainTable;
@@ -341,7 +345,7 @@ public class FavoritesCheatViewFragment extends Fragment implements FavoritesChe
     }
 
     private void getCheatBody() {
-        Call<Cheat> call = favoritesCheatViewPageIndicatorActivity.getRestApi().getCheatById(cheatObj.getCheatId());
+        Call<Cheat> call = restApi.getCheatById(cheatObj.getCheatId());
         call.enqueue(new Callback<Cheat>() {
             @Override
             public void onResponse(Call<Cheat> metaInfo, Response<Cheat> response) {
@@ -373,7 +377,7 @@ public class FavoritesCheatViewFragment extends Fragment implements FavoritesChe
 
     private void getCheatRating() {
         if (member != null) {
-            Call<JsonObject> call = favoritesCheatViewPageIndicatorActivity.getRestApi().getMemberRatingByCheatId(member.getMid(), cheatObj.getCheatId());
+            Call<JsonObject> call = restApi.getMemberRatingByCheatId(member.getMid(), cheatObj.getCheatId());
             call.enqueue(new Callback<JsonObject>() {
                 @Override
                 public void onResponse(Call<JsonObject> ratingInfo, Response<JsonObject> response) {

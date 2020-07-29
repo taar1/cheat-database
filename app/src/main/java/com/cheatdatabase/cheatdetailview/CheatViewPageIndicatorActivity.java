@@ -28,7 +28,6 @@ import com.cheatdatabase.activity.CheatForumActivity;
 import com.cheatdatabase.activity.LoginActivity;
 import com.cheatdatabase.activity.SubmitCheatFormActivity;
 import com.cheatdatabase.callbacks.GenericCallback;
-import com.cheatdatabase.data.RetrofitClientInstance;
 import com.cheatdatabase.data.model.Cheat;
 import com.cheatdatabase.data.model.Game;
 import com.cheatdatabase.data.model.Member;
@@ -84,6 +83,8 @@ public class CheatViewPageIndicatorActivity extends AppCompatActivity implements
     @Inject
     Tools tools;
 
+    @Inject
+    RestApi restApi;
 
     @BindView(R.id.outer_layout)
     LinearLayout outerLayout;
@@ -106,8 +107,6 @@ public class CheatViewPageIndicatorActivity extends AppCompatActivity implements
     private int activePage;
     private ShareActionProvider mShare;
     private AdView adView;
-
-    private RestApi restApi;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -160,8 +159,6 @@ public class CheatViewPageIndicatorActivity extends AppCompatActivity implements
         if (!Reachability.isRegistered()) {
             Reachability.registerReachability(this);
         }
-
-        restApi = RetrofitClientInstance.getRetrofitInstance().create(RestApi.class);
 
         settings = getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
         editor = settings.edit();

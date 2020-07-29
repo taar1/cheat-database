@@ -32,7 +32,6 @@ import com.afollestad.materialdialogs.Theme;
 import com.appbrain.AppBrain;
 import com.cheatdatabase.R;
 import com.cheatdatabase.activity.ui.mycheats.UnpublishedCheatsRepositoryKotlin;
-import com.cheatdatabase.data.RetrofitClientInstance;
 import com.cheatdatabase.data.model.Member;
 import com.cheatdatabase.dialogs.RateAppDialog;
 import com.cheatdatabase.fragments.ContactFormFragment;
@@ -90,6 +89,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Inject
     Tools tools;
+
+    @Inject
+    RestApi restApi;
 
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
@@ -472,7 +474,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
      */
     private void countMyCheats() {
         if ((member != null) && (member.getMid() != 0)) {
-            RestApi restApi = RetrofitClientInstance.getRetrofitInstance().create(RestApi.class);
             Call<UnpublishedCheatsRepositoryKotlin.MyCheatsCount> call;
             try {
                 //Log.d(TAG, "XXXXX countMyCheats: " + AeSimpleMD5.MD5(member.getPassword()));

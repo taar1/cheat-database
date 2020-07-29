@@ -26,7 +26,6 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.cheatdatabase.R;
 import com.cheatdatabase.activity.CheatsByGameListActivity;
-import com.cheatdatabase.data.RetrofitClientInstance;
 import com.cheatdatabase.data.model.Game;
 import com.cheatdatabase.helpers.Group;
 import com.cheatdatabase.helpers.Konstanten;
@@ -62,6 +61,9 @@ public class SearchResultsActivity extends AppCompatActivity implements OnGameLi
     @Inject
     Tools tools;
 
+    @Inject
+    RestApi restApi;
+
     @BindView(R.id.nothingfound_layout)
     LinearLayout nothingFoundLayout;
     @BindView(R.id.somethingfound_layout)
@@ -77,7 +79,6 @@ public class SearchResultsActivity extends AppCompatActivity implements OnGameLi
     @BindView(R.id.listView)
     ExpandableListView listView;
 
-    private RestApi restApi;
 
     private List<Game> gamesFound;
     private String query;
@@ -105,8 +106,6 @@ public class SearchResultsActivity extends AppCompatActivity implements OnGameLi
         if (!Reachability.isRegistered()) {
             Reachability.registerReachability(this);
         }
-
-        restApi = RetrofitClientInstance.getRetrofitInstance().create(RestApi.class);
 
         tools.initToolbarBase(this, toolbar);
     }

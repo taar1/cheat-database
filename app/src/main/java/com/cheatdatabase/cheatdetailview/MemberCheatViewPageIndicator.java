@@ -25,7 +25,6 @@ import com.cheatdatabase.activity.CheatForumActivity;
 import com.cheatdatabase.activity.LoginActivity;
 import com.cheatdatabase.activity.SubmitCheatFormActivity;
 import com.cheatdatabase.callbacks.GenericCallback;
-import com.cheatdatabase.data.RetrofitClientInstance;
 import com.cheatdatabase.data.model.Cheat;
 import com.cheatdatabase.data.model.Game;
 import com.cheatdatabase.data.model.Member;
@@ -79,6 +78,9 @@ public class MemberCheatViewPageIndicator extends AppCompatActivity implements G
     @Inject
     Tools tools;
 
+    @Inject
+    RestApi restApi;
+
     @BindView(R.id.outer_layout)
     LinearLayout outerLayout;
     @BindView(R.id.toolbar)
@@ -98,8 +100,6 @@ public class MemberCheatViewPageIndicator extends AppCompatActivity implements G
     private int activePage;
     private ShareActionProvider mShare;
     private AdView adView;
-
-    private RestApi restApi;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -150,8 +150,6 @@ public class MemberCheatViewPageIndicator extends AppCompatActivity implements G
     }
 
     private void init() {
-        restApi = RetrofitClientInstance.getRetrofitInstance().create(RestApi.class);
-
         mToolbar = tools.initToolbarBase(this, mToolbar);
 
         adView = new AdView(this, Konstanten.FACEBOOK_AUDIENCE_NETWORK_NATIVE_BANNER_ID, AdSize.BANNER_HEIGHT_50);

@@ -17,7 +17,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.cheatdatabase.R;
-import com.cheatdatabase.data.RetrofitClientInstance;
 import com.cheatdatabase.helpers.AeSimpleMD5;
 import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Reachability;
@@ -25,6 +24,8 @@ import com.cheatdatabase.rest.RestApi;
 import com.google.gson.JsonObject;
 
 import java.security.NoSuchAlgorithmException;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -61,7 +62,8 @@ public class RecoverActivity extends AppCompatActivity {
 
     private String mEmail;
 
-    private RestApi restApi;
+    @Inject
+    RestApi restApi;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,8 +100,6 @@ public class RecoverActivity extends AppCompatActivity {
     }
 
     private void init() {
-        restApi = RetrofitClientInstance.getRetrofitInstance().create(RestApi.class);
-
         if (mToolbar != null) {
             setSupportActionBar(mToolbar);
         }

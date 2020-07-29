@@ -21,7 +21,6 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.cheatdatabase.CheatDatabaseApplication;
 import com.cheatdatabase.R;
 import com.cheatdatabase.adapters.GamesBySystemRecycleListViewAdapter;
-import com.cheatdatabase.data.RetrofitClientInstance;
 import com.cheatdatabase.data.model.Game;
 import com.cheatdatabase.data.model.Member;
 import com.cheatdatabase.data.model.SystemModel;
@@ -62,6 +61,9 @@ public class GamesBySystemListActivity extends AppCompatActivity implements OnGa
     @Inject
     Tools tools;
 
+    @Inject
+    RestApi restApi;
+
     @BindView(R.id.outer_layout)
     LinearLayout outerLayout;
     @BindView(R.id.my_recycler_view)
@@ -72,8 +74,6 @@ public class GamesBySystemListActivity extends AppCompatActivity implements OnGa
     Toolbar mToolbar;
     @BindView(R.id.item_list_empty_view)
     TextView mEmptyView;
-
-    private RestApi restApi;
 
     @Override
     protected void onStart() {
@@ -91,8 +91,6 @@ public class GamesBySystemListActivity extends AppCompatActivity implements OnGa
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_list);
         ButterKnife.bind(this);
-
-        restApi = RetrofitClientInstance.getRetrofitInstance().create(RestApi.class);
 
         NativeAdsManager nativeAdsManager = new NativeAdsManager(this, Konstanten.FACEBOOK_AUDIENCE_NETWORK_NATIVE_AD_IN_RECYCLER_VIEW, 5);
         nativeAdsManager.loadAds(NativeAd.MediaCacheFlag.ALL);

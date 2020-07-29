@@ -92,6 +92,16 @@ public class Tools {
         return new Gson().fromJson(sharedPreferences.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
     }
 
+    /**
+     * Writes the member (after register or after login) to the sharedPreferences.
+     *
+     * @param member
+     */
+    public void putMember(Member member) {
+        editor.putString(Konstanten.MEMBER_OBJECT, new Gson().toJson(member));
+        editor.apply();
+    }
+
     public void putInt(String key, int value) {
         editor.putInt(key, value);
         editor.apply();

@@ -1,8 +1,6 @@
 package com.cheatdatabase.activity;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -21,7 +19,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.cheatdatabase.R;
 import com.cheatdatabase.adapters.MemberCheatRecycleListViewAdapter;
 import com.cheatdatabase.cheatdetailview.MemberCheatViewPageIndicator;
-import com.cheatdatabase.data.RetrofitClientInstance;
 import com.cheatdatabase.data.model.Cheat;
 import com.cheatdatabase.data.model.Member;
 import com.cheatdatabase.helpers.Konstanten;
@@ -57,6 +54,9 @@ public class CheatsByMemberListActivity extends AppCompatActivity implements OnC
     @Inject
     Tools tools;
 
+    @Inject
+    RestApi restApi;
+
     @BindView(R.id.progress_bar)
     ProgressBar progressBar;
     @BindView(R.id.my_recycler_view)
@@ -77,17 +77,12 @@ public class CheatsByMemberListActivity extends AppCompatActivity implements OnC
     private Member member;
     private List<Cheat> cheatList;
 
-    private Editor editor;
-
-    private RestApi restApi;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_member_cheat_list);
         ButterKnife.bind(this);
-
-        restApi = RetrofitClientInstance.getRetrofitInstance().create(RestApi.class);
 
         member = getIntent().getParcelableExtra("member");
         if (member != null) {
@@ -118,8 +113,6 @@ public class CheatsByMemberListActivity extends AppCompatActivity implements OnC
         emptyView.setText(getString(R.string.no_member_cheats, member.getUsername()));
         emptyView.setVisibility(View.GONE);
 
-        SharedPreferences settings = getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
-        editor = settings.edit();
 
         adView = new AdView(this, Konstanten.FACEBOOK_AUDIENCE_NETWORK_NATIVE_BANNER_ID, AdSize.BANNER_HEIGHT_50);
         facebookBanner.addView(adView);
@@ -143,8 +136,7 @@ public class CheatsByMemberListActivity extends AppCompatActivity implements OnC
                 if (response.isSuccessful()) {
                     cheatList = response.body();
 
-                    editor.putString(Konstanten.PREFERENCES_TEMP_CHEAT_ARRAY_OBJECT_VIEW, new Gson().toJson(cheatList));
-                    editor.apply();
+                    tools.putString(Konstanten.PREFERENCES_TEMP_CHEAT_ARRAY_OBJECT_VIEW, new Gson().toJson(cheatList));
 
                     updateUI();
                 } else {
@@ -218,8 +210,7 @@ public class CheatsByMemberListActivity extends AppCompatActivity implements OnC
 
     @Override
     public void onCheatListItemSelected(Cheat cheat, int position) {
-        editor.putInt(Konstanten.PREFERENCES_PAGE_SELECTED, position);
-        editor.apply();
+        tools.putInt(Konstanten.PREFERENCES_PAGE_SELECTED, position);
 
         // Using local Preferences to pass data (PREFERENCES_TEMP_CHEAT_ARRAY_OBJECT_VIEW) for game objects (instead of intent) otherwise runs into TransactionTooLargeException when passing the array to the next activity.
         if (Reachability.reachability.isReachable) {

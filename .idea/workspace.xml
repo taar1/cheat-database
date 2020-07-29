@@ -111,32 +111,29 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4caff62e-c62f-40ca-acf0-73c680b13375" name="Default" comment="STARTED (again) USING #HILT!&#10;This time it's working!">
+    <list default="true" id="4caff62e-c62f-40ca-acf0-73c680b13375" name="Default" comment="More migration to using HILT">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/app.iml" beforeDir="false" afterPath="$PROJECT_DIR$/app/app.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/CheatDatabaseApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/CheatDatabaseApplication.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/CheatForumActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/CheatForumActivity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/CheatsByGameListActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/CheatsByGameListActivity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/CheatsByMemberListActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/CheatsByMemberListActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/FavoriteCheatListActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/FavoriteCheatListActivity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/GamesBySystemListActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/GamesBySystemListActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/LoginActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/LoginActivity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/MainActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/RecoverActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/RecoverActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/RegisterActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/RegisterActivity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/SubmitCheatFormActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/SubmitCheatFormActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/ui/mycheats/MyUnpublishedCheatsListActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/ui/mycheats/MyUnpublishedCheatsListActivity.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/ui/mycheats/MyUnpublishedCheatsListFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/ui/mycheats/MyUnpublishedCheatsListFragment.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/adapters/GamesBySystemRecycleListViewAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/adapters/GamesBySystemRecycleListViewAdapter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/cheatdetailview/CheatViewFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/cheatdetailview/CheatViewFragment.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/cheatdetailview/CheatViewPageIndicatorActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/cheatdetailview/CheatViewPageIndicatorActivity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/cheatdetailview/FavoritesCheatViewFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/cheatdetailview/FavoritesCheatViewFragment.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/cheatdetailview/FavoritesCheatViewPageIndicator.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/cheatdetailview/FavoritesCheatViewPageIndicator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/cheatdetailview/MemberCheatViewFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/cheatdetailview/MemberCheatViewFragment.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/cheatdetailview/MemberCheatViewPageIndicator.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/cheatdetailview/MemberCheatViewPageIndicator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/dialogs/CheatMetaDialog.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/dialogs/CheatMetaDialog.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/dialogs/RateCheatMaterialDialog.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/dialogs/RateCheatMaterialDialog.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/dialogs/ReportCheatMaterialDialog.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/dialogs/ReportCheatMaterialDialog.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/data/model/Member.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/data/model/Member.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/fragments/ContactFormFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/fragments/ContactFormFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/fragments/MyCheatsFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/fragments/MyCheatsFragment.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/fragments/SystemListFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/fragments/SystemListFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/helpers/Helper.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/helpers/Helper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/fragments/TopMembersFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/fragments/TopMembersFragment.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/helpers/Tools.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/helpers/Tools.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/hilt/NetworkModule.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/hilt/NetworkModule.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/search/SearchResultsActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/search/SearchResultsActivity.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -621,27 +618,6 @@
       <option name="presentableId" value="Default" />
       <updated>1487274191999</updated>
     </task>
-    <task id="LOCAL-00098" summary="SUCCESSFUL MERGING WITH ROOM&#10;Fixing bugs related to DB access on UI thread now.">
-      <created>1587757073424</created>
-      <option name="number" value="00098" />
-      <option name="presentableId" value="LOCAL-00098" />
-      <option name="project" value="LOCAL" />
-      <updated>1587757073424</updated>
-    </task>
-    <task id="LOCAL-00099" summary="Fixing bugs related to DB access on UI thread">
-      <created>1587757579530</created>
-      <option name="number" value="00099" />
-      <option name="presentableId" value="LOCAL-00099" />
-      <option name="project" value="LOCAL" />
-      <updated>1587757579530</updated>
-    </task>
-    <task id="LOCAL-00100" summary="Fixing bugs related to migration to room.">
-      <created>1587845476921</created>
-      <option name="number" value="00100" />
-      <option name="presentableId" value="LOCAL-00100" />
-      <option name="project" value="LOCAL" />
-      <updated>1587845476921</updated>
-    </task>
     <task id="LOCAL-00101" summary="Fixing bugs in favorites activity etc.">
       <created>1587908642241</created>
       <option name="number" value="00101" />
@@ -964,7 +940,28 @@
       <option name="project" value="LOCAL" />
       <updated>1595600437572</updated>
     </task>
-    <option name="localTasksCounter" value="147" />
+    <task id="LOCAL-00147" summary="More migration to using HILT">
+      <created>1595618595971</created>
+      <option name="number" value="00147" />
+      <option name="presentableId" value="LOCAL-00147" />
+      <option name="project" value="LOCAL" />
+      <updated>1595618595972</updated>
+    </task>
+    <task id="LOCAL-00148" summary="Remove unused Helper.java and RestRepository.java classes.">
+      <created>1595622412077</created>
+      <option name="number" value="00148" />
+      <option name="presentableId" value="LOCAL-00148" />
+      <option name="project" value="LOCAL" />
+      <updated>1595622412077</updated>
+    </task>
+    <task id="LOCAL-00149" summary="Add NetworkModule class">
+      <created>1595851199100</created>
+      <option name="number" value="00149" />
+      <option name="presentableId" value="LOCAL-00149" />
+      <option name="project" value="LOCAL" />
+      <updated>1595851199101</updated>
+    </task>
+    <option name="localTasksCounter" value="150" />
     <servers />
   </component>
   <component name="TodoView">
@@ -1070,9 +1067,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
-    <MESSAGE value="Improving unpublished cheats card layouts etc." />
-    <MESSAGE value="Switching to coroutines (not working yet)." />
-    <MESSAGE value="Remove cheat from list functionality (needs to be changed to coroutines)&#10;currently bug in removing one item from the list in MyUnpublishedCheatsListFragment.kt" />
     <MESSAGE value="Fixing the feature for removing an item from the unpublished cheats list. the list will remove the item and refresh with an animation." />
     <MESSAGE value="Add app bar layout to toolbar layout xml file" />
     <MESSAGE value="Back arrow in actionbar in unpublished cheats list view added.&#10;Improved look of the card." />
@@ -1095,7 +1089,10 @@
     <MESSAGE value="Make rejected cheat alertdialog less transparent&#10;Add bottom padding for unpublished cheats recyclerview" />
     <MESSAGE value="Fix favorites list data getting lost on display rotation.&#10;Add scrollview to &quot;my cheats&quot; view for better landscape mode." />
     <MESSAGE value="STARTED (again) USING #HILT!&#10;This time it's working!" />
-    <option name="LAST_COMMIT_MESSAGE" value="STARTED (again) USING #HILT!&#10;This time it's working!" />
+    <MESSAGE value="More migration to using HILT" />
+    <MESSAGE value="Remove unused Helper.java and RestRepository.java classes." />
+    <MESSAGE value="Add NetworkModule class" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add NetworkModule class" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
@@ -1104,56 +1101,60 @@
       <screen x="0" y="23" width="2560" height="1348" />
     </state>
     <state x="522" y="250" width="1632" height="946" key="#PSD/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1595581094550" />
-    <state x="1141" y="469" key="AndroidProcessChooserDialog" timestamp="1595535730615">
+    <state x="1018" y="451" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1595618623001">
       <screen x="0" y="23" width="2560" height="1348" />
     </state>
-    <state x="1141" y="469" key="AndroidProcessChooserDialog/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1595535730615" />
-    <state x="500" y="101" width="1718" height="1269" key="CommitChangelistDialog2" timestamp="1595600437248">
+    <state x="1018" y="451" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1595618623001" />
+    <state x="1141" y="469" key="AndroidProcessChooserDialog" timestamp="1595879584398">
       <screen x="0" y="23" width="2560" height="1348" />
     </state>
-    <state x="500" y="101" width="1718" height="1269" key="CommitChangelistDialog2/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1595600437248" />
-    <state x="500" y="101" width="1524" height="1077" key="CommitChangelistDialog2/0.23.2560.1348/-1680.413.1680.1027@0.23.2560.1348" timestamp="1595513354788" />
+    <state x="1141" y="469" key="AndroidProcessChooserDialog/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1595879584398" />
+    <state x="500" y="101" width="1718" height="1269" key="CommitChangelistDialog2" timestamp="1595851198887">
+      <screen x="0" y="23" width="2560" height="1348" />
+    </state>
+    <state x="500" y="101" width="1718" height="1269" key="CommitChangelistDialog2/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1595622411936" />
+    <state x="500" y="101" width="1524" height="1077" key="CommitChangelistDialog2/0.23.2560.1348/-1680.413.1680.1027@0.23.2560.1348" timestamp="1595851198887" />
     <state x="9" y="32" width="2542" height="1330" maximized="true" key="DiffContextDialog" timestamp="1595533537949">
       <screen x="0" y="23" width="2560" height="1348" />
     </state>
     <state x="9" y="32" width="2542" height="1330" maximized="true" key="DiffContextDialog/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1595533537949" />
     <state x="100" y="123" width="2360" height="1148" key="DiffContextDialog/0.23.2560.1348/-1680.413.1680.1027@0.23.2560.1348" timestamp="1595333491824" />
-    <state width="2518" height="386" key="GridCell.Tab.0.bottom" timestamp="1595617705494">
+    <state width="2518" height="446" key="GridCell.Tab.0.bottom" timestamp="1596052636311">
       <screen x="0" y="23" width="2560" height="1348" />
     </state>
-    <state width="2518" height="386" key="GridCell.Tab.0.bottom/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1595617705494" />
+    <state width="2518" height="446" key="GridCell.Tab.0.bottom/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1596052636311" />
     <state width="2518" height="462" key="GridCell.Tab.0.bottom/0.23.2560.1348/-1680.413.1680.1027@0.23.2560.1348" timestamp="1595339485682" />
-    <state width="2518" height="386" key="GridCell.Tab.0.center" timestamp="1595617705493">
+    <state width="2518" height="446" key="GridCell.Tab.0.center" timestamp="1596052636311">
       <screen x="0" y="23" width="2560" height="1348" />
     </state>
-    <state width="2518" height="386" key="GridCell.Tab.0.center/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1595617705493" />
+    <state width="2518" height="446" key="GridCell.Tab.0.center/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1596052636311" />
     <state width="2518" height="462" key="GridCell.Tab.0.center/0.23.2560.1348/-1680.413.1680.1027@0.23.2560.1348" timestamp="1595339485681" />
-    <state width="2518" height="386" key="GridCell.Tab.0.left" timestamp="1595617705493">
+    <state width="2518" height="446" key="GridCell.Tab.0.left" timestamp="1596052636310">
       <screen x="0" y="23" width="2560" height="1348" />
     </state>
-    <state width="2518" height="386" key="GridCell.Tab.0.left/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1595617705493" />
+    <state width="2518" height="446" key="GridCell.Tab.0.left/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1596052636310" />
     <state width="2518" height="462" key="GridCell.Tab.0.left/0.23.2560.1348/-1680.413.1680.1027@0.23.2560.1348" timestamp="1595339485681" />
-    <state width="2518" height="386" key="GridCell.Tab.0.right" timestamp="1595617705493">
+    <state width="2518" height="446" key="GridCell.Tab.0.right" timestamp="1596052636311">
       <screen x="0" y="23" width="2560" height="1348" />
     </state>
-    <state width="2518" height="386" key="GridCell.Tab.0.right/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1595617705493" />
+    <state width="2518" height="446" key="GridCell.Tab.0.right/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1596052636311" />
     <state width="2518" height="462" key="GridCell.Tab.0.right/0.23.2560.1348/-1680.413.1680.1027@0.23.2560.1348" timestamp="1595339485682" />
-    <state width="2518" height="502" key="GridCell.Tab.1.bottom" timestamp="1595536056751">
+    <state width="2518" height="502" key="GridCell.Tab.1.bottom" timestamp="1595913046317">
       <screen x="0" y="23" width="2560" height="1348" />
     </state>
-    <state width="2518" height="502" key="GridCell.Tab.1.bottom/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1595536056751" />
-    <state width="2518" height="502" key="GridCell.Tab.1.center" timestamp="1595536056751">
+    <state width="2518" height="502" key="GridCell.Tab.1.bottom/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1595913046317" />
+    <state width="2518" height="502" key="GridCell.Tab.1.center" timestamp="1595913046317">
       <screen x="0" y="23" width="2560" height="1348" />
     </state>
-    <state width="2518" height="502" key="GridCell.Tab.1.center/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1595536056751" />
-    <state width="2518" height="502" key="GridCell.Tab.1.left" timestamp="1595536056750">
+    <state width="2518" height="502" key="GridCell.Tab.1.center/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1595913046317" />
+    <state width="2518" height="502" key="GridCell.Tab.1.left" timestamp="1595913046316">
       <screen x="0" y="23" width="2560" height="1348" />
     </state>
-    <state width="2518" height="502" key="GridCell.Tab.1.left/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1595536056750" />
-    <state width="2518" height="502" key="GridCell.Tab.1.right" timestamp="1595536056751">
+    <state width="2518" height="502" key="GridCell.Tab.1.left/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1595913046316" />
+    <state width="2518" height="502" key="GridCell.Tab.1.right" timestamp="1595913046317">
       <screen x="0" y="23" width="2560" height="1348" />
     </state>
-    <state width="2518" height="502" key="GridCell.Tab.1.right/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1595536056751" />
+    <state width="2518" height="502" key="GridCell.Tab.1.right/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1595913046317" />
     <state x="993" y="420" key="MultipleFileMergeDialog" timestamp="1595333089919">
       <screen x="0" y="23" width="2560" height="1348" />
     </state>
@@ -1162,11 +1163,11 @@
       <screen x="0" y="23" width="2560" height="1348" />
     </state>
     <state x="781" y="336" key="SettingsEditor/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1595581086418" />
-    <state x="880" y="437" key="Vcs.Push.Dialog.v2" timestamp="1595600583746">
+    <state x="880" y="437" key="Vcs.Push.Dialog.v2" timestamp="1595851202545">
       <screen x="0" y="23" width="2560" height="1348" />
     </state>
-    <state x="880" y="437" key="Vcs.Push.Dialog.v2/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1595600583746" />
-    <state x="880" y="437" key="Vcs.Push.Dialog.v2/0.23.2560.1348/-1680.413.1680.1027@0.23.2560.1348" timestamp="1595513356767" />
+    <state x="880" y="437" key="Vcs.Push.Dialog.v2/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1595622413428" />
+    <state x="880" y="437" key="Vcs.Push.Dialog.v2/0.23.2560.1348/-1680.413.1680.1027@0.23.2560.1348" timestamp="1595851202545" />
     <state x="99" y="123" width="2360" height="1148" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1595535856283">
       <screen x="0" y="23" width="2560" height="1348" />
     </state>
@@ -1184,20 +1185,20 @@
       <screen x="0" y="23" width="2560" height="1348" />
     </state>
     <state x="1018" y="471" key="extract.method.dialog/0.23.2560.1348/-1680.413.1680.1027@0.23.2560.1348" timestamp="1595337489807" />
-    <state x="582" y="106" width="1548" height="1151" key="find.popup" timestamp="1595617882180">
+    <state x="582" y="106" width="1548" height="1151" key="find.popup" timestamp="1596055685651">
       <screen x="0" y="23" width="2560" height="1348" />
     </state>
-    <state x="582" y="106" width="1548" height="1151" key="find.popup/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1595617882180" />
+    <state x="582" y="106" width="1548" height="1151" key="find.popup/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1596055685651" />
     <state x="660" y="209" width="1296" height="861" key="find.popup/0.23.2560.1348/-1680.413.1680.1027@0.23.2560.1348" timestamp="1595513241394" />
-    <state width="752" height="140" key="javadoc.popup.new" timestamp="1595616443795">
+    <state width="752" height="140" key="javadoc.popup.new" timestamp="1596055275265">
       <screen x="0" y="23" width="2560" height="1348" />
     </state>
-    <state width="752" height="140" key="javadoc.popup.new/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1595616443795" />
-    <state width="752" height="140" key="javadoc.popup.new/0.23.2560.1348/-1680.413.1680.1027@0.23.2560.1348" timestamp="1595512636200" />
-    <state x="945" y="331" width="670" height="676" key="search.everywhere.popup" timestamp="1595617818483">
+    <state width="752" height="140" key="javadoc.popup.new/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1596055275265" />
+    <state width="752" height="140" key="javadoc.popup.new/0.23.2560.1348/-1680.413.1680.1027@0.23.2560.1348" timestamp="1595841954029" />
+    <state x="945" y="331" width="670" height="676" key="search.everywhere.popup" timestamp="1596054494976">
       <screen x="0" y="23" width="2560" height="1348" />
     </state>
-    <state x="945" y="331" width="670" height="676" key="search.everywhere.popup/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1595617818483" />
+    <state x="945" y="331" width="670" height="676" key="search.everywhere.popup/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1596054494976" />
     <state x="945" y="331" width="670" height="676" key="search.everywhere.popup/0.23.2560.1348/-1680.413.1680.1027@0.23.2560.1348" timestamp="1595513205159" />
   </component>
   <component name="XDebuggerManager">
@@ -1211,6 +1212,12 @@
           </properties>
           <option name="timeStamp" value="132" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="java-method">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/CheatsByGameListActivity.java</url>
+          <line>302</line>
+          <properties method="onFailure" />
+          <option name="timeStamp" value="230" />
+        </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/dialogs/ReportCheatMaterialDialog.java</url>
           <line>48</line>
@@ -1222,19 +1229,9 @@
           <option name="timeStamp" value="183" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/CheatForumActivity.java</url>
-          <line>113</line>
-          <option name="timeStamp" value="190" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/cheat_detail_view/CheatViewPageIndicatorActivity.java</url>
           <line>124</line>
           <option name="timeStamp" value="194" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/CheatsByGameListActivity.java</url>
-          <line>276</line>
-          <option name="timeStamp" value="195" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/CheatsByGameListActivity.java</url>

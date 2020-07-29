@@ -26,7 +26,6 @@ import com.cheatdatabase.R;
 import com.cheatdatabase.activity.CheatsByMemberListActivity;
 import com.cheatdatabase.activity.MainActivity;
 import com.cheatdatabase.adapters.TopMembersListViewAdapter;
-import com.cheatdatabase.data.RetrofitClientInstance;
 import com.cheatdatabase.data.model.Member;
 import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.listeners.OnTopMemberListItemSelectedListener;
@@ -35,8 +34,11 @@ import com.cheatdatabase.rest.RestApi;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import dagger.hilt.android.AndroidEntryPoint;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -46,6 +48,7 @@ import retrofit2.Response;
  *
  * @author Dominik Erbsland
  */
+@AndroidEntryPoint
 public class TopMembersFragment extends Fragment implements OnTopMemberListItemSelectedListener {
     private static final String TAG = TopMembersFragment.class.getSimpleName();
     private final int VISIT_WEBSITE = 0;
@@ -56,6 +59,9 @@ public class TopMembersFragment extends Fragment implements OnTopMemberListItemS
 
     private RecyclerView.LayoutManager layoutManager;
     private TopMembersListViewAdapter topMembersListViewAdapter;
+
+    @Inject
+    RestApi restApi;
 
     @BindView(R.id.my_recycler_view)
     RecyclerView recyclerView;
@@ -146,8 +152,6 @@ public class TopMembersFragment extends Fragment implements OnTopMemberListItemS
         if (!mSwipeRefreshLayout.isRefreshing()) {
             mSwipeRefreshLayout.setRefreshing(true);
         }
-
-        RestApi restApi = RetrofitClientInstance.getRetrofitInstance().create(RestApi.class);
 
         Call<List<Member>> call = restApi.getMemberTop20();
         call.enqueue(new Callback<List<Member>>() {

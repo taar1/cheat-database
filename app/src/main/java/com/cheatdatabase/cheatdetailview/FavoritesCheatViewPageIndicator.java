@@ -25,7 +25,6 @@ import com.cheatdatabase.R;
 import com.cheatdatabase.activity.CheatForumActivity;
 import com.cheatdatabase.activity.LoginActivity;
 import com.cheatdatabase.activity.SubmitCheatFormActivity;
-import com.cheatdatabase.data.RetrofitClientInstance;
 import com.cheatdatabase.data.RoomCheatDatabase;
 import com.cheatdatabase.data.dao.FavoriteCheatDao;
 import com.cheatdatabase.data.model.Cheat;
@@ -106,10 +105,11 @@ public class FavoritesCheatViewPageIndicator extends AppCompatActivity {
     @Inject
     Tools tools;
 
+    @Inject
+    RestApi restApi;
+
     @BindView(R.id.outer_layout)
     LinearLayout outerLayout;
-
-    private RestApi restApi;
 
     private FavoriteCheatDao dao;
 
@@ -142,8 +142,6 @@ public class FavoritesCheatViewPageIndicator extends AppCompatActivity {
     }
 
     private void init() {
-        restApi = RetrofitClientInstance.getRetrofitInstance().create(RestApi.class);
-
         dao = RoomCheatDatabase.getDatabase(this).favoriteDao();
 
         mToolbar = tools.initToolbarBase(this, mToolbar);
@@ -423,7 +421,4 @@ public class FavoritesCheatViewPageIndicator extends AppCompatActivity {
         // TODO load screenshots again and save them to the SD card....
     }
 
-    public RestApi getRestApi() {
-        return restApi;
-    }
 }

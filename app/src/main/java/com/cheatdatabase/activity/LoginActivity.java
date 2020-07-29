@@ -21,7 +21,6 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentManager;
 
 import com.cheatdatabase.R;
-import com.cheatdatabase.data.RetrofitClientInstance;
 import com.cheatdatabase.data.model.Member;
 import com.cheatdatabase.dialogs.AlreadyLoggedInDialog;
 import com.cheatdatabase.dialogs.AlreadyLoggedInDialog.AlreadyLoggedInDialogListener;
@@ -63,6 +62,9 @@ public class LoginActivity extends AppCompatActivity implements AlreadyLoggedInD
     @Inject
     Tools tools;
 
+    @Inject
+    RestApi restApi;
+
     @BindView(R.id.email)
     EditText mEmailView;
     @BindView(R.id.password)
@@ -83,8 +85,6 @@ public class LoginActivity extends AppCompatActivity implements AlreadyLoggedInD
     Toolbar mToolbar;
 
     private Member member;
-
-    private RestApi restApi;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -131,8 +131,6 @@ public class LoginActivity extends AppCompatActivity implements AlreadyLoggedInD
     }
 
     private void init() {
-        restApi = RetrofitClientInstance.getRetrofitInstance().create(RestApi.class);
-
         if (mToolbar != null) {
             setSupportActionBar(mToolbar);
         }
@@ -308,7 +306,8 @@ public class LoginActivity extends AppCompatActivity implements AlreadyLoggedInD
                         member.setUsername(registerResponse.get("username").getAsString());
                         member.setEmail(registerResponse.get("email").getAsString());
                         member.setPassword(password);
-                        member.writeMemberData(member, tools.getSharedPreferences());
+                        //member.writeMemberData(member, tools.getSharedPreferences());
+                        tools.putMember(member);
 
                         afterLogin(true, 0);
                     } else if (returnValue.equalsIgnoreCase("wrong_pw")) {
