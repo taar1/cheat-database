@@ -1,6 +1,6 @@
 package com.cheatdatabase.dialogs;
 
-import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -12,17 +12,21 @@ import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.Theme;
-import com.cheatdatabase.activity.MainActivity;
 import com.cheatdatabase.R;
+import com.cheatdatabase.activity.MainActivity;
 import com.cheatdatabase.helpers.DistinctValues;
 import com.cheatdatabase.helpers.Konstanten;
 
+import javax.inject.Inject;
+
+import dagger.hilt.android.qualifiers.ActivityContext;
+
 public class RateAppDialog {
-    private static final String TAG = RateAppDialog.class.getSimpleName();
     private static final int MINIMUM_RATING_FOR_GOOGLE_PLAY = 4;
 
-    private final Activity activity;
-    private final MainActivity.MainActivityCallbacks mainActivityCallbacks;
+    private final Context context;
+    private MainActivity.MainActivityCallbacks mainActivityCallbacks;
+    private MaterialDialog.Builder materialDialogBuilder;
 
     private final SharedPreferences settings;
     private final SharedPreferences.Editor editor;
@@ -30,14 +34,14 @@ public class RateAppDialog {
 
     private int rating = 0;
 
-    public RateAppDialog(final Activity activity, MainActivity.MainActivityCallbacks mainActivityCallbacks) {
-        this.activity = activity;
-        this.mainActivityCallbacks = mainActivityCallbacks;
+    @Inject
+    public RateAppDialog(@ActivityContext Context context) {
+        this.context = context;
 
-        settings = activity.getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
+        settings = context.getSharedPreferences(Konstanten.PREFERENCES_FILE, Context.MODE_PRIVATE);
         editor = settings.edit();
 
-        MaterialDialog md = new MaterialDialog.Builder(activity)
+        materialDialogBuilder = new MaterialDialog.Builder(context)
                 .customView(R.layout.dialog_rate_cheatdatabase, true)
                 .positiveText(R.string.rate_us_submit)
                 .negativeText(R.string.cancel)
@@ -46,7 +50,8 @@ public class RateAppDialog {
                     editor.apply();
 
                     if (rating >= MINIMUM_RATING_FOR_GOOGLE_PLAY) {
-                        Toast.makeText(activity, R.string.rate_us_thanks_good_rating, Toast.LENGTH_LONG).show();
+                        Toast.makeText(context, R.string.rate_us_thanks_good_rating, Toast.LENGTH_LONG).show();
+
                         Handler handler = new Handler();
                         handler.postDelayed(() -> goToGooglePlay(), 1000);
                     } else {
@@ -57,10 +62,25 @@ public class RateAppDialog {
                     // User clicked CANCEL. Just close the dialog.
                 })
                 .theme(Theme.DARK)
-                .cancelable(false)
-                .show();
+                .cancelable(false);
+    }
 
-        View dialogView = md.getCustomView();
+    public void show(MainActivity.MainActivityCallbacks mainActivityCallbacks) {
+        this.mainActivityCallbacks = mainActivityCallbacks;
+        makeCustomLayout(materialDialogBuilder.show());
+    }
+
+    private void makeCustomLayout(MaterialDialog materialDialog) {
+        View dialogView = materialDialog.getCustomView();
+
+        // TODO FIXME sterne animation geht nicht mehr beim swipen...
+        // TODO FIXME sterne animation geht nicht mehr beim swipen...
+        // TODO FIXME sterne animation geht nicht mehr beim swipen...
+
+
+        // TODO FIXME close drawer when dialog closes...
+        // TODO FIXME close drawer when dialog closes...
+        // TODO FIXME close drawer when dialog closes...
 
         final RatingBar ratingBar = dialogView.findViewById(R.id.ratingbar);
         ratingBar.setOnRatingBarChangeListener((ratingBar1, v, b) -> rating = Math.round(ratingBar1.getRating()));
@@ -70,15 +90,15 @@ public class RateAppDialog {
     private void goToGooglePlay() {
         Uri appUri = Uri.parse(DistinctValues.GOOGLE_PLAY_URL);
         Intent intentRateApp = new Intent(Intent.ACTION_VIEW, appUri);
-        if (intentRateApp.resolveActivity(activity.getPackageManager()) != null) {
-            activity.startActivity(intentRateApp);
+        if (intentRateApp.resolveActivity(context.getPackageManager()) != null) {
+            context.startActivity(intentRateApp);
         } else {
-            Toast.makeText(activity, R.string.err_other_problem, Toast.LENGTH_LONG).show();
+            Toast.makeText(context, R.string.err_other_problem, Toast.LENGTH_LONG).show();
         }
     }
 
     private void showBadRatingDialog() {
-        MaterialDialog badRatingDialog = new MaterialDialog.Builder(activity)
+        MaterialDialog badRatingDialog = new MaterialDialog.Builder(context)
                 .customView(R.layout.dialog_bad_rating, true)
                 .positiveText(R.string.submit_feedback)
                 .negativeText(R.string.no_thanks)
@@ -94,6 +114,6 @@ public class RateAppDialog {
 
         final TextView dialogTitle = dialogView.findViewById(R.id.bad_rating_title);
         final TextView dialogText = dialogView.findViewById(R.id.bad_rating_text);
-        dialogText.setText(activity.getString(R.string.bad_rating_text, rating));
+        dialogText.setText(context.getString(R.string.bad_rating_text, rating));
     }
 }

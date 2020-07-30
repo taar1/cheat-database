@@ -6,8 +6,7 @@
     </shared>
   </component>
   <component name="AndroidLogFilters">
-    <option name="TOOL_WINDOW_CUSTOM_FILTER" value="XXXXX" />
-    <option name="TOOL_WINDOW_LOG_LEVEL" value="verbose" />
+    <option name="TOOL_WINDOW_LOG_LEVEL" value="error" />
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
   </component>
   <component name="AvailableLibraryUpdateStorage">
@@ -111,30 +110,13 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4caff62e-c62f-40ca-acf0-73c680b13375" name="Default" comment="More migration to using HILT">
+    <list default="true" id="4caff62e-c62f-40ca-acf0-73c680b13375" name="Default" comment="Adding counter to navigation drawer for &quot;my cheats&quot;">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/app.iml" beforeDir="false" afterPath="$PROJECT_DIR$/app/app.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/CheatDatabaseApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/CheatDatabaseApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/CheatForumActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/CheatForumActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/CheatsByGameListActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/CheatsByGameListActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/CheatsByMemberListActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/CheatsByMemberListActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/GamesBySystemListActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/GamesBySystemListActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/LoginActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/LoginActivity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/MainActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/RecoverActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/RecoverActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/RegisterActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/RegisterActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/SubmitCheatFormActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/SubmitCheatFormActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/cheatdetailview/CheatViewPageIndicatorActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/cheatdetailview/CheatViewPageIndicatorActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/cheatdetailview/FavoritesCheatViewFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/cheatdetailview/FavoritesCheatViewFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/cheatdetailview/FavoritesCheatViewPageIndicator.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/cheatdetailview/FavoritesCheatViewPageIndicator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/cheatdetailview/MemberCheatViewPageIndicator.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/cheatdetailview/MemberCheatViewPageIndicator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/data/model/Member.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/data/model/Member.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/fragments/ContactFormFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/fragments/ContactFormFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/fragments/SystemListFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/fragments/SystemListFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/fragments/TopMembersFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/fragments/TopMembersFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/dialogs/RateAppDialog.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/dialogs/RateAppDialog.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/helpers/Tools.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/helpers/Tools.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/hilt/NetworkModule.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/hilt/NetworkModule.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/search/SearchResultsActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/search/SearchResultsActivity.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -144,7 +126,7 @@
   <component name="CreatePatchCommitExecutor">
     <option name="PATCH_PATH" value="" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="6ea89d94" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="fd8b7031" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
@@ -184,17 +166,17 @@
         <option value="layoutResourceFile_vertical" />
         <option value="Singleton" />
         <option value="Kotlin Object" />
-        <option value="layoutResourceFile" />
+        <option value="Kotlin Interface" />
         <option value="resourceFile" />
         <option value="Kotlin Class" />
         <option value="Class" />
-        <option value="Kotlin Interface" />
+        <option value="layoutResourceFile" />
       </list>
     </option>
   </component>
   <component name="GenerateSignedApkSettings">
     <option name="EXPORT_PRIVATE_KEY" value="false" />
-    <option name="KEY_STORE_PATH" value="$USER_HOME$/Downloads/enature.keystore" />
+    <option name="KEY_STORE_PATH" value="C:\Users\taar1\OneDrive\Documents\enature.keystore" />
     <option name="KEY_ALIAS" value="cheat-database" />
     <option name="REMEMBER_PASSWORDS" value="true" />
   </component>
@@ -226,7 +208,7 @@
     <property name="DEBUGGER_ID" value="Auto" />
     <property name="DeviceAndSnapshotComboBoxAction.selectedDevice" value="fd8b7031" />
     <property name="DeviceAndSnapshotComboBoxAction.selectionTime" value="2020-05-19T19:14:11.265Z" />
-    <property name="ExportApk.ApkPath" value="$PROJECT_DIR$/../../../apk/Cheat-Database/2.5.18" />
+    <property name="ExportApk.ApkPath" value="D:\Development\Android\APK\Cheat-Database\2.5.17" />
     <property name="ExportApk.BuildType" value="release" />
     <property name="ExportApk.BuildVariants" value="googlePlayFlavorRelease" />
     <property name="ExportApk.Flavors" value="googlePlayFlavor" />
@@ -246,10 +228,9 @@
     <property name="extract.method.default.visibility" value="private" />
     <property name="ignore.virus.scanning.warn.message" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../../APK/Cheat-Database/2.5.17" />
-    <property name="project.structure.last.edited" value="Suggestions" />
+    <property name="project.structure.last.edited" value="SDK Location" />
     <property name="project.structure.proportion" value="0.17" />
     <property name="project.structure.side.proportion" value="0.2" />
-    <property name="recommended.upgrade.do.not.ask.for.version" value="3.6.3" />
     <property name="settings.editor.selected.configurable" value="preferences.sourceCode.Java" />
   </component>
   <component name="PsdUISettings">
@@ -263,6 +244,7 @@
       <recent name="com.cheatdatabase.data.network" />
     </key>
     <key name="CopyKotlinDeclarationDialog.RECENTS_KEY">
+      <recent name="com.cheatdatabase.hilt" />
       <recent name="com.cheatdatabase.rest" />
       <recent name="com.cheatdatabase.activity.ui.mycheats" />
       <recent name="com.cheatdatabase.adapters" />
@@ -618,6 +600,62 @@
       <option name="presentableId" value="Default" />
       <updated>1487274191999</updated>
     </task>
+    <task id="LOCAL-00093" summary="Fixing a lot of bugs of cheat favorites etc.">
+      <created>1587399406754</created>
+      <option name="number" value="00093" />
+      <option name="presentableId" value="LOCAL-00093" />
+      <option name="project" value="LOCAL" />
+      <updated>1587399406754</updated>
+    </task>
+    <task id="LOCAL-00094" summary="Improved DB schema">
+      <created>1587400135954</created>
+      <option name="number" value="00094" />
+      <option name="presentableId" value="LOCAL-00094" />
+      <option name="project" value="LOCAL" />
+      <updated>1587400135954</updated>
+    </task>
+    <task id="LOCAL-00095" summary="a try to merge with room">
+      <created>1587413692082</created>
+      <option name="number" value="00095" />
+      <option name="presentableId" value="LOCAL-00095" />
+      <option name="project" value="LOCAL" />
+      <updated>1587413692083</updated>
+    </task>
+    <task id="LOCAL-00096" summary="Version upgrade">
+      <created>1587755678525</created>
+      <option name="number" value="00096" />
+      <option name="presentableId" value="LOCAL-00096" />
+      <option name="project" value="LOCAL" />
+      <updated>1587755678526</updated>
+    </task>
+    <task id="LOCAL-00097" summary="Version upgrade">
+      <created>1587756070218</created>
+      <option name="number" value="00097" />
+      <option name="presentableId" value="LOCAL-00097" />
+      <option name="project" value="LOCAL" />
+      <updated>1587756070218</updated>
+    </task>
+    <task id="LOCAL-00098" summary="SUCCESSFUL MERGING WITH ROOM&#10;Fixing bugs related to DB access on UI thread now.">
+      <created>1587757073424</created>
+      <option name="number" value="00098" />
+      <option name="presentableId" value="LOCAL-00098" />
+      <option name="project" value="LOCAL" />
+      <updated>1587757073424</updated>
+    </task>
+    <task id="LOCAL-00099" summary="Fixing bugs related to DB access on UI thread">
+      <created>1587757579530</created>
+      <option name="number" value="00099" />
+      <option name="presentableId" value="LOCAL-00099" />
+      <option name="project" value="LOCAL" />
+      <updated>1587757579530</updated>
+    </task>
+    <task id="LOCAL-00100" summary="Fixing bugs related to migration to room.">
+      <created>1587845476921</created>
+      <option name="number" value="00100" />
+      <option name="presentableId" value="LOCAL-00100" />
+      <option name="project" value="LOCAL" />
+      <updated>1587845476921</updated>
+    </task>
     <task id="LOCAL-00101" summary="Fixing bugs in favorites activity etc.">
       <created>1587908642241</created>
       <option name="number" value="00101" />
@@ -884,84 +922,28 @@
       <option name="project" value="LOCAL" />
       <updated>1593463125313</updated>
     </task>
-    <task id="LOCAL-00139" summary="Displaying the amount of unpublished and published cheats int he &quot;my fragments&quot; view. Error in MainActivity when logging out, some fragments crash...">
-      <created>1594843232967</created>
+    <task id="LOCAL-00139" summary="Library Version Upgrades">
+      <created>1593463998543</created>
       <option name="number" value="00139" />
       <option name="presentableId" value="LOCAL-00139" />
       <option name="project" value="LOCAL" />
-      <updated>1594843232967</updated>
+      <updated>1593463998543</updated>
     </task>
-    <task id="LOCAL-00140" summary="Fixing login/logout refresh behavior for &quot;myCheats&quot; view. logging out removes the count. Loggin in refreshes the drawer and fragment with the cheats count numbers.">
-      <created>1595339543300</created>
+    <task id="LOCAL-00140" summary="Updated &quot;my cheats&quot; text with parameters for adding the amount of unchecked and rejected cheats.">
+      <created>1594672345974</created>
       <option name="number" value="00140" />
       <option name="presentableId" value="LOCAL-00140" />
       <option name="project" value="LOCAL" />
-      <updated>1595339543300</updated>
+      <updated>1594672345975</updated>
     </task>
-    <task id="LOCAL-00141" summary="Fixing strings.xml cheatList -&gt; cheats&#10;Fixing favorites empty view bug&#10;Improving &quot;my cheats&quot; view with counter">
-      <created>1595447278044</created>
+    <task id="LOCAL-00141" summary="Adding counter to navigation drawer for &quot;my cheats&quot;">
+      <created>1595307677229</created>
       <option name="number" value="00141" />
       <option name="presentableId" value="LOCAL-00141" />
       <option name="project" value="LOCAL" />
-      <updated>1595447278045</updated>
+      <updated>1595307677230</updated>
     </task>
-    <task id="LOCAL-00142" summary="Release Version 2.5.18&#10;(+ library updates)">
-      <created>1595449945113</created>
-      <option name="number" value="00142" />
-      <option name="presentableId" value="LOCAL-00142" />
-      <option name="project" value="LOCAL" />
-      <updated>1595449945113</updated>
-    </task>
-    <task id="LOCAL-00143" summary="2.5.19-preRelease">
-      <created>1595451231326</created>
-      <option name="number" value="00143" />
-      <option name="presentableId" value="LOCAL-00143" />
-      <option name="project" value="LOCAL" />
-      <updated>1595451231327</updated>
-    </task>
-    <task id="LOCAL-00144" summary="Make rejected cheat alertdialog less transparent&#10;Add bottom padding for unpublished cheats recyclerview">
-      <created>1595513355011</created>
-      <option name="number" value="00144" />
-      <option name="presentableId" value="LOCAL-00144" />
-      <option name="project" value="LOCAL" />
-      <updated>1595513355012</updated>
-    </task>
-    <task id="LOCAL-00145" summary="Fix favorites list data getting lost on display rotation.&#10;Add scrollview to &quot;my cheats&quot; view for better landscape mode.">
-      <created>1595536046773</created>
-      <option name="number" value="00145" />
-      <option name="presentableId" value="LOCAL-00145" />
-      <option name="project" value="LOCAL" />
-      <updated>1595536046773</updated>
-    </task>
-    <task id="LOCAL-00146" summary="STARTED (again) USING #HILT!&#10;This time it's working!">
-      <created>1595600437571</created>
-      <option name="number" value="00146" />
-      <option name="presentableId" value="LOCAL-00146" />
-      <option name="project" value="LOCAL" />
-      <updated>1595600437572</updated>
-    </task>
-    <task id="LOCAL-00147" summary="More migration to using HILT">
-      <created>1595618595971</created>
-      <option name="number" value="00147" />
-      <option name="presentableId" value="LOCAL-00147" />
-      <option name="project" value="LOCAL" />
-      <updated>1595618595972</updated>
-    </task>
-    <task id="LOCAL-00148" summary="Remove unused Helper.java and RestRepository.java classes.">
-      <created>1595622412077</created>
-      <option name="number" value="00148" />
-      <option name="presentableId" value="LOCAL-00148" />
-      <option name="project" value="LOCAL" />
-      <updated>1595622412077</updated>
-    </task>
-    <task id="LOCAL-00149" summary="Add NetworkModule class">
-      <created>1595851199100</created>
-      <option name="number" value="00149" />
-      <option name="presentableId" value="LOCAL-00149" />
-      <option name="project" value="LOCAL" />
-      <updated>1595851199101</updated>
-    </task>
-    <option name="localTasksCounter" value="150" />
+    <option name="localTasksCounter" value="142" />
     <servers />
   </component>
   <component name="TodoView">
@@ -1011,31 +993,6 @@
             </State>
           </value>
         </entry>
-        <entry key="2">
-          <value>
-            <State>
-              <option name="SHOW_ONLY_AFFECTED_CHANGES" value="true" />
-              <option name="FILTERS">
-                <map>
-                  <entry key="branch">
-                    <value>
-                      <list>
-                        <option value="HEAD" />
-                      </list>
-                    </value>
-                  </entry>
-                  <entry key="structure">
-                    <value>
-                      <list>
-                        <option value="dir:/Users/dominikerbsland/workspace/app/Android/cheat-database/app" />
-                      </list>
-                    </value>
-                  </entry>
-                </map>
-              </option>
-            </State>
-          </value>
-        </entry>
         <entry key="MAIN">
           <value>
             <State>
@@ -1048,7 +1005,6 @@
     <option name="OPEN_TABS">
       <set>
         <option value="1" />
-        <option value="2" />
       </set>
     </option>
   </component>
@@ -1067,6 +1023,14 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
+    <MESSAGE value="remove deprecated line" />
+    <MESSAGE value="Comment out unneeded gradle code" />
+    <MESSAGE value="Removed unused ad layout files. Builds again!!" />
+    <MESSAGE value="Fixing instant app crash because of binding. Removing viewBinding in gradle because Kotlin can bind more easily." />
+    <MESSAGE value="Bug fixes in &quot;my cheats&quot; section." />
+    <MESSAGE value="Improving unpublished cheats card layouts etc." />
+    <MESSAGE value="Switching to coroutines (not working yet)." />
+    <MESSAGE value="Remove cheat from list functionality (needs to be changed to coroutines)&#10;currently bug in removing one item from the list in MyUnpublishedCheatsListFragment.kt" />
     <MESSAGE value="Fixing the feature for removing an item from the unpublished cheats list. the list will remove the item and refresh with an animation." />
     <MESSAGE value="Add app bar layout to toolbar layout xml file" />
     <MESSAGE value="Back arrow in actionbar in unpublished cheats list view added.&#10;Improved look of the card." />
@@ -1081,125 +1045,119 @@
     <MESSAGE value="Fixing the navigation drawer style! Gray background with blue item highlighting on selection." />
     <MESSAGE value="Working Version 2.5.17!&#10;FIXED ON APP START CRASH (room database upgrade crashed -&gt; favorites -&gt; member_id NonNull)" />
     <MESSAGE value="Move RestApi object creation away from MainActivity to the child-fragments." />
-    <MESSAGE value="Displaying the amount of unpublished and published cheats int he &quot;my fragments&quot; view. Error in MainActivity when logging out, some fragments crash..." />
-    <MESSAGE value="Fixing login/logout refresh behavior for &quot;myCheats&quot; view. logging out removes the count. Loggin in refreshes the drawer and fragment with the cheats count numbers." />
-    <MESSAGE value="Fixing strings.xml cheatList -&gt; cheats&#10;Fixing favorites empty view bug&#10;Improving &quot;my cheats&quot; view with counter" />
-    <MESSAGE value="Release Version 2.5.18&#10;(+ library updates)" />
-    <MESSAGE value="2.5.19-preRelease" />
-    <MESSAGE value="Make rejected cheat alertdialog less transparent&#10;Add bottom padding for unpublished cheats recyclerview" />
-    <MESSAGE value="Fix favorites list data getting lost on display rotation.&#10;Add scrollview to &quot;my cheats&quot; view for better landscape mode." />
-    <MESSAGE value="STARTED (again) USING #HILT!&#10;This time it's working!" />
-    <MESSAGE value="More migration to using HILT" />
-    <MESSAGE value="Remove unused Helper.java and RestRepository.java classes." />
-    <MESSAGE value="Add NetworkModule class" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add NetworkModule class" />
+    <MESSAGE value="Library Version Upgrades" />
+    <MESSAGE value="Updated &quot;my cheats&quot; text with parameters for adding the amount of unchecked and rejected cheats." />
+    <MESSAGE value="Adding counter to navigation drawer for &quot;my cheats&quot;" />
+    <option name="LAST_COMMIT_MESSAGE" value="Adding counter to navigation drawer for &quot;my cheats&quot;" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="522" y="250" width="1632" height="946" key="#PSD" timestamp="1595581094550">
-      <screen x="0" y="23" width="2560" height="1348" />
+    <state x="602" y="173" width="1523" height="1030" key="#PSD" timestamp="1594925855628">
+      <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state x="522" y="250" width="1632" height="946" key="#PSD/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1595581094550" />
-    <state x="1018" y="451" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1595618623001">
-      <screen x="0" y="23" width="2560" height="1348" />
+    <state x="602" y="173" width="1523" height="1030" key="#PSD/0.0.2560.1400@0.0.2560.1400" timestamp="1594925855628" />
+    <state x="1071" y="416" key="#com.intellij.ide.util.MemberChooser" timestamp="1596141271722">
+      <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state x="1018" y="451" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1595618623001" />
-    <state x="1141" y="469" key="AndroidProcessChooserDialog" timestamp="1595879584398">
-      <screen x="0" y="23" width="2560" height="1348" />
+    <state x="1071" y="416" key="#com.intellij.ide.util.MemberChooser/-3000.0.1500.980/0.0.2560.1400@0.0.2560.1400" timestamp="1596141271722" />
+    <state x="1071" y="416" key="#com.intellij.ide.util.MemberChooser/0.0.2560.1400@0.0.2560.1400" timestamp="1595272530468" />
+    <state x="914" y="461" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog" timestamp="1594923928809">
+      <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state x="1141" y="469" key="AndroidProcessChooserDialog/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1595879584398" />
-    <state x="500" y="101" width="1718" height="1269" key="CommitChangelistDialog2" timestamp="1595851198887">
-      <screen x="0" y="23" width="2560" height="1348" />
+    <state x="914" y="461" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog/0.0.2560.1400@0.0.2560.1400" timestamp="1594923928809" />
+    <state x="901" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1594928294133">
+      <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state x="500" y="101" width="1718" height="1269" key="CommitChangelistDialog2/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1595622411936" />
-    <state x="500" y="101" width="1524" height="1077" key="CommitChangelistDialog2/0.23.2560.1348/-1680.413.1680.1027@0.23.2560.1348" timestamp="1595851198887" />
-    <state x="9" y="32" width="2542" height="1330" maximized="true" key="DiffContextDialog" timestamp="1595533537949">
-      <screen x="0" y="23" width="2560" height="1348" />
+    <state x="901" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.2560.1400@0.0.2560.1400" timestamp="1594928294133" />
+    <state x="1010" y="447" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1594931480582">
+      <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state x="9" y="32" width="2542" height="1330" maximized="true" key="DiffContextDialog/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1595533537949" />
-    <state x="100" y="123" width="2360" height="1148" key="DiffContextDialog/0.23.2560.1348/-1680.413.1680.1027@0.23.2560.1348" timestamp="1595333491824" />
-    <state width="2518" height="446" key="GridCell.Tab.0.bottom" timestamp="1596052636311">
-      <screen x="0" y="23" width="2560" height="1348" />
+    <state x="1010" y="447" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.2560.1400@0.0.2560.1400" timestamp="1594931480582" />
+    <state x="860" y="455" key="AndroidCreateResourceFileDialog" timestamp="1595273833585">
+      <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state width="2518" height="446" key="GridCell.Tab.0.bottom/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1596052636311" />
-    <state width="2518" height="462" key="GridCell.Tab.0.bottom/0.23.2560.1348/-1680.413.1680.1027@0.23.2560.1348" timestamp="1595339485682" />
-    <state width="2518" height="446" key="GridCell.Tab.0.center" timestamp="1596052636311">
-      <screen x="0" y="23" width="2560" height="1348" />
+    <state x="860" y="455" key="AndroidCreateResourceFileDialog/0.0.2560.1400@0.0.2560.1400" timestamp="1595273833585" />
+    <state x="1114" y="485" key="AndroidCreateXmlResourceDialog" timestamp="1595277038425">
+      <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state width="2518" height="446" key="GridCell.Tab.0.center/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1596052636311" />
-    <state width="2518" height="462" key="GridCell.Tab.0.center/0.23.2560.1348/-1680.413.1680.1027@0.23.2560.1348" timestamp="1595339485681" />
-    <state width="2518" height="446" key="GridCell.Tab.0.left" timestamp="1596052636310">
-      <screen x="0" y="23" width="2560" height="1348" />
+    <state x="1114" y="485" key="AndroidCreateXmlResourceDialog/0.0.2560.1400@0.0.2560.1400" timestamp="1595277038425" />
+    <state x="1135" y="465" key="AndroidProcessChooserDialog" timestamp="1595278051063">
+      <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state width="2518" height="446" key="GridCell.Tab.0.left/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1596052636310" />
-    <state width="2518" height="462" key="GridCell.Tab.0.left/0.23.2560.1348/-1680.413.1680.1027@0.23.2560.1348" timestamp="1595339485681" />
-    <state width="2518" height="446" key="GridCell.Tab.0.right" timestamp="1596052636311">
-      <screen x="0" y="23" width="2560" height="1348" />
+    <state x="1135" y="465" key="AndroidProcessChooserDialog/0.0.2560.1400@0.0.2560.1400" timestamp="1595278051063" />
+    <state x="653" y="64" width="1604" height="1148" key="CommitChangelistDialog2" timestamp="1595307674534">
+      <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state width="2518" height="446" key="GridCell.Tab.0.right/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1596052636311" />
-    <state width="2518" height="462" key="GridCell.Tab.0.right/0.23.2560.1348/-1680.413.1680.1027@0.23.2560.1348" timestamp="1595339485682" />
-    <state width="2518" height="502" key="GridCell.Tab.1.bottom" timestamp="1595913046317">
-      <screen x="0" y="23" width="2560" height="1348" />
+    <state x="653" y="64" width="1604" height="1148" key="CommitChangelistDialog2/0.0.2560.1400@0.0.2560.1400" timestamp="1595307674534" />
+    <state width="2517" height="494" key="GridCell.Tab.0.bottom" timestamp="1595278191668">
+      <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state width="2518" height="502" key="GridCell.Tab.1.bottom/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1595913046317" />
-    <state width="2518" height="502" key="GridCell.Tab.1.center" timestamp="1595913046317">
-      <screen x="0" y="23" width="2560" height="1348" />
+    <state width="2517" height="494" key="GridCell.Tab.0.bottom/0.0.2560.1400@0.0.2560.1400" timestamp="1595278191668" />
+    <state width="2517" height="494" key="GridCell.Tab.0.center" timestamp="1595278191668">
+      <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state width="2518" height="502" key="GridCell.Tab.1.center/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1595913046317" />
-    <state width="2518" height="502" key="GridCell.Tab.1.left" timestamp="1595913046316">
-      <screen x="0" y="23" width="2560" height="1348" />
+    <state width="2517" height="494" key="GridCell.Tab.0.center/0.0.2560.1400@0.0.2560.1400" timestamp="1595278191668" />
+    <state width="2517" height="494" key="GridCell.Tab.0.left" timestamp="1595278191668">
+      <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state width="2518" height="502" key="GridCell.Tab.1.left/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1595913046316" />
-    <state width="2518" height="502" key="GridCell.Tab.1.right" timestamp="1595913046317">
-      <screen x="0" y="23" width="2560" height="1348" />
+    <state width="2517" height="494" key="GridCell.Tab.0.left/0.0.2560.1400@0.0.2560.1400" timestamp="1595278191668" />
+    <state width="2517" height="494" key="GridCell.Tab.0.right" timestamp="1595278191668">
+      <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state width="2518" height="502" key="GridCell.Tab.1.right/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1595913046317" />
-    <state x="993" y="420" key="MultipleFileMergeDialog" timestamp="1595333089919">
-      <screen x="0" y="23" width="2560" height="1348" />
+    <state width="2517" height="494" key="GridCell.Tab.0.right/0.0.2560.1400@0.0.2560.1400" timestamp="1595278191668" />
+    <state width="2517" height="494" key="GridCell.Tab.1.bottom" timestamp="1595278191668">
+      <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state x="993" y="420" key="MultipleFileMergeDialog/0.23.2560.1348/-1680.413.1680.1027@0.23.2560.1348" timestamp="1595333089919" />
-    <state x="781" y="336" key="SettingsEditor" timestamp="1595581086418">
-      <screen x="0" y="23" width="2560" height="1348" />
+    <state width="2517" height="494" key="GridCell.Tab.1.bottom/0.0.2560.1400@0.0.2560.1400" timestamp="1595278191668" />
+    <state width="2517" height="494" key="GridCell.Tab.1.center" timestamp="1595278191668">
+      <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state x="781" y="336" key="SettingsEditor/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1595581086418" />
-    <state x="880" y="437" key="Vcs.Push.Dialog.v2" timestamp="1595851202545">
-      <screen x="0" y="23" width="2560" height="1348" />
+    <state width="2517" height="494" key="GridCell.Tab.1.center/0.0.2560.1400@0.0.2560.1400" timestamp="1595278191668" />
+    <state width="2517" height="494" key="GridCell.Tab.1.left" timestamp="1595278191668">
+      <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state x="880" y="437" key="Vcs.Push.Dialog.v2/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1595622413428" />
-    <state x="880" y="437" key="Vcs.Push.Dialog.v2/0.23.2560.1348/-1680.413.1680.1027@0.23.2560.1348" timestamp="1595851202545" />
-    <state x="99" y="123" width="2360" height="1148" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1595535856283">
-      <screen x="0" y="23" width="2560" height="1348" />
+    <state width="2517" height="494" key="GridCell.Tab.1.left/0.0.2560.1400@0.0.2560.1400" timestamp="1595278191668" />
+    <state width="2517" height="494" key="GridCell.Tab.1.right" timestamp="1595278191668">
+      <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state x="99" y="123" width="2360" height="1148" key="com.intellij.history.integration.ui.views.FileHistoryDialog/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1595535856283" />
-    <state x="938" y="319" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1595444249055">
-      <screen x="0" y="23" width="2560" height="1348" />
+    <state width="2517" height="494" key="GridCell.Tab.1.right/0.0.2560.1400@0.0.2560.1400" timestamp="1595278191668" />
+    <state x="992" y="416" width="1032" height="568" key="MultipleFileMergeDialog" timestamp="1596136104966">
+      <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state x="938" y="319" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1595444249055" />
-    <state x="1068" y="621" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1595581372668">
-      <screen x="0" y="23" width="2560" height="1348" />
+    <state x="992" y="416" width="1032" height="568" key="MultipleFileMergeDialog/-3000.0.1500.980/0.0.2560.1400@0.0.2560.1400" timestamp="1596136104966" />
+    <state x="992" y="416" key="MultipleFileMergeDialog/0.0.2560.1400@0.0.2560.1400" timestamp="1595353495531" />
+    <state x="0" y="0" key="VCS.ChangeListViewerDialog" timestamp="1595353482017">
+      <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state x="1068" y="621" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1595581372668" />
-    <state x="1068" y="621" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.23.2560.1348/-1680.413.1680.1027@0.23.2560.1348" timestamp="1595512130292" />
-    <state x="1018" y="471" key="extract.method.dialog" timestamp="1595337489807">
-      <screen x="0" y="23" width="2560" height="1348" />
+    <state x="0" y="0" key="VCS.ChangeListViewerDialog/0.0.2560.1400@0.0.2560.1400" timestamp="1595353482017" />
+    <state x="826" y="458" key="Vcs.Push.Dialog.v2" timestamp="1595308523246">
+      <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state x="1018" y="471" key="extract.method.dialog/0.23.2560.1348/-1680.413.1680.1027@0.23.2560.1348" timestamp="1595337489807" />
-    <state x="582" y="106" width="1548" height="1151" key="find.popup" timestamp="1596055685651">
-      <screen x="0" y="23" width="2560" height="1348" />
+    <state x="826" y="458" key="Vcs.Push.Dialog.v2/0.0.2560.1400@0.0.2560.1400" timestamp="1595308523246" />
+    <state x="92" y="92" width="2376" height="1216" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1594925683259">
+      <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state x="582" y="106" width="1548" height="1151" key="find.popup/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1596055685651" />
-    <state x="660" y="209" width="1296" height="861" key="find.popup/0.23.2560.1348/-1680.413.1680.1027@0.23.2560.1348" timestamp="1595513241394" />
-    <state width="752" height="140" key="javadoc.popup.new" timestamp="1596055275265">
-      <screen x="0" y="23" width="2560" height="1348" />
+    <state x="92" y="92" width="2376" height="1216" key="com.intellij.history.integration.ui.views.FileHistoryDialog/0.0.2560.1400@0.0.2560.1400" timestamp="1594925683259" />
+    <state x="927" y="315" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1595272549070">
+      <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state width="752" height="140" key="javadoc.popup.new/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1596055275265" />
-    <state width="752" height="140" key="javadoc.popup.new/0.23.2560.1348/-1680.413.1680.1027@0.23.2560.1348" timestamp="1595841954029" />
-    <state x="945" y="331" width="670" height="676" key="search.everywhere.popup" timestamp="1596054494976">
-      <screen x="0" y="23" width="2560" height="1348" />
+    <state x="927" y="315" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.0.2560.1400@0.0.2560.1400" timestamp="1595272549070" />
+    <state x="1089" y="617" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1596135352570">
+      <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state x="945" y="331" width="670" height="676" key="search.everywhere.popup/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1596054494976" />
-    <state x="945" y="331" width="670" height="676" key="search.everywhere.popup/0.23.2560.1348/-1680.413.1680.1027@0.23.2560.1348" timestamp="1595513205159" />
+    <state x="1089" y="617" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/-3000.0.1500.980/0.0.2560.1400@0.0.2560.1400" timestamp="1596135352569" />
+    <state x="1089" y="617" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.2560.1400@0.0.2560.1400" timestamp="1595353487311" />
+    <state x="475" y="206" width="1542" height="1028" key="find.popup" timestamp="1596142551682">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state x="475" y="206" width="1542" height="1028" key="find.popup/-3000.0.1500.980/0.0.2560.1400@0.0.2560.1400" timestamp="1596142551682" />
+    <state x="475" y="206" width="1542" height="1028" key="find.popup/0.0.2560.1400@0.0.2560.1400" timestamp="1595276098831" />
+    <state x="943" y="315" width="672" height="678" key="search.everywhere.popup" timestamp="1596141275014">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state x="943" y="315" width="672" height="678" key="search.everywhere.popup/-3000.0.1500.980/0.0.2560.1400@0.0.2560.1400" timestamp="1596141275014" />
+    <state x="943" y="315" width="672" height="678" key="search.everywhere.popup/0.0.2560.1400@0.0.2560.1400" timestamp="1595273827810" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1212,15 +1170,31 @@
           </properties>
           <option name="timeStamp" value="132" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="java-method">
+        <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/CheatsByGameListActivity.java</url>
-          <line>302</line>
-          <properties method="onFailure" />
-          <option name="timeStamp" value="230" />
+          <line>399</line>
+          <option name="timeStamp" value="187" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/adapters/FavoritesExpandableListAdapter.java</url>
+          <line>41</line>
+          <properties class="com.cheatdatabase.adapters.FavoritesExpandableListAdapter" method="getChildView" />
+          <option name="timeStamp" value="211" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/helpers/Tools.java</url>
+          <line>530</line>
+          <properties class="com.cheatdatabase.helpers.Tools" method="saveScreenshotsToSdCard" />
+          <option name="timeStamp" value="213" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/helpers/Tools.java</url>
+          <line>470</line>
+          <option name="timeStamp" value="64" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/dialogs/ReportCheatMaterialDialog.java</url>
-          <line>48</line>
+          <line>50</line>
           <option name="timeStamp" value="80" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
@@ -1229,14 +1203,39 @@
           <option name="timeStamp" value="183" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/CheatForumActivity.java</url>
+          <line>108</line>
+          <option name="timeStamp" value="190" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/cheat_detail_view/CheatViewPageIndicatorActivity.java</url>
           <line>124</line>
           <option name="timeStamp" value="194" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/CheatsByGameListActivity.java</url>
-          <line>314</line>
+          <line>268</line>
+          <option name="timeStamp" value="195" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/CheatsByGameListActivity.java</url>
+          <line>308</line>
           <option name="timeStamp" value="196" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/FavoriteCheatListActivity.java</url>
+          <line>105</line>
+          <option name="timeStamp" value="202" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/FavoriteCheatListActivity.java</url>
+          <line>97</line>
+          <option name="timeStamp" value="203" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/holders/CheatsByGameListViewItemHolder.java</url>
+          <line>60</line>
+          <option name="timeStamp" value="217" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/holders/MemberCheatsListViewItemHolder.java</url>
@@ -1244,9 +1243,9 @@
           <option name="timeStamp" value="218" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="java-line">
-          <url>file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/FavoriteCheatListActivity.java</url>
-          <line>108</line>
-          <option name="timeStamp" value="227" />
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/MainActivity.java</url>
+          <line>479</line>
+          <option name="timeStamp" value="223" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="kotlin-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/holders/CheatViewGalleryCardHolder.kt</url>
@@ -1273,6 +1272,12 @@
             <option name="EMULATED" value="true" />
           </properties>
           <option name="timeStamp" value="222" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="kotlin-function">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/fragments/MyCheatsFragment.kt</url>
+          <line>143</line>
+          <properties class="com.cheatdatabase.fragments.MyCheatsFragment" />
+          <option name="timeStamp" value="224" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

@@ -58,8 +58,6 @@ import needle.Needle;
  *
  * @version 1.0
  */
-//@Module
-//@InstallIn(ApplicationComponent.class)
 public class Tools {
     private final String TAG = Tools.class.getSimpleName();
 

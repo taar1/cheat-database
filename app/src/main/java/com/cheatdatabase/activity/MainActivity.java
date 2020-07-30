@@ -72,24 +72,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private static final String TAG = MainActivity.class.getSimpleName();
 
-    private int mFragmentId;
-
-    private AdView adView;
-
-    private ActionBarDrawerToggle actionBarDrawerToggle;
-
-    private Member member;
-    private UnpublishedCheatsRepositoryKotlin.MyCheatsCount myCheatsCount;
-
-    private SearchManager searchManager;
-    private SearchView searchView;
-
-    private FragmentManager fragmentManager;
-    private FragmentTransaction fragmentTransaction;
-
+    @Inject
+    RateAppDialog rateAppDialog;
     @Inject
     Tools tools;
-
     @Inject
     RestApi restApi;
 
@@ -109,6 +95,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     LinearLayout bannerContainerInmobi;
     @BindView(R.id.inmobi_banner)
     InMobiBanner inMobiBanner;
+
+    private int mFragmentId;
+    private AdView adView;
+    private ActionBarDrawerToggle actionBarDrawerToggle;
+    private Member member;
+    private UnpublishedCheatsRepositoryKotlin.MyCheatsCount myCheatsCount;
+    private SearchManager searchManager;
+    private SearchView searchView;
+    private FragmentManager fragmentManager;
+    private FragmentTransaction fragmentTransaction;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -385,7 +381,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             mToolbar.setTitle(R.string.top_members_top_helping);
             floatingActionButton.hide();
         } else if (id == R.id.nav_rate) {
-            new RateAppDialog(this, () -> showContactFormFragment());
+            rateAppDialog.show(this::showContactFormFragment);
             return true;
         } else if (id == R.id.nav_contact) {
             showContactFormFragment();

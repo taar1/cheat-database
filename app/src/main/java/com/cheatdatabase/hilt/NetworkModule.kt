@@ -13,7 +13,6 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
-
 @InstallIn(ApplicationComponent::class)
 @Module
 class NetworkModule {
@@ -25,7 +24,6 @@ class NetworkModule {
             .Builder()
             .build()
     }
-
 
     @Provides
     @Singleton
