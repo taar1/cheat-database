@@ -77,7 +77,6 @@ public class CheatForumActivity extends AppCompatActivity implements GenericCall
 
     @Inject
     Tools tools;
-
     @Inject
     RestApi restApi;
 
@@ -397,8 +396,7 @@ public class CheatForumActivity extends AppCompatActivity implements GenericCall
                 tools.shareCheat(cheatObj);
                 return true;
             case R.id.action_metainfo:
-                CheatMetaDialog cmDialog = new CheatMetaDialog(this, cheatObj, outerLayout, tools);
-                cmDialog.show();
+                new CheatMetaDialog(CheatForumActivity.this, cheatObj, outerLayout, tools, restApi).show();
                 return true;
             case R.id.action_report:
                 showReportDialog();
@@ -455,7 +453,7 @@ public class CheatForumActivity extends AppCompatActivity implements GenericCall
         if ((member == null) || (member.getMid() == 0)) {
             Toast.makeText(this, R.string.error_login_required, Toast.LENGTH_LONG).show();
         } else {
-            new RateCheatMaterialDialog(this, cheatObj, member, outerLayout, tools);
+            new RateCheatMaterialDialog(this, cheatObj, member, outerLayout, tools, restApi);
         }
     }
 

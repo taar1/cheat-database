@@ -371,8 +371,7 @@ public class CheatViewPageIndicatorActivity extends AppCompatActivity implements
                 return true;
             case R.id.action_metainfo:
                 if (Reachability.reachability.isReachable) {
-                    CheatMetaDialog cmDialog = new CheatMetaDialog(CheatViewPageIndicatorActivity.this, visibleCheat, outerLayout, tools);
-                    cmDialog.show();
+                    new CheatMetaDialog(CheatViewPageIndicatorActivity.this, visibleCheat, outerLayout, tools, restApi).show();
                 } else {
                     Toast.makeText(this, R.string.no_internet, Toast.LENGTH_SHORT).show();
                 }
@@ -437,7 +436,7 @@ public class CheatViewPageIndicatorActivity extends AppCompatActivity implements
         if ((member == null) || (member.getMid() == 0)) {
             Toast.makeText(this, R.string.error_login_required, Toast.LENGTH_LONG).show();
         } else {
-            new RateCheatMaterialDialog(this, visibleCheat, member, outerLayout, tools);
+            new RateCheatMaterialDialog(this, visibleCheat, member, outerLayout, tools, restApi);
         }
     }
 

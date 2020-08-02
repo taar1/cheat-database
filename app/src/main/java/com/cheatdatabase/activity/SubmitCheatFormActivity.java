@@ -41,7 +41,7 @@ import retrofit2.Response;
 /**
  * Form to submit a cheat for a game.
  *
- * @author erbsland
+ * @author Dominik Erbsland
  */
 @AndroidEntryPoint
 public class SubmitCheatFormActivity extends AppCompatActivity {
@@ -49,9 +49,10 @@ public class SubmitCheatFormActivity extends AppCompatActivity {
 
     @Inject
     Tools tools;
-
     @Inject
     RestApi restApi;
+    @Inject
+    PlainInformationDialog plainInformationDialog;
 
     @BindView(R.id.outer_layout)
     ConstraintLayout outerLayout;
@@ -130,16 +131,12 @@ public class SubmitCheatFormActivity extends AppCompatActivity {
 
     @OnClick(R.id.guidelines)
     void guidelinesClicked() {
-        PlainInformationDialog instructionsDialog = new PlainInformationDialog(this);
-        instructionsDialog.setContent(R.string.submit_cheat_instructions_title, R.string.submit_cheat_guidelines, R.string.ok);
-        instructionsDialog.show();
+        plainInformationDialog.setContent(R.string.submit_cheat_instructions_title, R.string.submit_cheat_guidelines, R.string.ok);
     }
 
     @OnClick(R.id.terms_conditions)
     void termsAndConditionsClicked() {
-        PlainInformationDialog termsDialog = new PlainInformationDialog(this);
-        termsDialog.setContent(R.string.guidelines, R.string.submit_cheat_consent_text, R.string.ok);
-        termsDialog.show();
+        plainInformationDialog.setContent(R.string.guidelines, R.string.submit_cheat_consent_text, R.string.ok);
     }
 
     void sendButtonClicked() {
@@ -193,36 +190,45 @@ public class SubmitCheatFormActivity extends AppCompatActivity {
     }
 
     private void submitCheatNow() {
-        Log.d(TAG, "submitCheatNow: 1");
-        Call<JsonObject> call = restApi.insertCheat(member.getMid(), gameObj.getGameId(), cheatTitle.getText().toString().trim(), cheatText.getText().toString().trim());
-        call.enqueue(new Callback<JsonObject>() {
-            @Override
-            public void onResponse(Call<JsonObject> games, Response<JsonObject> response) {
-                Log.d(TAG, "submitCheatNow: 2");
-                if (response.isSuccessful()) {
-                    JsonObject submissionResponse = response.body();
+        Log.d(TAG, "submitCheatNow: ");
+        String cheatTitleTrimmed = cheatTitle.getText().toString().trim();
+        String cheatTextTrimmed = cheatText.getText().toString().trim();
 
-                    String returnMessage = submissionResponse.get("returnMessage").getAsString();
-                    if (returnMessage.equalsIgnoreCase("insert_ok")) {
-                        cheatTitle.setText("");
-                        cheatText.setText("");
+        if ((cheatTitleTrimmed.length() < 2) || (cheatTextTrimmed.length() < 2)) {
+            Log.d(TAG, "submitCheatNow: 2");
+            finish();
+        } else {
+            Log.d(TAG, "submitCheatNow: 3");
+            Call<JsonObject> call = restApi.insertCheat(member.getMid(), gameObj.getGameId(), cheatTitleTrimmed, cheatTextTrimmed);
+            call.enqueue(new Callback<JsonObject>() {
+                @Override
+                public void onResponse(Call<JsonObject> games, Response<JsonObject> response) {
+                    Log.d(TAG, "submitCheatNow: 4");
+                    if (response.isSuccessful()) {
+                        JsonObject submissionResponse = response.body();
 
-                        showAlertDialog(R.string.thanks, R.string.cheat_submit_ok);
-                    } else if (returnMessage.equalsIgnoreCase("missing_values")) {
-                        showAlertDialog(R.string.err, R.string.cheat_submit_nok);
-                    } else if (returnMessage.equalsIgnoreCase("invalid_member_id")) {
-                        showAlertDialog(R.string.err, R.string.cheat_submit_nok);
+                        String returnMessage = submissionResponse.get("returnMessage").getAsString();
+                        if (returnMessage.equalsIgnoreCase("insert_ok")) {
+                            cheatTitle.setText("");
+                            cheatText.setText("");
+
+                            showAlertDialog(R.string.thanks, R.string.cheat_submit_ok);
+                        } else if (returnMessage.equalsIgnoreCase("missing_values")) {
+                            showAlertDialog(R.string.err, R.string.cheat_submit_nok);
+                        } else if (returnMessage.equalsIgnoreCase("invalid_member_id")) {
+                            showAlertDialog(R.string.err, R.string.cheat_submit_nok);
+                        }
                     }
                 }
-            }
 
-            @Override
-            public void onFailure(Call<JsonObject> call, Throwable t) {
-                Log.d(TAG, "submitCheatNow: 3");
-                Log.e(TAG, "Submitting the cheat has failed: " + t.getLocalizedMessage());
-                tools.showSnackbar(outerLayout, getString(R.string.no_internet));
-            }
-        });
+                @Override
+                public void onFailure(Call<JsonObject> call, Throwable t) {
+                    Log.d(TAG, "submitCheatNow: 5");
+                    Log.e(TAG, "Submitting the cheat has failed: " + t.getLocalizedMessage());
+                    tools.showSnackbar(outerLayout, getString(R.string.no_internet));
+                }
+            });
+        }
     }
 
     private void showAlertDialog(int title, int text) {

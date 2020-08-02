@@ -7,17 +7,21 @@ import android.widget.TextView;
 
 import com.cheatdatabase.R;
 
+import javax.inject.Inject;
+
+import dagger.hilt.android.qualifiers.ActivityContext;
+
 /**
- * Dialog to display a title and text.
+ * Simple dialog to display a title and text.
  *
- * @author Dominik
+ * @author Dominik Erbsland
  */
 public class PlainInformationDialog extends Dialog {
-
     private TextView mTitle;
     private TextView mText;
 
-    public PlainInformationDialog(Context context) {
+    @Inject
+    public PlainInformationDialog(@ActivityContext Context context) {
         super(context);
 
         requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -31,5 +35,7 @@ public class PlainInformationDialog extends Dialog {
     public void setContent(int title, int text, int button) {
         mTitle.setText(title);
         mText.setText(text);
+
+        show();
     }
 }

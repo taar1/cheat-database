@@ -16,7 +16,6 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.Theme;
 import com.cheatdatabase.R;
 import com.cheatdatabase.activity.CheatsByMemberListActivity;
-import com.cheatdatabase.data.RetrofitClientInstance;
 import com.cheatdatabase.data.model.Cheat;
 import com.cheatdatabase.data.model.Member;
 import com.cheatdatabase.helpers.Tools;
@@ -62,14 +61,14 @@ public class CheatMetaDialog extends Dialog implements OnClickListener {
     private View divider5;
     private View divider6;
 
-    public CheatMetaDialog(Context context, Cheat cheat, View view, Tools tools) {
+    public CheatMetaDialog(Context context, Cheat cheat, View view, Tools tools, RestApi restApi) {
         super(context);
         this.context = context;
         this.cheat = cheat;
         this.view = view;
         this.tools = tools;
+        this.restApi = restApi;
 
-        restApi = RetrofitClientInstance.getRetrofitInstance().create(RestApi.class);
         member = cheat.getSubmittingMember();
 
         final MaterialDialog metaInfoDialog = new MaterialDialog.Builder(context)
@@ -88,7 +87,6 @@ public class CheatMetaDialog extends Dialog implements OnClickListener {
         submissionDateText.setOnClickListener(this);
 
         loadMetaData();
-
     }
 
     private void loadMetaData() {

@@ -61,7 +61,6 @@ public class LoginActivity extends AppCompatActivity implements AlreadyLoggedInD
 
     @Inject
     Tools tools;
-
     @Inject
     RestApi restApi;
 

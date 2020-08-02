@@ -73,18 +73,9 @@ public class RateAppDialog {
     private void makeCustomLayout(MaterialDialog materialDialog) {
         View dialogView = materialDialog.getCustomView();
 
-        // TODO FIXME sterne animation geht nicht mehr beim swipen...
-        // TODO FIXME sterne animation geht nicht mehr beim swipen...
-        // TODO FIXME sterne animation geht nicht mehr beim swipen...
-
-
-        // TODO FIXME close drawer when dialog closes...
-        // TODO FIXME close drawer when dialog closes...
-        // TODO FIXME close drawer when dialog closes...
-
         final RatingBar ratingBar = dialogView.findViewById(R.id.ratingbar);
         ratingBar.setOnRatingBarChangeListener((ratingBar1, v, b) -> rating = Math.round(ratingBar1.getRating()));
-        ratingBar.setRating(Float.valueOf(String.valueOf(settings.getInt(APP_RATING_LOCAL, 0))));
+        ratingBar.setRating(Float.parseFloat(String.valueOf(settings.getInt(APP_RATING_LOCAL, 0))));
     }
 
     private void goToGooglePlay() {
@@ -103,9 +94,7 @@ public class RateAppDialog {
                 .positiveText(R.string.submit_feedback)
                 .negativeText(R.string.no_thanks)
                 .onPositive((dialog, which) -> mainActivityCallbacks.showContactFormFragmentCallback())
-                .onNegative((dialog, which) -> {
-                    // User clicked CANCEL. Just close the dialog.
-                })
+                .onNegative((dialog, which) -> mainActivityCallbacks.closeNagivationDrawerCallback())
                 .theme(Theme.DARK)
                 .cancelable(false)
                 .show();

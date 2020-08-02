@@ -2,7 +2,6 @@ package com.cheatdatabase.dialogs;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.fragment.app.DialogFragment;
@@ -27,18 +26,12 @@ public class AlreadyLoggedInDialog extends DialogFragment {
         final Member member = new Gson().fromJson(getActivity().getSharedPreferences(Konstanten.PREFERENCES_FILE, 0).getString(Konstanten.MEMBER_OBJECT, null), Member.class);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setMessage(getString(R.string.already_logged_in, member.getEmail())).setPositiveButton(R.string.sign_out, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int id) {
-                AlreadyLoggedInDialogListener activity = (AlreadyLoggedInDialogListener) getActivity();
-                activity.onFinishDialog(true);
-            }
-        }).setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int id) {
-                AlreadyLoggedInDialogListener activity = (AlreadyLoggedInDialogListener) getActivity();
-                activity.onFinishDialog(false);
-            }
+        builder.setMessage(getString(R.string.already_logged_in, member.getEmail())).setPositiveButton(R.string.sign_out, (dialog, id) -> {
+            AlreadyLoggedInDialogListener activity = (AlreadyLoggedInDialogListener) getActivity();
+            activity.onFinishDialog(true);
+        }).setNegativeButton(R.string.cancel, (dialog, id) -> {
+            AlreadyLoggedInDialogListener activity = (AlreadyLoggedInDialogListener) getActivity();
+            activity.onFinishDialog(false);
         });
         builder.setCancelable(false);
         return builder.create();

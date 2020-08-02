@@ -105,6 +105,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private SearchView searchView;
     private FragmentManager fragmentManager;
     private FragmentTransaction fragmentTransaction;
+    private MainActivityCallbacks mainActivityCallbacks;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -140,6 +141,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         TrackingUtils.getInstance().init(this);
 
         AppBrain.init(this);
+
+        mainActivityCallbacks = new MainActivityCallbacks() {
+            @Override
+            public void showContactFormFragmentCallback() {
+                MainActivity.this.showContactFormFragment();
+            }
+
+            @Override
+            public void closeNagivationDrawerCallback() {
+                MainActivity.this.closeNagivationDrawer();
+            }
+        };
     }
 
     private void updateMyCheatsDrawerNavigationItemCount() {
@@ -354,10 +367,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         finish();
     }
 
-    public interface MainActivityCallbacks {
-        void showContactFormFragmentCallback();
-    }
-
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         // Handle navigation view item clicks here.
@@ -381,7 +390,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             mToolbar.setTitle(R.string.top_members_top_helping);
             floatingActionButton.hide();
         } else if (id == R.id.nav_rate) {
-            rateAppDialog.show(this::showContactFormFragment);
+            rateAppDialog.show(mainActivityCallbacks);
             return true;
         } else if (id == R.id.nav_contact) {
             showContactFormFragment();
@@ -437,7 +446,24 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mDrawerLayout.closeDrawers();
     }
 
-    private void showContactFormFragment() {
+    private void showGameSystemsFragment() {
+        mToolbar.setTitle(R.string.app_name);
+        fragmentTransaction.addToBackStack(SystemListFragment.class.getSimpleName());
+
+        SystemListFragment fragment = SystemListFragment.newInstance(this);
+        fragmentManager.beginTransaction().replace(R.id.content_frame, fragment, SystemListFragment.class.getSimpleName()).commit();
+
+        floatingActionButton.show();
+        mDrawerLayout.closeDrawers();
+    }
+
+    public interface MainActivityCallbacks {
+        void showContactFormFragmentCallback();
+
+        void closeNagivationDrawerCallback();
+    }
+
+    public void showContactFormFragment() {
         mToolbar.setTitle(R.string.contactform_title);
         fragmentTransaction.addToBackStack(ContactFormFragment.class.getSimpleName());
 
@@ -449,17 +475,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mixedBannerContainer.setVisibility(View.GONE);
 
         floatingActionButton.hide();
+
+        // Contact Form Item: #6
+        navigationView.getMenu().getItem(6).setChecked(true);
         mDrawerLayout.closeDrawers();
     }
 
-    private void showGameSystemsFragment() {
-        mToolbar.setTitle(R.string.app_name);
-        fragmentTransaction.addToBackStack(SystemListFragment.class.getSimpleName());
-
-        SystemListFragment fragment = SystemListFragment.newInstance(this);
-        fragmentManager.beginTransaction().replace(R.id.content_frame, fragment, SystemListFragment.class.getSimpleName()).commit();
-
-        floatingActionButton.show();
+    public void closeNagivationDrawer() {
         mDrawerLayout.closeDrawers();
     }
 

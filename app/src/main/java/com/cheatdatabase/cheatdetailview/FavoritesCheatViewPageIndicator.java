@@ -329,8 +329,7 @@ public class FavoritesCheatViewPageIndicator extends AppCompatActivity {
                 return true;
             case R.id.action_metainfo:
                 if (Reachability.reachability.isReachable) {
-                    CheatMetaDialog cmDialog = new CheatMetaDialog(FavoritesCheatViewPageIndicator.this, visibleCheat, outerLayout, tools);
-                    cmDialog.show();
+                    new CheatMetaDialog(FavoritesCheatViewPageIndicator.this, visibleCheat, outerLayout, tools, restApi).show();
                 } else {
                     Toast.makeText(this, R.string.no_internet, Toast.LENGTH_SHORT).show();
                 }
@@ -393,7 +392,7 @@ public class FavoritesCheatViewPageIndicator extends AppCompatActivity {
         if ((member == null) || (member.getMid() == 0)) {
             Toast.makeText(this, R.string.error_login_to_rate, Toast.LENGTH_LONG).show();
         } else {
-            new RateCheatMaterialDialog(this, visibleCheat, member, outerLayout, tools);
+            new RateCheatMaterialDialog(this, visibleCheat, member, outerLayout, tools, restApi);
         }
     }
 

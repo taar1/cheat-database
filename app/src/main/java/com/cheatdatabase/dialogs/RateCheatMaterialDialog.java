@@ -8,7 +8,6 @@ import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.Theme;
 import com.cheatdatabase.R;
-import com.cheatdatabase.data.RetrofitClientInstance;
 import com.cheatdatabase.data.model.Cheat;
 import com.cheatdatabase.data.model.Member;
 import com.cheatdatabase.events.CheatRatingFinishedEvent;
@@ -28,23 +27,24 @@ import retrofit2.Response;
 public class RateCheatMaterialDialog {
     private static final String TAG = "RateCheatMaterialDialog";
 
-    private Tools tools;
+    private Activity activity;
+    private View view;
 
-    Activity activity;
-    Cheat cheat;
-    Member member;
-    RestApi restApi;
-    View view;
+    private Tools tools;
+    private RestApi restApi;
+
+    private Cheat cheat;
+    private Member member;
+
     private int newRatingBarValue;
 
-    public RateCheatMaterialDialog(final Activity activity, Cheat cheat, Member member, View view, Tools tools) {
+    public RateCheatMaterialDialog(final Activity activity, Cheat cheat, Member member, View view, Tools tools, RestApi restApi) {
         this.activity = activity;
         this.cheat = cheat;
         this.member = member;
         this.view = view;
         this.tools = tools;
-
-        restApi = RetrofitClientInstance.getRetrofitInstance().create(RestApi.class);
+        this.restApi = restApi;
 
         final int previousRating = (int) (cheat.getMemberRating() / 2);
         newRatingBarValue = previousRating;

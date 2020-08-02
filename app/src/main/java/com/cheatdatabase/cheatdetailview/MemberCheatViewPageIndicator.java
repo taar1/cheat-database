@@ -336,8 +336,7 @@ public class MemberCheatViewPageIndicator extends AppCompatActivity implements G
                 showReportDialog();
                 return true;
             case R.id.action_metainfo:
-                CheatMetaDialog cmDialog = new CheatMetaDialog(MemberCheatViewPageIndicator.this, visibleCheat, outerLayout, tools);
-                cmDialog.show();
+                new CheatMetaDialog(MemberCheatViewPageIndicator.this, visibleCheat, outerLayout, tools, restApi).show();
                 return true;
             case R.id.action_login:
                 Intent loginIntent = new Intent(MemberCheatViewPageIndicator.this, LoginActivity.class);
@@ -368,7 +367,7 @@ public class MemberCheatViewPageIndicator extends AppCompatActivity implements G
         if ((member == null) || (member.getMid() == 0)) {
             Toast.makeText(this, R.string.error_login_required, Toast.LENGTH_LONG).show();
         } else {
-            new RateCheatMaterialDialog(this, visibleCheat, member, outerLayout, tools);
+            new RateCheatMaterialDialog(this, visibleCheat, member, outerLayout, tools, restApi);
         }
     }
 
