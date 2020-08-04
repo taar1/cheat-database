@@ -47,7 +47,6 @@ public class SystemListFragment extends Fragment implements OnSystemListItemSele
 
     @Inject
     Tools tools;
-
     @Inject
     RestApi restApi;
 

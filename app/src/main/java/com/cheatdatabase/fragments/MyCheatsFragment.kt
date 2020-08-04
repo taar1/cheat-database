@@ -1,7 +1,6 @@
 package com.cheatdatabase.fragments
 
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -17,9 +16,7 @@ import com.cheatdatabase.activity.MainActivity
 import com.cheatdatabase.activity.ui.mycheats.MyUnpublishedCheatsListActivity
 import com.cheatdatabase.activity.ui.mycheats.UnpublishedCheatsRepositoryKotlin
 import com.cheatdatabase.data.model.Member
-import com.cheatdatabase.helpers.Konstanten
 import com.cheatdatabase.helpers.Tools
-import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_my_cheats_overview.view.*
 import javax.inject.Inject
@@ -27,7 +24,6 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class MyCheatsFragment(
     val mainActivity: MainActivity,
-    var settings: SharedPreferences,
     var myCheatsCount: UnpublishedCheatsRepositoryKotlin.MyCheatsCount?
 ) :
     Fragment() {
@@ -58,21 +54,19 @@ class MyCheatsFragment(
         unpublishedCheatsCount = view.unpublished_cheats_count
         unpublishedCheatsSubtitle = view.unpublished_cheats_subtitle
 
-        settings = this.mainActivity.getSharedPreferences(Konstanten.PREFERENCES_FILE, 0)
-
         myScoreLayout.setOnClickListener {
             tools.showSnackbar(outerLayout, getString(R.string.earn_points_submitting_cheats))
         }
 
         unpublishedCheatsCard.setOnClickListener {
             startActivityIfLoggedIn(
-                getMember(),
+                tools.member,
                 Intent(mainActivity, MyUnpublishedCheatsListActivity::class.java)
             )
         }
 
         publishedCheatsCard.setOnClickListener {
-            val member = getMember()
+            val member = tools.member
 
             val myCheatsIntent = Intent(mainActivity, CheatsByMemberListActivity::class.java)
             myCheatsIntent.putExtra("member", member)
@@ -91,12 +85,6 @@ class MyCheatsFragment(
         }
     }
 
-    private fun getMember(): Member? {
-        return Gson().fromJson(
-            settings.getString(Konstanten.MEMBER_OBJECT, null),
-            Member::class.java
-        )
-    }
 
 //    // The cheats count is executed in MainActivity.java
 //    fun getMyUnpublishedCheatsByCoroutines() {
@@ -131,7 +119,8 @@ class MyCheatsFragment(
 
     fun updateText() {
         if (myCheatsCount != null) {
-            val unpublishedCheatsSum: Int = myCheatsCount!!.uncheckedCheats + myCheatsCount!!.rejectedCheats
+            val unpublishedCheatsSum: Int =
+                myCheatsCount!!.uncheckedCheats + myCheatsCount!!.rejectedCheats
 
             if (unpublishedCheatsSum != 0) {
                 unpublishedCheatsCount.text = "(".plus(unpublishedCheatsSum).plus(")")

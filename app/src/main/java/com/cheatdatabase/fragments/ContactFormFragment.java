@@ -3,7 +3,6 @@ package com.cheatdatabase.fragments;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
@@ -27,12 +26,10 @@ import com.cheatdatabase.R;
 import com.cheatdatabase.activity.MainActivity;
 import com.cheatdatabase.data.model.Member;
 import com.cheatdatabase.events.GenericEvent;
-import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.helpers.Tools;
 import com.cheatdatabase.rest.RestApi;
 import com.google.android.material.textfield.TextInputEditText;
-import com.google.gson.Gson;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -47,12 +44,10 @@ import retrofit2.Response;
 
 @AndroidEntryPoint
 public class ContactFormFragment extends Fragment {
-
     private static final String TAG = "ContactFormFragment";
 
     @Inject
     Tools tools;
-
     @Inject
     RestApi restApi;
 
@@ -102,8 +97,7 @@ public class ContactFormFragment extends Fragment {
             Reachability.registerReachability(mainActivity);
         }
 
-        SharedPreferences settings = mainActivity.getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
-        Member member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
+        Member member = tools.getMember();
 
         // Update action bar menu items?
         setHasOptionsMenu(true);

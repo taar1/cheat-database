@@ -110,13 +110,15 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4caff62e-c62f-40ca-acf0-73c680b13375" name="Default" comment="Adding counter to navigation drawer for &quot;my cheats&quot;">
+    <list default="true" id="4caff62e-c62f-40ca-acf0-73c680b13375" name="Default" comment="RateAppDialog -&gt; TO HILT">
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/fragments/MainFragmentFactory.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/app.iml" beforeDir="false" afterPath="$PROJECT_DIR$/app/app.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/MainActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/dialogs/RateAppDialog.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/dialogs/RateAppDialog.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/helpers/Tools.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/helpers/Tools.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/hilt/NetworkModule.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/hilt/NetworkModule.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/fragments/ContactFormFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/fragments/ContactFormFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/fragments/MyCheatsFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/fragments/MyCheatsFragment.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/fragments/SystemListFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/fragments/SystemListFragment.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -126,7 +128,6 @@
   <component name="CreatePatchCommitExecutor">
     <option name="PATCH_PATH" value="" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="fd8b7031" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
@@ -168,9 +169,9 @@
         <option value="Kotlin Object" />
         <option value="Kotlin Interface" />
         <option value="resourceFile" />
-        <option value="Kotlin Class" />
         <option value="Class" />
         <option value="layoutResourceFile" />
+        <option value="Kotlin Class" />
       </list>
     </option>
   </component>
@@ -231,6 +232,7 @@
     <property name="project.structure.last.edited" value="SDK Location" />
     <property name="project.structure.proportion" value="0.17" />
     <property name="project.structure.side.proportion" value="0.2" />
+    <property name="recommended.upgrade.do.not.ask.for.version" value="3.6.3" />
     <property name="settings.editor.selected.configurable" value="preferences.sourceCode.Java" />
   </component>
   <component name="PsdUISettings">
@@ -600,20 +602,6 @@
       <option name="presentableId" value="Default" />
       <updated>1487274191999</updated>
     </task>
-    <task id="LOCAL-00093" summary="Fixing a lot of bugs of cheat favorites etc.">
-      <created>1587399406754</created>
-      <option name="number" value="00093" />
-      <option name="presentableId" value="LOCAL-00093" />
-      <option name="project" value="LOCAL" />
-      <updated>1587399406754</updated>
-    </task>
-    <task id="LOCAL-00094" summary="Improved DB schema">
-      <created>1587400135954</created>
-      <option name="number" value="00094" />
-      <option name="presentableId" value="LOCAL-00094" />
-      <option name="project" value="LOCAL" />
-      <updated>1587400135954</updated>
-    </task>
     <task id="LOCAL-00095" summary="a try to merge with room">
       <created>1587413692082</created>
       <option name="number" value="00095" />
@@ -943,7 +931,21 @@
       <option name="project" value="LOCAL" />
       <updated>1595307677230</updated>
     </task>
-    <option name="localTasksCounter" value="142" />
+    <task id="LOCAL-00142" summary="RateAppDialog -&gt; TO HILT">
+      <created>1596142819090</created>
+      <option name="number" value="00142" />
+      <option name="presentableId" value="LOCAL-00142" />
+      <option name="project" value="LOCAL" />
+      <updated>1596142819091</updated>
+    </task>
+    <task id="LOCAL-00143" summary="Fix rate app dialog star animation bug. extract more dialogs as HILT dependency.">
+      <created>1596399135771</created>
+      <option name="number" value="00143" />
+      <option name="presentableId" value="LOCAL-00143" />
+      <option name="project" value="LOCAL" />
+      <updated>1596399135772</updated>
+    </task>
+    <option name="localTasksCounter" value="144" />
     <servers />
   </component>
   <component name="TodoView">
@@ -1023,8 +1025,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
-    <MESSAGE value="remove deprecated line" />
-    <MESSAGE value="Comment out unneeded gradle code" />
     <MESSAGE value="Removed unused ad layout files. Builds again!!" />
     <MESSAGE value="Fixing instant app crash because of binding. Removing viewBinding in gradle because Kotlin can bind more easily." />
     <MESSAGE value="Bug fixes in &quot;my cheats&quot; section." />
@@ -1048,7 +1048,9 @@
     <MESSAGE value="Library Version Upgrades" />
     <MESSAGE value="Updated &quot;my cheats&quot; text with parameters for adding the amount of unchecked and rejected cheats." />
     <MESSAGE value="Adding counter to navigation drawer for &quot;my cheats&quot;" />
-    <option name="LAST_COMMIT_MESSAGE" value="Adding counter to navigation drawer for &quot;my cheats&quot;" />
+    <MESSAGE value="RateAppDialog -&gt; TO HILT" />
+    <MESSAGE value="Fix rate app dialog star animation bug. extract more dialogs as HILT dependency." />
+    <option name="LAST_COMMIT_MESSAGE" value="Fix rate app dialog star animation bug. extract more dialogs as HILT dependency." />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
@@ -1057,10 +1059,10 @@
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state x="602" y="173" width="1523" height="1030" key="#PSD/0.0.2560.1400@0.0.2560.1400" timestamp="1594925855628" />
-    <state x="1071" y="416" key="#com.intellij.ide.util.MemberChooser" timestamp="1596141271722">
+    <state x="1071" y="416" key="#com.intellij.ide.util.MemberChooser" timestamp="1596390016112">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state x="1071" y="416" key="#com.intellij.ide.util.MemberChooser/-3000.0.1500.980/0.0.2560.1400@0.0.2560.1400" timestamp="1596141271722" />
+    <state x="1071" y="416" key="#com.intellij.ide.util.MemberChooser/-3000.0.1500.980/0.0.2560.1400@0.0.2560.1400" timestamp="1596390016112" />
     <state x="1071" y="416" key="#com.intellij.ide.util.MemberChooser/0.0.2560.1400@0.0.2560.1400" timestamp="1595272530468" />
     <state x="914" y="461" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog" timestamp="1594923928809">
       <screen x="0" y="0" width="2560" height="1400" />
@@ -1086,25 +1088,34 @@
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state x="1135" y="465" key="AndroidProcessChooserDialog/0.0.2560.1400@0.0.2560.1400" timestamp="1595278051063" />
-    <state x="653" y="64" width="1604" height="1148" key="CommitChangelistDialog2" timestamp="1595307674534">
+    <state x="653" y="64" width="1718" height="1217" key="CommitChangelistDialog2" timestamp="1596399134016">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
+    <state x="653" y="64" width="1718" height="1217" key="CommitChangelistDialog2/-3000.0.1500.980/0.0.2560.1400@0.0.2560.1400" timestamp="1596399134016" />
     <state x="653" y="64" width="1604" height="1148" key="CommitChangelistDialog2/0.0.2560.1400@0.0.2560.1400" timestamp="1595307674534" />
-    <state width="2517" height="494" key="GridCell.Tab.0.bottom" timestamp="1595278191668">
+    <state x="92" y="92" width="2376" height="1216" key="DiffContextDialog" timestamp="1596390005978">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
+    <state x="92" y="92" width="2376" height="1216" key="DiffContextDialog/-3000.0.1500.980/0.0.2560.1400@0.0.2560.1400" timestamp="1596390005978" />
+    <state width="2517" height="392" key="GridCell.Tab.0.bottom" timestamp="1596398444079">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state width="2517" height="392" key="GridCell.Tab.0.bottom/-3000.0.1500.980/0.0.2560.1400@0.0.2560.1400" timestamp="1596398444079" />
     <state width="2517" height="494" key="GridCell.Tab.0.bottom/0.0.2560.1400@0.0.2560.1400" timestamp="1595278191668" />
-    <state width="2517" height="494" key="GridCell.Tab.0.center" timestamp="1595278191668">
+    <state width="2517" height="392" key="GridCell.Tab.0.center" timestamp="1596398444079">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
+    <state width="2517" height="392" key="GridCell.Tab.0.center/-3000.0.1500.980/0.0.2560.1400@0.0.2560.1400" timestamp="1596398444079" />
     <state width="2517" height="494" key="GridCell.Tab.0.center/0.0.2560.1400@0.0.2560.1400" timestamp="1595278191668" />
-    <state width="2517" height="494" key="GridCell.Tab.0.left" timestamp="1595278191668">
+    <state width="2517" height="392" key="GridCell.Tab.0.left" timestamp="1596398444079">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
+    <state width="2517" height="392" key="GridCell.Tab.0.left/-3000.0.1500.980/0.0.2560.1400@0.0.2560.1400" timestamp="1596398444079" />
     <state width="2517" height="494" key="GridCell.Tab.0.left/0.0.2560.1400@0.0.2560.1400" timestamp="1595278191668" />
-    <state width="2517" height="494" key="GridCell.Tab.0.right" timestamp="1595278191668">
+    <state width="2517" height="392" key="GridCell.Tab.0.right" timestamp="1596398444079">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
+    <state width="2517" height="392" key="GridCell.Tab.0.right/-3000.0.1500.980/0.0.2560.1400@0.0.2560.1400" timestamp="1596398444079" />
     <state width="2517" height="494" key="GridCell.Tab.0.right/0.0.2560.1400@0.0.2560.1400" timestamp="1595278191668" />
     <state width="2517" height="494" key="GridCell.Tab.1.bottom" timestamp="1595278191668">
       <screen x="0" y="0" width="2560" height="1400" />
@@ -1127,13 +1138,18 @@
     </state>
     <state x="992" y="416" width="1032" height="568" key="MultipleFileMergeDialog/-3000.0.1500.980/0.0.2560.1400@0.0.2560.1400" timestamp="1596136104966" />
     <state x="992" y="416" key="MultipleFileMergeDialog/0.0.2560.1400@0.0.2560.1400" timestamp="1595353495531" />
+    <state x="1014" y="411" key="RollbackChangesDialog" timestamp="1596398066793">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state x="1014" y="411" key="RollbackChangesDialog/-3000.0.1500.980/0.0.2560.1400@0.0.2560.1400" timestamp="1596398066793" />
     <state x="0" y="0" key="VCS.ChangeListViewerDialog" timestamp="1595353482017">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state x="0" y="0" key="VCS.ChangeListViewerDialog/0.0.2560.1400@0.0.2560.1400" timestamp="1595353482017" />
-    <state x="826" y="458" key="Vcs.Push.Dialog.v2" timestamp="1595308523246">
+    <state x="826" y="458" key="Vcs.Push.Dialog.v2" timestamp="1596399138420">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
+    <state x="826" y="458" key="Vcs.Push.Dialog.v2/-3000.0.1500.980/0.0.2560.1400@0.0.2560.1400" timestamp="1596399138420" />
     <state x="826" y="458" key="Vcs.Push.Dialog.v2/0.0.2560.1400@0.0.2560.1400" timestamp="1595308523246" />
     <state x="92" y="92" width="2376" height="1216" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1594925683259">
       <screen x="0" y="0" width="2560" height="1400" />
@@ -1143,20 +1159,20 @@
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state x="927" y="315" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.0.2560.1400@0.0.2560.1400" timestamp="1595272549070" />
-    <state x="1089" y="617" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1596135352570">
+    <state x="1089" y="617" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1596475815155">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state x="1089" y="617" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/-3000.0.1500.980/0.0.2560.1400@0.0.2560.1400" timestamp="1596135352569" />
+    <state x="1089" y="617" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/-3000.0.1500.980/0.0.2560.1400@0.0.2560.1400" timestamp="1596475815155" />
     <state x="1089" y="617" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.2560.1400@0.0.2560.1400" timestamp="1595353487311" />
-    <state x="475" y="206" width="1542" height="1028" key="find.popup" timestamp="1596142551682">
+    <state x="475" y="206" width="1542" height="1028" key="find.popup" timestamp="1596481244819">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state x="475" y="206" width="1542" height="1028" key="find.popup/-3000.0.1500.980/0.0.2560.1400@0.0.2560.1400" timestamp="1596142551682" />
+    <state x="475" y="206" width="1542" height="1028" key="find.popup/-3000.0.1500.980/0.0.2560.1400@0.0.2560.1400" timestamp="1596481244819" />
     <state x="475" y="206" width="1542" height="1028" key="find.popup/0.0.2560.1400@0.0.2560.1400" timestamp="1595276098831" />
-    <state x="943" y="315" width="672" height="678" key="search.everywhere.popup" timestamp="1596141275014">
+    <state x="943" y="315" width="672" height="678" key="search.everywhere.popup" timestamp="1596481257482">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state x="943" y="315" width="672" height="678" key="search.everywhere.popup/-3000.0.1500.980/0.0.2560.1400@0.0.2560.1400" timestamp="1596141275014" />
+    <state x="943" y="315" width="672" height="678" key="search.everywhere.popup/-3000.0.1500.980/0.0.2560.1400@0.0.2560.1400" timestamp="1596481257482" />
     <state x="943" y="315" width="672" height="678" key="search.everywhere.popup/0.0.2560.1400@0.0.2560.1400" timestamp="1595273827810" />
   </component>
   <component name="XDebuggerManager">
@@ -1204,7 +1220,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/CheatForumActivity.java</url>
-          <line>108</line>
+          <line>107</line>
           <option name="timeStamp" value="190" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
@@ -1242,11 +1258,6 @@
           <line>41</line>
           <option name="timeStamp" value="218" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="java-line">
-          <url>file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/MainActivity.java</url>
-          <line>479</line>
-          <option name="timeStamp" value="223" />
-        </line-breakpoint>
         <line-breakpoint enabled="true" type="kotlin-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/holders/CheatViewGalleryCardHolder.kt</url>
           <line>33</line>
@@ -1272,12 +1283,6 @@
             <option name="EMULATED" value="true" />
           </properties>
           <option name="timeStamp" value="222" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="kotlin-function">
-          <url>file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/fragments/MyCheatsFragment.kt</url>
-          <line>143</line>
-          <properties class="com.cheatdatabase.fragments.MyCheatsFragment" />
-          <option name="timeStamp" value="224" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

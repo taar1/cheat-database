@@ -36,6 +36,7 @@ import com.cheatdatabase.data.model.Member;
 import com.cheatdatabase.dialogs.RateAppDialog;
 import com.cheatdatabase.fragments.ContactFormFragment;
 import com.cheatdatabase.fragments.FavoriteGamesListFragment;
+import com.cheatdatabase.fragments.MainFragmentFactory;
 import com.cheatdatabase.fragments.MyCheatsFragment;
 import com.cheatdatabase.fragments.SystemListFragment;
 import com.cheatdatabase.fragments.TopMembersFragment;
@@ -78,6 +79,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     Tools tools;
     @Inject
     RestApi restApi;
+    @Inject
+    MainFragmentFactory mainFragmentFactory;
 
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
@@ -116,10 +119,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mFragmentId = getIntent().getIntExtra("mFragmentId", 0);
 
         init();
+        fragmentStuff();
         prepareAdBanner();
-
-        SystemListFragment fragment = SystemListFragment.newInstance(this);
-        fragmentTransaction.replace(R.id.content_frame, fragment, SystemListFragment.class.getSimpleName()).commit();
 
         actionBarDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, mToolbar, R.string.drawer_open, R.string.drawer_close);
         mDrawerLayout.addDrawerListener(actionBarDrawerToggle);
@@ -135,8 +136,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
-        fragmentManager = getSupportFragmentManager();
-        fragmentTransaction = fragmentManager.beginTransaction();
 
         TrackingUtils.getInstance().init(this);
 
@@ -153,6 +152,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 MainActivity.this.closeNagivationDrawer();
             }
         };
+    }
+
+    private void fragmentStuff() {
+        getSupportFragmentManager().setFragmentFactory(mainFragmentFactory);
+
+        fragmentManager = getSupportFragmentManager();
+        fragmentTransaction = fragmentManager.beginTransaction();
+
+        SystemListFragment fragment = SystemListFragment.newInstance(this);
+
+        fragmentTransaction.replace(R.id.content_frame, fragment, SystemListFragment.class.getSimpleName()).commit();
     }
 
     private void updateMyCheatsDrawerNavigationItemCount() {
@@ -438,7 +448,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mToolbar.setTitle(Html.fromHtml(getString(R.string.drawer_my_cheats)));
         fragmentTransaction.addToBackStack(MyCheatsFragment.class.getSimpleName());
 
-        MyCheatsFragment fragment = new MyCheatsFragment(this, tools.getSharedPreferences(), myCheatsCount);
+        MyCheatsFragment fragment = new MyCheatsFragment(this, myCheatsCount);
 
         fragmentManager.beginTransaction().replace(R.id.content_frame, fragment, MyCheatsFragment.class.getSimpleName()).commit();
 
