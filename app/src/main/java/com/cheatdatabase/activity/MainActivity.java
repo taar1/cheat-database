@@ -78,8 +78,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     Tools tools;
     @Inject
     RestApi restApi;
-//    @Inject
+    //    @Inject
 //    MainFragmentFactory mainFragmentFactory;
+    @Inject
+    SystemListFragment systemListFragment;
 
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
@@ -111,12 +113,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-//        MainFragmentFactoryEntryPoint entryPoint = EntryPointAccessors.fromActivity(this, MainFragmentFactoryEntryPoint.class);
-//        getSupportFragmentManager().setFragmentFactory(entryPoint.getMainFragmentFactory());
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+
+//        MainFragmentFactoryEntryPoint entryPoint = EntryPointAccessors.fromActivity(this, MainFragmentFactoryEntryPoint.class);
+//        getSupportFragmentManager().setFragmentFactory(entryPoint.getMainFragmentFactory());
 
         mFragmentId = getIntent().getIntExtra("mFragmentId", 0);
 
@@ -170,9 +172,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         fragmentManager = getSupportFragmentManager();
         fragmentTransaction = fragmentManager.beginTransaction();
 
-        SystemListFragment fragment = SystemListFragment.newInstance(this);
-
-        fragmentTransaction.replace(R.id.content_frame, fragment, SystemListFragment.class.getSimpleName()).commit();
+//        SystemListFragment fragment = SystemListFragment.newInstance(this);
+        fragmentTransaction.replace(R.id.content_frame, systemListFragment, SystemListFragment.class.getSimpleName()).commit();
     }
 
     private void updateMyCheatsDrawerNavigationItemCount() {
@@ -470,8 +471,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mToolbar.setTitle(R.string.app_name);
         fragmentTransaction.addToBackStack(SystemListFragment.class.getSimpleName());
 
-        SystemListFragment fragment = SystemListFragment.newInstance(this);
-        fragmentManager.beginTransaction().replace(R.id.content_frame, fragment, SystemListFragment.class.getSimpleName()).commit();
+//        SystemListFragment fragment = SystemListFragment.newInstance(this);
+        fragmentManager.beginTransaction().replace(R.id.content_frame, systemListFragment, SystemListFragment.class.getSimpleName()).commit();
 
         floatingActionButton.show();
         mDrawerLayout.closeDrawers();

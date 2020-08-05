@@ -14,25 +14,25 @@
 
         <include layout="@layout/toolbar" />
 
-        <!--        <FrameLayout-->
-        <!--            android:id="@+id/content_frame"-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:layout_height="0dp"-->
-        <!--            android:layout_weight="100"-->
-        <!--            android:gravity="top"-->
-        <!--            tools:context=".activity.MainActivity"-->
-        <!--            tools:ignore="MergeRootFrame">-->
-
-        <androidx.fragment.app.FragmentContainerView
+        <FrameLayout
             android:id="@+id/content_frame"
-            android:name="com.cheatdatabase.fragments.MainNavHostFragment"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="100"
             android:gravity="top"
-            app:defaultNavHost="true"
             tools:context=".activity.MainActivity"
             tools:ignore="MergeRootFrame">
+
+            <!--        <androidx.fragment.app.FragmentContainerView-->
+            <!--            android:id="@+id/content_frame"-->
+            <!--            android:name="com.cheatdatabase.fragments.MainNavHostFragment"-->
+            <!--            android:layout_width="match_parent"-->
+            <!--            android:layout_height="0dp"-->
+            <!--            android:layout_weight="100"-->
+            <!--            android:gravity="top"-->
+            <!--            app:defaultNavHost="true"-->
+            <!--            tools:context=".activity.MainActivity"-->
+            <!--            tools:ignore="MergeRootFrame">-->
 
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -48,8 +48,8 @@
                 app:srcCompat="@drawable/ic_add"
                 app:tint="@color/black" />
 
-        </androidx.fragment.app.FragmentContainerView>
-        <!--        </FrameLayout>-->
+            <!--        </androidx.fragment.app.FragmentContainerView>-->
+        </FrameLayout>
 
         <include layout="@layout/adview_mixed_banner_container" />
     </LinearLayout>
