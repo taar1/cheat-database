@@ -5,13 +5,15 @@ import androidx.fragment.app.FragmentFactory
 import com.cheatdatabase.activity.MainActivity
 import com.cheatdatabase.activity.SubmitCheatSelectGameActivity
 import com.cheatdatabase.activity.ui.mycheats.UnpublishedCheatsRepositoryKotlin
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import javax.inject.Inject
 
+@ExperimentalCoroutinesApi
 class MainFragmentFactory
 @Inject constructor(
     private val mainActivity: MainActivity,
-    val myCheatsCount: UnpublishedCheatsRepositoryKotlin.MyCheatsCount?,
-    val submitCheatSelectGameActivity: SubmitCheatSelectGameActivity
+    private val myCheatsCount: UnpublishedCheatsRepositoryKotlin.MyCheatsCount?,
+    private val submitCheatSelectGameActivity: SubmitCheatSelectGameActivity
 ) : FragmentFactory() {
 
     override fun instantiate(classLoader: ClassLoader, className: String): Fragment {

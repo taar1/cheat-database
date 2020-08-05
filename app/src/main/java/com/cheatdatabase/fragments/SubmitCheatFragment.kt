@@ -8,8 +8,12 @@ import android.widget.Button
 import androidx.fragment.app.Fragment
 import com.cheatdatabase.R
 import com.cheatdatabase.activity.SubmitCheatSelectGameActivity
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.submit_cheat_fragment.view.*
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 
+@ExperimentalCoroutinesApi
+@AndroidEntryPoint
 class SubmitCheatFragment(val activity: SubmitCheatSelectGameActivity) : Fragment() {
 
     lateinit var searchButton: Button

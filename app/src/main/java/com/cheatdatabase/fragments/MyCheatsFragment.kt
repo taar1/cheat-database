@@ -19,8 +19,10 @@ import com.cheatdatabase.data.model.Member
 import com.cheatdatabase.helpers.Tools
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_my_cheats_overview.view.*
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import javax.inject.Inject
 
+@ExperimentalCoroutinesApi
 @AndroidEntryPoint
 class MyCheatsFragment(
     val mainActivity: MainActivity,

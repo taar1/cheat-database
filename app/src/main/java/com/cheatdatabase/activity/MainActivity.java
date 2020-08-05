@@ -36,7 +36,6 @@ import com.cheatdatabase.data.model.Member;
 import com.cheatdatabase.dialogs.RateAppDialog;
 import com.cheatdatabase.fragments.ContactFormFragment;
 import com.cheatdatabase.fragments.FavoriteGamesListFragment;
-import com.cheatdatabase.fragments.MainFragmentFactory;
 import com.cheatdatabase.fragments.MyCheatsFragment;
 import com.cheatdatabase.fragments.SystemListFragment;
 import com.cheatdatabase.fragments.TopMembersFragment;
@@ -79,8 +78,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     Tools tools;
     @Inject
     RestApi restApi;
-    @Inject
-    MainFragmentFactory mainFragmentFactory;
+//    @Inject
+//    MainFragmentFactory mainFragmentFactory;
 
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
@@ -112,11 +111,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+//        MainFragmentFactoryEntryPoint entryPoint = EntryPointAccessors.fromActivity(this, MainFragmentFactoryEntryPoint.class);
+//        getSupportFragmentManager().setFragmentFactory(entryPoint.getMainFragmentFactory());
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
         mFragmentId = getIntent().getIntExtra("mFragmentId", 0);
+
+        // TODO hier weitermachen und in activity_main.xml weiterfahren...
+        // TODO hier weitermachen und in activity_main.xml weiterfahren...
+        // TODO hier weitermachen und in activity_main.xml weiterfahren...
+        // https://youtu.be/lH6n4--3R5k?t=1260
+        // https://youtu.be/lH6n4--3R5k?t=1260
+        // https://youtu.be/lH6n4--3R5k?t=1260
+
 
         init();
         fragmentStuff();
@@ -155,7 +165,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void fragmentStuff() {
-        getSupportFragmentManager().setFragmentFactory(mainFragmentFactory);
+//        getSupportFragmentManager().setFragmentFactory(mainFragmentFactory);
 
         fragmentManager = getSupportFragmentManager();
         fragmentTransaction = fragmentManager.beginTransaction();

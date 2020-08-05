@@ -39,6 +39,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import dagger.hilt.android.AndroidEntryPoint;
+import kotlinx.coroutines.ExperimentalCoroutinesApi;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -48,6 +49,7 @@ import retrofit2.Response;
  *
  * @author Dominik Erbsland
  */
+@ExperimentalCoroutinesApi
 @AndroidEntryPoint
 public class TopMembersFragment extends Fragment implements OnTopMemberListItemSelectedListener {
     private static final String TAG = TopMembersFragment.class.getSimpleName();
