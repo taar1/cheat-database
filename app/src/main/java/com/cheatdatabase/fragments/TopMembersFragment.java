@@ -24,7 +24,6 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.cheatdatabase.R;
 import com.cheatdatabase.activity.CheatsByMemberListActivity;
-import com.cheatdatabase.activity.MainActivity;
 import com.cheatdatabase.adapters.TopMembersListViewAdapter;
 import com.cheatdatabase.data.model.Member;
 import com.cheatdatabase.helpers.Reachability;
@@ -39,7 +38,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import dagger.hilt.android.AndroidEntryPoint;
-import kotlinx.coroutines.ExperimentalCoroutinesApi;
+import dagger.hilt.android.qualifiers.ActivityContext;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -49,7 +48,6 @@ import retrofit2.Response;
  *
  * @author Dominik Erbsland
  */
-@ExperimentalCoroutinesApi
 @AndroidEntryPoint
 public class TopMembersFragment extends Fragment implements OnTopMemberListItemSelectedListener {
     private static final String TAG = TopMembersFragment.class.getSimpleName();
@@ -74,17 +72,12 @@ public class TopMembersFragment extends Fragment implements OnTopMemberListItemS
     @BindView(R.id.empty_label)
     TextView emptyLabel;
 
-    private MainActivity activity;
-
-    public TopMembersFragment(MainActivity activity) {
-        this.activity = activity;
+    @Inject
+    public TopMembersFragment(@ActivityContext Context context) {
+        this.context = context;
 
         memberList = new ArrayList<>();
-        topMembersListViewAdapter = new TopMembersListViewAdapter(this, activity);
-    }
-
-    public static TopMembersFragment newInstance(MainActivity activity) {
-        return new TopMembersFragment(activity);
+        topMembersListViewAdapter = new TopMembersListViewAdapter(this, context);
     }
 
     @Override

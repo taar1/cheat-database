@@ -1,6 +1,6 @@
 package com.cheatdatabase.adapters;
 
-import android.app.Activity;
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,13 +16,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TopMembersListViewAdapter extends RecyclerView.Adapter<TopMembersListViewItemHolder> {
-    private Activity activity;
+    private Context context;
     private List<Member> memberList;
     private OnTopMemberListItemSelectedListener onTopMemberListItemSelectedListener;
 
-    public TopMembersListViewAdapter(OnTopMemberListItemSelectedListener onTopMemberListItemSelectedListener, Activity activity) {
+    public TopMembersListViewAdapter(OnTopMemberListItemSelectedListener onTopMemberListItemSelectedListener, Context context) {
         memberList = new ArrayList<>();
-        this.activity = activity;
+        this.context = context;
 
         this.onTopMemberListItemSelectedListener = onTopMemberListItemSelectedListener;
     }
@@ -30,7 +30,7 @@ public class TopMembersListViewAdapter extends RecyclerView.Adapter<TopMembersLi
     @Override
     public TopMembersListViewItemHolder onCreateViewHolder(final ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.topmembers_list_item, parent, false);
-        return new TopMembersListViewItemHolder(itemView, activity);
+        return new TopMembersListViewItemHolder(itemView, context);
     }
 
     public void onBindViewHolder(TopMembersListViewItemHolder holder, final int position) {

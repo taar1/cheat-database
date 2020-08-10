@@ -1,6 +1,6 @@
 package com.cheatdatabase.holders;
 
-import android.app.Activity;
+import android.content.Context;
 import android.view.View;
 import android.widget.TextView;
 
@@ -23,19 +23,20 @@ public class TopMembersListViewItemHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.member_message)
     TextView memberMessage;
     @BindView(R.id.website)
-    public TextView website;
+    public
+    TextView website;
     @BindView(R.id.avatar)
     CircleImageView avatar;
 
     public final View view;
-    private Activity activity;
+    private Context context;
 
-    public TopMembersListViewItemHolder(View view, Activity activity) {
+    public TopMembersListViewItemHolder(View view, Context context) {
         super(view);
         ButterKnife.bind(this, view);
 
         this.view = view;
-        this.activity = activity;
+        this.context = context;
     }
 
     public void updateUI(final Member member) {
@@ -43,7 +44,7 @@ public class TopMembersListViewItemHolder extends RecyclerView.ViewHolder {
         Picasso.get().load(Konstanten.WEBDIR_MEMBER_AVATAR + member.getMid()).placeholder(R.drawable.avatar).into(avatar);
 
         memberName.setText(member.getUsername().toUpperCase());
-        cheatCount.setText(activity.getString(R.string.top_members_cheats_count) + ": " + member.getCheatSubmissionCount());
+        cheatCount.setText(context.getString(R.string.top_members_cheats_count) + ": " + member.getCheatSubmissionCount());
 
         if (member.getWebsite().length() > 1) {
             website.setText(member.getWebsite());

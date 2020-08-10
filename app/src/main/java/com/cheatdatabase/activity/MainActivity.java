@@ -78,10 +78,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     Tools tools;
     @Inject
     RestApi restApi;
-    //    @Inject
-//    MainFragmentFactory mainFragmentFactory;
     @Inject
     SystemListFragment systemListFragment;
+    @Inject
+    TopMembersFragment topMembersFragment;
+    @Inject
+    FavoriteGamesListFragment favoriteGamesListFragment;
+    @Inject
+    ContactFormFragment contactFormFragment;
 
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
@@ -172,7 +176,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         fragmentManager = getSupportFragmentManager();
         fragmentTransaction = fragmentManager.beginTransaction();
 
-//        SystemListFragment fragment = SystemListFragment.newInstance(this);
         fragmentTransaction.replace(R.id.content_frame, systemListFragment, SystemListFragment.class.getSimpleName()).commit();
     }
 
@@ -397,14 +400,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             showGameSystemsFragment();
         } else if (id == R.id.nav_favorites) {
             fragmentTransaction.addToBackStack(FavoriteGamesListFragment.class.getSimpleName());
-            fragmentManager.beginTransaction().replace(R.id.content_frame, FavoriteGamesListFragment.newInstance(), FavoriteGamesListFragment.class.getSimpleName()).commit();
+            fragmentManager.beginTransaction().replace(R.id.content_frame, favoriteGamesListFragment, FavoriteGamesListFragment.class.getSimpleName()).commit();
 
             mToolbar.setTitle(R.string.favorites);
             floatingActionButton.hide();
         } else if (id == R.id.nav_members) {
-
-            TopMembersFragment topMembersFragment = TopMembersFragment.newInstance(this);
-
             fragmentTransaction.addToBackStack(TopMembersFragment.class.getSimpleName());
             fragmentManager.beginTransaction().replace(R.id.content_frame, topMembersFragment, TopMembersFragment.class.getSimpleName()).commit();
 
@@ -471,7 +471,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mToolbar.setTitle(R.string.app_name);
         fragmentTransaction.addToBackStack(SystemListFragment.class.getSimpleName());
 
-//        SystemListFragment fragment = SystemListFragment.newInstance(this);
         fragmentManager.beginTransaction().replace(R.id.content_frame, systemListFragment, SystemListFragment.class.getSimpleName()).commit();
 
         floatingActionButton.show();
@@ -488,10 +487,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mToolbar.setTitle(R.string.contactform_title);
         fragmentTransaction.addToBackStack(ContactFormFragment.class.getSimpleName());
 
-        ContactFormFragment fragment = ContactFormFragment.newInstance();
-        fragment.setMainActivity(this);
-
-        fragmentManager.beginTransaction().replace(R.id.content_frame, fragment, ContactFormFragment.class.getSimpleName()).commit();
+        fragmentManager.beginTransaction().replace(R.id.content_frame, contactFormFragment, ContactFormFragment.class.getSimpleName()).commit();
 
         mixedBannerContainer.setVisibility(View.GONE);
 

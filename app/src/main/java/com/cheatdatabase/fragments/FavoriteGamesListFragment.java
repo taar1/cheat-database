@@ -1,6 +1,6 @@
 package com.cheatdatabase.fragments;
 
-import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -32,8 +32,11 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import dagger.hilt.android.qualifiers.ActivityContext;
 import needle.Needle;
 
 public class FavoriteGamesListFragment extends Fragment implements OnGameListItemSelectedListener {
@@ -45,7 +48,7 @@ public class FavoriteGamesListFragment extends Fragment implements OnGameListIte
 
     private List<FavoriteCheatModel> favoriteCheatsList;
 
-    private Activity parentActivity;
+    private Context context;
 
     @BindView(R.id.listView)
     ExpandableListView listView;
@@ -58,10 +61,9 @@ public class FavoriteGamesListFragment extends Fragment implements OnGameListIte
 
     private FavoriteCheatDao dao;
 
-
-    public static FavoriteGamesListFragment newInstance() {
-        FavoriteGamesListFragment favoriteGamesListFragment = new FavoriteGamesListFragment();
-        return favoriteGamesListFragment;
+    @Inject
+    public FavoriteGamesListFragment(@ActivityContext Context context) {
+        this.context = context;
     }
 
     @Override
@@ -69,10 +71,9 @@ public class FavoriteGamesListFragment extends Fragment implements OnGameListIte
         View view = inflater.inflate(R.layout.fragment_favorites_main_list, container, false);
         ButterKnife.bind(this, view);
 
-        parentActivity = getActivity();
         dao = RoomCheatDatabase.getDatabase(getActivity()).favoriteDao();
 
-        adapter = new FavoritesExpandableListAdapter(parentActivity, groups, dao, this, this);
+        adapter = new FavoritesExpandableListAdapter(context, groups, dao, this, getLayoutInflater());
         listView.setAdapter(adapter);
 
         registerForContextMenu(listView);
@@ -182,8 +183,8 @@ public class FavoriteGamesListFragment extends Fragment implements OnGameListIte
 
     @Override
     public void onGameListItemSelected(Game game) {
-        Intent explicitIntent = new Intent(parentActivity, FavoriteCheatListActivity.class);
+        Intent explicitIntent = new Intent(context, FavoriteCheatListActivity.class);
         explicitIntent.putExtra("gameObj", game);
-        parentActivity.startActivity(explicitIntent);
+        startActivity(explicitIntent);
     }
 }

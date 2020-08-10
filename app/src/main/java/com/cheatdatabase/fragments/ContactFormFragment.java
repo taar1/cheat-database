@@ -23,7 +23,6 @@ import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 
 import com.cheatdatabase.R;
-import com.cheatdatabase.activity.MainActivity;
 import com.cheatdatabase.data.model.Member;
 import com.cheatdatabase.events.GenericEvent;
 import com.cheatdatabase.helpers.Reachability;
@@ -38,12 +37,11 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import dagger.hilt.android.AndroidEntryPoint;
-import kotlinx.coroutines.ExperimentalCoroutinesApi;
+import dagger.hilt.android.qualifiers.ActivityContext;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-@ExperimentalCoroutinesApi
 @AndroidEntryPoint
 public class ContactFormFragment extends Fragment {
     private static final String TAG = "ContactFormFragment";
@@ -72,22 +70,13 @@ public class ContactFormFragment extends Fragment {
     @BindView(R.id.thank_you)
     View mThankyouView;
 
-    private MainActivity mainActivity;
+    private Context context;
 
-    /**
-     * The default email to populate the email field with.
-     */
-    private static final String EXTRA_EMAIL = "com.example.android.authenticatordemo.extra.EMAIL";
-
-    // Values for email and password at the time of the login attempt.
     private String mEmail;
 
-    public static ContactFormFragment newInstance() {
-        return new ContactFormFragment();
-    }
-
-    public void setMainActivity(MainActivity mainActivity) {
-        this.mainActivity = mainActivity;
+    @Inject
+    public ContactFormFragment(@ActivityContext Context context) {
+        this.context = context;
     }
 
     @Override
@@ -96,16 +85,13 @@ public class ContactFormFragment extends Fragment {
         ButterKnife.bind(this, view);
 
         if (!Reachability.isRegistered()) {
-            Reachability.registerReachability(mainActivity);
+            Reachability.registerReachability(context);
         }
 
         Member member = tools.getMember();
 
         // Update action bar menu items?
         setHasOptionsMenu(true);
-
-        // Set up the login form.
-        mEmail = mainActivity.getIntent().getStringExtra(EXTRA_EMAIL);
 
         mEmailView.setText(mEmail);
         if ((member != null) && member.getEmail() != null) {
@@ -121,14 +107,14 @@ public class ContactFormFragment extends Fragment {
         });
         Linkify.addLinks(mEmailaddressView, Linkify.ALL);
 
-        tools.showKeyboard(mainActivity, outerLayout);
+        tools.showKeyboard(context, outerLayout);
 
         return view;
     }
 
     @Override
     public void onPause() {
-        Reachability.unregister(mainActivity);
+        Reachability.unregister(context);
         super.onPause();
     }
 
@@ -245,7 +231,7 @@ public class ContactFormFragment extends Fragment {
 
     private void selectMenu(Menu menu) {
         menu.clear();
-        mainActivity.getMenuInflater().inflate(R.menu.contactform_send_menu, menu);
+        getActivity().getMenuInflater().inflate(R.menu.contactform_send_menu, menu);
     }
 
     @Override
@@ -269,18 +255,18 @@ public class ContactFormFragment extends Fragment {
             public void onFailure(Call<Void> call, Throwable e) {
                 Log.e(TAG, "submitContactForm onFailure: " + e.getLocalizedMessage());
 
-                tools.showSnackbar(outerLayout, mainActivity.getString(R.string.err_submit_contactform), 5000);
+                tools.showSnackbar(outerLayout, context.getString(R.string.err_submit_contactform), 5000);
             }
         });
     }
 
     private void actionAfterSendForm() {
-        View view = mainActivity.getCurrentFocus();
+        View view = getActivity().getCurrentFocus();
         if (view != null) {
-            InputMethodManager imm = (InputMethodManager) mainActivity.getSystemService(Context.INPUT_METHOD_SERVICE);
+            InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
-        tools.showSnackbar(outerLayout, mainActivity.getString(R.string.contactform_thanks), 5000);
+        tools.showSnackbar(outerLayout, context.getString(R.string.contactform_thanks), 5000);
 
         Handler handler = new Handler();
         handler.postDelayed(() -> EventBus.getDefault().post(new GenericEvent(GenericEvent.Action.CLICK_CHEATS_DRAWER)), 1500);

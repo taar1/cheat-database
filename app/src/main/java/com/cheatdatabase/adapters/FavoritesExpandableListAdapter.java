@@ -1,6 +1,6 @@
 package com.cheatdatabase.adapters;
 
-import android.app.Activity;
+import android.content.Context;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,30 +12,28 @@ import android.widget.TextView;
 import com.cheatdatabase.R;
 import com.cheatdatabase.data.dao.FavoriteCheatDao;
 import com.cheatdatabase.data.model.Game;
-import com.cheatdatabase.fragments.FavoriteGamesListFragment;
 import com.cheatdatabase.helpers.Group;
 import com.cheatdatabase.listeners.OnGameListItemSelectedListener;
 
 import needle.Needle;
 
 public class FavoritesExpandableListAdapter extends BaseExpandableListAdapter {
+    private Context context;
+
     private final SparseArray<Group> groups;
-    public LayoutInflater inflater;
-    public Activity activity;
+    private LayoutInflater inflater;
     private FavoriteCheatDao dao;
-    private FavoriteGamesListFragment fragment;
     private OnGameListItemSelectedListener onGameListItemSelectedListener;
 
     private TextView textGameTitle;
     private TextView textCheatCounter;
 
-    public FavoritesExpandableListAdapter(Activity activity, SparseArray<Group> groups, FavoriteCheatDao dao, FavoriteGamesListFragment fragment, OnGameListItemSelectedListener onGameListItemSelectedListener) {
-        this.activity = activity;
+    public FavoritesExpandableListAdapter(Context context, SparseArray<Group> groups, FavoriteCheatDao dao, OnGameListItemSelectedListener onGameListItemSelectedListener, LayoutInflater inflater) {
+        this.context = context;
         this.groups = groups;
         this.dao = dao;
-        this.fragment = fragment;
-        this.inflater = activity.getLayoutInflater();
         this.onGameListItemSelectedListener = onGameListItemSelectedListener;
+        this.inflater = inflater;
     }
 
     @Override
