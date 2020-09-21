@@ -53,7 +53,6 @@ public class CheatsByMemberListActivity extends AppCompatActivity implements OnC
 
     @Inject
     Tools tools;
-
     @Inject
     RestApi restApi;
 
@@ -74,9 +73,8 @@ public class CheatsByMemberListActivity extends AppCompatActivity implements OnC
 
     private MemberCheatRecycleListViewAdapter memberCheatRecycleListViewAdapter;
 
-    private Member member;
+    private Member authorMember;
     private List<Cheat> cheatList;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,8 +82,9 @@ public class CheatsByMemberListActivity extends AppCompatActivity implements OnC
         setContentView(R.layout.activity_member_cheat_list);
         ButterKnife.bind(this);
 
-        member = getIntent().getParcelableExtra("member");
-        if (member != null) {
+        // The Member of whom to display the cheats.
+        authorMember = getIntent().getParcelableExtra("member");
+        if (authorMember != null) {
             init();
 
             memberCheatRecycleListViewAdapter = new MemberCheatRecycleListViewAdapter(this);
@@ -110,7 +109,7 @@ public class CheatsByMemberListActivity extends AppCompatActivity implements OnC
     private void init() {
         toolbar = tools.initToolbarBase(this, toolbar);
 
-        emptyView.setText(getString(R.string.no_member_cheats, member.getUsername()));
+        emptyView.setText(getString(R.string.no_member_cheats, authorMember.getUsername()));
         emptyView.setVisibility(View.GONE);
 
 
@@ -123,13 +122,13 @@ public class CheatsByMemberListActivity extends AppCompatActivity implements OnC
         }
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
-        getSupportActionBar().setTitle(getString(R.string.members_cheats_title, member.getUsername()));
+        getSupportActionBar().setTitle(getString(R.string.members_cheats_title, authorMember.getUsername()));
     }
 
     void getCheats() {
         progressBar.setVisibility(View.VISIBLE);
 
-        Call<List<Cheat>> call = restApi.getCheatsByMemberId(member.getMid());
+        Call<List<Cheat>> call = restApi.getCheatsByMemberId(authorMember.getMid());
         call.enqueue(new Callback<List<Cheat>>() {
             @Override
             public void onResponse(Call<List<Cheat>> games, Response<List<Cheat>> response) {
@@ -160,6 +159,7 @@ public class CheatsByMemberListActivity extends AppCompatActivity implements OnC
     private void updateUI() {
         if ((cheatList != null) && (cheatList.size() > 0)) {
             memberCheatRecycleListViewAdapter.setCheatList(cheatList);
+            memberCheatRecycleListViewAdapter.setLoggedInMember(tools.getMember());
             recyclerView.setAdapter(memberCheatRecycleListViewAdapter);
 
             memberCheatRecycleListViewAdapter.notifyDataSetChanged();
@@ -195,7 +195,7 @@ public class CheatsByMemberListActivity extends AppCompatActivity implements OnC
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putParcelable("member", member);
+        outState.putParcelable("member", authorMember);
     }
 
     @Override

@@ -170,7 +170,7 @@ class MyUnpublishedCheatsListFragment(val activity: MyUnpublishedCheatsListActiv
         val clipboard = context?.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
         val clip: ClipData = ClipData.newPlainText(cheat.game.gameName, cheat.rejectReason)
 
-        val dialog = MaterialAlertDialogBuilder(context, R.style.SimpleAlertDialog)
+        val dialog = MaterialAlertDialogBuilder(requireContext(), R.style.SimpleAlertDialog)
             .setTitle(getString(R.string.why_was_cheat_rejected))
             .setMessage(cheat.rejectReason)
             .setPositiveButton(getString(R.string.ok)) { _, _ ->
@@ -192,7 +192,7 @@ class MyUnpublishedCheatsListFragment(val activity: MyUnpublishedCheatsListActiv
     }
 
     override fun onDeleteButtonClicked(cheat: UnpublishedCheat, position: Int) {
-        MaterialAlertDialogBuilder(context, R.style.SimpleAlertDialog)
+        MaterialAlertDialogBuilder(requireContext(), R.style.SimpleAlertDialog)
             .setTitle("\"".plus(cheat.title).plus("\""))
             .setMessage(getString(R.string.unpublished_cheat_are_you_sure_delete))
             .setNegativeButton(getString(R.string.cancel)) { _, _ ->

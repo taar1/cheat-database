@@ -7,14 +7,12 @@ import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import butterknife.BindView
 import butterknife.ButterKnife
-import com.cheatdatabase.R
 import com.cheatdatabase.data.model.Screenshot
 import com.squareup.picasso.Picasso
 import java.io.File
 
 class CheatViewGalleryCardHolder(val view: View) : RecyclerView.ViewHolder(view) {
     private val TAG = CheatViewGalleryCardHolder::class.java.simpleName
-
 
     @BindView(R.id.card_title)
     @JvmField

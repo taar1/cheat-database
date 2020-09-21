@@ -23,8 +23,7 @@ public class TopMembersListViewItemHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.member_message)
     TextView memberMessage;
     @BindView(R.id.website)
-    public
-    TextView website;
+    public TextView website;
     @BindView(R.id.avatar)
     CircleImageView avatar;
 

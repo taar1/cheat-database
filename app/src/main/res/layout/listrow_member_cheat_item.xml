@@ -5,6 +5,22 @@
     android:background="?android:attr/selectableItemBackground"
     android:padding="16dp">
 
+    <!--    TODO FIXME rausfinden was ich mit dem edit icon am besten tun soll...-->
+    <!--    TODO FIXME rausfinden was ich mit dem edit icon am besten tun soll...-->
+    <!--    TODO FIXME rausfinden was ich mit dem edit icon am besten tun soll...-->
+    <!--    TODO FIXME rausfinden was ich mit dem edit icon am besten tun soll...-->
+
+    <ImageView
+        android:id="@+id/edit"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:src="@drawable/ic_edit"
+        android:visibility="gone"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
     <TextView
         android:id="@+id/game_name"
         android:layout_width="wrap_content"

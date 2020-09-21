@@ -1,5 +1,6 @@
 package com.cheatdatabase.holders;
 
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -8,15 +9,18 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.cheatdatabase.R;
 import com.cheatdatabase.data.model.Cheat;
+import com.cheatdatabase.data.model.Member;
 import com.cheatdatabase.helpers.Konstanten;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-
 public class MemberCheatsListViewItemHolder extends RecyclerView.ViewHolder {
+    private static final String TAG = "MemberCheatsListViewIte";
+
     public View view;
     private Cheat cheat;
+    private Member member;
 
     @BindView(R.id.game_name)
     TextView tvGameName;
@@ -59,7 +63,10 @@ public class MemberCheatsListViewItemHolder extends RecyclerView.ViewHolder {
             germanFlagIcon.setVisibility(View.GONE);
         }
 
-
+        Log.d(TAG, "XXXXX setCheat: member 1: " + member.getMid());
     }
 
+    public void setLoggedInMember(Member member) {
+        this.member = member;
+    }
 }
