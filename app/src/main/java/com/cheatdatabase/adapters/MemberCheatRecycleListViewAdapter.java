@@ -38,7 +38,7 @@ public class MemberCheatRecycleListViewAdapter extends RecyclerView.Adapter<Recy
         // TODO FIXME auf dem server (PHP) das member objekt noch mitsenden: getCheatsByMemberId.php
         // TODO FIXME ansonsten ist getSubmittingMember() (3 zeilen weiter unten) immer NULL
         // TODO FIXME auf dem server (PHP) das member objekt noch mitsenden: getCheatsByMemberId.php
-        // TODO FIXME ansonsten ist getSubmittingMember() (3 zeilen weiter unten) immer NULL
+        // TODO FIXME ansonsten ist getSubmittingMember() (3 zeilen weiter unten) immer NULL 
 
         Log.d(TAG, "onCreateViewHolder: loggedInMember" + loggedInMember.getMid());
         Log.d(TAG, "onCreateViewHolder: loggedInMember" + cheatList.get(0).getSubmittingMember().getMid());
