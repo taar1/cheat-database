@@ -45,6 +45,7 @@
             android:id="@+id/login_form"
             style="@style/LoginFormContainer"
             android:gravity="end"
+            android:layout_margin="12dp"
             android:orientation="vertical">
 
             <EditText
@@ -72,16 +73,14 @@
                 android:padding="16dp"
                 android:singleLine="true" />
 
-
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/register_button"
+                style="@style/DefaultButtonStyle"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="top"
-                android:layout_marginTop="16dp"
-                android:background="@drawable/bluedark01_btn_default_holo_dark"
-                android:paddingLeft="32dp"
-                android:paddingRight="32dp"
+                android:layout_height="60dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginRight="8dp"
                 android:text="@string/action_register_short" />
         </LinearLayout>
     </RelativeLayout>

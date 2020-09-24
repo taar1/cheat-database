@@ -84,7 +84,7 @@
                     android:id="@+id/cancel_button"
                     style="@style/DefaultButtonStyle"
                     android:layout_width="match_parent"
-                    android:layout_height="48dp"
+                    android:layout_height="60dp"
                     android:layout_marginRight="8dp"
                     android:layout_weight="1"
                     android:text="@string/cancel" />
@@ -93,7 +93,7 @@
                     android:id="@+id/login_button"
                     style="@style/DefaultButtonStyle"
                     android:layout_width="match_parent"
-                    android:layout_height="48dp"
+                    android:layout_height="60dp"
                     android:layout_marginLeft="8dp"
                     android:layout_weight="1"
                     android:text="@string/action_sign_in_short" />

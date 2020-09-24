@@ -29,6 +29,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import dagger.hilt.android.AndroidEntryPoint;
 import needle.Needle;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -38,6 +39,7 @@ import retrofit2.Response;
  * Activity which displays a login screen to the user, offering registration as
  * well.
  */
+@AndroidEntryPoint
 public class RegisterActivity extends AppCompatActivity {
 
     /**
@@ -47,7 +49,6 @@ public class RegisterActivity extends AppCompatActivity {
 
     @Inject
     Tools tools;
-
     @Inject
     RestApi restApi;
 
