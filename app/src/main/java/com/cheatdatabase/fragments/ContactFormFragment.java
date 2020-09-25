@@ -4,7 +4,6 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
 import android.os.Bundle;
-import android.os.Handler;
 import android.text.TextUtils;
 import android.text.util.Linkify;
 import android.util.Log;
@@ -24,13 +23,10 @@ import androidx.fragment.app.Fragment;
 
 import com.cheatdatabase.R;
 import com.cheatdatabase.data.model.Member;
-import com.cheatdatabase.events.GenericEvent;
 import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.helpers.Tools;
 import com.cheatdatabase.rest.RestApi;
 import com.google.android.material.textfield.TextInputEditText;
-
-import org.greenrobot.eventbus.EventBus;
 
 import javax.inject.Inject;
 
@@ -73,6 +69,7 @@ public class ContactFormFragment extends Fragment {
     private Context context;
 
     private String mEmail;
+    private MenuItem sendMenuItem;
 
     @Inject
     public ContactFormFragment(@ActivityContext Context context) {
@@ -124,6 +121,12 @@ public class ContactFormFragment extends Fragment {
      * actual login attempt is made.
      */
     private void attemptSendForm() {
+        View view = getActivity().getCurrentFocus();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
+
         // Reset errors.
         mEmailView.setError(null);
         mMessageView.setError(null);
@@ -173,6 +176,7 @@ public class ContactFormFragment extends Fragment {
      * Shows the progress UI and hides the login form.
      */
     private void showProgress(final boolean show, final int step) {
+        Log.d(TAG, "showProgress: " + step);
 
         if ((step == 1) || (step == 2)) {
             // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which
@@ -236,7 +240,9 @@ public class ContactFormFragment extends Fragment {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        Log.d(TAG, "onOptionsItemSelected: ");
         if (item.getItemId() == R.id.action_send) {
+            sendMenuItem = item;
             attemptSendForm();
             return true;
         }
@@ -244,10 +250,12 @@ public class ContactFormFragment extends Fragment {
     }
 
     private void submitContactForm() {
+        Log.d(TAG, "submitContactForm: ");
         Call<Void> call = restApi.submitContactForm(mEmailView.getText().toString().trim(), "Contact through Android App", mMessageView.getText().toString().trim());
         call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> voidValue, Response<Void> response) {
+                Log.d(TAG, "onResponse: ");
                 actionAfterSendForm();
             }
 
@@ -261,15 +269,13 @@ public class ContactFormFragment extends Fragment {
     }
 
     private void actionAfterSendForm() {
-        View view = getActivity().getCurrentFocus();
-        if (view != null) {
-            InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-        }
-        tools.showSnackbar(outerLayout, context.getString(R.string.contactform_thanks), 5000);
+        Log.d(TAG, "actionAfterSendForm: ");
 
-        Handler handler = new Handler();
-        handler.postDelayed(() -> EventBus.getDefault().post(new GenericEvent(GenericEvent.Action.CLICK_CHEATS_DRAWER)), 1500);
+        mThankyouView.setVisibility(View.VISIBLE);
+        mContactStatusView.setVisibility(View.GONE);
+        mContactFormView.setVisibility(View.GONE);
+
+        sendMenuItem.setVisible(false);
     }
 
 }

@@ -9,7 +9,9 @@ import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
 import com.cheatdatabase.R
 import com.cheatdatabase.fragments.SubmitCheatFragment
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class SubmitCheatSelectGameActivity : AppCompatActivity() {
 
     lateinit var toolbarMenu: Menu

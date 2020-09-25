@@ -278,7 +278,7 @@
         <item name="android:buttonTint">@color/white</item>
     </style>
 
-    <style name="CheatInputFormStyle">
+    <style name="CheatInputFormStyle" parent="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
         <item name="android:textAppearance">@style/WalkthroughText</item>
         <item name="android:textColor">@color/white</item>
         <item name="android:background">@color/navy_blue_medium_dark_transparent</item>
@@ -286,11 +286,11 @@
         <item name="helperTextTextColor">@color/white</item>
         <item name="hintTextColor">@color/gray</item>
         <item name="boxStrokeColor">@color/color_accent</item>
+        <item name="android:paddingTop">8dp</item>
     </style>
 
     <style name="NavigationDrawer">
         <item name="android:background">@color/navigation_drawer_background</item>
-
         <item name="itemIconTint">?attr/colorNavigationItem</item>
         <item name="itemTextColor">?attr/colorNavigationItem</item>
         <item name="itemBackground">?attr/drawableNavigationItemBackground</item>

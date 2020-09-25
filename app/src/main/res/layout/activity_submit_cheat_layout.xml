@@ -47,7 +47,7 @@
             android:imeOptions="actionNext"
             android:inputType="textCapWords|textAutoCorrect"
             android:maxLines="1"
-            android:paddingTop="32dp"
+            android:padding="18dp"
             android:singleLine="true"
             android:textAppearance="@style/WalkthroughText">
 

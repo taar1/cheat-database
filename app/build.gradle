@@ -19,8 +19,8 @@ apply plugin: 'dagger.hilt.android.plugin'
 
 String APK_ID = "com.cheatdatabase"
 String APK_NAME = "Cheat-Database"
-int VERSION_CODE = 67
-String VERSION_NAME = "2.5.19"
+int VERSION_CODE = 68
+String VERSION_NAME = "2.5.21-preRelease"
 
 android {
     compileSdkVersion 29
@@ -219,7 +219,6 @@ dependencies {
     implementation "androidx.hilt:hilt-lifecycle-viewmodel:$hilt_lifecycle_version"
     kapt "androidx.hilt:hilt-compiler:$hilt_lifecycle_version"
     annotationProcessor "androidx.hilt:hilt-compiler:$hilt_lifecycle_version"
-
 }
 
 kapt {
