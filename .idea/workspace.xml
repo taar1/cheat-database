@@ -110,17 +110,12 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4caff62e-c62f-40ca-acf0-73c680b13375" name="Default" comment="Create MainFragmentFactory.kt for HILT fragment injection.">
+    <list default="true" id="4caff62e-c62f-40ca-acf0-73c680b13375" name="Default" comment="Fixing bugs:&#10;- add cheat FAB crash fix&#10;- contact form / cheat submit form layout improvements&#10;- contact form submit bug fix">
       <change beforePath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/app.iml" beforeDir="false" afterPath="$PROJECT_DIR$/app/app.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/SubmitCheatSelectGameActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/SubmitCheatSelectGameActivity.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/fragments/ContactFormFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/fragments/ContactFormFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_submit_cheat_layout.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_submit_cheat_layout.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_contact_form.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_contact_form.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/menu/submitcheat_menu.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/menu/submitcheat_menu.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/themes.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/themes.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/androidTest/java/com/cheatdatabase/ApplicationTest.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -131,7 +126,7 @@
   <component name="CreatePatchCommitExecutor">
     <option name="PATCH_PATH" value="" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="fd8b7031" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="6ea89d94" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
@@ -186,7 +181,9 @@
         <option value="resourceFile" />
         <option value="Class" />
         <option value="layoutResourceFile" />
+        <option value="JUnit5 Test Class" />
         <option value="Kotlin Class" />
+        <option value="JUnit4 Test Class" />
       </list>
     </option>
   </component>
@@ -195,6 +192,7 @@
     <option name="KEY_STORE_PATH" value="D:\Google Drive\Cheat-Database\Android Keytool Keystore\enature.keystore" />
     <option name="KEY_ALIAS" value="cheat-database" />
     <option name="REMEMBER_PASSWORDS" value="true" />
+    <option name="BUILD_TARGET_KEY" value="apk" />
   </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
@@ -226,8 +224,9 @@
     <property name="DeviceAndSnapshotComboBoxAction.selectionTime" value="2020-05-19T19:14:11.265Z" />
     <property name="ExportApk.ApkPath" value="D:\Development\Android\APK\Cheat-Database\2.5.20" />
     <property name="ExportApk.BuildType" value="release" />
-    <property name="ExportApk.BuildVariants" value="amazonFlavorDebug&#10;amazonFlavorRelease&#10;googlePlayFlavorDebug&#10;googlePlayFlavorRelease" />
+    <property name="ExportApk.BuildVariants" value="amazonFlavorDebug&#10;amazonFlavorRelease" />
     <property name="ExportApk.Flavors" value="googlePlayFlavor" />
+    <property name="ExportApk.SignV1" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="SHOW_ALL_PROCESSES" value="false" />
     <property name="ScreenshotViewer.SavePath" value="$USER_HOME$/Desktop" />
@@ -240,6 +239,9 @@
     <property name="android.project.structure.proportion" value="0.15" />
     <property name="android.sdk.path" value="$USER_HOME$/AppData/Local/Android/Sdk" />
     <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1538756288633" />
+    <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary" value="JUnit4" />
+    <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit4" value="" />
+    <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5" value="" />
     <property name="device.picker.selection" value="6ea89d94" />
     <property name="extract.method.default.visibility" value="private" />
     <property name="ignore.virus.scanning.warn.message" value="true" />
@@ -248,7 +250,7 @@
     <property name="project.structure.proportion" value="0.17" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="recommended.upgrade.do.not.ask.for.version" value="3.6.3" />
-    <property name="settings.editor.selected.configurable" value="preferences.language.Kotlin" />
+    <property name="settings.editor.selected.configurable" value="preferences.intentionPowerPack" />
   </component>
   <component name="PsdUISettings">
     <option name="LAST_EDITED_BUILD_TYPE" value="debug" />
@@ -257,14 +259,14 @@
     <key name="MoveKotlinTopLevelDeclarationsDialog.RECENTS_KEY">
       <recent name="com.cheatdatabase.data.repository" />
     </key>
+    <key name="android.template.parentActivityClass">
+      <recent name="" />
+    </key>
     <key name="CreateKotlinClassDialog.RecentsKey">
       <recent name="com.cheatdatabase.data.network" />
     </key>
-    <key name="CopyKotlinDeclarationDialog.RECENTS_KEY">
-      <recent name="com.cheatdatabase.hilt" />
-      <recent name="com.cheatdatabase.rest" />
-      <recent name="com.cheatdatabase.activity.ui.mycheats" />
-      <recent name="com.cheatdatabase.adapters" />
+    <key name="CreateTestDialog.RecentsKey">
+      <recent name="com.cheatdatabase.activity" />
     </key>
     <key name="android.template.packageName">
       <recent name="com.cheatdatabase.activity.ui.mycheats" />
@@ -273,8 +275,14 @@
       <recent name="com.cheatdatabase.ads" />
       <recent name="com.cheatdatabase" />
     </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/app/src/main/res/layout-v17" />
+    <key name="CopyKotlinDeclarationDialog.RECENTS_KEY">
+      <recent name="com.cheatdatabase.hilt" />
+      <recent name="com.cheatdatabase.rest" />
+      <recent name="com.cheatdatabase.activity.ui.mycheats" />
+      <recent name="com.cheatdatabase.adapters" />
+    </key>
+    <key name="CreateTestDialog.Recents.Supers">
+      <recent name="" />
     </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="com.cheatdatabase.data.model" />
@@ -294,11 +302,11 @@
       <recent name="$PROJECT_DIR$/app/src/main/res/layout-xlarge-land" />
       <recent name="$PROJECT_DIR$/app/src/main/res/xml" />
     </key>
-    <key name="android.template.parentActivityClass">
-      <recent name="" />
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/app/src/main/res/layout-v17" />
     </key>
   </component>
-  <component name="RunManager" selected="Android App.app">
+  <component name="RunManager" selected="Android Instrumented Tests.testMe()">
     <configuration default="true" type="AndroidTestRunConfigurationType" factoryName="Android Tests">
       <module name="" />
       <option name="TESTING_TYPE" value="0" />
@@ -352,9 +360,94 @@
     <configuration name="&lt;template&gt;" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" default="true" selected="false">
       <option name="VM_PARAMETERS" value="-Xmx512m -Xms256m -XX:MaxPermSize=250m -ea" />
     </configuration>
-    <configuration default="true" type="AndroidJUnit" factoryName="Android JUnit">
+    <configuration name="MainActivityTest (1)" type="AndroidJUnit" factoryName="Android JUnit" temporary="true" nameIsGenerated="true">
+      <module name="app" />
+      <shortenClasspath name="MANIFEST" />
+      <useClassPathOnly />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.cheatdatabase.activity.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.cheatdatabase.activity" />
+      <option name="MAIN_CLASS_NAME" value="com.cheatdatabase.activity.MainActivityTest" />
+      <option name="METHOD_NAME" value="" />
       <option name="TEST_OBJECT" value="class" />
       <option name="VM_PARAMETERS" />
+      <option name="PARAMETERS" value="" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <method v="2">
+        <option name="Android.Gradle.BeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="MainActivityTest (2)" type="AndroidJUnit" factoryName="Android JUnit" temporary="true" nameIsGenerated="true">
+      <module name="app" />
+      <shortenClasspath name="MANIFEST" />
+      <useClassPathOnly />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.cheatdatabase.activity.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.cheatdatabase.activity" />
+      <option name="MAIN_CLASS_NAME" value="com.cheatdatabase.activity.MainActivityTest" />
+      <option name="METHOD_NAME" value="" />
+      <option name="TEST_OBJECT" value="class" />
+      <option name="VM_PARAMETERS" />
+      <option name="PARAMETERS" value="" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <method v="2">
+        <option name="Android.Gradle.BeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="MainActivityTest" type="AndroidJUnit" factoryName="Android JUnit" temporary="true" nameIsGenerated="true">
+      <module name="app" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.cheatdatabase.activity.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.cheatdatabase.activity" />
+      <option name="MAIN_CLASS_NAME" value="com.cheatdatabase.activity.MainActivityTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <option name="VM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <method v="2">
+        <option name="Android.Gradle.BeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="MainActivityTest" type="AndroidJUnit" factoryName="Android JUnit" temporary="true" nameIsGenerated="true">
+      <module name="app" />
+      <shortenClasspath name="MANIFEST" />
+      <useClassPathOnly />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.cheatdatabase.activity.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.cheatdatabase.activity" />
+      <option name="MAIN_CLASS_NAME" value="com.cheatdatabase.activity.MainActivityTest" />
+      <option name="METHOD_NAME" value="" />
+      <option name="TEST_OBJECT" value="class" />
+      <option name="VM_PARAMETERS" />
+      <option name="PARAMETERS" value="" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <method v="2">
+        <option name="Android.Gradle.BeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="AndroidJUnit" factoryName="Android JUnit">
+      <shortenClasspath name="MANIFEST" />
+      <useClassPathOnly />
+      <option name="MAIN_CLASS_NAME" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="TEST_OBJECT" value="class" />
+      <option name="VM_PARAMETERS" />
+      <option name="PARAMETERS" value="" />
       <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
       <method v="2">
         <option name="Android.Gradle.BeforeRunTask" enabled="true" />
@@ -508,30 +601,107 @@
         <option name="Android.Gradle.BeforeRunTask" enabled="true" />
       </method>
     </configuration>
+    <configuration name="clickedAddNewCheat...()" type="AndroidTestRunConfigurationType" factoryName="Android Instrumented Tests" temporary="true" nameIsGenerated="true">
+      <module name="app" />
+      <option name="TESTING_TYPE" value="3" />
+      <option name="METHOD_NAME" value="clickedAddNewCheatFloatingButton" />
+      <option name="CLASS_NAME" value="com.cheatdatabase.activity.MainActivityTest" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="INSTRUMENTATION_RUNNER_CLASS" value="" />
+      <option name="EXTRA_OPTIONS" value="" />
+      <option name="INCLUDE_GRADLE_EXTRA_OPTIONS" value="true" />
+      <option name="CLEAR_LOGCAT" value="false" />
+      <option name="SHOW_LOGCAT_AUTOMATICALLY" value="false" />
+      <option name="SKIP_NOOP_APK_INSTALLATIONS" value="true" />
+      <option name="FORCE_STOP_RUNNING_APP" value="true" />
+      <option name="TARGET_SELECTION_MODE" value="DEVICE_AND_SNAPSHOT_COMBO_BOX" />
+      <option name="SELECTED_CLOUD_MATRIX_CONFIGURATION_ID" value="-1" />
+      <option name="SELECTED_CLOUD_MATRIX_PROJECT_ID" value="" />
+      <option name="DEBUGGER_TYPE" value="Auto" />
+      <Auto>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+      </Auto>
+      <Hybrid>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+      </Hybrid>
+      <Java />
+      <Native>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+      </Native>
+      <Profilers>
+        <option name="ADVANCED_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_CPU_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_CPU_PROFILING_CONFIGURATION_NAME" value="Sampled (Java)" />
+      </Profilers>
+      <method v="2">
+        <option name="Android.Gradle.BeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="testMe()" type="AndroidTestRunConfigurationType" factoryName="Android Instrumented Tests" temporary="true" nameIsGenerated="true">
+      <module name="app" />
+      <option name="TESTING_TYPE" value="3" />
+      <option name="METHOD_NAME" value="testMe" />
+      <option name="CLASS_NAME" value="com.cheatdatabase.activity.MainActivityMTest" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="INSTRUMENTATION_RUNNER_CLASS" value="" />
+      <option name="EXTRA_OPTIONS" value="" />
+      <option name="INCLUDE_GRADLE_EXTRA_OPTIONS" value="true" />
+      <option name="CLEAR_LOGCAT" value="false" />
+      <option name="SHOW_LOGCAT_AUTOMATICALLY" value="false" />
+      <option name="SKIP_NOOP_APK_INSTALLATIONS" value="true" />
+      <option name="FORCE_STOP_RUNNING_APP" value="true" />
+      <option name="TARGET_SELECTION_MODE" value="DEVICE_AND_SNAPSHOT_COMBO_BOX" />
+      <option name="SELECTED_CLOUD_MATRIX_CONFIGURATION_ID" value="-1" />
+      <option name="SELECTED_CLOUD_MATRIX_PROJECT_ID" value="" />
+      <option name="DEBUGGER_TYPE" value="Auto" />
+      <Auto>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+      </Auto>
+      <Hybrid>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+      </Hybrid>
+      <Java />
+      <Native>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+      </Native>
+      <Profilers>
+        <option name="ADVANCED_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_CPU_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_CPU_PROFILING_CONFIGURATION_NAME" value="Sampled (Java)" />
+      </Profilers>
+      <method v="2">
+        <option name="Android.Gradle.BeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
     <configuration default="true" type="Application" factoryName="Application">
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
-    </configuration>
-    <configuration name="cheat-database [androidDependencies]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value="androidDependencies" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
-      <method v="2" />
     </configuration>
     <configuration default="true" type="JetRunConfigurationType">
       <module name="Cheat-Database" />
@@ -593,12 +763,19 @@
     </configuration>
     <list>
       <item itemvalue="Android App.app" />
-      <item itemvalue="Gradle.cheat-database [androidDependencies]" />
+      <item itemvalue="Android Instrumented Tests.clickedAddNewCheat...()" />
+      <item itemvalue="Android Instrumented Tests.testMe()" />
+      <item itemvalue="Android JUnit.MainActivityTest" />
+      <item itemvalue="Android JUnit.MainActivityTest (1)" />
+      <item itemvalue="Android JUnit.MainActivityTest (2)" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Gradle.cheat-database [androidDependencies]" />
-        <item itemvalue="Gradle.cheat-database [androidDependencies]" />
+        <item itemvalue="Android Instrumented Tests.testMe()" />
+        <item itemvalue="Android JUnit.MainActivityTest (2)" />
+        <item itemvalue="Android JUnit.MainActivityTest (1)" />
+        <item itemvalue="Android JUnit.MainActivityTest" />
+        <item itemvalue="Android Instrumented Tests.clickedAddNewCheat...()" />
       </list>
     </recent_temporary>
   </component>
@@ -616,13 +793,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1487274191999</updated>
-    </task>
-    <task id="LOCAL-00100" summary="Fixing bugs related to migration to room.">
-      <created>1587845476921</created>
-      <option name="number" value="00100" />
-      <option name="presentableId" value="LOCAL-00100" />
-      <option name="project" value="LOCAL" />
-      <updated>1587845476921</updated>
     </task>
     <task id="LOCAL-00101" summary="Fixing bugs in favorites activity etc.">
       <created>1587908642241</created>
@@ -960,7 +1130,14 @@
       <option name="project" value="LOCAL" />
       <updated>1600971385840</updated>
     </task>
-    <option name="localTasksCounter" value="149" />
+    <task id="LOCAL-00149" summary="Fixing bugs:&#10;- add cheat FAB crash fix&#10;- contact form / cheat submit form layout improvements&#10;- contact form submit bug fix">
+      <created>1601064729333</created>
+      <option name="number" value="00149" />
+      <option name="presentableId" value="LOCAL-00149" />
+      <option name="project" value="LOCAL" />
+      <updated>1601064729334</updated>
+    </task>
+    <option name="localTasksCounter" value="150" />
     <servers />
   </component>
   <component name="TodoView">
@@ -1040,7 +1217,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
-    <MESSAGE value="Switching to coroutines (not working yet)." />
     <MESSAGE value="Remove cheat from list functionality (needs to be changed to coroutines)&#10;currently bug in removing one item from the list in MyUnpublishedCheatsListFragment.kt" />
     <MESSAGE value="Fixing the feature for removing an item from the unpublished cheats list. the list will remove the item and refresh with an animation." />
     <MESSAGE value="Add app bar layout to toolbar layout xml file" />
@@ -1065,15 +1241,24 @@
     <MESSAGE value="Edit (own) Cheats Funktionalität begonnen..." />
     <MESSAGE value="Create MainFragmentFactory.kt for HILT fragment injection." />
     <MESSAGE value="Fixing the RegisterActivity bug." />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixing the RegisterActivity bug." />
+    <MESSAGE value="Fixing bugs:&#10;- add cheat FAB crash fix&#10;- contact form / cheat submit form layout improvements&#10;- contact form submit bug fix" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixing bugs:&#10;- add cheat FAB crash fix&#10;- contact form / cheat submit form layout improvements&#10;- contact form submit bug fix" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="602" y="173" width="1523" height="1030" key="#PSD" timestamp="1601063417423">
+    <state x="877" y="331" key="#&lt;template&gt;_of_Android_JUnit" timestamp="1601138441749">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state x="602" y="173" width="1523" height="1030" key="#PSD/0.0.2560.1400@0.0.2560.1400" timestamp="1601063417423" />
+    <state x="877" y="331" key="#&lt;template&gt;_of_Android_JUnit/0.0.2560.1400@0.0.2560.1400" timestamp="1601138441749" />
+    <state x="877" y="370" key="#MainActivityJUnit5Test" timestamp="1601138376360">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state x="877" y="370" key="#MainActivityJUnit5Test/0.0.2560.1400@0.0.2560.1400" timestamp="1601138376360" />
+    <state x="602" y="173" width="1523" height="1030" key="#PSD" timestamp="1601151183297">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state x="602" y="173" width="1523" height="1030" key="#PSD/0.0.2560.1400@0.0.2560.1400" timestamp="1601151183297" />
     <state x="734" y="355" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1601064323702">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
@@ -1107,12 +1292,12 @@
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state x="1135" y="465" key="AndroidProcessChooserDialog/0.0.2560.1400@0.0.2560.1400" timestamp="1595278051063" />
-    <state x="653" y="64" width="1718" height="1217" key="CommitChangelistDialog2" timestamp="1600980031708">
+    <state x="653" y="64" width="1718" height="1217" key="CommitChangelistDialog2" timestamp="1601064728493">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state x="653" y="64" width="1718" height="1217" key="CommitChangelistDialog2/-3000.0.1500.980/0.0.2560.1400@0.0.2560.1400" timestamp="1597091447083" />
     <state x="383" y="44" key="CommitChangelistDialog2/0.0.1500.960@0.0.1500.960" timestamp="1600805145643" />
-    <state x="653" y="64" width="1604" height="1148" key="CommitChangelistDialog2/0.0.2560.1400@0.0.2560.1400" timestamp="1600980031708" />
+    <state x="653" y="64" width="1604" height="1148" key="CommitChangelistDialog2/0.0.2560.1400@0.0.2560.1400" timestamp="1601064728493" />
     <state x="92" y="92" width="2376" height="1216" key="DiffContextDialog" timestamp="1600970076377">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
@@ -1123,26 +1308,26 @@
     </state>
     <state x="1060" y="440" key="FileChooserDialogImpl/-3000.0.1500.980/0.0.2560.1400@0.0.2560.1400" timestamp="1597784352184" />
     <state x="1060" y="440" key="FileChooserDialogImpl/0.0.2560.1400@0.0.2560.1400" timestamp="1601064065164" />
-    <state width="2517" height="798" key="GridCell.Tab.0.bottom" timestamp="1601063005576">
+    <state width="2517" height="410" key="GridCell.Tab.0.bottom" timestamp="1601151506600">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state width="2517" height="392" key="GridCell.Tab.0.bottom/-3000.0.1500.980/0.0.2560.1400@0.0.2560.1400" timestamp="1596398444079" />
-    <state width="2517" height="798" key="GridCell.Tab.0.bottom/0.0.2560.1400@0.0.2560.1400" timestamp="1601063005576" />
-    <state width="2517" height="798" key="GridCell.Tab.0.center" timestamp="1601063005576">
+    <state width="2517" height="410" key="GridCell.Tab.0.bottom/0.0.2560.1400@0.0.2560.1400" timestamp="1601151506600" />
+    <state width="2517" height="410" key="GridCell.Tab.0.center" timestamp="1601151506600">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state width="2517" height="392" key="GridCell.Tab.0.center/-3000.0.1500.980/0.0.2560.1400@0.0.2560.1400" timestamp="1596398444079" />
-    <state width="2517" height="798" key="GridCell.Tab.0.center/0.0.2560.1400@0.0.2560.1400" timestamp="1601063005576" />
-    <state width="2517" height="798" key="GridCell.Tab.0.left" timestamp="1601063005576">
+    <state width="2517" height="410" key="GridCell.Tab.0.center/0.0.2560.1400@0.0.2560.1400" timestamp="1601151506600" />
+    <state width="2517" height="410" key="GridCell.Tab.0.left" timestamp="1601151506599">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state width="2517" height="392" key="GridCell.Tab.0.left/-3000.0.1500.980/0.0.2560.1400@0.0.2560.1400" timestamp="1596398444079" />
-    <state width="2517" height="798" key="GridCell.Tab.0.left/0.0.2560.1400@0.0.2560.1400" timestamp="1601063005576" />
-    <state width="2517" height="798" key="GridCell.Tab.0.right" timestamp="1601063005576">
+    <state width="2517" height="410" key="GridCell.Tab.0.left/0.0.2560.1400@0.0.2560.1400" timestamp="1601151506599" />
+    <state width="2517" height="410" key="GridCell.Tab.0.right" timestamp="1601151506600">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state width="2517" height="392" key="GridCell.Tab.0.right/-3000.0.1500.980/0.0.2560.1400@0.0.2560.1400" timestamp="1596398444079" />
-    <state width="2517" height="798" key="GridCell.Tab.0.right/0.0.2560.1400@0.0.2560.1400" timestamp="1601063005576" />
+    <state width="2517" height="410" key="GridCell.Tab.0.right/0.0.2560.1400@0.0.2560.1400" timestamp="1601151506600" />
     <state width="2517" height="494" key="GridCell.Tab.1.bottom" timestamp="1595278191668">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
@@ -1168,47 +1353,52 @@
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state x="1014" y="411" key="RollbackChangesDialog/-3000.0.1500.980/0.0.2560.1400@0.0.2560.1400" timestamp="1596398066793" />
-    <state x="717" y="0" width="960" height="1400" key="ScreenshotViewer.Dimensions" timestamp="1597784352963">
+    <state x="717" y="0" width="960" height="1400" key="ScreenshotViewer.Dimensions" timestamp="1601136007171">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state x="717" y="0" width="960" height="1400" key="ScreenshotViewer.Dimensions/-3000.0.1500.980/0.0.2560.1400@0.0.2560.1400" timestamp="1597784352963" />
-    <state x="781" y="342" key="SettingsEditor" timestamp="1600617038863">
+    <state x="717" y="0" key="ScreenshotViewer.Dimensions/0.0.2560.1400@0.0.2560.1400" timestamp="1601136007171" />
+    <state x="781" y="342" key="SettingsEditor" timestamp="1601138617147">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state x="781" y="342" key="SettingsEditor/0.0.2560.1400@0.0.2560.1400" timestamp="1600617038863" />
+    <state x="781" y="342" key="SettingsEditor/0.0.2560.1400@0.0.2560.1400" timestamp="1601138617147" />
     <state x="0" y="0" key="VCS.ChangeListViewerDialog" timestamp="1595353482017">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state x="0" y="0" key="VCS.ChangeListViewerDialog/0.0.2560.1400@0.0.2560.1400" timestamp="1595353482017" />
-    <state x="826" y="458" key="Vcs.Push.Dialog.v2" timestamp="1600971387120">
+    <state x="826" y="458" key="Vcs.Push.Dialog.v2" timestamp="1601064733020">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state x="826" y="458" key="Vcs.Push.Dialog.v2/-3000.0.1500.980/0.0.2560.1400@0.0.2560.1400" timestamp="1597091452931" />
     <state x="484" y="314" key="Vcs.Push.Dialog.v2/0.0.1500.960@0.0.1500.960" timestamp="1600805148572" />
-    <state x="826" y="458" key="Vcs.Push.Dialog.v2/0.0.2560.1400@0.0.2560.1400" timestamp="1600971387120" />
+    <state x="826" y="458" key="Vcs.Push.Dialog.v2/0.0.2560.1400@0.0.2560.1400" timestamp="1601064733020" />
     <state x="92" y="92" width="2376" height="1216" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1594925683259">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state x="92" y="92" width="2376" height="1216" key="com.intellij.history.integration.ui.views.FileHistoryDialog/0.0.2560.1400@0.0.2560.1400" timestamp="1594925683259" />
-    <state x="927" y="315" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1595272549070">
+    <state x="927" y="315" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1601146693286">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state x="927" y="315" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.0.2560.1400@0.0.2560.1400" timestamp="1595272549070" />
+    <state x="927" y="315" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.0.2560.1400@0.0.2560.1400" timestamp="1601146693286" />
     <state x="1089" y="617" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1601050686774">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state x="1089" y="617" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/-3000.0.1500.980/0.0.2560.1400@0.0.2560.1400" timestamp="1597088262085" />
     <state x="1089" y="617" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.2560.1400@0.0.2560.1400" timestamp="1601050686774" />
-    <state x="475" y="206" width="1542" height="1028" key="find.popup" timestamp="1600716919449">
+    <state x="1044" y="403" key="com.intellij.testIntegration.createTest.CreateTestDialog" timestamp="1601151459333">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state x="1044" y="403" key="com.intellij.testIntegration.createTest.CreateTestDialog/0.0.2560.1400@0.0.2560.1400" timestamp="1601151459333" />
+    <state x="475" y="206" width="1542" height="1028" key="find.popup" timestamp="1601150049629">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state x="475" y="206" width="1542" height="1028" key="find.popup/-3000.0.1500.980/0.0.2560.1400@0.0.2560.1400" timestamp="1597088826506" />
-    <state x="475" y="206" width="1542" height="1028" key="find.popup/0.0.2560.1400@0.0.2560.1400" timestamp="1600716919449" />
-    <state x="943" y="315" width="672" height="678" key="search.everywhere.popup" timestamp="1601062392140">
+    <state x="475" y="206" width="1542" height="1028" key="find.popup/0.0.2560.1400@0.0.2560.1400" timestamp="1601150049629" />
+    <state x="943" y="315" width="672" height="678" key="search.everywhere.popup" timestamp="1601066273647">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state x="943" y="315" width="672" height="678" key="search.everywhere.popup/-3000.0.1500.980/0.0.2560.1400@0.0.2560.1400" timestamp="1597088805804" />
-    <state x="943" y="315" width="672" height="678" key="search.everywhere.popup/0.0.2560.1400@0.0.2560.1400" timestamp="1601062392140" />
+    <state x="943" y="315" width="672" height="678" key="search.everywhere.popup/0.0.2560.1400@0.0.2560.1400" timestamp="1601066273647" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
