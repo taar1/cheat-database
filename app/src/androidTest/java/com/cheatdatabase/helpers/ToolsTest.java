@@ -3,10 +3,14 @@ package com.cheatdatabase.helpers;
 import android.content.Context;
 import android.util.Log;
 
+import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.platform.app.InstrumentationRegistry;
+
+import com.cheatdatabase.activity.MainActivity;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -18,6 +22,9 @@ public class ToolsTest {
 
     private Tools tools;
     private Context instrumentationContext;
+
+    @Rule
+    public ActivityScenarioRule<MainActivity> activityScenarioRule = new ActivityScenarioRule<>(MainActivity.class);
 
     @Before
     public void setUp() throws Exception {
@@ -49,5 +56,15 @@ public class ToolsTest {
         assertEquals(differenceDate, 7);
     }
 
+    @Test
+    public void getSystemNameById() {
+        activityScenarioRule.getScenario().onActivity(activity -> {
+            String systemName = Tools.getSystemNameById(activity, 4);
+            Log.i(TAG, "XXXXX getSystemNameById: " + systemName);
+
+            assertEquals(Tools.getSystemNameById(activity, 4), "SNES");
+            assertEquals(Tools.getSystemNameById(activity, 10), "Wonderswan");
+        });
+    }
 
 }
