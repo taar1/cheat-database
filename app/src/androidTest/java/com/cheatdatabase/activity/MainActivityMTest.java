@@ -8,12 +8,16 @@ import static org.junit.Assert.assertEquals;
 
 public class MainActivityMTest {
 
+//    @Rule
+//    public  ActivityTestRule<MainActivity> activityTestRule = new ActivityTestRule<>(MainActivity.class);
+//    private Activity activity;
+
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
     }
 
     @After
-    public void tearDown() throws Exception {
+    public void tearDown() {
     }
 
     @Test

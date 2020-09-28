@@ -110,13 +110,15 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4caff62e-c62f-40ca-acf0-73c680b13375" name="Default" comment="Fixing bugs:&#10;- add cheat FAB crash fix&#10;- contact form / cheat submit form layout improvements&#10;- contact form submit bug fix">
+    <list default="true" id="4caff62e-c62f-40ca-acf0-73c680b13375" name="Default" comment="Adding first working JUnit4 Test: MainActivityMTest.java">
+      <change afterPath="$PROJECT_DIR$/app/src/androidTest/java/com/cheatdatabase/helpers/AeSimpleMD5Test.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/androidTest/java/com/cheatdatabase/helpers/ToolsTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/app.iml" beforeDir="false" afterPath="$PROJECT_DIR$/app/app.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/androidTest/java/com/cheatdatabase/ApplicationTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/androidTest/java/com/cheatdatabase/activity/MainActivityMTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/androidTest/java/com/cheatdatabase/activity/MainActivityMTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/helpers/Reachability.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/helpers/Reachability.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -126,7 +128,7 @@
   <component name="CreatePatchCommitExecutor">
     <option name="PATCH_PATH" value="" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="6ea89d94" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="fd8b7031" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
@@ -250,7 +252,7 @@
     <property name="project.structure.proportion" value="0.17" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="recommended.upgrade.do.not.ask.for.version" value="3.6.3" />
-    <property name="settings.editor.selected.configurable" value="preferences.intentionPowerPack" />
+    <property name="settings.editor.selected.configurable" value="preferences.keymap" />
   </component>
   <component name="PsdUISettings">
     <option name="LAST_EDITED_BUILD_TYPE" value="debug" />
@@ -259,13 +261,11 @@
     <key name="MoveKotlinTopLevelDeclarationsDialog.RECENTS_KEY">
       <recent name="com.cheatdatabase.data.repository" />
     </key>
-    <key name="android.template.parentActivityClass">
-      <recent name="" />
-    </key>
     <key name="CreateKotlinClassDialog.RecentsKey">
       <recent name="com.cheatdatabase.data.network" />
     </key>
     <key name="CreateTestDialog.RecentsKey">
+      <recent name="com.cheatdatabase.helpers" />
       <recent name="com.cheatdatabase.activity" />
     </key>
     <key name="android.template.packageName">
@@ -280,6 +280,9 @@
       <recent name="com.cheatdatabase.rest" />
       <recent name="com.cheatdatabase.activity.ui.mycheats" />
       <recent name="com.cheatdatabase.adapters" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/app/src/main/res/layout-v17" />
     </key>
     <key name="CreateTestDialog.Recents.Supers">
       <recent name="" />
@@ -302,11 +305,11 @@
       <recent name="$PROJECT_DIR$/app/src/main/res/layout-xlarge-land" />
       <recent name="$PROJECT_DIR$/app/src/main/res/xml" />
     </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/app/src/main/res/layout-v17" />
+    <key name="android.template.parentActivityClass">
+      <recent name="" />
     </key>
   </component>
-  <component name="RunManager" selected="Android Instrumented Tests.testMe()">
+  <component name="RunManager" selected="Android Instrumented Tests.getDayDifference()">
     <configuration default="true" type="AndroidTestRunConfigurationType" factoryName="Android Tests">
       <module name="" />
       <option name="TESTING_TYPE" value="0" />
@@ -359,65 +362,6 @@
     </configuration>
     <configuration name="&lt;template&gt;" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" default="true" selected="false">
       <option name="VM_PARAMETERS" value="-Xmx512m -Xms256m -XX:MaxPermSize=250m -ea" />
-    </configuration>
-    <configuration name="MainActivityTest (1)" type="AndroidJUnit" factoryName="Android JUnit" temporary="true" nameIsGenerated="true">
-      <module name="app" />
-      <shortenClasspath name="MANIFEST" />
-      <useClassPathOnly />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.cheatdatabase.activity.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="com.cheatdatabase.activity" />
-      <option name="MAIN_CLASS_NAME" value="com.cheatdatabase.activity.MainActivityTest" />
-      <option name="METHOD_NAME" value="" />
-      <option name="TEST_OBJECT" value="class" />
-      <option name="VM_PARAMETERS" />
-      <option name="PARAMETERS" value="" />
-      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
-      <method v="2">
-        <option name="Android.Gradle.BeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="MainActivityTest (2)" type="AndroidJUnit" factoryName="Android JUnit" temporary="true" nameIsGenerated="true">
-      <module name="app" />
-      <shortenClasspath name="MANIFEST" />
-      <useClassPathOnly />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.cheatdatabase.activity.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="com.cheatdatabase.activity" />
-      <option name="MAIN_CLASS_NAME" value="com.cheatdatabase.activity.MainActivityTest" />
-      <option name="METHOD_NAME" value="" />
-      <option name="TEST_OBJECT" value="class" />
-      <option name="VM_PARAMETERS" />
-      <option name="PARAMETERS" value="" />
-      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
-      <method v="2">
-        <option name="Android.Gradle.BeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="MainActivityTest" type="AndroidJUnit" factoryName="Android JUnit" temporary="true" nameIsGenerated="true">
-      <module name="app" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.cheatdatabase.activity.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="com.cheatdatabase.activity" />
-      <option name="MAIN_CLASS_NAME" value="com.cheatdatabase.activity.MainActivityTest" />
-      <option name="TEST_OBJECT" value="class" />
-      <option name="VM_PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
-      <method v="2">
-        <option name="Android.Gradle.BeforeRunTask" enabled="true" />
-      </method>
     </configuration>
     <configuration name="MainActivityTest" type="AndroidJUnit" factoryName="Android JUnit" temporary="true" nameIsGenerated="true">
       <module name="app" />
@@ -554,6 +498,102 @@
         <option name="Android.Gradle.BeforeRunTask" enabled="true" />
       </method>
     </configuration>
+    <configuration name="MD5()" type="AndroidTestRunConfigurationType" factoryName="Android Instrumented Tests" temporary="true" nameIsGenerated="true">
+      <module name="app" />
+      <option name="TESTING_TYPE" value="3" />
+      <option name="METHOD_NAME" value="MD5" />
+      <option name="CLASS_NAME" value="com.cheatdatabase.helpers.AeSimpleMD5Test" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="INSTRUMENTATION_RUNNER_CLASS" value="" />
+      <option name="EXTRA_OPTIONS" value="" />
+      <option name="INCLUDE_GRADLE_EXTRA_OPTIONS" value="true" />
+      <option name="CLEAR_LOGCAT" value="false" />
+      <option name="SHOW_LOGCAT_AUTOMATICALLY" value="false" />
+      <option name="SKIP_NOOP_APK_INSTALLATIONS" value="true" />
+      <option name="FORCE_STOP_RUNNING_APP" value="true" />
+      <option name="TARGET_SELECTION_MODE" value="DEVICE_AND_SNAPSHOT_COMBO_BOX" />
+      <option name="SELECTED_CLOUD_MATRIX_CONFIGURATION_ID" value="-1" />
+      <option name="SELECTED_CLOUD_MATRIX_PROJECT_ID" value="" />
+      <option name="DEBUGGER_TYPE" value="Auto" />
+      <Auto>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+      </Auto>
+      <Hybrid>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+      </Hybrid>
+      <Java />
+      <Native>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+      </Native>
+      <Profilers>
+        <option name="ADVANCED_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_CPU_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_CPU_PROFILING_CONFIGURATION_NAME" value="Sampled (Java)" />
+      </Profilers>
+      <method v="2">
+        <option name="Android.Gradle.BeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ToolsTest" type="AndroidTestRunConfigurationType" factoryName="Android Instrumented Tests" temporary="true" nameIsGenerated="true">
+      <module name="app" />
+      <option name="TESTING_TYPE" value="2" />
+      <option name="METHOD_NAME" value="" />
+      <option name="CLASS_NAME" value="com.cheatdatabase.helpers.ToolsTest" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="INSTRUMENTATION_RUNNER_CLASS" value="" />
+      <option name="EXTRA_OPTIONS" value="" />
+      <option name="INCLUDE_GRADLE_EXTRA_OPTIONS" value="true" />
+      <option name="CLEAR_LOGCAT" value="false" />
+      <option name="SHOW_LOGCAT_AUTOMATICALLY" value="false" />
+      <option name="SKIP_NOOP_APK_INSTALLATIONS" value="true" />
+      <option name="FORCE_STOP_RUNNING_APP" value="true" />
+      <option name="TARGET_SELECTION_MODE" value="DEVICE_AND_SNAPSHOT_COMBO_BOX" />
+      <option name="SELECTED_CLOUD_MATRIX_CONFIGURATION_ID" value="-1" />
+      <option name="SELECTED_CLOUD_MATRIX_PROJECT_ID" value="" />
+      <option name="DEBUGGER_TYPE" value="Auto" />
+      <Auto>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+      </Auto>
+      <Hybrid>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+      </Hybrid>
+      <Java />
+      <Native>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+      </Native>
+      <Profilers>
+        <option name="ADVANCED_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_CPU_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_CPU_PROFILING_CONFIGURATION_NAME" value="Sampled (Java)" />
+      </Profilers>
+      <method v="2">
+        <option name="Android.Gradle.BeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
     <configuration default="true" type="AndroidTestRunConfigurationType" factoryName="Android Instrumented Tests">
       <option name="TESTING_TYPE" value="0" />
       <option name="METHOD_NAME" value="" />
@@ -601,11 +641,11 @@
         <option name="Android.Gradle.BeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="clickedAddNewCheat...()" type="AndroidTestRunConfigurationType" factoryName="Android Instrumented Tests" temporary="true" nameIsGenerated="true">
+    <configuration name="convertDateToLocal...()" type="AndroidTestRunConfigurationType" factoryName="Android Instrumented Tests" temporary="true" nameIsGenerated="true">
       <module name="app" />
       <option name="TESTING_TYPE" value="3" />
-      <option name="METHOD_NAME" value="clickedAddNewCheatFloatingButton" />
-      <option name="CLASS_NAME" value="com.cheatdatabase.activity.MainActivityTest" />
+      <option name="METHOD_NAME" value="convertDateToLocaleDateFormat" />
+      <option name="CLASS_NAME" value="com.cheatdatabase.helpers.ToolsTest" />
       <option name="PACKAGE_NAME" value="" />
       <option name="INSTRUMENTATION_RUNNER_CLASS" value="" />
       <option name="EXTRA_OPTIONS" value="" />
@@ -649,11 +689,59 @@
         <option name="Android.Gradle.BeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="testMe()" type="AndroidTestRunConfigurationType" factoryName="Android Instrumented Tests" temporary="true" nameIsGenerated="true">
+    <configuration name="getDayDifference()" type="AndroidTestRunConfigurationType" factoryName="Android Instrumented Tests" temporary="true" nameIsGenerated="true">
       <module name="app" />
       <option name="TESTING_TYPE" value="3" />
-      <option name="METHOD_NAME" value="testMe" />
-      <option name="CLASS_NAME" value="com.cheatdatabase.activity.MainActivityMTest" />
+      <option name="METHOD_NAME" value="getDayDifference" />
+      <option name="CLASS_NAME" value="com.cheatdatabase.helpers.ToolsTest" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="INSTRUMENTATION_RUNNER_CLASS" value="" />
+      <option name="EXTRA_OPTIONS" value="" />
+      <option name="INCLUDE_GRADLE_EXTRA_OPTIONS" value="true" />
+      <option name="CLEAR_LOGCAT" value="false" />
+      <option name="SHOW_LOGCAT_AUTOMATICALLY" value="false" />
+      <option name="SKIP_NOOP_APK_INSTALLATIONS" value="true" />
+      <option name="FORCE_STOP_RUNNING_APP" value="true" />
+      <option name="TARGET_SELECTION_MODE" value="DEVICE_AND_SNAPSHOT_COMBO_BOX" />
+      <option name="SELECTED_CLOUD_MATRIX_CONFIGURATION_ID" value="-1" />
+      <option name="SELECTED_CLOUD_MATRIX_PROJECT_ID" value="" />
+      <option name="DEBUGGER_TYPE" value="Auto" />
+      <Auto>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+      </Auto>
+      <Hybrid>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+      </Hybrid>
+      <Java />
+      <Native>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+      </Native>
+      <Profilers>
+        <option name="ADVANCED_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_CPU_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_CPU_PROFILING_CONFIGURATION_NAME" value="Sampled (Java)" />
+      </Profilers>
+      <method v="2">
+        <option name="Android.Gradle.BeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="isEmailValid()" type="AndroidTestRunConfigurationType" factoryName="Android Instrumented Tests" temporary="true" nameIsGenerated="true">
+      <module name="app" />
+      <option name="TESTING_TYPE" value="3" />
+      <option name="METHOD_NAME" value="isEmailValid" />
+      <option name="CLASS_NAME" value="com.cheatdatabase.helpers.ToolsTest" />
       <option name="PACKAGE_NAME" value="" />
       <option name="INSTRUMENTATION_RUNNER_CLASS" value="" />
       <option name="EXTRA_OPTIONS" value="" />
@@ -763,19 +851,19 @@
     </configuration>
     <list>
       <item itemvalue="Android App.app" />
-      <item itemvalue="Android Instrumented Tests.clickedAddNewCheat...()" />
-      <item itemvalue="Android Instrumented Tests.testMe()" />
-      <item itemvalue="Android JUnit.MainActivityTest" />
-      <item itemvalue="Android JUnit.MainActivityTest (1)" />
-      <item itemvalue="Android JUnit.MainActivityTest (2)" />
+      <item itemvalue="Android Instrumented Tests.MD5()" />
+      <item itemvalue="Android Instrumented Tests.convertDateToLocal...()" />
+      <item itemvalue="Android Instrumented Tests.ToolsTest" />
+      <item itemvalue="Android Instrumented Tests.isEmailValid()" />
+      <item itemvalue="Android Instrumented Tests.getDayDifference()" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Android Instrumented Tests.testMe()" />
-        <item itemvalue="Android JUnit.MainActivityTest (2)" />
-        <item itemvalue="Android JUnit.MainActivityTest (1)" />
-        <item itemvalue="Android JUnit.MainActivityTest" />
-        <item itemvalue="Android Instrumented Tests.clickedAddNewCheat...()" />
+        <item itemvalue="Android Instrumented Tests.getDayDifference()" />
+        <item itemvalue="Android Instrumented Tests.isEmailValid()" />
+        <item itemvalue="Android Instrumented Tests.ToolsTest" />
+        <item itemvalue="Android Instrumented Tests.convertDateToLocal...()" />
+        <item itemvalue="Android Instrumented Tests.MD5()" />
       </list>
     </recent_temporary>
   </component>
@@ -793,13 +881,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1487274191999</updated>
-    </task>
-    <task id="LOCAL-00101" summary="Fixing bugs in favorites activity etc.">
-      <created>1587908642241</created>
-      <option name="number" value="00101" />
-      <option name="presentableId" value="LOCAL-00101" />
-      <option name="project" value="LOCAL" />
-      <updated>1587908642241</updated>
     </task>
     <task id="LOCAL-00102" summary="Fixing bugs in favorites activity etc.">
       <created>1587927923738</created>
@@ -1137,7 +1218,14 @@
       <option name="project" value="LOCAL" />
       <updated>1601064729334</updated>
     </task>
-    <option name="localTasksCounter" value="150" />
+    <task id="LOCAL-00150" summary="Adding first working JUnit4 Test: MainActivityMTest.java">
+      <created>1601151755787</created>
+      <option name="number" value="00150" />
+      <option name="presentableId" value="LOCAL-00150" />
+      <option name="project" value="LOCAL" />
+      <updated>1601151755788</updated>
+    </task>
+    <option name="localTasksCounter" value="151" />
     <servers />
   </component>
   <component name="TodoView">
@@ -1217,7 +1305,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
-    <MESSAGE value="Remove cheat from list functionality (needs to be changed to coroutines)&#10;currently bug in removing one item from the list in MyUnpublishedCheatsListFragment.kt" />
     <MESSAGE value="Fixing the feature for removing an item from the unpublished cheats list. the list will remove the item and refresh with an animation." />
     <MESSAGE value="Add app bar layout to toolbar layout xml file" />
     <MESSAGE value="Back arrow in actionbar in unpublished cheats list view added.&#10;Improved look of the card." />
@@ -1242,7 +1329,8 @@
     <MESSAGE value="Create MainFragmentFactory.kt for HILT fragment injection." />
     <MESSAGE value="Fixing the RegisterActivity bug." />
     <MESSAGE value="Fixing bugs:&#10;- add cheat FAB crash fix&#10;- contact form / cheat submit form layout improvements&#10;- contact form submit bug fix" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixing bugs:&#10;- add cheat FAB crash fix&#10;- contact form / cheat submit form layout improvements&#10;- contact form submit bug fix" />
+    <MESSAGE value="Adding first working JUnit4 Test: MainActivityMTest.java" />
+    <option name="LAST_COMMIT_MESSAGE" value="Adding first working JUnit4 Test: MainActivityMTest.java" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
@@ -1292,12 +1380,12 @@
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state x="1135" y="465" key="AndroidProcessChooserDialog/0.0.2560.1400@0.0.2560.1400" timestamp="1595278051063" />
-    <state x="653" y="64" width="1718" height="1217" key="CommitChangelistDialog2" timestamp="1601064728493">
+    <state x="653" y="64" width="1718" height="1217" key="CommitChangelistDialog2" timestamp="1601151755160">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state x="653" y="64" width="1718" height="1217" key="CommitChangelistDialog2/-3000.0.1500.980/0.0.2560.1400@0.0.2560.1400" timestamp="1597091447083" />
     <state x="383" y="44" key="CommitChangelistDialog2/0.0.1500.960@0.0.1500.960" timestamp="1600805145643" />
-    <state x="653" y="64" width="1604" height="1148" key="CommitChangelistDialog2/0.0.2560.1400@0.0.2560.1400" timestamp="1601064728493" />
+    <state x="653" y="64" width="1604" height="1148" key="CommitChangelistDialog2/0.0.2560.1400@0.0.2560.1400" timestamp="1601151755160" />
     <state x="92" y="92" width="2376" height="1216" key="DiffContextDialog" timestamp="1600970076377">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
@@ -1308,26 +1396,26 @@
     </state>
     <state x="1060" y="440" key="FileChooserDialogImpl/-3000.0.1500.980/0.0.2560.1400@0.0.2560.1400" timestamp="1597784352184" />
     <state x="1060" y="440" key="FileChooserDialogImpl/0.0.2560.1400@0.0.2560.1400" timestamp="1601064065164" />
-    <state width="2517" height="410" key="GridCell.Tab.0.bottom" timestamp="1601151506600">
+    <state width="2517" height="533" key="GridCell.Tab.0.bottom" timestamp="1601322677564">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state width="2517" height="392" key="GridCell.Tab.0.bottom/-3000.0.1500.980/0.0.2560.1400@0.0.2560.1400" timestamp="1596398444079" />
-    <state width="2517" height="410" key="GridCell.Tab.0.bottom/0.0.2560.1400@0.0.2560.1400" timestamp="1601151506600" />
-    <state width="2517" height="410" key="GridCell.Tab.0.center" timestamp="1601151506600">
+    <state width="2517" height="533" key="GridCell.Tab.0.bottom/0.0.2560.1400@0.0.2560.1400" timestamp="1601322677564" />
+    <state width="2517" height="533" key="GridCell.Tab.0.center" timestamp="1601322677564">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state width="2517" height="392" key="GridCell.Tab.0.center/-3000.0.1500.980/0.0.2560.1400@0.0.2560.1400" timestamp="1596398444079" />
-    <state width="2517" height="410" key="GridCell.Tab.0.center/0.0.2560.1400@0.0.2560.1400" timestamp="1601151506600" />
-    <state width="2517" height="410" key="GridCell.Tab.0.left" timestamp="1601151506599">
+    <state width="2517" height="533" key="GridCell.Tab.0.center/0.0.2560.1400@0.0.2560.1400" timestamp="1601322677564" />
+    <state width="2517" height="533" key="GridCell.Tab.0.left" timestamp="1601322677564">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state width="2517" height="392" key="GridCell.Tab.0.left/-3000.0.1500.980/0.0.2560.1400@0.0.2560.1400" timestamp="1596398444079" />
-    <state width="2517" height="410" key="GridCell.Tab.0.left/0.0.2560.1400@0.0.2560.1400" timestamp="1601151506599" />
-    <state width="2517" height="410" key="GridCell.Tab.0.right" timestamp="1601151506600">
+    <state width="2517" height="533" key="GridCell.Tab.0.left/0.0.2560.1400@0.0.2560.1400" timestamp="1601322677564" />
+    <state width="2517" height="533" key="GridCell.Tab.0.right" timestamp="1601322677564">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state width="2517" height="392" key="GridCell.Tab.0.right/-3000.0.1500.980/0.0.2560.1400@0.0.2560.1400" timestamp="1596398444079" />
-    <state width="2517" height="410" key="GridCell.Tab.0.right/0.0.2560.1400@0.0.2560.1400" timestamp="1601151506600" />
+    <state width="2517" height="533" key="GridCell.Tab.0.right/0.0.2560.1400@0.0.2560.1400" timestamp="1601322677564" />
     <state width="2517" height="494" key="GridCell.Tab.1.bottom" timestamp="1595278191668">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
@@ -1358,20 +1446,20 @@
     </state>
     <state x="717" y="0" width="960" height="1400" key="ScreenshotViewer.Dimensions/-3000.0.1500.980/0.0.2560.1400@0.0.2560.1400" timestamp="1597784352963" />
     <state x="717" y="0" key="ScreenshotViewer.Dimensions/0.0.2560.1400@0.0.2560.1400" timestamp="1601136007171" />
-    <state x="781" y="342" key="SettingsEditor" timestamp="1601138617147">
+    <state x="781" y="342" key="SettingsEditor" timestamp="1601322808978">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state x="781" y="342" key="SettingsEditor/0.0.2560.1400@0.0.2560.1400" timestamp="1601138617147" />
+    <state x="781" y="342" key="SettingsEditor/0.0.2560.1400@0.0.2560.1400" timestamp="1601322808978" />
     <state x="0" y="0" key="VCS.ChangeListViewerDialog" timestamp="1595353482017">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state x="0" y="0" key="VCS.ChangeListViewerDialog/0.0.2560.1400@0.0.2560.1400" timestamp="1595353482017" />
-    <state x="826" y="458" key="Vcs.Push.Dialog.v2" timestamp="1601064733020">
+    <state x="826" y="458" key="Vcs.Push.Dialog.v2" timestamp="1601151787915">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state x="826" y="458" key="Vcs.Push.Dialog.v2/-3000.0.1500.980/0.0.2560.1400@0.0.2560.1400" timestamp="1597091452931" />
     <state x="484" y="314" key="Vcs.Push.Dialog.v2/0.0.1500.960@0.0.1500.960" timestamp="1600805148572" />
-    <state x="826" y="458" key="Vcs.Push.Dialog.v2/0.0.2560.1400@0.0.2560.1400" timestamp="1601064733020" />
+    <state x="826" y="458" key="Vcs.Push.Dialog.v2/0.0.2560.1400@0.0.2560.1400" timestamp="1601151787915" />
     <state x="92" y="92" width="2376" height="1216" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1594925683259">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
@@ -1380,15 +1468,15 @@
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state x="927" y="315" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.0.2560.1400@0.0.2560.1400" timestamp="1601146693286" />
-    <state x="1089" y="617" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1601050686774">
+    <state x="1089" y="617" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1601315977603">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state x="1089" y="617" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/-3000.0.1500.980/0.0.2560.1400@0.0.2560.1400" timestamp="1597088262085" />
-    <state x="1089" y="617" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.2560.1400@0.0.2560.1400" timestamp="1601050686774" />
-    <state x="1044" y="403" key="com.intellij.testIntegration.createTest.CreateTestDialog" timestamp="1601151459333">
+    <state x="1089" y="617" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.2560.1400@0.0.2560.1400" timestamp="1601315977603" />
+    <state x="1044" y="403" key="com.intellij.testIntegration.createTest.CreateTestDialog" timestamp="1601317868194">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state x="1044" y="403" key="com.intellij.testIntegration.createTest.CreateTestDialog/0.0.2560.1400@0.0.2560.1400" timestamp="1601151459333" />
+    <state x="1044" y="403" key="com.intellij.testIntegration.createTest.CreateTestDialog/0.0.2560.1400@0.0.2560.1400" timestamp="1601317868194" />
     <state x="475" y="206" width="1542" height="1028" key="find.popup" timestamp="1601150049629">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
@@ -1427,11 +1515,6 @@
           <line>530</line>
           <properties class="com.cheatdatabase.helpers.Tools" method="saveScreenshotsToSdCard" />
           <option name="timeStamp" value="213" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/helpers/Tools.java</url>
-          <line>470</line>
-          <option name="timeStamp" value="64" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/dialogs/ReportCheatMaterialDialog.java</url>

@@ -35,7 +35,7 @@ public class Reachability {
                 reachability.isReceiving = false;
             }
         } catch (Exception e) {
-            Log.d("Reach", "ERRRR: " + e.getLocalizedMessage());
+            Log.d("Reach", "ERROR: " + e.getLocalizedMessage());
         }
 
         NetworkInfo info = connectivityManager.getActiveNetworkInfo();

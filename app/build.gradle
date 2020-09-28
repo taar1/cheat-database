@@ -243,6 +243,13 @@ dependencies {
     implementation "androidx.hilt:hilt-lifecycle-viewmodel:$hilt_lifecycle_version"
     kapt "androidx.hilt:hilt-compiler:$hilt_lifecycle_version"
     annotationProcessor "androidx.hilt:hilt-compiler:$hilt_lifecycle_version"
+
+    // Mockito
+    androidTestImplementation 'org.mockito:mockito-android:2.25.0'
+    testImplementation 'org.powermock:powermock-api-mockito:1.6.4'
+    testImplementation 'org.powermock:powermock-module-junit4:1.6.4'
+    androidTestImplementation "androidx.test:runner:1.3.0"
+    androidTestImplementation "androidx.test:rules:1.3.0"
 }
 
 kapt {
