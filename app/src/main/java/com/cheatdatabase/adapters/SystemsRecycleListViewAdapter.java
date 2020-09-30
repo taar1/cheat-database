@@ -4,6 +4,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.VisibleForTesting;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cheatdatabase.R;
@@ -17,6 +18,7 @@ import java.util.List;
 
 import needle.Needle;
 
+@VisibleForTesting
 public class SystemsRecycleListViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private static final String TAG = SystemsRecycleListViewAdapter.class.getSimpleName();
 
