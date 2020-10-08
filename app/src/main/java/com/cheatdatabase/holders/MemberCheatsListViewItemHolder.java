@@ -30,6 +30,8 @@ public class MemberCheatsListViewItemHolder extends RecyclerView.ViewHolder {
     ImageView imagesIcon;
     @BindView(R.id.german_flag_icon)
     ImageView germanFlagIcon;
+    @BindView(R.id.edit)
+    public ImageView editButton;
 
     public MemberCheatsListViewItemHolder(View view) {
         super(view);
@@ -63,7 +65,13 @@ public class MemberCheatsListViewItemHolder extends RecyclerView.ViewHolder {
             germanFlagIcon.setVisibility(View.GONE);
         }
 
-        Log.d(TAG, "XXXXX setCheat: member 1: " + member.getMid());
+        if (member.getMid() == cheat.getSubmittingMember().getMid()) {
+            editButton.setVisibility(View.VISIBLE);
+        } else {
+            editButton.setVisibility(View.GONE);
+        }
+
+        Log.d(TAG, "XXXXX setCheat: member: " + member.getMid());
     }
 
     public void setLoggedInMember(Member member) {

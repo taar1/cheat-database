@@ -13,7 +13,7 @@ import com.cheatdatabase.R;
 import com.cheatdatabase.data.model.Cheat;
 import com.cheatdatabase.data.model.Member;
 import com.cheatdatabase.holders.MemberCheatsListViewItemHolder;
-import com.cheatdatabase.listeners.OnCheatListItemSelectedListener;
+import com.cheatdatabase.listeners.OnMyCheatListItemSelectedListener;
 import com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView;
 
 import java.util.ArrayList;
@@ -25,12 +25,12 @@ public class MemberCheatRecycleListViewAdapter extends RecyclerView.Adapter<Recy
     private static final String TAG = MemberCheatRecycleListViewAdapter.class.getSimpleName();
 
     private List<Cheat> cheatList;
-    private OnCheatListItemSelectedListener onCheatListItemSelectedListener;
+    private OnMyCheatListItemSelectedListener onMyCheatListItemSelectedListener;
     private Member loggedInMember;
 
-    public MemberCheatRecycleListViewAdapter(OnCheatListItemSelectedListener onCheatListItemSelectedListener) {
+    public MemberCheatRecycleListViewAdapter(OnMyCheatListItemSelectedListener onMyCheatListItemSelectedListener) {
         cheatList = new ArrayList<>();
-        this.onCheatListItemSelectedListener = onCheatListItemSelectedListener;
+        this.onMyCheatListItemSelectedListener = onMyCheatListItemSelectedListener;
     }
 
     @Override
@@ -55,7 +55,8 @@ public class MemberCheatRecycleListViewAdapter extends RecyclerView.Adapter<Recy
         MemberCheatsListViewItemHolder memberCheatsListViewItemHolder = (MemberCheatsListViewItemHolder) holder;
         memberCheatsListViewItemHolder.setLoggedInMember(loggedInMember);
         memberCheatsListViewItemHolder.setCheat(cheat);
-        memberCheatsListViewItemHolder.view.setOnClickListener(v -> onCheatListItemSelectedListener.onCheatListItemSelected(cheat, position));
+        memberCheatsListViewItemHolder.view.setOnClickListener(v -> onMyCheatListItemSelectedListener.onCheatListItemSelected(cheat, position));
+        memberCheatsListViewItemHolder.editButton.setOnClickListener(v -> onMyCheatListItemSelectedListener.onCheatListItemEditSelected(cheat, position));
     }
 
     public void setCheatList(List<Cheat> cheatList) {

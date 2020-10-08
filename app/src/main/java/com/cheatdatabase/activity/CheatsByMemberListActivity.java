@@ -24,7 +24,7 @@ import com.cheatdatabase.data.model.Member;
 import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.helpers.Tools;
-import com.cheatdatabase.listeners.OnCheatListItemSelectedListener;
+import com.cheatdatabase.listeners.OnMyCheatListItemSelectedListener;
 import com.cheatdatabase.rest.RestApi;
 import com.cheatdatabase.widgets.DividerDecoration;
 import com.facebook.ads.AdSize;
@@ -47,7 +47,7 @@ import retrofit2.Response;
  * Shows all cheats of one particular member.
  */
 @AndroidEntryPoint
-public class CheatsByMemberListActivity extends AppCompatActivity implements OnCheatListItemSelectedListener {
+public class CheatsByMemberListActivity extends AppCompatActivity implements OnMyCheatListItemSelectedListener {
 
     private final String TAG = CheatsByMemberListActivity.class.getSimpleName();
 
@@ -221,5 +221,11 @@ public class CheatsByMemberListActivity extends AppCompatActivity implements OnC
         } else {
             Toast.makeText(this, R.string.no_internet, Toast.LENGTH_SHORT).show();
         }
+    }
+
+    @Override
+    public void onCheatListItemEditSelected(Cheat cheat, int position) {
+        // TODO create a edit cheat MVVM construct here....
+        Log.d(TAG, "XXXXX DDDDD onCheatListItemEditSelected: ");
     }
 }
