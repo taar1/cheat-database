@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cheatdatabase.R;
+import com.cheatdatabase.activity.ui.mycheats.edit.EditCheatActivity;
 import com.cheatdatabase.adapters.MemberCheatRecycleListViewAdapter;
 import com.cheatdatabase.cheatdetailview.MemberCheatViewPageIndicator;
 import com.cheatdatabase.data.model.Cheat;
@@ -227,5 +228,11 @@ public class CheatsByMemberListActivity extends AppCompatActivity implements OnM
     public void onCheatListItemEditSelected(Cheat cheat, int position) {
         // TODO create a edit cheat MVVM construct here....
         Log.d(TAG, "XXXXX DDDDD onCheatListItemEditSelected: ");
+
+        Intent intent = new Intent(CheatsByMemberListActivity.this, EditCheatActivity.class);
+        intent.putExtra("cheat", cheat);
+        startActivity(intent);
+
+
     }
 }

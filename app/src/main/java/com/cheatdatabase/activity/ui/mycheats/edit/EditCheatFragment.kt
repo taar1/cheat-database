@@ -8,7 +8,12 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.cheatdatabase.R
 
+
 class EditCheatFragment : Fragment() {
+
+    // NOT USED. Only use EditCheatActivity
+    // NOT USED. Only use EditCheatActivity
+    // NOT USED. Only use EditCheatActivity
 
     companion object {
         fun newInstance() = EditCheatFragment()
@@ -20,7 +25,7 @@ class EditCheatFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        return inflater.inflate(R.layout.main_fragment, container, false)
+        return inflater.inflate(R.layout.edit_cheat_fragment, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
