@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" group="cheat-database/app" />
-      <module fileurl="file://$PROJECT_DIR$/cheat-database.iml" filepath="$PROJECT_DIR$/cheat-database.iml" group="cheat-database" />
+      <module fileurl="file://$PROJECT_DIR$/cheat-database.iml" filepath="$PROJECT_DIR$/cheat-database.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/cheat-database.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/cheat-database.app.iml" />
     </modules>
   </component>
 </project>

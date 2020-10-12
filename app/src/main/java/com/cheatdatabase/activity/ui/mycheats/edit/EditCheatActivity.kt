@@ -2,7 +2,6 @@ package com.cheatdatabase.activity.ui.mycheats.edit
 
 import android.os.Bundle
 import android.util.Log
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.ViewModelProvider
@@ -15,7 +14,7 @@ class EditCheatActivity : AppCompatActivity() {
     private lateinit var viewModel: EditCheatViewModel
 
     lateinit var toolbar: Toolbar
-    lateinit var centeredText: TextView
+//    lateinit var centeredText: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,8 +30,8 @@ class EditCheatActivity : AppCompatActivity() {
         supportActionBar?.title = cheat.gameName
         supportActionBar?.subtitle = cheat.cheatTitle
 
-        centeredText = findViewById(R.id.message)
-        centeredText.text = "HALLO"
+//        centeredText = findViewById(R.id.message)
+//        centeredText.text = "HALLO"
 
 
         viewModel = ViewModelProvider(this).get(EditCheatViewModel::class.java)
