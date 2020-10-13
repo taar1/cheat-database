@@ -21,7 +21,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/title_layout"
@@ -77,6 +77,76 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
+
+            <androidx.core.widget.NestedScrollView
+                android:id="@+id/screenshotsScrollView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/cheat_layout">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/screenshotsList"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:itemCount="4"
+                    tools:listitem="@android:layout/simple_gallery_item" />
+            </androidx.core.widget.NestedScrollView>
+
+
+            <!--            TODO: preferences layout switch button layout für monospace font machen-->
+            <!--            TODO: preferences layout switch button layout für monospace font machen-->
+            <!--            TODO: preferences layout switch button layout für monospace font machen-->
+
+            <TextView
+                android:id="@+id/monospaceTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:text="Use monospace font"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/screenshotsScrollView" />
+
+            <ToggleButton
+                android:id="@+id/monspaceToggleButton"
+                style="@style/CheatInputFormStyle"
+                android:layout_width="96dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="8dp"
+                android:text="Monospace font"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/monospaceTitle" />
+
+
+            <!--            TODO: material design drop down menü für sprache machen (https://www.viralandroid.com/2016/02/android-material-design-spinner-dropdown-example.html)-->
+            <!--            TODO: material design drop down menü für sprache machen (https://www.viralandroid.com/2016/02/android-material-design-spinner-dropdown-example.html)-->
+            <!--            TODO: material design drop down menü für sprache machen (https://www.viralandroid.com/2016/02/android-material-design-spinner-dropdown-example.html)-->
+            <!--            TODO: material design drop down menü für sprache machen (https://www.viralandroid.com/2016/02/android-material-design-spinner-dropdown-example.html)-->
+            <!--            TODO: material design drop down menü für sprache machen (https://www.viralandroid.com/2016/02/android-material-design-spinner-dropdown-example.html)-->
+
+            <TextView
+                android:id="@+id/languageTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:text="Cheat Language"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/screenshotsScrollView" />
+
+
+            <Spinner
+                android:id="@+id/languageSpinner"
+                android:layout_width="160dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="32dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/languageTitle" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
