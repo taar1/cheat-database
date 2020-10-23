@@ -9,7 +9,6 @@ import com.cheatdatabase.data.model.Cheat;
 import com.cheatdatabase.data.model.Game;
 import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.TrackingUtils;
-import com.crashlytics.android.Crashlytics;
 import com.facebook.ads.AudienceNetworkAds;
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.Tracker;
@@ -23,7 +22,6 @@ import java.util.List;
 import java.util.TreeMap;
 
 import dagger.hilt.android.HiltAndroidApp;
-import io.fabric.sdk.android.Fabric;
 
 @HiltAndroidApp
 public class CheatDatabaseApplication extends Application implements Application.ActivityLifecycleCallbacks {
@@ -67,7 +65,7 @@ public class CheatDatabaseApplication extends Application implements Application
     }
 
     private void init() {
-        Fabric.with(this, new Crashlytics());
+//        Fabric.with(this, new Crashlytics());
 
         // Setup lifecycle callbacks
         registerActivityLifecycleCallbacks(this);

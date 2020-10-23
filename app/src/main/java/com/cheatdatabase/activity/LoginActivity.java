@@ -29,7 +29,7 @@ import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.helpers.Tools;
 import com.cheatdatabase.rest.RestApi;
-import com.crashlytics.android.Crashlytics;
+import com.google.firebase.crashlytics.FirebaseCrashlytics;
 import com.google.gson.JsonObject;
 
 import java.security.NoSuchAlgorithmException;
@@ -383,7 +383,7 @@ public class LoginActivity extends AppCompatActivity implements AlreadyLoggedInD
             }
         } catch (NullPointerException e) {
             Log.e(TAG, "onActivityResult data.getIntExtra is NULL: " + e.getLocalizedMessage());
-            Crashlytics.logException(e);
+            FirebaseCrashlytics.getInstance().recordException(e);
             finish();
         }
     }

@@ -133,7 +133,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // https://youtu.be/lH6n4--3R5k?t=1260
         // https://youtu.be/lH6n4--3R5k?t=1260
 
-
         init();
         fragmentStuff();
         prepareAdBanner();
