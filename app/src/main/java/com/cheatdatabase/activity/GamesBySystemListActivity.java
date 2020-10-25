@@ -95,6 +95,7 @@ public class GamesBySystemListActivity extends AppCompatActivity implements OnGa
         NativeAdsManager nativeAdsManager = new NativeAdsManager(this, Konstanten.FACEBOOK_AUDIENCE_NETWORK_NATIVE_AD_IN_RECYCLER_VIEW, 5);
         nativeAdsManager.loadAds(NativeAd.MediaCacheFlag.ALL);
 
+        SystemModel asdf = (SystemModel) getIntent().getSerializableExtra("systemObj");
         systemObj = getIntent().getParcelableExtra("systemObj");
         if (systemObj == null) {
             Toast.makeText(this, R.string.err_somethings_wrong, Toast.LENGTH_LONG).show();

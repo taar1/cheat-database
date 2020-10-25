@@ -6,7 +6,7 @@
     </shared>
   </component>
   <component name="AndroidLogFilters">
-    <option name="TOOL_WINDOW_LOG_LEVEL" value="error" />
+    <option name="TOOL_WINDOW_LOG_LEVEL" value="verbose" />
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
   </component>
   <component name="AutoImportSettings">
@@ -131,16 +131,24 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4caff62e-c62f-40ca-acf0-73c680b13375" name="Default" comment="Working on &quot;edit cheat&quot; layout.">
+    <list default="true" id="4caff62e-c62f-40ca-acf0-73c680b13375" name="Default" comment="Upgrading libraries, switching from Fabric to Firebase Crashlytics.">
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/data/repository/SystemRepository.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/fragments/SystemConsoleListFragment.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/fragments/SystemConsoleListViewModel.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/CheatDatabaseApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/CheatDatabaseApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/LoginActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/LoginActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/GamesBySystemListActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/GamesBySystemListActivity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/MainActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/adapters/MemberCheatRecycleListViewAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/adapters/MemberCheatRecycleListViewAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/adapters/SystemsRecycleListViewAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/adapters/SystemsRecycleListViewAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/data/RoomCheatDatabase.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/data/RoomCheatDatabase.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/data/dao/SystemDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/data/dao/SystemDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/fragments/SystemListFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/fragments/SystemListFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/holders/MemberCheatsListViewItemHolder.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/holders/MemberCheatsListViewItemHolder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/holders/SystemListViewItemHolder.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/holders/SystemListViewItemHolder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradle.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gradle.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -150,7 +158,7 @@
   <component name="CreatePatchCommitExecutor">
     <option name="PATCH_PATH" value="" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[Nexus_9_API_28]" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[EPHUT19C24000346]" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
@@ -191,8 +199,8 @@
         <option value="resourceFile" />
         <option value="Class" />
         <option value="Kotlin Interface" />
-        <option value="Kotlin Class" />
         <option value="JUnit4 Test Class" />
+        <option value="Kotlin Class" />
       </list>
     </option>
   </component>
@@ -224,7 +232,7 @@
   <component name="PropertiesComponent">
     <property name="ApkExportedModule" value="app" />
     <property name="BundleExportedModule" value="app" />
-    <property name="DEBUGGABLE_DEVICE" value="oneplus-hd1900-fd8b7031" />
+    <property name="DEBUGGABLE_DEVICE" value="huawei-jny_lx1-EPHUT19C24000346" />
     <property name="DEBUGGABLE_PROCESS" value="com.cheatdatabase" />
     <property name="DEBUGGER_ID" value="Auto" />
     <property name="DeviceAndSnapshotComboBoxAction.selectedDevice" value="6ea89d94" />
@@ -807,13 +815,6 @@
       <option name="presentableId" value="Default" />
       <updated>1487274191999</updated>
     </task>
-    <task id="LOCAL-00111" summary="Add MVVM Classes">
-      <created>1589313003693</created>
-      <option name="number" value="00111" />
-      <option name="presentableId" value="LOCAL-00111" />
-      <option name="project" value="LOCAL" />
-      <updated>1589313003693</updated>
-    </task>
     <task id="LOCAL-00112" summary="Fixing some bugs">
       <created>1589351609967</created>
       <option name="number" value="00112" />
@@ -1150,7 +1151,14 @@
       <option name="project" value="LOCAL" />
       <updated>1602621328186</updated>
     </task>
-    <option name="localTasksCounter" value="160" />
+    <task id="LOCAL-00160" summary="Upgrading libraries, switching from Fabric to Firebase Crashlytics.">
+      <created>1603441990530</created>
+      <option name="number" value="00160" />
+      <option name="presentableId" value="LOCAL-00160" />
+      <option name="project" value="LOCAL" />
+      <updated>1603441990531</updated>
+    </task>
+    <option name="localTasksCounter" value="161" />
     <servers />
   </component>
   <component name="TodoView">
@@ -1255,7 +1263,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
-    <MESSAGE value="Fixed crashes on screen rotation. Fixed bug for &quot;edit and re-submit unpublished cheat&quot;.&#10;READY FOR RELEASE VERSION 2.5.15" />
     <MESSAGE value="Fixing the navigation drawer style! Gray background with blue item highlighting on selection." />
     <MESSAGE value="Working Version 2.5.17!&#10;FIXED ON APP START CRASH (room database upgrade crashed -&gt; favorites -&gt; member_id NonNull)" />
     <MESSAGE value="Move RestApi object creation away from MainActivity to the child-fragments." />
@@ -1280,7 +1287,8 @@
     <MESSAGE value="Added link from my own cheats -&gt; edit cheat activity" />
     <MESSAGE value="Updating project to Android Studio 4.1.&#10;Working on the &quot;edit cheat&quot; form layout." />
     <MESSAGE value="Working on &quot;edit cheat&quot; layout." />
-    <option name="LAST_COMMIT_MESSAGE" value="Working on &quot;edit cheat&quot; layout." />
+    <MESSAGE value="Upgrading libraries, switching from Fabric to Firebase Crashlytics." />
+    <option name="LAST_COMMIT_MESSAGE" value="Upgrading libraries, switching from Fabric to Firebase Crashlytics." />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
@@ -1297,6 +1305,10 @@
       <screen x="0" y="23" width="2560" height="1348" />
     </state>
     <state x="880" y="253" key="#Plugins/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1602529502028" />
+    <state x="1068" y="420" key="#com.intellij.ide.util.MemberChooser" timestamp="1603565752447">
+      <screen x="0" y="23" width="2560" height="1348" />
+    </state>
+    <state x="1068" y="420" key="#com.intellij.ide.util.MemberChooser/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1603565752447" />
     <state x="968" y="440" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog" timestamp="1602529063329">
       <screen x="0" y="23" width="2560" height="1348" />
     </state>
@@ -1313,14 +1325,14 @@
       <screen x="0" y="23" width="2560" height="1348" />
     </state>
     <state x="1026" y="596" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1600804429305" />
-    <state x="1141" y="469" key="AndroidProcessChooserDialog" timestamp="1595879584398">
+    <state x="1141" y="469" key="AndroidProcessChooserDialog" timestamp="1603641556041">
       <screen x="0" y="23" width="2560" height="1348" />
     </state>
-    <state x="1141" y="469" key="AndroidProcessChooserDialog/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1595879584398" />
-    <state x="500" y="101" width="1718" height="1269" key="CommitChangelistDialog2" timestamp="1602621328008">
+    <state x="1141" y="469" key="AndroidProcessChooserDialog/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1603641556041" />
+    <state x="500" y="101" width="1718" height="1269" key="CommitChangelistDialog2" timestamp="1603441990305">
       <screen x="0" y="23" width="2560" height="1348" />
     </state>
-    <state x="500" y="101" width="1718" height="1269" key="CommitChangelistDialog2/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1602621328008" />
+    <state x="500" y="101" width="1718" height="1269" key="CommitChangelistDialog2/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1603441990305" />
     <state x="500" y="101" width="1524" height="1077" key="CommitChangelistDialog2/0.23.2560.1348/-1680.413.1680.1027@0.23.2560.1348" timestamp="1595851198887" />
     <state x="744" y="319" width="2548" height="1336" maximized="true" key="DiffContextDialog" timestamp="1601494642233">
       <screen x="0" y="23" width="2560" height="1348" />
@@ -1331,42 +1343,42 @@
       <screen x="0" y="23" width="2560" height="1348" />
     </state>
     <state x="1068" y="445" key="FileChooserDialogImpl/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1602529985883" />
-    <state width="2518" height="466" key="GridCell.Tab.0.bottom" timestamp="1603441497583">
+    <state width="2518" height="466" key="GridCell.Tab.0.bottom" timestamp="1603643634780">
       <screen x="0" y="23" width="2560" height="1348" />
     </state>
-    <state width="2518" height="466" key="GridCell.Tab.0.bottom/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1603441497583" />
+    <state width="2518" height="466" key="GridCell.Tab.0.bottom/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1603643634780" />
     <state width="2518" height="466" key="GridCell.Tab.0.bottom/0.23.2560.1348/-1680.413.1680.1027@0.23.2560.1348" timestamp="1600934568262" />
-    <state width="2518" height="466" key="GridCell.Tab.0.center" timestamp="1603441497582">
+    <state width="2518" height="466" key="GridCell.Tab.0.center" timestamp="1603643634779">
       <screen x="0" y="23" width="2560" height="1348" />
     </state>
-    <state width="2518" height="466" key="GridCell.Tab.0.center/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1603441497582" />
+    <state width="2518" height="466" key="GridCell.Tab.0.center/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1603643634779" />
     <state width="2518" height="466" key="GridCell.Tab.0.center/0.23.2560.1348/-1680.413.1680.1027@0.23.2560.1348" timestamp="1600934568261" />
-    <state width="2518" height="466" key="GridCell.Tab.0.left" timestamp="1603441497582">
+    <state width="2518" height="466" key="GridCell.Tab.0.left" timestamp="1603643634779">
       <screen x="0" y="23" width="2560" height="1348" />
     </state>
-    <state width="2518" height="466" key="GridCell.Tab.0.left/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1603441497582" />
+    <state width="2518" height="466" key="GridCell.Tab.0.left/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1603643634779" />
     <state width="2518" height="466" key="GridCell.Tab.0.left/0.23.2560.1348/-1680.413.1680.1027@0.23.2560.1348" timestamp="1600934568261" />
-    <state width="2518" height="466" key="GridCell.Tab.0.right" timestamp="1603441497583">
+    <state width="2518" height="466" key="GridCell.Tab.0.right" timestamp="1603643634779">
       <screen x="0" y="23" width="2560" height="1348" />
     </state>
-    <state width="2518" height="466" key="GridCell.Tab.0.right/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1603441497583" />
+    <state width="2518" height="466" key="GridCell.Tab.0.right/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1603643634779" />
     <state width="2518" height="466" key="GridCell.Tab.0.right/0.23.2560.1348/-1680.413.1680.1027@0.23.2560.1348" timestamp="1600934568262" />
-    <state width="2518" height="502" key="GridCell.Tab.1.bottom" timestamp="1595913046317">
+    <state width="2518" height="502" key="GridCell.Tab.1.bottom" timestamp="1603641706031">
       <screen x="0" y="23" width="2560" height="1348" />
     </state>
-    <state width="2518" height="502" key="GridCell.Tab.1.bottom/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1595913046317" />
-    <state width="2518" height="502" key="GridCell.Tab.1.center" timestamp="1595913046317">
+    <state width="2518" height="502" key="GridCell.Tab.1.bottom/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1603641706031" />
+    <state width="2518" height="502" key="GridCell.Tab.1.center" timestamp="1603641706030">
       <screen x="0" y="23" width="2560" height="1348" />
     </state>
-    <state width="2518" height="502" key="GridCell.Tab.1.center/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1595913046317" />
-    <state width="2518" height="502" key="GridCell.Tab.1.left" timestamp="1595913046316">
+    <state width="2518" height="502" key="GridCell.Tab.1.center/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1603641706030" />
+    <state width="2518" height="502" key="GridCell.Tab.1.left" timestamp="1603641706030">
       <screen x="0" y="23" width="2560" height="1348" />
     </state>
-    <state width="2518" height="502" key="GridCell.Tab.1.left/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1595913046316" />
-    <state width="2518" height="502" key="GridCell.Tab.1.right" timestamp="1595913046317">
+    <state width="2518" height="502" key="GridCell.Tab.1.left/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1603641706030" />
+    <state width="2518" height="502" key="GridCell.Tab.1.right" timestamp="1603641706031">
       <screen x="0" y="23" width="2560" height="1348" />
     </state>
-    <state width="2518" height="502" key="GridCell.Tab.1.right/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1595913046317" />
+    <state width="2518" height="502" key="GridCell.Tab.1.right/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1603641706031" />
     <state x="993" y="420" width="788" height="554" key="MultipleFileMergeDialog" timestamp="1601492072170">
       <screen x="0" y="23" width="2560" height="1348" />
     </state>
@@ -1384,10 +1396,10 @@
       <screen x="0" y="23" width="2560" height="1348" />
     </state>
     <state x="384" y="310" key="SettingsEditor/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1602530758612" />
-    <state x="880" y="437" key="Vcs.Push.Dialog.v2" timestamp="1602621329790">
+    <state x="880" y="437" key="Vcs.Push.Dialog.v2" timestamp="1603441997524">
       <screen x="0" y="23" width="2560" height="1348" />
     </state>
-    <state x="880" y="437" key="Vcs.Push.Dialog.v2/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1602621329790" />
+    <state x="880" y="437" key="Vcs.Push.Dialog.v2/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1603441997524" />
     <state x="880" y="437" key="Vcs.Push.Dialog.v2/0.23.2560.1348/-1680.413.1680.1027@0.23.2560.1348" timestamp="1595851202545" />
     <state x="99" y="123" width="2360" height="1148" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1595535856283">
       <screen x="0" y="23" width="2560" height="1348" />
@@ -1397,10 +1409,10 @@
       <screen x="0" y="23" width="2560" height="1348" />
     </state>
     <state x="938" y="319" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1595444249055" />
-    <state x="1068" y="621" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1603430778712">
+    <state x="1068" y="621" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1603550859924">
       <screen x="0" y="23" width="2560" height="1348" />
     </state>
-    <state x="1068" y="621" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1603430778712" />
+    <state x="1068" y="621" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1603550859924" />
     <state x="1068" y="621" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.23.2560.1348/-1680.413.1680.1027@0.23.2560.1348" timestamp="1596446373120" />
     <state x="789" y="306" width="1123" height="532" key="com.intellij.testIntegration.createTest.CreateTestDialog" timestamp="1601496584754">
       <screen x="0" y="23" width="2560" height="1348" />
@@ -1410,25 +1422,25 @@
       <screen x="0" y="23" width="2560" height="1348" />
     </state>
     <state x="1018" y="471" key="extract.method.dialog/0.23.2560.1348/-1680.413.1680.1027@0.23.2560.1348" timestamp="1595337489807" />
-    <state x="582" y="106" width="1548" height="1151" key="find.popup" timestamp="1603441194776">
+    <state x="582" y="106" width="1548" height="1151" key="find.popup" timestamp="1603652883241">
       <screen x="0" y="23" width="2560" height="1348" />
     </state>
     <state x="382" y="82" width="1016" height="818" key="find.popup/0.23.1680.958@0.23.1680.958" timestamp="1596443458833" />
-    <state x="582" y="106" width="1548" height="1151" key="find.popup/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1603441194776" />
+    <state x="582" y="106" width="1548" height="1151" key="find.popup/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1603652883241" />
     <state x="660" y="209" width="1296" height="861" key="find.popup/0.23.2560.1348/-1680.413.1680.1027@0.23.2560.1348" timestamp="1599548260599" />
     <state x="981" y="549" key="git4idea.ui.GitTagDialog" timestamp="1596660257227">
       <screen x="0" y="23" width="2560" height="1348" />
     </state>
     <state x="981" y="549" key="git4idea.ui.GitTagDialog/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1596660257227" />
-    <state width="752" height="140" key="javadoc.popup.new" timestamp="1603441186449">
+    <state width="752" height="140" key="javadoc.popup.new" timestamp="1603643382152">
       <screen x="0" y="23" width="2560" height="1348" />
     </state>
-    <state width="752" height="140" key="javadoc.popup.new/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1603441186449" />
+    <state width="752" height="140" key="javadoc.popup.new/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1603643382152" />
     <state width="752" height="140" key="javadoc.popup.new/0.23.2560.1348/-1680.413.1680.1027@0.23.2560.1348" timestamp="1596446258394" />
-    <state x="945" y="331" width="670" height="676" key="search.everywhere.popup" timestamp="1603441346198">
+    <state x="945" y="331" width="670" height="676" key="search.everywhere.popup" timestamp="1603650233214">
       <screen x="0" y="23" width="2560" height="1348" />
     </state>
-    <state x="945" y="331" width="670" height="676" key="search.everywhere.popup/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1603441346198" />
+    <state x="945" y="331" width="670" height="676" key="search.everywhere.popup/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1603650233214" />
     <state x="945" y="331" width="670" height="676" key="search.everywhere.popup/0.23.2560.1348/-1680.413.1680.1027@0.23.2560.1348" timestamp="1600934566019" />
   </component>
   <component name="XDebuggerManager">
@@ -1472,6 +1484,16 @@
           <url>file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/holders/MemberCheatsListViewItemHolder.java</url>
           <line>47</line>
           <option name="timeStamp" value="218" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/GamesBySystemListActivity.java</url>
+          <line>98</line>
+          <option name="timeStamp" value="232" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/adapters/SystemsRecycleListViewAdapter.java</url>
+          <line>56</line>
+          <option name="timeStamp" value="233" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

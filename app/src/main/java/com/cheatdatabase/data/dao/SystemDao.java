@@ -18,6 +18,9 @@ public interface SystemDao {
     @Query("SELECT * FROM systems")
     LiveData<List<SystemModel>> getAll();
 
+    @Query("SELECT * FROM systems ORDER BY name")
+    List<SystemModel> getAllAsList();
+
     @Query("SELECT * FROM systems where _id = :systemId")
     LiveData<SystemModel> getSystemById(int systemId);
 

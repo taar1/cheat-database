@@ -65,11 +65,13 @@ public class MemberCheatsListViewItemHolder extends RecyclerView.ViewHolder {
             germanFlagIcon.setVisibility(View.GONE);
         }
 
-        if (member.getMid() == cheat.getSubmittingMember().getMid()) {
-            editButton.setVisibility(View.VISIBLE);
-        } else {
-            editButton.setVisibility(View.GONE);
-        }
+        // TODO FIXME add this again when continue work on the "edit my cheat" functionality
+//        if (member.getMid() == cheat.getSubmittingMember().getMid()) {
+//            editButton.setVisibility(View.VISIBLE);
+//        } else {
+//            editButton.setVisibility(View.GONE);
+//        }
+        editButton.setVisibility(View.GONE);
 
         Log.d(TAG, "XXXXX setCheat: member: " + member.getMid());
     }

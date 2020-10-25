@@ -25,7 +25,7 @@ public class MemberCheatRecycleListViewAdapter extends RecyclerView.Adapter<Recy
     private static final String TAG = MemberCheatRecycleListViewAdapter.class.getSimpleName();
 
     private List<Cheat> cheatList;
-    private OnMyCheatListItemSelectedListener onMyCheatListItemSelectedListener;
+    private final OnMyCheatListItemSelectedListener onMyCheatListItemSelectedListener;
     private Member loggedInMember;
 
     public MemberCheatRecycleListViewAdapter(OnMyCheatListItemSelectedListener onMyCheatListItemSelectedListener) {
@@ -35,10 +35,6 @@ public class MemberCheatRecycleListViewAdapter extends RecyclerView.Adapter<Recy
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(final ViewGroup parent, int viewType) {
-        // TODO hier weiterfahren, member objekt wird jetzt mitgegeben (PHP)
-        // TODO hier weiterfahren, member objekt wird jetzt mitgegeben (PHP)
-        // TODO hier weiterfahren, member objekt wird jetzt mitgegeben (PHP)
-        // TODO hier weiterfahren, member objekt wird jetzt mitgegeben (PHP)
         // TODO hier weiterfahren, member objekt wird jetzt mitgegeben (PHP)
         // TODO hier weiterfahren, member objekt wird jetzt mitgegeben (PHP)
         Log.d(TAG, "XXXXX onCreateViewHolder: loggedInMember" + loggedInMember.getMid());

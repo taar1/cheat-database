@@ -1,8 +1,6 @@
 package com.cheatdatabase.holders;
 
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -16,10 +14,6 @@ import butterknife.ButterKnife;
 public class SystemListViewItemHolder extends RecyclerView.ViewHolder {
     public View view;
 
-    @BindView(R.id.outer_layout)
-    LinearLayout outerLayout;
-    @BindView(R.id.system_icon)
-    ImageView systemIcon;
     @BindView(R.id.system_name)
     TextView systemName;
     @BindView(R.id.subtitle)
@@ -33,7 +27,7 @@ public class SystemListViewItemHolder extends RecyclerView.ViewHolder {
     }
 
     public void setSystemPlatform(SystemModel systemPlatform) {
-        systemName.setText(systemPlatform.getSystemName());
+        systemName.setText(systemPlatform.getName());
         subtitle.setText(systemPlatform.getGamesCount() + " Games");
     }
 

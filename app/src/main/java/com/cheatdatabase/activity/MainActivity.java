@@ -37,6 +37,7 @@ import com.cheatdatabase.dialogs.RateAppDialog;
 import com.cheatdatabase.fragments.ContactFormFragment;
 import com.cheatdatabase.fragments.FavoriteGamesListFragment;
 import com.cheatdatabase.fragments.MyCheatsFragment;
+import com.cheatdatabase.fragments.SystemConsoleListFragment;
 import com.cheatdatabase.fragments.SystemListFragment;
 import com.cheatdatabase.fragments.TopMembersFragment;
 import com.cheatdatabase.helpers.AeSimpleMD5;
@@ -80,6 +81,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     RestApi restApi;
     @Inject
     SystemListFragment systemListFragment;
+    @Inject
+    SystemConsoleListFragment systemConsoleListFragment;
     @Inject
     TopMembersFragment topMembersFragment;
     @Inject
@@ -175,7 +178,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         fragmentManager = getSupportFragmentManager();
         fragmentTransaction = fragmentManager.beginTransaction();
 
-        fragmentTransaction.replace(R.id.content_frame, systemListFragment, SystemListFragment.class.getSimpleName()).commit();
+//        fragmentTransaction.replace(R.id.content_frame, systemListFragment, SystemListFragment.class.getSimpleName()).commit();
+        fragmentTransaction.replace(R.id.content_frame, systemConsoleListFragment, SystemConsoleListFragment.class.getSimpleName()).commit();
     }
 
     private void updateMyCheatsDrawerNavigationItemCount() {
@@ -468,9 +472,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private void showGameSystemsFragment() {
         mToolbar.setTitle(R.string.app_name);
-        fragmentTransaction.addToBackStack(SystemListFragment.class.getSimpleName());
+//        fragmentTransaction.addToBackStack(SystemListFragment.class.getSimpleName());
+        fragmentTransaction.addToBackStack(SystemConsoleListFragment.class.getSimpleName());
 
-        fragmentManager.beginTransaction().replace(R.id.content_frame, systemListFragment, SystemListFragment.class.getSimpleName()).commit();
+//        fragmentManager.beginTransaction().replace(R.id.content_frame, systemListFragment, SystemListFragment.class.getSimpleName()).commit();
+        fragmentManager.beginTransaction().replace(R.id.content_frame, systemConsoleListFragment, SystemConsoleListFragment.class.getSimpleName()).commit();
 
         floatingActionButton.show();
         mDrawerLayout.closeDrawers();

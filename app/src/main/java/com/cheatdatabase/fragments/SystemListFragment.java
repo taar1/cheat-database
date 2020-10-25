@@ -65,16 +65,6 @@ public class SystemListFragment extends Fragment implements OnSystemListItemSele
 
     private SystemDao dao;
 
-//    public static SystemListFragment newInstance(MainActivity mainActivity) {
-//        SystemListFragment systemListFragment = new SystemListFragment();
-//        systemListFragment.setMainActivity(mainActivity);
-//        return systemListFragment;
-//    }
-//
-//    public void setMainActivity(MainActivity mainActivity) {
-//        this.mainActivity = mainActivity;
-//    }
-
     @Inject
     public SystemListFragment() {
 

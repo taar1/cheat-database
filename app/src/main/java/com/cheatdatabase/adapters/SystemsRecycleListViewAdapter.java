@@ -23,7 +23,7 @@ public class SystemsRecycleListViewAdapter extends RecyclerView.Adapter<Recycler
     private static final String TAG = SystemsRecycleListViewAdapter.class.getSimpleName();
 
     private List<SystemModel> systemList;
-    private OnSystemListItemSelectedListener listener;
+    private final OnSystemListItemSelectedListener listener;
 
 
     public SystemsRecycleListViewAdapter(OnSystemListItemSelectedListener listener) {
@@ -63,7 +63,7 @@ public class SystemsRecycleListViewAdapter extends RecyclerView.Adapter<Recycler
         systemList = systemPlatforms;
 
         if ((systemList != null) && (systemList.size() > 0)) {
-            Collections.sort(systemList, (system1, system2) -> system1.getSystemName().toLowerCase().compareTo(system2.getSystemName().toLowerCase()));
+            Collections.sort(systemList, (system1, system2) -> system1.getName().toLowerCase().compareTo(system2.getName().toLowerCase()));
 
             Needle.onMainThread().execute(() -> {
                 notifyDataSetChanged();

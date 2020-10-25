@@ -5,6 +5,7 @@ import android.util.Log;
 
 import androidx.room.Database;
 import androidx.room.Room;
+import androidx.room.RoomDatabase;
 import androidx.room.migration.Migration;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
@@ -16,7 +17,7 @@ import com.cheatdatabase.data.model.SearchHistoryModel;
 import com.cheatdatabase.data.model.SystemModel;
 
 @Database(entities = {FavoriteCheatModel.class, SearchHistoryModel.class, SystemModel.class}, version = RoomCheatDatabase.DATABASE_VERSION, exportSchema = false)
-public abstract class RoomCheatDatabase extends androidx.room.RoomDatabase {
+public abstract class RoomCheatDatabase extends RoomDatabase {
 
     private static final String TAG = "RoomCheatDatabase";
 
