@@ -33,7 +33,6 @@ public class SystemModel implements Parcelable {
     @ColumnInfo(name = "lastmod")
     public String lastmod;
 
-
     @SerializedName("systemId")
     @Ignore
     private int systemId;
@@ -50,39 +49,46 @@ public class SystemModel implements Parcelable {
     @Ignore
     private Date lastModTimeStamp;
 
-
     @Inject
     @Ignore
     public SystemModel() {
     }
 
     public SystemModel(int systemId, String systemName, Date dateLocallyAdded) {
+        this.id = systemId;
         this.systemId = systemId;
+        this.name = systemName;
         this.systemName = systemName;
         this.dateLocallyAdded = dateLocallyAdded;
     }
 
     public SystemModel(int systemId, String systemName) {
+        this.id = systemId;
         this.systemId = systemId;
+        this.name = systemName;
         this.systemName = systemName;
     }
 
     public SystemModel(int id, String name, int gamesCount, int cheatCount, String lastmod) {
         this.id = id;
+        this.systemId = id;
         this.name = name;
+        this.systemName = name;
         this.gamesCount = gamesCount;
         this.cheatCount = cheatCount;
         this.lastmod = lastmod;
     }
 
     protected SystemModel(Parcel in) {
+        id = in.readInt();
         systemId = in.readInt();
+        name = in.readString();
+        systemName = in.readString();
         gamesCount = in.readInt();
         cheatCount = in.readInt();
-        systemName = in.readString();
+        lastModTimeStamp = (java.util.Date) in.readSerializable();
         dateLocallyAdded = (java.util.Date) in.readSerializable();
         games = in.createTypedArrayList(Game.CREATOR);
-        lastModTimeStamp = (java.util.Date) in.readSerializable();
     }
 
     @Override
@@ -92,19 +98,22 @@ public class SystemModel implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id);
         dest.writeInt(systemId);
+        dest.writeString(name);
+        dest.writeString(systemName);
         dest.writeInt(gamesCount);
         dest.writeInt(cheatCount);
-        dest.writeString(systemName);
+        dest.writeSerializable(lastModTimeStamp);
         dest.writeSerializable(dateLocallyAdded);
         dest.writeTypedList(games);
-        dest.writeSerializable(lastModTimeStamp);
     }
 
     public static final Creator<SystemModel> CREATOR = new Creator<SystemModel>() {
         @Override
         public SystemModel createFromParcel(Parcel in) {
-            return new SystemModel(in);
+            SystemModel mod = new SystemModel(in);
+            return mod;
         }
 
         @Override

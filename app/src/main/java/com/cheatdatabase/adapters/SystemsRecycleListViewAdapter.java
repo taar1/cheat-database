@@ -16,8 +16,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import needle.Needle;
-
 @VisibleForTesting
 public class SystemsRecycleListViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private static final String TAG = SystemsRecycleListViewAdapter.class.getSimpleName();
@@ -65,9 +63,7 @@ public class SystemsRecycleListViewAdapter extends RecyclerView.Adapter<Recycler
         if ((systemList != null) && (systemList.size() > 0)) {
             Collections.sort(systemList, (system1, system2) -> system1.getName().toLowerCase().compareTo(system2.getName().toLowerCase()));
 
-            Needle.onMainThread().execute(() -> {
-                notifyDataSetChanged();
-            });
+            notifyDataSetChanged();
         }
     }
 

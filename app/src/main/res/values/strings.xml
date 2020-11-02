@@ -233,6 +233,7 @@
     <string name="error_fetch_unpublished_cheats">There was a problem fetching your cheats. Try again alter.</string>
     <string name="error_deleting_cheat">There was an error deleting this cheat. Please try again later.</string>
     <string name="braces_with_text_in_the_middle">(%1$d)</string>
+    <string name="error_offline_pull_down_retry">Could not retrieve data. Swipe down to retry when you are back online.</string>
 
     <plurals name="cheats">
         <item quantity="one">Cheat</item>

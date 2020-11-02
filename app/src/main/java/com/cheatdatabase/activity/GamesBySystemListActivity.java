@@ -53,11 +53,6 @@ public class GamesBySystemListActivity extends AppCompatActivity implements OnGa
 
     private static final String TAG = GamesBySystemListActivity.class.getSimpleName();
 
-    private List<Game> gameList;
-    private GamesBySystemRecycleListViewAdapter gamesBySystemRecycleListViewAdapter;
-    private SystemModel systemObj;
-    private Member member;
-
     @Inject
     Tools tools;
 
@@ -74,6 +69,11 @@ public class GamesBySystemListActivity extends AppCompatActivity implements OnGa
     Toolbar mToolbar;
     @BindView(R.id.item_list_empty_view)
     TextView mEmptyView;
+
+    private List<Game> gameList;
+    private GamesBySystemRecycleListViewAdapter gamesBySystemRecycleListViewAdapter;
+    private SystemModel systemObj;
+    private Member member;
 
     @Override
     protected void onStart() {
@@ -95,13 +95,12 @@ public class GamesBySystemListActivity extends AppCompatActivity implements OnGa
         NativeAdsManager nativeAdsManager = new NativeAdsManager(this, Konstanten.FACEBOOK_AUDIENCE_NETWORK_NATIVE_AD_IN_RECYCLER_VIEW, 5);
         nativeAdsManager.loadAds(NativeAd.MediaCacheFlag.ALL);
 
-        SystemModel asdf = (SystemModel) getIntent().getSerializableExtra("systemObj");
         systemObj = getIntent().getParcelableExtra("systemObj");
         if (systemObj == null) {
             Toast.makeText(this, R.string.err_somethings_wrong, Toast.LENGTH_LONG).show();
             finish();
         } else {
-            setTitle((systemObj.getSystemName() != null ? systemObj.getSystemName() : ""));
+            setTitle((systemObj.getSystemName() != null ? systemObj.getSystemName() : systemObj.getName()));
             init();
 
             mSwipeRefreshLayout.setRefreshing(true);
@@ -188,8 +187,6 @@ public class GamesBySystemListActivity extends AppCompatActivity implements OnGa
     }
 
     private void loadGames(boolean forceLoadOnline) {
-        Log.d(TAG, "loadGames() System ID/NAME: " + systemObj.getSystemId() + "/" + systemObj.getSystemName());
-
         gameList = new ArrayList<>();
         List<Game> cachedGamesCollection;
         boolean isCached = false;
@@ -204,9 +201,9 @@ public class GamesBySystemListActivity extends AppCompatActivity implements OnGa
 
         TreeMap gameListTree = null;
         TreeMap<String, TreeMap<String, List<Game>>> gamesBySystemInCache = CheatDatabaseApplication.getGamesBySystemCached();
-        if (gamesBySystemInCache.containsKey(String.valueOf(systemObj.getSystemId()))) {
+        if (gamesBySystemInCache.containsKey(String.valueOf(systemObj.getId()))) {
 
-            gameListTree = gamesBySystemInCache.get(String.valueOf(systemObj.getSystemId()));
+            gameListTree = gamesBySystemInCache.get(String.valueOf(systemObj.getId()));
             if (gameListTree != null) {
 
                 if (gameListTree.containsKey(achievementsEnabled)) {
@@ -224,7 +221,7 @@ public class GamesBySystemListActivity extends AppCompatActivity implements OnGa
             gameList = new ArrayList<>();
             TreeMap finalGameListTree = gameListTree;
 
-            Call<List<Game>> call = restApi.getGameListBySystemId(systemObj.getSystemId(), isAchievementsEnabled);
+            Call<List<Game>> call = restApi.getGameListBySystemId(systemObj.getId(), isAchievementsEnabled);
             call.enqueue(new Callback<List<Game>>() {
                 @Override
                 public void onResponse(Call<List<Game>> games, Response<List<Game>> response) {
@@ -247,7 +244,7 @@ public class GamesBySystemListActivity extends AppCompatActivity implements OnGa
                             updatedGameListForCache.put(checkWhichSubKey, existingGamesInCache);
                         }
 
-                        gamesBySystemInCache.put(String.valueOf(systemObj.getSystemId()), updatedGameListForCache);
+                        gamesBySystemInCache.put(String.valueOf(systemObj.getId()), updatedGameListForCache);
                         CheatDatabaseApplication.setGamesBySystemCached(gamesBySystemInCache);
 
                         updateUI();

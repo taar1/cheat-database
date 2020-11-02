@@ -1,10 +1,8 @@
 package com.cheatdatabase.rest
 
 import com.cheatdatabase.activity.ui.mycheats.UnpublishedCheatsRepositoryKotlin
-import com.cheatdatabase.data.model.Cheat
-import com.cheatdatabase.data.model.HttpPostReturnValue
-import com.cheatdatabase.data.model.Member
-import com.cheatdatabase.data.model.UnpublishedCheat
+import com.cheatdatabase.data.model.*
+import com.cheatdatabase.data.network.SystemContainer
 import com.cheatdatabase.helpers.Konstanten
 import com.google.gson.GsonBuilder
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
@@ -61,6 +59,11 @@ interface KotlinRestApi {
     @GET("getMemberTop20.php")
     suspend fun getTopMembers(): Response<List<Member>>
 
+    @GET("countGamesAndCheatsOfAllSystems.php")
+    suspend fun getSystems(): Response<List<SystemModel>>
+
+    @GET("countGamesAndCheatsOfAllSystems.php")
+    suspend fun getSystemsToContainer(): SystemContainer
 
     @FormUrlEncoded
     @POST("countMyCheats.php")

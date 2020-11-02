@@ -21,10 +21,13 @@ public abstract class RoomCheatDatabase extends RoomDatabase {
 
     private static final String TAG = "RoomCheatDatabase";
 
+    // 3 - From 30.06.2015
+    // 4 - From 20.04.2020
+    // 5 - From 24.04.2020
+    // 5 - From 24.04.2020
+
     private static RoomCheatDatabase INSTANCE;
     private static final String DATABASE_NAME = "data";
-    //    public static final int DATABASE_VERSION = 3; // From 30.06.2015
-//    public static final int DATABASE_VERSION = 4; // From 20.04.2020
     public static final int DATABASE_VERSION = 5; // From 24.04.2020
 
     public static RoomCheatDatabase getDatabase(final Context context) {
@@ -74,8 +77,7 @@ public abstract class RoomCheatDatabase extends RoomDatabase {
     static final Migration MIGRATION_4_5 = new Migration(4, 5) {
         @Override
         public void migrate(SupportSQLiteDatabase database) {
-            Log.d(TAG, "XXXXX migrate: MIGRATION_4_5 b");
-            // Nothing to do but we are already at database version 5, so.... leave this here.
+            Log.d(TAG, "XXXXX migrate: MIGRATION_4_5");
 
             databaseChangesForVersion4And5(database);
         }
@@ -116,4 +118,5 @@ public abstract class RoomCheatDatabase extends RoomDatabase {
                 "searchquery TEXT, " +
                 "searchtime TEXT)");
     }
+
 }

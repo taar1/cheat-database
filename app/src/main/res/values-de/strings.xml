@@ -236,6 +236,7 @@
     <string name="error_loading_cheats">Fehler beim Laden der Cheats. Versuche es später nochmals.</string>
     <string name="error_fetch_unpublished_cheats">Fehler beim Laden deiner Cheats. Versuche es später nochmals.</string>
     <string name="error_deleting_cheat">Fehler beim Löschen des Cheats. Versuche es später nochmals.</string>
+    <string name="error_offline_pull_down_retry">Kein Netzwerk. Wische nach unten um es erneut zu versuchen.</string>
 
     <plurals name="cheats">
         <item quantity="one">Cheat</item>

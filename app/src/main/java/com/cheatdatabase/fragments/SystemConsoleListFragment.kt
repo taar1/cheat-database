@@ -3,13 +3,12 @@ package com.cheatdatabase.fragments
 import android.app.ActivityOptions
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.cheatdatabase.R
@@ -17,22 +16,25 @@ import com.cheatdatabase.activity.GamesBySystemListActivity
 import com.cheatdatabase.adapters.SystemsRecycleListViewAdapter
 import com.cheatdatabase.data.model.SystemModel
 import com.cheatdatabase.databinding.FragmentSystemlistBinding
+import com.cheatdatabase.helpers.Tools
 import com.cheatdatabase.listeners.OnSystemListItemSelectedListener
+import com.google.android.material.snackbar.BaseTransientBottomBar
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class SystemConsoleListFragment @Inject constructor() : Fragment(R.layout.fragment_systemlist), OnSystemListItemSelectedListener {
-
     private val TAG = "SystemConsoleListFragme"
+
+    @Inject
+    lateinit var tools: Tools
 
     companion object {
         fun newInstance() = SystemConsoleListFragment()
     }
 
+    private val viewModel: SystemConsoleListViewModel by viewModels()
     private lateinit var viewBinding: FragmentSystemlistBinding
-    private lateinit var viewModel: SystemConsoleListViewModel
-
     private lateinit var systemsRecycleListViewAdapter: SystemsRecycleListViewAdapter
 
     override fun onCreateView(
@@ -43,24 +45,8 @@ class SystemConsoleListFragment @Inject constructor() : Fragment(R.layout.fragme
         return viewBinding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        Log.d(TAG, "XXXXX onActivityCreated: ")
-
-        viewModel = ViewModelProvider(this).get(SystemConsoleListViewModel::class.java)
-
-        viewModel.allSystems.observe(viewLifecycleOwner, Observer { systems ->
-            Log.d(TAG, "XXXXX 10000: ")
-            systemsRecycleListViewAdapter.setSystemPlatforms(systems)
-
-        })
-
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        Log.d(TAG, "XXXXX onViewCreated: ")
 
         systemsRecycleListViewAdapter = SystemsRecycleListViewAdapter(this)
 
@@ -71,9 +57,28 @@ class SystemConsoleListFragment @Inject constructor() : Fragment(R.layout.fragme
             setHasFixedSize(true)
         }
 
+        viewModel.systems.observe(viewLifecycleOwner, Observer { systems ->
+            systems?.apply {
+                systemsRecycleListViewAdapter.setSystemPlatforms(systems)
+            }
+        })
+
+        // Observer for the network error.
+        viewModel.eventNetworkError.observe(viewLifecycleOwner, Observer<Boolean> { isNetworkError ->
+            if (isNetworkError) onNetworkError()
+        })
+
+        // Observer for the network error shown flag
+        viewModel.isNetworkErrorShown.observe(viewLifecycleOwner, Observer<Boolean> { isNetworkErrorShown ->
+            if (!isNetworkErrorShown) {
+                viewBinding.myRecyclerView.visibility = View.VISIBLE
+                viewBinding.emptyLabel.visibility = View.GONE
+            }
+        })
+
         viewBinding.swipeRefreshLayout.setOnRefreshListener {
             toggleRefreshingAnimation(true)
-            viewModel.getAllSystemsObserver()
+            viewModel.refreshDataFromNetwork()
             toggleRefreshingAnimation(false)
         }
     }
@@ -82,9 +87,22 @@ class SystemConsoleListFragment @Inject constructor() : Fragment(R.layout.fragme
         viewBinding.swipeRefreshLayout.isRefreshing = isRefreshing
     }
 
-    override fun onSystemListItemSelected(systemPlatform: SystemModel) {
-        Log.d(TAG, "XXXXX onSystemListItemSelected: systemPlatform: " + systemPlatform.name)
+    /**
+     * Method for displaying a Toast error message for network errors.
+     */
+    private fun onNetworkError() {
+        if (!viewModel.isNetworkErrorShown.value!!) {
+            tools.showSnackbar(viewBinding.outerLayout, getString(R.string.error_offline_pull_down_retry), BaseTransientBottomBar.LENGTH_LONG)
+            viewBinding.myRecyclerView.visibility = View.GONE
+            viewBinding.emptyLabel.visibility = View.VISIBLE
+            viewModel.onNetworkErrorShown()
+        }
+    }
 
+    /**
+     * User clicked on a console to display the games.
+     */
+    override fun onSystemListItemSelected(systemPlatform: SystemModel) {
         val intent = Intent(activity, GamesBySystemListActivity::class.java)
         intent.putExtra("systemObj", systemPlatform)
         startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(activity).toBundle())

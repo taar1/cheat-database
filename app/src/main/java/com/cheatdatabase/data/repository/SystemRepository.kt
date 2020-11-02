@@ -1,13 +1,36 @@
 package com.cheatdatabase.data.repository
 
-import androidx.lifecycle.LiveData
-import com.cheatdatabase.data.dao.SystemDao
+import android.util.Log
+import com.cheatdatabase.data.RoomCheatDatabase
 import com.cheatdatabase.data.model.SystemModel
+import com.cheatdatabase.rest.KotlinRestApi
+import com.cheatdatabase.rest.SafeApiRequest
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
-class SystemRepository(private val systemDao: SystemDao) {
+class SystemRepository(private val roomCheatDatabase: RoomCheatDatabase) : SafeApiRequest() {
+    private val TAG = "SystemRepository"
 
+    var systemsList: List<SystemModel> = listOf()
 
-    val allSystems: LiveData<List<SystemModel>> = systemDao.all
+    var newSystemModels: MutableList<SystemModel> = mutableListOf()
 
+    suspend fun getSystemsListFromRoom() {
+        withContext(Dispatchers.IO) {
+            systemsList = roomCheatDatabase.systemDao().allAsList() as List<SystemModel>
+        }
+    }
 
+    suspend fun getSystemsListFromNetwork() {
+        Log.d(TAG, "XXXXX refreshSystems: ")
+        withContext(Dispatchers.IO) {
+            val systemModelListFromApi: List<SystemModel> = apiRequest { KotlinRestApi().getSystems() }
+
+            for (sp in systemModelListFromApi) {
+                newSystemModels.add(sp.toSystemModel())
+            }
+
+            roomCheatDatabase.systemDao().insertAll(newSystemModels)
+        }
+    }
 }

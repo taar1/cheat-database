@@ -61,10 +61,10 @@ import needle.Needle;
 public class Tools {
     private final String TAG = Tools.class.getSimpleName();
 
-    private SharedPreferences sharedPreferences;
-    private SharedPreferences.Editor editor;
+    private final SharedPreferences sharedPreferences;
+    private final SharedPreferences.Editor editor;
 
-    private Context context;
+    private final Context context;
 
     @Inject
     public Tools(@ActivityContext Context context) {
@@ -502,15 +502,17 @@ public class Tools {
         showSnackbar(fromView, message, BaseTransientBottomBar.LENGTH_LONG);
     }
 
-    public void showSnackbar(View fromView, String message, int duration) {
+    public Snackbar showSnackbar(View fromView, String message, int duration) {
+        Snackbar snackbar = Snackbar.make(fromView, message, Snackbar.LENGTH_LONG);
+        snackbar.setText(message);
+        snackbar.setDuration(duration);
+
         Needle.onMainThread().execute(() -> {
             if ((message != null) && (fromView != null)) {
-                Snackbar snackbar = Snackbar.make(fromView, message, Snackbar.LENGTH_LONG);
-                snackbar.setText(message);
-                snackbar.setDuration(duration);
                 snackbar.show();
             }
         });
+        return snackbar;
     }
 
     public void showKeyboard(Context context, View view) {
