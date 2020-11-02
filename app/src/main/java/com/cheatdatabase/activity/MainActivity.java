@@ -3,22 +3,16 @@ package com.cheatdatabase.activity;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Configuration;
-import android.net.Uri;
 import android.os.Bundle;
 import android.provider.SearchRecentSuggestions;
-import android.text.Html;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.webkit.WebView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
@@ -26,21 +20,18 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.ui.AppBarConfiguration;
+import androidx.navigation.ui.NavigationUI;
 
-import com.afollestad.materialdialogs.MaterialDialog;
-import com.afollestad.materialdialogs.Theme;
 import com.appbrain.AppBrain;
 import com.cheatdatabase.R;
 import com.cheatdatabase.activity.ui.mycheats.UnpublishedCheatsRepositoryKotlin;
 import com.cheatdatabase.data.model.Member;
 import com.cheatdatabase.dialogs.RateAppDialog;
-import com.cheatdatabase.fragments.ContactFormFragment;
-import com.cheatdatabase.fragments.FavoriteGamesListFragment;
 import com.cheatdatabase.fragments.MyCheatsFragment;
-import com.cheatdatabase.fragments.SystemConsoleListFragment;
-import com.cheatdatabase.fragments.TopMembersFragment;
 import com.cheatdatabase.helpers.AeSimpleMD5;
-import com.cheatdatabase.helpers.DistinctValues;
 import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.helpers.Tools;
@@ -68,7 +59,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 @AndroidEntryPoint
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = MainActivity.class.getSimpleName();
 
@@ -78,19 +69,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     Tools tools;
     @Inject
     RestApi restApi;
-    @Inject
-    SystemConsoleListFragment systemConsoleListFragment;
-    @Inject
-    TopMembersFragment topMembersFragment;
-    @Inject
-    FavoriteGamesListFragment favoriteGamesListFragment;
-    @Inject
-    ContactFormFragment contactFormFragment;
+//    @Inject
+//    SystemConsoleListFragment systemConsoleListFragment;
+//    @Inject
+//    TopMembersFragment topMembersFragment;
+//    @Inject
+//    FavoriteGamesListFragment favoriteGamesListFragment;
+//    @Inject
+//    ContactFormFragment contactFormFragment;
 
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
     @BindView(R.id.drawer_layout)
-    DrawerLayout mDrawerLayout;
+    DrawerLayout drawerLayout;
     @BindView(R.id.nav_view)
     NavigationView navigationView;
     @BindView(R.id.add_new_cheat_button)
@@ -106,14 +97,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private int mFragmentId;
     private AdView adView;
-    private ActionBarDrawerToggle actionBarDrawerToggle;
     private Member member;
     private UnpublishedCheatsRepositoryKotlin.MyCheatsCount myCheatsCount;
     private SearchManager searchManager;
     private SearchView searchView;
     private FragmentManager fragmentManager;
     private FragmentTransaction fragmentTransaction;
-    private MainActivityCallbacks mainActivityCallbacks;
+//    private MainActivityCallbacks mainActivityCallbacks;
+
+    private AppBarConfiguration appBarConfiguration;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -121,8 +113,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-//        MainFragmentFactoryEntryPoint entryPoint = EntryPointAccessors.fromActivity(this, MainFragmentFactoryEntryPoint.class);
-//        getSupportFragmentManager().setFragmentFactory(entryPoint.getMainFragmentFactory());
 
         mFragmentId = getIntent().getIntExtra("mFragmentId", 0);
 
@@ -134,14 +124,25 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // https://youtu.be/lH6n4--3R5k?t=1260
 
         init();
-        fragmentStuff();
+//        fragmentStuff();
         prepareAdBanner();
 
-        actionBarDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, mToolbar, R.string.drawer_open, R.string.drawer_close);
-        mDrawerLayout.addDrawerListener(actionBarDrawerToggle);
-        actionBarDrawerToggle.syncState();
+        //navigationView.setNavigationItemSelectedListener(this);
 
-        navigationView.setNavigationItemSelectedListener(this);
+        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+
+        appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph())
+                .setOpenableLayout(drawerLayout)
+                .build();
+
+        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
+        NavigationUI.setupWithNavController(navigationView, navController);
+
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        return Navigation.findNavController(this, R.id.nav_host_fragment).navigateUp() || super.onSupportNavigateUp();
     }
 
     private void init() {
@@ -151,30 +152,29 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
-
         TrackingUtils.getInstance().init(this);
 
         AppBrain.init(this);
 
-        mainActivityCallbacks = new MainActivityCallbacks() {
-            @Override
-            public void showContactFormFragmentCallback() {
-                MainActivity.this.showContactFormFragment();
-            }
-
-            @Override
-            public void closeNagivationDrawerCallback() {
-                MainActivity.this.closeNagivationDrawer();
-            }
-        };
+//        mainActivityCallbacks = new MainActivityCallbacks() {
+//            @Override
+//            public void showContactFormFragmentCallback() {
+//                MainActivity.this.showContactFormFragment();
+//            }
+//
+//            @Override
+//            public void closeNagivationDrawerCallback() {
+//                MainActivity.this.closeNagivationDrawer();
+//            }
+//        };
     }
 
-    private void fragmentStuff() {
-        fragmentManager = getSupportFragmentManager();
-        fragmentTransaction = fragmentManager.beginTransaction();
-
-        fragmentTransaction.replace(R.id.content_frame, systemConsoleListFragment, SystemConsoleListFragment.class.getSimpleName()).commit();
-    }
+//    private void fragmentStuff() {
+//        fragmentManager = getSupportFragmentManager();
+//        fragmentTransaction = fragmentManager.beginTransaction();
+//
+//        fragmentTransaction.replace(R.id.nav_host_fragment, systemConsoleListFragment, SystemConsoleListFragment.class.getSimpleName()).commit();
+//    }
 
     private void updateMyCheatsDrawerNavigationItemCount() {
         Menu menu = navigationView.getMenu();
@@ -198,7 +198,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private void refreshMyCheatsFragment() {
         // If you log out we are updating the text in "MyCheatsFragment" so we have to inform the fragment that the login-state has changed.
-        Fragment myCheatsFragment = getSupportFragmentManager().findFragmentById(R.id.content_frame);
+        Fragment myCheatsFragment = getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
         if (myCheatsFragment != null) {
             if (myCheatsFragment instanceof MyCheatsFragment) {
                 MyCheatsFragment mmyCheatsFragment = (MyCheatsFragment) myCheatsFragment;
@@ -330,11 +330,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // The action bar home/up action should open or close the drawer.
-        // ActionBarDrawerToggle will take care of this.
-        if (actionBarDrawerToggle.onOptionsItemSelected(item)) {
-            return true;
-        }
 
         // Handle action buttons
         switch (item.getItemId()) {
@@ -373,14 +368,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         countMyCheats();
     }
 
-
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        // Pass any configuration change to the drawer toggle
-        actionBarDrawerToggle.onConfigurationChanged(newConfig);
-    }
-
     @Override
     public void onBackPressed() {
         super.onBackPressed();
@@ -388,116 +375,116 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         finish();
     }
 
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        // Handle navigation view item clicks here.
-        int id = item.getItemId();
-
-        if (id == R.id.nav_gamesystems) {
-            showGameSystemsFragment();
-        } else if (id == R.id.nav_favorites) {
-            fragmentTransaction.addToBackStack(FavoriteGamesListFragment.class.getSimpleName());
-            fragmentManager.beginTransaction().replace(R.id.content_frame, favoriteGamesListFragment, FavoriteGamesListFragment.class.getSimpleName()).commit();
-
-            mToolbar.setTitle(R.string.favorites);
-            floatingActionButton.hide();
-        } else if (id == R.id.nav_members) {
-            fragmentTransaction.addToBackStack(TopMembersFragment.class.getSimpleName());
-            fragmentManager.beginTransaction().replace(R.id.content_frame, topMembersFragment, TopMembersFragment.class.getSimpleName()).commit();
-
-            mToolbar.setTitle(R.string.top_members_top_helping);
-            floatingActionButton.hide();
-        } else if (id == R.id.nav_rate) {
-            rateAppDialog.show(mainActivityCallbacks);
-            return true;
-        } else if (id == R.id.nav_contact) {
-            showContactFormFragment();
-        } else if (id == R.id.nav_settings) {
-            startActivity(new Intent(MainActivity.this, AppPreferencesActivity.class));
-            mDrawerLayout.closeDrawers();
-        } else if (id == R.id.nav_more_apps) {
-            Uri uri = Uri.parse(DistinctValues.URL_MORE_APPS);
-            Intent intentMoreApps = new Intent(Intent.ACTION_VIEW, uri);
-            if (intentMoreApps.resolveActivity(getPackageManager()) != null) {
-                startActivity(intentMoreApps);
-            } else {
-                tools.showSnackbar(mDrawerLayout, getResources().getString(R.string.err_other_problem));
-            }
-            mDrawerLayout.closeDrawers();
-        } else if (id == R.id.nav_terms_of_use) {
-            mDrawerLayout.closeDrawers();
-
-            MaterialDialog md = new MaterialDialog.Builder(this)
-                    .customView(R.layout.layout_cheat_content_table, true)
-                    .theme(Theme.DARK)
-                    .positiveText(R.string.close)
-                    .cancelable(true)
-                    .show();
-
-            View dialogView = md.getCustomView();
-            WebView webview = dialogView.findViewById(R.id.webview);
-            webview.loadUrl("https://www.freeprivacypolicy.com/privacy/view/1ac30e371af5decb7631a29e7eed2d15");
-        } else if (id == R.id.nav_my_cheats) {
-            showMyCheatsFragment();
-        } else {
-            showGameSystemsFragment();
-        }
-
-        mDrawerLayout.closeDrawers();
-
-        if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
-            getSupportFragmentManager().popBackStackImmediate();
-        }
-
-        return true;
-    }
-
-    private void showMyCheatsFragment() {
-        mToolbar.setTitle(Html.fromHtml(getString(R.string.drawer_my_cheats)));
-        fragmentTransaction.addToBackStack(MyCheatsFragment.class.getSimpleName());
-
-        MyCheatsFragment fragment = new MyCheatsFragment(this, myCheatsCount);
-
-        fragmentManager.beginTransaction().replace(R.id.content_frame, fragment, MyCheatsFragment.class.getSimpleName()).commit();
-
-        floatingActionButton.hide();
-        mDrawerLayout.closeDrawers();
-    }
-
-    private void showGameSystemsFragment() {
-        mToolbar.setTitle(R.string.app_name);
-        fragmentTransaction.addToBackStack(SystemConsoleListFragment.class.getSimpleName());
-
-        fragmentManager.beginTransaction().replace(R.id.content_frame, systemConsoleListFragment, SystemConsoleListFragment.class.getSimpleName()).commit();
-
-        floatingActionButton.show();
-        mDrawerLayout.closeDrawers();
-    }
-
+    //    @Override
+//    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+//        // Handle navigation view item clicks here.
+//        int id = item.getItemId();
+//
+//        if (id == R.id.nav_gamesystems) {
+//            showGameSystemsFragment();
+//        } else if (id == R.id.nav_favorites) {
+//            fragmentTransaction.addToBackStack(FavoriteGamesListFragment.class.getSimpleName());
+//            fragmentManager.beginTransaction().replace(R.id.nav_host_fragment, favoriteGamesListFragment, FavoriteGamesListFragment.class.getSimpleName()).commit();
+//
+//            mToolbar.setTitle(R.string.favorites);
+//            floatingActionButton.hide();
+//        } else if (id == R.id.nav_members) {
+//            fragmentTransaction.addToBackStack(TopMembersFragment.class.getSimpleName());
+//            fragmentManager.beginTransaction().replace(R.id.nav_host_fragment, topMembersFragment, TopMembersFragment.class.getSimpleName()).commit();
+//
+//            mToolbar.setTitle(R.string.top_members_top_helping);
+//            floatingActionButton.hide();
+//        } else if (id == R.id.nav_rate) {
+//            rateAppDialog.show(mainActivityCallbacks);
+//            return true;
+//        } else if (id == R.id.nav_contact) {
+//            showContactFormFragment();
+//        } else if (id == R.id.nav_settings) {
+//            startActivity(new Intent(MainActivity.this, AppPreferencesActivity.class));
+//            mDrawerLayout.closeDrawers();
+//        } else if (id == R.id.nav_more_apps) {
+//            Uri uri = Uri.parse(DistinctValues.URL_MORE_APPS);
+//            Intent intentMoreApps = new Intent(Intent.ACTION_VIEW, uri);
+//            if (intentMoreApps.resolveActivity(getPackageManager()) != null) {
+//                startActivity(intentMoreApps);
+//            } else {
+//                tools.showSnackbar(mDrawerLayout, getResources().getString(R.string.err_other_problem));
+//            }
+//            mDrawerLayout.closeDrawers();
+//        } else if (id == R.id.nav_terms_of_use) {
+//            mDrawerLayout.closeDrawers();
+//
+//            MaterialDialog md = new MaterialDialog.Builder(this)
+//                    .customView(R.layout.layout_cheat_content_table, true)
+//                    .theme(Theme.DARK)
+//                    .positiveText(R.string.close)
+//                    .cancelable(true)
+//                    .show();
+//
+//            View dialogView = md.getCustomView();
+//            WebView webview = dialogView.findViewById(R.id.webview);
+//            webview.loadUrl("https://www.freeprivacypolicy.com/privacy/view/1ac30e371af5decb7631a29e7eed2d15");
+//        } else if (id == R.id.nav_my_cheats) {
+//            showMyCheatsFragment();
+//        } else {
+//            showGameSystemsFragment();
+//        }
+//
+//        mDrawerLayout.closeDrawers();
+//
+//        if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
+//            getSupportFragmentManager().popBackStackImmediate();
+//        }
+//
+//        return true;
+//    }
+//
+//    private void showMyCheatsFragment() {
+//        mToolbar.setTitle(Html.fromHtml(getString(R.string.drawer_my_cheats)));
+//        fragmentTransaction.addToBackStack(MyCheatsFragment.class.getSimpleName());
+//
+//        MyCheatsFragment fragment = new MyCheatsFragment(this, myCheatsCount);
+//
+//        fragmentManager.beginTransaction().replace(R.id.nav_host_fragment, fragment, MyCheatsFragment.class.getSimpleName()).commit();
+//
+//        floatingActionButton.hide();
+//        drawerLayout.closeDrawers();
+//    }
+//
+//    private void showGameSystemsFragment() {
+//        mToolbar.setTitle(R.string.app_name);
+//        fragmentTransaction.addToBackStack(SystemConsoleListFragment.class.getSimpleName());
+//
+//        fragmentManager.beginTransaction().replace(R.id.nav_host_fragment, systemConsoleListFragment, SystemConsoleListFragment.class.getSimpleName()).commit();
+//
+//        floatingActionButton.show();
+//        drawerLayout.closeDrawers();
+//    }
+//
     public interface MainActivityCallbacks {
         void showContactFormFragmentCallback();
 
         void closeNagivationDrawerCallback();
     }
-
-    public void showContactFormFragment() {
-        mToolbar.setTitle(R.string.contactform_title);
-        fragmentTransaction.addToBackStack(ContactFormFragment.class.getSimpleName());
-
-        fragmentManager.beginTransaction().replace(R.id.content_frame, contactFormFragment, ContactFormFragment.class.getSimpleName()).commit();
-
-        mixedBannerContainer.setVisibility(View.GONE);
-
-        floatingActionButton.hide();
-
-        // Contact Form Item: #6
-        navigationView.getMenu().getItem(6).setChecked(true);
-        mDrawerLayout.closeDrawers();
-    }
-
-    public void closeNagivationDrawer() {
-        mDrawerLayout.closeDrawers();
-    }
+//
+//    public void showContactFormFragment() {
+//        mToolbar.setTitle(R.string.contactform_title);
+//        fragmentTransaction.addToBackStack(ContactFormFragment.class.getSimpleName());
+//
+//        fragmentManager.beginTransaction().replace(R.id.nav_host_fragment, contactFormFragment, ContactFormFragment.class.getSimpleName()).commit();
+//
+//        mixedBannerContainer.setVisibility(View.GONE);
+//
+//        floatingActionButton.hide();
+//
+//        // Contact Form Item: #6
+//        navigationView.getMenu().getItem(6).setChecked(true);
+//        drawerLayout.closeDrawers();
+//    }
+//
+//    public void closeNagivationDrawer() {
+//        drawerLayout.closeDrawers();
+//    }
 
     /**
      * Loads the member's unpublished, rejected and published cheats count.

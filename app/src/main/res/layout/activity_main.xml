@@ -14,42 +14,30 @@
 
         <include layout="@layout/toolbar" />
 
-        <FrameLayout
-            android:id="@+id/content_frame"
+        <fragment
+            android:id="@+id/nav_host_fragment"
+            android:name="androidx.navigation.fragment.NavHostFragment"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="100"
             android:gravity="top"
+            app:defaultNavHost="true"
+            app:navGraph="@navigation/nav_drawer"
             tools:context=".activity.MainActivity"
-            tools:ignore="MergeRootFrame">
+            tools:ignore="MergeRootFrame"></fragment>
 
-            <!--        <androidx.fragment.app.FragmentContainerView-->
-            <!--            android:id="@+id/content_frame"-->
-            <!--            android:name="com.cheatdatabase.fragments.MainNavHostFragment"-->
-            <!--            android:layout_width="match_parent"-->
-            <!--            android:layout_height="0dp"-->
-            <!--            android:layout_weight="100"-->
-            <!--            android:gravity="top"-->
-            <!--            app:defaultNavHost="true"-->
-            <!--            tools:context=".activity.MainActivity"-->
-            <!--            tools:ignore="MergeRootFrame">-->
-
-
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/add_new_cheat_button"
-                style="@style/FAButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom|end"
-                android:layout_margin="24dp"
-                app:backgroundTint="@color/color_primary_light"
-                app:fabSize="normal"
-                app:rippleColor="@color/white"
-                app:srcCompat="@drawable/ic_add"
-                app:tint="@color/black" />
-
-            <!--        </androidx.fragment.app.FragmentContainerView>-->
-        </FrameLayout>
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/add_new_cheat_button"
+            style="@style/FAButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="24dp"
+            app:backgroundTint="@color/color_primary_light"
+            app:fabSize="normal"
+            app:rippleColor="@color/white"
+            app:srcCompat="@drawable/ic_add"
+            app:tint="@color/black" />
 
         <include layout="@layout/adview_mixed_banner_container" />
     </LinearLayout>
@@ -64,6 +52,6 @@
         android:fitsSystemWindows="true"
         android:maxWidth="300dp"
         app:headerLayout="@layout/drawer_header"
-        app:menu="@menu/drawer_view" />
+        app:menu="@menu/drawer_menu" />
 
 </androidx.drawerlayout.widget.DrawerLayout>

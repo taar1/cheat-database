@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_drawer"
+    app:startDestination="@id/nav_gamesystems">
+
+    <fragment
+        android:id="@+id/nav_gamesystems"
+        android:name="com.cheatdatabase.fragments.SystemConsoleListFragment"
+        android:label="@string/goto_games_and_cheats"
+        tools:layout="@layout/fragment_systemlist" />
+    <fragment
+        android:id="@+id/nav_favorites"
+        android:name="com.cheatdatabase.fragments.FavoriteGamesListFragment"
+        android:label="@string/favorites"
+        tools:layout="@layout/fragment_favorites_main_list" />
+    <fragment
+        android:id="@+id/nav_my_cheats"
+        android:name="com.cheatdatabase.fragments.MyCheatsFragment"
+        android:label="@string/drawer_my_cheats"
+        tools:layout="@layout/fragment_my_cheats_overview" />
+    <fragment
+        android:id="@+id/nav_members"
+        android:name="com.cheatdatabase.fragments.TopMembersFragment"
+        android:label="@string/top_members_title"
+        tools:layout="@layout/fragment_topmembers" />
+    <fragment
+        android:id="@+id/nav_contact"
+        android:name="com.cheatdatabase.fragments.ContactFormFragment"
+        android:label="@string/contactform_title"
+        tools:layout="@layout/fragment_contact_form" />
+    <activity
+        android:id="@+id/nav_settings"
+        android:name="com.cheatdatabase.activity.AppPreferencesActivity"
+        android:label="@string/action_settings"
+        tools:layout="@layout/activity_app_settings" />
+</navigation>

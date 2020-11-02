@@ -5,20 +5,20 @@
         android:id="@+id/nav_group_main"
         android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_gamesystems"
+            android:id="@id/nav_gamesystems"
             android:icon="@drawable/ic_drawer_cheats"
             android:title="@string/goto_games_and_cheats" />
         <item
-            android:id="@+id/nav_favorites"
+            android:id="@id/nav_favorites"
             android:icon="@drawable/ic_drawer_favorites"
             android:title="@string/favorites" />
         <item
-            android:id="@+id/nav_my_cheats"
+            android:id="@id/nav_my_cheats"
             android:icon="@drawable/ic_pencil"
             android:title="@string/drawer_my_cheats"
             app:actionLayout="@layout/menu_counter" />
         <item
-            android:id="@+id/nav_members"
+            android:id="@id/nav_members"
             android:icon="@drawable/ic_drawer_members"
             android:title="@string/top_members_title" />
     </group>
@@ -34,7 +34,7 @@
             android:icon="@drawable/ic_drawer_rate"
             android:title="@string/rate_us" />
         <item
-            android:id="@+id/nav_contact"
+            android:id="@id/nav_contact"
             android:icon="@drawable/ic_drawer_contact"
             android:title="@string/contactform_title" />
         <item
@@ -46,7 +46,7 @@
         android:id="@+id/nav_group_settings"
         android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_settings"
+            android:id="@id/nav_settings"
             android:icon="@drawable/ic_drawer_settings"
             android:title="@string/action_settings" />
     </group>
