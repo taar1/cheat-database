@@ -10,12 +10,14 @@ import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import com.cheatdatabase.R
 import com.cheatdatabase.activity.CheatsByMemberListActivity
-import com.cheatdatabase.activity.MainActivity
 import com.cheatdatabase.activity.ui.mycheats.MyUnpublishedCheatsListActivity
-import com.cheatdatabase.activity.ui.mycheats.UnpublishedCheatsRepositoryKotlin
 import com.cheatdatabase.data.model.Member
+import com.cheatdatabase.data.model.MyCheatsCount
+import com.cheatdatabase.databinding.FragmentMyCheatsOverviewBinding
 import com.cheatdatabase.helpers.Tools
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_my_cheats_overview.view.*
@@ -24,15 +26,13 @@ import javax.inject.Inject
 
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
-class MyCheatsFragment(
-    val mainActivity: MainActivity,
-    var myCheatsCount: UnpublishedCheatsRepositoryKotlin.MyCheatsCount?
-) :
-    Fragment() {
+class MyCheatsFragment : Fragment(R.layout.fragment_my_cheats_overview) {
     val TAG = "MyCheatsFragment"
 
     @Inject
     lateinit var tools: Tools
+
+    private var myCheatsCount: MyCheatsCount? = null
 
     lateinit var myScoreLayout: LinearLayout
     lateinit var outerLayout: ConstraintLayout
@@ -42,11 +42,20 @@ class MyCheatsFragment(
     lateinit var unpublishedCheatsCount: TextView
     lateinit var unpublishedCheatsSubtitle: TextView
 
+    private lateinit var viewBinding: FragmentMyCheatsOverviewBinding
+
+    private val viewModel: MyCheatsViewModel by viewModels()
+
+    companion object {
+        fun newInstance() = MyCheatsFragment()
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_my_cheats_overview, container, false)
+        viewBinding = FragmentMyCheatsOverviewBinding.inflate(inflater)
+        val view = viewBinding.root
 
         myScoreLayout = view.my_score_layout
         outerLayout = view.outer_layout
@@ -56,6 +65,22 @@ class MyCheatsFragment(
         unpublishedCheatsCount = view.unpublished_cheats_count
         unpublishedCheatsSubtitle = view.unpublished_cheats_subtitle
 
+        viewModel.myCheats.observe(viewLifecycleOwner, Observer { myCheats ->
+            myCheatsCount = myCheats
+            updateText()
+        })
+
+        initListeners()
+        updateText()
+        return viewBinding.root
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.getMyCheatsCount(tools.member)
+    }
+
+    private fun initListeners() {
         myScoreLayout.setOnClickListener {
             tools.showSnackbar(outerLayout, getString(R.string.earn_points_submitting_cheats))
         }
@@ -63,20 +88,17 @@ class MyCheatsFragment(
         unpublishedCheatsCard.setOnClickListener {
             startActivityIfLoggedIn(
                 tools.member,
-                Intent(mainActivity, MyUnpublishedCheatsListActivity::class.java)
+                Intent(activity, MyUnpublishedCheatsListActivity::class.java)
             )
         }
 
         publishedCheatsCard.setOnClickListener {
             val member = tools.member
 
-            val myCheatsIntent = Intent(mainActivity, CheatsByMemberListActivity::class.java)
+            val myCheatsIntent = Intent(activity, CheatsByMemberListActivity::class.java)
             myCheatsIntent.putExtra("member", member)
             startActivityIfLoggedIn(member, myCheatsIntent)
         }
-
-        updateText()
-        return view
     }
 
     private fun startActivityIfLoggedIn(member: Member?, myCheatsIntent: Intent) {

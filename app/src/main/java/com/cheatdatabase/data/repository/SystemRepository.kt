@@ -1,6 +1,5 @@
 package com.cheatdatabase.data.repository
 
-import android.util.Log
 import com.cheatdatabase.data.RoomCheatDatabase
 import com.cheatdatabase.data.model.SystemModel
 import com.cheatdatabase.rest.KotlinRestApi
@@ -22,7 +21,6 @@ class SystemRepository(private val roomCheatDatabase: RoomCheatDatabase) : SafeA
     }
 
     suspend fun getSystemsListFromNetwork() {
-        Log.d(TAG, "XXXXX refreshSystems: ")
         withContext(Dispatchers.IO) {
             val systemModelListFromApi: List<SystemModel> = apiRequest { KotlinRestApi().getSystems() }
 

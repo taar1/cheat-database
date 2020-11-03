@@ -5,6 +5,7 @@ import android.content.SharedPreferences
 import androidx.lifecycle.AndroidViewModel
 import com.cheatdatabase.data.model.Member
 import com.cheatdatabase.data.model.UnpublishedCheat
+import com.cheatdatabase.data.repository.MyCheatsRepository
 import com.cheatdatabase.helpers.AeSimpleMD5
 import com.cheatdatabase.helpers.Coroutines
 import com.cheatdatabase.helpers.Konstanten
@@ -24,7 +25,7 @@ class MyUnpublishedCheatsViewModel(application: Application) :
 
     fun getMyUnpublishedCheatsByCoroutines() {
         Coroutines.main {
-            val response = UnpublishedCheatsRepositoryKotlin().getMyUnpublishedCheats(
+            val response = MyCheatsRepository().getMyUnpublishedCheats(
                 member.mid,
                 AeSimpleMD5.MD5(member.password)
             )
@@ -39,7 +40,7 @@ class MyUnpublishedCheatsViewModel(application: Application) :
 
     fun deleteUnpublishedCheat(unpublishedCheat: UnpublishedCheat) {
         Coroutines.main {
-            val response = UnpublishedCheatsRepositoryKotlin().deleteUnpublishedCheat(
+            val response = MyCheatsRepository().deleteUnpublishedCheat(
                 unpublishedCheat, member
             )
 

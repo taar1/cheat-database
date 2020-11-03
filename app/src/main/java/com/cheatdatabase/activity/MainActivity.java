@@ -10,27 +10,19 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
 
 import com.appbrain.AppBrain;
 import com.cheatdatabase.R;
-import com.cheatdatabase.activity.ui.mycheats.UnpublishedCheatsRepositoryKotlin;
 import com.cheatdatabase.data.model.Member;
+import com.cheatdatabase.data.model.MyCheatsCount;
 import com.cheatdatabase.dialogs.RateAppDialog;
-import com.cheatdatabase.fragments.MyCheatsFragment;
 import com.cheatdatabase.helpers.AeSimpleMD5;
 import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Reachability;
@@ -95,14 +87,14 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.inmobi_banner)
     InMobiBanner inMobiBanner;
 
-    private int mFragmentId;
+    //    private int mFragmentId;
     private AdView adView;
     private Member member;
-    private UnpublishedCheatsRepositoryKotlin.MyCheatsCount myCheatsCount;
+    private MyCheatsCount myCheatsCount;
     private SearchManager searchManager;
     private SearchView searchView;
-    private FragmentManager fragmentManager;
-    private FragmentTransaction fragmentTransaction;
+//    private FragmentManager fragmentManager;
+//    private FragmentTransaction fragmentTransaction;
 //    private MainActivityCallbacks mainActivityCallbacks;
 
     private AppBarConfiguration appBarConfiguration;
@@ -114,14 +106,7 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
 
-        mFragmentId = getIntent().getIntExtra("mFragmentId", 0);
-
-        // TODO hier weitermachen und in activity_main.xml weiterfahren...
-        // TODO hier weitermachen und in activity_main.xml weiterfahren...
-        // TODO hier weitermachen und in activity_main.xml weiterfahren...
-        // https://youtu.be/lH6n4--3R5k?t=1260
-        // https://youtu.be/lH6n4--3R5k?t=1260
-        // https://youtu.be/lH6n4--3R5k?t=1260
+//        mFragmentId = getIntent().getIntExtra("mFragmentId", 0);
 
         init();
 //        fragmentStuff();
@@ -129,20 +114,21 @@ public class MainActivity extends AppCompatActivity {
 
         //navigationView.setNavigationItemSelectedListener(this);
 
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-
-        appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph())
-                .setOpenableLayout(drawerLayout)
-                .build();
-
-        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
-        NavigationUI.setupWithNavController(navigationView, navController);
+//        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+//
+//        appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph())
+//                .setOpenableLayout(drawerLayout)
+//                .build();
+//
+//        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
+//        NavigationUI.setupWithNavController(navigationView, navController);
 
     }
 
     @Override
     public boolean onSupportNavigateUp() {
-        return Navigation.findNavController(this, R.id.nav_host_fragment).navigateUp() || super.onSupportNavigateUp();
+        //return Navigation.findNavController(this, R.id.nav_host_fragment).navigateUp() || super.onSupportNavigateUp();
+        return true;
     }
 
     private void init() {
@@ -177,36 +163,36 @@ public class MainActivity extends AppCompatActivity {
 //    }
 
     private void updateMyCheatsDrawerNavigationItemCount() {
-        Menu menu = navigationView.getMenu();
-        MenuItem navMyCheats = menu.findItem(R.id.nav_my_cheats);
-        TextView myCheatsNavDrawerCounter = navMyCheats.getActionView().findViewById(R.id.nav_drawer_item_counter);
-
-        if (myCheatsCount != null) {
-            int allUnpublishedCheats = myCheatsCount.getUncheckedCheats() + myCheatsCount.getRejectedCheats();
-
-            if (allUnpublishedCheats > 0) {
-                myCheatsNavDrawerCounter.setText(getString(R.string.braces_with_text_in_the_middle, allUnpublishedCheats));
-            } else {
-                myCheatsNavDrawerCounter.setText("");
-            }
-        } else {
-            myCheatsNavDrawerCounter.setText("");
-        }
-
-        refreshMyCheatsFragment();
+//        Menu menu = navigationView.getMenu();
+//        MenuItem navMyCheats = menu.findItem(R.id.nav_my_cheats);
+//        TextView myCheatsNavDrawerCounter = navMyCheats.getActionView().findViewById(R.id.nav_drawer_item_counter);
+//
+//        if (myCheatsCount != null) {
+//            int allUnpublishedCheats = myCheatsCount.getUncheckedCheats() + myCheatsCount.getRejectedCheats();
+//
+//            if (allUnpublishedCheats > 0) {
+//                myCheatsNavDrawerCounter.setText(getString(R.string.braces_with_text_in_the_middle, allUnpublishedCheats));
+//            } else {
+//                myCheatsNavDrawerCounter.setText("");
+//            }
+//        } else {
+//            myCheatsNavDrawerCounter.setText("");
+//        }
+//
+////        refreshMyCheatsFragment();
     }
 
-    private void refreshMyCheatsFragment() {
-        // If you log out we are updating the text in "MyCheatsFragment" so we have to inform the fragment that the login-state has changed.
-        Fragment myCheatsFragment = getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
-        if (myCheatsFragment != null) {
-            if (myCheatsFragment instanceof MyCheatsFragment) {
-                MyCheatsFragment mmyCheatsFragment = (MyCheatsFragment) myCheatsFragment;
-                mmyCheatsFragment.setMyCheatsCount(myCheatsCount);
-                mmyCheatsFragment.updateText();
-            }
-        }
-    }
+//    private void refreshMyCheatsFragment() {
+//        // If you log out we are updating the text in "MyCheatsFragment" so we have to inform the fragment that the login-state has changed.
+//        Fragment myCheatsFragment = getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
+//        if (myCheatsFragment != null) {
+//            if (myCheatsFragment instanceof MyCheatsFragment) {
+//                MyCheatsFragment mmyCheatsFragment = (MyCheatsFragment) myCheatsFragment;
+//                mmyCheatsFragment.setMyCheatsCount(myCheatsCount);
+//                mmyCheatsFragment.updateText();
+//            }
+//        }
+//    }
 
     /**
      * Display either InMobi or Facebook Audience Network banner (randomly)
@@ -245,13 +231,13 @@ public class MainActivity extends AppCompatActivity {
         startActivity(explicitIntent);
     }
 
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        outState.putInt("mFragmentId", mFragmentId);
-
-        tools.putInt(Konstanten.PREFERENCES_SELECTED_DRAWER_FRAGMENT_ID, mFragmentId);
-        super.onSaveInstanceState(outState);
-    }
+//    @Override
+//    public void onSaveInstanceState(Bundle outState) {
+//        outState.putInt("mFragmentId", mFragmentId);
+//
+//        tools.putInt(Konstanten.PREFERENCES_SELECTED_DRAWER_FRAGMENT_ID, mFragmentId);
+//        super.onSaveInstanceState(outState);
+//    }
 
     @Override
     public void onPause() {
@@ -493,13 +479,13 @@ public class MainActivity extends AppCompatActivity {
      */
     private void countMyCheats() {
         if ((member != null) && (member.getMid() != 0)) {
-            Call<UnpublishedCheatsRepositoryKotlin.MyCheatsCount> call;
+            Call<MyCheatsCount> call;
             try {
                 //Log.d(TAG, "XXXXX countMyCheats: " + AeSimpleMD5.MD5(member.getPassword()));
                 call = restApi.countMyCheats(member.getMid(), AeSimpleMD5.MD5(member.getPassword()));
-                call.enqueue(new Callback<UnpublishedCheatsRepositoryKotlin.MyCheatsCount>() {
+                call.enqueue(new Callback<MyCheatsCount>() {
                     @Override
-                    public void onResponse(Call<UnpublishedCheatsRepositoryKotlin.MyCheatsCount> countValue, Response<UnpublishedCheatsRepositoryKotlin.MyCheatsCount> response) {
+                    public void onResponse(Call<MyCheatsCount> countValue, Response<MyCheatsCount> response) {
                         if (response.isSuccessful()) {
                             myCheatsCount = response.body();
                         } else {
@@ -510,7 +496,7 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onFailure(Call<UnpublishedCheatsRepositoryKotlin.MyCheatsCount> call, Throwable e) {
+                    public void onFailure(Call<MyCheatsCount> call, Throwable e) {
                         Log.e(TAG, "countMyCheats onFailure: " + e.getLocalizedMessage());
                         myCheatsCount = null;
                         updateMyCheatsDrawerNavigationItemCount();

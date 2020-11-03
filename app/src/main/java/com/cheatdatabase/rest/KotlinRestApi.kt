@@ -1,6 +1,5 @@
 package com.cheatdatabase.rest
 
-import com.cheatdatabase.activity.ui.mycheats.UnpublishedCheatsRepositoryKotlin
 import com.cheatdatabase.data.model.*
 import com.cheatdatabase.data.network.SystemContainer
 import com.cheatdatabase.helpers.Konstanten
@@ -70,7 +69,7 @@ interface KotlinRestApi {
     suspend fun countMyCheats(
         @Field("memberId") memberId: Int,
         @Field("pw") password_md5: String
-    ): Response<UnpublishedCheatsRepositoryKotlin.MyCheatsCount>
+    ): Response<MyCheatsCount>
 
     companion object {
         operator fun invoke(): KotlinRestApi {

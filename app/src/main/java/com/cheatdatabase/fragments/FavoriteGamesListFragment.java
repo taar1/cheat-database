@@ -10,8 +10,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
@@ -52,14 +50,13 @@ public class FavoriteGamesListFragment extends Fragment implements OnGameListIte
 
     @BindView(R.id.listView)
     ExpandableListView listView;
-    @BindView(R.id.somethingfound_layout)
-    RelativeLayout somethingfoundLayout;
-    @BindView(R.id.nothingfound_layout)
-    LinearLayout nothingFoundLayout;
-    @BindView(R.id.nothingfound_text)
-    TextView nothingFoundText;
+    @BindView(R.id.empty_label)
+    TextView emptyLabel;
 
     private FavoriteCheatDao dao;
+
+    public FavoriteGamesListFragment() {
+    }
 
     @Inject
     public FavoriteGamesListFragment(@ActivityContext Context context) {
@@ -85,7 +82,7 @@ public class FavoriteGamesListFragment extends Fragment implements OnGameListIte
     }
 
     private void loadGames() {
-        dao.getAll().observe(this, favoriteCheatsList -> {
+        dao.getAll().observe(getViewLifecycleOwner(), favoriteCheatsList -> {
             this.favoriteCheatsList = favoriteCheatsList;
             fillExpandableList();
             createData();
@@ -160,8 +157,8 @@ public class FavoriteGamesListFragment extends Fragment implements OnGameListIte
 
     private void handleEmptyState() {
         Needle.onMainThread().execute(() -> {
-            somethingfoundLayout.setVisibility(View.GONE);
-            nothingFoundLayout.setVisibility(View.VISIBLE);
+            listView.setVisibility(View.GONE);
+            emptyLabel.setVisibility(View.VISIBLE);
         });
     }
 

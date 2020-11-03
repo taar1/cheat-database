@@ -1,47 +1,32 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".activity.MainActivity">
+    android:layout_height="match_parent">
 
-    <RelativeLayout
-        android:id="@+id/somethingfound_layout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingStart="@dimen/activity_searchresult_horizontal_margin"
-        android:paddingLeft="@dimen/activity_searchresult_horizontal_margin"
-        android:paddingTop="@dimen/activity_searchresult_vertical_margin"
-        android:paddingEnd="@dimen/activity_searchresult_horizontal_margin"
-        android:paddingRight="@dimen/activity_searchresult_horizontal_margin"
-        android:paddingBottom="@dimen/activity_searchresult_vertical_margin"
-        android:visibility="visible"
-        tools:context="com.cheatdatabase.activity.MainActivity">
-
-        <ExpandableListView
-            android:id="@+id/listView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scrollbars="none" />
-    </RelativeLayout>
-
-    <LinearLayout
-        android:id="@+id/nothingfound_layout"
+    <TextView
+        android:id="@+id/empty_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="60dp"
-        android:gravity="top"
-        android:orientation="vertical"
-        android:visibility="gone">
+        android:gravity="center"
+        android:padding="48dp"
+        android:text="@string/favorite_empty"
+        android:textAppearance="@style/SmallTextBold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/nothingfound_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="@string/favorite_empty"
-            android:textAppearance="@style/NormalText" />
 
-    </LinearLayout>
+    <ExpandableListView
+        android:id="@+id/listView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:listitem="@layout/listrow_expandable_item" />
 
-</LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

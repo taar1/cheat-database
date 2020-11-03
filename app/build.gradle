@@ -208,6 +208,7 @@ dependencies {
     implementation "androidx.navigation:navigation-ui:$nav_version"
     implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
     implementation "androidx.navigation:navigation-runtime-ktx:$nav_version"
+
     implementation("androidx.work:work-runtime-ktx:$work_version") {
         // Exclude com.google.guava to avoid 'Duplicate ListenableFuture found' error
         exclude group: 'com.google.guava', module: 'listenablefuture'

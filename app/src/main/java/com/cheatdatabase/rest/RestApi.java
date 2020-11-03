@@ -1,10 +1,10 @@
 package com.cheatdatabase.rest;
 
-import com.cheatdatabase.activity.ui.mycheats.UnpublishedCheatsRepositoryKotlin;
 import com.cheatdatabase.data.model.Cheat;
 import com.cheatdatabase.data.model.ForumPost;
 import com.cheatdatabase.data.model.Game;
 import com.cheatdatabase.data.model.Member;
+import com.cheatdatabase.data.model.MyCheatsCount;
 import com.cheatdatabase.data.model.SystemModel;
 import com.cheatdatabase.data.model.UnpublishedCheat;
 import com.google.gson.JsonObject;
@@ -309,7 +309,7 @@ public interface RestApi {
 
     @FormUrlEncoded
     @POST("countMyCheats.php")
-    Call<UnpublishedCheatsRepositoryKotlin.MyCheatsCount> countMyCheats(@Field("memberId") int memberId, @Field("pw") String password_md5);
+    Call<MyCheatsCount> countMyCheats(@Field("memberId") int memberId, @Field("pw") String password_md5);
 
 
 }
