@@ -239,4 +239,6 @@
         <item quantity="one">Cheat</item>
         <item quantity="other">Cheats</item>
     </plurals>
+
+    <string name="more_apps_url">https://www.teleboy.ch</string>
 </resources>

@@ -33,7 +33,6 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import dagger.hilt.android.AndroidEntryPoint;
-import dagger.hilt.android.qualifiers.ActivityContext;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -66,14 +65,11 @@ public class ContactFormFragment extends Fragment {
     @BindView(R.id.thank_you)
     View mThankyouView;
 
-    private Context context;
-
     private String mEmail;
     private MenuItem sendMenuItem;
 
-    @Inject
-    public ContactFormFragment(@ActivityContext Context context) {
-        this.context = context;
+    public ContactFormFragment() {
+
     }
 
     @Override
@@ -82,7 +78,7 @@ public class ContactFormFragment extends Fragment {
         ButterKnife.bind(this, view);
 
         if (!Reachability.isRegistered()) {
-            Reachability.registerReachability(context);
+            Reachability.registerReachability(getActivity());
         }
 
         Member member = tools.getMember();
@@ -104,14 +100,14 @@ public class ContactFormFragment extends Fragment {
         });
         Linkify.addLinks(mEmailaddressView, Linkify.ALL);
 
-        tools.showKeyboard(context, outerLayout);
+        tools.showKeyboard(getActivity(), outerLayout);
 
         return view;
     }
 
     @Override
     public void onPause() {
-        Reachability.unregister(context);
+        Reachability.unregister(getActivity());
         super.onPause();
     }
 
@@ -123,7 +119,7 @@ public class ContactFormFragment extends Fragment {
     private void attemptSendForm() {
         View view = getActivity().getCurrentFocus();
         if (view != null) {
-            InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+            InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
 
@@ -263,7 +259,7 @@ public class ContactFormFragment extends Fragment {
             public void onFailure(Call<Void> call, Throwable e) {
                 Log.e(TAG, "submitContactForm onFailure: " + e.getLocalizedMessage());
 
-                tools.showSnackbar(outerLayout, context.getString(R.string.err_submit_contactform), 5000);
+                tools.showSnackbar(outerLayout, getActivity().getString(R.string.err_submit_contactform), 5000);
             }
         });
     }

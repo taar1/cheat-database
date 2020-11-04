@@ -131,25 +131,28 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4caff62e-c62f-40ca-acf0-73c680b13375" name="Default" comment="Get started with the Navigation Component">
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/MainActivityK.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/data/model/MyCheatsCount.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/fragments/MyCheatsViewModel.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_main_k.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" afterDir="false" />
+    <list default="true" id="4caff62e-c62f-40ca-acf0-73c680b13375" name="Default" comment="Started with Navigation Component, created MyCheatsViewModel.kt layer.">
+      <change afterPath="$PROJECT_DIR$/app/src/amazonFlavor/res/values/strings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/googlePlayFlavor/res/values/strings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/fragments/AppPreferencesFragment.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/MainActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/ui/mycheats/MyUnpublishedCheatsViewModel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/ui/mycheats/MyUnpublishedCheatsViewModel.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/ui/mycheats/UnpublishedCheatsRepositoryKotlin.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/data/repository/MyCheatsRepository.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/data/repository/SystemRepository.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/data/repository/SystemRepository.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/AppCompatPreferenceActivity.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/AppPreferencesActivity.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/MainActivityK.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/MainActivityK.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/fragments/AppPreferencesFragment.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/fragments/ContactFormFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/fragments/ContactFormFragment.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/fragments/FavoriteGamesListFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/fragments/FavoriteGamesListFragment.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/fragments/MyCheatsFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/fragments/MyCheatsFragment.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/rest/KotlinRestApi.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/rest/KotlinRestApi.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/rest/RestApi.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/rest/RestApi.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_favorites_main_list.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_favorites_main_list.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/fragments/SystemConsoleListFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/fragments/SystemConsoleListFragment.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/fragments/TopMembersFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/fragments/TopMembersFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_app_settings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_contact_form.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_contact_form.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_topmembers.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_topmembers.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/menu_counter.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/menu_counter.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/menu/drawer_menu.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/menu/drawer_menu.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/navigation/nav_drawer.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/navigation/nav_drawer.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -159,7 +162,7 @@
   <component name="CreatePatchCommitExecutor">
     <option name="PATCH_PATH" value="" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[6ea89d94]" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[fd8b7031]" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
@@ -261,7 +264,7 @@
     <property name="device.picker.selection" value="6ea89d94" />
     <property name="extract.method.default.visibility" value="private" />
     <property name="ignore.virus.scanning.warn.message" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/app/src/main/res/layout" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/app/src/googlePlayFlavor/res/values" />
     <property name="project.structure.last.edited" value="Suggestions" />
     <property name="project.structure.proportion" value="0.17" />
     <property name="project.structure.side.proportion" value="0.2" />
@@ -297,9 +300,6 @@
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/app/src/main/res/layout-v17" />
     </key>
-    <key name="CreateTestDialog.Recents.Supers">
-      <recent name="" />
-    </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="com.cheatdatabase.data.model" />
       <recent name="com.cheatdatabase.adapters" />
@@ -312,16 +312,19 @@
       <recent name="com.cheatdatabase.listitems" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/app/src/googlePlayFlavor/res/values" />
       <recent name="$PROJECT_DIR$/app/src/main/res/layout" />
       <recent name="D:\Development\Android\Workspaces\cheat-database\app\src\main\res\layout" />
       <recent name="$PROJECT_DIR$/app/libs" />
       <recent name="$PROJECT_DIR$/app/src/main/res/layout-xlarge-land" />
-      <recent name="$PROJECT_DIR$/app/src/main/res/xml" />
     </key>
     <key name="android.template.814311009">
       <recent name="com.cheatdatabase.activity.ui.mycheats.edit" />
     </key>
     <key name="android.template.parentActivityClass">
+      <recent name="" />
+    </key>
+    <key name="CreateTestDialog.Recents.Supers">
       <recent name="" />
     </key>
   </component>
@@ -818,13 +821,6 @@
       <option name="presentableId" value="Default" />
       <updated>1487274191999</updated>
     </task>
-    <task id="LOCAL-00115" summary="Comment out unneeded gradle code">
-      <created>1589790280261</created>
-      <option name="number" value="00115" />
-      <option name="presentableId" value="LOCAL-00115" />
-      <option name="project" value="LOCAL" />
-      <updated>1589790280261</updated>
-    </task>
     <task id="LOCAL-00116" summary="Removed unused ad layout files. Builds again!!">
       <created>1589916904974</created>
       <option name="number" value="00116" />
@@ -1161,7 +1157,14 @@
       <option name="project" value="LOCAL" />
       <updated>1604352650418</updated>
     </task>
-    <option name="localTasksCounter" value="164" />
+    <task id="LOCAL-00164" summary="Started with Navigation Component, created MyCheatsViewModel.kt layer.">
+      <created>1604441215118</created>
+      <option name="number" value="00164" />
+      <option name="presentableId" value="LOCAL-00164" />
+      <option name="project" value="LOCAL" />
+      <updated>1604441215118</updated>
+    </task>
+    <option name="localTasksCounter" value="165" />
     <servers />
   </component>
   <component name="TodoView">
@@ -1266,7 +1269,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
-    <MESSAGE value="Displaying the amount of unpublished and published cheats int he &quot;my fragments&quot; view. Error in MainActivity when logging out, some fragments crash..." />
     <MESSAGE value="Fixing login/logout refresh behavior for &quot;myCheats&quot; view. logging out removes the count. Loggin in refreshes the drawer and fragment with the cheats count numbers." />
     <MESSAGE value="Fixing strings.xml cheatList -&gt; cheats&#10;Fixing favorites empty view bug&#10;Improving &quot;my cheats&quot; view with counter" />
     <MESSAGE value="Release Version 2.5.18&#10;(+ library updates)" />
@@ -1291,7 +1293,8 @@
     <MESSAGE value="Version with MVVM SystemConsoleListFragment.kt and Repository pattern. WORKING (except clicking a system when you get forawarded to GamesBySystemListActivity)" />
     <MESSAGE value="System List Fragment neu mit: Kotlin, Coroutines, MVVM, Offlince Room Caching" />
     <MESSAGE value="Get started with the Navigation Component" />
-    <option name="LAST_COMMIT_MESSAGE" value="Get started with the Navigation Component" />
+    <MESSAGE value="Started with Navigation Component, created MyCheatsViewModel.kt layer." />
+    <option name="LAST_COMMIT_MESSAGE" value="Started with Navigation Component, created MyCheatsViewModel.kt layer." />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
@@ -1316,10 +1319,10 @@
       <screen x="0" y="23" width="2560" height="1348" />
     </state>
     <state x="968" y="440" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1602529063329" />
-    <state x="769" y="23" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1603836017998">
+    <state x="769" y="23" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1604520372444">
       <screen x="0" y="23" width="2560" height="1348" />
     </state>
-    <state x="769" y="23" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1603836017998" />
+    <state x="769" y="23" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1604520372444" />
     <state x="1029" y="368" width="505" height="658" key="#org.jetbrains.kotlin.idea.refactoring.move.moveDeclarations.ui.MoveKotlinTopLevelDeclarationsDialog" timestamp="1604389633921">
       <screen x="0" y="23" width="2560" height="1348" />
     </state>
@@ -1328,6 +1331,10 @@
       <screen x="0" y="23" width="2560" height="1348" />
     </state>
     <state x="1026" y="596" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1600804429305" />
+    <state x="868" y="459" key="AndroidCreateResourceDirectoryDialog" timestamp="1604501768282">
+      <screen x="0" y="23" width="2560" height="1348" />
+    </state>
+    <state x="868" y="459" key="AndroidCreateResourceDirectoryDialog/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1604501768282" />
     <state x="868" y="459" key="AndroidCreateResourceFileDialog" timestamp="1604343287967">
       <screen x="0" y="23" width="2560" height="1348" />
     </state>
@@ -1336,68 +1343,67 @@
       <screen x="0" y="23" width="2560" height="1348" />
     </state>
     <state x="1007" y="476" key="AndroidCreateXmlResourceDialog/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1604245079468" />
-    <state x="1141" y="469" key="AndroidProcessChooserDialog" timestamp="1604322555098">
+    <state x="1141" y="469" key="AndroidProcessChooserDialog" timestamp="1604521679119">
       <screen x="0" y="23" width="2560" height="1348" />
     </state>
-    <state x="1141" y="469" key="AndroidProcessChooserDialog/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1604322555098" />
-    <state x="500" y="101" width="1718" height="1269" key="CommitChangelistDialog2" timestamp="1604352650223">
+    <state x="1141" y="469" key="AndroidProcessChooserDialog/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1604521679119" />
+    <state x="500" y="101" width="1718" height="1269" key="CommitChangelistDialog2" timestamp="1604441214900">
       <screen x="0" y="23" width="2560" height="1348" />
     </state>
-    <state x="500" y="101" width="1718" height="1269" key="CommitChangelistDialog2/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1604352650223" />
-    <state x="500" y="101" width="1524" height="1077" key="CommitChangelistDialog2/0.23.2560.1348/-1680.413.1680.1027@0.23.2560.1348" timestamp="1595851198887" />
-    <state x="11" y="34" width="2549" height="1337" maximized="true" key="DiffContextDialog" timestamp="1604247965365">
+    <state x="500" y="101" width="1718" height="1269" key="CommitChangelistDialog2/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1604441214900" />
+    <state x="11" y="34" width="2549" height="1337" maximized="true" key="DiffContextDialog" timestamp="1604522011329">
       <screen x="0" y="23" width="2560" height="1348" />
     </state>
-    <state x="11" y="34" width="2549" height="1337" maximized="true" key="DiffContextDialog/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1604247965365" />
+    <state x="11" y="34" width="2549" height="1337" maximized="true" key="DiffContextDialog/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1604522011329" />
     <state x="1068" y="445" key="FileChooserDialogImpl" timestamp="1602529985883">
       <screen x="0" y="23" width="2560" height="1348" />
     </state>
     <state x="1068" y="445" key="FileChooserDialogImpl/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1602529985883" />
-    <state width="2518" height="460" key="GridCell.Tab.0.bottom" timestamp="1604441089792">
+    <state width="2518" height="589" key="GridCell.Tab.0.bottom" timestamp="1604525796809">
       <screen x="0" y="23" width="2560" height="1348" />
     </state>
-    <state width="2518" height="460" key="GridCell.Tab.0.bottom/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1604441089792" />
+    <state width="2518" height="589" key="GridCell.Tab.0.bottom/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1604525796809" />
     <state width="2518" height="466" key="GridCell.Tab.0.bottom/0.23.2560.1348/-1680.413.1680.1027@0.23.2560.1348" timestamp="1600934568262" />
-    <state width="2518" height="460" key="GridCell.Tab.0.center" timestamp="1604441089791">
+    <state width="2518" height="589" key="GridCell.Tab.0.center" timestamp="1604525796808">
       <screen x="0" y="23" width="2560" height="1348" />
     </state>
-    <state width="2518" height="460" key="GridCell.Tab.0.center/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1604441089791" />
+    <state width="2518" height="589" key="GridCell.Tab.0.center/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1604525796808" />
     <state width="2518" height="466" key="GridCell.Tab.0.center/0.23.2560.1348/-1680.413.1680.1027@0.23.2560.1348" timestamp="1600934568261" />
-    <state width="2518" height="460" key="GridCell.Tab.0.left" timestamp="1604441089790">
+    <state width="2518" height="589" key="GridCell.Tab.0.left" timestamp="1604525796807">
       <screen x="0" y="23" width="2560" height="1348" />
     </state>
-    <state width="2518" height="460" key="GridCell.Tab.0.left/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1604441089790" />
+    <state width="2518" height="589" key="GridCell.Tab.0.left/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1604525796807" />
     <state width="2518" height="466" key="GridCell.Tab.0.left/0.23.2560.1348/-1680.413.1680.1027@0.23.2560.1348" timestamp="1600934568261" />
-    <state width="2518" height="460" key="GridCell.Tab.0.right" timestamp="1604441089791">
+    <state width="2518" height="589" key="GridCell.Tab.0.right" timestamp="1604525796808">
       <screen x="0" y="23" width="2560" height="1348" />
     </state>
-    <state width="2518" height="460" key="GridCell.Tab.0.right/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1604441089791" />
+    <state width="2518" height="589" key="GridCell.Tab.0.right/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1604525796808" />
     <state width="2518" height="466" key="GridCell.Tab.0.right/0.23.2560.1348/-1680.413.1680.1027@0.23.2560.1348" timestamp="1600934568262" />
-    <state width="2518" height="502" key="GridCell.Tab.1.bottom" timestamp="1604381298922">
+    <state width="2518" height="502" key="GridCell.Tab.1.bottom" timestamp="1604521839464">
       <screen x="0" y="23" width="2560" height="1348" />
     </state>
-    <state width="2518" height="502" key="GridCell.Tab.1.bottom/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1604381298922" />
-    <state width="2518" height="502" key="GridCell.Tab.1.center" timestamp="1604381298922">
+    <state width="2518" height="502" key="GridCell.Tab.1.bottom/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1604521839464" />
+    <state width="2518" height="502" key="GridCell.Tab.1.center" timestamp="1604521839463">
       <screen x="0" y="23" width="2560" height="1348" />
     </state>
-    <state width="2518" height="502" key="GridCell.Tab.1.center/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1604381298922" />
-    <state width="2518" height="502" key="GridCell.Tab.1.left" timestamp="1604381298921">
+    <state width="2518" height="502" key="GridCell.Tab.1.center/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1604521839463" />
+    <state width="2518" height="502" key="GridCell.Tab.1.left" timestamp="1604521839463">
       <screen x="0" y="23" width="2560" height="1348" />
     </state>
-    <state width="2518" height="502" key="GridCell.Tab.1.left/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1604381298921" />
-    <state width="2518" height="502" key="GridCell.Tab.1.right" timestamp="1604381298922">
+    <state width="2518" height="502" key="GridCell.Tab.1.left/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1604521839463" />
+    <state width="2518" height="502" key="GridCell.Tab.1.right" timestamp="1604521839464">
       <screen x="0" y="23" width="2560" height="1348" />
     </state>
-    <state width="2518" height="502" key="GridCell.Tab.1.right/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1604381298922" />
+    <state width="2518" height="502" key="GridCell.Tab.1.right/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1604521839464" />
     <state x="993" y="420" width="788" height="554" key="MultipleFileMergeDialog" timestamp="1601492072170">
       <screen x="0" y="23" width="2560" height="1348" />
     </state>
     <state x="993" y="420" width="788" height="554" key="MultipleFileMergeDialog/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1601492072170" />
     <state x="993" y="420" key="MultipleFileMergeDialog/0.23.2560.1348/-1680.413.1680.1027@0.23.2560.1348" timestamp="1596446402843" />
-    <state x="1018" y="415" key="RollbackChangesDialog" timestamp="1601494643225">
+    <state x="1018" y="415" key="RollbackChangesDialog" timestamp="1604522012889">
       <screen x="0" y="23" width="2560" height="1348" />
     </state>
-    <state x="1018" y="415" key="RollbackChangesDialog/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1601494643225" />
+    <state x="1018" y="415" key="RollbackChangesDialog/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1604522012889" />
     <state x="725" y="23" key="ScreenshotViewer.Dimensions" timestamp="1604242226845">
       <screen x="0" y="23" width="2560" height="1348" />
     </state>
@@ -1407,11 +1413,10 @@
       <screen x="0" y="23" width="2560" height="1348" />
     </state>
     <state x="384" y="310" key="SettingsEditor/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1602530758612" />
-    <state x="880" y="437" key="Vcs.Push.Dialog.v2" timestamp="1604352652818">
+    <state x="880" y="437" key="Vcs.Push.Dialog.v2" timestamp="1604441223329">
       <screen x="0" y="23" width="2560" height="1348" />
     </state>
-    <state x="880" y="437" key="Vcs.Push.Dialog.v2/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1604352652818" />
-    <state x="880" y="437" key="Vcs.Push.Dialog.v2/0.23.2560.1348/-1680.413.1680.1027@0.23.2560.1348" timestamp="1595851202545" />
+    <state x="880" y="437" key="Vcs.Push.Dialog.v2/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1604441223329" />
     <state x="100" y="123" width="2360" height="1148" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1604255700193">
       <screen x="0" y="23" width="2560" height="1348" />
     </state>
@@ -1425,11 +1430,11 @@
       <screen x="0" y="23" width="2560" height="1348" />
     </state>
     <state x="789" y="306" width="1123" height="532" key="com.intellij.testIntegration.createTest.CreateTestDialog/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1601496584754" />
-    <state x="544" y="69" width="1548" height="1151" key="find.popup" timestamp="1604440932844">
+    <state x="544" y="69" width="1548" height="1151" key="find.popup" timestamp="1604525082066">
       <screen x="0" y="23" width="2560" height="1348" />
     </state>
     <state x="382" y="82" width="1016" height="818" key="find.popup/0.23.1680.958@0.23.1680.958" timestamp="1596443458833" />
-    <state x="544" y="69" width="1548" height="1151" key="find.popup/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1604440932844" />
+    <state x="544" y="69" width="1548" height="1151" key="find.popup/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1604525082065" />
     <state x="660" y="209" width="1296" height="861" key="find.popup/0.23.2560.1348/-1680.413.1680.1027@0.23.2560.1348" timestamp="1599548260599" />
     <state x="981" y="549" key="git4idea.ui.GitTagDialog" timestamp="1596660257227">
       <screen x="0" y="23" width="2560" height="1348" />
@@ -1438,16 +1443,16 @@
     <state width="600" height="428" key="javadoc.popup" timestamp="1603746843023">
       <screen x="0" y="23" width="2560" height="1348" />
     </state>
-    <state width="752" height="140" key="javadoc.popup.new" timestamp="1604440940023">
+    <state width="752" height="140" key="javadoc.popup.new" timestamp="1604525047073">
       <screen x="0" y="23" width="2560" height="1348" />
     </state>
-    <state width="752" height="140" key="javadoc.popup.new/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1604440940023" />
+    <state width="752" height="140" key="javadoc.popup.new/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1604525047073" />
     <state width="752" height="140" key="javadoc.popup.new/0.23.2560.1348/-1680.413.1680.1027@0.23.2560.1348" timestamp="1596446258394" />
     <state width="600" height="428" key="javadoc.popup/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1603746843023" />
-    <state x="945" y="331" width="670" height="676" key="search.everywhere.popup" timestamp="1604439885788">
+    <state x="945" y="331" width="670" height="676" key="search.everywhere.popup" timestamp="1604525065231">
       <screen x="0" y="23" width="2560" height="1348" />
     </state>
-    <state x="945" y="331" width="670" height="676" key="search.everywhere.popup/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1604439885788" />
+    <state x="945" y="331" width="670" height="676" key="search.everywhere.popup/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1604525065231" />
     <state x="945" y="331" width="670" height="676" key="search.everywhere.popup/0.23.2560.1348/-1680.413.1680.1027@0.23.2560.1348" timestamp="1600934566019" />
   </component>
   <component name="XDebuggerManager">
@@ -1491,6 +1496,11 @@
           <url>file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/holders/MemberCheatsListViewItemHolder.java</url>
           <line>47</line>
           <option name="timeStamp" value="218" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/holders/TopMembersListViewItemHolder.java</url>
+          <line>36</line>
+          <option name="timeStamp" value="232" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

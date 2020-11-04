@@ -1,27 +1,37 @@
 package com.cheatdatabase.activity
 
+import android.app.SearchManager
 import android.content.Intent
 import android.os.Bundle
+import android.provider.SearchRecentSuggestions
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.NavigationUI.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.appbrain.AppBrain
 import com.cheatdatabase.R
-import com.cheatdatabase.data.model.Member
 import com.cheatdatabase.data.model.MyCheatsCount
-import com.cheatdatabase.data.repository.MyCheatsRepository
 import com.cheatdatabase.databinding.ActivityMainKBinding
 import com.cheatdatabase.dialogs.RateAppDialog
-import com.cheatdatabase.helpers.*
+import com.cheatdatabase.fragments.MyCheatsViewModel
+import com.cheatdatabase.helpers.Konstanten
+import com.cheatdatabase.helpers.Tools
+import com.cheatdatabase.helpers.TrackingUtils
 import com.cheatdatabase.rest.RestApi
+import com.cheatdatabase.search.SearchSuggestionProvider
 import com.facebook.ads.AdSize
 import com.facebook.ads.AdView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -38,6 +48,7 @@ import kotlin.random.Random
 @AndroidEntryPoint
 class MainActivityK : AppCompatActivity() {
 
+
     private val TAG = "MainActivityK"
 
     @Inject
@@ -49,18 +60,23 @@ class MainActivityK : AppCompatActivity() {
     @Inject
     lateinit var restApi: RestApi
 
+    val viewModel: MyCheatsViewModel by viewModels()
+
     //    private lateinit var mToolbar: Toolbar
-//    private lateinit var drawerLayout: DrawerLayout
     private lateinit var navigationView: NavigationView
     private lateinit var floatingActionButton: FloatingActionButton
     private lateinit var mixedBannerContainer: LinearLayout
     private lateinit var bannerContainerFacebook: LinearLayout
     private lateinit var bannerContainerInmobi: LinearLayout
     private lateinit var inMobiBanner: InMobiBanner
+    private lateinit var navController: NavController
+    private lateinit var drawerLayout: DrawerLayout
+
+    private lateinit var searchManager: SearchManager
+    private lateinit var searchView: SearchView
 
     private lateinit var adView: AdView
-    private lateinit var member: Member
-    private var myCheatsCount: MyCheatsCount? = null
+
     private lateinit var appBarConfiguration: AppBarConfiguration
 
     private lateinit var viewBinding: DrawerLayout
@@ -77,11 +93,16 @@ class MainActivityK : AppCompatActivity() {
         init()
         bindViews()
 
+        viewModel.myCheats.observe(this, { myCheats ->
+            updateMyCheatsDrawerNavigationItemCount(myCheats)
+        })
+
         prepareAdBanner()
 
         // Navigation Component
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment_k) as NavHostFragment
-        val navController = navHostFragment.navController
+        navController = navHostFragment.navController
+        drawerLayout = binding.drawerLayout
 
         appBarConfiguration = AppBarConfiguration(navController.graph, binding.drawerLayout)
 
@@ -103,9 +124,12 @@ class MainActivityK : AppCompatActivity() {
         //floatingActionButton = viewBinding.add_new_cheat_button
     }
 
+    override fun onSupportNavigateUp(): Boolean {
+        return navigateUp(navController, drawerLayout)
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        member = tools.member
 
         if (resultCode == Konstanten.LOGIN_SUCCESS_RETURN_CODE) {
             Toast.makeText(this, R.string.login_ok, Toast.LENGTH_LONG).show()
@@ -113,7 +137,69 @@ class MainActivityK : AppCompatActivity() {
             Toast.makeText(this, R.string.register_thanks, Toast.LENGTH_LONG).show()
         }
 
-        countMyCheats()
+        viewModel.getMyCheatsCount(tools.member)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menu.clear()
+
+        if (tools.member != null) {
+            menuInflater.inflate(R.menu.signout_menu, menu)
+        } else {
+            menuInflater.inflate(R.menu.signin_menu, menu)
+        }
+        menuInflater.inflate(R.menu.clear_search_history_menu, menu)
+
+        // Search
+        // Associate searchable configuration with the SearchView
+        menuInflater.inflate(R.menu.search_menu, menu)
+        searchManager = getSystemService(SEARCH_SERVICE) as SearchManager
+        val searchItem = menu.findItem(R.id.search)
+        searchView = searchItem.actionView as SearchView
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(componentName))
+
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onPrepareOptionsMenu(menu: Menu): Boolean {
+        menu.clear()
+        if (tools.member != null) {
+            menuInflater.inflate(R.menu.signout_menu, menu)
+        } else {
+            menuInflater.inflate(R.menu.signin_menu, menu)
+        }
+        menuInflater.inflate(R.menu.clear_search_history_menu, menu)
+
+        // Search
+        // Associate searchable configuration with the SearchView
+        menuInflater.inflate(R.menu.search_menu, menu)
+        searchManager = getSystemService(SEARCH_SERVICE) as SearchManager
+        searchView = menu.findItem(R.id.search).actionView as SearchView
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(componentName))
+        return super.onPrepareOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        // Handle action buttons
+        return when (item.itemId) {
+            R.id.action_clear_search_history -> {
+                val suggestions = SearchRecentSuggestions(this, SearchSuggestionProvider.AUTHORITY, SearchSuggestionProvider.MODE)
+                suggestions.clearHistory()
+                Toast.makeText(this, R.string.search_history_cleared, Toast.LENGTH_LONG).show()
+                true
+            }
+            R.id.action_login -> {
+                val loginIntent = Intent(this, LoginActivity::class.java)
+                startActivityForResult(loginIntent, Konstanten.LOGIN_REGISTER_OK_RETURN_CODE)
+                true
+            }
+            R.id.action_logout -> {
+                tools.logout()
+                invalidateOptionsMenu()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
 
@@ -137,73 +223,18 @@ class MainActivityK : AppCompatActivity() {
         }
     }
 
-    private fun updateMyCheatsDrawerNavigationItemCount() {
+    private fun updateMyCheatsDrawerNavigationItemCount(myCheatsCount: MyCheatsCount?) {
         val menu = navigationView.menu
         val navMyCheats = menu.findItem(R.id.nav_my_cheats)
         val myCheatsNavDrawerCounter = navMyCheats.actionView.findViewById<TextView>(R.id.nav_drawer_item_counter)
 
-        myCheatsNavDrawerCounter.text = ""
-        val allUnpublishedCheats = myCheatsCount!!.uncheckedCheats + myCheatsCount!!.rejectedCheats
-        if (allUnpublishedCheats > 0) {
-            myCheatsNavDrawerCounter.text = getString(R.string.braces_with_text_in_the_middle, allUnpublishedCheats)
-        }
-
-//        refreshMyCheatsFragment()
-    }
-
-//    private fun refreshMyCheatsFragment() {
-//        // If you log out we are updating the text in "MyCheatsFragment" so we have to inform the fragment that the login-state has changed.
-//        val myCheatsFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment)
-//        if (myCheatsFragment != null) {
-//            if (myCheatsFragment is MyCheatsFragment) {
-//                val mmyCheatsFragment = myCheatsFragment
-//                mmyCheatsFragment.myCheatsCount = myCheatsCount
-//                mmyCheatsFragment.updateText()
-//            }
-//        }
-//    }
-
-    //
-    //    public void showContactFormFragment() {
-    //        mToolbar.setTitle(R.string.contactform_title);
-    //        fragmentTransaction.addToBackStack(ContactFormFragment.class.getSimpleName());
-    //
-    //        fragmentManager.beginTransaction().replace(R.id.nav_host_fragment, contactFormFragment, ContactFormFragment.class.getSimpleName()).commit();
-    //
-    //        mixedBannerContainer.setVisibility(View.GONE);
-    //
-    //        floatingActionButton.hide();
-    //
-    //        // Contact Form Item: #6
-    //        navigationView.getMenu().getItem(6).setChecked(true);
-    //        drawerLayout.closeDrawers();
-    //    }
-    //
-    //    public void closeNagivationDrawer() {
-    //        drawerLayout.closeDrawers();
-    //    }
-
-    /**
-     * Loads the member's unpublished, rejected and published cheats count.
-     *
-     * @return UnpublishedCheatsRepositoryKotlin.MyCheatsCount
-     */
-    private fun countMyCheats() {
-        if (member.mid != 0) {
-            Coroutines.main {
-                val response = MyCheatsRepository().countMyCheats(
-                    member.mid,
-                    AeSimpleMD5.MD5(member.password)
-                )
-
-                if (response.isSuccessful) {
-                    myCheatsCount = response.body()!!
-                } else {
-                    myCheatsCount = null
-                }
-
-                updateMyCheatsDrawerNavigationItemCount()
+        if (myCheatsCount != null) {
+            val allUnpublishedCheats = myCheatsCount.uncheckedCheats + myCheatsCount.rejectedCheats
+            if (allUnpublishedCheats > 0) {
+                myCheatsNavDrawerCounter.text = getString(R.string.braces_with_text_in_the_middle, allUnpublishedCheats)
             }
+        } else {
+            myCheatsNavDrawerCounter.text = ""
         }
     }
 
@@ -213,8 +244,7 @@ class MainActivityK : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        member = tools.member
-        countMyCheats()
+        viewModel.getMyCheatsCount(tools.member)
     }
 
     override fun onBackPressed() {

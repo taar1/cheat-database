@@ -38,7 +38,6 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import dagger.hilt.android.AndroidEntryPoint;
-import dagger.hilt.android.qualifiers.ActivityContext;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -52,7 +51,6 @@ import retrofit2.Response;
 public class TopMembersFragment extends Fragment implements OnTopMemberListItemSelectedListener {
     private static final String TAG = TopMembersFragment.class.getSimpleName();
     private final int VISIT_WEBSITE = 0;
-    private Context context;
 
     private List<Member> memberList;
     private Member selectedMember;
@@ -72,10 +70,12 @@ public class TopMembersFragment extends Fragment implements OnTopMemberListItemS
     @BindView(R.id.empty_label)
     TextView emptyLabel;
 
-    @Inject
-    public TopMembersFragment(@ActivityContext Context context) {
-        this.context = context;
+    public TopMembersFragment() {
+    }
 
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
         memberList = new ArrayList<>();
         topMembersListViewAdapter = new TopMembersListViewAdapter(this, context);
     }
@@ -86,7 +86,7 @@ public class TopMembersFragment extends Fragment implements OnTopMemberListItemS
         ButterKnife.bind(this, view);
 
         if (!Reachability.isRegistered()) {
-            Reachability.registerReachability(context);
+            Reachability.registerReachability(getActivity());
         }
 
         setHasOptionsMenu(true);
@@ -94,14 +94,14 @@ public class TopMembersFragment extends Fragment implements OnTopMemberListItemS
         mSwipeRefreshLayout.setOnRefreshListener(this::loadMembersInBackground);
 
         if (Reachability.reachability.isReachable) {
-            layoutManager = new LinearLayoutManager(context);
+            layoutManager = new LinearLayoutManager(getActivity());
             recyclerView.setLayoutManager(layoutManager);
             recyclerView.setHasFixedSize(true);
             recyclerView.setAdapter(topMembersListViewAdapter);
             DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(), RecyclerView.VERTICAL);
             recyclerView.addItemDecoration(dividerItemDecoration);
         } else {
-            Toast.makeText(context, R.string.no_internet, Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity(), R.string.no_internet, Toast.LENGTH_LONG).show();
         }
 
         loadMembersInBackground();
@@ -110,7 +110,7 @@ public class TopMembersFragment extends Fragment implements OnTopMemberListItemS
 
     @Override
     public void onPause() {
-        Reachability.unregister(context);
+        Reachability.unregister(getActivity());
         super.onPause();
     }
 
@@ -134,7 +134,7 @@ public class TopMembersFragment extends Fragment implements OnTopMemberListItemS
                     intent.setData(Uri.parse(selectedMember.getWebsite()));
                     startActivity(intent);
                 } else {
-                    Toast.makeText(context, getString(R.string.top_members_no_website, selectedMember.getUsername()), Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(), getString(R.string.top_members_no_website, selectedMember.getUsername()), Toast.LENGTH_LONG).show();
                 }
 
                 return true;
@@ -194,11 +194,11 @@ public class TopMembersFragment extends Fragment implements OnTopMemberListItemS
     @Override
     public void onMemberClicked(Member member) {
         if (Reachability.reachability.isReachable) {
-            Intent intent = new Intent(context, CheatsByMemberListActivity.class);
+            Intent intent = new Intent(getActivity(), CheatsByMemberListActivity.class);
             intent.putExtra("member", member);
-            context.startActivity(intent);
+            getActivity().startActivity(intent);
         } else {
-            Toast.makeText(context, R.string.no_internet, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), R.string.no_internet, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -208,14 +208,9 @@ public class TopMembersFragment extends Fragment implements OnTopMemberListItemS
         if ((url != null) && (url.length() > 4)) {
             Intent intent = new Intent(Intent.ACTION_VIEW);
             intent.setData(Uri.parse(url));
-            context.startActivity(intent);
+            getActivity().startActivity(intent);
         }
     }
 
-    @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
-        this.context = context;
-    }
 
 }

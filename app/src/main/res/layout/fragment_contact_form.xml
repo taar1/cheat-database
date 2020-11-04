@@ -113,7 +113,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/contactform_thanks"
-            android:textAppearance="@style/NormalTextLight" />
+            android:textAppearance="@style/SmallTextBold" />
+
     </LinearLayout>
 
 </LinearLayout>

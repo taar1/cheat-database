@@ -26,7 +26,7 @@
         android:id="@+id/nav_group_other"
         android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_more_apps"
+            android:id="@id/nav_more_apps"
             android:icon="@drawable/ic_drawer_more"
             android:title="@string/menu_more_apps" />
         <item

@@ -11,7 +11,6 @@ import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import com.cheatdatabase.R
 import com.cheatdatabase.activity.CheatsByMemberListActivity
 import com.cheatdatabase.activity.ui.mycheats.MyUnpublishedCheatsListActivity
@@ -65,7 +64,7 @@ class MyCheatsFragment : Fragment(R.layout.fragment_my_cheats_overview) {
         unpublishedCheatsCount = view.unpublished_cheats_count
         unpublishedCheatsSubtitle = view.unpublished_cheats_subtitle
 
-        viewModel.myCheats.observe(viewLifecycleOwner, Observer { myCheats ->
+        viewModel.myCheats.observe(viewLifecycleOwner, { myCheats ->
             myCheatsCount = myCheats
             updateText()
         })
@@ -109,39 +108,7 @@ class MyCheatsFragment : Fragment(R.layout.fragment_my_cheats_overview) {
         }
     }
 
-
-//    // The cheats count is executed in MainActivity.java
-//    fun getMyUnpublishedCheatsByCoroutines() {
-//        val member = getMember()
-//        if ((member != null) && (member.mid != 0)) {
-//            Coroutines.main {
-//                val response = UnpublishedCheatsRepositoryKotlin().countMyCheats(
-//                    member.mid,
-//                    AeSimpleMD5.MD5(member.password)
-//                )
-//
-//                if (response.isSuccessful) {
-//                    myCheatCount = response.body()!!
-//
-//                    publishedCheatsCount.text = "(".plus(myCheatCount.publishedCheats).plus(")")
-//                    unpublishedCheatsCount.text =
-//                        "(".plus((myCheatCount.uncheckedCheats + myCheatCount.rejectedCheats))
-//                            .plus(")")
-//
-//                    unpublishedCheatsSubtitle.text =
-//                        getString(
-//                            R.string.cheats_waiting_for_approval,
-//                            "(".plus(myCheatCount.uncheckedCheats).plus(") "),
-//                            "(".plus(myCheatCount.rejectedCheats).plus(")")
-//                        )
-//                }
-//            }
-//        } else {
-//            showLoggedOutText()
-//        }
-//    }
-
-    fun updateText() {
+    private fun updateText() {
         if (myCheatsCount != null) {
             val unpublishedCheatsSum: Int =
                 myCheatsCount!!.uncheckedCheats + myCheatsCount!!.rejectedCheats

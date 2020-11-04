@@ -83,6 +83,7 @@ class SystemConsoleListFragment @Inject constructor() : Fragment(R.layout.fragme
         }
     }
 
+
     fun toggleRefreshingAnimation(isRefreshing: Boolean) {
         viewBinding.swipeRefreshLayout.isRefreshing = isRefreshing
     }

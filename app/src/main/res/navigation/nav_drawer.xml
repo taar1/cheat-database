@@ -30,9 +30,12 @@
         android:name="com.cheatdatabase.fragments.ContactFormFragment"
         android:label="@string/contactform_title"
         tools:layout="@layout/fragment_contact_form" />
-    <activity
+    <fragment
         android:id="@+id/nav_settings"
-        android:name="com.cheatdatabase.activity.AppPreferencesActivity"
-        android:label="@string/action_settings"
-        tools:layout="@layout/activity_app_settings" />
+        android:name="com.cheatdatabase.fragments.AppPreferencesFragment"
+        android:label="@string/action_settings" />
+    <activity
+        android:id="@+id/nav_more_apps"
+        app:action="android.intent.action.VIEW"
+        app:data="@string/more_apps_url" />
 </navigation>
