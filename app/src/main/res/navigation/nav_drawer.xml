@@ -25,6 +25,9 @@
         android:name="com.cheatdatabase.fragments.TopMembersFragment"
         android:label="@string/top_members_title"
         tools:layout="@layout/fragment_topmembers" />
+    <action
+        android:id="@+id/nav_rate"
+        android:label="@string/rate_us" />
     <fragment
         android:id="@+id/nav_contact"
         android:name="com.cheatdatabase.fragments.ContactFormFragment"
@@ -34,8 +37,14 @@
         android:id="@+id/nav_settings"
         android:name="com.cheatdatabase.fragments.AppPreferencesFragment"
         android:label="@string/action_settings" />
-    <activity
+    <fragment
         android:id="@+id/nav_more_apps"
-        app:action="android.intent.action.VIEW"
-        app:data="@string/more_apps_url" />
+        android:name="com.cheatdatabase.fragments.MoreAppsFragment"
+        tools:layout="@layout/webview_container" />
+    <fragment
+        android:id="@+id/nav_terms_of_use"
+        android:name="com.cheatdatabase.fragments.TermsAndConditionsFragment"
+        android:label="@string/privacy_policy"
+        tools:layout="@layout/webview_container" />
+
 </navigation>

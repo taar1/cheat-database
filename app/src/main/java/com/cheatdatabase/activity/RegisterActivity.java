@@ -295,7 +295,7 @@ public class RegisterActivity extends AppCompatActivity {
                 mUsernameView.requestFocus();
                 break;
             default:
-                Toast.makeText(RegisterActivity.this, R.string.err_other_problem, Toast.LENGTH_LONG).show();
+                Toast.makeText(RegisterActivity.this, R.string.err_creating_user_account, Toast.LENGTH_LONG).show();
         }
     }
 }

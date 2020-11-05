@@ -46,7 +46,7 @@
     <string name="err_username_used">用户名已被他人注册使用。</string>
     <string name="err_email_invalid">Email地址无效。</string>
     <string name="err_email_used">此Email已被他人注册使用。</string>
-    <string name="err_other_problem">创建用户账户时出错。请稍后重试。</string>
+    <string name="err_creating_user_account">创建用户账户时出错。请稍后重试。</string>
     <string name="err_email_user_not_found">没有发现用户数据.</string>
     <string name="err_data_not_accessible">请重试.</string>
     <string name="err_no_member_data">错误.</string>

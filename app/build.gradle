@@ -113,7 +113,6 @@ android {
 
 repositories {
     maven { url "https://dl.bintray.com/drummer-aidan/maven/" }
-    maven { url 'http://swisscodemonkeys.github.io/appbrain-sdk/maven' }
     maven { url 'https://maven.fabric.io/public' }
     maven { url 'https://s3.amazonaws.com/moat-sdk-builds' }
     maven { url 'https://maven.google.com' }
@@ -162,9 +161,7 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
 
-
     implementation 'de.hdodenhof:circleimageview:3.1.0'
-    api 'com.appbrain:appbrain-sdk:16.02'
     implementation 'com.github.stfalcon:stfalcon-imageviewer:0.1.0'
 
     // Retrofit
@@ -239,7 +236,7 @@ dependencies {
     androidTestImplementation "androidx.test.ext:junit:1.1.2"
 
     // Mockito
-    androidTestImplementation 'org.mockito:mockito-android:3.5.15'
+    androidTestImplementation 'org.mockito:mockito-android:3.6.0'
     testImplementation 'org.powermock:powermock-api-mockito:1.7.4'
     testImplementation 'org.powermock:powermock-module-junit4:2.0.9'
 

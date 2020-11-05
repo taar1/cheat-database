@@ -4,10 +4,8 @@ import android.app.SearchManager
 import android.content.Intent
 import android.os.Bundle
 import android.provider.SearchRecentSuggestions
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
@@ -21,7 +19,6 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import com.appbrain.AppBrain
 import com.cheatdatabase.R
 import com.cheatdatabase.data.model.MyCheatsCount
 import com.cheatdatabase.databinding.ActivityMainKBinding
@@ -30,25 +27,18 @@ import com.cheatdatabase.fragments.MyCheatsViewModel
 import com.cheatdatabase.helpers.Konstanten
 import com.cheatdatabase.helpers.Tools
 import com.cheatdatabase.helpers.TrackingUtils
-import com.cheatdatabase.rest.RestApi
 import com.cheatdatabase.search.SearchSuggestionProvider
-import com.facebook.ads.AdSize
 import com.facebook.ads.AdView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
 import com.inmobi.ads.InMobiBanner
-import com.inmobi.sdk.InMobiSdk
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main_k.view.*
-import kotlinx.android.synthetic.main.adview_mixed_banner_container.view.*
 import kotlinx.android.synthetic.main.toolbar.view.*
 import javax.inject.Inject
-import kotlin.random.Random
 
 @AndroidEntryPoint
 class MainActivityK : AppCompatActivity() {
-
-
     private val TAG = "MainActivityK"
 
     @Inject
@@ -57,12 +47,8 @@ class MainActivityK : AppCompatActivity() {
     @Inject
     lateinit var tools: Tools
 
-    @Inject
-    lateinit var restApi: RestApi
-
     val viewModel: MyCheatsViewModel by viewModels()
 
-    //    private lateinit var mToolbar: Toolbar
     private lateinit var navigationView: NavigationView
     private lateinit var floatingActionButton: FloatingActionButton
     private lateinit var mixedBannerContainer: LinearLayout
@@ -97,8 +83,6 @@ class MainActivityK : AppCompatActivity() {
             updateMyCheatsDrawerNavigationItemCount(myCheats)
         })
 
-        prepareAdBanner()
-
         // Navigation Component
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment_k) as NavHostFragment
         navController = navHostFragment.navController
@@ -108,19 +92,24 @@ class MainActivityK : AppCompatActivity() {
 
         navigationView.setupWithNavController(navController)
         setupActionBarWithNavController(navController, appBarConfiguration)
+
+        val rateAppItem = navigationView.menu.findItem(R.id.nav_rate)
+        rateAppItem.setOnMenuItemClickListener {
+            rateAppDialog.show(navController.createDeepLink().setDestination(R.id.nav_contact).createPendingIntent())
+            true
+        }
     }
 
     private fun init() {
         TrackingUtils.getInstance().init(this)
-        AppBrain.init(this)
     }
 
     private fun bindViews() {
         navigationView = viewBinding.nav_view
-        inMobiBanner = viewBinding.inmobi_banner
-        bannerContainerFacebook = viewBinding.banner_container_facebook
-        bannerContainerInmobi = viewBinding.banner_container_inmobi
-        mixedBannerContainer = viewBinding.mixed_banner_container
+//        inMobiBanner = viewBinding.inmobi_banner
+//        bannerContainerFacebook = viewBinding.banner_container_facebook
+//        bannerContainerInmobi = viewBinding.banner_container_inmobi
+//        mixedBannerContainer = viewBinding.mixed_banner_container
         //floatingActionButton = viewBinding.add_new_cheat_button
     }
 
@@ -141,28 +130,18 @@ class MainActivityK : AppCompatActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menu.clear()
-
-        if (tools.member != null) {
-            menuInflater.inflate(R.menu.signout_menu, menu)
-        } else {
-            menuInflater.inflate(R.menu.signin_menu, menu)
-        }
-        menuInflater.inflate(R.menu.clear_search_history_menu, menu)
-
-        // Search
-        // Associate searchable configuration with the SearchView
-        menuInflater.inflate(R.menu.search_menu, menu)
-        searchManager = getSystemService(SEARCH_SERVICE) as SearchManager
-        val searchItem = menu.findItem(R.id.search)
-        searchView = searchItem.actionView as SearchView
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(componentName))
-
+        populateOptionsMenu(menu)
         return super.onCreateOptionsMenu(menu)
     }
 
     override fun onPrepareOptionsMenu(menu: Menu): Boolean {
+        populateOptionsMenu(menu)
+        return super.onPrepareOptionsMenu(menu)
+    }
+
+    private fun populateOptionsMenu(menu: Menu) {
         menu.clear()
+
         if (tools.member != null) {
             menuInflater.inflate(R.menu.signout_menu, menu)
         } else {
@@ -176,7 +155,6 @@ class MainActivityK : AppCompatActivity() {
         searchManager = getSystemService(SEARCH_SERVICE) as SearchManager
         searchView = menu.findItem(R.id.search).actionView as SearchView
         searchView.setSearchableInfo(searchManager.getSearchableInfo(componentName))
-        return super.onPrepareOptionsMenu(menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -206,22 +184,22 @@ class MainActivityK : AppCompatActivity() {
     /**
      * Display either InMobi or Facebook Audience Network banner (randomly)
      */
-    private fun prepareAdBanner() {
-        if (Random.nextInt(0, 1) == 0) {
-            Log.d(TAG, "Banner: Using InMobi Version: " + InMobiSdk.getVersion())
-            inMobiBanner.setEnableAutoRefresh(true)
-            inMobiBanner.load(this)
-            bannerContainerFacebook.visibility = View.GONE
-            bannerContainerInmobi.visibility = View.VISIBLE
-        } else {
-            Log.d(TAG, "Banner: Using Facebook Audience Network")
-            bannerContainerInmobi.visibility = View.GONE
-            bannerContainerFacebook.visibility = View.VISIBLE
-            adView = AdView(this, Konstanten.FACEBOOK_AUDIENCE_NETWORK_NATIVE_BANNER_ID, AdSize.BANNER_HEIGHT_50)
-            bannerContainerFacebook.addView(adView)
-            adView.loadAd()
-        }
-    }
+//    private fun prepareAdBanner() {
+//        if (Random.nextInt(0, 1) == 0) {
+//            Log.d(TAG, "Banner: Using InMobi Version: " + InMobiSdk.getVersion())
+//            inMobiBanner.setEnableAutoRefresh(true)
+//            inMobiBanner.load(this)
+//            bannerContainerFacebook.visibility = View.GONE
+//            bannerContainerInmobi.visibility = View.VISIBLE
+//        } else {
+//            Log.d(TAG, "Banner: Using Facebook Audience Network")
+//            bannerContainerInmobi.visibility = View.GONE
+//            bannerContainerFacebook.visibility = View.VISIBLE
+//            adView = AdView(this, Konstanten.FACEBOOK_AUDIENCE_NETWORK_NATIVE_BANNER_ID, AdSize.BANNER_HEIGHT_50)
+//            bannerContainerFacebook.addView(adView)
+//            adView.loadAd()
+//        }
+//    }
 
     private fun updateMyCheatsDrawerNavigationItemCount(myCheatsCount: MyCheatsCount?) {
         val menu = navigationView.menu
@@ -245,12 +223,5 @@ class MainActivityK : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         viewModel.getMyCheatsCount(tools.member)
-    }
-
-    override fun onBackPressed() {
-        super.onBackPressed()
-
-        AppBrain.getAds().showOfferWall(this)
-        finish()
     }
 }

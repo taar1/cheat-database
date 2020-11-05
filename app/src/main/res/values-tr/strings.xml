@@ -38,7 +38,7 @@
     <string name="err_username_used">Bu kullanıcı adı şu anda kullanımda.</string>
     <string name="err_email_invalid">Email geçerli değil.</string>
     <string name="err_email_used">Bu email adresi zaten kullanılıyor.</string>
-    <string name="err_other_problem">Kullanıcı hesabını oluştururken bir hata meydana geldi. Lütfen daha sonra tekrar deneyin. If the problem remains you can also register at www.cheat-database.com/register.</string>
+    <string name="err_creating_user_account">Kullanıcı hesabını oluştururken bir hata meydana geldi. Lütfen daha sonra tekrar deneyin. If the problem remains you can also register at www.cheat-database.com/register.</string>
     <string name="err_email_user_not_found">No user found with this email address.</string>
     <string name="err_data_not_accessible">Requested data could not be retrieved. Please try again a bit later.</string>
     <string name="err_no_member_data">Error: No member data could be found.</string>

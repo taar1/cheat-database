@@ -153,7 +153,6 @@
                 android:name="android.app.default_searchable"
                 android:value="com.cheatdatabase.search.SearchResultsActivity" />
         </activity>
-        <activity android:name="com.appbrain.AppBrainActivity" />
         <activity
             android:name=".activity.ui.mycheats.MyUnpublishedCheatsListActivity"
             android:configChanges="orientation|screenSize"
@@ -181,7 +180,6 @@
             android:value="true" /> <!-- =========== -->
         <!-- AD NETWORKS -->
         <!-- =========== -->
-        <!-- AppBrain SDK -->
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="887f8ad41ac6b3277f277e83ddc0103a7215fc26" />
@@ -190,13 +188,7 @@
             android:name=".search.SearchSuggestionProvider"
             android:authorities="com.cheatdatabase.search.SearchSuggestionProvider" />
 
-        <receiver
-            android:name="com.appbrain.ReferrerReceiver"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="com.android.vending.INSTALL_REFERRER" />
-            </intent-filter>
-        </receiver> <!-- GOOGLE ANALYTICS -->
+        <!-- GOOGLE ANALYTICS -->
         <!-- Enable background dispatching to improve delivery on non-Google Play devices -->
         <receiver
             android:name="com.google.android.gms.analytics.AnalyticsReceiver"
@@ -212,8 +204,8 @@
             <intent-filter>
                 <action android:name="com.android.vending.INSTALL_REFERRER" />
             </intent-filter>
-        </receiver> <!-- Enable Google Play Store Campaign reports -->
-        <service android:name="com.appbrain.AppBrainService" />
+        </receiver>
+        <!-- Enable Google Play Store Campaign reports -->
         <service
             android:name="com.google.android.gms.analytics.AnalyticsService"
             android:enabled="true"

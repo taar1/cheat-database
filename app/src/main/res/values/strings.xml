@@ -55,7 +55,7 @@
     <string name="err_username_used">This username is already being used.</string>
     <string name="err_email_invalid">Email is not valid.</string>
     <string name="err_email_used">This email address is already being used.</string>
-    <string name="err_other_problem">There was a problem creating the user account. Please try again a bit later. If the problem remains you can also register at www.cheat-database.com/register.</string>
+    <string name="err_creating_user_account">There was a problem creating the user account. Please try again a bit later. If the problem remains you can also register at www.cheat-database.com/register.</string>
     <string name="err_email_user_not_found">No user found with this email address.</string>
     <string name="err_data_not_accessible">Requested data could not be retrieved. Please try again a bit later.</string>
     <string name="err_submit_contactform">There was a problem submitting the data. Please try again.</string>
@@ -187,7 +187,7 @@
     <string name="rate_us_submit">Submit rating</string>
     <string name="rate_us_thanks_good_rating">Thanks for your great rating! Please also make sure to rate us on Google Play, too.</string>
     <string name="bad_rating_ouch">Ouch!</string>
-    <string name="bad_rating_text">That didn\'t go as expected.\n\nWould you mind telling us why you rated Cheat-Database with %1$d stars? We would love to hear your thoughts so we can improve the app accordingly.</string>
+    <string name="bad_rating_text">That didn\'t go as expected.\n\nWould you mind telling us why you rated Cheat-Database with %1$s? We would love to hear your thoughts so we can improve the app accordingly.</string>
     <string name="submit_feedback">Submit feedback</string>
 
     <string name="no_thanks">No thanks</string>
@@ -240,5 +240,10 @@
         <item quantity="other">Cheats</item>
     </plurals>
 
-    <string name="more_apps_url">https://www.teleboy.ch</string>
+    <plurals name="stars">
+        <item quantity="one">star</item>
+        <item quantity="other">stars</item>
+    </plurals>
+
+    <string name="more_apps_url">https://www.cheat-database.com</string>
 </resources>

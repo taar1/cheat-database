@@ -46,7 +46,7 @@
     <string name="err_username_used">Ang username na ito na gamit na.</string>
     <string name="err_email_invalid">Ang email na ito ay hindi valid.</string>
     <string name="err_email_used">Ang email address na ito ay gamit na.</string>
-    <string name="err_other_problem">Nag ka problema sa pag gawa ng account na ito. Please try again a bit later. If the problem remains you can also register at www.cheat-database.com/register.</string>
+    <string name="err_creating_user_account">Nag ka problema sa pag gawa ng account na ito. Please try again a bit later. If the problem remains you can also register at www.cheat-database.com/register.</string>
     <string name="err_email_user_not_found">Walang user na nakita na gumagamit ng email address na ito.</string>
     <string name="err_data_not_accessible">Hindi ma retrieve and ni request na data. Please try again a bit later.</string>
     <string name="err_no_member_data">Error: No member data could be found.</string>

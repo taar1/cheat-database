@@ -1,5 +1,6 @@
 package com.cheatdatabase.dialogs;
 
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -13,7 +14,6 @@ import android.widget.Toast;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.Theme;
 import com.cheatdatabase.R;
-import com.cheatdatabase.activity.MainActivity;
 import com.cheatdatabase.helpers.DistinctValues;
 import com.cheatdatabase.helpers.Konstanten;
 
@@ -25,14 +25,14 @@ public class RateAppDialog {
     private static final int MINIMUM_RATING_FOR_GOOGLE_PLAY = 4;
 
     private final Context context;
-    private MainActivity.MainActivityCallbacks mainActivityCallbacks;
-    private MaterialDialog.Builder materialDialogBuilder;
+    private final MaterialDialog.Builder materialDialogBuilder;
 
     private final SharedPreferences settings;
     private final SharedPreferences.Editor editor;
     private final String APP_RATING_LOCAL = "app_rating_local";
 
     private int rating = 0;
+    private PendingIntent pendingIntent;
 
     @Inject
     public RateAppDialog(@ActivityContext Context context) {
@@ -42,7 +42,7 @@ public class RateAppDialog {
         editor = settings.edit();
 
         materialDialogBuilder = new MaterialDialog.Builder(context)
-                .customView(R.layout.dialog_rate_cheatdatabase, true)
+                .customView(R.layout.dialog_rate_app, true)
                 .positiveText(R.string.rate_us_submit)
                 .negativeText(R.string.cancel)
                 .onPositive((dialog, which) -> {
@@ -53,7 +53,7 @@ public class RateAppDialog {
                         Toast.makeText(context, R.string.rate_us_thanks_good_rating, Toast.LENGTH_LONG).show();
 
                         Handler handler = new Handler();
-                        handler.postDelayed(() -> goToGooglePlay(), 1000);
+                        handler.postDelayed(this::goToGooglePlay, 1000);
                     } else {
                         showBadRatingDialog();
                     }
@@ -65,8 +65,8 @@ public class RateAppDialog {
                 .cancelable(false);
     }
 
-    public void show(MainActivity.MainActivityCallbacks mainActivityCallbacks) {
-        this.mainActivityCallbacks = mainActivityCallbacks;
+    public void show(PendingIntent pendingIntent) {
+        this.pendingIntent = pendingIntent;
         makeCustomLayout(materialDialogBuilder.show());
     }
 
@@ -83,8 +83,6 @@ public class RateAppDialog {
         Intent intentRateApp = new Intent(Intent.ACTION_VIEW, appUri);
         if (intentRateApp.resolveActivity(context.getPackageManager()) != null) {
             context.startActivity(intentRateApp);
-        } else {
-            Toast.makeText(context, R.string.err_other_problem, Toast.LENGTH_LONG).show();
         }
     }
 
@@ -93,16 +91,24 @@ public class RateAppDialog {
                 .customView(R.layout.dialog_bad_rating, true)
                 .positiveText(R.string.submit_feedback)
                 .negativeText(R.string.no_thanks)
-                .onPositive((dialog, which) -> mainActivityCallbacks.showContactFormFragmentCallback())
-                .onNegative((dialog, which) -> mainActivityCallbacks.closeNagivationDrawerCallback())
+                .onPositive((dialog, which) -> {
+                    try {
+                        pendingIntent.send();
+                    } catch (PendingIntent.CanceledException e) {
+                        e.printStackTrace();
+                    }
+                })
                 .theme(Theme.DARK)
-                .cancelable(false)
                 .show();
+
 
         View dialogView = badRatingDialog.getCustomView();
 
         final TextView dialogTitle = dialogView.findViewById(R.id.bad_rating_title);
         final TextView dialogText = dialogView.findViewById(R.id.bad_rating_text);
-        dialogText.setText(context.getString(R.string.bad_rating_text, rating));
+
+        String starOrStars = rating + " " +
+                context.getResources().getQuantityString(R.plurals.stars, rating);
+        dialogText.setText(context.getString(R.string.bad_rating_text, starOrStars));
     }
 }

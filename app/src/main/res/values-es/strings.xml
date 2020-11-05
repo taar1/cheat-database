@@ -46,7 +46,7 @@
     <string name="err_username_used">Este usuario ya existe.</string>
     <string name="err_email_invalid">Email no válido.</string>
     <string name="err_email_used">Esta dirección de email ya existe.</string>
-    <string name="err_other_problem">Ha habido un problema creando la cuenta. Vuelve a intentarlo más tarde. Si el problema persiste, puedes registrarte en www.cheat-database.com/register.</string>
+    <string name="err_creating_user_account">Ha habido un problema creando la cuenta. Vuelve a intentarlo más tarde. Si el problema persiste, puedes registrarte en www.cheat-database.com/register.</string>
     <string name="err_email_user_not_found">No se ha encontrado ningún usuario con este email.</string>
     <string name="err_data_not_accessible">No se ha podido recuperar la información solicitada. Vuelve a intentarlo más tarde.</string>
     <string name="err_no_member_data">Error: No se ha encontrado información del usuario.</string>

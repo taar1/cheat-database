@@ -49,7 +49,7 @@
     <string name="err_username_used">Brugernavnet er optaget.</string>
     <string name="err_email_invalid">Ugyldig e-mail-adresse.</string>
     <string name="err_email_used">E-mail-adressen er optaget.</string>
-    <string name="err_other_problem">Der var et problem med oprettelsen af din brugerkonto. Prøv venligst igen senere. If the problem remains you can also register at www.cheat-database.com/register.</string>
+    <string name="err_creating_user_account">Der var et problem med oprettelsen af din brugerkonto. Prøv venligst igen senere. If the problem remains you can also register at www.cheat-database.com/register.</string>
     <string name="err_email_user_not_found">No user found with this email address.</string>
     <string name="err_data_not_accessible">Requested data could not be retrieved. Please try again a bit later.</string>
     <string name="err_no_member_data">Error: No member data could be found.</string>

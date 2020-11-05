@@ -334,7 +334,7 @@ public class CheatViewFragment extends Fragment implements CheatViewGalleryImage
 
     private void displayTableInWebview() {
         MaterialDialog md = new MaterialDialog.Builder(getActivity())
-                .customView(R.layout.layout_cheat_content_table, true)
+                .customView(R.layout.webview_container, true)
                 .theme(Theme.DARK)
                 .positiveText(R.string.close)
                 .cancelable(true)

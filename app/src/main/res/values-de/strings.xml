@@ -51,7 +51,7 @@
     <string name="err_username_used">Dieser Benutzername wird bereits verwendet.</string>
     <string name="err_email_invalid">Ungültige E-Mail Adresse.</string>
     <string name="err_email_used">Diese E-Mail Adresse wird bereits verwendet.</string>
-    <string name="err_other_problem">Es gab ein Problem beim Erstellen des Accounts. Bitte versuche es später noch einmal. Sollte das Problem bestehen bleiben besuche www.cheat-database.com/register für eine Registration.</string>
+    <string name="err_creating_user_account">Es gab ein Problem beim Erstellen des Accounts. Bitte versuche es später noch einmal. Sollte das Problem bestehen bleiben besuche www.cheat-database.com/register für eine Registration.</string>
     <string name="err_email_user_not_found">Kein Benutzer mit dieser E-Mail Adresse gefunden.</string>
     <string name="err_data_not_accessible">Die angeforderten Daten konnten nicht empfangen werden. Versuche es etwas später noch einmal.</string>
     <string name="err_no_member_data">Fehler: Es wurden keine Daten gefunden.</string>
@@ -187,7 +187,7 @@
     <string name="rate_us_submit">Bewertung abschicken</string>
     <string name="rate_us_thanks_good_rating">Vielen Dank für die tolle Bewertung! Bitte bewerte die App doch auch noch auf Google Play.</string>
     <string name="bad_rating_ouch">Autsch!</string>
-    <string name="bad_rating_text">Das lief nicht ganz so gut wie wir gehofft haben. Bitte teile uns doch mit, wieso du Cheat-Database nur mit %1$d bewertet hast. Wir würden uns über konstruktive Kritik freuen, damit wir die App entsprechend verbessern können.</string>
+    <string name="bad_rating_text">Das lief nicht ganz so gut wie wir gehofft haben. Bitte teile uns doch mit, wieso du Cheat-Database nur mit %1$s bewertet hast. Wir würden uns über konstruktive Kritik freuen, damit wir die App entsprechend verbessern können.</string>
     <string name="submit_feedback">Feedback senden</string>
     <string name="no_thanks">Nein danke</string>
 
@@ -242,4 +242,11 @@
         <item quantity="one">Cheat</item>
         <item quantity="other">Cheats</item>
     </plurals>
+
+    <plurals name="stars">
+        <item quantity="one">Stern</item>
+        <item quantity="other">Sterne</item>
+    </plurals>
+
+    <string name="more_apps_url">https://www.cheat-database.com</string>
 </resources>

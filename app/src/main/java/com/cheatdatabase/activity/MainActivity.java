@@ -18,7 +18,6 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.ui.AppBarConfiguration;
 
-import com.appbrain.AppBrain;
 import com.cheatdatabase.R;
 import com.cheatdatabase.data.model.Member;
 import com.cheatdatabase.data.model.MyCheatsCount;
@@ -139,8 +138,6 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setHomeButtonEnabled(true);
 
         TrackingUtils.getInstance().init(this);
-
-        AppBrain.init(this);
 
 //        mainActivityCallbacks = new MainActivityCallbacks() {
 //            @Override
@@ -352,13 +349,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
         countMyCheats();
-    }
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        AppBrain.getAds().showOfferWall(this);
-        finish();
     }
 
     //    @Override
