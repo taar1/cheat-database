@@ -3,9 +3,11 @@ package com.cheatdatabase.fragments
 import android.app.ActivityOptions
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -16,8 +18,11 @@ import com.cheatdatabase.activity.GamesBySystemListActivity
 import com.cheatdatabase.adapters.SystemsRecycleListViewAdapter
 import com.cheatdatabase.data.model.SystemModel
 import com.cheatdatabase.databinding.FragmentSystemlistBinding
+import com.cheatdatabase.helpers.Konstanten
 import com.cheatdatabase.helpers.Tools
 import com.cheatdatabase.listeners.OnSystemListItemSelectedListener
+import com.facebook.ads.AdSize
+import com.facebook.ads.AdView
 import com.google.android.material.snackbar.BaseTransientBottomBar
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -28,6 +33,9 @@ class SystemConsoleListFragment @Inject constructor() : Fragment(R.layout.fragme
 
     @Inject
     lateinit var tools: Tools
+
+    private lateinit var bannerContainerFacebook: LinearLayout
+    private lateinit var adView: AdView
 
     companion object {
         fun newInstance() = SystemConsoleListFragment()
@@ -49,6 +57,7 @@ class SystemConsoleListFragment @Inject constructor() : Fragment(R.layout.fragme
         super.onViewCreated(view, savedInstanceState)
 
         systemsRecycleListViewAdapter = SystemsRecycleListViewAdapter(this)
+        prepareAdBanner()
 
         viewBinding.myRecyclerView.apply {
             adapter = systemsRecycleListViewAdapter
@@ -83,9 +92,17 @@ class SystemConsoleListFragment @Inject constructor() : Fragment(R.layout.fragme
         }
     }
 
-
     fun toggleRefreshingAnimation(isRefreshing: Boolean) {
         viewBinding.swipeRefreshLayout.isRefreshing = isRefreshing
+    }
+
+    private fun prepareAdBanner() {
+        Log.d(TAG, "Banner: Using Facebook Audience Network")
+        bannerContainerFacebook = viewBinding.bannerContainerFacebook
+        bannerContainerFacebook.visibility = View.VISIBLE
+        adView = AdView(context, Konstanten.FACEBOOK_AUDIENCE_NETWORK_NATIVE_BANNER_ID, AdSize.BANNER_HEIGHT_50)
+        bannerContainerFacebook.addView(adView)
+        adView.loadAd()
     }
 
     /**

@@ -248,5 +248,6 @@
         <item quantity="other">Sterne</item>
     </plurals>
 
+    <string name="games">%1$d Games</string>
     <string name="more_apps_url">https://www.cheat-database.com</string>
 </resources>

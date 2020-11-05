@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -14,6 +15,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -30,6 +32,8 @@ import com.cheatdatabase.helpers.Tools;
 import com.cheatdatabase.listeners.OnGameListItemSelectedListener;
 import com.cheatdatabase.rest.RestApi;
 import com.cheatdatabase.widgets.DividerDecoration;
+import com.facebook.ads.AdSize;
+import com.facebook.ads.AdView;
 import com.facebook.ads.NativeAd;
 import com.facebook.ads.NativeAdsManager;
 import com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView;
@@ -60,13 +64,15 @@ public class GamesBySystemListActivity extends AppCompatActivity implements OnGa
     RestApi restApi;
 
     @BindView(R.id.outer_layout)
-    LinearLayout outerLayout;
+    ConstraintLayout outerLayout;
     @BindView(R.id.my_recycler_view)
     FastScrollRecyclerView recyclerView;
     @BindView(R.id.swipe_refresh_layout)
     SwipeRefreshLayout mSwipeRefreshLayout;
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
+    @BindView(R.id.banner_container_facebook)
+    LinearLayout bannerContainerFacebook;
     @BindView(R.id.item_list_empty_view)
     TextView mEmptyView;
 
@@ -74,17 +80,7 @@ public class GamesBySystemListActivity extends AppCompatActivity implements OnGa
     private GamesBySystemRecycleListViewAdapter gamesBySystemRecycleListViewAdapter;
     private SystemModel systemObj;
     private Member member;
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-
-        if (Reachability.reachability.isReachable) {
-            loadGames(false);
-        } else {
-            Toast.makeText(this, R.string.no_internet, Toast.LENGTH_SHORT).show();
-        }
-    }
+    private AdView adView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,14 +90,19 @@ public class GamesBySystemListActivity extends AppCompatActivity implements OnGa
 
         NativeAdsManager nativeAdsManager = new NativeAdsManager(this, Konstanten.FACEBOOK_AUDIENCE_NETWORK_NATIVE_AD_IN_RECYCLER_VIEW, 5);
         nativeAdsManager.loadAds(NativeAd.MediaCacheFlag.ALL);
+        prepareAdBanner();
 
         systemObj = getIntent().getParcelableExtra("systemObj");
         if (systemObj == null) {
             Toast.makeText(this, R.string.err_somethings_wrong, Toast.LENGTH_LONG).show();
             finish();
         } else {
-            setTitle((systemObj.getSystemName() != null ? systemObj.getSystemName() : systemObj.getName()));
             init();
+
+            getSupportActionBar().setTitle((systemObj.getSystemName() != null ? systemObj.getSystemName() : systemObj.getName()));
+            getSupportActionBar().setSubtitle(getString(R.string.games, systemObj.getGamesCount()));
+
+            loadGames(false);
 
             mSwipeRefreshLayout.setRefreshing(true);
             mSwipeRefreshLayout.setOnRefreshListener(() -> loadGames(true));
@@ -184,6 +185,14 @@ public class GamesBySystemListActivity extends AppCompatActivity implements OnGa
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    private void prepareAdBanner() {
+        Log.d(TAG, "Banner: Using Facebook Audience Network");
+        bannerContainerFacebook.setVisibility(View.VISIBLE);
+        adView = new AdView(this, Konstanten.FACEBOOK_AUDIENCE_NETWORK_NATIVE_BANNER_ID, AdSize.BANNER_HEIGHT_50);
+        bannerContainerFacebook.addView(adView);
+        adView.loadAd();
     }
 
     private void loadGames(boolean forceLoadOnline) {

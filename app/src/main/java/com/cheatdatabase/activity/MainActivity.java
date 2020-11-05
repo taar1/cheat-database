@@ -437,11 +437,11 @@ public class MainActivity extends AppCompatActivity {
 //        drawerLayout.closeDrawers();
 //    }
 //
-    public interface MainActivityCallbacks {
-        void showContactFormFragmentCallback();
-
-        void closeNagivationDrawerCallback();
-    }
+//    public interface MainActivityCallbacks {
+//        void showContactFormFragmentCallback();
+//
+//        void closeNagivationDrawerCallback();
+//    }
 //
 //    public void showContactFormFragment() {
 //        mToolbar.setTitle(R.string.contactform_title);
