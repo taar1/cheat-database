@@ -11,6 +11,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
@@ -26,7 +28,6 @@ import com.cheatdatabase.data.RoomCheatDatabase;
 import com.cheatdatabase.data.dao.FavoriteCheatDao;
 import com.cheatdatabase.data.model.Cheat;
 import com.cheatdatabase.data.model.Game;
-import com.cheatdatabase.data.model.Member;
 import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.helpers.Tools;
@@ -59,16 +60,7 @@ import retrofit2.Response;
 @AndroidEntryPoint
 public class CheatsByGameListActivity extends AppCompatActivity implements OnCheatListItemSelectedListener {
 
-    private static String TAG = CheatsByGameListActivity.class.getSimpleName();
-
-    private Member member;
-    private ArrayList<Cheat> cheatList;
-
-    private CheatDatabaseApplication cheatDatabaseApplication;
-    private CheatsByGameRecycleListViewAdapter cheatsByGameRecycleListViewAdapter;
-
-    private Game gameObj;
-    private AdView facebookAdView;
+    private static final String TAG = CheatsByGameListActivity.class.getSimpleName();
 
     @Inject
     Tools tools;
@@ -88,6 +80,27 @@ public class CheatsByGameListActivity extends AppCompatActivity implements OnChe
     TextView mEmptyView;
     @BindView(R.id.banner_container)
     LinearLayout bannerContainerFacebook;
+
+    private ArrayList<Cheat> cheatList;
+
+    private CheatDatabaseApplication cheatDatabaseApplication;
+    private CheatsByGameRecycleListViewAdapter cheatsByGameRecycleListViewAdapter;
+
+    private Game gameObj;
+    private AdView facebookAdView;
+
+    private final ActivityResultLauncher<Intent> resultContract =
+            registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), getActivityResultRegistry(), activityResult -> {
+                int intentReturnCode = activityResult.getResultCode();
+                if (intentReturnCode == Konstanten.REGISTER_SUCCESS_RETURN_CODE) {
+                    tools.showSnackbar(outerLayout, getString(R.string.register_thanks));
+                } else if (intentReturnCode == Konstanten.LOGIN_SUCCESS_RETURN_CODE) {
+                    tools.showSnackbar(outerLayout, getString(R.string.login_ok));
+                } else if (activityResult.getResultCode() == Konstanten.RECOVER_PASSWORD_ATTEMPT) {
+                    tools.showSnackbar(outerLayout, getString(R.string.recover_login_success));
+                }
+                invalidateOptionsMenu();
+            });
 
     @Override
     protected void onStart() {
@@ -147,10 +160,6 @@ public class CheatsByGameListActivity extends AppCompatActivity implements OnChe
         }
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
-
-        if (member == null) {
-            member = tools.getMember();
-        }
     }
 
     @Override
@@ -158,7 +167,7 @@ public class CheatsByGameListActivity extends AppCompatActivity implements OnChe
         menu.clear();
         getMenuInflater().inflate(R.menu.cheats_by_game_menu, menu);
 
-        if (member != null) {
+        if (tools.getMember() != null) {
             getMenuInflater().inflate(R.menu.signout_menu, menu);
         } else {
             getMenuInflater().inflate(R.menu.signin_menu, menu);
@@ -178,7 +187,7 @@ public class CheatsByGameListActivity extends AppCompatActivity implements OnChe
     @Override
     public boolean onPrepareOptionsMenu(final Menu menu) {
         menu.clear();
-        if (member == null) {
+        if (tools.getMember() == null) {
             getMenuInflater().inflate(R.menu.signin_menu, menu);
         } else {
             getMenuInflater().inflate(R.menu.signout_menu, menu);
@@ -212,12 +221,11 @@ public class CheatsByGameListActivity extends AppCompatActivity implements OnChe
                 startActivity(explicitIntent);
                 return true;
             case R.id.action_login:
-                Intent loginIntent = new Intent(CheatsByGameListActivity.this, LoginActivity.class);
-                startActivityForResult(loginIntent, Konstanten.LOGIN_REGISTER_OK_RETURN_CODE);
+                resultContract.launch(new Intent(CheatsByGameListActivity.this, LoginActivity.class));
                 return true;
             case R.id.action_logout:
-                member = null;
                 tools.logout();
+                tools.showSnackbar(outerLayout, getString(R.string.logout_ok));
                 invalidateOptionsMenu();
                 return true;
             default:
@@ -262,13 +270,11 @@ public class CheatsByGameListActivity extends AppCompatActivity implements OnChe
 
         if (!isCached || forceLoadOnline) {
             int memberId = 0;
-            if (member != null) {
-                memberId = member.getMid();
+            if (tools.getMember() != null) {
+                memberId = tools.getMember().getMid();
             }
 
             TreeMap finalCheatListTree = cheatListTree;
-
-            Log.d(TAG, "XXXXXX GGGGG loadCheats: ");
 
             Call<List<Cheat>> call = restApi.getCheatsAndRatings(gameObj.getGameId(), memberId, (isAchievementsEnabled ? 1 : 0));
             call.enqueue(new Callback<List<Cheat>>() {
@@ -358,20 +364,6 @@ public class CheatsByGameListActivity extends AppCompatActivity implements OnChe
         startActivity(explicitIntent);
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        member = tools.getMember();
-
-        if (requestCode == Konstanten.LOGIN_REGISTER_OK_RETURN_CODE) {
-            if (resultCode == Konstanten.LOGIN_SUCCESS_RETURN_CODE) {
-                Toast.makeText(this, R.string.login_ok, Toast.LENGTH_LONG).show();
-            } else if (resultCode == Konstanten.REGISTER_SUCCESS_RETURN_CODE) {
-                Toast.makeText(this, R.string.register_thanks, Toast.LENGTH_LONG).show();
-            }
-        }
-    }
-
     void addCheatsToFavoritesTask() {
         FavoriteCheatDao dao = RoomCheatDatabase.getDatabase(this).favoriteDao();
 
@@ -390,8 +382,8 @@ public class CheatsByGameListActivity extends AppCompatActivity implements OnChe
 
                     Needle.onBackgroundThread().execute(() -> {
                         int memberId = 0;
-                        if (member != null) {
-                            memberId = member.getMid();
+                        if (tools.getMember() != null) {
+                            memberId = tools.getMember().getMid();
                         }
 
                         dao.insert(cheat.toFavoriteCheatModel(memberId));

@@ -2,6 +2,7 @@ package com.cheatdatabase.activity;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -16,6 +17,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentManager;
@@ -29,7 +32,6 @@ import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.helpers.Tools;
 import com.cheatdatabase.rest.RestApi;
-import com.google.firebase.crashlytics.FirebaseCrashlytics;
 import com.google.gson.JsonObject;
 
 import java.security.NoSuchAlgorithmException;
@@ -83,7 +85,20 @@ public class LoginActivity extends AppCompatActivity implements AlreadyLoggedInD
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
 
-    private Member member;
+    private final ActivityResultLauncher<Intent> resultContract =
+            registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), getActivityResultRegistry(), activityResult -> {
+
+                int intentReturnCode = activityResult.getResultCode();
+                if (intentReturnCode == Konstanten.REGISTER_SUCCESS_RETURN_CODE) {
+                    setResult(Konstanten.REGISTER_SUCCESS_RETURN_CODE);
+                    finish();
+                } else if (intentReturnCode == Konstanten.RECOVER_PASSWORD_SUCCESS_RETURN_CODE) {
+                    setResult(Konstanten.RECOVER_PASSWORD_SUCCESS_RETURN_CODE);
+                } else if (activityResult.getResultCode() == Konstanten.RECOVER_PASSWORD_ATTEMPT) {
+                    setResult(Konstanten.RECOVER_PASSWORD_ATTEMPT);
+                }
+
+            });
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,8 +112,8 @@ public class LoginActivity extends AppCompatActivity implements AlreadyLoggedInD
         mEmail = getIntent().getStringExtra(EXTRA_EMAIL);
 
         mEmailView.setText(mEmail);
-        if ((member != null) && member.getEmail() != null) {
-            mEmailView.setText(member.getEmail());
+        if ((tools.getMember() != null) && tools.getMember().getEmail() != null) {
+            mEmailView.setText(tools.getMember().getEmail());
         }
 
         mPasswordView.setOnEditorActionListener((textView, id, keyEvent) -> {
@@ -115,7 +130,7 @@ public class LoginActivity extends AppCompatActivity implements AlreadyLoggedInD
 
 
         // If already logged in, show a popup.
-        if ((member != null) && (member.getEmail().length() > 0)) {
+        if ((tools.getMember() != null) && (tools.getMember().getEmail().length() > 0)) {
             mEmailView.setEnabled(false);
             mPasswordView.setEnabled(false);
             loginButton.setEnabled(false);
@@ -135,14 +150,11 @@ public class LoginActivity extends AppCompatActivity implements AlreadyLoggedInD
         }
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
-
-        member = tools.getMember();
     }
 
     @OnClick(R.id.txt_send_login)
     void forgotPasswordClicked() {
-        Intent recoverIntent = new Intent(LoginActivity.this, RecoverActivity.class);
-        startActivityForResult(recoverIntent, Konstanten.RECOVER_PASSWORD_ATTEMPT);
+        resultContract.launch(new Intent(this, RecoverActivity.class));
     }
 
     @OnClick(R.id.login_button)
@@ -156,6 +168,7 @@ public class LoginActivity extends AppCompatActivity implements AlreadyLoggedInD
 
     @OnClick(R.id.cancel_button)
     void cancelButtonClicked() {
+        setResult(Activity.RESULT_CANCELED);
         finish();
     }
 
@@ -177,7 +190,7 @@ public class LoginActivity extends AppCompatActivity implements AlreadyLoggedInD
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
         getMenuInflater().inflate(R.menu.register_menu, menu);
-        if (member != null) {
+        if (tools.getMember() != null) {
             getMenuInflater().inflate(R.menu.signout_menu, menu);
         }
         return true;
@@ -191,15 +204,12 @@ public class LoginActivity extends AppCompatActivity implements AlreadyLoggedInD
                 onBackPressed();
                 return true;
             case R.id.action_register:
-                Intent registerIntent = new Intent(LoginActivity.this, RegisterActivity.class);
-                startActivityForResult(registerIntent, Konstanten.REGISTER_ATTEMPT);
+                resultContract.launch(new Intent(this, RegisterActivity.class));
                 return true;
             case R.id.action_forgot_password:
-                Intent recoverIntent = new Intent(LoginActivity.this, RecoverActivity.class);
-                startActivityForResult(recoverIntent, Konstanten.RECOVER_PASSWORD_ATTEMPT);
+                resultContract.launch(new Intent(this, RecoverActivity.class));
                 return true;
             case R.id.action_logout:
-                member = null;
                 tools.logout();
                 invalidateOptionsMenu();
                 return true;
@@ -300,7 +310,7 @@ public class LoginActivity extends AppCompatActivity implements AlreadyLoggedInD
                     String returnValue = registerResponse.get("returnValue").getAsString();
 
                     if (returnValue.equalsIgnoreCase("login_ok")) {
-                        member = new Member();
+                        Member member = new Member();
                         member.setMid(registerResponse.get("memberId").getAsInt());
                         member.setUsername(registerResponse.get("username").getAsString());
                         member.setEmail(registerResponse.get("email").getAsString());
@@ -333,11 +343,8 @@ public class LoginActivity extends AppCompatActivity implements AlreadyLoggedInD
         Needle.onMainThread().execute(() -> {
             showProgress(false);
 
-            // LOGIN_SUCCESS_RETURN_CODE = Login success
             if (loginResult) {
-                Intent returnIntent = new Intent();
-                returnIntent.putExtra("result", Konstanten.LOGIN_SUCCESS_RETURN_CODE);
-                setResult(Konstanten.LOGIN_SUCCESS_RETURN_CODE, returnIntent);
+                setResult(Konstanten.LOGIN_SUCCESS_RETURN_CODE);
                 finish();
             } else {
                 errorStuff(errorCode);
@@ -361,30 +368,6 @@ public class LoginActivity extends AppCompatActivity implements AlreadyLoggedInD
                 break;
             default:
                 Toast.makeText(LoginActivity.this, R.string.err_occurred, Toast.LENGTH_LONG).show();
-        }
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        try {
-            int intentReturnCode = data.getIntExtra("result", Konstanten.LOGIN_REGISTER_FAIL_RETURN_CODE);
-
-            if (intentReturnCode == Konstanten.REGISTER_SUCCESS_RETURN_CODE) {
-                Intent returnIntent = new Intent();
-                returnIntent.putExtra("result", Konstanten.REGISTER_SUCCESS_RETURN_CODE);
-                setResult(RESULT_OK, returnIntent);
-
-                Toast.makeText(LoginActivity.this, R.string.register_thanks, Toast.LENGTH_LONG).show();
-                finish();
-            } else if (intentReturnCode == Konstanten.RECOVER_PASSWORD_SUCCESS_RETURN_CODE) {
-                Toast.makeText(LoginActivity.this, R.string.recover_login_success, Toast.LENGTH_LONG).show();
-            }
-        } catch (NullPointerException e) {
-            Log.e(TAG, "onActivityResult data.getIntExtra is NULL: " + e.getLocalizedMessage());
-            FirebaseCrashlytics.getInstance().recordException(e);
-            finish();
         }
     }
 

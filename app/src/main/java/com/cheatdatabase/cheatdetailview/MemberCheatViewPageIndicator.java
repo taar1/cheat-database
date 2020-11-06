@@ -13,6 +13,8 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.ShareActionProvider;
@@ -27,7 +29,6 @@ import com.cheatdatabase.activity.SubmitCheatFormActivity;
 import com.cheatdatabase.callbacks.GenericCallback;
 import com.cheatdatabase.data.model.Cheat;
 import com.cheatdatabase.data.model.Game;
-import com.cheatdatabase.data.model.Member;
 import com.cheatdatabase.dialogs.CheatMetaDialog;
 import com.cheatdatabase.dialogs.RateCheatMaterialDialog;
 import com.cheatdatabase.dialogs.ReportCheatMaterialDialog;
@@ -94,12 +95,25 @@ public class MemberCheatViewPageIndicator extends AppCompatActivity implements G
     private List<Cheat> cheatList;
     private Cheat visibleCheat;
     private Game gameObj;
-    private Member member;
     private MemberCheatViewFragmentAdapter memberCheatViewFragmentAdapter;
     private ViewPager mPager;
     private int activePage;
     private ShareActionProvider mShare;
     private AdView adView;
+
+    private final ActivityResultLauncher<Intent> resultContract =
+            registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), getActivityResultRegistry(), activityResult -> {
+                int intentReturnCode = activityResult.getResultCode();
+                if (intentReturnCode == Konstanten.REGISTER_SUCCESS_RETURN_CODE) {
+                    tools.showSnackbar(outerLayout, getString(R.string.register_thanks));
+                } else if (intentReturnCode == Konstanten.LOGIN_SUCCESS_RETURN_CODE) {
+                    tools.showSnackbar(outerLayout, getString(R.string.login_ok));
+                } else if (activityResult.getResultCode() == Konstanten.RECOVER_PASSWORD_ATTEMPT) {
+                    tools.showSnackbar(outerLayout, getString(R.string.recover_login_success));
+                }
+                invalidateOptionsMenu();
+            });
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -155,8 +169,6 @@ public class MemberCheatViewPageIndicator extends AppCompatActivity implements G
         adView = new AdView(this, Konstanten.FACEBOOK_AUDIENCE_NETWORK_NATIVE_BANNER_ID, AdSize.BANNER_HEIGHT_50);
         facebookBanner.addView(adView);
         adView.loadAd();
-
-        member = tools.getMember();
     }
 
     private void initialisePaging() {
@@ -243,27 +255,6 @@ public class MemberCheatViewPageIndicator extends AppCompatActivity implements G
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (resultCode == RESULT_OK) {
-            // Return result code. Login success, Register success etc.
-            int intentReturnCode = data.getIntExtra("result", Konstanten.LOGIN_REGISTER_FAIL_RETURN_CODE);
-
-            if (requestCode == Konstanten.LOGIN_REGISTER_OK_RETURN_CODE) {
-                member = tools.getMember();
-
-                invalidateOptionsMenu();
-                if ((member != null) && intentReturnCode == Konstanten.REGISTER_SUCCESS_RETURN_CODE) {
-                    Toast.makeText(MemberCheatViewPageIndicator.this, R.string.register_thanks, Toast.LENGTH_LONG).show();
-                } else if ((member != null) && intentReturnCode == Konstanten.LOGIN_SUCCESS_RETURN_CODE) {
-                    Toast.makeText(MemberCheatViewPageIndicator.this, R.string.login_ok, Toast.LENGTH_LONG).show();
-                }
-            }
-        }
-    }
-
-    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         if ((visibleCheat != null) && (visibleCheat.getMemberRating() > 0)) {
             getMenuInflater().inflate(R.menu.handset_cheatview_rating_on_menu, menu);
@@ -271,7 +262,7 @@ public class MemberCheatViewPageIndicator extends AppCompatActivity implements G
             getMenuInflater().inflate(R.menu.handset_cheatview_rating_off_menu, menu);
         }
 
-        if (member != null) {
+        if (tools.getMember() != null) {
             getMenuInflater().inflate(R.menu.signout_menu, menu);
         } else {
             getMenuInflater().inflate(R.menu.signin_menu, menu);
@@ -327,8 +318,8 @@ public class MemberCheatViewPageIndicator extends AppCompatActivity implements G
                 tools.showSnackbar(outerLayout, getString(R.string.favorite_adding));
 
                 int memberId = 0;
-                if (member != null) {
-                    memberId = member.getMid();
+                if (tools.getMember() != null) {
+                    memberId = tools.getMember().getMid();
                 }
                 tools.addFavorite(visibleCheat, memberId, this);
                 return true;
@@ -339,11 +330,9 @@ public class MemberCheatViewPageIndicator extends AppCompatActivity implements G
                 new CheatMetaDialog(MemberCheatViewPageIndicator.this, visibleCheat, outerLayout, tools, restApi).show();
                 return true;
             case R.id.action_login:
-                Intent loginIntent = new Intent(MemberCheatViewPageIndicator.this, LoginActivity.class);
-                startActivityForResult(loginIntent, Konstanten.LOGIN_REGISTER_OK_RETURN_CODE);
+                resultContract.launch(new Intent(MemberCheatViewPageIndicator.this, LoginActivity.class));
                 return true;
             case R.id.action_logout:
-                member = null;
                 tools.logout();
                 invalidateOptionsMenu();
                 return true;
@@ -356,18 +345,18 @@ public class MemberCheatViewPageIndicator extends AppCompatActivity implements G
     }
 
     public void showReportDialog() {
-        if ((member == null) || (member.getMid() == 0)) {
+        if ((tools.getMember() == null) || (tools.getMember().getMid() == 0)) {
             Toast.makeText(MemberCheatViewPageIndicator.this, R.string.error_login_required, Toast.LENGTH_SHORT).show();
         } else {
-            new ReportCheatMaterialDialog(this, visibleCheat, member, outerLayout, tools);
+            new ReportCheatMaterialDialog(this, visibleCheat, tools.getMember(), outerLayout, tools);
         }
     }
 
     public void showRatingDialog() {
-        if ((member == null) || (member.getMid() == 0)) {
+        if ((tools.getMember() == null) || (tools.getMember().getMid() == 0)) {
             Toast.makeText(this, R.string.error_login_required, Toast.LENGTH_LONG).show();
         } else {
-            new RateCheatMaterialDialog(this, visibleCheat, member, outerLayout, tools, restApi);
+            new RateCheatMaterialDialog(this, visibleCheat, tools.getMember(), outerLayout, tools, restApi);
         }
     }
 
@@ -390,7 +379,6 @@ public class MemberCheatViewPageIndicator extends AppCompatActivity implements G
         if (!Reachability.isRegistered()) {
             Reachability.registerReachability(this);
         }
-        member = tools.getMember();
 
         invalidateOptionsMenu();
     }

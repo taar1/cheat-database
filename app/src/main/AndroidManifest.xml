@@ -27,7 +27,7 @@
         android:theme="@style/Theme.Navyblue">
         <activity android:name=".activity.ui.mycheats.edit.EditCheatActivity"></activity>
         <activity
-            android:name=".activity.MainActivityK"
+            android:name=".activity.MainActivity"
             android:configChanges="orientation|screenSize"
             android:label="@string/title_activity_main">
             <intent-filter>
@@ -46,7 +46,7 @@
         <activity
             android:name=".search.SearchResultsActivity"
             android:label="@string/title_activity_search_result"
-            android:parentActivityName=".activity.MainActivityK">
+            android:parentActivityName=".activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
@@ -60,7 +60,7 @@
         </activity>
         <activity
             android:name=".activity.GamesBySystemListActivity"
-            android:parentActivityName=".activity.MainActivityK">
+            android:parentActivityName=".activity.MainActivity">
             <meta-data
                 android:name="android.app.default_searchable"
                 android:value="com.cheatdatabase.search.SearchResultsActivity" />
@@ -177,7 +177,8 @@
             android:value="@integer/google_play_services_version" />
         <meta-data
             android:name="com.google.android.gms.ads.AD_MANAGER_APP"
-            android:value="true" /> <!-- =========== -->
+            android:value="true" />
+        <!-- =========== -->
         <!-- AD NETWORKS -->
         <!-- =========== -->
         <meta-data

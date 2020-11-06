@@ -65,8 +65,6 @@ public class CheatDatabaseApplication extends Application implements Application
     }
 
     private void init() {
-//        Fabric.with(this, new Crashlytics());
-
         // Setup lifecycle callbacks
         registerActivityLifecycleCallbacks(this);
 

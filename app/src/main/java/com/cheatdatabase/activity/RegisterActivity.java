@@ -2,7 +2,6 @@ package com.cheatdatabase.activity;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -52,9 +51,6 @@ public class RegisterActivity extends AppCompatActivity {
     @Inject
     RestApi restApi;
 
-    // Values for email and password at the time of the login attempt.
-    private String mEmail;
-
     @BindView(R.id.email)
     EditText mEmailView;
     @BindView(R.id.username)
@@ -70,6 +66,8 @@ public class RegisterActivity extends AppCompatActivity {
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
 
+    // Values for email and password at the time of the login attempt.
+    private String mEmail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -267,12 +265,8 @@ public class RegisterActivity extends AppCompatActivity {
     void registerTaskFinished(boolean success, int errorCode) {
         Needle.onMainThread().execute(() -> {
             showProgress(false);
-
             if (success) {
-                // REGISTER_SUCCESS_RETURN_CODE = Register success
-                Intent returnIntent = new Intent();
-                returnIntent.putExtra("result", Konstanten.REGISTER_SUCCESS_RETURN_CODE);
-                setResult(RESULT_OK, returnIntent);
+                setResult(Konstanten.REGISTER_SUCCESS_RETURN_CODE);
                 finish();
             } else {
                 displayError(errorCode);

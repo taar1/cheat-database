@@ -43,6 +43,8 @@
         <LinearLayout
             android:id="@+id/login_form"
             style="@style/LoginFormContainer"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
             android:gravity="end"
             android:orientation="vertical">
 
@@ -59,15 +61,13 @@
                 android:padding="16dp"
                 android:singleLine="true" />
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/recover_button"
+                style="@style/DefaultButtonStyle"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="60dp"
                 android:layout_gravity="top"
                 android:layout_marginTop="16dp"
-                android:background="@drawable/bluedark01_btn_default_holo_dark"
-                android:paddingLeft="32dp"
-                android:paddingRight="32dp"
                 android:text="@string/action_forgot_password_short" />
 
             <TextView

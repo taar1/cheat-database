@@ -21,6 +21,8 @@ import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.ShareActionProvider;
@@ -32,7 +34,6 @@ import com.cheatdatabase.callbacks.GenericCallback;
 import com.cheatdatabase.data.model.Cheat;
 import com.cheatdatabase.data.model.ForumPost;
 import com.cheatdatabase.data.model.Game;
-import com.cheatdatabase.data.model.Member;
 import com.cheatdatabase.dialogs.CheatMetaDialog;
 import com.cheatdatabase.dialogs.RateCheatMaterialDialog;
 import com.cheatdatabase.dialogs.ReportCheatMaterialDialog;
@@ -68,12 +69,11 @@ import retrofit2.Response;
 @AndroidEntryPoint
 public class CheatForumActivity extends AppCompatActivity implements GenericCallback {
 
-    private static String TAG = CheatForumActivity.class.getSimpleName();
+    private static final String TAG = CheatForumActivity.class.getSimpleName();
 
     private Cheat cheatObj;
     private Game gameObj;
     private ShareActionProvider mShare;
-    private Member member;
 
     @Inject
     Tools tools;
@@ -100,8 +100,21 @@ public class CheatForumActivity extends AppCompatActivity implements GenericCall
     Button postButton;
     @BindView(R.id.banner_container)
     LinearLayout facebookBanner;
+
     private AdView adView;
 
+    private final ActivityResultLauncher<Intent> resultContract =
+            registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), getActivityResultRegistry(), activityResult -> {
+                int intentReturnCode = activityResult.getResultCode();
+                if (intentReturnCode == Konstanten.REGISTER_SUCCESS_RETURN_CODE) {
+                    tools.showSnackbar(outerLayout, getString(R.string.register_thanks));
+                } else if (intentReturnCode == Konstanten.LOGIN_SUCCESS_RETURN_CODE) {
+                    tools.showSnackbar(outerLayout, getString(R.string.login_ok));
+                } else if (activityResult.getResultCode() == Konstanten.RECOVER_PASSWORD_ATTEMPT) {
+                    tools.showSnackbar(outerLayout, getString(R.string.recover_login_success));
+                }
+                invalidateOptionsMenu();
+            });
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -159,8 +172,6 @@ public class CheatForumActivity extends AppCompatActivity implements GenericCall
         facebookBanner.addView(adView);
         adView.loadAd();
 
-        member = tools.getMember();
-
         if (mToolbar != null) {
             setSupportActionBar(mToolbar);
         }
@@ -174,7 +185,7 @@ public class CheatForumActivity extends AppCompatActivity implements GenericCall
      * Submits the forum post and scrolls down to the bottom of the list.
      */
     private void submitPost() {
-        if (member == null) {
+        if (tools.getMember() == null) {
             Toast.makeText(this, R.string.error_login_required, Toast.LENGTH_LONG).show();
         } else {
             // get the current date
@@ -198,9 +209,9 @@ public class CheatForumActivity extends AppCompatActivity implements GenericCall
 
             ForumPost forumPost = new ForumPost();
             forumPost.setText(editText.getText().toString().trim());
-            forumPost.setUsername(member.getUsername());
-            forumPost.setName(member.getUsername());
-            forumPost.setEmail(member.getEmail());
+            forumPost.setUsername(tools.getMember().getUsername());
+            forumPost.setName(tools.getMember().getUsername());
+            forumPost.setEmail(tools.getMember().getEmail());
             forumPost.setCreated(months[mMonth] + " " + mDay + ", " + mYear + " / " + leadingZeroHour + ":" + leadingZeroMin);
 
             if (Reachability.reachability.isReachable) {
@@ -302,7 +313,6 @@ public class CheatForumActivity extends AppCompatActivity implements GenericCall
         if (!Reachability.isRegistered()) {
             Reachability.registerReachability(this);
         }
-        member = tools.getMember();
     }
 
     @Override
@@ -330,7 +340,7 @@ public class CheatForumActivity extends AppCompatActivity implements GenericCall
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.handset_forum_menu, menu);
 
-        if (member != null) {
+        if (tools.getMember() != null) {
             getMenuInflater().inflate(R.menu.signout_menu, menu);
         } else {
             getMenuInflater().inflate(R.menu.signin_menu, menu);
@@ -387,8 +397,8 @@ public class CheatForumActivity extends AppCompatActivity implements GenericCall
             case R.id.action_add_to_favorites:
                 tools.showSnackbar(outerLayout, getString(R.string.favorite_adding));
                 int memberId = 0;
-                if (member != null) {
-                    memberId = member.getMid();
+                if (tools.getMember() != null) {
+                    memberId = tools.getMember().getMid();
                 }
                 tools.addFavorite(cheatObj, memberId, this);
                 return true;
@@ -407,13 +417,11 @@ public class CheatForumActivity extends AppCompatActivity implements GenericCall
                 startActivity(explicitIntent);
                 return true;
             case R.id.action_login:
-                Intent loginIntent = new Intent(this, LoginActivity.class);
-                startActivityForResult(loginIntent, Konstanten.LOGIN_REGISTER_OK_RETURN_CODE);
+                resultContract.launch(new Intent(this, LoginActivity.class));
                 return true;
             case R.id.action_logout:
-                member = null;
-//                Tools.logout(CheatForumActivity.this, settings.edit());
                 tools.logout();
+                tools.showSnackbar(outerLayout, getString(R.string.logout_ok));
                 invalidateOptionsMenu();
                 return true;
             default:
@@ -421,39 +429,19 @@ public class CheatForumActivity extends AppCompatActivity implements GenericCall
         }
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (resultCode == RESULT_OK) {
-            // Return result code. Login success, Register success etc.
-            int intentReturnCode = data.getIntExtra("result", Konstanten.LOGIN_REGISTER_FAIL_RETURN_CODE);
-
-            if (requestCode == Konstanten.LOGIN_REGISTER_OK_RETURN_CODE) {
-                member = tools.getMember();
-                invalidateOptionsMenu();
-                if ((member != null) && intentReturnCode == Konstanten.REGISTER_SUCCESS_RETURN_CODE) {
-                    Toast.makeText(CheatForumActivity.this, R.string.register_thanks, Toast.LENGTH_LONG).show();
-                } else if ((member != null) && intentReturnCode == Konstanten.LOGIN_SUCCESS_RETURN_CODE) {
-                    Toast.makeText(CheatForumActivity.this, R.string.login_ok, Toast.LENGTH_LONG).show();
-                }
-            }
-        }
-    }
-
     public void showReportDialog() {
-        if ((member == null) || (member.getMid() == 0)) {
+        if ((tools.getMember() == null) || (tools.getMember().getMid() == 0)) {
             Toast.makeText(this, R.string.error_login_required, Toast.LENGTH_LONG).show();
         } else {
-            new ReportCheatMaterialDialog(this, cheatObj, member, outerLayout, tools);
+            new ReportCheatMaterialDialog(this, cheatObj, tools.getMember(), outerLayout, tools);
         }
     }
 
     public void showRatingDialog() {
-        if ((member == null) || (member.getMid() == 0)) {
+        if ((tools.getMember() == null) || (tools.getMember().getMid() == 0)) {
             Toast.makeText(this, R.string.error_login_required, Toast.LENGTH_LONG).show();
         } else {
-            new RateCheatMaterialDialog(this, cheatObj, member, outerLayout, tools, restApi);
+            new RateCheatMaterialDialog(this, cheatObj, tools.getMember(), outerLayout, tools, restApi);
         }
     }
 
@@ -468,7 +456,7 @@ public class CheatForumActivity extends AppCompatActivity implements GenericCall
     private void submitForumPost(ForumPost forumPost) {
         Call<Void> call = null;
         try {
-            call = restApi.insertForum(member.getMid(), cheatObj.getCheatId(), AeSimpleMD5.MD5(member.getPassword()), forumPost.getText());
+            call = restApi.insertForum(tools.getMember().getMid(), cheatObj.getCheatId(), AeSimpleMD5.MD5(tools.getMember().getPassword()), forumPost.getText());
             call.enqueue(new Callback<Void>() {
                 @Override
                 public void onResponse(Call<Void> forumPost, Response<Void> response) {

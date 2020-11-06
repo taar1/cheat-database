@@ -35,10 +35,14 @@ public class MemberCheatRecycleListViewAdapter extends RecyclerView.Adapter<Recy
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(final ViewGroup parent, int viewType) {
-        // TODO hier weiterfahren, member objekt wird jetzt mitgegeben (PHP)
-        // TODO hier weiterfahren, member objekt wird jetzt mitgegeben (PHP)
         Log.d(TAG, "XXXXX onCreateViewHolder: loggedInMember" + loggedInMember.getMid());
         Log.d(TAG, "XXXXX onCreateViewHolder: loggedInMember" + cheatList.get(0).getSubmittingMember().getMid());
+
+        // TODO FIXME hier crasht es noch (wegen loggedInMember)
+        // TODO FIXME hier crasht es noch (wegen loggedInMember)
+        // TODO FIXME hier crasht es noch (wegen loggedInMember)
+        // TODO FIXME hier crasht es noch (wegen loggedInMember)
+        // TODO FIXME hier crasht es noch (wegen loggedInMember)
 
         final View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.listrow_member_cheat_item, parent, false);
         itemView.setDrawingCacheEnabled(true);

@@ -10,6 +10,8 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -18,7 +20,6 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.Theme;
 import com.cheatdatabase.R;
 import com.cheatdatabase.data.model.Game;
-import com.cheatdatabase.data.model.Member;
 import com.cheatdatabase.data.model.UnpublishedCheat;
 import com.cheatdatabase.dialogs.PlainInformationDialog;
 import com.cheatdatabase.helpers.Konstanten;
@@ -68,8 +69,20 @@ public class SubmitCheatFormActivity extends AppCompatActivity {
     Toolbar toolbar;
 
     private Game gameObj;
-    private Member member;
     private UnpublishedCheat unpublishedCheat;
+
+    private final ActivityResultLauncher<Intent> resultContract =
+            registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), getActivityResultRegistry(), activityResult -> {
+                int intentReturnCode = activityResult.getResultCode();
+                if (intentReturnCode == Konstanten.REGISTER_SUCCESS_RETURN_CODE) {
+                    tools.showSnackbar(outerLayout, getString(R.string.register_thanks));
+                } else if (intentReturnCode == Konstanten.LOGIN_SUCCESS_RETURN_CODE) {
+                    tools.showSnackbar(outerLayout, getString(R.string.login_ok));
+                } else if (activityResult.getResultCode() == Konstanten.RECOVER_PASSWORD_ATTEMPT) {
+                    tools.showSnackbar(outerLayout, getString(R.string.recover_login_success));
+                }
+                invalidateOptionsMenu();
+            });
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,8 +116,6 @@ public class SubmitCheatFormActivity extends AppCompatActivity {
         }
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
-
-        member = tools.getMember();
     }
 
     @Override
@@ -120,8 +131,8 @@ public class SubmitCheatFormActivity extends AppCompatActivity {
                 login();
                 return true;
             case R.id.action_logout:
-                member = null;
                 tools.logout();
+                tools.showSnackbar(outerLayout, getString(R.string.logout_ok));
                 invalidateOptionsMenu();
                 return true;
             default:
@@ -140,7 +151,7 @@ public class SubmitCheatFormActivity extends AppCompatActivity {
     }
 
     void sendButtonClicked() {
-        if ((member != null) && (member.getMid() != 0)) {
+        if ((tools.getMember() != null) && (tools.getMember().getMid() != 0)) {
             if ((cheatText.getText().toString().trim().length() < 5) || (cheatTitle.getText().toString().trim().length() < 2)) {
                 showAlertDialog(R.string.err, R.string.fill_everything);
             } else if (!checkBoxTerms.isChecked()) {
@@ -159,7 +170,7 @@ public class SubmitCheatFormActivity extends AppCompatActivity {
 
     private void checkMemberPermissions() {
         Log.d(TAG, "checkMemberPermissions: 1");
-        Call<JsonObject> call = restApi.getMemberPermissions(member.getMid());
+        Call<JsonObject> call = restApi.getMemberPermissions(tools.getMember().getMid());
         call.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> games, Response<JsonObject> response) {
@@ -199,7 +210,7 @@ public class SubmitCheatFormActivity extends AppCompatActivity {
             finish();
         } else {
             Log.d(TAG, "submitCheatNow: 3");
-            Call<JsonObject> call = restApi.insertCheat(member.getMid(), gameObj.getGameId(), cheatTitleTrimmed, cheatTextTrimmed);
+            Call<JsonObject> call = restApi.insertCheat(tools.getMember().getMid(), gameObj.getGameId(), cheatTitleTrimmed, cheatTextTrimmed);
             call.enqueue(new Callback<JsonObject>() {
                 @Override
                 public void onResponse(Call<JsonObject> games, Response<JsonObject> response) {
@@ -252,7 +263,7 @@ public class SubmitCheatFormActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.submitcheat_menu, menu);
 
-        if (member != null) {
+        if (tools.getMember() != null) {
             getMenuInflater().inflate(R.menu.signout_menu, menu);
         } else {
             getMenuInflater().inflate(R.menu.signin_menu, menu);
@@ -262,27 +273,7 @@ public class SubmitCheatFormActivity extends AppCompatActivity {
     }
 
     private void login() {
-        Intent loginIntent = new Intent(SubmitCheatFormActivity.this, LoginActivity.class);
-        startActivityForResult(loginIntent, Konstanten.LOGIN_REGISTER_OK_RETURN_CODE);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        member = tools.getMember();
-
-        if (resultCode == Konstanten.LOGIN_SUCCESS_RETURN_CODE) {
-            if (member != null) {
-                Toast.makeText(SubmitCheatFormActivity.this, R.string.login_ok, Toast.LENGTH_LONG).show();
-            }
-        } else if (resultCode == Konstanten.REGISTER_SUCCESS_RETURN_CODE) {
-            if (member != null) {
-                Toast.makeText(SubmitCheatFormActivity.this, R.string.register_thanks, Toast.LENGTH_LONG).show();
-            }
-        }
-
-        invalidateOptionsMenu();
+        resultContract.launch(new Intent(SubmitCheatFormActivity.this, LoginActivity.class));
     }
 
 }

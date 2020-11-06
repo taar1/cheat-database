@@ -471,7 +471,7 @@ public class Tools {
 
     public void logout() {
         removeValue(Konstanten.MEMBER_OBJECT);
-        Toast.makeText(context, R.string.logout_ok, Toast.LENGTH_LONG).show();
+        //Toast.makeText(context, R.string.logout_ok, Toast.LENGTH_LONG).show();
     }
 
     public Toolbar initToolbarBase(AppCompatActivity a, Toolbar toolbar) {

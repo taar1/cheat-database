@@ -12,6 +12,7 @@
         android:padding="48dp"
         android:text="@string/favorite_empty"
         android:textAppearance="@style/SmallTextBold"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

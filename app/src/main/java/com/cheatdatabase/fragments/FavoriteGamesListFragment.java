@@ -67,7 +67,6 @@ public class FavoriteGamesListFragment extends Fragment implements OnGameListIte
         View view = inflater.inflate(R.layout.fragment_favorites_main_list, container, false);
         ButterKnife.bind(this, view);
 
-
         dao = RoomCheatDatabase.getDatabase(getActivity()).favoriteDao();
 
         adapter = new FavoritesExpandableListAdapter(context, groups, dao, this, getLayoutInflater());
@@ -118,6 +117,7 @@ public class FavoriteGamesListFragment extends Fragment implements OnGameListIte
                     for (Game g : gameList) {
                         if (g.getGameId() == game.getGameId()) {
                             addThisGame = false;
+                            break;
                         }
                     }
 

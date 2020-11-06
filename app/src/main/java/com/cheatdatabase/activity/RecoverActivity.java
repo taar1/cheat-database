@@ -2,7 +2,6 @@ package com.cheatdatabase.activity;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -30,6 +29,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import dagger.hilt.android.AndroidEntryPoint;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -38,6 +38,7 @@ import retrofit2.Response;
  * Activity which displays a login screen to the user, offering registration as
  * well.
  */
+@AndroidEntryPoint
 public class RecoverActivity extends AppCompatActivity {
     private static final String TAG = "RecoverActivity";
     /**
@@ -84,7 +85,6 @@ public class RecoverActivity extends AppCompatActivity {
                 } else {
                     Toast.makeText(RecoverActivity.this, R.string.no_internet, Toast.LENGTH_SHORT).show();
                 }
-
             }
             return false;
         });
@@ -223,9 +223,7 @@ public class RecoverActivity extends AppCompatActivity {
             mResponseMessageView.setVisibility(View.VISIBLE);
 
             if (successMessage != R.string.err_email_user_not_found) {
-                Intent returnIntent = new Intent();
-                returnIntent.putExtra("result", Konstanten.RECOVER_PASSWORD_SUCCESS_RETURN_CODE);
-                setResult(RESULT_OK, returnIntent);
+                setResult(Konstanten.RECOVER_PASSWORD_SUCCESS_RETURN_CODE);
                 finish();
             }
         } else {

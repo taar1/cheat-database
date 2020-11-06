@@ -113,7 +113,6 @@ android {
 
 repositories {
     maven { url "https://dl.bintray.com/drummer-aidan/maven/" }
-    maven { url 'https://maven.fabric.io/public' }
     maven { url 'https://s3.amazonaws.com/moat-sdk-builds' }
     maven { url 'https://maven.google.com' }
     maven { url 'https://jitpack.io' }
@@ -157,7 +156,7 @@ dependencies {
 
     implementation 'com.facebook.android:audience-network-sdk:6.2.0'
     implementation 'com.zsoltsafrany:needle:1.0.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.3'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
     implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
 

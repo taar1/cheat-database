@@ -14,6 +14,8 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.ShareActionProvider;
@@ -29,7 +31,6 @@ import com.cheatdatabase.data.RoomCheatDatabase;
 import com.cheatdatabase.data.dao.FavoriteCheatDao;
 import com.cheatdatabase.data.model.Cheat;
 import com.cheatdatabase.data.model.Game;
-import com.cheatdatabase.data.model.Member;
 import com.cheatdatabase.dialogs.CheatMetaDialog;
 import com.cheatdatabase.dialogs.RateCheatMaterialDialog;
 import com.cheatdatabase.dialogs.ReportCheatMaterialDialog;
@@ -76,32 +77,6 @@ public class FavoritesCheatViewPageIndicator extends AppCompatActivity {
 
     private final String TAG = FavoritesCheatViewPageIndicator.class.getSimpleName();
 
-    private Intent intent;
-
-    private View viewLayout;
-    private int pageSelected;
-
-    private Game gameObj;
-    private List<Cheat> cheatArray;
-    private Cheat visibleCheat;
-
-    private Member member;
-
-    public AlertDialog.Builder builder;
-
-    private FavoritesCheatViewFragmentAdapter mAdapter;
-    private ViewPager mPager;
-
-    private int activePage;
-
-
-    private ShareActionProvider mShare;
-
-    private Toolbar mToolbar;
-
-    private LinearLayout facebookBanner;
-    private AdView adView;
-
     @Inject
     Tools tools;
 
@@ -112,6 +87,42 @@ public class FavoritesCheatViewPageIndicator extends AppCompatActivity {
     LinearLayout outerLayout;
 
     private FavoriteCheatDao dao;
+    private Intent intent;
+
+    private View viewLayout;
+    private int pageSelected;
+
+    private Game gameObj;
+    private List<Cheat> cheatArray;
+    private Cheat visibleCheat;
+
+
+    public AlertDialog.Builder builder;
+
+    private FavoritesCheatViewFragmentAdapter mAdapter;
+    private ViewPager mPager;
+
+    private int activePage;
+
+    private ShareActionProvider mShare;
+
+    private Toolbar mToolbar;
+
+    private LinearLayout facebookBanner;
+    private AdView adView;
+
+    private final ActivityResultLauncher<Intent> resultContract =
+            registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), getActivityResultRegistry(), activityResult -> {
+                int intentReturnCode = activityResult.getResultCode();
+                if (intentReturnCode == Konstanten.REGISTER_SUCCESS_RETURN_CODE) {
+                    tools.showSnackbar(outerLayout, getString(R.string.register_thanks));
+                } else if (intentReturnCode == Konstanten.LOGIN_SUCCESS_RETURN_CODE) {
+                    tools.showSnackbar(outerLayout, getString(R.string.login_ok));
+                } else if (activityResult.getResultCode() == Konstanten.RECOVER_PASSWORD_ATTEMPT) {
+                    tools.showSnackbar(outerLayout, getString(R.string.recover_login_success));
+                }
+                invalidateOptionsMenu();
+            });
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -150,8 +161,6 @@ public class FavoritesCheatViewPageIndicator extends AppCompatActivity {
         adView = new AdView(this, Konstanten.FACEBOOK_AUDIENCE_NETWORK_NATIVE_BANNER_ID, AdSize.BANNER_HEIGHT_50);
         facebookBanner.addView(adView);
         adView.loadAd();
-
-        member = tools.getMember();
     }
 
     private void initialisePaging() {
@@ -237,27 +246,6 @@ public class FavoritesCheatViewPageIndicator extends AppCompatActivity {
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (resultCode == RESULT_OK) {
-            // Return result code. Login success, Register success etc.
-            int intentReturnCode = data.getIntExtra("result", Konstanten.LOGIN_REGISTER_FAIL_RETURN_CODE);
-
-            if (requestCode == Konstanten.LOGIN_REGISTER_OK_RETURN_CODE) {
-                member = tools.getMember();
-
-                invalidateOptionsMenu();
-                if ((member != null) && intentReturnCode == Konstanten.REGISTER_SUCCESS_RETURN_CODE) {
-                    Toast.makeText(FavoritesCheatViewPageIndicator.this, R.string.register_thanks, Toast.LENGTH_LONG).show();
-                } else if ((member != null) && intentReturnCode == Konstanten.LOGIN_SUCCESS_RETURN_CODE) {
-                    Toast.makeText(FavoritesCheatViewPageIndicator.this, R.string.login_ok, Toast.LENGTH_LONG).show();
-                }
-            }
-        }
-    }
-
-    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         if ((visibleCheat != null) && (visibleCheat.getMemberRating() > 0)) {
             getMenuInflater().inflate(R.menu.favorites_cheatview_rating_on_menu, menu);
@@ -265,7 +253,7 @@ public class FavoritesCheatViewPageIndicator extends AppCompatActivity {
             getMenuInflater().inflate(R.menu.favorites_cheatview_rating_off_menu, menu);
         }
 
-        if (member != null) {
+        if (tools.getMember() != null) {
             getMenuInflater().inflate(R.menu.signout_menu, menu);
         } else {
             getMenuInflater().inflate(R.menu.signin_menu, menu);
@@ -335,12 +323,11 @@ public class FavoritesCheatViewPageIndicator extends AppCompatActivity {
                 }
                 return true;
             case R.id.action_login:
-                Intent loginIntent = new Intent(FavoritesCheatViewPageIndicator.this, LoginActivity.class);
-                startActivityForResult(loginIntent, Konstanten.LOGIN_REGISTER_OK_RETURN_CODE);
+                resultContract.launch(new Intent(FavoritesCheatViewPageIndicator.this, LoginActivity.class));
                 return true;
             case R.id.action_logout:
-                member = null;
                 tools.logout();
+                tools.showSnackbar(outerLayout, getString(R.string.logout_ok));
                 invalidateOptionsMenu();
                 return true;
             case R.id.action_share:
@@ -355,7 +342,6 @@ public class FavoritesCheatViewPageIndicator extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         Reachability.registerReachability(this);
-        member = tools.getMember();
         invalidateOptionsMenu();
     }
 
@@ -381,18 +367,18 @@ public class FavoritesCheatViewPageIndicator extends AppCompatActivity {
     }
 
     public void showReportDialog() {
-        if ((member == null) || (member.getMid() == 0)) {
+        if ((tools.getMember() == null) || (tools.getMember().getMid() == 0)) {
             Toast.makeText(this, R.string.error_login_required, Toast.LENGTH_SHORT).show();
         } else {
-            new ReportCheatMaterialDialog(this, visibleCheat, member, outerLayout, tools);
+            new ReportCheatMaterialDialog(this, visibleCheat, tools.getMember(), outerLayout, tools);
         }
     }
 
     public void showRatingDialog() {
-        if ((member == null) || (member.getMid() == 0)) {
+        if ((tools.getMember() == null) || (tools.getMember().getMid() == 0)) {
             Toast.makeText(this, R.string.error_login_to_rate, Toast.LENGTH_LONG).show();
         } else {
-            new RateCheatMaterialDialog(this, visibleCheat, member, outerLayout, tools, restApi);
+            new RateCheatMaterialDialog(this, visibleCheat, tools.getMember(), outerLayout, tools, restApi);
         }
     }
 
@@ -411,7 +397,7 @@ public class FavoritesCheatViewPageIndicator extends AppCompatActivity {
 
     private void showUndoSnackbar() {
         Snackbar mySnackbar = Snackbar.make(findViewById(R.id.outer_layout), R.string.remove_favorite_neutral_ok, Snackbar.LENGTH_INDEFINITE);
-        mySnackbar.setAction(R.string.undo, v -> Needle.onBackgroundThread().execute(() -> dao.insert(visibleCheat.toFavoriteCheatModel((member != null ? member.getMid() : 0)))));
+        mySnackbar.setAction(R.string.undo, v -> Needle.onBackgroundThread().execute(() -> dao.insert(visibleCheat.toFavoriteCheatModel((tools.getMember() != null ? tools.getMember().getMid() : 0)))));
         mySnackbar.show();
 
         // TODO load screenshots again and save them to the SD card....

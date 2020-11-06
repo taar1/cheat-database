@@ -10,7 +10,9 @@ import androidx.appcompat.widget.Toolbar
 import com.cheatdatabase.R
 import com.cheatdatabase.fragments.SubmitCheatFragment
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 
+@ExperimentalCoroutinesApi
 @AndroidEntryPoint
 class SubmitCheatSelectGameActivity : AppCompatActivity() {
 

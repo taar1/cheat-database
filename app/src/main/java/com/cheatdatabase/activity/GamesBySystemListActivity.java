@@ -12,6 +12,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
@@ -24,7 +26,6 @@ import com.cheatdatabase.CheatDatabaseApplication;
 import com.cheatdatabase.R;
 import com.cheatdatabase.adapters.GamesBySystemRecycleListViewAdapter;
 import com.cheatdatabase.data.model.Game;
-import com.cheatdatabase.data.model.Member;
 import com.cheatdatabase.data.model.SystemModel;
 import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Reachability;
@@ -79,8 +80,19 @@ public class GamesBySystemListActivity extends AppCompatActivity implements OnGa
     private List<Game> gameList;
     private GamesBySystemRecycleListViewAdapter gamesBySystemRecycleListViewAdapter;
     private SystemModel systemObj;
-    private Member member;
     private AdView adView;
+
+    private final ActivityResultLauncher<Intent> resultContract =
+            registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), getActivityResultRegistry(), activityResult -> {
+                int intentReturnCode = activityResult.getResultCode();
+                if (intentReturnCode == Konstanten.REGISTER_SUCCESS_RETURN_CODE) {
+                    tools.showSnackbar(outerLayout, getString(R.string.register_thanks));
+                } else if (intentReturnCode == Konstanten.LOGIN_SUCCESS_RETURN_CODE) {
+                    tools.showSnackbar(outerLayout, getString(R.string.login_ok));
+                } else if (activityResult.getResultCode() == Konstanten.RECOVER_PASSWORD_ATTEMPT) {
+                    tools.showSnackbar(outerLayout, getString(R.string.recover_login_success));
+                }
+            });
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -124,16 +136,12 @@ public class GamesBySystemListActivity extends AppCompatActivity implements OnGa
         }
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
-
-        if (member == null) {
-            member = tools.getMember();
-        }
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         menu.clear();
-        if (member != null) {
+        if (tools.getMember() != null) {
             getMenuInflater().inflate(R.menu.signout_menu, menu);
         } else {
             getMenuInflater().inflate(R.menu.signin_menu, menu);
@@ -153,7 +161,7 @@ public class GamesBySystemListActivity extends AppCompatActivity implements OnGa
     @Override
     public boolean onPrepareOptionsMenu(final Menu menu) {
         menu.clear();
-        if (member == null) {
+        if (tools.getMember() == null) {
             getMenuInflater().inflate(R.menu.signin_menu, menu);
         } else {
             getMenuInflater().inflate(R.menu.signout_menu, menu);
@@ -174,12 +182,11 @@ public class GamesBySystemListActivity extends AppCompatActivity implements OnGa
         // Handle action buttons
         switch (item.getItemId()) {
             case R.id.action_login:
-                Intent loginIntent = new Intent(GamesBySystemListActivity.this, LoginActivity.class);
-                startActivityForResult(loginIntent, Konstanten.LOGIN_REGISTER_OK_RETURN_CODE);
+                resultContract.launch(new Intent(this, LoginActivity.class));
                 return true;
             case R.id.action_logout:
-                member = null;
                 tools.logout();
+                tools.showSnackbar(outerLayout, getString(R.string.logout_ok));
                 invalidateOptionsMenu();
                 return true;
             default:
@@ -308,20 +315,6 @@ public class GamesBySystemListActivity extends AppCompatActivity implements OnGa
     protected void onStop() {
         Reachability.unregister(this);
         super.onStop();
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        member = tools.getMember();
-
-        if (requestCode == Konstanten.LOGIN_REGISTER_OK_RETURN_CODE) {
-            if (resultCode == Konstanten.LOGIN_SUCCESS_RETURN_CODE) {
-                Toast.makeText(this, R.string.login_ok, Toast.LENGTH_LONG).show();
-            } else if (resultCode == Konstanten.REGISTER_SUCCESS_RETURN_CODE) {
-                Toast.makeText(this, R.string.register_thanks, Toast.LENGTH_LONG).show();
-            }
-        }
     }
 
     @Override

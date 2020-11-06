@@ -43,7 +43,7 @@
         <LinearLayout
             android:id="@+id/login_form"
             style="@style/LoginFormContainer"
-            android:layout_margin="12dp"
+            android:layout_margin="16dp"
             android:orientation="vertical">
 
             <EditText
@@ -74,9 +74,9 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="12dp"
                 android:layout_marginStart="12dp"
                 android:layout_marginTop="24dp"
+                android:layout_marginEnd="12dp"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 

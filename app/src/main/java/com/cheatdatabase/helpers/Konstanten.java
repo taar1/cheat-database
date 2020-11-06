@@ -14,7 +14,7 @@ public class Konstanten {
     public final static String WEBDIR_MEMBER_AVATAR = "https://www.cheat-database.com/getblobimage.php?blobid=";
 
     public static final int LOGIN_REGISTER_FAIL_RETURN_CODE = 0;
-    public static final int LOGIN_REGISTER_OK_RETURN_CODE = 1;
+//    public static final int LOGIN_REGISTER_OK_RETURN_CODE = 1;
     public static final int LOGIN_SUCCESS_RETURN_CODE = 1;
     public static final int REGISTER_SUCCESS_RETURN_CODE = 2;
     public static final int RECOVER_PASSWORD_SUCCESS_RETURN_CODE = 3;
