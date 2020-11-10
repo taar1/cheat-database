@@ -21,7 +21,6 @@ import com.afollestad.materialdialogs.Theme;
 import com.cheatdatabase.R;
 import com.cheatdatabase.data.model.Game;
 import com.cheatdatabase.data.model.UnpublishedCheat;
-import com.cheatdatabase.dialogs.PlainInformationDialog;
 import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.helpers.Tools;
@@ -52,8 +51,6 @@ public class SubmitCheatFormActivity extends AppCompatActivity {
     Tools tools;
     @Inject
     RestApi restApi;
-    @Inject
-    PlainInformationDialog plainInformationDialog;
 
     @BindView(R.id.outer_layout)
     ConstraintLayout outerLayout;
@@ -89,6 +86,8 @@ public class SubmitCheatFormActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_submit_cheat_layout);
         ButterKnife.bind(this);
+
+        showAlertDialog(R.string.before_you_post, R.string.rules_for_submissions, R.string.understood);
 
         Intent intent = getIntent();
         gameObj = intent.getParcelableExtra("gameObj");
@@ -142,20 +141,20 @@ public class SubmitCheatFormActivity extends AppCompatActivity {
 
     @OnClick(R.id.guidelines)
     void guidelinesClicked() {
-        plainInformationDialog.setContent(R.string.submit_cheat_instructions_title, R.string.submit_cheat_guidelines, R.string.ok);
+        showAlertDialog(R.string.submit_cheat_instructions_title, R.string.submit_cheat_guidelines, R.string.ok);
     }
 
     @OnClick(R.id.terms_conditions)
     void termsAndConditionsClicked() {
-        plainInformationDialog.setContent(R.string.guidelines, R.string.submit_cheat_consent_text, R.string.ok);
+        showAlertDialog(R.string.submit_cheat_consent_title, R.string.submit_cheat_consent_text, R.string.ok);
     }
 
     void sendButtonClicked() {
         if ((tools.getMember() != null) && (tools.getMember().getMid() != 0)) {
             if ((cheatText.getText().toString().trim().length() < 5) || (cheatTitle.getText().toString().trim().length() < 2)) {
-                showAlertDialog(R.string.err, R.string.fill_everything);
+                showAlertDialog(R.string.err, R.string.fill_everything, R.string.ok);
             } else if (!checkBoxTerms.isChecked()) {
-                showAlertDialog(R.string.err, R.string.submit_cheat_error_accept_conditions);
+                showAlertDialog(R.string.err, R.string.submit_cheat_error_accept_conditions, R.string.understood);
             } else {
                 if (Reachability.reachability.isReachable) {
                     checkMemberPermissions();
@@ -186,7 +185,7 @@ public class SubmitCheatFormActivity extends AppCompatActivity {
                     if (!banned) {
                         submitCheatNow();
                     } else {
-                        showAlertDialog(R.string.err, R.string.member_banned);
+                        showAlertDialog(R.string.err, R.string.member_banned, R.string.understood);
                     }
                 }
             }
@@ -201,20 +200,16 @@ public class SubmitCheatFormActivity extends AppCompatActivity {
     }
 
     private void submitCheatNow() {
-        Log.d(TAG, "submitCheatNow: ");
         String cheatTitleTrimmed = cheatTitle.getText().toString().trim();
         String cheatTextTrimmed = cheatText.getText().toString().trim();
 
         if ((cheatTitleTrimmed.length() < 2) || (cheatTextTrimmed.length() < 2)) {
-            Log.d(TAG, "submitCheatNow: 2");
             finish();
         } else {
-            Log.d(TAG, "submitCheatNow: 3");
             Call<JsonObject> call = restApi.insertCheat(tools.getMember().getMid(), gameObj.getGameId(), cheatTitleTrimmed, cheatTextTrimmed);
             call.enqueue(new Callback<JsonObject>() {
                 @Override
                 public void onResponse(Call<JsonObject> games, Response<JsonObject> response) {
-                    Log.d(TAG, "submitCheatNow: 4");
                     if (response.isSuccessful()) {
                         JsonObject submissionResponse = response.body();
 
@@ -223,18 +218,17 @@ public class SubmitCheatFormActivity extends AppCompatActivity {
                             cheatTitle.setText("");
                             cheatText.setText("");
 
-                            showAlertDialog(R.string.thanks, R.string.cheat_submit_ok);
+                            showAlertDialog(R.string.thanks, R.string.cheat_submit_ok, R.string.understood);
                         } else if (returnMessage.equalsIgnoreCase("missing_values")) {
-                            showAlertDialog(R.string.err, R.string.cheat_submit_nok);
+                            showAlertDialog(R.string.err, R.string.cheat_submit_nok, R.string.understood);
                         } else if (returnMessage.equalsIgnoreCase("invalid_member_id")) {
-                            showAlertDialog(R.string.err, R.string.cheat_submit_nok);
+                            showAlertDialog(R.string.err, R.string.cheat_submit_nok, R.string.understood);
                         }
                     }
                 }
 
                 @Override
                 public void onFailure(Call<JsonObject> call, Throwable t) {
-                    Log.d(TAG, "submitCheatNow: 5");
                     Log.e(TAG, "Submitting the cheat has failed: " + t.getLocalizedMessage());
                     tools.showSnackbar(outerLayout, getString(R.string.no_internet));
                 }
@@ -242,11 +236,11 @@ public class SubmitCheatFormActivity extends AppCompatActivity {
         }
     }
 
-    private void showAlertDialog(int title, int text) {
+    private void showAlertDialog(int title, int bodyText, int buttonText) {
         new MaterialDialog.Builder(SubmitCheatFormActivity.this)
                 .title(title)
-                .content(text)
-                .positiveText(R.string.ok)
+                .content(bodyText)
+                .positiveText(buttonText)
                 .onPositive((dialog, which) -> {
                     if (title == R.string.thanks) {
                         Handler handler = new Handler();

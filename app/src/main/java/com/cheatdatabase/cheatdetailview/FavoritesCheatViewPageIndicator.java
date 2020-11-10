@@ -1,6 +1,5 @@
 package com.cheatdatabase.cheatdetailview;
 
-import android.app.AlertDialog;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
@@ -96,8 +95,7 @@ public class FavoritesCheatViewPageIndicator extends AppCompatActivity {
     private List<Cheat> cheatArray;
     private Cheat visibleCheat;
 
-
-    public AlertDialog.Builder builder;
+    //public AlertDialog.Builder builder;
 
     private FavoritesCheatViewFragmentAdapter mAdapter;
     private ViewPager mPager;

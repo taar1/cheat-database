@@ -13,10 +13,6 @@ import com.facebook.ads.AudienceNetworkAds;
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.Tracker;
 import com.google.firebase.analytics.FirebaseAnalytics;
-import com.inmobi.sdk.InMobiSdk;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.List;
 import java.util.TreeMap;
@@ -74,21 +70,6 @@ public class CheatDatabaseApplication extends Application implements Application
         // Facebook Native Ads
         // Initialize the Audience Network SDK
         AudienceNetworkAds.initialize(this);
-
-        // Init InMobi Ads
-        JSONObject consentObject = new JSONObject();
-        try {
-            // Provide correct consent value to sdk which is obtained by User
-            consentObject.put(InMobiSdk.IM_GDPR_CONSENT_AVAILABLE, true);
-            // Provide 0 if GDPR is not applicable and 1 if applicable
-            consentObject.put("gdpr", "0");
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        InMobiSdk.init(this, Konstanten.INMOBI_CHEATDATABASE_APP_ID, consentObject);
-        InMobiSdk.setAgeGroup(InMobiSdk.AgeGroup.BETWEEN_18_AND_24);
-        InMobiSdk.setLogLevel(InMobiSdk.LogLevel.DEBUG);
     }
 
     @Override

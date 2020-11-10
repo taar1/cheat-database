@@ -171,16 +171,9 @@ dependencies {
     //Logging Network Calls
     implementation 'com.squareup.okhttp3:logging-interceptor:4.9.0'
 
-    // INMOBI ADS START
-    implementation 'com.inmobi.monetization:inmobi-ads:8.2.0'
     implementation 'com.google.android.gms:play-services-basement:17.5.0'
     implementation 'com.google.android.gms:play-services-ads-identifier:17.0.0'
     implementation 'com.google.android.gms:play-services-location:17.1.0'
-//    implementation 'com.android.support:customtabs:28.0.0'
-    // INMOBI ADS END
-
-    // ROOM DATABASE DEBUG
-    debugImplementation 'com.amitshekhar.android:debug-db:1.0.6'
 
     // KOTLIN
     implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
@@ -213,8 +206,6 @@ dependencies {
     // GROUPIE (easy recyclerviews)
     implementation "com.xwray:groupie:$groupie_version"
     implementation "com.xwray:groupie-kotlin-android-extensions:$groupie_version"
-
-    //implementation 'com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava'
 
     // HILT
     implementation "com.google.dagger:hilt-android:$hilt_version"
@@ -256,15 +247,6 @@ dependencies {
     implementation 'com.google.firebase:firebase-crashlytics-ktx'
     implementation 'com.google.firebase:firebase-analytics-ktx'
 
-
-
-    // Java language implementation
-    implementation "androidx.navigation:navigation-fragment:$nav_version"
-    implementation "androidx.navigation:navigation-ui:$nav_version"
-
-    // Kotlin
-    implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
-    implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
 
     // Feature module Support
     implementation "androidx.navigation:navigation-dynamic-features-fragment:$nav_version"

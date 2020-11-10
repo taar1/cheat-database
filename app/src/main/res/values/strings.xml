@@ -246,5 +246,18 @@
     </plurals>
 
     <string name="games">%1$d games</string>
-    <string name="more_apps_url">https://www.cheat-database.com</string>
+    <string name="more_apps_url">https://play.google.com/store/apps/developer?id=E-Nature</string>
+    <string name="understood">Understood</string>
+    <string name="before_you_post">Before you post…</string>
+
+    <string name="rules_for_submissions">Before you continue, please read and understand the following rules regarding the content of submitted tricks.\n\n
+The following contents are not allowed:\n\n
+- Cheats/instructions that block or interfere with other apps/games when ads are displayed\n
+- Cheats, which influence the course of other apps/games\n
+- Instructions that allow hacking of services, software or hardware or the circumvention of security measures\n
+- Cheats that access or use services or APIs in a manner that violates the Terms of Use of the respective app/game\n
+- Third-party code that downloads or executes code not intended in the app/game\n
+- Cheats/code that enables or is associated with the distribution or installation of malicious software\n\n
+Submitted tricks that violate one or more of the above points will be deleted.</string>
+
 </resources>

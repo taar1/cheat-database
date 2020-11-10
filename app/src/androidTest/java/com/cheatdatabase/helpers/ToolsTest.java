@@ -28,7 +28,10 @@ public class ToolsTest {
 
     @Before
     public void setUp() throws Exception {
+
         instrumentationContext = InstrumentationRegistry.getInstrumentation().getContext();
+
+
         tools = new Tools(instrumentationContext);
     }
 
