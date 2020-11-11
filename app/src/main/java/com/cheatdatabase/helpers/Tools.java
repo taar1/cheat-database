@@ -25,7 +25,6 @@ import com.cheatdatabase.data.model.Cheat;
 import com.cheatdatabase.data.model.Game;
 import com.cheatdatabase.data.model.Member;
 import com.cheatdatabase.data.model.Screenshot;
-import com.cheatdatabase.data.model.SystemModel;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
@@ -40,11 +39,9 @@ import java.io.IOException;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -389,65 +386,65 @@ public class Tools {
         return games;
     }
 
-    /**
-     * Get Systems from xml/systems.xml
-     *
-     * @param activity
-     * @return
-     */
-    public static List<SystemModel> getGameSystemsFromXml(Activity activity) {
-        ArrayList<SystemModel> platformArrayList = new ArrayList<>();
-
-        try {
-            XmlResourceParser xrp = activity.getResources().getXml(R.xml.systems);
-            while (xrp.getEventType() != XmlPullParser.END_DOCUMENT) {
-                if (xrp.getEventType() == XmlPullParser.START_TAG) {
-                    String s = xrp.getName();
-                    if (s.equals("system")) {
-                        String systemId = xrp.getAttributeValue(null, "sysId");
-                        String systemName = xrp.getAttributeValue(null, "name");
-
-                        SystemModel gs = new SystemModel();
-                        gs.setSystemId(Integer.parseInt(systemId));
-                        gs.setSystemName(systemName);
-
-                        platformArrayList.add(gs);
-                    }
-                }
-                xrp.next();
-            }
-        } catch (XmlPullParserException | IOException e) {
-            e.printStackTrace();
-        }
-
-        return platformArrayList;
-    }
-
-    public SystemModel[] getSystems(Activity activity) {
-        List<SystemModel> al = getGameSystemsFromXml(activity);
-        SystemModel[] gsList = new SystemModel[al.size()];
-
-        for (int i = 0; i < al.size(); i++) {
-            gsList[i] = al.get(i);
-        }
-
-        return gsList;
-    }
-
-    public List<SystemModel> getSystemNamesFromXml(Activity activity) {
-        return getGameSystemsFromXml(activity);
-    }
-
-    public static SystemModel getSystemObjectByName(Activity activity, String systemName) {
-        List<SystemModel> al = getGameSystemsFromXml(activity);
-        for (int i = 0; i < al.size(); i++) {
-            SystemModel sys = al.get(i);
-            if (sys.getSystemName().equalsIgnoreCase(systemName)) {
-                return sys;
-            }
-        }
-        return null;
-    }
+//    /**
+//     * Get Systems from xml/systems.xml
+//     *
+//     * @param activity
+//     * @return
+//     */
+//    public static List<SystemModel> getGameSystemsFromXml(Activity activity) {
+//        ArrayList<SystemModel> platformArrayList = new ArrayList<>();
+//
+//        try {
+//            XmlResourceParser xrp = activity.getResources().getXml(R.xml.systems);
+//            while (xrp.getEventType() != XmlPullParser.END_DOCUMENT) {
+//                if (xrp.getEventType() == XmlPullParser.START_TAG) {
+//                    String s = xrp.getName();
+//                    if (s.equals("system")) {
+//                        String systemId = xrp.getAttributeValue(null, "sysId");
+//                        String systemName = xrp.getAttributeValue(null, "name");
+//
+//                        SystemModel gs = new SystemModel();
+//                        gs.setSystemId(Integer.parseInt(systemId));
+//                        gs.setSystemName(systemName);
+//
+//                        platformArrayList.add(gs);
+//                    }
+//                }
+//                xrp.next();
+//            }
+//        } catch (XmlPullParserException | IOException e) {
+//            e.printStackTrace();
+//        }
+//
+//        return platformArrayList;
+//    }
+//
+//    public SystemModel[] getSystems(Activity activity) {
+//        List<SystemModel> al = getGameSystemsFromXml(activity);
+//        SystemModel[] gsList = new SystemModel[al.size()];
+//
+//        for (int i = 0; i < al.size(); i++) {
+//            gsList[i] = al.get(i);
+//        }
+//
+//        return gsList;
+//    }
+//
+//    public List<SystemModel> getSystemNamesFromXml(Activity activity) {
+//        return getGameSystemsFromXml(activity);
+//    }
+//
+//    public static SystemModel getSystemObjectByName(Activity activity, String systemName) {
+//        List<SystemModel> al = getGameSystemsFromXml(activity);
+//        for (int i = 0; i < al.size(); i++) {
+//            SystemModel sys = al.get(i);
+//            if (sys.getSystemName().equalsIgnoreCase(systemName)) {
+//                return sys;
+//            }
+//        }
+//        return null;
+//    }
 
     /**
      * Convert unconverted Date to user's set Locale date format.

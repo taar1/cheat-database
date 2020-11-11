@@ -108,6 +108,12 @@ public class GamesBySystemListActivity extends AppCompatActivity implements OnGa
         if (systemObj == null) {
             Toast.makeText(this, R.string.err_somethings_wrong, Toast.LENGTH_LONG).show();
             finish();
+        } else if (systemObj.getSystemId() == 30) {
+            Toast.makeText(this, R.string.ios_games_unsupported, Toast.LENGTH_LONG).show();
+            finish();
+        } else if (systemObj.getSystemId() == 33) {
+            Toast.makeText(this, R.string.android_games_unsupported, Toast.LENGTH_LONG).show();
+            finish();
         } else {
             init();
 
@@ -236,6 +242,8 @@ public class GamesBySystemListActivity extends AppCompatActivity implements OnGa
         if (!isCached || forceLoadOnline || gameList.size() == 0) {
             gameList = new ArrayList<>();
             TreeMap finalGameListTree = gameListTree;
+
+            Log.d(TAG, "XXXXX loadGames: " + systemObj.getId());
 
             Call<List<Game>> call = restApi.getGameListBySystemId(systemObj.getId(), isAchievementsEnabled);
             call.enqueue(new Callback<List<Game>>() {

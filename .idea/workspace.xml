@@ -131,23 +131,17 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4caff62e-c62f-40ca-acf0-73c680b13375" name="Default" comment="Get rid of startActivityForResult() everywhere (using the new &quot;registerForActivityResult&quot; method)">
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/dialogs/CheatSubmissionRulesDialogFragment.kt" afterDir="false" />
+    <list default="true" id="4caff62e-c62f-40ca-acf0-73c680b13375" name="Default" comment="Adding some info dialog when submitting a cheat to hopefully avoid the Google ban??">
       <change beforePath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/androidTest/java/com/cheatdatabase/helpers/ToolsTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/androidTest/java/com/cheatdatabase/helpers/ToolsTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/CheatDatabaseApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/CheatDatabaseApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/SubmitCheatFormActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/SubmitCheatFormActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/cheatdetailview/FavoritesCheatViewPageIndicator.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/cheatdetailview/FavoritesCheatViewPageIndicator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/dialogs/PlainInformationDialog.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_submit_cheat_layout.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_submit_cheat_layout.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/adview_inmobi_banner_layout.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/adview_mixed_banner_container.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/dialog_information.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/dialog_information.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/GamesBySystemListActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/GamesBySystemListActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/adapters/SystemsRecycleListViewAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/adapters/SystemsRecycleListViewAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/data/repository/SystemRepository.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/data/repository/SystemRepository.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/helpers/Tools.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/helpers/Tools.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/res/values-de/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values-de/strings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/themes.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/themes.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/xml/systems.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/xml/systems.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -157,7 +151,7 @@
   <component name="CreatePatchCommitExecutor">
     <option name="PATCH_PATH" value="" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[EPHUT19C24000346]" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[fd8b7031]" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
@@ -237,8 +231,8 @@
     <property name="DEBUGGABLE_PROCESS" value="com.cheatdatabase" />
     <property name="DEBUGGER_ID" value="Auto" />
     <property name="DeviceAndSnapshotComboBoxAction.selectedDevice" value="6ea89d94" />
-    <property name="DeviceAndSnapshotComboBoxAction.selectionTime" value="2020-10-12T20:01:27.894Z" />
-    <property name="ExportApk.ApkPath" value="$PROJECT_DIR$/../../../apk/Cheat-Database/2.5.21" />
+    <property name="DeviceAndSnapshotComboBoxAction.selectionTime" value="2020-11-11T08:50:59.962Z" />
+    <property name="ExportApk.ApkPath" value="$PROJECT_DIR$/../../../apk/Cheat-Database/2.5.22" />
     <property name="ExportApk.BuildType" value="release" />
     <property name="ExportApk.BuildVariants" value="googlePlayFlavorRelease" />
     <property name="ExportApk.Flavors" value="googlePlayFlavor" />
@@ -817,13 +811,6 @@
       <option name="presentableId" value="Default" />
       <updated>1487274191999</updated>
     </task>
-    <task id="LOCAL-00120" summary="Improving unpublished cheats card layouts etc.">
-      <created>1590345437019</created>
-      <option name="number" value="00120" />
-      <option name="presentableId" value="LOCAL-00120" />
-      <option name="project" value="LOCAL" />
-      <updated>1590345437019</updated>
-    </task>
     <task id="LOCAL-00121" summary="Switching to coroutines (not working yet).">
       <created>1591120902765</created>
       <option name="number" value="00121" />
@@ -1160,7 +1147,14 @@
       <option name="project" value="LOCAL" />
       <updated>1604677055831</updated>
     </task>
-    <option name="localTasksCounter" value="169" />
+    <task id="LOCAL-00169" summary="Adding some info dialog when submitting a cheat to hopefully avoid the Google ban??">
+      <created>1605040709132</created>
+      <option name="number" value="00169" />
+      <option name="presentableId" value="LOCAL-00169" />
+      <option name="project" value="LOCAL" />
+      <updated>1605040709134</updated>
+    </task>
+    <option name="localTasksCounter" value="170" />
     <servers />
   </component>
   <component name="TodoView">
@@ -1265,7 +1259,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
-    <MESSAGE value="Make rejected cheat alertdialog less transparent&#10;Add bottom padding for unpublished cheats recyclerview" />
     <MESSAGE value="Fix favorites list data getting lost on display rotation.&#10;Add scrollview to &quot;my cheats&quot; view for better landscape mode." />
     <MESSAGE value="STARTED (again) USING #HILT!&#10;This time it's working!" />
     <MESSAGE value="More migration to using HILT" />
@@ -1290,7 +1283,8 @@
     <MESSAGE value="Navigation Component: Almost finished!" />
     <MESSAGE value="Move bottom banner ads from MainActivity to the Fragments" />
     <MESSAGE value="Get rid of startActivityForResult() everywhere (using the new &quot;registerForActivityResult&quot; method)" />
-    <option name="LAST_COMMIT_MESSAGE" value="Get rid of startActivityForResult() everywhere (using the new &quot;registerForActivityResult&quot; method)" />
+    <MESSAGE value="Adding some info dialog when submitting a cheat to hopefully avoid the Google ban??" />
+    <option name="LAST_COMMIT_MESSAGE" value="Adding some info dialog when submitting a cheat to hopefully avoid the Google ban??" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
@@ -1335,45 +1329,45 @@
       <screen x="0" y="23" width="2560" height="1348" />
     </state>
     <state x="868" y="459" key="AndroidCreateResourceFileDialog/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1604343287967" />
-    <state x="1007" y="476" key="AndroidCreateXmlResourceDialog" timestamp="1604245079468">
+    <state x="1007" y="476" key="AndroidCreateXmlResourceDialog" timestamp="1605098341802">
       <screen x="0" y="23" width="2560" height="1348" />
     </state>
-    <state x="1007" y="476" key="AndroidCreateXmlResourceDialog/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1604245079468" />
+    <state x="1007" y="476" key="AndroidCreateXmlResourceDialog/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1605098341802" />
     <state x="1141" y="469" key="AndroidProcessChooserDialog" timestamp="1604666443652">
       <screen x="0" y="23" width="2560" height="1348" />
     </state>
     <state x="1141" y="469" key="AndroidProcessChooserDialog/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1604666443652" />
-    <state x="500" y="101" width="1718" height="1269" key="CommitChangelistDialog2" timestamp="1604677055505">
+    <state x="500" y="101" width="1718" height="1269" key="CommitChangelistDialog2" timestamp="1605099916185">
       <screen x="0" y="23" width="2560" height="1348" />
     </state>
-    <state x="500" y="101" width="1718" height="1269" key="CommitChangelistDialog2/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1604677055505" />
-    <state x="11" y="34" width="2549" height="1337" maximized="true" key="DiffContextDialog" timestamp="1604769834154">
+    <state x="500" y="101" width="1718" height="1269" key="CommitChangelistDialog2/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1605099916185" />
+    <state x="11" y="34" width="2549" height="1337" maximized="true" key="DiffContextDialog" timestamp="1605099914755">
       <screen x="0" y="23" width="2560" height="1348" />
     </state>
-    <state x="11" y="34" width="2549" height="1337" maximized="true" key="DiffContextDialog/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1604769834154" />
+    <state x="11" y="34" width="2549" height="1337" maximized="true" key="DiffContextDialog/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1605099914755" />
     <state x="1068" y="445" key="FileChooserDialogImpl" timestamp="1602529985883">
       <screen x="0" y="23" width="2560" height="1348" />
     </state>
     <state x="1068" y="445" key="FileChooserDialogImpl/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1602529985883" />
-    <state width="2518" height="515" key="GridCell.Tab.0.bottom" timestamp="1605026463623">
+    <state width="2518" height="515" key="GridCell.Tab.0.bottom" timestamp="1605099548145">
       <screen x="0" y="23" width="2560" height="1348" />
     </state>
-    <state width="2518" height="515" key="GridCell.Tab.0.bottom/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1605026463623" />
+    <state width="2518" height="515" key="GridCell.Tab.0.bottom/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1605099548145" />
     <state width="2518" height="466" key="GridCell.Tab.0.bottom/0.23.2560.1348/-1680.413.1680.1027@0.23.2560.1348" timestamp="1600934568262" />
-    <state width="2518" height="515" key="GridCell.Tab.0.center" timestamp="1605026463622">
+    <state width="2518" height="515" key="GridCell.Tab.0.center" timestamp="1605099548144">
       <screen x="0" y="23" width="2560" height="1348" />
     </state>
-    <state width="2518" height="515" key="GridCell.Tab.0.center/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1605026463622" />
+    <state width="2518" height="515" key="GridCell.Tab.0.center/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1605099548144" />
     <state width="2518" height="466" key="GridCell.Tab.0.center/0.23.2560.1348/-1680.413.1680.1027@0.23.2560.1348" timestamp="1600934568261" />
-    <state width="2518" height="515" key="GridCell.Tab.0.left" timestamp="1605026463622">
+    <state width="2518" height="515" key="GridCell.Tab.0.left" timestamp="1605099548143">
       <screen x="0" y="23" width="2560" height="1348" />
     </state>
-    <state width="2518" height="515" key="GridCell.Tab.0.left/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1605026463622" />
+    <state width="2518" height="515" key="GridCell.Tab.0.left/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1605099548143" />
     <state width="2518" height="466" key="GridCell.Tab.0.left/0.23.2560.1348/-1680.413.1680.1027@0.23.2560.1348" timestamp="1600934568261" />
-    <state width="2518" height="515" key="GridCell.Tab.0.right" timestamp="1605026463623">
+    <state width="2518" height="515" key="GridCell.Tab.0.right" timestamp="1605099548144">
       <screen x="0" y="23" width="2560" height="1348" />
     </state>
-    <state width="2518" height="515" key="GridCell.Tab.0.right/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1605026463623" />
+    <state width="2518" height="515" key="GridCell.Tab.0.right/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1605099548144" />
     <state width="2518" height="466" key="GridCell.Tab.0.right/0.23.2560.1348/-1680.413.1680.1027@0.23.2560.1348" timestamp="1600934568262" />
     <state width="2518" height="502" key="GridCell.Tab.1.bottom" timestamp="1604677798711">
       <screen x="0" y="23" width="2560" height="1348" />
@@ -1409,10 +1403,10 @@
       <screen x="0" y="23" width="2560" height="1348" />
     </state>
     <state x="384" y="310" key="SettingsEditor/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1602530758612" />
-    <state x="880" y="437" key="Vcs.Push.Dialog.v2" timestamp="1604677058673">
+    <state x="880" y="437" key="Vcs.Push.Dialog.v2" timestamp="1605040710361">
       <screen x="0" y="23" width="2560" height="1348" />
     </state>
-    <state x="880" y="437" key="Vcs.Push.Dialog.v2/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1604677058673" />
+    <state x="880" y="437" key="Vcs.Push.Dialog.v2/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1605040710361" />
     <state x="100" y="123" width="2360" height="1148" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1604255700193">
       <screen x="0" y="23" width="2560" height="1348" />
     </state>
@@ -1426,11 +1420,10 @@
       <screen x="0" y="23" width="2560" height="1348" />
     </state>
     <state x="789" y="306" width="1123" height="532" key="com.intellij.testIntegration.createTest.CreateTestDialog/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1601496584754" />
-    <state x="544" y="69" width="1548" height="1151" key="find.popup" timestamp="1605040672399">
+    <state x="544" y="69" width="1548" height="1151" key="find.popup" timestamp="1605098190397">
       <screen x="0" y="23" width="2560" height="1348" />
     </state>
-    <state x="382" y="82" width="1016" height="818" key="find.popup/0.23.1680.958@0.23.1680.958" timestamp="1596443458833" />
-    <state x="544" y="69" width="1548" height="1151" key="find.popup/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1605040672399" />
+    <state x="544" y="69" width="1548" height="1151" key="find.popup/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1605098190397" />
     <state x="660" y="209" width="1296" height="861" key="find.popup/0.23.2560.1348/-1680.413.1680.1027@0.23.2560.1348" timestamp="1599548260599" />
     <state x="981" y="549" key="git4idea.ui.GitTagDialog" timestamp="1596660257227">
       <screen x="0" y="23" width="2560" height="1348" />
@@ -1439,16 +1432,16 @@
     <state width="600" height="428" key="javadoc.popup" timestamp="1603746843023">
       <screen x="0" y="23" width="2560" height="1348" />
     </state>
-    <state width="752" height="140" key="javadoc.popup.new" timestamp="1605040399215">
+    <state width="752" height="140" key="javadoc.popup.new" timestamp="1605098237830">
       <screen x="0" y="23" width="2560" height="1348" />
     </state>
-    <state width="752" height="140" key="javadoc.popup.new/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1605040399215" />
+    <state width="752" height="140" key="javadoc.popup.new/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1605098237830" />
     <state width="752" height="140" key="javadoc.popup.new/0.23.2560.1348/-1680.413.1680.1027@0.23.2560.1348" timestamp="1596446258394" />
     <state width="600" height="428" key="javadoc.popup/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1603746843023" />
-    <state x="945" y="331" width="670" height="676" key="search.everywhere.popup" timestamp="1605025884286">
+    <state x="945" y="331" width="670" height="676" key="search.everywhere.popup" timestamp="1605099839878">
       <screen x="0" y="23" width="2560" height="1348" />
     </state>
-    <state x="945" y="331" width="670" height="676" key="search.everywhere.popup/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1605025884286" />
+    <state x="945" y="331" width="670" height="676" key="search.everywhere.popup/0.23.2560.1348/-1680.23.1680.1027@0.23.2560.1348" timestamp="1605099839878" />
     <state x="945" y="331" width="670" height="676" key="search.everywhere.popup/0.23.2560.1348/-1680.413.1680.1027@0.23.2560.1348" timestamp="1600934566019" />
   </component>
   <component name="XDebuggerManager">

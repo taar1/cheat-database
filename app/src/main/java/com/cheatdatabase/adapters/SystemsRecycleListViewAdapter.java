@@ -60,6 +60,15 @@ public class SystemsRecycleListViewAdapter extends RecyclerView.Adapter<Recycler
     public void setSystemPlatforms(List<SystemModel> systemPlatforms) {
         systemList = systemPlatforms;
 
+        // Filter out Android (33) and iOS (30)
+        List<SystemModel> filterList = new ArrayList<>();
+        for (SystemModel s : systemList) {
+            if (s.getSystemId() == 30 || s.getSystemId() == 33) {
+                filterList.add(s);
+            }
+        }
+        systemList.removeAll(filterList);
+
         if ((systemList != null) && (systemList.size() > 0)) {
             Collections.sort(systemList, (system1, system2) -> system1.getName().toLowerCase().compareTo(system2.getName().toLowerCase()));
 

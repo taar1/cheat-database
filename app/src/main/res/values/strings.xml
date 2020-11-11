@@ -259,5 +259,7 @@ The following contents are not allowed:\n\n
 - Third-party code that downloads or executes code not intended in the app/game\n
 - Cheats/code that enables or is associated with the distribution or installation of malicious software\n\n
 Submitted tricks that violate one or more of the above points will be deleted.</string>
+    <string name="ios_games_unsupported">iOS games no longer available.</string>
+    <string name="android_games_unsupported">Android games no longer available.</string>
 
 </resources>

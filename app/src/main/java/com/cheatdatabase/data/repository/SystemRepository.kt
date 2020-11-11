@@ -28,6 +28,7 @@ class SystemRepository(private val roomCheatDatabase: RoomCheatDatabase) : SafeA
                 newSystemModels.add(sp.toSystemModel())
             }
 
+            roomCheatDatabase.systemDao().deleteAll()
             roomCheatDatabase.systemDao().insertAll(newSystemModels)
         }
     }

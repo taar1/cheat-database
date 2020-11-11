@@ -260,4 +260,6 @@
 - Drittanbietercode, der Code herunterlädt oder ausführt, welcher im Original-Spiel nicht vorgesehen ist\n\n
 - Cheats/Code, der die Verteilung oder Installation von schädlicher Software ermöglichen oder damit in Verbindung stehen\n\nEingesandte Tricks, die gegen eine oder mehrere der oben genannten Punkten verstossen, werden gelöscht.</string>
 
+    <string name="ios_games_unsupported">iOS Games nicht mehr verfügbar.</string>
+    <string name="android_games_unsupported">Android Games nicht mehr verfügbar.</string>
 </resources>
