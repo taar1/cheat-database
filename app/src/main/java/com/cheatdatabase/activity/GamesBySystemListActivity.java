@@ -22,7 +22,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.cheatdatabase.CheatDatabaseApplication;
 import com.cheatdatabase.R;
 import com.cheatdatabase.adapters.GamesBySystemRecycleListViewAdapter;
 import com.cheatdatabase.data.model.Game;
@@ -41,7 +40,6 @@ import com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.TreeMap;
 
 import javax.inject.Inject;
 
@@ -105,6 +103,7 @@ public class GamesBySystemListActivity extends AppCompatActivity implements OnGa
         prepareAdBanner();
 
         systemObj = getIntent().getParcelableExtra("systemObj");
+
         if (systemObj == null) {
             Toast.makeText(this, R.string.err_somethings_wrong, Toast.LENGTH_LONG).show();
             finish();
@@ -120,10 +119,15 @@ public class GamesBySystemListActivity extends AppCompatActivity implements OnGa
             getSupportActionBar().setTitle((systemObj.getSystemName() != null ? systemObj.getSystemName() : systemObj.getName()));
             getSupportActionBar().setSubtitle(getString(R.string.games, systemObj.getGamesCount()));
 
-            loadGames(false);
+            try {
+                loadGames();
+            } catch (NullPointerException e) {
+                Toast.makeText(this, R.string.err_occurred, Toast.LENGTH_LONG).show();
+                finish();
+            }
 
             mSwipeRefreshLayout.setRefreshing(true);
-            mSwipeRefreshLayout.setOnRefreshListener(() -> loadGames(true));
+            mSwipeRefreshLayout.setOnRefreshListener(this::loadGames);
 
             gamesBySystemRecycleListViewAdapter = new GamesBySystemRecycleListViewAdapter(this, nativeAdsManager, tools, this);
             recyclerView.setAdapter(gamesBySystemRecycleListViewAdapter);
@@ -208,82 +212,28 @@ public class GamesBySystemListActivity extends AppCompatActivity implements OnGa
         adView.loadAd();
     }
 
-    private void loadGames(boolean forceLoadOnline) {
+    private void loadGames() {
         gameList = new ArrayList<>();
-        List<Game> cachedGamesCollection;
-        boolean isCached = false;
-        String achievementsEnabled;
         boolean isAchievementsEnabled = tools.getBooleanFromSharedPreferences("enable_achievements", true);
 
-        if (isAchievementsEnabled) {
-            achievementsEnabled = Konstanten.ACHIEVEMENTS;
-        } else {
-            achievementsEnabled = Konstanten.NO_ACHIEVEMENTS;
-        }
+        Call<List<Game>> call = restApi.getGameListBySystemId(systemObj.getId(), isAchievementsEnabled);
+        call.enqueue(new Callback<List<Game>>() {
+            @Override
+            public void onResponse(Call<List<Game>> games, Response<List<Game>> response) {
+                if (response.isSuccessful()) {
+                    gameList = response.body();
+                    applySystemToGames();
 
-        TreeMap gameListTree = null;
-        TreeMap<String, TreeMap<String, List<Game>>> gamesBySystemInCache = CheatDatabaseApplication.getGamesBySystemCached();
-        if (gamesBySystemInCache.containsKey(String.valueOf(systemObj.getId()))) {
-
-            gameListTree = gamesBySystemInCache.get(String.valueOf(systemObj.getId()));
-            if (gameListTree != null) {
-
-                if (gameListTree.containsKey(achievementsEnabled)) {
-                    cachedGamesCollection = (List<Game>) gameListTree.get(achievementsEnabled);
-
-                    if (cachedGamesCollection.size() > 0) {
-                        gameList = cachedGamesCollection;
-                        isCached = true;
-                    }
+                    updateUI();
                 }
             }
-        }
 
-        if (!isCached || forceLoadOnline || gameList.size() == 0) {
-            gameList = new ArrayList<>();
-            TreeMap finalGameListTree = gameListTree;
-
-            Log.d(TAG, "XXXXX loadGames: " + systemObj.getId());
-
-            Call<List<Game>> call = restApi.getGameListBySystemId(systemObj.getId(), isAchievementsEnabled);
-            call.enqueue(new Callback<List<Game>>() {
-                @Override
-                public void onResponse(Call<List<Game>> games, Response<List<Game>> response) {
-                    if (response.isSuccessful()) {
-                        gameList = response.body();
-                        applySystemToGames();
-
-                        TreeMap<String, List<Game>> updatedGameListForCache = new TreeMap<>();
-                        updatedGameListForCache.put(achievementsEnabled, gameList);
-
-                        String checkWhichSubKey;
-                        if (achievementsEnabled.equalsIgnoreCase(Konstanten.ACHIEVEMENTS)) {
-                            checkWhichSubKey = Konstanten.NO_ACHIEVEMENTS;
-                        } else {
-                            checkWhichSubKey = Konstanten.ACHIEVEMENTS;
-                        }
-
-                        if ((finalGameListTree != null) && (finalGameListTree.containsKey(checkWhichSubKey))) {
-                            List<Game> existingGamesInCache = (List<Game>) finalGameListTree.get(checkWhichSubKey);
-                            updatedGameListForCache.put(checkWhichSubKey, existingGamesInCache);
-                        }
-
-                        gamesBySystemInCache.put(String.valueOf(systemObj.getId()), updatedGameListForCache);
-                        CheatDatabaseApplication.setGamesBySystemCached(gamesBySystemInCache);
-
-                        updateUI();
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<List<Game>> call, Throwable t) {
-                    Log.e(TAG, "Load game and cheats counters failed: " + t.getLocalizedMessage());
-                    error();
-                }
-            });
-        } else {
-            updateUI();
-        }
+            @Override
+            public void onFailure(Call<List<Game>> call, Throwable t) {
+                Log.e(TAG, "Load game and cheats counters failed: " + t.getLocalizedMessage());
+                error();
+            }
+        });
     }
 
     private void applySystemToGames() {

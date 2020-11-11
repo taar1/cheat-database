@@ -1,7 +1,5 @@
 package com.cheatdatabase.cheatdetailview;
 
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.text.Html;
 import android.util.Log;
@@ -29,7 +27,6 @@ import com.cheatdatabase.adapters.CheatViewGalleryListAdapter;
 import com.cheatdatabase.callbacks.CheatViewGalleryImageClickListener;
 import com.cheatdatabase.data.model.Cheat;
 import com.cheatdatabase.data.model.Game;
-import com.cheatdatabase.data.model.Member;
 import com.cheatdatabase.data.model.Screenshot;
 import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Reachability;
@@ -88,9 +85,6 @@ public class CheatViewFragment extends Fragment implements CheatViewGalleryImage
     private List<Cheat> cheatList;
     private Game game;
     private int offset;
-    private Member member;
-    private SharedPreferences settings;
-    private Editor editor;
     private CheatViewPageIndicatorActivity cheatViewPageIndicatorActivity;
 
     public CheatViewFragment() {
@@ -114,18 +108,8 @@ public class CheatViewFragment extends Fragment implements CheatViewGalleryImage
             offset = savedInstanceState.getInt("offset");
         }
 
-        init();
-    }
-
-    private void init() {
         cheatViewPageIndicatorActivity = (CheatViewPageIndicatorActivity) getActivity();
-
-        settings = getActivity().getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
-        editor = settings.edit();
-
-        member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
     }
-
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
@@ -185,6 +169,7 @@ public class CheatViewFragment extends Fragment implements CheatViewGalleryImage
             galleryRecyclerView.setAdapter(cheatViewGalleryListAdapter);
             RecyclerView.LayoutManager gridLayoutManager = new GridLayoutManager(cheatViewPageIndicatorActivity, 2, GridLayoutManager.HORIZONTAL, false);
             galleryRecyclerView.setLayoutManager(gridLayoutManager);
+            galleryRecyclerView.setVisibility(View.VISIBLE);
 
             if ((cheatObj.getScreenshotList() == null) || (cheatObj.getScreenshotList().size() <= 3)) {
                 tvSwipeHorizontallyInfoText.setVisibility(View.GONE);
@@ -209,8 +194,7 @@ public class CheatViewFragment extends Fragment implements CheatViewGalleryImage
             populateView();
         }
 
-        editor.putString("cheat" + offset, new Gson().toJson(cheatObj));
-        editor.apply();
+        tools.putString("cheat" + offset, new Gson().toJson(cheatObj));
     }
 
     private void populateView() {
