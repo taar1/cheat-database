@@ -193,7 +193,7 @@
     <string name="no_thanks">No thanks</string>
     <string name="pref_enable_achievements_key">enable_achievements</string>
     <string name="pref_enable_achievements">Achievements &amp; Trophies</string>
-    <string name="pref_enable_achievements_summary">Filter Achievement &amp; Trophy cheats from the list.</string>
+    <string name="pref_enable_achievements_summary">Shall achievements &amp; trophy cheats be displayed?</string>
 
     <string name="privacy_policy">Privacy Policy</string>
     <string name="ukon_ad_title">Say Goodbye to Your Hangover</string>

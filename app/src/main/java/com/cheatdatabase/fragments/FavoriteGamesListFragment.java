@@ -172,7 +172,7 @@ public class FavoriteGamesListFragment extends Fragment implements OnGameListIte
 
     @Override
     public void onGameListItemSelected(Game game) {
-        Intent explicitIntent = new Intent(context, FavoriteCheatListActivity.class);
+        Intent explicitIntent = new Intent(getActivity(), FavoriteCheatListActivity.class);
         explicitIntent.putExtra("gameObj", game);
         startActivity(explicitIntent);
     }

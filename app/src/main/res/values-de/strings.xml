@@ -193,7 +193,7 @@
 
     <string name="pref_enable_achievements_key">enable_achievements</string>
     <string name="pref_enable_achievements">Achievements &amp; Trophies</string>
-    <string name="pref_enable_achievements_summary">Filtere Achievement &amp; Trophy Cheats aus der Liste.</string>
+    <string name="pref_enable_achievements_summary">Sollen Achievements &amp; Trophies angezeigt werden?</string>
 
     <plurals name="entries">
         <item quantity="one">Eintrag</item>

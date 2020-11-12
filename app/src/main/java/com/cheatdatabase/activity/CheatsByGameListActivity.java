@@ -3,6 +3,7 @@ package com.cheatdatabase.activity;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -16,6 +17,7 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
+import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -82,6 +84,7 @@ public class CheatsByGameListActivity extends AppCompatActivity implements OnChe
     LinearLayout bannerContainerFacebook;
 
     private ArrayList<Cheat> cheatList;
+    private boolean isAchievementsEnabled;
 
     private CheatDatabaseApplication cheatDatabaseApplication;
     private CheatsByGameRecycleListViewAdapter cheatsByGameRecycleListViewAdapter;
@@ -239,7 +242,8 @@ public class CheatsByGameListActivity extends AppCompatActivity implements OnChe
         ArrayList<Cheat> cheatsFound;
         boolean isCached = false;
         String achievementsEnabled;
-        boolean isAchievementsEnabled = tools.getBooleanFromSharedPreferences("enable_achievements", true);
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        isAchievementsEnabled = prefs.getBoolean("enable_achievements", true);
 
         if (isAchievementsEnabled) {
             achievementsEnabled = Konstanten.ACHIEVEMENTS;
@@ -367,7 +371,7 @@ public class CheatsByGameListActivity extends AppCompatActivity implements OnChe
     void addCheatsToFavoritesTask() {
         FavoriteCheatDao dao = RoomCheatDatabase.getDatabase(this).favoriteDao();
 
-        Call<List<Cheat>> call = restApi.getCheatsByGameId(gameObj.getGameId(), tools.getBooleanFromSharedPreferences("enable_achievements", true));
+        Call<List<Cheat>> call = restApi.getCheatsByGameId(gameObj.getGameId(), (isAchievementsEnabled ? 1 : 0));
         call.enqueue(new Callback<List<Cheat>>() {
             @Override
             public void onResponse(Call<List<Cheat>> cheats, Response<List<Cheat>> response) {

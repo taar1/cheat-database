@@ -213,7 +213,7 @@ public interface RestApi {
      */
     @FormUrlEncoded
     @POST("getCheatsByGameId.php")
-    Call<List<Cheat>> getCheatsByGameId(@Field("gameId") int gameId, @Field("achievementsEnabled") boolean achievementsEnabled);
+    Call<List<Cheat>> getCheatsByGameId(@Field("gameId") int gameId, @Field("achievementsEnabled") int achievementsEnabled);
 
     /**
      * Gets all cheats from a member.
@@ -248,7 +248,7 @@ public interface RestApi {
      */
     @FormUrlEncoded
     @POST("getGamesBySystemId.php")
-    Call<List<Game>> getGameListBySystemId(@Field("systemId") int systemId, @Field("achievementsEnabled") boolean achievementsEnabled);
+    Call<List<Game>> getGameListBySystemId(@Field("systemId") int systemId, @Field("achievementsEnabled") int achievementsEnabled);
 
     /**
      * Gets the cheat text (body) of a cheat as a string.
