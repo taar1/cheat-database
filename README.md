@@ -1,4 +1,4 @@
-[![Cheat-Database Logo](https://raw.githubusercontent.com/taar1/cheat-database/master/app/src/main/res/drawable-xhdpi/logo_full.png)](https://play.google.com/store/apps/details?id=com.cheatdatabase) 
+[![Cheat-Database Logo](https://images-na.ssl-images-amazon.com/images/I/715KWrLOTiL.png)](https://www.amazon.com/gp/product/B00KBAC71E) 
 
 
 # Cheat-Database for Android
