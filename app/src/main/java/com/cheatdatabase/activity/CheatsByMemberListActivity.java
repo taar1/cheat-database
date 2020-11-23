@@ -88,7 +88,7 @@ public class CheatsByMemberListActivity extends AppCompatActivity implements OnM
         if (authorMember != null) {
             init();
 
-            memberCheatRecycleListViewAdapter = new MemberCheatRecycleListViewAdapter(this);
+            memberCheatRecycleListViewAdapter = new MemberCheatRecycleListViewAdapter(this, tools.getMember());
 
             // use this setting to improve performance if you know that changes
             // in content do not change the layout size of the RecyclerView
@@ -160,7 +160,7 @@ public class CheatsByMemberListActivity extends AppCompatActivity implements OnM
     private void updateUI() {
         if ((cheatList != null) && (cheatList.size() > 0)) {
             memberCheatRecycleListViewAdapter.setCheatList(cheatList);
-            memberCheatRecycleListViewAdapter.setLoggedInMember(tools.getMember());
+            memberCheatRecycleListViewAdapter.setMember(tools.getMember());
             recyclerView.setAdapter(memberCheatRecycleListViewAdapter);
 
             memberCheatRecycleListViewAdapter.notifyDataSetChanged();

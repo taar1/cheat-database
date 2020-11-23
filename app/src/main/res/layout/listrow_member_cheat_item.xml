@@ -1,15 +1,15 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="80dp"
-    android:background="?android:attr/selectableItemBackground"
-    android:padding="16dp">
+    android:layout_height="wrap_content"
+    android:background="?android:attr/selectableItemBackground">
 
     <TextView
-        android:id="@+id/game_name"
+        android:id="@+id/gameName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="2dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         android:ellipsize="end"
         android:gravity="start"
         android:maxLines="1"
@@ -19,41 +19,44 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/edit"
+        android:id="@+id/editImageButton"
         android:layout_width="24dp"
         android:layout_height="24dp"
         android:layout_marginStart="8dp"
         android:background="?attr/selectableItemBackgroundBorderless"
         android:src="@drawable/ic_edit"
         android:visibility="visible"
-        app:layout_constraintStart_toEndOf="@+id/game_name"
-        app:layout_constraintTop_toTopOf="@+id/game_name" />
+        app:layout_constraintStart_toEndOf="@+id/gameName"
+        app:layout_constraintTop_toTopOf="@+id/gameName" />
 
     <TextView
-        android:id="@+id/cheat_title"
+        android:id="@+id/cheatTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="2dp"
+        android:layout_marginBottom="8dp"
         android:gravity="start"
+        android:maxLines="1"
         android:text="@string/placeholder"
         android:textAppearance="@style/SearchResultListItemText"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/game_name" />
+        app:layout_constraintTop_toBottomOf="@+id/gameName" />
 
 
     <ImageView
-        android:id="@+id/images_icon"
+        android:id="@+id/imagesIcon"
         android:layout_width="80dp"
         android:layout_height="48dp"
         android:layout_marginStart="8dp"
         android:src="@drawable/ic_map"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/german_flag_icon"
+        app:layout_constraintEnd_toStartOf="@+id/germanFlag"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/german_flag_icon"
+        android:id="@+id/germanFlag"
         android:layout_width="80dp"
         android:layout_height="48dp"
         android:src="@drawable/ic_germany"

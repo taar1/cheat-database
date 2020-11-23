@@ -11,7 +11,7 @@
     android:padding="@dimen/outer_padding_listview_item">
 
     <TextView
-        android:id="@+id/cheat_title"
+        android:id="@+id/cheatTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:singleLine="true"

@@ -23,7 +23,7 @@ class MyUnpublishedCheatsListViewItemHolder(
     var cardBottomLine: View? = view.submission_status_layout_bottom
     var submissionStatus: TextView? = view.submission_status
     var gameAndSystem: TextView? = view.game_and_system
-    var cheatTitle: TextView? = view.cheat_title
+    var cheatTitle: TextView? = view.cheatTitle
     var cheatText: TextView? = view.cheat_text
     var submissionDate: TextView? = view.submission_date
 

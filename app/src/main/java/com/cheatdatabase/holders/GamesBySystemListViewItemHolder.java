@@ -14,10 +14,10 @@ import butterknife.ButterKnife;
 
 public class GamesBySystemListViewItemHolder extends RecyclerView.ViewHolder {
     public View view;
-    private Context context;
+    private final Context context;
     private Game game;
 
-    @BindView(R.id.game_name)
+    @BindView(R.id.gameName)
     TextView gameName;
     @BindView(R.id.cheat_count)
     TextView cheatCount;

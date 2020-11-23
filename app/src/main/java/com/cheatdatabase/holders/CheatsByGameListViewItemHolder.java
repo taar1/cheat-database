@@ -20,7 +20,7 @@ public class CheatsByGameListViewItemHolder extends RecyclerView.ViewHolder {
     public View view;
     private Cheat cheat;
 
-    @BindView(R.id.cheat_title)
+    @BindView(R.id.cheatTitle)
     TextView mCheatTitle;
     @BindView(R.id.small_ratingbar)
     RatingBar mRatingBar;

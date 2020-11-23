@@ -13,7 +13,7 @@
     </data>
 
     <TextView
-        android:id="@+id/game_name"
+        android:id="@+id/gameName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="2dp"
@@ -25,7 +25,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/cheat_title"
+        android:id="@+id/cheatTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
@@ -33,7 +33,7 @@
         android:textAppearance="@style/SearchResultListItemText"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/game_name" />
+        app:layout_constraintTop_toBottomOf="@+id/gameName" />
 
     <ImageView
         android:id="@+id/state"

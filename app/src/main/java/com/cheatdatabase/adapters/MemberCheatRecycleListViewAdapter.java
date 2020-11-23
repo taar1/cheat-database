@@ -1,6 +1,5 @@
 package com.cheatdatabase.adapters;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.cheatdatabase.R;
 import com.cheatdatabase.data.model.Cheat;
 import com.cheatdatabase.data.model.Member;
-import com.cheatdatabase.holders.MemberCheatsListViewItemHolder;
+import com.cheatdatabase.holders.MemberCheatsListViewItemHolderK;
 import com.cheatdatabase.listeners.OnMyCheatListItemSelectedListener;
 import com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView;
 
@@ -26,37 +25,29 @@ public class MemberCheatRecycleListViewAdapter extends RecyclerView.Adapter<Recy
 
     private List<Cheat> cheatList;
     private final OnMyCheatListItemSelectedListener onMyCheatListItemSelectedListener;
-    private Member loggedInMember;
+    private Member member;
 
-    public MemberCheatRecycleListViewAdapter(OnMyCheatListItemSelectedListener onMyCheatListItemSelectedListener) {
+    public MemberCheatRecycleListViewAdapter(OnMyCheatListItemSelectedListener onMyCheatListItemSelectedListener, Member member) {
         cheatList = new ArrayList<>();
         this.onMyCheatListItemSelectedListener = onMyCheatListItemSelectedListener;
+        this.member = member;
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(final ViewGroup parent, int viewType) {
-        Log.d(TAG, "XXXXX onCreateViewHolder: loggedInMember" + loggedInMember.getMid());
-        Log.d(TAG, "XXXXX onCreateViewHolder: loggedInMember" + cheatList.get(0).getSubmittingMember().getMid());
-
-        // TODO FIXME hier crasht es noch (wegen loggedInMember)
-        // TODO FIXME hier crasht es noch (wegen loggedInMember)
-        // TODO FIXME hier crasht es noch (wegen loggedInMember)
-        // TODO FIXME hier crasht es noch (wegen loggedInMember)
-        // TODO FIXME hier crasht es noch (wegen loggedInMember)
-
         final View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.listrow_member_cheat_item, parent, false);
         itemView.setDrawingCacheEnabled(true);
-        return new MemberCheatsListViewItemHolder(itemView);
+        return new MemberCheatsListViewItemHolderK(itemView);
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         Cheat cheat = cheatList.get(position);
-        MemberCheatsListViewItemHolder memberCheatsListViewItemHolder = (MemberCheatsListViewItemHolder) holder;
-        memberCheatsListViewItemHolder.setLoggedInMember(loggedInMember);
+        MemberCheatsListViewItemHolderK memberCheatsListViewItemHolder = (MemberCheatsListViewItemHolderK) holder;
+        memberCheatsListViewItemHolder.setLoggedInMember(member);
         memberCheatsListViewItemHolder.setCheat(cheat);
-        memberCheatsListViewItemHolder.view.setOnClickListener(v -> onMyCheatListItemSelectedListener.onCheatListItemSelected(cheat, position));
-        memberCheatsListViewItemHolder.editButton.setOnClickListener(v -> onMyCheatListItemSelectedListener.onCheatListItemEditSelected(cheat, position));
+        memberCheatsListViewItemHolder.itemView.setOnClickListener(v -> onMyCheatListItemSelectedListener.onCheatListItemSelected(cheat, position));
+        //memberCheatsListViewItemHolder.editButton.setOnClickListener(v -> onMyCheatListItemSelectedListener.onCheatListItemEditSelected(cheat, position));
     }
 
     public void setCheatList(List<Cheat> cheatList) {
@@ -79,7 +70,7 @@ public class MemberCheatRecycleListViewAdapter extends RecyclerView.Adapter<Recy
         return 100;
     }
 
-    public void setLoggedInMember(Member member) {
-        this.loggedInMember = member;
+    public void setMember(Member member) {
+        this.member = member;
     }
 }

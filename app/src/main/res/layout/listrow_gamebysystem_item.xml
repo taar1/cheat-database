@@ -6,7 +6,7 @@
     android:padding="@dimen/outer_padding_listview_item">
 
     <TextView
-        android:id="@+id/game_name"
+        android:id="@+id/gameName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="start"
