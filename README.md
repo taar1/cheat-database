@@ -12,4 +12,4 @@ If you would like to contribute and help making the app better feel free to fork
 
 Thanks!
 
-[![Cheat-Database Logo](https://images-na.ssl-images-amazon.com/images/I/715KWrLOTiL.png)]
+![Cheat-Database Logo](https://images-na.ssl-images-amazon.com/images/I/715KWrLOTiL.png)
