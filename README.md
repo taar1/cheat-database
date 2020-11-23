@@ -4,7 +4,7 @@
 # Cheat-Database for Android
 A continuously growing collection of tricks, tips, walkthroughs and passwords for games on past and current video game systems, PC and mobile phones.
 
-You can download and install the app through Google Play:
+You can download and install the app on amazon.com:
 
 https://www.amazon.com/gp/product/B00KBAC71E
 
