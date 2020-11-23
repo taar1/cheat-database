@@ -3,7 +3,7 @@ package com.cheatdatabase.helpers;
 public class DistinctValues {
 
     // HUAWEI VALUES
-    public static final String GOOGLE_PLAY_URL = "http://www.amazon.com/gp/mas/dl/android?p=com.cheatdatabase";
-    public static final String URL_MORE_APPS = "http://www.amazon.com/gp/mas/dl/android?p=com.cheatdatabase&showAll=1";
+    public static final String APP_STORE_URL = "https://appgallery.huawei.com/#/app/C103319339?locale=en_GB&source=%20appshare&subsource=C103319339";
+    public static final String MORE_APPS_URL = "https://appgallery.huawei.com/#/app/C103319339?locale=en_GB&source=%20appshare&subsource=C103319339";
 
 }

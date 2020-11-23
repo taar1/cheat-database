@@ -53,7 +53,7 @@ public class RateAppDialog {
                         Toast.makeText(context, R.string.rate_us_thanks_good_rating, Toast.LENGTH_LONG).show();
 
                         Handler handler = new Handler();
-                        handler.postDelayed(this::goToGooglePlay, 1000);
+                        handler.postDelayed(this::goToAppStore, 1000);
                     } else {
                         showBadRatingDialog();
                     }
@@ -78,8 +78,8 @@ public class RateAppDialog {
         ratingBar.setRating(Float.parseFloat(String.valueOf(settings.getInt(APP_RATING_LOCAL, 0))));
     }
 
-    private void goToGooglePlay() {
-        Uri appUri = Uri.parse(DistinctValues.GOOGLE_PLAY_URL);
+    private void goToAppStore() {
+        Uri appUri = Uri.parse(DistinctValues.APP_STORE_URL);
         Intent intentRateApp = new Intent(Intent.ACTION_VIEW, appUri);
         if (intentRateApp.resolveActivity(context.getPackageManager()) != null) {
             context.startActivity(intentRateApp);

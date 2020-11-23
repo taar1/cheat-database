@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="more_apps_url">http://www.amazon.com/gp/mas/dl/android?p=com.cheatdatabase&amp;showAll=1</string>
+    <string name="more_apps_url">https://www.amazon.com/gp/mas/dl/android?p=com.cheatdatabase&amp;showAll=1</string>
 </resources>

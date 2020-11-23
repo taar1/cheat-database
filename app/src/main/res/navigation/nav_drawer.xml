@@ -40,6 +40,7 @@
     <fragment
         android:id="@+id/nav_more_apps"
         android:name="com.cheatdatabase.fragments.MoreAppsFragment"
+        android:label="@string/menu_more_apps"
         tools:layout="@layout/webview_container" />
     <fragment
         android:id="@+id/nav_terms_of_use"
