@@ -9,8 +9,8 @@ apply plugin: 'com.google.firebase.crashlytics'
 
 String APK_ID = "com.cheatdatabase"
 String APK_NAME = "Cheat-Database"
-int VERSION_CODE = 72
-String VERSION_NAME = "2.7-preRelease"
+int VERSION_CODE = 73
+String VERSION_NAME = "2.7.1-preRelease"
 
 android {
     compileSdkVersion 30
