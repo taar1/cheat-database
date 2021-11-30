@@ -29,6 +29,7 @@
         <activity
             android:name=".activity.MainActivity"
             android:configChanges="orientation|screenSize"
+            android:exported="true"
             android:label="@string/title_activity_main">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -45,6 +46,7 @@
         </activity>
         <activity
             android:name=".search.SearchResultsActivity"
+            android:exported="false"
             android:label="@string/title_activity_search_result"
             android:parentActivityName=".activity.MainActivity">
             <intent-filter>
@@ -60,6 +62,7 @@
         </activity>
         <activity
             android:name=".activity.GamesBySystemListActivity"
+            android:exported="false"
             android:parentActivityName=".activity.MainActivity">
             <meta-data
                 android:name="android.app.default_searchable"
@@ -67,9 +70,11 @@
         </activity>
         <activity
             android:name=".activity.SubmitCheatFormActivity"
+            android:exported="false"
             android:label="@string/submit_cheat_title" />
         <activity
             android:name=".activity.CheatsByGameListActivity"
+            android:exported="false"
             android:label="@string/title_cheat_list"
             android:parentActivityName=".activity.GamesBySystemListActivity">
             <meta-data
@@ -81,20 +86,24 @@
         </activity>
         <activity
             android:name=".activity.LoginActivity"
+            android:exported="false"
             android:label="@string/title_activity_login"
             android:windowSoftInputMode="adjustResize|stateVisible" />
         <activity
             android:name=".activity.RecoverActivity"
+            android:exported="false"
             android:label="@string/title_activity_recover"
             android:parentActivityName=".activity.LoginActivity"
             android:windowSoftInputMode="adjustResize|stateVisible" />
         <activity
             android:name=".activity.RegisterActivity"
+            android:exported="false"
             android:label="@string/title_activity_register"
             android:parentActivityName=".activity.LoginActivity"
             android:windowSoftInputMode="adjustResize|stateVisible" />
         <activity
             android:name=".activity.CheatForumActivity"
+            android:exported="false"
             android:parentActivityName=".cheatdetailview.CheatViewPageIndicatorActivity"
             android:uiOptions="splitActionBarWhenNarrow"
             android:windowSoftInputMode="adjustResize|stateHidden">
@@ -107,6 +116,7 @@
         </activity>
         <activity
             android:name=".activity.CheatsByMemberListActivity"
+            android:exported="false"
             android:parentActivityName=".activity.MainActivity">
             <meta-data
                 android:name="android.app.default_searchable"
@@ -114,6 +124,7 @@
         </activity>
         <activity
             android:name=".cheatdetailview.MemberCheatViewPageIndicator"
+            android:exported="false"
             android:parentActivityName=".activity.CheatsByMemberListActivity"
             android:uiOptions="splitActionBarWhenNarrow">
             <meta-data
@@ -122,6 +133,7 @@
         </activity>
         <activity
             android:name=".cheatdetailview.CheatViewPageIndicatorActivity"
+            android:exported="false"
             android:label="@string/title_cheat_detail"
             android:parentActivityName=".activity.CheatsByGameListActivity"
             android:uiOptions="splitActionBarWhenNarrow">
@@ -134,6 +146,7 @@
         </activity>
         <activity
             android:name=".activity.FavoriteCheatListActivity"
+            android:exported="false"
             android:label="@string/title_favorite_list"
             android:parentActivityName=".activity.MainActivity"
             android:theme="@style/Theme.Navyblue">
@@ -146,6 +159,7 @@
         </activity>
         <activity
             android:name=".cheatdetailview.FavoritesCheatViewPageIndicator"
+            android:exported="false"
             android:label="@string/title_cheat_detail"
             android:theme="@style/Theme.Navyblue"
             android:uiOptions="splitActionBarWhenNarrow">
@@ -156,12 +170,14 @@
         <activity
             android:name=".activity.ui.mycheats.MyUnpublishedCheatsListActivity"
             android:configChanges="orientation|screenSize"
+            android:exported="false"
             android:label="@string/unpublished_cheats"
             android:parentActivityName=".activity.MainActivity"
             android:theme="@style/Theme.Navyblue" />
         <activity
             android:name=".activity.SubmitCheatSelectGameActivity"
             android:configChanges="orientation|screenSize"
+            android:exported="false"
             android:label="@string/submit_cheat_title"
             android:theme="@style/Theme.Navyblue">
             <meta-data
@@ -193,7 +209,8 @@
         <!-- Enable background dispatching to improve delivery on non-Google Play devices -->
         <receiver
             android:name="com.google.android.gms.analytics.AnalyticsReceiver"
-            android:enabled="true">
+            android:enabled="true"
+            android:exported="false">
             <intent-filter>
                 <action android:name="com.google.android.gms.analytics.ANALYTICS_DISPATCH" />
             </intent-filter>

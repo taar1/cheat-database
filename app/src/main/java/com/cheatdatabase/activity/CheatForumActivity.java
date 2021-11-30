@@ -406,7 +406,7 @@ public class CheatForumActivity extends AppCompatActivity implements GenericCall
                 tools.shareCheat(cheatObj);
                 return true;
             case R.id.action_metainfo:
-                new CheatMetaDialog(CheatForumActivity.this, cheatObj, outerLayout, tools, restApi).show();
+                new CheatMetaDialog(CheatForumActivity.this, cheatObj, outerLayout, tools).show();
                 return true;
             case R.id.action_report:
                 showReportDialog();
@@ -441,7 +441,7 @@ public class CheatForumActivity extends AppCompatActivity implements GenericCall
         if ((tools.getMember() == null) || (tools.getMember().getMid() == 0)) {
             Toast.makeText(this, R.string.error_login_required, Toast.LENGTH_LONG).show();
         } else {
-            new RateCheatMaterialDialog(this, cheatObj, tools.getMember(), outerLayout, tools, restApi);
+            new RateCheatMaterialDialog(this, cheatObj, tools.getMember(), outerLayout, tools);
         }
     }
 

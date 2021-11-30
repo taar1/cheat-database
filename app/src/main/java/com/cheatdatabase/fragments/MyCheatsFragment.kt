@@ -19,14 +19,12 @@ import com.cheatdatabase.data.model.MyCheatsCount
 import com.cheatdatabase.databinding.FragmentMyCheatsOverviewBinding
 import com.cheatdatabase.helpers.Tools
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.fragment_my_cheats_overview.view.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import javax.inject.Inject
 
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
-class MyCheatsFragment : Fragment(R.layout.fragment_my_cheats_overview) {
-    val TAG = "MyCheatsFragment"
+class MyCheatsFragment : Fragment() {
 
     @Inject
     lateinit var tools: Tools
@@ -41,37 +39,44 @@ class MyCheatsFragment : Fragment(R.layout.fragment_my_cheats_overview) {
     lateinit var unpublishedCheatsCount: TextView
     lateinit var unpublishedCheatsSubtitle: TextView
 
-    private lateinit var viewBinding: FragmentMyCheatsOverviewBinding
+    private var _binding: FragmentMyCheatsOverviewBinding? = null
+    private val binding get() = _binding!!
 
     private val viewModel: MyCheatsViewModel by viewModels()
 
     companion object {
+        const val TAG = "MyCheatsFragment"
         fun newInstance() = MyCheatsFragment()
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        viewBinding = FragmentMyCheatsOverviewBinding.inflate(inflater)
-        val view = viewBinding.root
+    ): View {
+        _binding = FragmentMyCheatsOverviewBinding.inflate(inflater, container, false)
+        return binding.root
+    }
 
-        myScoreLayout = view.my_score_layout
-        outerLayout = view.outer_layout
-        unpublishedCheatsCard = view.card_unpublished_cheats
-        publishedCheatsCard = view.card_published_cheats
-        publishedCheatsCount = view.published_cheats_count
-        unpublishedCheatsCount = view.unpublished_cheats_count
-        unpublishedCheatsSubtitle = view.unpublished_cheats_subtitle
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-        viewModel.myCheats.observe(viewLifecycleOwner, { myCheats ->
+        myScoreLayout = binding.myScoreLayout
+        outerLayout = binding.outerLayout
+        unpublishedCheatsCard = binding.cardUnpublishedCheats
+        publishedCheatsCard = binding.cardPublishedCheats
+        publishedCheatsCount = binding.publishedCheatsCount
+        unpublishedCheatsCount = binding.unpublishedCheatsCount
+        unpublishedCheatsSubtitle = binding.unpublishedCheatsSubtitle
+
+        viewModel.myCheats.observe(viewLifecycleOwner) { myCheats ->
             myCheatsCount = myCheats
             updateText()
-        })
+        }
 
         initListeners()
         updateText()
-        return viewBinding.root
+
+        myScoreLayout = binding.myScoreLayout
     }
 
     override fun onResume() {
@@ -139,4 +144,8 @@ class MyCheatsFragment : Fragment(R.layout.fragment_my_cheats_overview) {
             getString(R.string.cheats_waiting_for_approval, "", "")
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 }

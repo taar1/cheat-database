@@ -8,19 +8,36 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.cheatdatabase.R
 import com.cheatdatabase.databinding.WebviewContainerBinding
-import kotlinx.android.synthetic.main.webview_container.view.*
 
-class MoreAppsFragment : Fragment(R.layout.webview_container) {
-    private val TAG = "MoreAppsFragment"
+class MoreAppsFragment : Fragment() {
 
-    lateinit var viewBinding: WebviewContainerBinding
+    companion object {
+        private const val TAG = "MoreAppsFragment"
+    }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        viewBinding = WebviewContainerBinding.inflate(inflater)
-        viewBinding.root.webview.loadUrl(resources.getString(R.string.more_apps_url))
+    private var _binding: WebviewContainerBinding? = null
+    private val binding get() = _binding!!
 
-        Log.d(TAG, "App Store URL: " + resources.getString(R.string.more_apps_url))
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        _binding = WebviewContainerBinding.inflate(inflater, container, false)
+        return binding.root
+    }
 
-        return viewBinding.root
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val resourcesUrl = resources.getString(R.string.more_apps_url)
+        Log.d(TAG, "App Store URL: ".plus(resourcesUrl))
+
+        binding.webview.loadUrl(resourcesUrl)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

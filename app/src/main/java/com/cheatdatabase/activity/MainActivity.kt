@@ -13,6 +13,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
@@ -21,20 +22,23 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.cheatdatabase.R
 import com.cheatdatabase.data.model.MyCheatsCount
+import com.cheatdatabase.databinding.ActivityMainBinding
 import com.cheatdatabase.dialogs.RateAppDialog
 import com.cheatdatabase.fragments.MyCheatsViewModel
 import com.cheatdatabase.helpers.Konstanten
 import com.cheatdatabase.helpers.Tools
 import com.cheatdatabase.helpers.TrackingUtils
 import com.cheatdatabase.search.SearchSuggestionProvider
+import com.google.android.material.navigation.NavigationView
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.toolbar.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
-    private val TAG = "MainActivity"
+
+    companion object {
+        private const val TAG = "MainActivity"
+    }
 
     @Inject
     lateinit var rateAppDialog: RateAppDialog
@@ -50,30 +54,41 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
 
-    val resultContract = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult? ->
-        if (result?.resultCode == Konstanten.LOGIN_SUCCESS_RETURN_CODE) {
-            tools.showSnackbar(drawerLayout, getString(R.string.login_ok))
-        } else if (result?.resultCode == Konstanten.REGISTER_SUCCESS_RETURN_CODE) {
-            tools.showSnackbar(drawerLayout, getString(R.string.register_thanks))
-        }
+    private lateinit var binding: ActivityMainBinding
+    private lateinit var drawerLayout: DrawerLayout
+    private lateinit var navigationView: NavigationView
 
-        viewModel.getMyCheatsCount(tools.member)
-    }
+    val resultContract =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult? ->
+            if (result?.resultCode == Konstanten.LOGIN_SUCCESS_RETURN_CODE) {
+                tools.showSnackbar(drawerLayout, getString(R.string.login_ok))
+            } else if (result?.resultCode == Konstanten.REGISTER_SUCCESS_RETURN_CODE) {
+                tools.showSnackbar(drawerLayout, getString(R.string.register_thanks))
+            }
+
+            viewModel.getMyCheatsCount(tools.member)
+        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setContentView(R.layout.activity_main)
-        setSupportActionBar(toolbar)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        setSupportActionBar(binding.toolbarLayout.toolbar)
 
         init()
 
-        viewModel.myCheats.observe(this, { myCheats ->
+        drawerLayout = binding.drawerLayout
+        navigationView = binding.navigationView
+
+        viewModel.myCheats.observe(this) { myCheats ->
             updateMyCheatsDrawerNavigationItemCount(myCheats)
-        })
+        }
 
         // Navigation Component
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.navHostFragment) as NavHostFragment
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.navHostFragment) as NavHostFragment
         navController = navHostFragment.navController
 
         appBarConfiguration = AppBarConfiguration(navController.graph, drawerLayout)
@@ -83,7 +98,10 @@ class MainActivity : AppCompatActivity() {
 
         val rateAppItem = navigationView.menu.findItem(R.id.nav_rate)
         rateAppItem.setOnMenuItemClickListener {
-            rateAppDialog.show(navController.createDeepLink().setDestination(R.id.nav_contact).createPendingIntent())
+            rateAppDialog.show(
+                navController.createDeepLink().setDestination(R.id.nav_contact)
+                    .createPendingIntent()
+            )
             true
         }
     }
@@ -127,7 +145,11 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_clear_search_history -> {
-                val suggestions = SearchRecentSuggestions(this, SearchSuggestionProvider.AUTHORITY, SearchSuggestionProvider.MODE)
+                val suggestions = SearchRecentSuggestions(
+                    this,
+                    SearchSuggestionProvider.AUTHORITY,
+                    SearchSuggestionProvider.MODE
+                )
                 suggestions.clearHistory()
                 Toast.makeText(this, R.string.search_history_cleared, Toast.LENGTH_LONG).show()
                 true
@@ -149,12 +171,14 @@ class MainActivity : AppCompatActivity() {
     private fun updateMyCheatsDrawerNavigationItemCount(myCheatsCount: MyCheatsCount?) {
         val menu = navigationView.menu
         val navMyCheats = menu.findItem(R.id.nav_my_cheats)
-        val myCheatsNavDrawerCounter = navMyCheats.actionView.findViewById<TextView>(R.id.nav_drawer_item_counter)
+        val myCheatsNavDrawerCounter =
+            navMyCheats.actionView.findViewById<TextView>(R.id.nav_drawer_item_counter)
 
         if (myCheatsCount != null) {
             val allUnpublishedCheats = myCheatsCount.uncheckedCheats + myCheatsCount.rejectedCheats
             if (allUnpublishedCheats > 0) {
-                myCheatsNavDrawerCounter.text = getString(R.string.braces_with_text_in_the_middle, allUnpublishedCheats)
+                myCheatsNavDrawerCounter.text =
+                    getString(R.string.braces_with_text_in_the_middle, allUnpublishedCheats)
             }
         } else {
             myCheatsNavDrawerCounter.text = ""

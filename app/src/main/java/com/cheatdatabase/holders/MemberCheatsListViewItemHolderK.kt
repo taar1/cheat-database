@@ -9,6 +9,12 @@ import kotlinx.android.synthetic.main.listrow_member_cheat_item.view.*
 
 class MemberCheatsListViewItemHolderK(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
+    // TODO FIXME die adapter die diesen holder verwenden in kotlin umwandeln und anpassen für VIEWBINDING und dann den viewBinder dem holder übergeben
+    // TODO FIXME die adapter die diesen holder verwenden in kotlin umwandeln und anpassen für VIEWBINDING und dann den viewBinder dem holder übergeben
+    // TODO FIXME die adapter die diesen holder verwenden in kotlin umwandeln und anpassen für VIEWBINDING und dann den viewBinder dem holder übergeben
+    // TODO FIXME die adapter die diesen holder verwenden in kotlin umwandeln und anpassen für VIEWBINDING und dann den viewBinder dem holder übergeben
+    // TODO FIXME die adapter die diesen holder verwenden in kotlin umwandeln und anpassen für VIEWBINDING und dann den viewBinder dem holder übergeben
+
     private var member: Member? = null
 
     fun setCheat(cheat: Cheat) {

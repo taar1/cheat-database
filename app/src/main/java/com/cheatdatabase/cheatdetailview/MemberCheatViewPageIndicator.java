@@ -356,7 +356,7 @@ public class MemberCheatViewPageIndicator extends AppCompatActivity implements G
         if ((tools.getMember() == null) || (tools.getMember().getMid() == 0)) {
             Toast.makeText(this, R.string.error_login_required, Toast.LENGTH_LONG).show();
         } else {
-            new RateCheatMaterialDialog(this, visibleCheat, tools.getMember(), outerLayout, tools, restApi);
+            new RateCheatMaterialDialog(this, visibleCheat, tools.getMember(), outerLayout, tools);
         }
     }
 

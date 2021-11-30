@@ -1,12 +1,14 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/outer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/navy_blue_medium_dark"
-    android:visibility="invisible"
     android:paddingTop="16dp"
-    android:paddingBottom="16dp">
+    android:paddingBottom="16dp"
+    android:visibility="invisible"
+    tools:visibility="visible">
 
     <TextView
         android:id="@+id/submission_date_title"
@@ -252,7 +254,7 @@
     <View
         android:id="@+id/divider_6"
         android:layout_width="match_parent"
-        android:layout_height="4dp"
+        android:layout_height="1dp"
         android:layout_marginTop="16dp"
         android:layout_marginBottom="16dp"
         android:background="@color/gray"

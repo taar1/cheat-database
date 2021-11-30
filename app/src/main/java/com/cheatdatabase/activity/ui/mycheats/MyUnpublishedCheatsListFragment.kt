@@ -24,12 +24,12 @@ import com.cheatdatabase.R
 import com.cheatdatabase.activity.SubmitCheatFormActivity
 import com.cheatdatabase.activity.SubmitCheatSelectGameActivity
 import com.cheatdatabase.data.model.UnpublishedCheat
+import com.cheatdatabase.databinding.UnpublishedCheatsFragmentBinding
 import com.cheatdatabase.helpers.Tools
 import com.cheatdatabase.listeners.MyUnpublishedCheatsListItemSelectedListener
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.unpublished_cheats_fragment.view.*
 import javax.inject.Inject
 
 /**
@@ -40,7 +40,13 @@ class MyUnpublishedCheatsListFragment(val activity: MyUnpublishedCheatsListActiv
     MyUnpublishedCheatsListItemSelectedListener,
     MyUnpublishedCheatsListener {
 
-    val TAG = "MyUnpublishedCheatsFt"
+    companion object {
+        const val TAG = "MyUnpublishedCheatsFt"
+
+        fun newInstance(activity: MyUnpublishedCheatsListActivity): MyUnpublishedCheatsListFragment {
+            return MyUnpublishedCheatsListFragment(activity)
+        }
+    }
 
     @Inject
     lateinit var tools: Tools
@@ -48,6 +54,9 @@ class MyUnpublishedCheatsListFragment(val activity: MyUnpublishedCheatsListActiv
     var cheatPositionInList: Int = 0
     var myUnpublishedCheatsViewModel: MyUnpublishedCheatsViewModel? = null
     var myUnpublishedCheatsListViewAdapter: MyUnpublishedCheatsListViewAdapter? = null
+
+    private var _binding: UnpublishedCheatsFragmentBinding? = null
+    private val binding get() = _binding!!
 
     lateinit var emptyLabel: TextView
     lateinit var swipeRefreshLayout: SwipeRefreshLayout
@@ -57,24 +66,28 @@ class MyUnpublishedCheatsListFragment(val activity: MyUnpublishedCheatsListActiv
     lateinit var fab: ExtendedFloatingActionButton
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-    ): View? {
-        val view = inflater.inflate(R.layout.unpublished_cheats_fragment, container, false)
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        _binding = UnpublishedCheatsFragmentBinding.inflate(inflater, container, false)
+        return binding.root
+    }
 
-        emptyLabel = view.empty_label
-        outerLayout = view.outer_layout
-        recyclerView = view.recycler_view
-        progressBar = view.progress_bar
-        swipeRefreshLayout = view.swipe_refresh_layout
-        fab = view.fab_submit_cheat
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        emptyLabel = binding.emptyLabel
+        outerLayout = binding.outerLayout
+        recyclerView = binding.recyclerView
+        progressBar = binding.progressBar
+        swipeRefreshLayout = binding.swipeRefreshLayout
+        fab = binding.fabSubmitCheat
 
         swipeRefreshLayout.setOnRefreshListener {
             reloadData()
         }
 
         fab.setOnClickListener { submitCheat() }
-
-        return view
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -265,10 +278,5 @@ class MyUnpublishedCheatsListFragment(val activity: MyUnpublishedCheatsListActiv
         startActivity(explicitIntent)
     }
 
-    companion object {
-        fun newInstance(activity: MyUnpublishedCheatsListActivity): MyUnpublishedCheatsListFragment {
-            return MyUnpublishedCheatsListFragment(activity)
-        }
-    }
 
 }
