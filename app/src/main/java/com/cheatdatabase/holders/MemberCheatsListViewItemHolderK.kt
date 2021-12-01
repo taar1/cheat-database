@@ -4,42 +4,37 @@ import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.cheatdatabase.data.model.Cheat
 import com.cheatdatabase.data.model.Member
+import com.cheatdatabase.databinding.ListrowMemberCheatItemBinding
 import com.cheatdatabase.helpers.Konstanten
-import kotlinx.android.synthetic.main.listrow_member_cheat_item.view.*
 
-class MemberCheatsListViewItemHolderK(itemView: View) : RecyclerView.ViewHolder(itemView) {
-
-    // TODO FIXME die adapter die diesen holder verwenden in kotlin umwandeln und anpassen für VIEWBINDING und dann den viewBinder dem holder übergeben
-    // TODO FIXME die adapter die diesen holder verwenden in kotlin umwandeln und anpassen für VIEWBINDING und dann den viewBinder dem holder übergeben
-    // TODO FIXME die adapter die diesen holder verwenden in kotlin umwandeln und anpassen für VIEWBINDING und dann den viewBinder dem holder übergeben
-    // TODO FIXME die adapter die diesen holder verwenden in kotlin umwandeln und anpassen für VIEWBINDING und dann den viewBinder dem holder übergeben
-    // TODO FIXME die adapter die diesen holder verwenden in kotlin umwandeln und anpassen für VIEWBINDING und dann den viewBinder dem holder übergeben
+class MemberCheatsListViewItemHolderK(val binding: ListrowMemberCheatItemBinding) :
+    RecyclerView.ViewHolder(binding.root) {
 
     private var member: Member? = null
 
     fun setCheat(cheat: Cheat) {
-        itemView.gameName.text = "${cheat.game.gameName} (${cheat.system.systemName})"
-        itemView.cheatTitle.text = cheat.cheatTitle
+        binding.gameName.text = "${cheat.game.gameName} (${cheat.system.systemName})"
+        binding.cheatTitle.text = cheat.cheatTitle
 
         if (cheat.screenshotList.size > 0) {
-            itemView.imagesIcon.visibility = View.VISIBLE
+            binding.imagesIcon.visibility = View.VISIBLE
         } else {
-            itemView.imagesIcon.visibility = View.GONE
+            binding.imagesIcon.visibility = View.GONE
         }
 
         if (cheat.languageId == Konstanten.GERMAN) {
-            itemView.germanFlag.visibility = View.VISIBLE
+            binding.germanFlag.visibility = View.VISIBLE
         } else {
-            itemView.germanFlag.visibility = View.GONE
+            binding.germanFlag.visibility = View.GONE
         }
 
         // TODO FIXME add this again when continue work on the "edit my cheat" functionality
 //        if (member.getMid() == cheat.getSubmittingMember().getMid()) {
-//            itemView.edit.setVisibility(View.VISIBLE);
+//            binding.edit.setVisibility(View.VISIBLE);
 //        } else {
-//            itemView.edit.setVisibility(View.GONE);
+//            binding.edit.setVisibility(View.GONE);
 //        }
-        itemView.editImageButton.visibility = View.GONE
+        binding.editImageButton.visibility = View.GONE
     }
 
     fun setLoggedInMember(member: Member?) {
