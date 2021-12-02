@@ -290,6 +290,12 @@ public class MemberCheatViewFragment extends Fragment implements CheatViewGaller
         }
     }
 
+    // TODO FIXME umwandeln in kotlin und material dialog wie in CheatViewFragment.kt
+    // TODO FIXME umwandeln in kotlin und material dialog wie in CheatViewFragment.kt
+    // TODO FIXME umwandeln in kotlin und material dialog wie in CheatViewFragment.kt
+    // TODO FIXME umwandeln in kotlin und material dialog wie in CheatViewFragment.kt
+    // TODO FIXME umwandeln in kotlin und material dialog wie in CheatViewFragment.kt
+
     private void displayTableInWebview() {
         MaterialDialog md = new MaterialDialog.Builder(getActivity())
                 .customView(R.layout.webview_container, true)

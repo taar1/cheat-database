@@ -362,7 +362,7 @@ public class CheatViewPageIndicatorActivity extends AppCompatActivity implements
                 return true;
             case R.id.action_metainfo:
                 if (Reachability.reachability.isReachable) {
-                    new CheatMetaDialog(CheatViewPageIndicatorActivity.this, visibleCheat, outerLayout, tools, restApi).show();
+                    new CheatMetaDialog(CheatViewPageIndicatorActivity.this, visibleCheat, outerLayout, tools).show();
                 } else {
                     Toast.makeText(this, R.string.no_internet, Toast.LENGTH_SHORT).show();
                 }
