@@ -9,9 +9,8 @@ import android.text.format.DateFormat
 import android.util.Log
 import android.view.View
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.constraintlayout.widget.ConstraintLayout
-import com.afollestad.materialdialogs.MaterialDialog
-import com.afollestad.materialdialogs.customview.customView
 import com.cheatdatabase.R
 import com.cheatdatabase.activity.CheatsByMemberListActivity
 import com.cheatdatabase.data.RetrofitClientInstance
@@ -19,6 +18,7 @@ import com.cheatdatabase.data.model.Cheat
 import com.cheatdatabase.data.model.Member
 import com.cheatdatabase.helpers.Tools
 import com.cheatdatabase.rest.RestApi
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.gson.JsonObject
 import retrofit2.Call
 import retrofit2.Callback
@@ -35,7 +35,7 @@ class CheatMetaDialog(
     context
 ), View.OnClickListener {
 
-    private val mMaterialDialog: MaterialDialog = MaterialDialog(context)
+    private var madb: MaterialAlertDialogBuilder = MaterialAlertDialogBuilder(context)
     private val restApi: RestApi =
         RetrofitClientInstance.getRetrofitInstance().create(RestApi::class.java)
 
@@ -66,18 +66,20 @@ class CheatMetaDialog(
     }
 
     init {
-        mMaterialDialog.apply {
-            title(R.string.title_cheat_details)
-            customView(R.layout.layout_cheatview_meta_dialog)
-            positiveButton(R.string.ok)
-            cancelable(true)
-            show()
-        }
+        madb.setTitle(R.string.title_cheat_details)
+            .setView(R.layout.layout_cheatview_meta_dialog)
+            .setPositiveButton(R.string.ok) { _, _ ->
+                // close dialog
+            }
+            .setCancelable(true)
+
+        val materialDialog = madb.create()
+        materialDialog.show()
+
 
         member = cheat.submittingMember
 
-        bind(mMaterialDialog.view)
-
+        bind(materialDialog)
         loadMetaData()
     }
 
@@ -87,7 +89,6 @@ class CheatMetaDialog(
             override fun onResponse(metaInfo: Call<JsonObject?>, response: Response<JsonObject?>) {
                 val metaInfoData: JsonObject? = response.body()
                 Log.d(TAG, "onResponse metaInfo: $metaInfo")
-
 
                 if (metaInfoData?.get("viewsTotal") != null) {
                     cheat.viewsTotal = metaInfoData.get("viewsTotal").asInt
@@ -230,29 +231,29 @@ class CheatMetaDialog(
         }
     }
 
-    private fun bind(dialogView: View) {
-        outerLayout = dialogView.findViewById(R.id.outer_layout)
-        averageRatingTitle = dialogView.findViewById(R.id.average_rating_title)
-        averageRatingText = dialogView.findViewById(R.id.average_rating_text)
-        lifetimeViewsTitle = dialogView.findViewById(R.id.lifetime_views_title)
-        lifetimeViewsText = dialogView.findViewById(R.id.lifetime_views_text)
-        submissionDateTitle = dialogView.findViewById(R.id.submission_date_title)
-        submissionDateText = dialogView.findViewById(R.id.submission_date_text)
-        submittedByTitle = dialogView.findViewById(R.id.submitted_by_title)
-        submittedByText = dialogView.findViewById(R.id.submitted_by_text)
-        viewsTodayTitle = dialogView.findViewById(R.id.views_today_title)
-        viewsTodayText = dialogView.findViewById(R.id.views_today_text)
+    private fun bind(dialogView: AlertDialog) {
+        outerLayout = dialogView.findViewById(R.id.outer_layout)!!
+        averageRatingTitle = dialogView.findViewById(R.id.average_rating_title)!!
+        averageRatingText = dialogView.findViewById(R.id.average_rating_text)!!
+        lifetimeViewsTitle = dialogView.findViewById(R.id.lifetime_views_title)!!
+        lifetimeViewsText = dialogView.findViewById(R.id.lifetime_views_text)!!
+        submissionDateTitle = dialogView.findViewById(R.id.submission_date_title)!!
+        submissionDateText = dialogView.findViewById(R.id.submission_date_text)!!
+        submittedByTitle = dialogView.findViewById(R.id.submitted_by_title)!!
+        submittedByText = dialogView.findViewById(R.id.submitted_by_text)!!
+        viewsTodayTitle = dialogView.findViewById(R.id.views_today_title)!!
+        viewsTodayText = dialogView.findViewById(R.id.views_today_text)!!
         totalCheatsByMemberTitle =
-            dialogView.findViewById(R.id.total_cheats_by_member_title)
+            dialogView.findViewById(R.id.total_cheats_by_member_title)!!
         totalCheatsByMemberText =
-            dialogView.findViewById(R.id.total_cheats_by_member_text)
-        showAllCheatsByMember = dialogView.findViewById(R.id.show_all_cheats_by_member)
-        websiteTitle = dialogView.findViewById(R.id.website_title)
-        websiteText = dialogView.findViewById(R.id.website_text)
-        divider3 = dialogView.findViewById(R.id.divider_3)
-        divider4 = dialogView.findViewById(R.id.divider_4)
-        divider5 = dialogView.findViewById(R.id.divider_5)
-        divider6 = dialogView.findViewById(R.id.divider_6)
+            dialogView.findViewById(R.id.total_cheats_by_member_text)!!
+        showAllCheatsByMember = dialogView.findViewById(R.id.show_all_cheats_by_member)!!
+        websiteTitle = dialogView.findViewById(R.id.website_title)!!
+        websiteText = dialogView.findViewById(R.id.website_text)!!
+        divider3 = dialogView.findViewById(R.id.divider_3)!!
+        divider4 = dialogView.findViewById(R.id.divider_4)!!
+        divider5 = dialogView.findViewById(R.id.divider_5)!!
+        divider6 = dialogView.findViewById(R.id.divider_6)!!
 
         lifetimeViewsText.setOnClickListener(this)
         viewsTodayText.setOnClickListener(this)

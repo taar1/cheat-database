@@ -175,7 +175,7 @@
     <string name="err_username_too_short">The entered username is too short.</string>
 
     <!-- GENERAL INFORMATION -->
-    <string name="rate_us">Rate Cheat-Database</string>
+    <string name="rate_us">Rate us</string>
 
     <string name="title_favorite_list">Favorites</string>
 
@@ -261,5 +261,8 @@ The following contents are not allowed:\n\n
 Submitted tricks that violate one or more of the above points will be deleted.</string>
     <string name="ios_games_unsupported">iOS games no longer available.</string>
     <string name="android_games_unsupported">Android games no longer available.</string>
+    <string name="submission_status">Submission Status:</string>
+    <string name="cheat_title">Cheat Title</string>
+    <string name="edit_and_re_submit">Edit and Re-Submit</string>
 
 </resources>

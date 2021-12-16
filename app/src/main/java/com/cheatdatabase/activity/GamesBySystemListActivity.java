@@ -8,8 +8,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,6 +22,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.applovin.adview.AppLovinAdView;
 import com.cheatdatabase.R;
 import com.cheatdatabase.adapters.GamesBySystemRecycleListViewAdapter;
 import com.cheatdatabase.data.model.Game;
@@ -34,8 +33,6 @@ import com.cheatdatabase.helpers.Tools;
 import com.cheatdatabase.listeners.OnGameListItemSelectedListener;
 import com.cheatdatabase.rest.RestApi;
 import com.cheatdatabase.widgets.DividerDecoration;
-import com.facebook.ads.AdSize;
-import com.facebook.ads.AdView;
 import com.facebook.ads.NativeAd;
 import com.facebook.ads.NativeAdsManager;
 import com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView;
@@ -72,15 +69,14 @@ public class GamesBySystemListActivity extends AppCompatActivity implements OnGa
     SwipeRefreshLayout mSwipeRefreshLayout;
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
-    @BindView(R.id.banner_container_facebook)
-    LinearLayout bannerContainerFacebook;
     @BindView(R.id.item_list_empty_view)
     TextView mEmptyView;
+    @BindView(R.id.ad_container)
+    AppLovinAdView adView;
 
     private List<Game> gameList;
     private GamesBySystemRecycleListViewAdapter gamesBySystemRecycleListViewAdapter;
     private SystemModel systemObj;
-    private AdView adView;
 
     private final ActivityResultLauncher<Intent> resultContract =
             registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), getActivityResultRegistry(), activityResult -> {
@@ -102,7 +98,6 @@ public class GamesBySystemListActivity extends AppCompatActivity implements OnGa
 
         NativeAdsManager nativeAdsManager = new NativeAdsManager(this, Konstanten.FACEBOOK_AUDIENCE_NETWORK_NATIVE_AD_IN_RECYCLER_VIEW, 5);
         nativeAdsManager.loadAds(NativeAd.MediaCacheFlag.ALL);
-        prepareAdBanner();
 
         systemObj = getIntent().getParcelableExtra("systemObj");
 
@@ -148,6 +143,14 @@ public class GamesBySystemListActivity extends AppCompatActivity implements OnGa
         }
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
+
+        // TODO schauen wegen dem include...
+        // TODO schauen wegen dem include...
+        // TODO schauen wegen dem include...
+        // TODO schauen wegen dem include...
+        // TODO schauen wegen dem include...
+        // TODO schauen wegen dem include...
+        adView.loadNextAd();
     }
 
     @Override
@@ -204,14 +207,6 @@ public class GamesBySystemListActivity extends AppCompatActivity implements OnGa
             default:
                 return super.onOptionsItemSelected(item);
         }
-    }
-
-    private void prepareAdBanner() {
-        Log.d(TAG, "Banner: Using Facebook Audience Network");
-        bannerContainerFacebook.setVisibility(View.VISIBLE);
-        adView = new AdView(this, Konstanten.FACEBOOK_AUDIENCE_NETWORK_NATIVE_BANNER_ID, AdSize.BANNER_HEIGHT_50);
-        bannerContainerFacebook.addView(adView);
-        adView.loadAd();
     }
 
     private void loadGames() {

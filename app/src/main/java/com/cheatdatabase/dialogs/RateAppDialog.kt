@@ -7,21 +7,24 @@ import android.content.SharedPreferences
 import android.net.Uri
 import android.os.Handler
 import android.os.Looper
-import android.view.View
 import android.widget.RatingBar
 import android.widget.TextView
 import android.widget.Toast
-import com.afollestad.materialdialogs.MaterialDialog
-import com.afollestad.materialdialogs.customview.customView
+import androidx.appcompat.app.AlertDialog
 import com.cheatdatabase.R
 import com.cheatdatabase.helpers.DistinctValues
 import com.cheatdatabase.helpers.Konstanten
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.qualifiers.ActivityContext
 import javax.inject.Inject
 import kotlin.math.roundToInt
 
 class RateAppDialog @Inject constructor(@param:ActivityContext private val context: Context) {
-    private var mMaterialDialog: MaterialDialog = MaterialDialog(context)
+
+    private var madb: MaterialAlertDialogBuilder =
+        MaterialAlertDialogBuilder(context, R.style.ThemeOverlay_AppCompat_Dialog_Alert)
+    private var materialDialog: AlertDialog
+
     private val settings: SharedPreferences =
         context.getSharedPreferences(Konstanten.PREFERENCES_FILE, Context.MODE_PRIVATE)
     private val editor: SharedPreferences.Editor = settings.edit()
@@ -35,9 +38,10 @@ class RateAppDialog @Inject constructor(@param:ActivityContext private val conte
     }
 
     init {
-        mMaterialDialog.apply {
-            customView(R.layout.dialog_rate_app)
-            positiveButton(R.string.rate_us_submit) {
+        madb.setTitle(R.string.rate_us)
+        madb.setMessage(R.string.rate_us_text)
+        madb.setView(R.layout.dialog_rate_app)
+            .setPositiveButton(R.string.rate_us_submit) { _, _ ->
                 editor.putInt(APP_RATING_LOCAL, rating).apply()
 
                 if (rating >= MINIMUM_RATING_FOR_GOOGLE_PLAY) {
@@ -46,18 +50,19 @@ class RateAppDialog @Inject constructor(@param:ActivityContext private val conte
                     showBadRatingDialog()
                 }
             }
-            negativeButton(R.string.cancel) { dialog ->
+            .setNegativeButton(R.string.cancel) { dialog, _ ->
                 dialog.dismiss()
             }
-            cancelable(false)
-        }
+            .setCancelable(false)
+        materialDialog = madb.create()
+
     }
 
     fun show(pendingIntent: PendingIntent?) {
         this.pendingIntent = pendingIntent
         makeCustomLayout()
 
-        mMaterialDialog.show()
+        materialDialog.show()
     }
 
     private fun thanksForGoodRating() {
@@ -70,13 +75,12 @@ class RateAppDialog @Inject constructor(@param:ActivityContext private val conte
     }
 
     private fun makeCustomLayout() {
-        val dialogView: View = mMaterialDialog.view
-        val ratingBar: RatingBar = dialogView.findViewById(R.id.ratingbar)
-        ratingBar.onRatingBarChangeListener =
+        val ratingBar: RatingBar? = materialDialog.findViewById(R.id.ratingbar)
+        ratingBar?.onRatingBarChangeListener =
             RatingBar.OnRatingBarChangeListener { ratingBar1: RatingBar, v: Float, b: Boolean ->
                 rating = ratingBar1.rating.roundToInt()
             }
-        ratingBar.rating = settings.getInt(APP_RATING_LOCAL, 0).toString().toFloat()
+        ratingBar?.rating = settings.getInt(APP_RATING_LOCAL, 0).toString().toFloat()
     }
 
     private fun goToAppStore() {
@@ -88,27 +92,25 @@ class RateAppDialog @Inject constructor(@param:ActivityContext private val conte
     }
 
     private fun showBadRatingDialog() {
-        val badRatingDialog = MaterialDialog(context)
-        badRatingDialog.apply {
-            customView(R.layout.dialog_bad_rating)
-            positiveButton(R.string.submit_feedback) {
+        val df = MaterialAlertDialogBuilder(context)
+            .setTitle(R.string.bad_rating_ouch)
+            .setMessage(R.string.bad_rating_text)
+            .setPositiveButton(R.string.submit_feedback) { _, _ ->
                 pendingIntent?.send()
             }
-            negativeButton(R.string.no_thanks) {
-                dismiss()
+            .setNegativeButton(R.string.no_thanks) { dialog, _ ->
+                dialog.dismiss()
             }
-        }
+            .setCancelable(false)
+        val materialDialog = df.create()
+        materialDialog.show()
 
         val starOrStars =
             rating.toString().plus(" ")
                 .plus(context.resources.getQuantityString(R.plurals.stars, rating))
 
-        val dialogView: View = badRatingDialog.view
-        dialogView.apply {
-            findViewById<TextView>(R.id.bad_rating_text).text =
-                context.getString(R.string.bad_rating_text, starOrStars)
-        }
+
+        materialDialog.findViewById<TextView>(R.id.bad_rating_text)?.text =
+            context.getString(R.string.bad_rating_text, starOrStars)
     }
-
-
 }

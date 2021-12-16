@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,11 +16,13 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.applovin.adview.AppLovinAdView;
 import com.cheatdatabase.CheatDatabaseApplication;
 import com.cheatdatabase.R;
 import com.cheatdatabase.adapters.CheatsByGameRecycleListViewAdapter;
@@ -36,8 +37,6 @@ import com.cheatdatabase.helpers.Tools;
 import com.cheatdatabase.listeners.OnCheatListItemSelectedListener;
 import com.cheatdatabase.rest.RestApi;
 import com.cheatdatabase.widgets.DividerDecoration;
-import com.facebook.ads.AdSize;
-import com.facebook.ads.AdView;
 import com.facebook.ads.NativeAd;
 import com.facebook.ads.NativeAdsManager;
 import com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView;
@@ -71,7 +70,7 @@ public class CheatsByGameListActivity extends AppCompatActivity implements OnChe
     RestApi restApi;
 
     @BindView(R.id.outer_layout)
-    LinearLayout outerLayout;
+    ConstraintLayout outerLayout;
     @BindView(R.id.my_recycler_view)
     FastScrollRecyclerView recyclerView;
     @BindView(R.id.swipe_refresh_layout)
@@ -80,8 +79,8 @@ public class CheatsByGameListActivity extends AppCompatActivity implements OnChe
     Toolbar mToolbar;
     @BindView(R.id.item_list_empty_view)
     TextView mEmptyView;
-    @BindView(R.id.banner_container)
-    LinearLayout bannerContainerFacebook;
+    @BindView(R.id.ad_container)
+    AppLovinAdView adView;
 
     private ArrayList<Cheat> cheatList;
     private boolean isAchievementsEnabled;
@@ -90,7 +89,6 @@ public class CheatsByGameListActivity extends AppCompatActivity implements OnChe
     private CheatsByGameRecycleListViewAdapter cheatsByGameRecycleListViewAdapter;
 
     private Game gameObj;
-    private AdView facebookAdView;
 
     private final ActivityResultLauncher<Intent> resultContract =
             registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), getActivityResultRegistry(), activityResult -> {
@@ -122,6 +120,7 @@ public class CheatsByGameListActivity extends AppCompatActivity implements OnChe
         setContentView(R.layout.activity_cheat_list);
         ButterKnife.bind(this);
 
+        // TODO FIXME (remove)
         NativeAdsManager nativeAdsManager = new NativeAdsManager(this, Konstanten.FACEBOOK_AUDIENCE_NETWORK_NATIVE_AD_IN_RECYCLER_VIEW, 5);
         nativeAdsManager.loadAds(NativeAd.MediaCacheFlag.ALL);
 
@@ -154,15 +153,13 @@ public class CheatsByGameListActivity extends AppCompatActivity implements OnChe
     private void init() {
         cheatDatabaseApplication = CheatDatabaseApplication.getCurrentAppInstance();
 
-        facebookAdView = new AdView(this, Konstanten.FACEBOOK_AUDIENCE_NETWORK_NATIVE_BANNER_ID, AdSize.BANNER_HEIGHT_50);
-        bannerContainerFacebook.addView(facebookAdView);
-        facebookAdView.loadAd();
-
         if (mToolbar != null) {
             setSupportActionBar(mToolbar);
         }
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
+
+        adView.loadNextAd();
     }
 
     @Override
@@ -353,13 +350,13 @@ public class CheatsByGameListActivity extends AppCompatActivity implements OnChe
         super.onStop();
     }
 
-    @Override
-    protected void onDestroy() {
-        if (facebookAdView != null) {
-            facebookAdView.destroy();
-        }
-        super.onDestroy();
-    }
+//    @Override
+//    protected void onDestroy() {
+//        if (facebookAdView != null) {
+//            facebookAdView.destroy();
+//        }
+//        super.onDestroy();
+//    }
 
     @OnClick(R.id.add_new_cheat_button)
     void addNewCheat() {
@@ -422,4 +419,5 @@ public class CheatsByGameListActivity extends AppCompatActivity implements OnChe
             tools.showSnackbar(outerLayout, getString(R.string.no_internet));
         }
     }
+
 }

@@ -2,21 +2,21 @@ package com.cheatdatabase.dialogs
 
 import android.app.Activity
 import android.view.View
-import com.afollestad.materialdialogs.MaterialDialog
-import com.afollestad.materialdialogs.list.listItemsSingleChoice
+import androidx.appcompat.app.AlertDialog
 import com.cheatdatabase.R
 import com.cheatdatabase.data.RetrofitClientInstance
 import com.cheatdatabase.data.model.Cheat
 import com.cheatdatabase.data.model.Member
 import com.cheatdatabase.helpers.Tools
 import com.cheatdatabase.rest.RestApi
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.gson.JsonObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 /**
- * Material Design Cheat Reporting Dialog.
+ * Cheat Reporting Dialog.
  */
 class ReportCheatMaterialDialog(
     val activity: Activity,
@@ -26,30 +26,27 @@ class ReportCheatMaterialDialog(
     val tools: Tools
 ) {
 
-    private val mMaterialDialog: MaterialDialog = MaterialDialog(activity)
+    private var madb: MaterialAlertDialogBuilder = MaterialAlertDialogBuilder(activity)
+    private var materialDialog: AlertDialog
+
     private val restApi: RestApi =
         RetrofitClientInstance.getRetrofitInstance().create(RestApi::class.java)
 
     init {
         val reasons: Array<String> = activity.resources.getStringArray(R.array.report_reasons)
 
-        mMaterialDialog.apply {
-            title(R.string.report_cheat_title)
-            listItemsSingleChoice(
-                R.array.report_reasons,
-                waitForPositiveButton = false,
-                selection = { _, index, _ ->
-                    reportCheat(cheat.cheatId, member.mid, reasons[index])
-                }
-            )
-            negativeButton(R.string.cancel) { dialog ->
+        madb.setTitle(R.string.report_cheat_title)
+            .setItems(reasons) { _, which ->
+                reportCheat(cheat.cheatId, member.mid, reasons[which])
+            }
+            .setNegativeButton(R.string.cancel) { dialog, _ ->
                 dialog.dismiss()
             }
-            show()
-        }
+        materialDialog = madb.create()
+        materialDialog.show()
     }
 
-    fun reportCheat(cheatId: Int, memberId: Int, reason: String?) {
+    private fun reportCheat(cheatId: Int, memberId: Int, reason: String?) {
         val call: Call<JsonObject> = restApi.reportCheat(cheatId, memberId, reason)
         call.enqueue(object : Callback<JsonObject?> {
             override fun onResponse(forum: Call<JsonObject?>, response: Response<JsonObject?>) {
@@ -76,11 +73,9 @@ class ReportCheatMaterialDialog(
     private fun postReporting(isSuccess: Boolean) {
         if (isSuccess) {
             tools.showSnackbar(view, activity.getString(R.string.thanks_for_reporting))
-            mMaterialDialog.dismiss()
+            materialDialog.dismiss()
         } else {
             tools.showSnackbar(view, activity.getString(R.string.err_occurred))
         }
     }
-
-
 }

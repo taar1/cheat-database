@@ -1,5 +1,6 @@
 package com.cheatdatabase.cheatdetailview
 
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.Html
 import android.util.Log
@@ -14,12 +15,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.cheatdatabase.R
 import com.cheatdatabase.adapters.CheatViewGalleryListAdapter
 import com.cheatdatabase.callbacks.CheatViewGalleryImageClickListener
+import com.cheatdatabase.data.helper.CheatArrayHolder
 import com.cheatdatabase.data.model.Cheat
-import com.cheatdatabase.data.model.Game
+import com.cheatdatabase.data.model.Member
 import com.cheatdatabase.data.model.Screenshot
-import com.cheatdatabase.databinding.FragmentCheatDetailViewBinding
+import com.cheatdatabase.databinding.FragmentMemberCheatDetailBinding
 import com.cheatdatabase.helpers.Konstanten
-import com.cheatdatabase.helpers.Reachability
 import com.cheatdatabase.helpers.Tools
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.gson.Gson
@@ -32,16 +33,10 @@ import retrofit2.Callback
 import retrofit2.Response
 import javax.inject.Inject
 
-/**
- * Cheat Detail View Fragment.
- *
- * @author Dominik Erbsland
- * @version 1.2
- */
 @AndroidEntryPoint
-class CheatViewFragment : Fragment(), CheatViewGalleryImageClickListener {
+class MemberCheatViewFragment : Fragment(), CheatViewGalleryImageClickListener {
 
-    private var _binding: FragmentCheatDetailViewBinding? = null
+    private var _binding: FragmentMemberCheatDetailBinding? = null
     private val binding get() = _binding!!
 
     @Inject
@@ -55,29 +50,30 @@ class CheatViewFragment : Fragment(), CheatViewGalleryImageClickListener {
     lateinit var tvSwipeHorizontallyInfoText: TextView
     lateinit var galleryRecyclerView: RecyclerView
     lateinit var progressBar: ProgressBar
-    lateinit var reloadView: ImageView
 
-    private lateinit var cheatObj: Cheat
-    private var cheatList: List<Cheat>?
-    private var game: Game? = null
+    lateinit var cheatObj: Cheat
+    private var cheats: List<Cheat>? = null
     private var offset = 0
+    private var member: Member? = null
+    private var cheatViewPageIndicatorActivity: MemberCheatViewPageIndicator? = null
+    private var outerLayout: LinearLayout? = null
 
-    private var cheatViewPageIndicatorActivity: CheatViewPageIndicatorActivity? = null
+    lateinit var editor: SharedPreferences.Editor
+
 
     companion object {
-        private const val TAG = "CheatViewFragment"
+        private const val TAG = "MemberCheatViewFragment"
 
         @JvmStatic
-        fun newInstance(gameObj: Game, offset: Int): CheatViewFragment {
-            val cheatViewFragment = CheatViewFragment()
-            cheatViewFragment.game = gameObj
-            cheatViewFragment.offset = offset
-            return cheatViewFragment
+        fun newInstance(
+            cheats: List<Cheat>?, offset: Int, outerLayout: LinearLayout?
+        ): MemberCheatViewFragment {
+            val fragment = MemberCheatViewFragment()
+            fragment.cheats = cheats
+            fragment.offset = offset
+            fragment.outerLayout = outerLayout
+            return fragment
         }
-    }
-
-    init {
-        cheatList = ArrayList()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -85,17 +81,19 @@ class CheatViewFragment : Fragment(), CheatViewGalleryImageClickListener {
 
         // If the screen has been rotated we re-set the values
         if (savedInstanceState != null) {
-            game = savedInstanceState.getParcelable("game")
+            val cheatArrayHolder: CheatArrayHolder? =
+                savedInstanceState.getParcelable("cheatArrayHolder")
+            cheats = cheatArrayHolder?.cheatList
             offset = savedInstanceState.getInt("offset")
         }
-        cheatViewPageIndicatorActivity = activity as CheatViewPageIndicatorActivity?
-    }
+        cheatViewPageIndicatorActivity = activity as MemberCheatViewPageIndicator?
+        val settings = tools.sharedPreferences
+        editor = settings.edit()
 
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        outState.putParcelable("game", game)
-        outState.putInt("offset", offset)
+        member = Gson().fromJson(
+            settings.getString(Konstanten.MEMBER_OBJECT, null),
+            Member::class.java
+        )
     }
 
     override fun onCreateView(
@@ -103,7 +101,7 @@ class CheatViewFragment : Fragment(), CheatViewGalleryImageClickListener {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentCheatDetailViewBinding.inflate(inflater, container, false)
+        _binding = FragmentMemberCheatDetailBinding.inflate(inflater, container, false)
 
         mainLayout = binding.mainLayout
         mainTable = binding.tableCheatListMain
@@ -112,10 +110,9 @@ class CheatViewFragment : Fragment(), CheatViewGalleryImageClickListener {
         tvCheatTitle = binding.textCheatTitle
         tvSwipeHorizontallyInfoText = binding.galleryInfo
         galleryRecyclerView = binding.galleryRecyclerView
-        reloadView = binding.reload
         progressBar = binding.progressBar
 
-        reloadView.setOnClickListener { clickReload() }
+        //reloadView.setOnClickListener { clickReload() }
 
         return binding.root
     }
@@ -123,83 +120,64 @@ class CheatViewFragment : Fragment(), CheatViewGalleryImageClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        if (cheatList != null && game != null) {
-            cheatList = game?.cheatList
-            cheatObj = cheatList!![offset]
-            tvCheatTitle.text = cheatObj.cheatTitle
-            tvTextBeforeTable.visibility = View.VISIBLE
-            tvSwipeHorizontallyInfoText.visibility = View.INVISIBLE
-            progressBar.visibility = View.INVISIBLE
-            if (Reachability.reachability.isReachable) {
-                onlineContent
-            } else {
-                reloadView.visibility = View.VISIBLE
-                Toast.makeText(
-                    cheatViewPageIndicatorActivity,
-                    R.string.no_internet,
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
-            countForumPosts()
-        } else {
-            tools.showSnackbar(mainLayout, getString(R.string.err_data_not_accessible))
+        cheatObj = cheats!![offset]
+        cheatRating
+        tvCheatTitle.text = cheatObj.cheatTitle
+
+        tvTextBeforeTable.visibility = View.VISIBLE
+        tvSwipeHorizontallyInfoText.visibility = View.INVISIBLE
+        progressBar.visibility = View.INVISIBLE
+
+        for (s in cheatObj.screenshotList) {
+            Log.d(TAG, "XXXXX onCreateView: screenshot: " + s.fullPath)
         }
-    }
-
-    fun clickReload() {
-        if (Reachability.reachability.isReachable) {
-            onlineContent
-        } else {
-            Toast.makeText(cheatViewPageIndicatorActivity, R.string.no_internet, Toast.LENGTH_SHORT)
-                .show()
-        }
-    }
-
-    /**
-     * If the user came from the search results the cheat-text might not be
-     * complete (trimmed for the search results) and therefore has to be
-     * re-fetched in a background process.
-     */
-    private val onlineContent: Unit
-        get() {
-            reloadView.visibility = View.GONE
-
-            // Get thumbnails if there are screenshots.
-            if (cheatObj.hasScreenshots()) {
-                val cheatViewGalleryListAdapter = CheatViewGalleryListAdapter()
-                cheatViewGalleryListAdapter.setScreenshotList(cheatObj.screenshotList)
-                cheatViewGalleryListAdapter.setClickListener(this)
-                galleryRecyclerView.adapter = cheatViewGalleryListAdapter
-                val gridLayoutManager: RecyclerView.LayoutManager = GridLayoutManager(
-                    cheatViewPageIndicatorActivity,
-                    2,
-                    GridLayoutManager.HORIZONTAL,
-                    false
-                )
-                galleryRecyclerView.layoutManager = gridLayoutManager
-                galleryRecyclerView.visibility = View.VISIBLE
-                if (cheatObj.screenshotList == null || cheatObj.screenshotList.size <= 3) {
-                    tvSwipeHorizontallyInfoText.visibility = View.GONE
-                } else {
-                    tvSwipeHorizontallyInfoText.visibility = View.VISIBLE
-                }
-            } else {
+        /**
+         * Get thumbnails if there are screenshots.
+         */
+        if (cheatObj.hasScreenshots()) {
+            val cheatViewGalleryListAdapter = CheatViewGalleryListAdapter()
+            cheatViewGalleryListAdapter.setScreenshotList(cheatObj.screenshotList)
+            cheatViewGalleryListAdapter.setClickListener(this)
+            galleryRecyclerView.adapter = cheatViewGalleryListAdapter
+            val gridLayoutManager: RecyclerView.LayoutManager = GridLayoutManager(
+                cheatViewPageIndicatorActivity,
+                2,
+                GridLayoutManager.HORIZONTAL,
+                false
+            )
+            galleryRecyclerView.layoutManager = gridLayoutManager
+            if (cheatObj.screenshotList == null || cheatObj.screenshotList.size < 3) {
                 tvSwipeHorizontallyInfoText.visibility = View.GONE
-                galleryRecyclerView.visibility = View.GONE
-            }
-            /**
-             * If the user came from the search results the cheat-text might not be
-             * complete (trimmed for the search results) and therefore has to be
-             * re-fetched in a background process.
-             */
-            if (cheatObj.cheatText == null || cheatObj.cheatText.length < 10) {
-                progressBar.visibility = View.VISIBLE
-                cheatBody
             } else {
-                populateView()
+                tvSwipeHorizontallyInfoText.visibility = View.VISIBLE
             }
-            tools.putString("cheat$offset", Gson().toJson(cheatObj))
+            progressBar.visibility = View.VISIBLE
+        } else {
+            tvSwipeHorizontallyInfoText.visibility = View.GONE
+            galleryRecyclerView.visibility = View.GONE
         }
+        /**
+         * If the user came from the search results the cheat-text might not
+         * be complete (trimmed for the search results) and therefore has to
+         * be re-fetched in a background process.
+         */
+        if (cheatObj.cheatText == null || cheatObj.cheatText.length < 10) {
+            progressBar.visibility = View.VISIBLE
+            cheatBody
+        } else {
+            progressBar.visibility = View.GONE
+            populateView()
+        }
+        editor.putString("cheat$offset", Gson().toJson(cheatObj))
+        editor.apply()
+    }
+
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putParcelable("cheatArrayHolder", CheatArrayHolder(cheats))
+        outState.putInt("offset", offset)
+    }
 
     private fun populateView() {
         try {
@@ -218,10 +196,10 @@ class CheatViewFragment : Fragment(), CheatViewGalleryImageClickListener {
         mainTable.visibility = View.VISIBLE
         mainTable.isHorizontalScrollBarEnabled = true
 
-        // Cheat text before the table
-        var textBeforeTable: Array<String>? = null
+        // Text before the table
+        val textBeforeTable: Array<String>
 
-        // Some cheats start right with a table
+        // Einige tabellarische Cheats beginnen direkt mit der Tabelle
         if (cheatObj.cheatText.startsWith("<br><table")) {
             tvTextBeforeTable.visibility = View.GONE
         } else {
@@ -255,12 +233,12 @@ class CheatViewFragment : Fragment(), CheatViewGalleryImageClickListener {
         tvFirstThCol.text = Html.fromHtml(firstThColumn)
         tvFirstThCol.setPadding(1, 1, 5, 1)
         tvFirstThCol.minimumWidth = Konstanten.TABLE_ROW_MINIMUM_WIDTH
-        tvFirstThCol.setTextAppearance(cheatViewPageIndicatorActivity, R.style.NormalText)
+        tvFirstThCol.setTextAppearance(R.style.NormalText)
         trTh.addView(tvFirstThCol)
         val tvSecondThCol = TextView(cheatViewPageIndicatorActivity)
         tvSecondThCol.text = Html.fromHtml(secondThColumn)
         tvSecondThCol.setPadding(5, 1, 1, 1)
-        tvSecondThCol.setTextAppearance(context, R.style.NormalText)
+        tvSecondThCol.setTextAppearance(R.style.NormalText)
         trTh.addView(tvSecondThCol)
 
         /* Add row to TableLayout. */mainTable.addView(
@@ -284,18 +262,17 @@ class CheatViewFragment : Fragment(), CheatViewGalleryImageClickListener {
                 ViewGroup.LayoutParams.WRAP_CONTENT
             )
             val tvFirstTdCol = TextView(cheatViewPageIndicatorActivity)
-            tvFirstTdCol.isSingleLine = false
             tvFirstTdCol.text = firstTdColumn
             tvFirstTdCol.setPadding(1, 1, 10, 1)
             tvFirstTdCol.minimumWidth = Konstanten.TABLE_ROW_MINIMUM_WIDTH
-            tvFirstTdCol.setTextAppearance(context, R.style.NormalText)
+            tvFirstTdCol.setTextAppearance(R.style.NormalText)
             trTd.addView(tvFirstTdCol)
             val tvSecondTdCol = TextView(cheatViewPageIndicatorActivity)
             tvSecondTdCol.isSingleLine = false
             tvSecondTdCol.text = secondTdColumn
             tvSecondTdCol.canScrollHorizontally(1)
             tvSecondTdCol.setPadding(10, 1, 30, 1)
-            tvSecondTdCol.setTextAppearance(context, R.style.NormalText)
+            tvSecondTdCol.setTextAppearance(R.style.NormalText)
             trTd.addView(tvSecondTdCol)
 
             /* Add row to TableLayout. */mainTable.addView(
@@ -306,27 +283,22 @@ class CheatViewFragment : Fragment(), CheatViewGalleryImageClickListener {
                 )
             )
         }
-        mainTable.setOnClickListener(View.OnClickListener { view: View? -> displayTableInWebview() })
-        progressBar.visibility = View.GONE
+        mainTable.setOnClickListener { displayTableInWebview() }
     }
 
     private fun fillSimpleContent() {
         mainTable.visibility = View.GONE
         tvTextBeforeTable.visibility = View.GONE
-        if (cheatObj != null) {
-            val styledText: CharSequence = Html.fromHtml(cheatObj.cheatText)
-            tvCheatText.text = styledText
-            if (cheatObj.isWalkthroughFormat) {
-                tvCheatText.setTextAppearance(context, R.style.WalkthroughText)
-            }
+        val styledText: CharSequence = Html.fromHtml(cheatObj.cheatText)
+        tvCheatText.text = styledText
+        if (cheatObj.isWalkthroughFormat) {
+            tvCheatText.setTextAppearance(R.style.WalkthroughText)
         }
-        progressBar.visibility = View.GONE
     }
 
     private fun displayTableInWebview() {
         val madb = MaterialAlertDialogBuilder(requireContext())
-        madb.setTitle(R.string.report_cheat_title)
-            .setView(R.layout.webview_container)
+        madb.setView(R.layout.webview_container)
             .setPositiveButton(R.string.close) { dialog, _ ->
                 dialog.dismiss()
             }
@@ -338,48 +310,63 @@ class CheatViewFragment : Fragment(), CheatViewGalleryImageClickListener {
         webview?.loadDataWithBaseURL("", cheatObj.cheatText, "text/html", "UTF-8", "")
     }
 
+
     private val cheatBody: Unit
-        get() {
-            progressBar.visibility = View.VISIBLE
+        private get() {
             val call: Call<Cheat> =
                 cheatViewPageIndicatorActivity!!.getRestApi().getCheatById(cheatObj.cheatId)
             call.enqueue(object : Callback<Cheat?> {
                 override fun onResponse(metaInfo: Call<Cheat?>, response: Response<Cheat?>) {
-                    setCheatText(response.body())
+                    updateUI(response.body())
                 }
 
                 override fun onFailure(call: Call<Cheat?>, e: Throwable) {
+                    Log.e(TAG, "getCheatBody onFailure: " + e.localizedMessage)
                     tools.showSnackbar(
-                        mainLayout, getString(R.string.err_somethings_wrong), 5000
+                        outerLayout,
+                        requireContext().getString(R.string.err_somethings_wrong),
+                        5000
                     )
                 }
             })
         }
 
-    private fun countForumPosts() {
-        val call: Call<JsonObject> =
-            cheatViewPageIndicatorActivity!!.getRestApi().countForumPosts(cheatObj.cheatId)
-        call.enqueue(object : Callback<JsonObject?> {
-            override fun onResponse(forum: Call<JsonObject?>, response: Response<JsonObject?>) {
-                val forumPostsCount: JsonObject? = response.body()
-                val forumCount: Int? = forumPostsCount?.get("forumCount")?.asInt
-                if (forumCount != null) {
-                    cheatObj.forumCount = forumCount
-                }
-            }
-
-            override fun onFailure(call: Call<JsonObject?>, e: Throwable) {
-                // Do nothing
-            }
-        })
-    }
-
-    private fun setCheatText(fullCheatText: Cheat?) {
-        if (fullCheatText != null && fullCheatText.cheatText.length > 1) {
-            cheatObj.cheatText = fullCheatText.cheatText
-            populateView()
+    private fun updateUI(cheat: Cheat?) {
+        if (cheat?.style == Konstanten.CHEAT_TEXT_FORMAT_WALKTHROUGH) {
+            cheatObj.isWalkthroughFormat = true
         }
+        progressBar.visibility = View.GONE
+        cheatObj.cheatText = cheat?.cheatText
+        populateView()
     }
+
+    private val cheatRating: Unit
+        get() {
+            if (member != null) {
+                val call: Call<JsonObject> =
+                    cheatViewPageIndicatorActivity!!.getRestApi().getMemberRatingByCheatId(
+                        member!!.mid, cheatObj.cheatId
+                    )
+                call.enqueue(object : Callback<JsonObject?> {
+                    override fun onResponse(
+                        ratingInfo: Call<JsonObject?>,
+                        response: Response<JsonObject?>
+                    ) {
+                        val ratingJsonObj: JsonObject? = response.body()
+                        Log.d(
+                            TAG, "getCheatRating SUCCESS: " + ratingJsonObj?.get("rating")?.asFloat
+                        )
+                        val cheatRating: Float? = ratingJsonObj?.get("rating")?.asFloat
+                        if (cheatRating != null && cheatRating > 0) {
+                            cheatViewPageIndicatorActivity!!.setRating(offset, cheatRating)
+                        }
+                    }
+
+                    override fun onFailure(call: Call<JsonObject?>, t: Throwable) {
+                    }
+                })
+            }
+        }
 
     override fun onScreenshotClicked(screenshot: Screenshot, position: Int) {
         StfalconImageViewer.Builder(
@@ -390,5 +377,6 @@ class CheatViewFragment : Fragment(), CheatViewGalleryImageClickListener {
                 .into(imageView)
         }.withStartPosition(position).show()
     }
+
 
 }

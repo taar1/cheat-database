@@ -1,7 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.google.gms.google-services'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'androidx.navigation.safeargs'
 apply plugin: 'dagger.hilt.android.plugin'
@@ -154,12 +153,11 @@ dependencies {
     kapt 'com.jakewharton:butterknife-compiler:10.2.3'
 
     implementation 'com.github.vajro:MaterialDesignLibrary:1.6'
-    implementation 'com.afollestad.material-dialogs:core:3.3.0'
     implementation 'com.google.code.gson:gson:2.8.9'
     api 'com.google.android.gms:play-services-analytics:17.0.1'
     implementation 'com.google.android.gms:play-services-auth:19.2.0'
     implementation 'com.squareup.picasso:picasso:2.71828'
-    implementation 'org.greenrobot:eventbus:3.2.0'
+    implementation 'org.greenrobot:eventbus:3.3.1'
     implementation 'com.github.SherlockGougou:MagicIndicator:1.6.0'
     implementation 'com.simplecityapps:recyclerview-fastscroll:2.0.1'
 
@@ -180,9 +178,9 @@ dependencies {
     //Logging Network Calls
     implementation 'com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.3'
 
-    implementation 'com.google.android.gms:play-services-basement:17.6.0'
-    implementation 'com.google.android.gms:play-services-ads-identifier:17.1.0'
-    implementation 'com.google.android.gms:play-services-location:18.0.0'
+    implementation 'com.google.android.gms:play-services-basement:18.0.0'
+    implementation 'com.google.android.gms:play-services-ads-identifier:18.0.0'
+    implementation 'com.google.android.gms:play-services-location:19.0.0'
 
     // KOTLIN
     implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
@@ -230,7 +228,7 @@ dependencies {
 
     // TESTING
     testImplementation 'junit:junit:4.13.2'
-    androidTestUtil 'androidx.test:orchestrator:1.4.0'
+    androidTestUtil 'androidx.test:orchestrator:1.4.1'
 
     testImplementation 'androidx.test:core:1.4.0'
     androidTestImplementation 'androidx.test:core:1.4.0'
@@ -268,7 +266,10 @@ dependencies {
     androidTestImplementation "androidx.navigation:navigation-testing:$nav_version"
 
     // Jetpack Compose Integration
-    implementation 'androidx.navigation:navigation-compose:2.4.0-beta02'
+    implementation 'androidx.navigation:navigation-compose:2.4.0-rc01'
+
+    implementation "com.applovin:applovin-sdk:10.3.5"
+
 }
 
 kapt {

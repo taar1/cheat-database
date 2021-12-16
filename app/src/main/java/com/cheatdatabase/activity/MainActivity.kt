@@ -20,6 +20,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.applovin.sdk.AppLovinSdk
 import com.cheatdatabase.R
 import com.cheatdatabase.data.model.MyCheatsCount
 import com.cheatdatabase.databinding.ActivityMainBinding
@@ -32,6 +33,7 @@ import com.cheatdatabase.search.SearchSuggestionProvider
 import com.google.android.material.navigation.NavigationView
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
+
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -72,12 +74,12 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-
-        setSupportActionBar(binding.toolbarLayout.toolbar)
-
         init()
+
+        binding = ActivityMainBinding.inflate(layoutInflater)
+
+        setContentView(binding.root)
+        setSupportActionBar(binding.toolbarLayout.toolbar)
 
         drawerLayout = binding.drawerLayout
         navigationView = binding.navigationView
@@ -107,6 +109,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun init() {
+        // Please make sure to set the mediation provider value to "max" to ensure proper functionality
+        AppLovinSdk.getInstance(this).mediationProvider = "max"
+        AppLovinSdk.getInstance(this).initializeSdk {
+            // AppLovin SDK is initialized, start loading ads
+        }
+
         TrackingUtils.getInstance().init(this)
     }
 

@@ -1,5 +1,6 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/card_layout"
@@ -15,7 +16,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
-
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -40,19 +40,18 @@
                     android:layout_alignParentStart="true"
                     android:layout_marginStart="12dp"
                     android:layout_marginTop="6dp"
-                    android:text="Submission Status:" />
-
+                    android:text="@string/submission_status" />
 
                 <TextView
                     android:id="@+id/submission_status"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/status_title"
-                    android:layout_alignLeft="@id/status_title"
+                    android:layout_alignStart="@id/status_title"
                     android:layout_marginBottom="6dp"
                     android:ellipsize="end"
                     android:maxLines="1"
-                    android:text="Pending Approval" />
+                    tools:text="Pending Approval" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/details_button"
@@ -75,9 +74,9 @@
                 android:layout_marginTop="16dp"
                 android:ellipsize="end"
                 android:maxLines="1"
-                android:text="GameCube // Pikmin"
                 app:layout_constraintStart_toStartOf="@id/submission_status_layout"
-                app:layout_constraintTop_toBottomOf="@id/submission_status_layout" />
+                app:layout_constraintTop_toBottomOf="@id/submission_status_layout"
+                tools:text="GameCube // Pikmin" />
 
             <TextView
                 android:id="@+id/cheatTitle"
@@ -87,7 +86,7 @@
                 android:layout_marginTop="8dp"
                 android:ellipsize="end"
                 android:maxLines="1"
-                android:text="Cheat Title"
+                android:text="@string/cheat_title"
                 app:layout_constraintStart_toStartOf="@id/game_and_system"
                 app:layout_constraintTop_toBottomOf="@id/game_and_system" />
 
@@ -99,10 +98,9 @@
                 android:ellipsize="end"
                 android:maxLines="3"
                 android:paddingEnd="32dp"
-                android:text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren,"
                 app:layout_constraintStart_toStartOf="@+id/cheatTitle"
-                app:layout_constraintTop_toBottomOf="@id/cheatTitle" />
-
+                app:layout_constraintTop_toBottomOf="@id/cheatTitle"
+                tools:text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren," />
 
             <TextView
                 android:id="@+id/submission_date"
@@ -111,10 +109,9 @@
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="12dp"
                 android:gravity="start"
-                android:text="Submitted: May 27th, 2020"
                 app:layout_constraintBottom_toTopOf="@+id/delete_button"
-                app:layout_constraintEnd_toEndOf="parent" />
-
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:text="Submitted: May 27th, 2020" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/edit_button"
@@ -122,8 +119,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
-                android:drawableLeft="@drawable/ic_pencil"
-                android:text="Edit and Re-Submit"
+                android:drawableStart="@drawable/ic_pencil"
+                android:text="@string/edit_and_re_submit"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/cheatTitle"
                 app:rippleColor="@color/gray" />
@@ -135,7 +132,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="16dp"
-                android:drawableLeft="@drawable/ic_delete"
+                android:drawableStart="@drawable/ic_delete"
                 android:text="@string/delete"
                 app:layout_constraintBottom_toTopOf="@id/submission_status_layout_bottom"
                 app:layout_constraintEnd_toEndOf="parent"

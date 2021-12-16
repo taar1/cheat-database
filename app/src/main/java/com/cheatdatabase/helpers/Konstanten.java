@@ -87,6 +87,10 @@ public class Konstanten {
     public final static String INMOBI_FULLSCREEN_PLACEMENT_ID = "1566307508743";
     public final static String INMOBI_FULLSCREEN_SITE_ID = "e41d5fd5b0c5494fb178afb7f7698fb4";
 
+
+//    public final static String INMOBI_APP_KEY_2021 = "1640801269456";
+//    public final static String INMOBI_NATIVE_AD_ID_2021 = "1639750196790";
+
     // SD CARD SETTINGS
     public final static String APP_PATH_SD_CARD = "/Android/data/com.cheatdatabase/files/";
 

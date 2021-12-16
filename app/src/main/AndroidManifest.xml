@@ -15,6 +15,7 @@
     <uses-permission android:name="com.android.browser.permission.WRITE_HISTORY_BOOKMARKS" />
     <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT" />
     <uses-permission android:name="com.android.launcher.permission.UNINSTALL_SHORTCUT" />
+    <uses-permission android:name="com.google.android.gms.permission.AD_ID" />
 
     <application
         android:name=".CheatDatabaseApplication"
@@ -25,7 +26,7 @@
         android:launchMode="singleTop"
         android:logo="@drawable/logo_full_centered"
         android:theme="@style/Theme.Navyblue">
-        <activity android:name=".activity.ui.mycheats.edit.EditCheatActivity"></activity>
+        <activity android:name=".activity.ui.mycheats.edit.EditCheatActivity" />
         <activity
             android:name=".activity.MainActivity"
             android:configChanges="orientation|screenSize"
@@ -228,6 +229,11 @@
             android:name="com.google.android.gms.analytics.AnalyticsService"
             android:enabled="true"
             android:exported="false" />
+
+        <!-- https://dash.applovin.com/documentation/mediation/android/getting-started/integration -->
+        <meta-data
+            android:name="applovin.sdk.key"
+            android:value="QrvA-SWVxrAMGsKSCzUawM8Audr9OFrko0Pu9q-4pW_eaLThU3tbbnfLJISHooq8MCqhAS8BA_vvBhHSkHzuFN" />
     </application>
 
 </manifest>

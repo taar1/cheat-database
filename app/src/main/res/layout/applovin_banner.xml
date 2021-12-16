@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.applovin.adview.AppLovinAdView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:maxads="http://schemas.applovin.com/android/1.0"
+    android:id="@+id/ad_container"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintLeft_toLeftOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    maxads:adUnitId="41ff6e538c1a7c46" />

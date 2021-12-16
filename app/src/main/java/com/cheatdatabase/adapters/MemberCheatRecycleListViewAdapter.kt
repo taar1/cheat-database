@@ -24,18 +24,6 @@ class MemberCheatRecycleListViewAdapter(
     private var _binding: ListrowMemberCheatItemBinding? = null
     private val binding get() = _binding!!
 
-    // TODO FIXME das mit den anderen adaptern auch machen (kotlin umwandeln und das viewbinding übernehmen von hier)
-    // TODO FIXME das mit den anderen adaptern auch machen (kotlin umwandeln und das viewbinding übernehmen von hier)
-    // TODO FIXME das mit den anderen adaptern auch machen (kotlin umwandeln und das viewbinding übernehmen von hier)
-    // TODO FIXME das mit den anderen adaptern auch machen (kotlin umwandeln und das viewbinding übernehmen von hier)
-    // TODO FIXME das mit den anderen adaptern auch machen (kotlin umwandeln und das viewbinding übernehmen von hier)
-    // TODO FIXME das mit den anderen adaptern auch machen (kotlin umwandeln und das viewbinding übernehmen von hier)
-    // TODO FIXME das mit den anderen adaptern auch machen (kotlin umwandeln und das viewbinding übernehmen von hier)
-    // TODO FIXME das mit den anderen adaptern auch machen (kotlin umwandeln und das viewbinding übernehmen von hier)
-    // TODO FIXME das mit den anderen adaptern auch machen (kotlin umwandeln und das viewbinding übernehmen von hier)
-    // TODO FIXME das mit den anderen adaptern auch machen (kotlin umwandeln und das viewbinding übernehmen von hier)
-    // TODO FIXME das mit den anderen adaptern auch machen (kotlin umwandeln und das viewbinding übernehmen von hier)
-
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int

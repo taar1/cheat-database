@@ -10,5 +10,6 @@
     <dimen name="card_insets">0dp</dimen>
 
     <dimen name="outer_padding_listview_item">10dp</dimen>
+    <dimen name="banner_height">50dp</dimen>
 
 </resources>

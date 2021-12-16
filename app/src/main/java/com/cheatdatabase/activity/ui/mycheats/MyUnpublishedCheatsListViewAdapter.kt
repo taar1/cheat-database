@@ -3,10 +3,9 @@ package com.cheatdatabase.activity.ui.mycheats
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.cheatdatabase.R
 import com.cheatdatabase.data.model.UnpublishedCheat
+import com.cheatdatabase.databinding.UnpublishedCheatListItemBinding
 import com.cheatdatabase.listeners.MyUnpublishedCheatsListItemSelectedListener
-import java.util.*
 
 class MyUnpublishedCheatsListViewAdapter(
     val myUnpublishedCheatsListItemSelectedListener: MyUnpublishedCheatsListItemSelectedListener,
@@ -14,20 +13,27 @@ class MyUnpublishedCheatsListViewAdapter(
 ) : RecyclerView.Adapter<MyUnpublishedCheatsListViewItemHolder>() {
     var unpublishedCheats: List<UnpublishedCheat> = ArrayList()
 
+    private var _binding: UnpublishedCheatListItemBinding? = null
+    private val binding get() = _binding!!
+
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
     ): MyUnpublishedCheatsListViewItemHolder {
-        val itemView = LayoutInflater.from(parent.context)
-            .inflate(R.layout.unpublished_cheat_list_item, parent, false)
-        return MyUnpublishedCheatsListViewItemHolder(itemView, activity)
+        _binding = UnpublishedCheatListItemBinding.inflate(
+            LayoutInflater.from(parent.context),
+            parent,
+            false
+        )
+
+        return MyUnpublishedCheatsListViewItemHolder(binding, activity)
     }
 
     override fun onBindViewHolder(
         myUnpublishedCheatsListViewItemHolder: MyUnpublishedCheatsListViewItemHolder,
         position: Int
     ) {
-        myUnpublishedCheatsListViewItemHolder.updateUI(unpublishedCheats[position])
+        myUnpublishedCheatsListViewItemHolder.setCheat(unpublishedCheats[position])
         myUnpublishedCheatsListViewItemHolder.detailsButton.setOnClickListener {
             myUnpublishedCheatsListItemSelectedListener.onRejectReasonButtonClicked(
                 unpublishedCheats[position]

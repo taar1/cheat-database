@@ -16,7 +16,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.constraintlayout.widget.ConstraintLayout
 import butterknife.OnClick
-import com.afollestad.materialdialogs.MaterialDialog
 import com.cheatdatabase.R
 import com.cheatdatabase.data.model.Game
 import com.cheatdatabase.data.model.UnpublishedCheat
@@ -25,6 +24,7 @@ import com.cheatdatabase.helpers.Konstanten
 import com.cheatdatabase.helpers.Reachability
 import com.cheatdatabase.helpers.Tools
 import com.cheatdatabase.rest.RestApi
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.textfield.TextInputEditText
 import com.google.gson.JsonObject
 import dagger.hilt.android.AndroidEntryPoint
@@ -253,18 +253,17 @@ class SubmitCheatFormActivity : AppCompatActivity() {
     }
 
     private fun showAlertDialog(title: Int, bodyText: Int, buttonText: Int) {
-        MaterialDialog(this).apply {
-            title(title)
-            message(bodyText)
-            positiveButton(buttonText) {
+
+        MaterialAlertDialogBuilder(this)
+            .setTitle(title)
+            .setMessage(bodyText)
+            .setPositiveButton(buttonText) { dialog, _ ->
                 if (title == R.string.thanks) {
                     Handler(Looper.getMainLooper()).postDelayed({
                         finish()
                     }, 100)
                 }
-            }
-            show()
-        }
+            }.show()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

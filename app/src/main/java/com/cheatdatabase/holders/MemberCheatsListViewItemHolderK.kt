@@ -13,28 +13,31 @@ class MemberCheatsListViewItemHolderK(val binding: ListrowMemberCheatItemBinding
     private var member: Member? = null
 
     fun setCheat(cheat: Cheat) {
-        binding.gameName.text = "${cheat.game.gameName} (${cheat.system.systemName})"
-        binding.cheatTitle.text = cheat.cheatTitle
 
-        if (cheat.screenshotList.size > 0) {
-            binding.imagesIcon.visibility = View.VISIBLE
-        } else {
-            binding.imagesIcon.visibility = View.GONE
-        }
+        with(binding) {
+            gameName.text = "${cheat.game.gameName} (${cheat.system.systemName})"
+            cheatTitle.text = cheat.cheatTitle
 
-        if (cheat.languageId == Konstanten.GERMAN) {
-            binding.germanFlag.visibility = View.VISIBLE
-        } else {
-            binding.germanFlag.visibility = View.GONE
-        }
+            if (cheat.screenshotList.size > 0) {
+                imagesIcon.visibility = View.VISIBLE
+            } else {
+                imagesIcon.visibility = View.GONE
+            }
 
-        // TODO FIXME add this again when continue work on the "edit my cheat" functionality
+            if (cheat.languageId == Konstanten.GERMAN) {
+                germanFlag.visibility = View.VISIBLE
+            } else {
+                germanFlag.visibility = View.GONE
+            }
+
+            // TODO FIXME add this again when continue work on the "edit my cheat" functionality
 //        if (member.getMid() == cheat.getSubmittingMember().getMid()) {
-//            binding.edit.setVisibility(View.VISIBLE);
+//            edit.setVisibility(View.VISIBLE);
 //        } else {
-//            binding.edit.setVisibility(View.GONE);
+//            edit.setVisibility(View.GONE);
 //        }
-        binding.editImageButton.visibility = View.GONE
+            editImageButton.visibility = View.GONE
+        }
     }
 
     fun setLoggedInMember(member: Member?) {

@@ -327,7 +327,7 @@ public class MemberCheatViewPageIndicator extends AppCompatActivity implements G
                 showReportDialog();
                 return true;
             case R.id.action_metainfo:
-                new CheatMetaDialog(MemberCheatViewPageIndicator.this, visibleCheat, outerLayout, tools, restApi).show();
+                new CheatMetaDialog(MemberCheatViewPageIndicator.this, visibleCheat, outerLayout, tools).show();
                 return true;
             case R.id.action_login:
                 resultContract.launch(new Intent(MemberCheatViewPageIndicator.this, LoginActivity.class));
