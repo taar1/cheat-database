@@ -36,10 +36,10 @@ public class CheatsByGameRecycleListViewAdapter extends RecyclerView.Adapter<Rec
     private static final String TAG = CheatsByGameRecycleListViewAdapter.class.getSimpleName();
 
     private List<Cheat> cheatList;
-    private List<ListItem> listItems;
-    private Context context;
+    private final List<ListItem> listItems;
+    private final Context context;
 
-    private OnCheatListItemSelectedListener listener;
+    private final OnCheatListItemSelectedListener listener;
 
     private NativeAdsManager mNativeAdsManager;
 
@@ -73,7 +73,7 @@ public class CheatsByGameRecycleListViewAdapter extends RecyclerView.Adapter<Rec
         if (position < 0) {
             return ListItem.TYPE_CHEAT;
         } else {
-            return listItems.get(position).getType();
+            return listItems.get(position).type();
         }
     }
 
@@ -143,7 +143,7 @@ public class CheatsByGameRecycleListViewAdapter extends RecyclerView.Adapter<Rec
         // What will be displayed at the right side when fast scroll is used (normally the first letter of the game)
         int type = getItemViewType(position);
         if (type == ListItem.TYPE_CHEAT) {
-            return listItems.get(position).getTitle().toUpperCase();
+            return listItems.get(position).title().toUpperCase();
         } else {
             // When we show an ad or something else we show blank
             return "";

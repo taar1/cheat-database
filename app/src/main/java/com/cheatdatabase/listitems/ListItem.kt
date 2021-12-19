@@ -1,14 +1,17 @@
-package com.cheatdatabase.listitems;
+package com.cheatdatabase.listitems
 
-public abstract class ListItem {
-    public static final int TYPE_SYSTEM = 0;
-    public static final int TYPE_GAME = 1;
-    public static final int TYPE_CHEAT = 2;
-    public static final int TYPE_FACEBOOK_NATIVE_AD = 3;
-    public static final int TYPE_INMOBI_NATIVE_AD = 4;
-    public static final int TYPE_BLANK = 5;
-    public static final int TYPE_UKON_NO_CHIKARA = 6;
+abstract class ListItem {
+    abstract fun type(): Int
+    abstract fun title(): String?
 
-    abstract public int getType();
-    abstract public String getTitle();
+    companion object {
+        const val TYPE_SYSTEM = 0
+        const val TYPE_GAME = 1
+        const val TYPE_CHEAT = 2
+        const val TYPE_FACEBOOK_NATIVE_AD = 3
+        const val TYPE_INMOBI_NATIVE_AD = 4
+        const val TYPE_BLANK = 5
+        const val TYPE_UKON_NO_CHIKARA = 6
+        const val TYPE_APPLOVIN_NATIVE = 7
+    }
 }

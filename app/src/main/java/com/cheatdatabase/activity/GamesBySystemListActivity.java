@@ -126,7 +126,7 @@ public class GamesBySystemListActivity extends AppCompatActivity implements OnGa
             mSwipeRefreshLayout.setRefreshing(true);
             mSwipeRefreshLayout.setOnRefreshListener(this::loadGames);
 
-            gamesBySystemRecycleListViewAdapter = new GamesBySystemRecycleListViewAdapter(this, nativeAdsManager, tools, this);
+            gamesBySystemRecycleListViewAdapter = new GamesBySystemRecycleListViewAdapter(this, tools, this);
             recyclerView.setAdapter(gamesBySystemRecycleListViewAdapter);
 
             recyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
@@ -144,12 +144,6 @@ public class GamesBySystemListActivity extends AppCompatActivity implements OnGa
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
-        // TODO schauen wegen dem include...
-        // TODO schauen wegen dem include...
-        // TODO schauen wegen dem include...
-        // TODO schauen wegen dem include...
-        // TODO schauen wegen dem include...
-        // TODO schauen wegen dem include...
         adView.loadNextAd();
     }
 

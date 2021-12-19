@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.applovin.mediation.ads.MaxAdView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:maxads="http://schemas.applovin.com/android/1.0"
+    android:layout_width="300dp"
+    android:layout_height="250dp"
+    android:background="@color/red"
+    maxads:adFormat="MREC"
+    maxads:adUnitId="YOUR_AD_UNIT_ID" />

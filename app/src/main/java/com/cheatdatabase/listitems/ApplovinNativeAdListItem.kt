@@ -1,9 +1,9 @@
 package com.cheatdatabase.listitems
 
-class FacebookNativeAdListItem : ListItem() {
+class ApplovinNativeAdListItem : ListItem() {
 
     override fun type(): Int {
-        return TYPE_FACEBOOK_NATIVE_AD
+        return TYPE_APPLOVIN_NATIVE
     }
 
     override fun title(): String {

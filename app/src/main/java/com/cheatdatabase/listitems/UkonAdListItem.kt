@@ -1,13 +1,11 @@
-package com.cheatdatabase.listitems;
+package com.cheatdatabase.listitems
 
-public class UkonAdListItem extends ListItem {
-    @Override
-    public int getType() {
-        return ListItem.TYPE_UKON_NO_CHIKARA;
+class UkonAdListItem : ListItem() {
+    override fun type(): Int {
+        return TYPE_UKON_NO_CHIKARA
     }
 
-    @Override
-    public String getTitle() {
-        return "";
+    override fun title(): String {
+        return ""
     }
 }

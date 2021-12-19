@@ -1,26 +1,15 @@
-package com.cheatdatabase.listitems;
+package com.cheatdatabase.listitems
 
-import com.cheatdatabase.data.model.Game;
+import com.cheatdatabase.data.model.Game
 
-public class GameListItem extends ListItem {
+class GameListItem : ListItem() {
+    var game: Game? = null
 
-    private Game game;
-
-    public Game getGame() {
-        return game;
+    override fun type(): Int {
+        return TYPE_GAME
     }
 
-    public void setGame(Game game) {
-        this.game = game;
-    }
-
-    @Override
-    public int getType() {
-        return ListItem.TYPE_GAME;
-    }
-
-    @Override
-    public String getTitle() {
-        return game.getGameName().substring(0, 1);
+    override fun title(): String? {
+        return game?.gameName?.substring(0, 1)
     }
 }

@@ -75,13 +75,13 @@ public class Konstanten {
     public final static String FACEBOOK_AUDIENCE_NETWORK_NATIVE_BANNER_ID = "148040821872637_2083092671700766";
     public final static String FACEBOOK_AUDIENCE_NETWORK_NATIVE_AD_IN_RECYCLER_VIEW = "148040821872637_2664092580267436";
 
-    //public final static String INMOBI_APP_ID = "4028cba631d63df10132325b781205a2";
+    public final static String INMOBI_APP_ID = "4028cba631d63df10132325b781205a2";
     public final static String INMOBI_CHEATDATABASE_APP_ID = "1489144176729570";
 
     public final static String INMOBI_BANNER_PLACEMENT_ID = "1431977578836721";
     public final static String INMOBI_BANNER_SITE_ID = "1d5e79641a5441fb9887745cdcf005ec";
 
-    public final static String INMOBI_RECYCLERVIEW_LIST_ITEM_PLACEMENT_ID = "1563695474851";
+    public final static long INMOBI_RECYCLERVIEW_LIST_ITEM_PLACEMENT_ID = 1563695474851L;
     public final static String INMOBI_RECYCLERVIEW_LIST_ITEM_SITE_ID = "4f8d0ce7ac55411b8852f1da5bd52590";
 
     public final static String INMOBI_FULLSCREEN_PLACEMENT_ID = "1566307508743";

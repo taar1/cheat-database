@@ -4,6 +4,7 @@ import android.app.SearchManager
 import android.content.Intent
 import android.os.Bundle
 import android.provider.SearchRecentSuggestions
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.TextView
@@ -30,8 +31,12 @@ import com.cheatdatabase.helpers.Konstanten
 import com.cheatdatabase.helpers.Tools
 import com.cheatdatabase.helpers.TrackingUtils
 import com.cheatdatabase.search.SearchSuggestionProvider
+import com.google.android.gms.common.GoogleApiAvailability
 import com.google.android.material.navigation.NavigationView
+import com.inmobi.sdk.InMobiSdk
 import dagger.hilt.android.AndroidEntryPoint
+import org.json.JSONException
+import org.json.JSONObject
 import javax.inject.Inject
 
 
@@ -115,7 +120,28 @@ class MainActivity : AppCompatActivity() {
             // AppLovin SDK is initialized, start loading ads
         }
 
+        // 0 = OK
+        val isGooglePlayServicesAvailable =
+            GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(this)
         TrackingUtils.getInstance().init(this)
+
+        val consentObject = JSONObject()
+        try {
+            // Provide correct consent value to sdk which is obtained by User
+            consentObject.put(InMobiSdk.IM_GDPR_CONSENT_AVAILABLE, true)
+            // Provide 0 if GDPR is not applicable and 1 if applicable
+            consentObject.put("gdpr", "0")
+        } catch (e: JSONException) {
+            e.printStackTrace()
+        }
+        InMobiSdk.init(this, Konstanten.INMOBI_APP_ID, consentObject) {
+            if (null != it) {
+                Log.e(TAG, "InMobi Init failed - ${it.message}")
+            } else {
+                Log.d(TAG, "InMobi Init Successful")
+            }
+        }
+        InMobiSdk.setAgeGroup(InMobiSdk.AgeGroup.BETWEEN_18_AND_24)
     }
 
     override fun onSupportNavigateUp(): Boolean {
