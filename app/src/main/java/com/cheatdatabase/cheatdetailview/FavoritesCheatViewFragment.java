@@ -34,8 +34,6 @@ import com.cheatdatabase.helpers.Tools;
 import com.cheatdatabase.rest.RestApi;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import com.squareup.picasso.Picasso;
-import com.stfalcon.imageviewer.StfalconImageViewer;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -401,7 +399,11 @@ public class FavoritesCheatViewFragment extends Fragment implements FavoritesChe
 
     @Override
     public void onScreenshotClicked(File screenshot, int position) {
-        new StfalconImageViewer.Builder<>(favoritesCheatViewPageIndicatorActivity, screenshotList, (imageView, image) -> Picasso.get().load(image).placeholder(R.drawable.image_placeholder).into(imageView)).withStartPosition(position).show();
+        // TODO FIXME image viewer ersetzen
+        // TODO FIXME image viewer ersetzen
+        // TODO FIXME image viewer ersetzen
+        // TODO FIXME image viewer ersetzen
+        //new StfalconImageViewer.Builder<>(favoritesCheatViewPageIndicatorActivity, screenshotList, (imageView, image) -> Picasso.get().load(image).placeholder(R.drawable.image_placeholder).into(imageView)).withStartPosition(position).show();
     }
 
 }

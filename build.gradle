@@ -2,7 +2,7 @@
 buildscript {
     ext {
         kotlin_version = '1.6.10'
-        kotlinx_version = '1.5.2-native-mt'
+        kotlinx_version = '1.6.0-native-mt'
         nav_version = '2.3.5'
         work_version = '2.7.1'
         room_version = '2.4.0'
@@ -22,6 +22,7 @@ buildscript {
         google()
         maven { url 'https://artifacts.applovin.com/android' }
     }
+
     dependencies {
         classpath 'com.android.tools.build:gradle:7.1.0-beta05'
         classpath 'com.google.gms:google-services:4.3.10'

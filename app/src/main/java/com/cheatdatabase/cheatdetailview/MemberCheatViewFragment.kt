@@ -25,8 +25,6 @@ import com.cheatdatabase.helpers.Tools
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.gson.Gson
 import com.google.gson.JsonObject
-import com.squareup.picasso.Picasso
-import com.stfalcon.imageviewer.StfalconImageViewer
 import dagger.hilt.android.AndroidEntryPoint
 import retrofit2.Call
 import retrofit2.Callback
@@ -368,14 +366,18 @@ class MemberCheatViewFragment : Fragment(), CheatViewGalleryImageClickListener {
             }
         }
 
+    // TODO FIXME gallery viewer ersetzen
+    // TODO FIXME gallery viewer ersetzen
+    // TODO FIXME gallery viewer ersetzen
+    // TODO FIXME gallery viewer ersetzen
     override fun onScreenshotClicked(screenshot: Screenshot, position: Int) {
-        StfalconImageViewer.Builder(
-            cheatViewPageIndicatorActivity,
-            cheatObj.screenshotList
-        ) { imageView: ImageView?, image: Screenshot ->
-            Picasso.get().load(image.fullPath).placeholder(R.drawable.image_placeholder)
-                .into(imageView)
-        }.withStartPosition(position).show()
+//        StfalconImageViewer.Builder(
+//            cheatViewPageIndicatorActivity,
+//            cheatObj.screenshotList
+//        ) { imageView: ImageView?, image: Screenshot ->
+//            Picasso.get().load(image.fullPath).placeholder(R.drawable.image_placeholder)
+//                .into(imageView)
+//        }.withStartPosition(position).show()
     }
 
 
