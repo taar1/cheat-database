@@ -118,18 +118,39 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4caff62e-c62f-40ca-acf0-73c680b13375" name="Default" comment="Apploving native ads implementation (noch nicht fertig)">
+    <list default="true" id="4caff62e-c62f-40ca-acf0-73c680b13375" name="Default" comment="Apploving native ads implementiert (FUNKTIONIEREN)&#10;StfalconImageViewer auskommentiert, da gradle es nicht mehr laden kann. suche nach alternativen...">
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/cheatdetailview/SingleImageViewerActivity.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/webview_with_toolbar.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/CheatDatabaseApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/CheatDatabaseApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/CheatForumActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/CheatForumActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/CheatsByGameListActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/CheatsByGameListActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/CheatsByMemberListActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/CheatsByMemberListActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/FavoriteCheatListActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/FavoriteCheatListActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/GamesBySystemListActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/GamesBySystemListActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/MainActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/MainActivity.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/adapters/CheatViewGalleryListAdapter.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/adapters/CheatViewGalleryListAdapter.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/adapters/CheatsByGameRecycleListViewAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/adapters/CheatsByGameRecycleListViewAdapter.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/adapters/GamesBySystemRecycleListViewAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/adapters/GamesBySystemRecycleListViewAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/adapters/MemberCheatRecycleListViewAdapter.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/adapters/MemberCheatRecycleListViewAdapter.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/cheatdetailview/CheatViewFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/cheatdetailview/CheatViewFragment.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/cheatdetailview/FavoritesCheatViewFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/cheatdetailview/FavoritesCheatViewFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/cheatdetailview/MemberCheatViewFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/cheatdetailview/MemberCheatViewFragment.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/holders/ApplovinNativeAdListViewItemHolder.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/holders/ApplovinNativeAdListViewItemHolder.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/rest/SafeApiRequest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/rest/SafeApiRequest.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/include_applovin_maxadview_native.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/include_applovin_maxadview_native.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/cheatdetailview/CheatViewPageIndicatorActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/cheatdetailview/CheatViewPageIndicatorActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/cheatdetailview/FavoritesCheatViewPageIndicator.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/cheatdetailview/FavoritesCheatViewPageIndicator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/cheatdetailview/MemberCheatViewPageIndicator.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/cheatdetailview/MemberCheatViewPageIndicator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/holders/CheatViewGalleryCardHolder.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/holders/CheatViewGalleryCardHolder.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/holders/FacebookNativeAdHolder.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/holders/MemberCheatsListViewItemHolderK.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/holders/MemberCheatsListViewItemHolderK.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_cheat_forum.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_cheat_forum.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_cheatview_pager.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_cheatview_pager.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_member_cheat_list.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_member_cheat_list.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/adview_facebook.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/adview_facebook.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/applovin_banner.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/applovin_banner.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/gallery_card.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/gallery_card.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/native_ad_unit.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -173,7 +194,6 @@
       <list>
         <option value="valueResourceFile" />
         <option value="Interface" />
-        <option value="layoutResourceFile_vertical" />
         <option value="Singleton" />
         <option value="Kotlin Object" />
         <option value="layoutResourceFile" />
@@ -183,6 +203,7 @@
         <option value="JUnit4 Test Class" />
         <option value="Kotlin File" />
         <option value="navigationResourceFile" />
+        <option value="layoutResourceFile_vertical" />
         <option value="Kotlin Class" />
       </list>
     </option>
@@ -245,6 +266,8 @@
     <property name="VectorAssetImportPath" value="C:\Users\taar1\Downloads" />
     <property name="android-custom-viewC:/Users/taar1/.gradle/caches/modules-2/files-2.1/androidx.recyclerview/recyclerview/1.2.1/f0f93e67af3f7417bdd560d5142f6dec4fe629c3/recyclerview-1.2.1-sources.jar!/androidx/recyclerview/widget/RecyclerView.java_SELECTED" value="RecyclerView" />
     <property name="android-custom-viewC:/Users/taar1/.gradle/caches/modules-2/files-2.1/com.applovin/applovin-sdk/10.3.5/db6c667594c8d06f3f1acee55b3cba42928b01ec/applovin-sdk-10.3.5-sources.jar!/com/applovin/mediation/ads/MaxAdView.java_SELECTED" value="MaxAdView" />
+    <property name="android-custom-viewC:/Users/taar1/.gradle/caches/modules-2/files-2.1/com.facebook.fresco/drawee/2.6.0/8a4ada02d0e83f5de056796e7d5fef2acaf8f27d/drawee-2.6.0-sources.jar!/com/facebook/drawee/view/SimpleDraweeView.java_SELECTED" value="SimpleDraweeView" />
+    <property name="android-custom-viewD:/Development/Android/Workspaces/cheat-database/app/src/main/java/com/cheatdatabase/cheatdetailview/ZoomableDraweeView.kt_SELECTED" value="ZoomableDraweeView" />
     <property name="android.project.structure.last.selected" value="app" />
     <property name="android.project.structure.proportion" value="0.15" />
     <property name="android.sdk.path" value="$USER_HOME$/AppData/Local/Android/Sdk" />
@@ -273,31 +296,11 @@
       <recent name="com.cheatdatabase.ads" />
       <recent name="com.cheatdatabase" />
     </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\Development\Android\Workspaces\cheat-database\app\src\main\res\layout" />
-      <recent name="$PROJECT_DIR$/app/src/huaweiFlavor/res/values" />
-      <recent name="$PROJECT_DIR$/app/src/huaweiFlavor/java/com.cheatdatabase.helpers" />
-      <recent name="$PROJECT_DIR$/app/src/googlePlayFlavor/res/values" />
-      <recent name="$PROJECT_DIR$/app/src/main/res/layout" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/app/src/main/res/layout-v17" />
-    </key>
     <key name="CreateTestDialog.Recents.Supers">
       <recent name="" />
     </key>
-    <key name="CreateKotlinClassDialog.RecentsKey">
-      <recent name="com.cheatdatabase.data.network" />
-    </key>
-    <key name="android.template.814311009">
-      <recent name="com.cheatdatabase.activity.ui.mycheats.edit" />
-    </key>
-    <key name="MoveKotlinTopLevelDeclarationsDialog.RECENTS_KEY">
-      <recent name="com.cheatdatabase.data.repository" />
-      <recent name="com.cheatdatabase.activity.ui.mycheats.edit" />
-    </key>
-    <key name="android.template.parentActivityClass">
-      <recent name="" />
+    <key name="android.template.-1480711285">
+      <recent name="com.cheatdatabase.cheatdetailview" />
     </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="com.cheatdatabase.data.model" />
@@ -319,6 +322,29 @@
       <recent name="com.cheatdatabase.listeners" />
       <recent name="com.cheatdatabase.activity.ui.mycheats" />
       <recent name="com.cheatdatabase.fragments" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Development\Android\Workspaces\cheat-database\app\src\main\res\layout" />
+      <recent name="$PROJECT_DIR$/app/src/huaweiFlavor/res/values" />
+      <recent name="$PROJECT_DIR$/app/src/huaweiFlavor/java/com.cheatdatabase.helpers" />
+      <recent name="$PROJECT_DIR$/app/src/googlePlayFlavor/res/values" />
+      <recent name="$PROJECT_DIR$/app/src/main/res/layout" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/app/src/main/res/layout-v17" />
+    </key>
+    <key name="CreateKotlinClassDialog.RecentsKey">
+      <recent name="com.cheatdatabase.data.network" />
+    </key>
+    <key name="android.template.814311009">
+      <recent name="com.cheatdatabase.activity.ui.mycheats.edit" />
+    </key>
+    <key name="MoveKotlinTopLevelDeclarationsDialog.RECENTS_KEY">
+      <recent name="com.cheatdatabase.data.repository" />
+      <recent name="com.cheatdatabase.activity.ui.mycheats.edit" />
+    </key>
+    <key name="android.template.parentActivityClass">
+      <recent name="" />
     </key>
   </component>
   <component name="RunManager" selected="Android App.app">
@@ -799,13 +825,6 @@
       <option name="presentableId" value="Default" />
       <updated>1487274191999</updated>
     </task>
-    <task id="LOCAL-00131" summary="Improved cheat submission form style, navigation drawer style improvement, display my published cheats works now.">
-      <created>1592166192939</created>
-      <option name="number" value="00131" />
-      <option name="presentableId" value="LOCAL-00131" />
-      <option name="project" value="LOCAL" />
-      <updated>1592166192939</updated>
-    </task>
     <task id="LOCAL-00132" summary="Added my published cheat error handling, updated top member cheats list error handling.">
       <created>1592254892548</created>
       <option name="number" value="00132" />
@@ -1142,7 +1161,14 @@
       <option name="project" value="LOCAL" />
       <updated>1639947004994</updated>
     </task>
-    <option name="localTasksCounter" value="180" />
+    <task id="LOCAL-00180" summary="Apploving native ads implementiert (FUNKTIONIEREN)&#10;StfalconImageViewer auskommentiert, da gradle es nicht mehr laden kann. suche nach alternativen...">
+      <created>1640808732769</created>
+      <option name="number" value="00180" />
+      <option name="presentableId" value="LOCAL-00180" />
+      <option name="project" value="LOCAL" />
+      <updated>1640808732770</updated>
+    </task>
+    <option name="localTasksCounter" value="181" />
     <servers />
   </component>
   <component name="TodoView">
@@ -1247,7 +1273,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
-    <MESSAGE value="Click on EDIT icon in &quot;my cheats&quot; goes to (non-existent) &quot;edit cheat&quot; form." />
     <MESSAGE value="Adding EditCheatActivity (MVVM) - still empty..." />
     <MESSAGE value="Added link from my own cheats -&gt; edit cheat activity" />
     <MESSAGE value="Updating project to Android Studio 4.1.&#10;Working on the &quot;edit cheat&quot; form layout." />
@@ -1272,7 +1297,8 @@
     <MESSAGE value="Updating JUnit Tests" />
     <MESSAGE value="Cleaning up code, adding banner ads" />
     <MESSAGE value="Apploving native ads implementation (noch nicht fertig)" />
-    <option name="LAST_COMMIT_MESSAGE" value="Apploving native ads implementation (noch nicht fertig)" />
+    <MESSAGE value="Apploving native ads implementiert (FUNKTIONIEREN)&#10;StfalconImageViewer auskommentiert, da gradle es nicht mehr laden kann. suche nach alternativen..." />
+    <option name="LAST_COMMIT_MESSAGE" value="Apploving native ads implementiert (FUNKTIONIEREN)&#10;StfalconImageViewer auskommentiert, da gradle es nicht mehr laden kann. suche nach alternativen..." />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
@@ -1301,6 +1327,11 @@
           <url>file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/holders/TopMembersListViewItemHolder.java</url>
           <line>36</line>
           <option name="timeStamp" value="232" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/cheatdetailview/CheatViewPageIndicatorActivity.java</url>
+          <line>130</line>
+          <option name="timeStamp" value="235" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

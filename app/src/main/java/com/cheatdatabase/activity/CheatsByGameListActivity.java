@@ -37,8 +37,6 @@ import com.cheatdatabase.helpers.Tools;
 import com.cheatdatabase.listeners.OnCheatListItemSelectedListener;
 import com.cheatdatabase.rest.RestApi;
 import com.cheatdatabase.widgets.DividerDecoration;
-import com.facebook.ads.NativeAd;
-import com.facebook.ads.NativeAdsManager;
 import com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView;
 
 import org.greenrobot.eventbus.EventBus;
@@ -80,7 +78,7 @@ public class CheatsByGameListActivity extends AppCompatActivity implements OnChe
     @BindView(R.id.item_list_empty_view)
     TextView mEmptyView;
     @BindView(R.id.ad_container)
-    AppLovinAdView adView;
+    AppLovinAdView appLovinAdView;
 
     private ArrayList<Cheat> cheatList;
     private boolean isAchievementsEnabled;
@@ -120,10 +118,6 @@ public class CheatsByGameListActivity extends AppCompatActivity implements OnChe
         setContentView(R.layout.activity_cheat_list);
         ButterKnife.bind(this);
 
-        // TODO FIXME (remove)
-        NativeAdsManager nativeAdsManager = new NativeAdsManager(this, Konstanten.FACEBOOK_AUDIENCE_NETWORK_NATIVE_AD_IN_RECYCLER_VIEW, 5);
-        nativeAdsManager.loadAds(NativeAd.MediaCacheFlag.ALL);
-
         gameObj = getIntent().getParcelableExtra("gameObj");
 
         if (gameObj == null) {
@@ -136,7 +130,7 @@ public class CheatsByGameListActivity extends AppCompatActivity implements OnChe
             mSwipeRefreshLayout.setRefreshing(true);
             mSwipeRefreshLayout.setOnRefreshListener(() -> loadCheats(true));
 
-            cheatsByGameRecycleListViewAdapter = new CheatsByGameRecycleListViewAdapter(this, nativeAdsManager, this);
+            cheatsByGameRecycleListViewAdapter = new CheatsByGameRecycleListViewAdapter(this, tools, this);
             recyclerView.setAdapter(cheatsByGameRecycleListViewAdapter);
 
             getSupportActionBar().setTitle(gameObj.getGameName() != null ? gameObj.getGameName() : "");
@@ -159,7 +153,7 @@ public class CheatsByGameListActivity extends AppCompatActivity implements OnChe
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
-        adView.loadNextAd();
+        appLovinAdView.loadNextAd();
     }
 
     @Override
@@ -349,14 +343,6 @@ public class CheatsByGameListActivity extends AppCompatActivity implements OnChe
         Reachability.unregister(this);
         super.onStop();
     }
-
-//    @Override
-//    protected void onDestroy() {
-//        if (facebookAdView != null) {
-//            facebookAdView.destroy();
-//        }
-//        super.onDestroy();
-//    }
 
     @OnClick(R.id.add_new_cheat_button)
     void addNewCheat() {

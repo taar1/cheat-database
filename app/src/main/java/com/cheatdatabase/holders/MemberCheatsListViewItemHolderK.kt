@@ -1,13 +1,18 @@
 package com.cheatdatabase.holders
 
+import android.content.Context
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
+import com.cheatdatabase.R
 import com.cheatdatabase.data.model.Cheat
 import com.cheatdatabase.data.model.Member
 import com.cheatdatabase.databinding.ListrowMemberCheatItemBinding
 import com.cheatdatabase.helpers.Konstanten
 
-class MemberCheatsListViewItemHolderK(val binding: ListrowMemberCheatItemBinding) :
+class MemberCheatsListViewItemHolderK(
+    val binding: ListrowMemberCheatItemBinding,
+    val context: Context
+) :
     RecyclerView.ViewHolder(binding.root) {
 
     private var member: Member? = null
@@ -15,7 +20,12 @@ class MemberCheatsListViewItemHolderK(val binding: ListrowMemberCheatItemBinding
     fun setCheat(cheat: Cheat) {
 
         with(binding) {
-            gameName.text = "${cheat.game.gameName} (${cheat.system.systemName})"
+//            gameName.text = "${cheat.game.gameName} (${cheat.system.systemName})"
+            gameName.text = context.getString(
+                R.string.game_name_system_name,
+                cheat.game.gameName,
+                cheat.system.systemName
+            )
             cheatTitle.text = cheat.cheatTitle
 
             if (cheat.screenshotList.size > 0) {

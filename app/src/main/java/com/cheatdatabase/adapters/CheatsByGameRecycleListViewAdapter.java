@@ -12,17 +12,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.cheatdatabase.R;
 import com.cheatdatabase.data.model.Cheat;
+import com.cheatdatabase.databinding.IncludeApplovinMaxadviewNativeBinding;
 import com.cheatdatabase.helpers.Konstanten;
+import com.cheatdatabase.helpers.Tools;
+import com.cheatdatabase.holders.ApplovinNativeAdListViewItemHolder;
 import com.cheatdatabase.holders.CheatsByGameListViewItemHolder;
-import com.cheatdatabase.holders.FacebookNativeAdHolder;
 import com.cheatdatabase.listeners.OnCheatListItemSelectedListener;
+import com.cheatdatabase.listitems.ApplovinNativeAdListItem;
 import com.cheatdatabase.listitems.CheatListItem;
-import com.cheatdatabase.listitems.FacebookNativeAdListItem;
 import com.cheatdatabase.listitems.ListItem;
-import com.facebook.ads.AdOptionsView;
-import com.facebook.ads.NativeAd;
-import com.facebook.ads.NativeAdLayout;
-import com.facebook.ads.NativeAdsManager;
 import com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView;
 
 import java.util.ArrayList;
@@ -38,24 +36,12 @@ public class CheatsByGameRecycleListViewAdapter extends RecyclerView.Adapter<Rec
     private List<Cheat> cheatList;
     private final List<ListItem> listItems;
     private final Context context;
-
     private final OnCheatListItemSelectedListener listener;
+    private final Tools tools;
 
-    private NativeAdsManager mNativeAdsManager;
-
-    public CheatsByGameRecycleListViewAdapter(Activity activity, OnCheatListItemSelectedListener listener) {
+    public CheatsByGameRecycleListViewAdapter(Activity activity, Tools tools, OnCheatListItemSelectedListener listener) {
         this.context = activity;
-        this.listener = listener;
-        cheatList = new ArrayList<>();
-        listItems = new ArrayList<>();
-
-        // TODO at some point implement a cheat filter function
-        filterList("");
-    }
-
-    public CheatsByGameRecycleListViewAdapter(Activity activity, NativeAdsManager nativeAdsManager, OnCheatListItemSelectedListener listener) {
-        this.context = activity;
-        this.mNativeAdsManager = nativeAdsManager;
+        this.tools = tools;
         this.listener = listener;
         cheatList = new ArrayList<>();
         listItems = new ArrayList<>();
@@ -84,11 +70,14 @@ public class CheatsByGameRecycleListViewAdapter extends RecyclerView.Adapter<Rec
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(final ViewGroup parent, int viewType) {
-        if (viewType == ListItem.TYPE_FACEBOOK_NATIVE_AD) {
-            NativeAdLayout inflatedView = (NativeAdLayout) LayoutInflater.from(parent.getContext()).inflate(R.layout.native_ad_unit, parent, false);
-            return new FacebookNativeAdHolder(inflatedView);
+        if (viewType == ListItem.TYPE_APPLOVIN_NATIVE) {
+            IncludeApplovinMaxadviewNativeBinding binding = IncludeApplovinMaxadviewNativeBinding.inflate(
+                    LayoutInflater.from(parent.getContext()),
+                    parent,
+                    false
+            );
+            return new ApplovinNativeAdListViewItemHolder(binding);
         } else {
-            // ListItem.TYPE_CHEAT
             final View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.listrow_cheat_item, parent, false);
             itemView.setDrawingCacheEnabled(true);
             return new CheatsByGameListViewItemHolder(itemView);
@@ -105,34 +94,9 @@ public class CheatsByGameRecycleListViewAdapter extends RecyclerView.Adapter<Rec
             CheatsByGameListViewItemHolder cheatsByGameListViewItemHolder = (CheatsByGameListViewItemHolder) holder;
             cheatsByGameListViewItemHolder.setCheat(cheatListItem.getCheat());
             cheatsByGameListViewItemHolder.view.setOnClickListener(v -> listener.onCheatListItemSelected(cheatListItem.getCheat(), position));
-        } else if (type == ListItem.TYPE_FACEBOOK_NATIVE_AD) {
-            if (mNativeAdsManager != null) {
-                NativeAd ad = mNativeAdsManager.nextNativeAd();
-
-                FacebookNativeAdHolder facebookNativeAdHolder = (FacebookNativeAdHolder) holder;
-                facebookNativeAdHolder.adChoicesContainer.removeAllViews();
-
-                if (ad != null) {
-                    facebookNativeAdHolder.tvAdTitle.setText(ad.getAdvertiserName());
-                    facebookNativeAdHolder.tvAdBody.setText(ad.getAdBodyText());
-                    facebookNativeAdHolder.tvAdSocialContext.setText(ad.getAdSocialContext());
-                    facebookNativeAdHolder.tvAdSponsoredLabel.setText("Sponsored");
-                    facebookNativeAdHolder.btnAdCallToAction.setText(ad.getAdCallToAction());
-                    facebookNativeAdHolder.btnAdCallToAction.setVisibility(ad.hasCallToAction() ? View.VISIBLE : View.INVISIBLE);
-                    AdOptionsView adOptionsView = new AdOptionsView(context, ad, facebookNativeAdHolder.nativeAdLayout);
-                    facebookNativeAdHolder.adChoicesContainer.addView(adOptionsView, 0);
-
-                    List<View> clickableViews = new ArrayList<>();
-                    clickableViews.add(facebookNativeAdHolder.ivAdIcon);
-                    clickableViews.add(facebookNativeAdHolder.mvAdMedia);
-                    clickableViews.add(facebookNativeAdHolder.btnAdCallToAction);
-                    ad.registerViewForInteraction(
-                            facebookNativeAdHolder.nativeAdLayout,
-                            facebookNativeAdHolder.mvAdMedia,
-                            facebookNativeAdHolder.ivAdIcon,
-                            clickableViews);
-                }
-            }
+        } else if (type == ListItem.TYPE_APPLOVIN_NATIVE) {
+            ApplovinNativeAdListViewItemHolder applovinNativeAdListViewItemHolder = (ApplovinNativeAdListViewItemHolder) holder;
+            applovinNativeAdListViewItemHolder.showIt();
         }
     }
 
@@ -162,10 +126,10 @@ public class CheatsByGameRecycleListViewAdapter extends RecyclerView.Adapter<Rec
             // TODO filter the list and update gameList with filtered List
         }
 
-        updateCheatListAndInjectFacebookAds();
+        updateCheatListAndInjectNativeAds();
     }
 
-    private void updateCheatListAndInjectFacebookAds() {
+    private void updateCheatListAndInjectNativeAds() {
         int j = 0;
         final List<ListItem> newListItems = new ArrayList<>();
 
@@ -174,12 +138,10 @@ public class CheatsByGameRecycleListViewAdapter extends RecyclerView.Adapter<Rec
             cheatListItem.setCheat(cheat);
             newListItems.add(cheatListItem);
 
-            if (mNativeAdsManager != null) {
-                if (j % Konstanten.INJECT_AD_AFTER_EVERY_POSITION == Konstanten.INJECT_AD_AFTER_EVERY_POSITION - 1) {
-                    newListItems.add(new FacebookNativeAdListItem());
-                }
-                j++;
+            if (j % Konstanten.INJECT_AD_AFTER_EVERY_POSITION == Konstanten.INJECT_AD_AFTER_EVERY_POSITION - 1) {
+                newListItems.add(new ApplovinNativeAdListItem());
             }
+            j++;
         }
 
         Needle.onMainThread().execute(() -> {
@@ -204,5 +166,4 @@ public class CheatsByGameRecycleListViewAdapter extends RecyclerView.Adapter<Rec
             notifyDataSetChanged();
         });
     }
-
 }

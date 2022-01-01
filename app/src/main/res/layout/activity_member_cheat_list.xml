@@ -50,23 +50,14 @@
         app:fastScrollPopupTextSize="44sp"
         app:fastScrollThumbColor="@color/color_primary_light"
         app:fastScrollTrackColor="@color/scrollbar"
-        app:layout_constraintBottom_toTopOf="@id/banner_container"
+        app:layout_constraintBottom_toTopOf="@id/applovin_include"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/include3"
         tools:listitem="@layout/listrow_member_cheat_item" />
 
-
-    <LinearLayout
-        android:id="@+id/banner_container"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_alignParentBottom="true"
-        android:layout_weight="1"
-        android:background="@android:color/transparent"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+    <include
+        android:id="@+id/applovin_include"
+        layout="@layout/applovin_banner" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

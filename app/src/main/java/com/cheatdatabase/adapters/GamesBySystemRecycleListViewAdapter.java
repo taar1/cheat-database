@@ -34,13 +34,10 @@ import needle.Needle;
 public class GamesBySystemRecycleListViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements FastScrollRecyclerView.SectionedAdapter,
         FastScrollRecyclerView.MeasurableAdapter {
 
-    private static final String TAG = GamesBySystemRecycleListViewAdapter.class.getSimpleName();
-
     private List<Game> gameList;
     private final List<ListItem> listItems;
     private final Activity activity;
     private final OnGameListItemSelectedListener listener;
-
     private final Tools tools;
 
     public GamesBySystemRecycleListViewAdapter(Activity activity, Tools tools, OnGameListItemSelectedListener listener) {
@@ -73,12 +70,7 @@ public class GamesBySystemRecycleListViewAdapter extends RecyclerView.Adapter<Re
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(final ViewGroup parent, int viewType) {
-
-        if (viewType == ListItem.TYPE_GAME) {
-            final View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.listrow_gamebysystem_item, parent, false);
-            itemView.setDrawingCacheEnabled(true);
-            return new GamesBySystemListViewItemHolder(itemView, activity);
-        } else if (viewType == ListItem.TYPE_APPLOVIN_NATIVE) {
+        if (viewType == ListItem.TYPE_APPLOVIN_NATIVE) {
             IncludeApplovinMaxadviewNativeBinding binding = IncludeApplovinMaxadviewNativeBinding.inflate(
                     LayoutInflater.from(parent.getContext()),
                     parent,
@@ -88,9 +80,11 @@ public class GamesBySystemRecycleListViewAdapter extends RecyclerView.Adapter<Re
         } else if (viewType == ListItem.TYPE_UKON_NO_CHIKARA) {
             final View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.ukon_custom_ad, parent, false);
             return new UkonAdListViewItemHolder(itemView);
+        } else {
+            final View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.listrow_gamebysystem_item, parent, false);
+            itemView.setDrawingCacheEnabled(true);
+            return new GamesBySystemListViewItemHolder(itemView, activity);
         }
-
-        return null;
     }
 
     @Override

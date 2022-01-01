@@ -29,6 +29,7 @@ import androidx.appcompat.widget.ShareActionProvider;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.MenuItemCompat;
 
+import com.applovin.adview.AppLovinAdView;
 import com.cheatdatabase.R;
 import com.cheatdatabase.callbacks.GenericCallback;
 import com.cheatdatabase.data.model.Cheat;
@@ -43,8 +44,6 @@ import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.helpers.Tools;
 import com.cheatdatabase.rest.RestApi;
-import com.facebook.ads.AdSize;
-import com.facebook.ads.AdView;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -98,10 +97,8 @@ public class CheatForumActivity extends AppCompatActivity implements GenericCall
     EditText editText;
     @BindView(R.id.submit_button)
     Button postButton;
-    @BindView(R.id.banner_container)
-    LinearLayout facebookBanner;
-
-    private AdView adView;
+    @BindView(R.id.ad_container)
+    AppLovinAdView appLovinAdView;
 
     private final ActivityResultLauncher<Intent> resultContract =
             registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), getActivityResultRegistry(), activityResult -> {
@@ -168,9 +165,7 @@ public class CheatForumActivity extends AppCompatActivity implements GenericCall
             Reachability.registerReachability(this);
         }
 
-        adView = new AdView(this, Konstanten.FACEBOOK_AUDIENCE_NETWORK_NATIVE_BANNER_ID, AdSize.BANNER_HEIGHT_50);
-        facebookBanner.addView(adView);
-        adView.loadAd();
+        appLovinAdView.loadNextAd();
 
         if (mToolbar != null) {
             setSupportActionBar(mToolbar);
@@ -179,6 +174,8 @@ public class CheatForumActivity extends AppCompatActivity implements GenericCall
         getSupportActionBar().setSubtitle((gameObj.getSystemName() != null ? gameObj.getSystemName() : ""));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
+
+        appLovinAdView.loadNextAd();
     }
 
     /**
@@ -326,14 +323,6 @@ public class CheatForumActivity extends AppCompatActivity implements GenericCall
         EventBus.getDefault().unregister(this);
         Reachability.unregister(this);
         super.onStop();
-    }
-
-    @Override
-    protected void onDestroy() {
-        if (adView != null) {
-            adView.destroy();
-        }
-        super.onDestroy();
     }
 
     @Override

@@ -22,6 +22,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.MenuItemCompat;
 import androidx.viewpager.widget.ViewPager;
 
+import com.applovin.adview.AppLovinAdView;
 import com.cheatdatabase.R;
 import com.cheatdatabase.activity.CheatForumActivity;
 import com.cheatdatabase.activity.LoginActivity;
@@ -38,8 +39,6 @@ import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.helpers.Tools;
 import com.cheatdatabase.rest.RestApi;
-import com.facebook.ads.AdSize;
-import com.facebook.ads.AdView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -84,6 +83,8 @@ public class FavoritesCheatViewPageIndicator extends AppCompatActivity {
 
     @BindView(R.id.outer_layout)
     LinearLayout outerLayout;
+    @BindView(R.id.ad_container)
+    AppLovinAdView appLovinAdView;
 
     private FavoriteCheatDao dao;
     private Intent intent;
@@ -95,8 +96,6 @@ public class FavoritesCheatViewPageIndicator extends AppCompatActivity {
     private List<Cheat> cheatArray;
     private Cheat visibleCheat;
 
-    //public AlertDialog.Builder builder;
-
     private FavoritesCheatViewFragmentAdapter mAdapter;
     private ViewPager mPager;
 
@@ -106,8 +105,6 @@ public class FavoritesCheatViewPageIndicator extends AppCompatActivity {
 
     private Toolbar mToolbar;
 
-    private LinearLayout facebookBanner;
-    private AdView adView;
 
     private final ActivityResultLauncher<Intent> resultContract =
             registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), getActivityResultRegistry(), activityResult -> {
@@ -155,10 +152,7 @@ public class FavoritesCheatViewPageIndicator extends AppCompatActivity {
 
         mToolbar = tools.initToolbarBase(this, mToolbar);
 
-        facebookBanner = findViewById(R.id.banner_container);
-        adView = new AdView(this, Konstanten.FACEBOOK_AUDIENCE_NETWORK_NATIVE_BANNER_ID, AdSize.BANNER_HEIGHT_50);
-        facebookBanner.addView(adView);
-        adView.loadAd();
+        appLovinAdView.loadNextAd();
     }
 
     private void initialisePaging() {
@@ -354,14 +348,6 @@ public class FavoritesCheatViewPageIndicator extends AppCompatActivity {
         EventBus.getDefault().unregister(this);
         Reachability.unregister(this);
         super.onStop();
-    }
-
-    @Override
-    protected void onDestroy() {
-        if (adView != null) {
-            adView.destroy();
-        }
-        super.onDestroy();
     }
 
     public void showReportDialog() {

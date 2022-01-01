@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -16,6 +15,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.applovin.adview.AppLovinAdView;
 import com.cheatdatabase.R;
 import com.cheatdatabase.activity.ui.mycheats.edit.EditCheatActivity;
 import com.cheatdatabase.adapters.MemberCheatRecycleListViewAdapter;
@@ -28,8 +28,6 @@ import com.cheatdatabase.helpers.Tools;
 import com.cheatdatabase.listeners.OnMyCheatListItemSelectedListener;
 import com.cheatdatabase.rest.RestApi;
 import com.cheatdatabase.widgets.DividerDecoration;
-import com.facebook.ads.AdSize;
-import com.facebook.ads.AdView;
 import com.google.gson.Gson;
 import com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView;
 
@@ -65,12 +63,10 @@ public class CheatsByMemberListActivity extends AppCompatActivity implements OnM
     Toolbar toolbar;
     @BindView(R.id.item_list_empty_view)
     TextView emptyView;
-    @BindView(R.id.banner_container)
-    LinearLayout facebookBanner;
     @BindView(R.id.outer_layout)
     ConstraintLayout outerLayout;
-
-    AdView adView;
+    @BindView(R.id.ad_container)
+    AppLovinAdView appLovinAdView;
 
     private MemberCheatRecycleListViewAdapter memberCheatRecycleListViewAdapter;
 
@@ -88,7 +84,7 @@ public class CheatsByMemberListActivity extends AppCompatActivity implements OnM
         if (authorMember != null) {
             init();
 
-            memberCheatRecycleListViewAdapter = new MemberCheatRecycleListViewAdapter(this, tools.getMember());
+            memberCheatRecycleListViewAdapter = new MemberCheatRecycleListViewAdapter(this, tools.getMember(), this);
 
             // use this setting to improve performance if you know that changes
             // in content do not change the layout size of the RecyclerView
@@ -113,10 +109,7 @@ public class CheatsByMemberListActivity extends AppCompatActivity implements OnM
         emptyView.setText(getString(R.string.no_member_cheats, authorMember.getUsername()));
         emptyView.setVisibility(View.GONE);
 
-
-        adView = new AdView(this, Konstanten.FACEBOOK_AUDIENCE_NETWORK_NATIVE_BANNER_ID, AdSize.BANNER_HEIGHT_50);
-        facebookBanner.addView(adView);
-        adView.loadAd();
+        appLovinAdView.loadNextAd();
 
         if (toolbar != null) {
             setSupportActionBar(toolbar);
@@ -187,8 +180,8 @@ public class CheatsByMemberListActivity extends AppCompatActivity implements OnM
 
     @Override
     protected void onDestroy() {
-        if (adView != null) {
-            adView.destroy();
+        if (appLovinAdView != null) {
+            appLovinAdView.destroy();
         }
         super.onDestroy();
     }

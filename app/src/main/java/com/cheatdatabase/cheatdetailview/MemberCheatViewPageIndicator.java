@@ -22,6 +22,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.MenuItemCompat;
 import androidx.viewpager.widget.ViewPager;
 
+import com.applovin.adview.AppLovinAdView;
 import com.cheatdatabase.R;
 import com.cheatdatabase.activity.CheatForumActivity;
 import com.cheatdatabase.activity.LoginActivity;
@@ -37,8 +38,6 @@ import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.helpers.Tools;
 import com.cheatdatabase.rest.RestApi;
-import com.facebook.ads.AdSize;
-import com.facebook.ads.AdView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -86,8 +85,8 @@ public class MemberCheatViewPageIndicator extends AppCompatActivity implements G
     LinearLayout outerLayout;
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
-    @BindView(R.id.banner_container)
-    LinearLayout facebookBanner;
+    @BindView(R.id.ad_container)
+    AppLovinAdView appLovinAdView;
 
     private Intent intent;
     private View viewLayout;
@@ -99,7 +98,6 @@ public class MemberCheatViewPageIndicator extends AppCompatActivity implements G
     private ViewPager mPager;
     private int activePage;
     private ShareActionProvider mShare;
-    private AdView adView;
 
     private final ActivityResultLauncher<Intent> resultContract =
             registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), getActivityResultRegistry(), activityResult -> {
@@ -165,10 +163,7 @@ public class MemberCheatViewPageIndicator extends AppCompatActivity implements G
 
     private void init() {
         mToolbar = tools.initToolbarBase(this, mToolbar);
-
-        adView = new AdView(this, Konstanten.FACEBOOK_AUDIENCE_NETWORK_NATIVE_BANNER_ID, AdSize.BANNER_HEIGHT_50);
-        facebookBanner.addView(adView);
-        adView.loadAd();
+        appLovinAdView.loadNextAd();
     }
 
     private void initialisePaging() {
@@ -394,14 +389,6 @@ public class MemberCheatViewPageIndicator extends AppCompatActivity implements G
         EventBus.getDefault().unregister(this);
         Reachability.unregister(this);
         super.onStop();
-    }
-
-    @Override
-    protected void onDestroy() {
-        if (adView != null) {
-            adView.destroy();
-        }
-        super.onDestroy();
     }
 
     public RestApi getRestApi() {

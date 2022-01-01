@@ -27,6 +27,9 @@
         android:launchMode="singleTop"
         android:logo="@drawable/logo_full_centered"
         android:theme="@style/Theme.Navyblue">
+        <activity
+            android:name=".cheatdetailview.SingleImageViewerActivity"
+            android:exported="false" />
         <activity android:name=".activity.ui.mycheats.edit.EditCheatActivity" />
         <activity
             android:name=".activity.MainActivity"
@@ -195,8 +198,7 @@
             android:value="@integer/google_play_services_version" />
         <meta-data
             android:name="com.google.android.gms.ads.AD_MANAGER_APP"
-            android:value="true" />
-        <!-- =========== -->
+            android:value="true" /> <!-- =========== -->
         <!-- AD NETWORKS -->
         <!-- =========== -->
         <meta-data
@@ -205,9 +207,7 @@
 
         <provider
             android:name=".search.SearchSuggestionProvider"
-            android:authorities="com.cheatdatabase.search.SearchSuggestionProvider" />
-
-        <!-- GOOGLE ANALYTICS -->
+            android:authorities="com.cheatdatabase.search.SearchSuggestionProvider" /> <!-- GOOGLE ANALYTICS -->
         <!-- Enable background dispatching to improve delivery on non-Google Play devices -->
         <receiver
             android:name="com.google.android.gms.analytics.AnalyticsReceiver"
@@ -224,14 +224,13 @@
             <intent-filter>
                 <action android:name="com.android.vending.INSTALL_REFERRER" />
             </intent-filter>
-        </receiver>
-        <!-- Enable Google Play Store Campaign reports -->
+        </receiver> <!-- Enable Google Play Store Campaign reports -->
         <service
             android:name="com.google.android.gms.analytics.AnalyticsService"
             android:enabled="true"
             android:exported="false" />
-
         <!-- https://dash.applovin.com/documentation/mediation/android/getting-started/integration -->
+        <!-- APPLOVIN REVENUE: https://dash.applovin.com/o/analytics/index#date_range=today&app_id=60067980&type=thirdparty_impressions&compare=false&show_unique=true -->
         <meta-data
             android:name="applovin.sdk.key"
             android:value="QrvA-SWVxrAMGsKSCzUawM8Audr9OFrko0Pu9q-4pW_eaLThU3tbbnfLJISHooq8MCqhAS8BA_vvBhHSkHzuFN" />

@@ -9,7 +9,6 @@ import com.cheatdatabase.data.model.Cheat;
 import com.cheatdatabase.data.model.Game;
 import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.TrackingUtils;
-import com.facebook.ads.AudienceNetworkAds;
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.Tracker;
 import com.google.firebase.analytics.FirebaseAnalytics;
@@ -66,10 +65,6 @@ public class CheatDatabaseApplication extends Application implements Application
 
         // Set firebase logging
         firebaseAnalytics = FirebaseAnalytics.getInstance(getApplicationContext());
-
-        // Facebook Native Ads
-        // Initialize the Audience Network SDK
-        AudienceNetworkAds.initialize(this);
     }
 
     @Override

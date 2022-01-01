@@ -1,6 +1,5 @@
 package com.cheatdatabase.cheatdetailview;
 
-import android.app.AlertDialog;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
@@ -9,10 +8,8 @@ import android.content.SharedPreferences.Editor;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -25,6 +22,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.MenuItemCompat;
 import androidx.viewpager.widget.ViewPager;
 
+import com.applovin.adview.AppLovinAdView;
 import com.cheatdatabase.R;
 import com.cheatdatabase.activity.CheatForumActivity;
 import com.cheatdatabase.activity.LoginActivity;
@@ -40,8 +38,6 @@ import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.helpers.Tools;
 import com.cheatdatabase.rest.RestApi;
-import com.facebook.ads.AdSize;
-import com.facebook.ads.AdView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
 
@@ -88,26 +84,27 @@ public class CheatViewPageIndicatorActivity extends AppCompatActivity implements
     LinearLayout outerLayout;
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
-    @BindView(R.id.banner_container)
-    LinearLayout facebookBanner;
+    @BindView(R.id.ad_container)
+    AppLovinAdView appLovinAdView;
+    @BindView(R.id.pager)
+    ViewPager mPager;
+    @BindView(R.id.add_new_cheat_button)
+    FloatingActionButton fab;
 
     public static final int FORUM_POST_ADDED_REQUEST = 176;
 
     private Intent intent;
 
-    private View viewLayout;
     private int pageSelected;
     private Game gameObj;
     private ArrayList<Cheat> cheatArray;
     private Cheat visibleCheat;
     private SharedPreferences settings;
     private Editor editor;
-    public AlertDialog.Builder builder;
     private CheatViewFragmentAdapter mAdapter;
-    private ViewPager mPager;
+
     private int activePage;
     private ShareActionProvider mShare;
-    private AdView adView;
 
     private final ActivityResultLauncher<Intent> resultContract =
             registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), getActivityResultRegistry(), activityResult -> {
@@ -128,12 +125,10 @@ public class CheatViewPageIndicatorActivity extends AppCompatActivity implements
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        intent = getIntent();
-
-        LayoutInflater inflater = LayoutInflater.from(this);
-        viewLayout = inflater.inflate(intent.getIntExtra("layoutResourceId", R.layout.activity_cheatview_pager), null);
-        setContentView(viewLayout);
+        setContentView(R.layout.activity_cheatview_pager);
         ButterKnife.bind(this);
+
+        intent = getIntent();
 
         init();
 
@@ -155,7 +150,7 @@ public class CheatViewPageIndicatorActivity extends AppCompatActivity implements
         } else {
             for (Cheat cheat : gameObj.getCheatList()) {
                 if (cheatArray == null) {
-                    cheatArray = new ArrayList();
+                    cheatArray = new ArrayList<>();
                 }
                 cheatArray.add(cheat);
             }
@@ -177,21 +172,17 @@ public class CheatViewPageIndicatorActivity extends AppCompatActivity implements
             Reachability.registerReachability(this);
         }
 
-        cheatArray = new ArrayList();
+        cheatArray = new ArrayList<>();
         settings = getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
         editor = settings.edit();
 
+        appLovinAdView.loadNextAd();
         mToolbar = tools.initToolbarBase(this, mToolbar);
-
-        adView = new AdView(this, Konstanten.FACEBOOK_AUDIENCE_NETWORK_NATIVE_BANNER_ID, AdSize.BANNER_HEIGHT_50);
-        adView.loadAd();
-        facebookBanner.addView(adView);
     }
 
     private void initialisePaging() {
         try {
             mAdapter = new CheatViewFragmentAdapter(getSupportFragmentManager(), gameObj, cheatArray);
-            mPager = viewLayout.findViewById(R.id.pager);
             mPager.setAdapter(mAdapter);
             mPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
                 @Override
@@ -254,8 +245,7 @@ public class CheatViewPageIndicatorActivity extends AppCompatActivity implements
             ViewPagerHelper.bind(magicIndicator, mPager);
             mPager.setCurrentItem(pageSelected);
 
-            FloatingActionButton fa = viewLayout.findViewById(R.id.add_new_cheat_button);
-            fa.setOnClickListener(v -> {
+            fab.setOnClickListener(v -> {
                 Intent explicitIntent = new Intent(CheatViewPageIndicatorActivity.this, SubmitCheatFormActivity.class);
                 explicitIntent.putExtra("gameObj", gameObj);
                 startActivity(explicitIntent);
@@ -403,14 +393,6 @@ public class CheatViewPageIndicatorActivity extends AppCompatActivity implements
         EventBus.getDefault().unregister(this);
         Reachability.unregister(this);
         super.onStop();
-    }
-
-    @Override
-    protected void onDestroy() {
-        if (adView != null) {
-            adView.destroy();
-        }
-        super.onDestroy();
     }
 
     public void showReportDialog() {

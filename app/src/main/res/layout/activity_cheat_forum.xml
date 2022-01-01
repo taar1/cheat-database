@@ -94,5 +94,7 @@
             android:text="@string/forum_button_submit" />
     </LinearLayout>
 
-    <include layout="@layout/adview_facebook" />
+    <include
+        android:id="@+id/applovin_include"
+        layout="@layout/applovin_banner" />
 </LinearLayout>

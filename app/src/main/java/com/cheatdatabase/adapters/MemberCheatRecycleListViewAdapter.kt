@@ -1,5 +1,6 @@
 package com.cheatdatabase.adapters
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -14,7 +15,8 @@ import java.util.*
 
 class MemberCheatRecycleListViewAdapter(
     onMyCheatListItemSelectedListener: OnMyCheatListItemSelectedListener,
-    member: Member
+    member: Member,
+    val context: Context
 ) : RecyclerView.Adapter<MemberCheatsListViewItemHolderK>(), SectionedAdapter,
     MeasurableAdapter<MemberCheatsListViewItemHolderK?> {
     private var cheatList: List<Cheat>
@@ -33,7 +35,7 @@ class MemberCheatRecycleListViewAdapter(
             parent,
             false
         )
-        return MemberCheatsListViewItemHolderK(binding)
+        return MemberCheatsListViewItemHolderK(binding, context)
     }
 
     override fun onBindViewHolder(holder: MemberCheatsListViewItemHolderK, position: Int) {

@@ -1,5 +1,6 @@
 package com.cheatdatabase.cheatdetailview
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.Html
 import android.util.Log
@@ -144,7 +145,7 @@ class CheatViewFragment : Fragment(), CheatViewGalleryImageClickListener {
         }
     }
 
-    fun clickReload() {
+    private fun clickReload() {
         if (Reachability.reachability.isReachable) {
             onlineContent
         } else {
@@ -217,7 +218,7 @@ class CheatViewFragment : Fragment(), CheatViewGalleryImageClickListener {
         mainTable.isHorizontalScrollBarEnabled = true
 
         // Cheat text before the table
-        var textBeforeTable: Array<String>? = null
+        var textBeforeTable: Array<String>?
 
         // Some cheats start right with a table
         if (cheatObj.cheatText.startsWith("<br><table")) {
@@ -304,7 +305,7 @@ class CheatViewFragment : Fragment(), CheatViewGalleryImageClickListener {
                 )
             )
         }
-        mainTable.setOnClickListener(View.OnClickListener { view: View? -> displayTableInWebview() })
+        mainTable.setOnClickListener { displayTableInWebview() }
         progressBar.visibility = View.GONE
     }
 
@@ -391,6 +392,12 @@ class CheatViewFragment : Fragment(), CheatViewGalleryImageClickListener {
 //            Picasso.get().load(image.fullPath).placeholder(R.drawable.image_placeholder)
 //                .into(imageView)
 //        }.withStartPosition(position).show()
+
+
+        val intent = Intent(activity, SingleImageViewerActivity::class.java)
+        intent.putExtra("image_full_path", screenshot.fullPath)
+        startActivity(intent)
     }
+
 
 }

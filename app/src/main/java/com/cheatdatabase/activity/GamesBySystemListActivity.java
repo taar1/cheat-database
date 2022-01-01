@@ -33,8 +33,6 @@ import com.cheatdatabase.helpers.Tools;
 import com.cheatdatabase.listeners.OnGameListItemSelectedListener;
 import com.cheatdatabase.rest.RestApi;
 import com.cheatdatabase.widgets.DividerDecoration;
-import com.facebook.ads.NativeAd;
-import com.facebook.ads.NativeAdsManager;
 import com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView;
 
 import java.util.ArrayList;
@@ -72,7 +70,7 @@ public class GamesBySystemListActivity extends AppCompatActivity implements OnGa
     @BindView(R.id.item_list_empty_view)
     TextView mEmptyView;
     @BindView(R.id.ad_container)
-    AppLovinAdView adView;
+    AppLovinAdView appLovinAdView;
 
     private List<Game> gameList;
     private GamesBySystemRecycleListViewAdapter gamesBySystemRecycleListViewAdapter;
@@ -95,9 +93,6 @@ public class GamesBySystemListActivity extends AppCompatActivity implements OnGa
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_list);
         ButterKnife.bind(this);
-
-        NativeAdsManager nativeAdsManager = new NativeAdsManager(this, Konstanten.FACEBOOK_AUDIENCE_NETWORK_NATIVE_AD_IN_RECYCLER_VIEW, 5);
-        nativeAdsManager.loadAds(NativeAd.MediaCacheFlag.ALL);
 
         systemObj = getIntent().getParcelableExtra("systemObj");
 
@@ -144,7 +139,7 @@ public class GamesBySystemListActivity extends AppCompatActivity implements OnGa
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
-        adView.loadNextAd();
+        appLovinAdView.loadNextAd();
     }
 
     @Override

@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.applovin.adview.AppLovinAdView;
 import com.cheatdatabase.R;
 import com.cheatdatabase.adapters.CheatsByGameRecycleListViewAdapter;
 import com.cheatdatabase.cheatdetailview.FavoritesCheatViewPageIndicator;
@@ -35,8 +36,6 @@ import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.helpers.Tools;
 import com.cheatdatabase.listeners.OnCheatListItemSelectedListener;
 import com.cheatdatabase.widgets.DividerDecoration;
-import com.facebook.ads.AdSize;
-import com.facebook.ads.AdView;
 import com.google.gson.Gson;
 import com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView;
 
@@ -70,7 +69,6 @@ public class FavoriteCheatListActivity extends AppCompatActivity implements OnCh
     private Cheat visibleCheat;
 
     private ArrayList<Cheat> cheatsArrayList;
-    private AdView facebookAdView;
 
     @Inject
     Tools tools;
@@ -85,8 +83,8 @@ public class FavoriteCheatListActivity extends AppCompatActivity implements OnCh
     Toolbar mToolbar;
     @BindView(R.id.item_list_empty_view)
     TextView mEmptyView;
-    @BindView(R.id.banner_container)
-    LinearLayout bannerContainerFacebook;
+    @BindView(R.id.ad_container)
+    AppLovinAdView appLovinAdView;
 
     private FavoriteCheatDao dao;
 
@@ -118,7 +116,7 @@ public class FavoriteCheatListActivity extends AppCompatActivity implements OnCh
             mSwipeRefreshLayout.setRefreshing(true);
             mSwipeRefreshLayout.setOnRefreshListener(() -> loadCheats());
 
-            cheatsByGameRecycleListViewAdapter = new CheatsByGameRecycleListViewAdapter(this, this);
+            cheatsByGameRecycleListViewAdapter = new CheatsByGameRecycleListViewAdapter(this, tools, this);
             recyclerView.setAdapter(cheatsByGameRecycleListViewAdapter);
 
             getSupportActionBar().setTitle(gameObj.getGameName());
@@ -135,9 +133,7 @@ public class FavoriteCheatListActivity extends AppCompatActivity implements OnCh
         SharedPreferences sharedPreferences = getSharedPreferences(Konstanten.PREFERENCES_FILE, MODE_PRIVATE);
         editor = sharedPreferences.edit();
 
-        facebookAdView = new AdView(this, Konstanten.FACEBOOK_AUDIENCE_NETWORK_NATIVE_BANNER_ID, AdSize.BANNER_HEIGHT_50);
-        bannerContainerFacebook.addView(facebookAdView);
-        facebookAdView.loadAd();
+        appLovinAdView.loadNextAd();
 
         if (mToolbar != null) {
             setSupportActionBar(mToolbar);
@@ -282,14 +278,6 @@ public class FavoriteCheatListActivity extends AppCompatActivity implements OnCh
         EventBus.getDefault().unregister(this);
         Reachability.unregister(this);
         super.onStop();
-    }
-
-    @Override
-    protected void onDestroy() {
-        if (facebookAdView != null) {
-            facebookAdView.destroy();
-        }
-        super.onDestroy();
     }
 
     @OnClick(R.id.add_new_cheat_button)
