@@ -67,6 +67,8 @@ public class FavoritesCheatViewFragment extends Fragment implements FavoritesChe
     @Inject
     RestApi restApi;
 
+    @BindView(R.id.main_layout)
+    LinearLayout mainLayout;
     @BindView(R.id.table_cheat_list_main)
     TableLayout mainTable;
     @BindView(R.id.cheat_content)
@@ -88,7 +90,6 @@ public class FavoritesCheatViewFragment extends Fragment implements FavoritesChe
     private Game game;
     private int offset;
     private Member member;
-    private LinearLayout outerLayout;
 
     private SharedPreferences settings;
     private Editor editor;
@@ -96,11 +97,10 @@ public class FavoritesCheatViewFragment extends Fragment implements FavoritesChe
     private FavoritesCheatViewPageIndicator favoritesCheatViewPageIndicatorActivity;
     private List<File> screenshotList;
 
-    public static FavoritesCheatViewFragment newInstance(Game game, int offset, LinearLayout outerLayout) {
+    public static FavoritesCheatViewFragment newInstance(Game game, int offset) {
         FavoritesCheatViewFragment fragment = new FavoritesCheatViewFragment();
         fragment.game = game;
         fragment.offset = offset;
-        fragment.outerLayout = outerLayout;
         return fragment;
     }
 
@@ -353,7 +353,7 @@ public class FavoritesCheatViewFragment extends Fragment implements FavoritesChe
             @Override
             public void onFailure(Call<Cheat> call, Throwable e) {
                 Log.e(TAG, "getCheatBody onFailure: " + e.getLocalizedMessage());
-                tools.showSnackbar(outerLayout, getContext().getString(R.string.err_somethings_wrong), 5000);
+                tools.showSnackbar(mainLayout, getContext().getString(R.string.err_somethings_wrong), 5000);
             }
         });
     }

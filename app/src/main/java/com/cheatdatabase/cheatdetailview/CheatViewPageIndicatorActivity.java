@@ -10,7 +10,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -19,6 +18,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.ShareActionProvider;
 import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.view.MenuItemCompat;
 import androidx.viewpager.widget.ViewPager;
 
@@ -67,7 +67,6 @@ import dagger.hilt.android.AndroidEntryPoint;
  * Swipe through cheats horizontally with this CheatViewPageIndicatorActivity.
  *
  * @author Dominik Erbsland
- * @version 1.0
  */
 @AndroidEntryPoint
 public class CheatViewPageIndicatorActivity extends AppCompatActivity implements GenericCallback {
@@ -81,7 +80,7 @@ public class CheatViewPageIndicatorActivity extends AppCompatActivity implements
     RestApi restApi;
 
     @BindView(R.id.outer_layout)
-    LinearLayout outerLayout;
+    ConstraintLayout outerLayout;
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
     @BindView(R.id.ad_container)
@@ -405,7 +404,7 @@ public class CheatViewPageIndicatorActivity extends AppCompatActivity implements
 
     public void showRatingDialog() {
         if ((tools.getMember() == null) || (tools.getMember().getMid() == 0)) {
-            Toast.makeText(this, R.string.error_login_required, Toast.LENGTH_LONG).show();
+            Toast.makeText(this, R.string.error_login_to_rate, Toast.LENGTH_LONG).show();
         } else {
             new RateCheatMaterialDialog(this, visibleCheat, tools.getMember(), outerLayout, tools);
         }

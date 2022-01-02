@@ -119,7 +119,6 @@ public class CheatForumActivity extends AppCompatActivity implements GenericCall
         setContentView(R.layout.activity_cheat_forum);
         ButterKnife.bind(this);
 
-
         cheatObj = getIntent().getParcelableExtra("cheatObj");
         gameObj = getIntent().getParcelableExtra("gameObj");
 

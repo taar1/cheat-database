@@ -1,7 +1,5 @@
 package com.cheatdatabase.cheatdetailview;
 
-import android.widget.LinearLayout;
-
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
@@ -9,18 +7,16 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import com.cheatdatabase.data.model.Game;
 
 public class FavoritesCheatViewFragmentAdapter extends FragmentPagerAdapter {
-    private final LinearLayout outerLayout;
-    private Game game;
+    private final Game game;
 
-    public FavoritesCheatViewFragmentAdapter(FragmentManager fragmentManager, Game game, LinearLayout outerLayout) {
+    public FavoritesCheatViewFragmentAdapter(FragmentManager fragmentManager, Game game) {
         super(fragmentManager);
         this.game = game;
-        this.outerLayout = outerLayout;
     }
 
     @Override
     public Fragment getItem(int position) {
-        return FavoritesCheatViewFragment.newInstance(game, position, outerLayout);
+        return FavoritesCheatViewFragment.newInstance(game, position);
     }
 
     @Override

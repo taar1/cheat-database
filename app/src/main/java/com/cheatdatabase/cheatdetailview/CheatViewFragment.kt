@@ -381,11 +381,6 @@ class CheatViewFragment : Fragment(), CheatViewGalleryImageClickListener {
     }
 
 
-    // TODO FIXME diese library muss wohl oder übel ersetzt werden....
-    // TODO FIXME diese library muss wohl oder übel ersetzt werden....
-    // TODO FIXME diese library muss wohl oder übel ersetzt werden....
-    // TODO FIXME diese library muss wohl oder übel ersetzt werden....
-    // TODO FIXME diese library muss wohl oder übel ersetzt werden....
     override fun onScreenshotClicked(screenshot: Screenshot, position: Int) {
 //        StfalconImageViewer.Builder(            cheatViewPageIndicatorActivity,            cheatObj.screenshotList        )
 //        { imageView: ImageView?, image: Screenshot ->
@@ -393,9 +388,10 @@ class CheatViewFragment : Fragment(), CheatViewGalleryImageClickListener {
 //                .into(imageView)
 //        }.withStartPosition(position).show()
 
-
+        // TODO replace with some image viewer at some point...
         val intent = Intent(activity, SingleImageViewerActivity::class.java)
         intent.putExtra("image_full_path", screenshot.fullPath)
+        intent.putExtra("cheat_title", cheatObj.cheatTitle)
         startActivity(intent)
     }
 

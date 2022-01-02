@@ -51,12 +51,16 @@ class SubmitCheatFormActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySubmitCheatLayoutBinding
 
-    var outerLayout: ConstraintLayout = binding.outerLayout
-    var textStaticCheatTitle: TextView = binding.textCheatSubmissionTitle
-    var cheatTitle: TextInputEditText = binding.editCheatTitle
-    var cheatText: TextInputEditText = binding.editCheatText
-    var checkBoxTerms: CheckBox = binding.checkboxTerms
-    val toolbar: Toolbar = binding.toolbarLayout.toolbar
+    lateinit var outerLayout: ConstraintLayout
+    lateinit var textStaticCheatTitle: TextView
+    lateinit var cheatTitle: TextInputEditText
+    lateinit var cheatText: TextInputEditText
+    lateinit var checkBoxTerms: CheckBox
+    lateinit var toolbar: Toolbar
+
+    companion object {
+        private const val TAG = "SubmitCheatActivity"
+    }
 
     private val resultContract: ActivityResultLauncher<Intent> =
         registerForActivityResult(
@@ -84,6 +88,9 @@ class SubmitCheatFormActivity : AppCompatActivity() {
         binding = ActivitySubmitCheatLayoutBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        bind()
+        init()
+
         showAlertDialog(
             R.string.before_you_post,
             R.string.rules_for_submissions,
@@ -96,11 +103,19 @@ class SubmitCheatFormActivity : AppCompatActivity() {
         toolbar.title = gameObj.gameName
         toolbar.subtitle = gameObj.systemName
 
-        init()
         if (unpublishedCheat != null) {
             cheatTitle.setText(unpublishedCheat.getTitle())
             cheatText.setText(unpublishedCheat.getCheat())
         }
+    }
+
+    private fun bind() {
+        outerLayout = binding.outerLayout
+        textStaticCheatTitle = binding.textCheatSubmissionTitle
+        cheatTitle = binding.editCheatTitle
+        cheatText = binding.editCheatText
+        checkBoxTerms = binding.checkboxTerms
+        toolbar = binding.toolbarLayout.toolbar
     }
 
     private fun init() {
@@ -111,7 +126,7 @@ class SubmitCheatFormActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
-            R.id.home -> {
+            android.R.id.home -> {
                 onBackPressed()
                 true
             }
@@ -151,7 +166,7 @@ class SubmitCheatFormActivity : AppCompatActivity() {
         )
     }
 
-    fun sendButtonClicked() {
+    private fun sendButtonClicked() {
         if (tools.member != null && tools.member.mid != 0) {
             if (cheatText.text.toString().trim { it <= ' ' }.length < 5 || cheatTitle.text
                     .toString().trim { it <= ' ' }.length < 2
@@ -280,7 +295,4 @@ class SubmitCheatFormActivity : AppCompatActivity() {
         resultContract.launch(Intent(this, LoginActivity::class.java))
     }
 
-    companion object {
-        private const val TAG = "SubmitCheatActivity"
-    }
 }

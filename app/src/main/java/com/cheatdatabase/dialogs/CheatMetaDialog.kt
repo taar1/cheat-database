@@ -25,6 +25,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.text.SimpleDateFormat
 
+
 @SuppressLint("SimpleDateFormat")
 class CheatMetaDialog(
     context: Context,
@@ -66,21 +67,18 @@ class CheatMetaDialog(
     }
 
     init {
-        madb.setTitle(R.string.title_cheat_details)
-            .setView(R.layout.layout_cheatview_meta_dialog)
-            .setPositiveButton(R.string.ok) { _, _ ->
-                // close dialog
-            }
+        madb.setView(R.layout.layout_cheatview_meta_dialog)
             .setCancelable(true)
 
         val materialDialog = madb.create()
         materialDialog.show()
 
-
         member = cheat.submittingMember
 
         bind(materialDialog)
         loadMetaData()
+
+        window?.setDimAmount(0.1f)
     }
 
     private fun loadMetaData() {
@@ -261,6 +259,5 @@ class CheatMetaDialog(
         showAllCheatsByMember.setOnClickListener(this)
         submissionDateText.setOnClickListener(this)
     }
-
 
 }

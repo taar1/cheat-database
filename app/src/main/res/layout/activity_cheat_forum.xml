@@ -1,4 +1,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/outer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -20,7 +22,8 @@
         android:gravity="top"
         android:paddingTop="10dp"
         android:src="@drawable/reload"
-        android:visibility="invisible" />
+        android:visibility="invisible"
+        tools:visibility="visible" />
 
     <TextView
         android:id="@+id/text_cheat_title"
@@ -44,7 +47,8 @@
             android:padding="10dp"
             android:text="@string/forum_yet_empty"
             android:textColor="#CCCCCC"
-            android:visibility="invisible" />
+            android:visibility="invisible"
+            tools:visibility="visible" />
 
         <ScrollView
             android:id="@+id/sv"
@@ -94,7 +98,12 @@
             android:text="@string/forum_button_submit" />
     </LinearLayout>
 
-    <include
-        android:id="@+id/applovin_include"
-        layout="@layout/applovin_banner" />
+    <com.applovin.adview.AppLovinAdView xmlns:maxads="http://schemas.applovin.com/android/1.0"
+        android:id="@+id/ad_container"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        maxads:adUnitId="41ff6e538c1a7c46" />
 </LinearLayout>

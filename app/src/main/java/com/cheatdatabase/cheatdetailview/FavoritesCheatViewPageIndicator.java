@@ -6,11 +6,8 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -19,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.ShareActionProvider;
 import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.view.MenuItemCompat;
 import androidx.viewpager.widget.ViewPager;
 
@@ -61,6 +59,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import dagger.hilt.android.AndroidEntryPoint;
 import needle.Needle;
 
@@ -68,7 +67,6 @@ import needle.Needle;
  * Horizontal sliding gallery of cheats from a game.
  *
  * @author Dominik Erbsland
- * @version 1.0
  */
 @AndroidEntryPoint
 public class FavoritesCheatViewPageIndicator extends AppCompatActivity {
@@ -82,22 +80,22 @@ public class FavoritesCheatViewPageIndicator extends AppCompatActivity {
     RestApi restApi;
 
     @BindView(R.id.outer_layout)
-    LinearLayout outerLayout;
+    ConstraintLayout outerLayout;
     @BindView(R.id.ad_container)
     AppLovinAdView appLovinAdView;
+    @BindView(R.id.pager)
+    ViewPager mPager;
+    @BindView(R.id.add_new_cheat_button)
+    FloatingActionButton fab;
 
     private FavoriteCheatDao dao;
     private Intent intent;
 
-    private View viewLayout;
     private int pageSelected;
 
     private Game gameObj;
     private List<Cheat> cheatArray;
     private Cheat visibleCheat;
-
-    private FavoritesCheatViewFragmentAdapter mAdapter;
-    private ViewPager mPager;
 
     private int activePage;
 
@@ -122,11 +120,10 @@ public class FavoritesCheatViewPageIndicator extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        intent = getIntent();
+        setContentView(R.layout.activity_cheatview_pager);
+        ButterKnife.bind(this);
 
-        LayoutInflater inflater = LayoutInflater.from(this);
-        viewLayout = inflater.inflate(intent.getIntExtra("layoutResourceId", R.layout.activity_cheatview_pager), null);
-        setContentView(viewLayout);
+        intent = getIntent();
 
         init();
 
@@ -163,9 +160,7 @@ public class FavoritesCheatViewPageIndicator extends AppCompatActivity {
         }
 
         try {
-            mAdapter = new FavoritesCheatViewFragmentAdapter(getSupportFragmentManager(), gameObj, outerLayout);
-
-            mPager = viewLayout.findViewById(R.id.pager);
+            FavoritesCheatViewFragmentAdapter mAdapter = new FavoritesCheatViewFragmentAdapter(getSupportFragmentManager(), gameObj);
             mPager.setAdapter(mAdapter);
             mPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
                 @Override
@@ -226,8 +221,7 @@ public class FavoritesCheatViewPageIndicator extends AppCompatActivity {
             ViewPagerHelper.bind(magicIndicator, mPager);
             mPager.setCurrentItem(pageSelected);
 
-            FloatingActionButton fa = viewLayout.findViewById(R.id.add_new_cheat_button);
-            fa.setOnClickListener(v -> {
+            fab.setOnClickListener(v -> {
                 Intent intent = new Intent(FavoritesCheatViewPageIndicator.this, SubmitCheatFormActivity.class);
                 intent.putExtra("gameObj", gameObj);
                 startActivity(intent);
