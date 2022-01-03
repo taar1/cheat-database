@@ -25,9 +25,7 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
-import androidx.appcompat.widget.ShareActionProvider;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.view.MenuItemCompat;
 
 import com.applovin.adview.AppLovinAdView;
 import com.cheatdatabase.R;
@@ -72,7 +70,6 @@ public class CheatForumActivity extends AppCompatActivity implements GenericCall
 
     private Cheat cheatObj;
     private Game gameObj;
-    private ShareActionProvider mShare;
 
     @Inject
     Tools tools;
@@ -334,13 +331,6 @@ public class CheatForumActivity extends AppCompatActivity implements GenericCall
             getMenuInflater().inflate(R.menu.signin_menu, menu);
         }
 
-        // Locate MenuItem with ShareActionProvider
-        MenuItem item = menu.findItem(R.id.action_share);
-
-        // Sharing
-        mShare = (androidx.appcompat.widget.ShareActionProvider) MenuItemCompat.getActionProvider(item);
-        setShareText(cheatObj);
-
         // Search
         getMenuInflater().inflate(R.menu.search_menu, menu);
 
@@ -350,26 +340,6 @@ public class CheatForumActivity extends AppCompatActivity implements GenericCall
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
 
         return super.onCreateOptionsMenu(menu);
-    }
-
-    private void setShareText(Cheat visibleCheat) {
-        String cheatShareTitle = String.format(getString(R.string.share_email_subject), visibleCheat.getGameName());
-        String cheatShareBody = visibleCheat.getGame().getGameName() + " (" + visibleCheat.getSystem().getSystemName() + "): " + visibleCheat.getCheatTitle() + "\n";
-        cheatShareBody += Konstanten.BASE_URL + "display/switch.php?id=" + visibleCheat.getCheatId() + "\n\n";
-
-        Intent shareIntent = new Intent(Intent.ACTION_SEND);
-        shareIntent.setAction(Intent.ACTION_SEND);
-        shareIntent.setType("text/plain");
-        shareIntent.putExtra(Intent.EXTRA_SUBJECT, cheatShareTitle);
-        shareIntent.putExtra(Intent.EXTRA_TEXT, cheatShareBody);
-        setShareIntent(shareIntent);
-    }
-
-    // Call to update the share intent
-    private void setShareIntent(Intent shareIntent) {
-        if (mShare != null) {
-            mShare.setShareIntent(shareIntent);
-        }
     }
 
     @Override

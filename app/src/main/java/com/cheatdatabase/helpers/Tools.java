@@ -12,7 +12,6 @@ import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -549,19 +548,23 @@ public class Tools {
      * @param cheat
      */
     public void shareCheat(Cheat cheat) {
-        String fullBody = cheat.getGameName() + " (" + cheat.getSystemName() + "): " + cheat.getCheatTitle() + "\n";
-        fullBody += Konstanten.BASE_URL + "display/switch.php?id=" + cheat.getCheatId() + "\n\n";
+        String shareText = new StringBuilder(cheat.getGameName())
+                .append(" - ")
+                .append(cheat.getCheatTitle())
+                .append(" (")
+                .append(cheat.getSystemName())
+                .append(")\n")
+                .append("https://cheat-database.com/display/switch.php?id=")
+                .append(cheat.getCheatId())
+                .toString();
 
-        Intent shareIntent = new Intent(Intent.ACTION_SEND);
-        shareIntent.setType("text/plain");
-        String result = String.format(context.getString(R.string.share_email_subject), cheat.getGameName());
-        shareIntent.putExtra(Intent.EXTRA_SUBJECT, result);
-        shareIntent.putExtra(Intent.EXTRA_TEXT, fullBody);
-        try {
-            context.startActivity(Intent.createChooser(shareIntent, context.getString(R.string.share_title)));
-        } catch (android.content.ActivityNotFoundException ex) {
-            Toast.makeText(context, context.getString(R.string.share_error_no_client), Toast.LENGTH_SHORT).show();
-        }
+        Intent sendIntent = new Intent();
+        sendIntent.setAction(Intent.ACTION_SEND);
+        sendIntent.putExtra(Intent.EXTRA_TEXT, shareText);
+        sendIntent.setType("text/plain");
+
+        Intent shareIntent = Intent.createChooser(sendIntent, null);
+        context.startActivity(shareIntent);
     }
 
     public void addFavorite(Cheat visibleCheat, int memberId, GenericCallback callback) {

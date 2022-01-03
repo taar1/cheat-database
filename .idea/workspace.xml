@@ -118,22 +118,15 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4caff62e-c62f-40ca-acf0-73c680b13375" name="Default" comment="Facebook ads entfernt, inmobi dependencies entfernt&#10;alles auf applovin umgestellt&#10;bug fixes">
+    <list default="true" id="4caff62e-c62f-40ca-acf0-73c680b13375" name="Default" comment="Fixing many crashes&#10;Fixing the dimming bug when displaying a dialog">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/CheatForumActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/CheatForumActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/FavoriteCheatListActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/FavoriteCheatListActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/SubmitCheatFormActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/SubmitCheatFormActivity.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/cheatdetailview/CheatViewFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/cheatdetailview/CheatViewFragment.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/cheatdetailview/CheatViewPageIndicatorActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/cheatdetailview/CheatViewPageIndicatorActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/cheatdetailview/FavoritesCheatViewFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/cheatdetailview/FavoritesCheatViewFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/cheatdetailview/FavoritesCheatViewFragmentAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/cheatdetailview/FavoritesCheatViewFragmentAdapter.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/cheatdetailview/FavoritesCheatViewPageIndicator.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/cheatdetailview/FavoritesCheatViewPageIndicator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/cheatdetailview/SingleImageViewerActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/cheatdetailview/SingleImageViewerActivity.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/dialogs/CheatMetaDialog.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/dialogs/CheatMetaDialog.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_cheat_forum.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_cheat_forum.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_cheatview_pager.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_cheatview_pager.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/layout_cheatview_meta_dialog.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/layout_cheatview_meta_dialog.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/themes.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/themes.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/cheatdetailview/MemberCheatViewPageIndicator.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/cheatdetailview/MemberCheatViewPageIndicator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/helpers/Tools.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/helpers/Tools.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/menu/favorites_cheatview_rating_on_menu.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/menu/favorites_cheatview_rating_on_menu.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -808,13 +801,6 @@
       <option name="presentableId" value="Default" />
       <updated>1487274191999</updated>
     </task>
-    <task id="LOCAL-00133" summary="Fixed crashes on screen rotation. Fixed bug for &quot;edit and re-submit unpublished cheat&quot;.&#10;READY FOR RELEASE VERSION 2.5.15">
-      <created>1592511213777</created>
-      <option name="number" value="00133" />
-      <option name="presentableId" value="LOCAL-00133" />
-      <option name="project" value="LOCAL" />
-      <updated>1592511213778</updated>
-    </task>
     <task id="LOCAL-00134" summary="Fixing the navigation drawer style! Gray background with blue item highlighting on selection.">
       <created>1592599507082</created>
       <option name="number" value="00134" />
@@ -1151,7 +1137,14 @@
       <option name="project" value="LOCAL" />
       <updated>1641072944949</updated>
     </task>
-    <option name="localTasksCounter" value="182" />
+    <task id="LOCAL-00182" summary="Fixing many crashes&#10;Fixing the dimming bug when displaying a dialog">
+      <created>1641154739823</created>
+      <option name="number" value="00182" />
+      <option name="presentableId" value="LOCAL-00182" />
+      <option name="project" value="LOCAL" />
+      <updated>1641154739824</updated>
+    </task>
+    <option name="localTasksCounter" value="183" />
     <servers />
   </component>
   <component name="TodoView">
@@ -1256,7 +1249,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
-    <MESSAGE value="Added link from my own cheats -&gt; edit cheat activity" />
     <MESSAGE value="Updating project to Android Studio 4.1.&#10;Working on the &quot;edit cheat&quot; form layout." />
     <MESSAGE value="Working on &quot;edit cheat&quot; layout." />
     <MESSAGE value="Upgrading libraries, switching from Fabric to Firebase Crashlytics." />
@@ -1281,7 +1273,8 @@
     <MESSAGE value="Apploving native ads implementation (noch nicht fertig)" />
     <MESSAGE value="Apploving native ads implementiert (FUNKTIONIEREN)&#10;StfalconImageViewer auskommentiert, da gradle es nicht mehr laden kann. suche nach alternativen..." />
     <MESSAGE value="Facebook ads entfernt, inmobi dependencies entfernt&#10;alles auf applovin umgestellt&#10;bug fixes" />
-    <option name="LAST_COMMIT_MESSAGE" value="Facebook ads entfernt, inmobi dependencies entfernt&#10;alles auf applovin umgestellt&#10;bug fixes" />
+    <MESSAGE value="Fixing many crashes&#10;Fixing the dimming bug when displaying a dialog" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixing many crashes&#10;Fixing the dimming bug when displaying a dialog" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
@@ -1310,19 +1303,6 @@
           <url>file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/holders/TopMembersListViewItemHolder.java</url>
           <line>36</line>
           <option name="timeStamp" value="232" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="kotlin-function">
-          <url>file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/cheatdetailview/CheatViewFragment.kt</url>
-          <line>69</line>
-          <properties class="com.cheatdatabase.cheatdetailview.CheatViewFragment.Companion" method="newInstance">
-            <option name="EMULATED" value="true" />
-          </properties>
-          <option name="timeStamp" value="236" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="kotlin-line">
-          <url>file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/cheatdetailview/CheatViewFragment.kt</url>
-          <line>104</line>
-          <option name="timeStamp" value="237" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

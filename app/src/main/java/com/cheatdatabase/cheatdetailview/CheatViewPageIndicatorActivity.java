@@ -16,10 +16,8 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
-import androidx.appcompat.widget.ShareActionProvider;
 import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.core.view.MenuItemCompat;
 import androidx.viewpager.widget.ViewPager;
 
 import com.applovin.adview.AppLovinAdView;
@@ -103,7 +101,6 @@ public class CheatViewPageIndicatorActivity extends AppCompatActivity implements
     private CheatViewFragmentAdapter mAdapter;
 
     private int activePage;
-    private ShareActionProvider mShare;
 
     private final ActivityResultLauncher<Intent> resultContract =
             registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), getActivityResultRegistry(), activityResult -> {
@@ -275,12 +272,6 @@ public class CheatViewPageIndicatorActivity extends AppCompatActivity implements
         MenuItem forumMenuItem = menu.findItem(R.id.action_forum);
         forumMenuItem.setTitle(getString(R.string.forum_amount_posts, visibleCheat.getForumCount(), postOrPosts));
 
-        // Locate MenuItem with ShareActionProvider
-        MenuItem item = menu.findItem(R.id.action_share);
-
-        // Sharing
-        mShare = (ShareActionProvider) MenuItemCompat.getActionProvider(item);
-
         // Search
         getMenuInflater().inflate(R.menu.search_menu, menu);
 
@@ -295,9 +286,6 @@ public class CheatViewPageIndicatorActivity extends AppCompatActivity implements
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         super.onPrepareOptionsMenu(menu);
-//        MenuItem item = menu.findItem(R.id.action_share);
-//        mShare = (ShareActionProvider) MenuItemCompat.getActionProvider(item);
-
         String postOrPosts = getString(R.string.forum_many_posts);
         if (visibleCheat.getForumCount() == 1) {
             postOrPosts = getString(R.string.forum_single_post);
@@ -305,11 +293,6 @@ public class CheatViewPageIndicatorActivity extends AppCompatActivity implements
         MenuItem forumMenuItem = menu.findItem(R.id.action_forum);
         forumMenuItem.setTitle(getString(R.string.forum_amount_posts, visibleCheat.getForumCount(), postOrPosts));
         return true;
-    }
-
-    // Call to update the share intent
-    private void setShareIntent(Intent shareIntent) {
-        mShare.setShareIntent(shareIntent);
     }
 
     @Override
@@ -365,12 +348,13 @@ public class CheatViewPageIndicatorActivity extends AppCompatActivity implements
                 invalidateOptionsMenu();
                 return true;
             case R.id.action_share:
-                setShareIntent(tools.setShareText(visibleCheat));
+                tools.shareCheat(visibleCheat);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
+
 
     @Override
     public void onResume() {

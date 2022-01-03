@@ -17,9 +17,7 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
-import androidx.appcompat.widget.ShareActionProvider;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.view.MenuItemCompat;
 import androidx.viewpager.widget.ViewPager;
 
 import com.applovin.adview.AppLovinAdView;
@@ -97,7 +95,6 @@ public class MemberCheatViewPageIndicator extends AppCompatActivity implements G
     private MemberCheatViewFragmentAdapter memberCheatViewFragmentAdapter;
     private ViewPager mPager;
     private int activePage;
-    private ShareActionProvider mShare;
 
     private final ActivityResultLauncher<Intent> resultContract =
             registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), getActivityResultRegistry(), activityResult -> {
@@ -263,12 +260,6 @@ public class MemberCheatViewPageIndicator extends AppCompatActivity implements G
             getMenuInflater().inflate(R.menu.signin_menu, menu);
         }
 
-        // Locate MenuItem with ShareActionProvider
-        MenuItem item = menu.findItem(R.id.action_share);
-
-        // Sharing
-        mShare = (ShareActionProvider) MenuItemCompat.getActionProvider(item);
-
         // Search
         getMenuInflater().inflate(R.menu.search_menu, menu);
 
@@ -278,13 +269,6 @@ public class MemberCheatViewPageIndicator extends AppCompatActivity implements G
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
 
         return super.onCreateOptionsMenu(menu);
-    }
-
-    // Call to update the share intent
-    private void setShareIntent(Intent shareIntent) {
-        if (mShare != null) {
-            mShare.setShareIntent(shareIntent);
-        }
     }
 
     @Override
@@ -332,7 +316,7 @@ public class MemberCheatViewPageIndicator extends AppCompatActivity implements G
                 invalidateOptionsMenu();
                 return true;
             case R.id.action_share:
-                setShareIntent(tools.setShareText(visibleCheat));
+                tools.shareCheat(visibleCheat);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

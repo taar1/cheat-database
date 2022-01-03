@@ -25,7 +25,6 @@
         android:icon="@android:drawable/ic_menu_share"
         android:orderInCategory="150"
         android:title="@string/share_title"
-        app:actionProviderClass="androidx.appcompat.widget.ShareActionProvider"
         app:showAsAction="never" />
     <item
         android:id="@+id/action_metainfo"
