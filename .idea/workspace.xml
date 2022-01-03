@@ -118,15 +118,13 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4caff62e-c62f-40ca-acf0-73c680b13375" name="Default" comment="Fixing many crashes&#10;Fixing the dimming bug when displaying a dialog">
+    <list default="true" id="4caff62e-c62f-40ca-acf0-73c680b13375" name="Default" comment="Share Cheat dialog geupdatet">
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/CheatForumActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/CheatForumActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/cheatdetailview/CheatViewPageIndicatorActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/cheatdetailview/CheatViewPageIndicatorActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/cheatdetailview/FavoritesCheatViewPageIndicator.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/cheatdetailview/FavoritesCheatViewPageIndicator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/cheatdetailview/MemberCheatViewPageIndicator.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/cheatdetailview/MemberCheatViewPageIndicator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/helpers/Tools.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/helpers/Tools.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/menu/favorites_cheatview_rating_on_menu.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/menu/favorites_cheatview_rating_on_menu.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/menu/favorites_cheatview_rating_off_menu.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/menu/favorites_cheatview_rating_off_menu.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/menu/handset_cheatview_rating_off_menu.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/menu/handset_cheatview_rating_off_menu.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/menu/handset_cheatview_rating_on_menu.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/menu/handset_cheatview_rating_on_menu.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/menu/handset_forum_menu.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/menu/handset_forum_menu.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -801,13 +799,6 @@
       <option name="presentableId" value="Default" />
       <updated>1487274191999</updated>
     </task>
-    <task id="LOCAL-00134" summary="Fixing the navigation drawer style! Gray background with blue item highlighting on selection.">
-      <created>1592599507082</created>
-      <option name="number" value="00134" />
-      <option name="presentableId" value="LOCAL-00134" />
-      <option name="project" value="LOCAL" />
-      <updated>1592599507082</updated>
-    </task>
     <task id="LOCAL-00135" summary="Fixing the navigation drawer style! Gray background with blue item highlighting on selection.">
       <created>1593204135390</created>
       <option name="number" value="00135" />
@@ -1144,7 +1135,14 @@
       <option name="project" value="LOCAL" />
       <updated>1641154739824</updated>
     </task>
-    <option name="localTasksCounter" value="183" />
+    <task id="LOCAL-00183" summary="Share Cheat dialog geupdatet">
+      <created>1641245303931</created>
+      <option name="number" value="00183" />
+      <option name="presentableId" value="LOCAL-00183" />
+      <option name="project" value="LOCAL" />
+      <updated>1641245303932</updated>
+    </task>
+    <option name="localTasksCounter" value="184" />
     <servers />
   </component>
   <component name="TodoView">
@@ -1249,7 +1247,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
-    <MESSAGE value="Updating project to Android Studio 4.1.&#10;Working on the &quot;edit cheat&quot; form layout." />
     <MESSAGE value="Working on &quot;edit cheat&quot; layout." />
     <MESSAGE value="Upgrading libraries, switching from Fabric to Firebase Crashlytics." />
     <MESSAGE value="Version with MVVM SystemConsoleListFragment.kt and Repository pattern. WORKING (except clicking a system when you get forawarded to GamesBySystemListActivity)" />
@@ -1274,7 +1271,8 @@
     <MESSAGE value="Apploving native ads implementiert (FUNKTIONIEREN)&#10;StfalconImageViewer auskommentiert, da gradle es nicht mehr laden kann. suche nach alternativen..." />
     <MESSAGE value="Facebook ads entfernt, inmobi dependencies entfernt&#10;alles auf applovin umgestellt&#10;bug fixes" />
     <MESSAGE value="Fixing many crashes&#10;Fixing the dimming bug when displaying a dialog" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixing many crashes&#10;Fixing the dimming bug when displaying a dialog" />
+    <MESSAGE value="Share Cheat dialog geupdatet" />
+    <option name="LAST_COMMIT_MESSAGE" value="Share Cheat dialog geupdatet" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>

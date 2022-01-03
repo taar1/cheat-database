@@ -1,6 +1,5 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:bwq="http://schemas.android.com/tools">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
         android:id="@+id/action_forum"
@@ -15,8 +14,6 @@
         android:orderInCategory="110"
         android:title="@string/meta_info"
         app:showAsAction="never" />
-
-    <divider />
 
     <item
         android:id="@+id/action_rate"
@@ -37,10 +34,7 @@
         android:icon="@android:drawable/ic_menu_share"
         android:orderInCategory="140"
         android:title="@string/share_title"
-        app:showAsAction="never"
-        bwq:actionProviderClass="android.support.v7.widget.ShareActionProvider" />
-
-    <divider />
+        app:showAsAction="never" />
 
     <item
         android:id="@+id/action_report"
@@ -48,8 +42,6 @@
         android:orderInCategory="150"
         android:title="@string/report_cheat_title"
         app:showAsAction="never" />
-
-    <divider />
 
     <item
         android:id="@+id/action_submit_cheat"

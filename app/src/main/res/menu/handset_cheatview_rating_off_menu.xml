@@ -15,8 +15,6 @@
         android:title="@string/meta_info"
         app:showAsAction="never" />
 
-    <divider />
-
     <item
         android:id="@+id/action_rate"
         android:icon="@drawable/ic_action_not_important"
@@ -36,10 +34,7 @@
         android:icon="@android:drawable/ic_menu_share"
         android:orderInCategory="140"
         android:title="@string/share_title"
-        app:actionProviderClass="androidx.appcompat.widget.ShareActionProvider"
         app:showAsAction="never" />
-
-    <divider />
 
     <item
         android:id="@+id/action_report"
@@ -48,13 +43,10 @@
         android:title="@string/report_cheat_title"
         app:showAsAction="never" />
 
-    <divider />
-
     <item
         android:id="@+id/action_submit_cheat"
         android:icon="@drawable/ic_action_upload"
         android:orderInCategory="160"
         android:title="@string/submit_cheat_short"
         app:showAsAction="never" />
-
 </menu>
