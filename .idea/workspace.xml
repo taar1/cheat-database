@@ -118,18 +118,13 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4caff62e-c62f-40ca-acf0-73c680b13375" name="Default" comment="Share Cheat dialog geupdatet">
-      <change afterPath="$PROJECT_DIR$/app/src/amazonFlavor/java/com.cheatdatabase/helpers/DistinctValues.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/googlePlayFlavor/java/com/cheatdatabase/helpers/DistinctValues.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/huaweiFlavor/java/com.cheatdatabase.helpers/DistinctValues.kt" afterDir="false" />
+    <list default="true" id="4caff62e-c62f-40ca-acf0-73c680b13375" name="Default" comment="Updating JUnit Tests">
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/amazonFlavor/java/com.cheatdatabase/helpers/DistinctValues.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/googlePlayFlavor/java/com/cheatdatabase/helpers/DistinctValues.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/huaweiFlavor/java/com.cheatdatabase.helpers/DistinctValues.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/xml/systems.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/xml/systems.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/GamesBySystemListActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/GamesBySystemListActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/adapters/SystemsRecycleListViewAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/adapters/SystemsRecycleListViewAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/helpers/Konstanten.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/helpers/Konstanten.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -228,7 +223,7 @@
     <property name="DEBUGGER_ID" value="Auto" />
     <property name="DeviceAndSnapshotComboBoxAction.selectedDevice" value="EPHUT19C24000346" />
     <property name="DeviceAndSnapshotComboBoxAction.selectionTime" value="2020-11-23T12:56:50.903Z" />
-    <property name="ExportApk.ApkPath" value="D:\Development\Android\APK\Cheat-Database\2.7.1" />
+    <property name="ExportApk.ApkPath" value="D:\Development\Android\APK\Cheat-Database\2.7.2" />
     <property name="ExportApk.BuildType" value="release" />
     <property name="ExportApk.BuildVariants" value="amazonFlavorRelease&#10;huaweiFlavorRelease" />
     <property name="ExportApk.Flavors" value="googlePlayFlavor" />
@@ -1306,6 +1301,26 @@
           <url>file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/holders/TopMembersListViewItemHolder.java</url>
           <line>36</line>
           <option name="timeStamp" value="232" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/adapters/SystemsRecycleListViewAdapter.java</url>
+          <line>50</line>
+          <option name="timeStamp" value="235" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/adapters/SystemsRecycleListViewAdapter.java</url>
+          <line>60</line>
+          <option name="timeStamp" value="236" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/fragments/SystemConsoleListFragment.kt</url>
+          <line>61</line>
+          <option name="timeStamp" value="233" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/fragments/SystemConsoleListFragment.kt</url>
+          <line>62</line>
+          <option name="timeStamp" value="234" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

@@ -61,13 +61,13 @@ public class SystemsRecycleListViewAdapter extends RecyclerView.Adapter<Recycler
         systemList = systemPlatforms;
 
         // Filter out Android (33) and iOS (30)
-        List<SystemModel> filterList = new ArrayList<>();
-        for (SystemModel s : systemList) {
-            if (s.getSystemId() == 30 || s.getSystemId() == 33) {
-                filterList.add(s);
-            }
-        }
-        systemList.removeAll(filterList);
+//        List<SystemModel> filterList = new ArrayList<>();
+//        for (SystemModel s : systemList) {
+//            if (s.getSystemId() == 30 || s.getSystemId() == 33) {
+//                filterList.add(s);
+//            }
+//        }
+//        systemList.removeAll(filterList);
 
         if ((systemList != null) && (systemList.size() > 0)) {
             Collections.sort(systemList, (system1, system2) -> system1.getName().toLowerCase().compareTo(system2.getName().toLowerCase()));
@@ -76,7 +76,7 @@ public class SystemsRecycleListViewAdapter extends RecyclerView.Adapter<Recycler
         }
     }
 
-    // Filter List by search qord (not implemented yet)
+    // Filter List by search word (not implemented yet)
     public void filterList(String filter) {
         if ((filter != null) && (filter.trim().length() > 2)) {
             // TODO filter the list and update gameList with filtered List

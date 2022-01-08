@@ -99,12 +99,6 @@ public class GamesBySystemListActivity extends AppCompatActivity implements OnGa
         if (systemObj == null) {
             Toast.makeText(this, R.string.err_somethings_wrong, Toast.LENGTH_LONG).show();
             finish();
-        } else if (systemObj.getSystemId() == 30) {
-            Toast.makeText(this, R.string.ios_games_unsupported, Toast.LENGTH_LONG).show();
-            finish();
-        } else if (systemObj.getSystemId() == 33) {
-            Toast.makeText(this, R.string.android_games_unsupported, Toast.LENGTH_LONG).show();
-            finish();
         } else {
             init();
 

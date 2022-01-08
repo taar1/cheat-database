@@ -2,7 +2,7 @@ package com.cheatdatabase.helpers;
 
 public class Konstanten {
 
-    public final static String CURRENT_VERSION = "2.5.1";
+    public final static String CURRENT_VERSION = "2.7.2";
 
     public static final int INJECT_AD_AFTER_EVERY_POSITION = 20;
 
