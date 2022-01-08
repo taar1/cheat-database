@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!--    <system-->
-    <!--        name="Android"-->
-    <!--        sysId="33" />-->
+    <system
+        name="Android"
+        sysId="33" />
     <system
         name="C64"
         sysId="31" />
@@ -21,9 +21,9 @@
     <system
         name="GameCube"
         sysId="6" />
-    <!--    <system-->
-    <!--        name="iOS"-->
-    <!--        sysId="30" />-->
+    <system
+        name="iOS"
+        sysId="30" />
     <system
         name="Jaguar"
         sysId="22" />
@@ -111,4 +111,7 @@
     <system
         name="Nintendo Switch"
         sysId="39" />
+    <system
+        name="PlayStation 5"
+        sysId="40" />
 </resources>

@@ -15,8 +15,8 @@ applovin {
 
 String APK_ID = "com.cheatdatabase"
 String APK_NAME = "Cheat-Database"
-int VERSION_CODE = 73
-String VERSION_NAME = "2.7.1-preRelease"
+int VERSION_CODE = 74
+String VERSION_NAME = "2.7.1"
 
 android {
     compileSdkVersion 31
@@ -158,8 +158,8 @@ dependencies {
 
     implementation 'com.github.vajro:MaterialDesignLibrary:1.6'
     implementation 'com.google.code.gson:gson:2.8.9'
-    api 'com.google.android.gms:play-services-analytics:18.0.0'
-    implementation 'com.google.android.gms:play-services-auth:20.0.0'
+    api 'com.google.android.gms:play-services-analytics:18.0.1'
+    implementation 'com.google.android.gms:play-services-auth:20.0.1'
     implementation 'com.squareup.picasso:picasso:2.71828'
     implementation 'org.greenrobot:eventbus:3.3.1'
     implementation 'com.github.SherlockGougou:MagicIndicator:1.6.0'
@@ -185,8 +185,8 @@ dependencies {
     implementation 'com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.3'
 
     implementation 'com.google.android.gms:play-services-basement:18.0.0'
-    implementation 'com.google.android.gms:play-services-ads-identifier:18.0.0'
-    implementation 'com.google.android.gms:play-services-location:19.0.0'
+    implementation 'com.google.android.gms:play-services-ads-identifier:18.0.1'
+    implementation 'com.google.android.gms:play-services-location:19.0.1'
 
     // KOTLIN
     implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
@@ -264,7 +264,7 @@ dependencies {
     implementation 'androidx.navigation:navigation-compose:2.4.0-rc01'
 
     // Applovin Revenue: https://dash.applovin.com/o/analytics/index#date_range=today&app_id=60067980&type=thirdparty_impressions&compare=false&show_unique=true
-    implementation "com.applovin:applovin-sdk:10.3.5"
+    implementation 'com.applovin:applovin-sdk:11.0.0'
 }
 
 kapt {

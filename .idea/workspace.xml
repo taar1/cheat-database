@@ -119,12 +119,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4caff62e-c62f-40ca-acf0-73c680b13375" name="Default" comment="Share Cheat dialog geupdatet">
+      <change afterPath="$PROJECT_DIR$/app/src/amazonFlavor/java/com.cheatdatabase/helpers/DistinctValues.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/googlePlayFlavor/java/com/cheatdatabase/helpers/DistinctValues.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/huaweiFlavor/java/com.cheatdatabase.helpers/DistinctValues.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/menu/favorites_cheatview_rating_off_menu.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/menu/favorites_cheatview_rating_off_menu.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/menu/handset_cheatview_rating_off_menu.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/menu/handset_cheatview_rating_off_menu.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/menu/handset_cheatview_rating_on_menu.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/menu/handset_cheatview_rating_on_menu.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/menu/handset_forum_menu.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/menu/handset_forum_menu.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/amazonFlavor/java/com.cheatdatabase/helpers/DistinctValues.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/googlePlayFlavor/java/com/cheatdatabase/helpers/DistinctValues.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/huaweiFlavor/java/com.cheatdatabase.helpers/DistinctValues.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/xml/systems.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/xml/systems.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -184,7 +189,7 @@
   </component>
   <component name="GenerateSignedApkSettings">
     <option name="EXPORT_PRIVATE_KEY" value="false" />
-    <option name="KEY_STORE_PATH" value="$USER_HOME$/Downloads/enature.keystore" />
+    <option name="KEY_STORE_PATH" value="D:\Google Drive\Software Development (Android Studio, Keystore etc.)\Cheat-Database\Android Keytool Keystore\enature.keystore" />
     <option name="KEY_ALIAS" value="cheat-database" />
     <option name="REMEMBER_PASSWORDS" value="true" />
     <option name="BUILD_TARGET_KEY" value="apk" />
@@ -223,9 +228,9 @@
     <property name="DEBUGGER_ID" value="Auto" />
     <property name="DeviceAndSnapshotComboBoxAction.selectedDevice" value="EPHUT19C24000346" />
     <property name="DeviceAndSnapshotComboBoxAction.selectionTime" value="2020-11-23T12:56:50.903Z" />
-    <property name="ExportApk.ApkPath" value="$PROJECT_DIR$/../../../apk/Cheat-Database/2.6" />
+    <property name="ExportApk.ApkPath" value="D:\Development\Android\APK\Cheat-Database\2.7.1" />
     <property name="ExportApk.BuildType" value="release" />
-    <property name="ExportApk.BuildVariants" value="huaweiFlavorRelease" />
+    <property name="ExportApk.BuildVariants" value="amazonFlavorRelease&#10;huaweiFlavorRelease" />
     <property name="ExportApk.Flavors" value="googlePlayFlavor" />
     <property name="ExportApk.SignV1" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
@@ -252,7 +257,7 @@
     <property name="device.picker.selection" value="6ea89d94" />
     <property name="extract.method.default.visibility" value="private" />
     <property name="ignore.virus.scanning.warn.message" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/app/src/main/res/layout" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../APK/Cheat-Database/2.7.1" />
     <property name="project.structure.last.edited" value="Suggestions" />
     <property name="project.structure.proportion" value="0.17" />
     <property name="project.structure.side.proportion" value="0.2" />
@@ -799,13 +804,6 @@
       <option name="presentableId" value="Default" />
       <updated>1487274191999</updated>
     </task>
-    <task id="LOCAL-00135" summary="Fixing the navigation drawer style! Gray background with blue item highlighting on selection.">
-      <created>1593204135390</created>
-      <option name="number" value="00135" />
-      <option name="presentableId" value="LOCAL-00135" />
-      <option name="project" value="LOCAL" />
-      <updated>1593204135391</updated>
-    </task>
     <task id="LOCAL-00136" summary="Working Version 2.5.17!&#10;FIXED ON APP START CRASH (room database upgrade crashed -&gt; favorites -&gt; member_id NonNull)">
       <created>1593351054610</created>
       <option name="number" value="00136" />
@@ -1142,7 +1140,14 @@
       <option name="project" value="LOCAL" />
       <updated>1641245303932</updated>
     </task>
-    <option name="localTasksCounter" value="184" />
+    <task id="LOCAL-00184" summary="Share Cheat dialog geupdatet">
+      <created>1641245453969</created>
+      <option name="number" value="00184" />
+      <option name="presentableId" value="LOCAL-00184" />
+      <option name="project" value="LOCAL" />
+      <updated>1641245453969</updated>
+    </task>
+    <option name="localTasksCounter" value="185" />
     <servers />
   </component>
   <component name="TodoView">
