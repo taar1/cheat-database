@@ -341,7 +341,7 @@ class CheatViewFragment : Fragment(), CheatViewGalleryImageClickListener {
         get() {
             progressBar.visibility = View.VISIBLE
             val call: Call<Cheat> =
-                cheatViewPageIndicatorActivity!!.getRestApi().getCheatById(cheatObj.cheatId)
+                cheatViewPageIndicatorActivity!!.restApi.getCheatById(cheatObj.cheatId)
             call.enqueue(object : Callback<Cheat?> {
                 override fun onResponse(metaInfo: Call<Cheat?>, response: Response<Cheat?>) {
                     setCheatText(response.body())
@@ -357,7 +357,7 @@ class CheatViewFragment : Fragment(), CheatViewGalleryImageClickListener {
 
     private fun countForumPosts() {
         val call: Call<JsonObject> =
-            cheatViewPageIndicatorActivity!!.getRestApi().countForumPosts(cheatObj.cheatId)
+            cheatViewPageIndicatorActivity!!.restApi.countForumPosts(cheatObj.cheatId)
         call.enqueue(object : Callback<JsonObject?> {
             override fun onResponse(forum: Call<JsonObject?>, response: Response<JsonObject?>) {
                 val forumPostsCount: JsonObject? = response.body()

@@ -23,6 +23,7 @@ import com.cheatdatabase.R;
 import com.cheatdatabase.activity.CheatForumActivity;
 import com.cheatdatabase.activity.LoginActivity;
 import com.cheatdatabase.activity.SubmitCheatFormActivity;
+import com.cheatdatabase.callbacks.OnCheatRated;
 import com.cheatdatabase.data.RoomCheatDatabase;
 import com.cheatdatabase.data.dao.FavoriteCheatDao;
 import com.cheatdatabase.data.model.Cheat;
@@ -49,8 +50,7 @@ import net.lucode.hackware.magicindicator.buildins.commonnavigator.indicators.Li
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.ColorTransitionPagerTitleView;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.SimplePagerTitleView;
 
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
@@ -67,7 +67,7 @@ import needle.Needle;
  * @author Dominik Erbsland
  */
 @AndroidEntryPoint
-public class FavoritesCheatViewPageIndicator extends AppCompatActivity {
+public class FavoritesCheatViewPageIndicator extends AppCompatActivity implements OnCheatRated {
 
     private final String TAG = FavoritesCheatViewPageIndicator.class.getSimpleName();
 
@@ -314,14 +314,7 @@ public class FavoritesCheatViewPageIndicator extends AppCompatActivity {
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
-        EventBus.getDefault().register(this);
-    }
-
-    @Override
     protected void onStop() {
-        EventBus.getDefault().unregister(this);
         Reachability.unregister(this);
         super.onStop();
     }
@@ -338,16 +331,8 @@ public class FavoritesCheatViewPageIndicator extends AppCompatActivity {
         if ((tools.getMember() == null) || (tools.getMember().getMid() == 0)) {
             Toast.makeText(this, R.string.error_login_to_rate, Toast.LENGTH_LONG).show();
         } else {
-            new RateCheatMaterialDialog(this, visibleCheat, tools.getMember(), outerLayout, tools);
+            new RateCheatMaterialDialog(this, visibleCheat, outerLayout, tools, restApi, this);
         }
-    }
-
-    @Subscribe
-    public void onEvent(CheatRatingFinishedEvent result) {
-        visibleCheat.setMemberRating(result.getRating());
-        cheatArray.get(activePage).setMemberRating(result.getRating());
-        invalidateOptionsMenu();
-        Toast.makeText(this, R.string.rating_inserted, Toast.LENGTH_SHORT).show();
     }
 
     public void setRating(int position, float rating) {
@@ -359,11 +344,12 @@ public class FavoritesCheatViewPageIndicator extends AppCompatActivity {
         Snackbar mySnackbar = Snackbar.make(findViewById(R.id.outer_layout), R.string.remove_favorite_neutral_ok, Snackbar.LENGTH_INDEFINITE);
         mySnackbar.setAction(R.string.undo, v -> Needle.onBackgroundThread().execute(() -> dao.insert(visibleCheat.toFavoriteCheatModel((tools.getMember() != null ? tools.getMember().getMid() : 0)))));
         mySnackbar.show();
-
-        // TODO load screenshots again and save them to the SD card....
-        // TODO load screenshots again and save them to the SD card....
-        // TODO load screenshots again and save them to the SD card....
-        // TODO load screenshots again and save them to the SD card....
     }
 
+    @Override
+    public void onCheatRated(@NotNull CheatRatingFinishedEvent cheatRatingFinishedEvent) {
+        visibleCheat.setMemberRating(cheatRatingFinishedEvent.getRating());
+        cheatArray.get(activePage).setMemberRating(cheatRatingFinishedEvent.getRating());
+        invalidateOptionsMenu();
+    }
 }

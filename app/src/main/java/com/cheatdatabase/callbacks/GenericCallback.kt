@@ -1,9 +1,6 @@
-package com.cheatdatabase.callbacks;
+package com.cheatdatabase.callbacks
 
-public interface GenericCallback {
-
-    void success();
-
-    void fail(Exception e);
-
+interface GenericCallback {
+    fun success()
+    fun fail(e: Exception)
 }

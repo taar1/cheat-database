@@ -1,38 +1,21 @@
-package com.cheatdatabase.events;
+package com.cheatdatabase.events
 
-import com.cheatdatabase.data.model.Cheat;
+import com.cheatdatabase.data.model.Cheat
 
-public class CheatRatingFinishedEvent {
+data class CheatRatingFinishedEvent(var isSucceeded: Boolean) {
 
-    private Exception mException;
-    private boolean mSucceeded;
-    private Cheat mCheat;
-    private int mRating;
+    lateinit var throwable: Throwable
+    lateinit var cheat: Cheat
+    var rating: Int = 0
 
-    public CheatRatingFinishedEvent(Cheat cheat, int rating) {
-        mSucceeded = true;
-        mCheat = cheat;
-        mRating = rating;
+    constructor(cheat: Cheat, rating: Int, isSucceeded: Boolean) : this(isSucceeded) {
+        this.isSucceeded = isSucceeded
+        this.cheat = cheat
+        this.rating = rating
     }
 
-    public CheatRatingFinishedEvent(Exception exception) {
-        mSucceeded = false;
-        mException = exception;
-    }
-
-    public Cheat getCheat() {
-        return mCheat;
-    }
-
-    public int getRating() {
-        return mRating;
-    }
-
-    public Exception getException() {
-        return mException;
-    }
-
-    public boolean isSucceeded() {
-        return mSucceeded;
+    constructor(throwable: Throwable, isSucceeded: Boolean) : this(isSucceeded) {
+        this.isSucceeded = isSucceeded
+        this.throwable = throwable
     }
 }

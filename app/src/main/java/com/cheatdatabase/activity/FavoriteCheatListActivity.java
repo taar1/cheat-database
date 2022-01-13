@@ -30,7 +30,6 @@ import com.cheatdatabase.data.model.Cheat;
 import com.cheatdatabase.data.model.FavoriteCheatModel;
 import com.cheatdatabase.data.model.Game;
 import com.cheatdatabase.data.model.Member;
-import com.cheatdatabase.events.CheatRatingFinishedEvent;
 import com.cheatdatabase.helpers.Konstanten;
 import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.helpers.Tools;
@@ -38,9 +37,6 @@ import com.cheatdatabase.listeners.OnCheatListItemSelectedListener;
 import com.cheatdatabase.widgets.DividerDecoration;
 import com.google.gson.Gson;
 import com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView;
-
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -91,10 +87,7 @@ public class FavoriteCheatListActivity extends AppCompatActivity implements OnCh
     @Override
     protected void onStart() {
         super.onStart();
-        EventBus.getDefault().register(this);
-
         dao = RoomCheatDatabase.getDatabase(this).favoriteDao();
-
         loadCheats();
     }
 
@@ -259,12 +252,6 @@ public class FavoriteCheatListActivity extends AppCompatActivity implements OnCh
         super.onSaveInstanceState(outState);
     }
 
-    @Subscribe
-    public void onEvent(CheatRatingFinishedEvent result) {
-        visibleCheat.setMemberRating(result.getRating());
-        tools.showSnackbar(outerLayout, getString(R.string.rating_inserted));
-    }
-
     @Override
     public void onResume() {
         super.onResume();
@@ -275,7 +262,6 @@ public class FavoriteCheatListActivity extends AppCompatActivity implements OnCh
 
     @Override
     protected void onStop() {
-        EventBus.getDefault().unregister(this);
         Reachability.unregister(this);
         super.onStop();
     }

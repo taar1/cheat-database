@@ -30,6 +30,7 @@ import androidx.appcompat.widget.Toolbar;
 import com.applovin.adview.AppLovinAdView;
 import com.cheatdatabase.R;
 import com.cheatdatabase.callbacks.GenericCallback;
+import com.cheatdatabase.callbacks.OnCheatRated;
 import com.cheatdatabase.data.model.Cheat;
 import com.cheatdatabase.data.model.ForumPost;
 import com.cheatdatabase.data.model.Game;
@@ -43,8 +44,7 @@ import com.cheatdatabase.helpers.Reachability;
 import com.cheatdatabase.helpers.Tools;
 import com.cheatdatabase.rest.RestApi;
 
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
+import org.jetbrains.annotations.NotNull;
 
 import java.security.NoSuchAlgorithmException;
 import java.util.Calendar;
@@ -64,7 +64,7 @@ import retrofit2.Response;
  * Displaying the forum of one cheat.
  */
 @AndroidEntryPoint
-public class CheatForumActivity extends AppCompatActivity implements GenericCallback {
+public class CheatForumActivity extends AppCompatActivity implements GenericCallback, OnCheatRated {
 
     private static final String TAG = CheatForumActivity.class.getSimpleName();
 
@@ -309,14 +309,7 @@ public class CheatForumActivity extends AppCompatActivity implements GenericCall
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
-        EventBus.getDefault().register(this);
-    }
-
-    @Override
     protected void onStop() {
-        EventBus.getDefault().unregister(this);
         Reachability.unregister(this);
         super.onStop();
     }
@@ -399,20 +392,12 @@ public class CheatForumActivity extends AppCompatActivity implements GenericCall
         if ((tools.getMember() == null) || (tools.getMember().getMid() == 0)) {
             Toast.makeText(this, R.string.error_login_required, Toast.LENGTH_LONG).show();
         } else {
-            new RateCheatMaterialDialog(this, cheatObj, tools.getMember(), outerLayout, tools);
+            new RateCheatMaterialDialog(this, cheatObj, outerLayout, tools, restApi, this);
         }
     }
 
-    @Subscribe
-    public void onEvent(CheatRatingFinishedEvent result) {
-        Log.d(TAG, "OnEvent result: " + result.getRating());
-        cheatObj.setMemberRating(result.getRating());
-        // highlightRatingIcon(true);
-        Toast.makeText(this, R.string.rating_inserted, Toast.LENGTH_SHORT).show();
-    }
-
     private void submitForumPost(ForumPost forumPost) {
-        Call<Void> call = null;
+        Call<Void> call;
         try {
             call = restApi.insertForum(tools.getMember().getMid(), cheatObj.getCheatId(), AeSimpleMD5.MD5(tools.getMember().getPassword()), forumPost.getText());
             call.enqueue(new Callback<Void>() {
@@ -484,5 +469,11 @@ public class CheatForumActivity extends AppCompatActivity implements GenericCall
     public void fail(Exception e) {
         Log.d(TAG, "CheatForumActivity ADD FAV fail: ");
         tools.showSnackbar(outerLayout, getString(R.string.error_adding_favorite));
+    }
+
+    @Override
+    public void onCheatRated(@NotNull CheatRatingFinishedEvent cheatRatingFinishedEvent) {
+        Log.d(TAG, "OnEvent result: " + cheatRatingFinishedEvent.getRating());
+        cheatObj.setMemberRating(cheatRatingFinishedEvent.getRating());
     }
 }

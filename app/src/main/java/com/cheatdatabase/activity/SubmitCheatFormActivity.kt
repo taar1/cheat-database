@@ -88,7 +88,7 @@ class SubmitCheatFormActivity : AppCompatActivity() {
         binding = ActivitySubmitCheatLayoutBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        bind()
+        bindViews()
         init()
 
         showAlertDialog(
@@ -109,7 +109,7 @@ class SubmitCheatFormActivity : AppCompatActivity() {
         }
     }
 
-    private fun bind() {
+    private fun bindViews() {
         outerLayout = binding.outerLayout
         textStaticCheatTitle = binding.textCheatSubmissionTitle
         cheatTitle = binding.editCheatTitle

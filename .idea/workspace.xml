@@ -118,13 +118,22 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4caff62e-c62f-40ca-acf0-73c680b13375" name="Default" comment="Updating JUnit Tests">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="4caff62e-c62f-40ca-acf0-73c680b13375" name="Default" comment="Android &amp; iOS wieder hinzugefügt, da ja eh nicht mehr auf Google Play&#10;VERSION 2.7.2 (08.01.2022)">
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/callbacks/GenericCallback.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/callbacks/OnCheatRated.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/cheatdetailview/CheatViewPageIndicatorActivity.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/events/CheatRatingFinishedEvent.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/GamesBySystemListActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/GamesBySystemListActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/adapters/SystemsRecycleListViewAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/adapters/SystemsRecycleListViewAdapter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/helpers/Konstanten.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/helpers/Konstanten.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/CheatForumActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/CheatForumActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/FavoriteCheatListActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/FavoriteCheatListActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/SubmitCheatFormActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/SubmitCheatFormActivity.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/callbacks/GenericCallback.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/cheatdetailview/CheatViewFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/cheatdetailview/CheatViewFragment.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/cheatdetailview/CheatViewPageIndicatorActivity.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/cheatdetailview/FavoritesCheatViewPageIndicator.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/cheatdetailview/FavoritesCheatViewPageIndicator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/cheatdetailview/MemberCheatViewPageIndicator.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/cheatdetailview/MemberCheatViewPageIndicator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/dialogs/RateCheatMaterialDialog.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/dialogs/RateCheatMaterialDialog.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/events/CheatRatingFinishedEvent.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -173,12 +182,12 @@
         <option value="layoutResourceFile" />
         <option value="resourceFile" />
         <option value="Class" />
-        <option value="Kotlin Interface" />
         <option value="JUnit4 Test Class" />
         <option value="Kotlin File" />
         <option value="navigationResourceFile" />
         <option value="layoutResourceFile_vertical" />
         <option value="Kotlin Class" />
+        <option value="Kotlin Interface" />
       </list>
     </option>
   </component>
@@ -232,7 +241,7 @@
     <property name="RunOnceActivity.cidr.known.project.marker" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="SHOW_ALL_PROCESSES" value="false" />
-    <property name="ScreenshotViewer.SavePath" value="$USER_HOME$/Desktop" />
+    <property name="ScreenshotViewer.SavePath" value="$PROJECT_DIR$/../../../../Google Drive/Software Development (Android Studio, Keystore etc.)/Cheat-Database/Screenshots/2.7.2" />
     <property name="SearchEverywhereHistoryKey" value="adapter&#9;FILE&#9;file:///Users/dominikerbsland/workspace/app/Android/cheat-database/app/src/main/java/com/cheatdatabase/adapters/GamesBySystemRecycleListViewAdapter.java&#10;Androidman&#9;FILE&#9;file:///Users/dominikerbsland/workspace/app/Android/cheat-database/app/src/main/AndroidManifest.xml&#10;topada&#9;FILE&#9;file:///Users/dominikerbsland/workspace/app/Android/cheat-database/app/src/main/java/com/cheatdatabase/adapters/TopMembersListViewAdapter.java&#10;topm&#9;FILE&#9;file:///Users/dominikerbsland/workspace/app/Android/cheat-database/app/src/main/res/layout/topmembers_list_item.xml&#10;drawer&#9;FILE&#9;file:///Users/dominikerbsland/workspace/app/Android/cheat-database/app/src/main/res/layout/drawer_header.xml&#10;_main&#9;FILE&#9;file:///Users/dominikerbsland/workspace/app/Android/cheat-database/app/src/main/res/layout/activity_main.xml&#10;manifest&#9;FILE&#9;file:///Users/dominikerbsland/workspace/app/Android/cheat-database/app/src/main/AndroidManifest.xml&#10;style&#9;FILE&#9;file:///Users/dominikerbsland/workspace/app/Android/cheat-database/app/src/main/res/values/styles.xml&#10;rating&#9;PSI&#9;JAVA://com.cheatdatabase.R.id#rating_layout&#10;include&#9;FILE&#9;file:///Users/dominikerbsland/workspace/app/Android/cheat-database/app/src/main/res/layout/include_fastscroll_recyclerview.xml&#10;cheatlist&#9;FILE&#9;file:///Users/dominikerbsland/workspace/app/Android/cheat-database/app/src/main/res/layout/activity_cheat_list.xml&#10;actigame&#9;FILE&#9;file:///Users/dominikerbsland/workspace/app/Android/cheat-database/app/src/main/res/layout/activity_game_list.xml&#10;string&#9;FILE&#9;file:///Users/dominikerbsland/workspace/app/Android/cheat-database/app/src/main/res/values/strings.xml&#10;main&#9;FILE&#9;file:///Users/dominikerbsland/workspace/app/Android/cheat-database/app/src/main/res/layout/activity_main.xml&#10;ma&#9;FILE&#9;file://C:/Users/taar1/Development/Android/GitHub/cheat-database/app/src/main/res/layout/activity_main.xml&#10;actimain&#9;FILE&#9;file://C:/Users/taar1/Development/Android/GitHub/cheat-database/app/src/main/res/layout/activity_main.xml&#10;activity_game&#9;FILE&#9;file://C:/Users/taar1/Development/Android/AndroidStudioProjects/Cheat-Database/app/src/main/res/layout-large-land/activity_gamelist.xml&#10;listrow_gamelist&#9;PSI&#9;JAVA://com.cheatdatabase.R.layout#listrow_gamelist&#10;listrow_game_item&#9;FILE&#9;file://C:/Users/taar1/Development/Android/AndroidStudioProjects/Cheat-Database/app/src/main/res/layout/listrow_game_item.xml&#10;game list&#9;PSI&#9;JAVA://com.cheatdatabase.R.layout#gamesearch_listrow_details&#10;gamelist&#9;PSI&#9;JAVA://com.cheatdatabase.R.layout#listrow_gamelist" />
     <property name="UI_DESIGNER_EDITOR_MODE.NlPaletteManager-NlEditorPanel.WIDTH" value="661" />
     <property name="UI_DESIGNER_EDITOR_MODE.NlPaletteManager-NlPreviewForm.SHOW" value="false" />
@@ -252,8 +261,8 @@
     <property name="device.picker.selection" value="6ea89d94" />
     <property name="extract.method.default.visibility" value="private" />
     <property name="ignore.virus.scanning.warn.message" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../APK/Cheat-Database/2.7.1" />
-    <property name="project.structure.last.edited" value="Suggestions" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../../Google Drive/Software Development (Android Studio, Keystore etc.)/Cheat-Database/Screenshots/2.7.2" />
+    <property name="project.structure.last.edited" value="SDK Location" />
     <property name="project.structure.proportion" value="0.17" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="recommended.upgrade.do.not.ask.for.version" value="3.6.3" />
@@ -799,13 +808,6 @@
       <option name="presentableId" value="Default" />
       <updated>1487274191999</updated>
     </task>
-    <task id="LOCAL-00136" summary="Working Version 2.5.17!&#10;FIXED ON APP START CRASH (room database upgrade crashed -&gt; favorites -&gt; member_id NonNull)">
-      <created>1593351054610</created>
-      <option name="number" value="00136" />
-      <option name="presentableId" value="LOCAL-00136" />
-      <option name="project" value="LOCAL" />
-      <updated>1593351054611</updated>
-    </task>
     <task id="LOCAL-00137" summary="Working Version 2.5.17!&#10;FIXED ON APP START CRASH (room database upgrade crashed -&gt; favorites -&gt; member_id NonNull)">
       <created>1593351280799</created>
       <option name="number" value="00137" />
@@ -1142,7 +1144,14 @@
       <option name="project" value="LOCAL" />
       <updated>1641245453969</updated>
     </task>
-    <option name="localTasksCounter" value="185" />
+    <task id="LOCAL-00185" summary="Android &amp; iOS wieder hinzugefügt, da ja eh nicht mehr auf Google Play&#10;VERSION 2.7.2 (08.01.2022)">
+      <created>1641673693452</created>
+      <option name="number" value="00185" />
+      <option name="presentableId" value="LOCAL-00185" />
+      <option name="project" value="LOCAL" />
+      <updated>1641673693452</updated>
+    </task>
+    <option name="localTasksCounter" value="186" />
     <servers />
   </component>
   <component name="TodoView">
@@ -1247,7 +1256,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
-    <MESSAGE value="Working on &quot;edit cheat&quot; layout." />
     <MESSAGE value="Upgrading libraries, switching from Fabric to Firebase Crashlytics." />
     <MESSAGE value="Version with MVVM SystemConsoleListFragment.kt and Repository pattern. WORKING (except clicking a system when you get forawarded to GamesBySystemListActivity)" />
     <MESSAGE value="System List Fragment neu mit: Kotlin, Coroutines, MVVM, Offlince Room Caching" />
@@ -1272,7 +1280,8 @@
     <MESSAGE value="Facebook ads entfernt, inmobi dependencies entfernt&#10;alles auf applovin umgestellt&#10;bug fixes" />
     <MESSAGE value="Fixing many crashes&#10;Fixing the dimming bug when displaying a dialog" />
     <MESSAGE value="Share Cheat dialog geupdatet" />
-    <option name="LAST_COMMIT_MESSAGE" value="Share Cheat dialog geupdatet" />
+    <MESSAGE value="Android &amp; iOS wieder hinzugefügt, da ja eh nicht mehr auf Google Play&#10;VERSION 2.7.2 (08.01.2022)" />
+    <option name="LAST_COMMIT_MESSAGE" value="Android &amp; iOS wieder hinzugefügt, da ja eh nicht mehr auf Google Play&#10;VERSION 2.7.2 (08.01.2022)" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>

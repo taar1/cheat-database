@@ -26,6 +26,7 @@ import com.cheatdatabase.activity.CheatForumActivity;
 import com.cheatdatabase.activity.LoginActivity;
 import com.cheatdatabase.activity.SubmitCheatFormActivity;
 import com.cheatdatabase.callbacks.GenericCallback;
+import com.cheatdatabase.callbacks.OnCheatRated;
 import com.cheatdatabase.data.model.Cheat;
 import com.cheatdatabase.data.model.Game;
 import com.cheatdatabase.dialogs.CheatMetaDialog;
@@ -51,8 +52,7 @@ import net.lucode.hackware.magicindicator.buildins.commonnavigator.indicators.Li
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.ColorTransitionPagerTitleView;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.SimplePagerTitleView;
 
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
+import org.jetbrains.annotations.NotNull;
 
 import java.lang.reflect.Type;
 import java.util.List;
@@ -69,7 +69,7 @@ import dagger.hilt.android.AndroidEntryPoint;
  * @author Dominik Erbsland
  */
 @AndroidEntryPoint
-public class MemberCheatViewPageIndicator extends AppCompatActivity implements GenericCallback {
+public class MemberCheatViewPageIndicator extends AppCompatActivity implements GenericCallback, OnCheatRated {
 
     private final String TAG = MemberCheatViewPageIndicator.class.getName();
 
@@ -335,16 +335,15 @@ public class MemberCheatViewPageIndicator extends AppCompatActivity implements G
         if ((tools.getMember() == null) || (tools.getMember().getMid() == 0)) {
             Toast.makeText(this, R.string.error_login_required, Toast.LENGTH_LONG).show();
         } else {
-            new RateCheatMaterialDialog(this, visibleCheat, tools.getMember(), outerLayout, tools);
+            new RateCheatMaterialDialog(this, visibleCheat, outerLayout, tools, restApi, this);
         }
     }
 
-    @Subscribe
-    public void onEvent(CheatRatingFinishedEvent result) {
-        visibleCheat.setMemberRating(result.getRating());
-        cheatList.get(activePage).setMemberRating(result.getRating());
+    @Override
+    public void onCheatRated(@NotNull CheatRatingFinishedEvent cheatRatingFinishedEvent) {
+        visibleCheat.setMemberRating(cheatRatingFinishedEvent.getRating());
+        cheatList.get(activePage).setMemberRating(cheatRatingFinishedEvent.getRating());
         invalidateOptionsMenu();
-        Toast.makeText(this, R.string.rating_inserted, Toast.LENGTH_SHORT).show();
     }
 
     public void setRating(int position, float rating) {
@@ -363,14 +362,7 @@ public class MemberCheatViewPageIndicator extends AppCompatActivity implements G
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
-        EventBus.getDefault().register(this);
-    }
-
-    @Override
     protected void onStop() {
-        EventBus.getDefault().unregister(this);
         Reachability.unregister(this);
         super.onStop();
     }

@@ -5,15 +5,13 @@ import android.view.View
 import android.widget.RatingBar
 import androidx.appcompat.app.AlertDialog
 import com.cheatdatabase.R
-import com.cheatdatabase.data.RetrofitClientInstance
+import com.cheatdatabase.callbacks.OnCheatRated
 import com.cheatdatabase.data.model.Cheat
-import com.cheatdatabase.data.model.Member
 import com.cheatdatabase.events.CheatRatingFinishedEvent
 import com.cheatdatabase.helpers.Tools
 import com.cheatdatabase.rest.RestApi
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.gson.JsonObject
-import org.greenrobot.eventbus.EventBus
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -25,18 +23,17 @@ import kotlin.math.roundToInt
 class RateCheatMaterialDialog(
     private val activity: Activity,
     private val cheat: Cheat,
-    private val member: Member,
     private val view: View,
-    private val tools: Tools
+    private val tools: Tools,
+    private val restApi: RestApi,
+    private val onCheatRated: OnCheatRated
 ) {
     private var madb: MaterialAlertDialogBuilder = MaterialAlertDialogBuilder(activity)
-    private val restApi: RestApi =
-        RetrofitClientInstance.getRetrofitInstance().create(RestApi::class.java)
 
     private var newRatingBarValue: Int
 
     init {
-        val previousRating = (cheat.memberRating / 2) as Int
+        val previousRating = (cheat.memberRating / 2).toInt()
         newRatingBarValue = previousRating
 
         madb.setTitle(R.string.rate_cheat)
@@ -65,18 +62,17 @@ class RateCheatMaterialDialog(
 
 
     private fun rateCheat(rating: Int) {
-        val call: Call<JsonObject> = restApi.rateCheat(member.mid, cheat.cheatId, rating)
+        val call: Call<JsonObject> = restApi.rateCheat(tools.member.mid, cheat.cheatId, rating)
         call.enqueue(object : Callback<JsonObject?> {
             override fun onResponse(forum: Call<JsonObject?>, response: Response<JsonObject?>) {
                 cheat.memberRating = rating.toFloat()
                 tools.showSnackbar(view, activity.getString(R.string.rating_inserted))
+
+                onCheatRated.onCheatRated(CheatRatingFinishedEvent(cheat, rating, true))
             }
 
-            override fun onFailure(call: Call<JsonObject?>, e: Throwable) {
-                // TODO FIXME event bus entfernen, ADD CALLBACK
-                // TODO FIXME event bus entfernen, ADD CALLBACK
-                // TODO FIXME event bus entfernen, ADD CALLBACK
-                EventBus.getDefault().post(CheatRatingFinishedEvent(cheat, rating))
+            override fun onFailure(call: Call<JsonObject?>, throwable: Throwable) {
+                onCheatRated.onCheatRated(CheatRatingFinishedEvent(throwable, false))
             }
         })
     }
