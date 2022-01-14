@@ -32,7 +32,9 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/include_toolbar">
 
-        <include layout="@layout/include_fastscroll_recyclerview" />
+        <include
+            android:id="@+id/include_recyclerview"
+            layout="@layout/include_fastscroll_recyclerview" />
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
@@ -60,7 +62,9 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
-        <include layout="@layout/applovin_banner" />
+        <include
+            android:id="@+id/include_applovin"
+            layout="@layout/applovin_banner" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

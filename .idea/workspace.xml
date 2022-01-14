@@ -118,11 +118,13 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4caff62e-c62f-40ca-acf0-73c680b13375" name="Default" comment="Various bug fixes, conversions to kotlin. Rating cheat works again using callbacks.">
+    <list default="true" id="4caff62e-c62f-40ca-acf0-73c680b13375" name="Default" comment="Remove EventBus library from project">
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/CheatsByGameListActivity.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/FavoriteCheatListActivity.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/CheatsByGameListActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/CheatsByGameListActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/CheatsByGameListActivity.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/FavoriteCheatListActivity.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_cheat_list.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_cheat_list.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -797,13 +799,6 @@
       <option name="presentableId" value="Default" />
       <updated>1487274191999</updated>
     </task>
-    <task id="LOCAL-00138" summary="Move RestApi object creation away from MainActivity to the child-fragments.">
-      <created>1593463125312</created>
-      <option name="number" value="00138" />
-      <option name="presentableId" value="LOCAL-00138" />
-      <option name="project" value="LOCAL" />
-      <updated>1593463125313</updated>
-    </task>
     <task id="LOCAL-00139" summary="Displaying the amount of unpublished and published cheats int he &quot;my fragments&quot; view. Error in MainActivity when logging out, some fragments crash...">
       <created>1594843232967</created>
       <option name="number" value="00139" />
@@ -1140,7 +1135,14 @@
       <option name="project" value="LOCAL" />
       <updated>1642109377615</updated>
     </task>
-    <option name="localTasksCounter" value="187" />
+    <task id="LOCAL-00187" summary="Remove EventBus library from project">
+      <created>1642185563448</created>
+      <option name="number" value="00187" />
+      <option name="presentableId" value="LOCAL-00187" />
+      <option name="project" value="LOCAL" />
+      <updated>1642185563449</updated>
+    </task>
+    <option name="localTasksCounter" value="188" />
     <servers />
   </component>
   <component name="TodoView">
@@ -1245,7 +1247,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
-    <MESSAGE value="Version with MVVM SystemConsoleListFragment.kt and Repository pattern. WORKING (except clicking a system when you get forawarded to GamesBySystemListActivity)" />
     <MESSAGE value="System List Fragment neu mit: Kotlin, Coroutines, MVVM, Offlince Room Caching" />
     <MESSAGE value="Get started with the Navigation Component" />
     <MESSAGE value="Started with Navigation Component, created MyCheatsViewModel.kt layer." />
@@ -1270,7 +1271,8 @@
     <MESSAGE value="Share Cheat dialog geupdatet" />
     <MESSAGE value="Android &amp; iOS wieder hinzugefügt, da ja eh nicht mehr auf Google Play&#10;VERSION 2.7.2 (08.01.2022)" />
     <MESSAGE value="Various bug fixes, conversions to kotlin. Rating cheat works again using callbacks." />
-    <option name="LAST_COMMIT_MESSAGE" value="Various bug fixes, conversions to kotlin. Rating cheat works again using callbacks." />
+    <MESSAGE value="Remove EventBus library from project" />
+    <option name="LAST_COMMIT_MESSAGE" value="Remove EventBus library from project" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>

@@ -1,314 +1,270 @@
-package com.cheatdatabase.activity;
+package com.cheatdatabase.activity
 
-import android.app.SearchManager;
-import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.os.Bundle;
-import android.os.Environment;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.SearchView;
-import androidx.appcompat.widget.Toolbar;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-
-import com.applovin.adview.AppLovinAdView;
-import com.cheatdatabase.R;
-import com.cheatdatabase.adapters.CheatsByGameRecycleListViewAdapter;
-import com.cheatdatabase.cheatdetailview.FavoritesCheatViewPageIndicator;
-import com.cheatdatabase.data.RoomCheatDatabase;
-import com.cheatdatabase.data.dao.FavoriteCheatDao;
-import com.cheatdatabase.data.model.Cheat;
-import com.cheatdatabase.data.model.FavoriteCheatModel;
-import com.cheatdatabase.data.model.Game;
-import com.cheatdatabase.data.model.Member;
-import com.cheatdatabase.helpers.Konstanten;
-import com.cheatdatabase.helpers.Reachability;
-import com.cheatdatabase.helpers.Tools;
-import com.cheatdatabase.listeners.OnCheatListItemSelectedListener;
-import com.cheatdatabase.widgets.DividerDecoration;
-import com.google.gson.Gson;
-import com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView;
-
-import java.io.File;
-import java.util.ArrayList;
-
-import javax.inject.Inject;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-import dagger.hilt.android.AndroidEntryPoint;
-import needle.Needle;
+import android.app.SearchManager
+import android.content.Intent
+import android.os.Bundle
+import android.os.Environment
+import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
+import android.widget.TextView
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
+import androidx.appcompat.widget.Toolbar
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.applovin.adview.AppLovinAdView
+import com.cheatdatabase.R
+import com.cheatdatabase.activity.SubmitCheatFormActivity
+import com.cheatdatabase.adapters.CheatsByGameRecycleListViewAdapter
+import com.cheatdatabase.cheatdetailview.FavoritesCheatViewPageIndicator
+import com.cheatdatabase.data.RoomCheatDatabase
+import com.cheatdatabase.data.dao.FavoriteCheatDao
+import com.cheatdatabase.data.model.Cheat
+import com.cheatdatabase.data.model.FavoriteCheatModel
+import com.cheatdatabase.data.model.Game
+import com.cheatdatabase.databinding.ActivityCheatListBinding
+import com.cheatdatabase.helpers.Konstanten
+import com.cheatdatabase.helpers.Reachability
+import com.cheatdatabase.helpers.Tools
+import com.cheatdatabase.listeners.OnCheatListItemSelectedListener
+import com.cheatdatabase.widgets.DividerDecoration
+import com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView
+import dagger.hilt.android.AndroidEntryPoint
+import needle.Needle
+import java.io.File
+import javax.inject.Inject
 
 @AndroidEntryPoint
-public class FavoriteCheatListActivity extends AppCompatActivity implements OnCheatListItemSelectedListener {
-
-    private final String TAG = this.getClass().getSimpleName();
-
-    private Game gameObj;
-
-    private CheatsByGameRecycleListViewAdapter cheatsByGameRecycleListViewAdapter;
-
-    private SharedPreferences.Editor editor;
-    private Member member;
-
-    private Game lastGameObj;
-    private Cheat visibleCheat;
-
-    private ArrayList<Cheat> cheatsArrayList;
-
+class FavoriteCheatListActivity : AppCompatActivity(), OnCheatListItemSelectedListener {
     @Inject
-    Tools tools;
+    lateinit var tools: Tools
 
-    @BindView(R.id.outer_layout)
-    ConstraintLayout outerLayout;
-    @BindView(R.id.my_recycler_view)
-    FastScrollRecyclerView recyclerView;
-    @BindView(R.id.swipe_refresh_layout)
-    SwipeRefreshLayout mSwipeRefreshLayout;
-    @BindView(R.id.toolbar)
-    Toolbar mToolbar;
-    @BindView(R.id.item_list_empty_view)
-    TextView mEmptyView;
-    @BindView(R.id.ad_container)
-    AppLovinAdView appLovinAdView;
+    lateinit var outerLayout: ConstraintLayout
+    lateinit var recyclerView: FastScrollRecyclerView
+    lateinit var mSwipeRefreshLayout: SwipeRefreshLayout
+    lateinit var mToolbar: Toolbar
+    lateinit var mEmptyView: TextView
+    lateinit var appLovinAdView: AppLovinAdView
 
-    private FavoriteCheatDao dao;
+    private var gameObj: Game? = null
+    private var cheatsByGameRecycleListViewAdapter: CheatsByGameRecycleListViewAdapter? = null
+    private var lastGameObj: Game? = null
+    private var visibleCheat: Cheat? = null
+    private var cheatsArrayList: ArrayList<Cheat>? = null
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        dao = RoomCheatDatabase.getDatabase(this).favoriteDao();
-        loadCheats();
+    private var dao: FavoriteCheatDao? = null
+
+    private lateinit var binding: ActivityCheatListBinding
+
+    override fun onStart() {
+        super.onStart()
+        dao = RoomCheatDatabase.getDatabase(this).favoriteDao()
+        loadCheats()
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_cheat_list);
-        ButterKnife.bind(this);
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
 
-        gameObj = getIntent().getParcelableExtra("gameObj");
+        binding = ActivityCheatListBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
+        gameObj = intent.getParcelableExtra("gameObj")
         if (gameObj == null) {
-            Toast.makeText(this, R.string.err_somethings_wrong, Toast.LENGTH_LONG).show();
-            finish();
+            Toast.makeText(this, R.string.err_somethings_wrong, Toast.LENGTH_LONG).show()
+            finish()
         } else {
-            setTitle((gameObj.getGameName() != null ? gameObj.getGameName() : ""));
-            init();
+            title = if (gameObj!!.gameName != null) gameObj!!.gameName else ""
 
-            mSwipeRefreshLayout.setRefreshing(true);
-            mSwipeRefreshLayout.setOnRefreshListener(() -> loadCheats());
+            bindViews()
+            init()
 
-            cheatsByGameRecycleListViewAdapter = new CheatsByGameRecycleListViewAdapter(this, tools, this);
-            recyclerView.setAdapter(cheatsByGameRecycleListViewAdapter);
+            mSwipeRefreshLayout.isRefreshing = true
+            mSwipeRefreshLayout.setOnRefreshListener { loadCheats() }
+            cheatsByGameRecycleListViewAdapter =
+                CheatsByGameRecycleListViewAdapter(this, tools, this)
+            supportActionBar!!.title = gameObj!!.gameName
+            supportActionBar!!.subtitle = gameObj!!.systemName
 
-            getSupportActionBar().setTitle(gameObj.getGameName());
-            getSupportActionBar().setSubtitle(gameObj.getSystemName());
-
-            recyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
-            recyclerView.addItemDecoration(new DividerDecoration(this));
-            recyclerView.getItemAnimator().setRemoveDuration(50);
-            recyclerView.setHasFixedSize(true);
+            with(recyclerView) {
+                adapter = cheatsByGameRecycleListViewAdapter
+                layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
+                addItemDecoration(DividerDecoration(context))
+                itemAnimator!!.removeDuration = 50
+                setHasFixedSize(true)
+                showScrollbar()
+            }
         }
     }
 
-    private void init() {
-        SharedPreferences sharedPreferences = getSharedPreferences(Konstanten.PREFERENCES_FILE, MODE_PRIVATE);
-        editor = sharedPreferences.edit();
+    private fun bindViews() {
+        outerLayout = binding.outerLayout
+        recyclerView = binding.includeRecyclerview.myRecyclerView
+        mSwipeRefreshLayout = binding.swipeRefreshLayout
+        mToolbar = binding.includeToolbar.toolbar
+        mEmptyView = binding.itemListEmptyView
+        appLovinAdView = binding.includeApplovin.adContainer
 
-        appLovinAdView.loadNextAd();
-
-        if (mToolbar != null) {
-            setSupportActionBar(mToolbar);
-        }
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeButtonEnabled(true);
-
-        if (member == null) {
-            member = new Gson().fromJson(sharedPreferences.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
+        binding.addNewCheatButton.setOnClickListener {
+            addNewCheat()
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        menu.clear();
-        getMenuInflater().inflate(R.menu.cheats_by_game_menu, menu);
+    private fun init() {
+        appLovinAdView.loadNextAd()
+        setSupportActionBar(mToolbar)
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        supportActionBar!!.setHomeButtonEnabled(true)
+    }
 
-        if (member != null) {
-            getMenuInflater().inflate(R.menu.signout_menu, menu);
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menu.clear()
+        menuInflater.inflate(R.menu.cheats_by_game_menu, menu)
+        if (tools.member != null) {
+            menuInflater.inflate(R.menu.signout_menu, menu)
         } else {
-            getMenuInflater().inflate(R.menu.signin_menu, menu);
+            menuInflater.inflate(R.menu.signin_menu, menu)
         }
-
-        getMenuInflater().inflate(R.menu.handset_cheatview_rating_off_menu, menu);
+        menuInflater.inflate(R.menu.handset_cheatview_rating_off_menu, menu)
 
         // Search
-        getMenuInflater().inflate(R.menu.search_menu, menu);
+        menuInflater.inflate(R.menu.search_menu, menu)
 
         // Associate searchable configuration with the SearchView
-        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-
-        return super.onCreateOptionsMenu(menu);
+        val searchManager = getSystemService(SEARCH_SERVICE) as SearchManager
+        val searchView = menu.findItem(R.id.search).actionView as SearchView
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(componentName))
+        return super.onCreateOptionsMenu(menu)
     }
 
-    @Override
-    public boolean onPrepareOptionsMenu(final Menu menu) {
-        menu.clear();
-        if (member == null) {
-            getMenuInflater().inflate(R.menu.signin_menu, menu);
+    override fun onPrepareOptionsMenu(menu: Menu): Boolean {
+        menu.clear()
+        if (tools.member == null) {
+            menuInflater.inflate(R.menu.signin_menu, menu)
         } else {
-            getMenuInflater().inflate(R.menu.signout_menu, menu);
+            menuInflater.inflate(R.menu.signout_menu, menu)
         }
-
-        getMenuInflater().inflate(R.menu.search_menu, menu);
+        menuInflater.inflate(R.menu.search_menu, menu)
 
         // Associate searchable configuration with the SearchView
-        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-
-        return super.onPrepareOptionsMenu(menu);
+        val searchManager = getSystemService(SEARCH_SERVICE) as SearchManager
+        val searchView = menu.findItem(R.id.search).actionView as SearchView
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(componentName))
+        return super.onPrepareOptionsMenu(menu)
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                onBackPressed();
-                return true;
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> {
+                onBackPressed()
+                return true
+            }
         }
-        return super.onOptionsItemSelected(item);
+        return super.onOptionsItemSelected(item)
     }
 
-    private void loadCheats() {
-        cheatsArrayList = new ArrayList<>();
-
+    private fun loadCheats() {
+        cheatsArrayList = ArrayList()
         if (gameObj != null) {
-            if ((gameObj.getCheatList() == null) || (gameObj.getCheatList().size() == 0)) {
-
-                dao.getCheatsByGameId(gameObj.getGameId()).observe(this, favcheats -> {
-                    for (FavoriteCheatModel fc : favcheats) {
-                        Cheat cheat = fc.toCheat();
-                        cheat.setHasScreenshots(hasScreenshotsOnSdCard(cheat.getCheatId()));
-
-                        cheatsArrayList.add(cheat);
+            if (gameObj!!.cheatList == null || gameObj!!.cheatList.size == 0) {
+                dao!!.getCheatsByGameId(gameObj!!.gameId)
+                    .observe(this) { favcheats: List<FavoriteCheatModel> ->
+                        for (fc in favcheats) {
+                            val cheat = fc.toCheat()
+                            cheat.setHasScreenshots(hasScreenshotsOnSdCard(cheat.cheatId))
+                            cheatsArrayList!!.add(cheat)
+                        }
+                        gameObj!!.setCheatList(cheatsArrayList)
+                        updateUI()
                     }
-
-                    gameObj.setCheatList(cheatsArrayList);
-                    updateUI();
-                });
             } else {
-                cheatsArrayList.addAll(gameObj.getCheatList());
-                updateUI();
+                cheatsArrayList!!.addAll(gameObj!!.cheatList)
+                updateUI()
             }
         } else {
-            error();
+            error()
         }
-
-        mSwipeRefreshLayout.setRefreshing(false);
+        mSwipeRefreshLayout.isRefreshing = false
     }
 
-    private void updateUI() {
+    private fun updateUI() {
         try {
-            if (cheatsArrayList != null && cheatsArrayList.size() > 0) {
-                cheatsByGameRecycleListViewAdapter.setCheatList(cheatsArrayList);
-                cheatsByGameRecycleListViewAdapter.updateCheatListWithoutAds();
+            if (cheatsArrayList != null && cheatsArrayList!!.size > 0) {
+                cheatsByGameRecycleListViewAdapter!!.setCheatList(cheatsArrayList)
+                cheatsByGameRecycleListViewAdapter!!.updateCheatListWithoutAds()
             } else {
-                error();
+                error()
             }
-        } catch (Exception e) {
-            Log.e(TAG, "updateUI Exception:" + e.getLocalizedMessage());
-            error();
+        } catch (e: Exception) {
+            Log.e(TAG, "updateUI Exception:" + e.localizedMessage)
+            error()
         }
-
-        Needle.onMainThread().execute(() -> mSwipeRefreshLayout.setRefreshing(false));
+        Needle.onMainThread().execute { mSwipeRefreshLayout.isRefreshing = false }
     }
 
-    private boolean hasScreenshotsOnSdCard(int cheatId) {
-        File sdCard = Environment.getExternalStorageDirectory();
-        File dir = new File(sdCard.getAbsolutePath() + Konstanten.APP_PATH_SD_CARD + cheatId);
-        File[] files = dir.listFiles();
-
-        return files != null && files.length > 0;
+    private fun hasScreenshotsOnSdCard(cheatId: Int): Boolean {
+        val sdCard = Environment.getExternalStorageDirectory()
+        val dir = File(sdCard.absolutePath + Konstanten.APP_PATH_SD_CARD + cheatId)
+        val files = dir.listFiles()
+        return files != null && files.size > 0
     }
 
     // Save the position of the last element
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
+    override fun onSaveInstanceState(outState: Bundle) {
         //outState.putInt("position", lastPosition);
-        outState.putParcelable("gameObj", lastGameObj);
-        super.onSaveInstanceState(outState);
+        outState.putParcelable("gameObj", lastGameObj)
+        super.onSaveInstanceState(outState)
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
+    public override fun onResume() {
+        super.onResume()
         if (!Reachability.isRegistered()) {
-            Reachability.registerReachability(this);
+            Reachability.registerReachability(this)
         }
     }
 
-    @Override
-    protected void onStop() {
-        Reachability.unregister(this);
-        super.onStop();
+    override fun onStop() {
+        Reachability.unregister(this)
+        super.onStop()
     }
 
-    @OnClick(R.id.add_new_cheat_button)
-    void addNewCheat() {
-        Intent explicitIntent = new Intent(FavoriteCheatListActivity.this, SubmitCheatFormActivity.class);
-        explicitIntent.putExtra("gameObj", gameObj);
-        startActivity(explicitIntent);
+    fun addNewCheat() {
+        val explicitIntent =
+            Intent(this@FavoriteCheatListActivity, SubmitCheatFormActivity::class.java)
+        explicitIntent.putExtra("gameObj", gameObj)
+        startActivity(explicitIntent)
     }
 
-    private void error() {
-        Log.e(TAG, "Caught error: " + getPackageName() + "/" + getTitle());
-        Needle.onMainThread().execute(() -> {
-            tools.showSnackbar(outerLayout, getString(R.string.err_data_not_accessible));
-        });
+    private fun error() {
+        Log.e(TAG, "Caught error: $packageName/$title")
+        Needle.onMainThread().execute {
+            tools.showSnackbar(
+                outerLayout,
+                getString(R.string.err_data_not_accessible)
+            )
+        }
     }
 
-    @Override
-    public void onCheatListItemSelected(Cheat cheat, int position) {
-        this.visibleCheat = cheat;
-        this.lastGameObj = cheat.getGame();
-
+    override fun onCheatListItemSelected(cheat: Cheat, position: Int) {
+        visibleCheat = cheat
+        lastGameObj = cheat.game
         if (Reachability.reachability.isReachable) {
-            // Using local Preferences to pass data for large game objects
-            // (instead of intent) such as Pokemon
+            tools.putInt(Konstanten.PREFERENCES_PAGE_SELECTED, position)
 
-            int i = 0;
-            for (Cheat c : gameObj.getCheatList()) {
-                if (c == cheat) {
-                    position = i;
-                }
-                i++;
-            }
-
-            editor.putInt(Konstanten.PREFERENCES_PAGE_SELECTED, position);
-            editor.apply();
-
-            Intent explicitIntent = new Intent(this, FavoritesCheatViewPageIndicator.class);
-            explicitIntent.putExtra("gameObj", gameObj);
-            explicitIntent.putExtra("position", position);
-            explicitIntent.putExtra("layoutResourceId", R.layout.activity_cheatview_pager);
-            startActivity(explicitIntent);
+            val explicitIntent = Intent(this, FavoritesCheatViewPageIndicator::class.java)
+            explicitIntent.putExtra("gameObj", gameObj)
+            explicitIntent.putExtra("position", position)
+            explicitIntent.putExtra("layoutResourceId", R.layout.activity_cheatview_pager)
+            startActivity(explicitIntent)
         } else {
-            tools.showSnackbar(outerLayout, getString(R.string.no_internet));
+            tools.showSnackbar(outerLayout, getString(R.string.no_internet))
         }
+    }
 
-
+    companion object {
+        private const val TAG = "FavoriteCheatListActivi"
     }
 }
