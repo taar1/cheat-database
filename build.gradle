@@ -5,7 +5,7 @@ buildscript {
         kotlinx_version = '1.6.0-native-mt'
         nav_version = '2.3.5'
         work_version = '2.7.1'
-        room_version = '2.4.0'
+        room_version = '2.4.1'
         retrofit_version = '2.9.0'
         dagger_version = '2.28.3'
         kodein_version = '7.6.0'
