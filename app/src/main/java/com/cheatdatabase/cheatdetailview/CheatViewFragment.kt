@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebView
 import android.widget.*
+import androidx.core.widget.TextViewCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -254,12 +255,12 @@ class CheatViewFragment : Fragment(), CheatViewGalleryImageClickListener {
         tvFirstThCol.text = Html.fromHtml(firstThColumn)
         tvFirstThCol.setPadding(1, 1, 5, 1)
         tvFirstThCol.minimumWidth = Konstanten.TABLE_ROW_MINIMUM_WIDTH
-        tvFirstThCol.setTextAppearance(cheatViewPageIndicatorActivity, R.style.NormalText)
+        TextViewCompat.setTextAppearance(tvFirstThCol, R.style.NormalText)
         trTh.addView(tvFirstThCol)
         val tvSecondThCol = TextView(cheatViewPageIndicatorActivity)
         tvSecondThCol.text = Html.fromHtml(secondThColumn)
         tvSecondThCol.setPadding(5, 1, 1, 1)
-        tvSecondThCol.setTextAppearance(context, R.style.NormalText)
+        TextViewCompat.setTextAppearance(tvSecondThCol, R.style.NormalText)
         trTh.addView(tvSecondThCol)
 
         /* Add row to TableLayout. */mainTable.addView(
@@ -287,14 +288,14 @@ class CheatViewFragment : Fragment(), CheatViewGalleryImageClickListener {
             tvFirstTdCol.text = firstTdColumn
             tvFirstTdCol.setPadding(1, 1, 10, 1)
             tvFirstTdCol.minimumWidth = Konstanten.TABLE_ROW_MINIMUM_WIDTH
-            tvFirstTdCol.setTextAppearance(context, R.style.NormalText)
+            TextViewCompat.setTextAppearance(tvFirstTdCol, R.style.NormalText)
             trTd.addView(tvFirstTdCol)
             val tvSecondTdCol = TextView(cheatViewPageIndicatorActivity)
             tvSecondTdCol.isSingleLine = false
             tvSecondTdCol.text = secondTdColumn
             tvSecondTdCol.canScrollHorizontally(1)
             tvSecondTdCol.setPadding(10, 1, 30, 1)
-            tvSecondTdCol.setTextAppearance(context, R.style.NormalText)
+            TextViewCompat.setTextAppearance(tvSecondTdCol, R.style.NormalText)
             trTd.addView(tvSecondTdCol)
 
             /* Add row to TableLayout. */mainTable.addView(
@@ -312,12 +313,10 @@ class CheatViewFragment : Fragment(), CheatViewGalleryImageClickListener {
     private fun fillSimpleContent() {
         mainTable.visibility = View.GONE
         tvTextBeforeTable.visibility = View.GONE
-        if (cheatObj != null) {
-            val styledText: CharSequence = Html.fromHtml(cheatObj.cheatText)
-            tvCheatText.text = styledText
-            if (cheatObj.isWalkthroughFormat) {
-                tvCheatText.setTextAppearance(context, R.style.WalkthroughText)
-            }
+        val styledText: CharSequence = Html.fromHtml(cheatObj.cheatText)
+        tvCheatText.text = styledText
+        if (cheatObj.isWalkthroughFormat) {
+            TextViewCompat.setTextAppearance(tvCheatText, R.style.WalkthroughText)
         }
         progressBar.visibility = View.GONE
     }

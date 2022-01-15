@@ -18,6 +18,7 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.core.widget.TextViewCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -287,13 +288,13 @@ public class FavoritesCheatViewFragment extends Fragment implements FavoritesChe
         tvFirstThCol.setText(Html.fromHtml(firstThColumn));
         tvFirstThCol.setPadding(1, 1, 5, 1);
         tvFirstThCol.setMinimumWidth(Konstanten.TABLE_ROW_MINIMUM_WIDTH);
-        tvFirstThCol.setTextAppearance(favoritesCheatViewPageIndicatorActivity, R.style.NormalText);
+        TextViewCompat.setTextAppearance(tvFirstThCol, R.style.NormalText);
         trTh.addView(tvFirstThCol);
 
         TextView tvSecondThCol = new TextView(favoritesCheatViewPageIndicatorActivity);
         tvSecondThCol.setText(Html.fromHtml(secondThColumn));
         tvSecondThCol.setPadding(5, 1, 1, 1);
-        tvSecondThCol.setTextAppearance(favoritesCheatViewPageIndicatorActivity, R.style.NormalText);
+        TextViewCompat.setTextAppearance(tvSecondThCol, R.style.NormalText);
         trTh.addView(tvSecondThCol);
 
         /* Add row to TableLayout. */
@@ -316,13 +317,13 @@ public class FavoritesCheatViewFragment extends Fragment implements FavoritesChe
             tvFirstTdCol.setText(firstTdColumn);
             tvFirstTdCol.setPadding(1, 1, 10, 1);
             tvFirstTdCol.setMinimumWidth(Konstanten.TABLE_ROW_MINIMUM_WIDTH);
-            tvFirstTdCol.setTextAppearance(favoritesCheatViewPageIndicatorActivity, R.style.NormalText);
+            TextViewCompat.setTextAppearance(tvFirstTdCol, R.style.NormalText);
             trTd.addView(tvFirstTdCol);
 
             TextView tvSecondTdCol = new TextView(favoritesCheatViewPageIndicatorActivity);
             tvSecondTdCol.setText(secondTdColumn);
             tvSecondTdCol.setPadding(10, 1, 30, 1);
-            tvSecondTdCol.setTextAppearance(favoritesCheatViewPageIndicatorActivity, R.style.NormalText);
+            TextViewCompat.setTextAppearance(tvSecondTdCol, R.style.NormalText);
             trTd.addView(tvSecondTdCol);
 
             /* Add row to TableLayout. */
@@ -338,7 +339,7 @@ public class FavoritesCheatViewFragment extends Fragment implements FavoritesChe
         tvCheatText.setText(styledText);
 
         if (cheatObj.isWalkthroughFormat()) {
-            tvCheatText.setTextAppearance(favoritesCheatViewPageIndicatorActivity, R.style.WalkthroughText);
+            TextViewCompat.setTextAppearance(tvCheatText, R.style.WalkthroughText);
         }
     }
 
