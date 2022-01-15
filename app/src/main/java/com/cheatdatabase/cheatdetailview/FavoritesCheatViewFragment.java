@@ -213,7 +213,7 @@ public class FavoritesCheatViewFragment extends Fragment implements FavoritesChe
     }
 
     private List<File> getScreenshotsOnSdCard() {
-        File sdCard = Environment.getExternalStorageDirectory();
+        File sdCard = getContext().getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS);
         File dir = new File(sdCard.getAbsolutePath() + Konstanten.APP_PATH_SD_CARD + cheatObj.getCheatId());
         File[] files = dir.listFiles();
 

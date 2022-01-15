@@ -118,13 +118,13 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4caff62e-c62f-40ca-acf0-73c680b13375" name="Default" comment="Remove EventBus library from project">
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/CheatsByGameListActivity.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/FavoriteCheatListActivity.kt" afterDir="false" />
+    <list default="true" id="4caff62e-c62f-40ca-acf0-73c680b13375" name="Default" comment="CheatListActivities converted to kotlin. Removed Butterknife in those classes.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/CheatsByGameListActivity.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/FavoriteCheatListActivity.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_cheat_list.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_cheat_list.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/FavoriteCheatListActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/FavoriteCheatListActivity.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/cheatdetailview/FavoritesCheatViewFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/cheatdetailview/FavoritesCheatViewFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/data/model/Cheat.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/data/model/Cheat.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/data/model/Screenshot.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/data/model/Screenshot.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/helpers/Tools.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/helpers/Tools.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -799,13 +799,6 @@
       <option name="presentableId" value="Default" />
       <updated>1487274191999</updated>
     </task>
-    <task id="LOCAL-00139" summary="Displaying the amount of unpublished and published cheats int he &quot;my fragments&quot; view. Error in MainActivity when logging out, some fragments crash...">
-      <created>1594843232967</created>
-      <option name="number" value="00139" />
-      <option name="presentableId" value="LOCAL-00139" />
-      <option name="project" value="LOCAL" />
-      <updated>1594843232967</updated>
-    </task>
     <task id="LOCAL-00140" summary="Fixing login/logout refresh behavior for &quot;myCheats&quot; view. logging out removes the count. Loggin in refreshes the drawer and fragment with the cheats count numbers.">
       <created>1595339543300</created>
       <option name="number" value="00140" />
@@ -1142,7 +1135,14 @@
       <option name="project" value="LOCAL" />
       <updated>1642185563449</updated>
     </task>
-    <option name="localTasksCounter" value="188" />
+    <task id="LOCAL-00188" summary="CheatListActivities converted to kotlin. Removed Butterknife in those classes.">
+      <created>1642192224388</created>
+      <option name="number" value="00188" />
+      <option name="presentableId" value="LOCAL-00188" />
+      <option name="project" value="LOCAL" />
+      <updated>1642192224388</updated>
+    </task>
+    <option name="localTasksCounter" value="189" />
     <servers />
   </component>
   <component name="TodoView">
@@ -1247,7 +1247,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
-    <MESSAGE value="System List Fragment neu mit: Kotlin, Coroutines, MVVM, Offlince Room Caching" />
     <MESSAGE value="Get started with the Navigation Component" />
     <MESSAGE value="Started with Navigation Component, created MyCheatsViewModel.kt layer." />
     <MESSAGE value="Navigation Component: Fixing bugs with the fragments inside the nav controller" />
@@ -1272,7 +1271,8 @@
     <MESSAGE value="Android &amp; iOS wieder hinzugefügt, da ja eh nicht mehr auf Google Play&#10;VERSION 2.7.2 (08.01.2022)" />
     <MESSAGE value="Various bug fixes, conversions to kotlin. Rating cheat works again using callbacks." />
     <MESSAGE value="Remove EventBus library from project" />
-    <option name="LAST_COMMIT_MESSAGE" value="Remove EventBus library from project" />
+    <MESSAGE value="CheatListActivities converted to kotlin. Removed Butterknife in those classes." />
+    <option name="LAST_COMMIT_MESSAGE" value="CheatListActivities converted to kotlin. Removed Butterknife in those classes." />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>

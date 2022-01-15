@@ -206,10 +206,13 @@ class FavoriteCheatListActivity : AppCompatActivity(), OnCheatListItemSelectedLi
     }
 
     private fun hasScreenshotsOnSdCard(cheatId: Int): Boolean {
-        val sdCard = Environment.getExternalStorageDirectory()
-        val dir = File(sdCard.absolutePath + Konstanten.APP_PATH_SD_CARD + cheatId)
-        val files = dir.listFiles()
-        return files != null && files.size > 0
+        val sdCard = applicationContext.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS)
+        sdCard?.let {
+            val dir = File(it.absolutePath + Konstanten.APP_PATH_SD_CARD + cheatId)
+            val files = dir.listFiles()
+            return !files.isNullOrEmpty()
+        }
+        return false
     }
 
     // Save the position of the last element

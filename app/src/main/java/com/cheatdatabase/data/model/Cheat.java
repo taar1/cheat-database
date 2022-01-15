@@ -233,23 +233,6 @@ public class Cheat implements Parcelable {
         return cheatDayAge;
     }
 
-//    /**
-//     * Schaut, ob auf der SD Karte Screenshots zu dem Cheat existieren.
-//     *
-//     * @return boolean
-//     */
-//    public boolean hasScreenshotOnSd() {
-//        if (Tools.isSdReadable()) {
-//            String fileName = this.getCheatId() + "a.png";
-//            File sdCard = Environment.getExternalStorageDirectory();
-//            File dir = new File(sdCard.getAbsolutePath() + Konstanten.APP_PATH_SD_CARD + this.getCheatId());
-//            File file = new File(dir, fileName);
-//            return file.isFile();
-//        } else {
-//            return false;
-//        }
-//    }
-
     public boolean hasScreenshots() {
         return screenshots;
     }

@@ -531,7 +531,7 @@ public class Tools {
             try {
                 for (Screenshot s : cheat.getScreenshotList()) {
                     if (Tools.isSdWriteable()) {
-                        s.saveToSd();
+                        s.saveToSd(context);
                     }
                 }
 

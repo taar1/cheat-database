@@ -1,9 +1,9 @@
 package com.cheatdatabase.data.model;
 
+import android.content.Context;
 import android.os.Environment;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.util.Log;
 
 import com.cheatdatabase.helpers.Konstanten;
 import com.google.gson.annotations.SerializedName;
@@ -92,10 +92,8 @@ public class Screenshot implements Parcelable {
         return fullPath;
     }
 
-    public String getFullPathOnSdCard() {
-        String fullPathOnSdCard = Environment.getExternalStorageDirectory().getAbsolutePath() + Konstanten.APP_PATH_SD_CARD + getCheatId() + getFilename();
-        Log.d(TAG, "XXXXX getFullPathOnSdCard: " + fullPathOnSdCard);
-        return fullPathOnSdCard;
+    public String getFullPathOnSdCard(Context context) {
+        return context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath() + Konstanten.APP_PATH_SD_CARD + getCheatId() + getFilename();
     }
 
     /**
@@ -103,7 +101,7 @@ public class Screenshot implements Parcelable {
      *
      * @return boolean
      */
-    public void saveToSd() throws IOException {
+    public void saveToSd(Context context) throws IOException {
         String fileName = getCheatId() + getFilename();
         String fileURL = Konstanten.SCREENSHOT_ROOT_WEBDIR + fileName;
 
@@ -113,7 +111,7 @@ public class Screenshot implements Parcelable {
         c.setDoOutput(true);
         c.connect();
 
-        File sdCard = Environment.getExternalStorageDirectory();
+        File sdCard = context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS);
         File dir = new File(sdCard.getAbsolutePath() + Konstanten.APP_PATH_SD_CARD + getCheatId());
         dir.mkdirs();
         File file = new File(dir, fileName);
@@ -123,7 +121,7 @@ public class Screenshot implements Parcelable {
         InputStream in = c.getInputStream();
 
         byte[] buffer = new byte[1024];
-        int len1 = 0;
+        int len1;
         while ((len1 = in.read(buffer)) > 0) {
             f.write(buffer, 0, len1);
         }
