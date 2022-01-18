@@ -127,7 +127,7 @@
     <string name="top_members_top_helping">Top Members</string>
     <string name="top_members_visit_website">Besuche %1$s\'s Website</string>
     <string name="top_members_no_website">%1$s hat keine Website</string>
-    <string name="top_members_cheats_count">Anzahl Cheats</string>
+    <string name="top_members_cheats_count">Anzahl Cheats: %d</string>
 
     <!-- SHARE CHEAT -->
     <string name="share_title">Cheat teilen</string>

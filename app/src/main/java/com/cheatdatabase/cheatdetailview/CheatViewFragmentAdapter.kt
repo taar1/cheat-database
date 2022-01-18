@@ -1,38 +1,26 @@
-package com.cheatdatabase.cheatdetailview;
+package com.cheatdatabase.cheatdetailview
 
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentPagerAdapter
+import com.cheatdatabase.cheatdetailview.CheatViewFragment.Companion.newInstance
+import com.cheatdatabase.data.model.Cheat
+import com.cheatdatabase.data.model.Game
 
-import com.cheatdatabase.data.model.Cheat;
-import com.cheatdatabase.data.model.Game;
-
-import java.util.List;
-
-public class CheatViewFragmentAdapter extends FragmentPagerAdapter {
-
-    private List<Cheat> cheatArray;
-    private Game game;
-
-    public CheatViewFragmentAdapter(FragmentManager fm, Game game, List<Cheat> cheatArray) {
-        super(fm);
-        this.game = game;
-        this.cheatArray = cheatArray;
+class CheatViewFragmentAdapter(
+    fragmentManager: FragmentManager,
+    private val game: Game,
+    private val cheatArray: ArrayList<Cheat>
+) : FragmentPagerAdapter(fragmentManager) {
+    override fun getItem(position: Int): Fragment {
+        return newInstance(game, position)
     }
 
-    @Override
-    public Fragment getItem(int position) {
-        return CheatViewFragment.newInstance(game, position);
+    override fun getCount(): Int {
+        return cheatArray.size
     }
 
-    @Override
-    public int getCount() {
-        return cheatArray.size();
+    override fun getPageTitle(position: Int): CharSequence? {
+        return cheatArray[position].cheatTitle
     }
-
-    @Override
-    public CharSequence getPageTitle(int position) {
-        return cheatArray.get(position).getCheatTitle();
-    }
-
 }

@@ -54,7 +54,6 @@ class MemberCheatViewFragment : Fragment(), CheatViewGalleryImageClickListener {
     private var offset = 0
     private var member: Member? = null
     private var cheatViewPageIndicatorActivity: MemberCheatViewPageIndicator? = null
-    private var outerLayout: LinearLayout? = null
 
     lateinit var editor: SharedPreferences.Editor
 
@@ -64,12 +63,11 @@ class MemberCheatViewFragment : Fragment(), CheatViewGalleryImageClickListener {
 
         @JvmStatic
         fun newInstance(
-            cheats: List<Cheat>?, offset: Int, outerLayout: LinearLayout?
+            cheats: List<Cheat>?, offset: Int
         ): MemberCheatViewFragment {
             val fragment = MemberCheatViewFragment()
             fragment.cheats = cheats
             fragment.offset = offset
-            fragment.outerLayout = outerLayout
             return fragment
         }
     }
@@ -312,7 +310,7 @@ class MemberCheatViewFragment : Fragment(), CheatViewGalleryImageClickListener {
     private val cheatBody: Unit
         private get() {
             val call: Call<Cheat> =
-                cheatViewPageIndicatorActivity!!.getRestApi().getCheatById(cheatObj.cheatId)
+                cheatViewPageIndicatorActivity!!.restApi.getCheatById(cheatObj.cheatId)
             call.enqueue(object : Callback<Cheat?> {
                 override fun onResponse(metaInfo: Call<Cheat?>, response: Response<Cheat?>) {
                     updateUI(response.body())
@@ -321,7 +319,7 @@ class MemberCheatViewFragment : Fragment(), CheatViewGalleryImageClickListener {
                 override fun onFailure(call: Call<Cheat?>, e: Throwable) {
                     Log.e(TAG, "getCheatBody onFailure: " + e.localizedMessage)
                     tools.showSnackbar(
-                        outerLayout,
+                        mainLayout,
                         requireContext().getString(R.string.err_somethings_wrong),
                         5000
                     )
@@ -342,7 +340,7 @@ class MemberCheatViewFragment : Fragment(), CheatViewGalleryImageClickListener {
         get() {
             if (member != null) {
                 val call: Call<JsonObject> =
-                    cheatViewPageIndicatorActivity!!.getRestApi().getMemberRatingByCheatId(
+                    cheatViewPageIndicatorActivity!!.restApi.getMemberRatingByCheatId(
                         member!!.mid, cheatObj.cheatId
                     )
                 call.enqueue(object : Callback<JsonObject?> {

@@ -130,7 +130,7 @@
     <!-- SHARE CHEAT -->
     <string name="top_members_visit_website">Visit %1$s\'s website</string>
     <string name="top_members_no_website">Member %s has no website</string>
-    <string name="top_members_cheats_count">Number of cheats</string>
+    <string name="top_members_cheats_count">Number of cheats: %d</string>
     <string name="share_title">Share cheat</string>
     <string name="share_error_no_client">There are no email clients installed.</string>
 
@@ -266,5 +266,6 @@ Submitted tricks that violate one or more of the above points will be deleted.</
     <string name="edit_and_re_submit">Edit and Re-Submit</string>
 
     <string name="game_name_system_name">%1$s (%2$s)</string>
+    <string name="quoted_text">"%s"</string>
 
 </resources>

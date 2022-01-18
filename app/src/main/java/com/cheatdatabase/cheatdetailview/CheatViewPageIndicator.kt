@@ -9,7 +9,6 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
 import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
@@ -58,7 +57,7 @@ import javax.inject.Inject
  * @author Dominik Erbsland
  */
 @AndroidEntryPoint
-class CheatViewPageIndicatorActivity : AppCompatActivity(), GenericCallback,
+class CheatViewPageIndicator : AppCompatActivity(), GenericCallback,
     OnCheatRated {
 
     @Inject
@@ -72,10 +71,11 @@ class CheatViewPageIndicatorActivity : AppCompatActivity(), GenericCallback,
     lateinit var appLovinAdView: AppLovinAdView
     lateinit var mPager: ViewPager
     lateinit var fab: FloatingActionButton
+    lateinit var magicIndicator: MagicIndicator
 
     private var pageSelected = 0
     private var gameObj: Game? = null
-    private var cheatArray: ArrayList<Cheat>? = null
+    private var cheatList: ArrayList<Cheat>? = null
     private var visibleCheat: Cheat? = null
     private var mAdapter: CheatViewFragmentAdapter? = null
     private var activePage = 0
@@ -139,15 +139,15 @@ class CheatViewPageIndicatorActivity : AppCompatActivity(), GenericCallback,
             finish()
         } else {
             for (cheat in gameObj!!.cheatList) {
-                if (cheatArray == null) {
-                    cheatArray = ArrayList()
+                if (cheatList == null) {
+                    cheatList = ArrayList()
                 }
-                cheatArray!!.add(cheat)
+                cheatList!!.add(cheat)
             }
-            if (cheatArray == null || cheatArray!!.size < 1) {
+            if (cheatList == null || cheatList!!.size < 1) {
                 onBackPressed()
             }
-            visibleCheat = cheatArray!![pageSelected]
+            visibleCheat = cheatList!![pageSelected]
             supportActionBar!!.title = if (gameObj!!.gameName != null) gameObj!!.gameName else ""
             supportActionBar!!.subtitle =
                 if (gameObj!!.systemName != null) gameObj!!.systemName else ""
@@ -161,6 +161,7 @@ class CheatViewPageIndicatorActivity : AppCompatActivity(), GenericCallback,
         appLovinAdView = binding.adContainer
         mPager = binding.pager
         fab = binding.addNewCheatButton
+        magicIndicator = binding.magicIndicator
     }
 
     private fun init() {
@@ -171,14 +172,14 @@ class CheatViewPageIndicatorActivity : AppCompatActivity(), GenericCallback,
         settings = tools.sharedPreferences
         editor = tools.preferencesEditor
 
-        cheatArray = ArrayList()
+        cheatList = ArrayList()
         appLovinAdView.loadNextAd()
         mToolbar = tools.initToolbarBase(this, mToolbar)
     }
 
     private fun initialisePaging() {
         try {
-            mAdapter = CheatViewFragmentAdapter(supportFragmentManager, gameObj, cheatArray)
+            mAdapter = CheatViewFragmentAdapter(supportFragmentManager, gameObj!!, cheatList!!)
             mPager.adapter = mAdapter
             mPager.addOnPageChangeListener(object : OnPageChangeListener {
                 override fun onPageScrolled(
@@ -193,11 +194,11 @@ class CheatViewPageIndicatorActivity : AppCompatActivity(), GenericCallback,
                     editor.putInt(Konstanten.PREFERENCES_PAGE_SELECTED, position).apply()
                     activePage = position
                     try {
-                        visibleCheat = cheatArray!![position]
+                        visibleCheat = cheatList!![position]
                         invalidateOptionsMenu()
                     } catch (e: Exception) {
                         Toast.makeText(
-                            this@CheatViewPageIndicatorActivity,
+                            this@CheatViewPageIndicator,
                             R.string.err_somethings_wrong,
                             Toast.LENGTH_SHORT
                         ).show()
@@ -206,24 +207,21 @@ class CheatViewPageIndicatorActivity : AppCompatActivity(), GenericCallback,
 
                 override fun onPageScrollStateChanged(state: Int) {}
             })
-            val magicIndicator = findViewById<MagicIndicator>(R.id.magic_indicator)
             val commonNavigator = CommonNavigator(this)
             commonNavigator.isSkimOver = true
             commonNavigator.adapter = object : CommonNavigatorAdapter() {
                 override fun getCount(): Int {
-                    return if (cheatArray == null) 0 else cheatArray!!.size
+                    return if (cheatList == null) 0 else cheatList!!.size
                 }
 
                 override fun getTitleView(context: Context, index: Int): IPagerTitleView {
                     val clipPagerTitleView: SimplePagerTitleView =
                         ColorTransitionPagerTitleView(context)
-                    clipPagerTitleView.text = cheatArray!![index].cheatTitle
+                    clipPagerTitleView.text = cheatList!![index].cheatTitle
                     clipPagerTitleView.normalColor =
                         Color.parseColor("#88ffffff") // White transparent
                     clipPagerTitleView.selectedColor = Color.WHITE
-                    clipPagerTitleView.setOnClickListener { v: View? ->
-                        mPager.currentItem = index
-                    }
+                    clipPagerTitleView.setOnClickListener { mPager.currentItem = index }
                     return clipPagerTitleView
                 }
 
@@ -239,10 +237,10 @@ class CheatViewPageIndicatorActivity : AppCompatActivity(), GenericCallback,
             ViewPagerHelper.bind(magicIndicator, mPager)
             mPager.currentItem = pageSelected
             fab.setOnClickListener {
-                val explicitIntent =
-                    Intent(this@CheatViewPageIndicatorActivity, SubmitCheatFormActivity::class.java)
-                explicitIntent.putExtra("gameObj", gameObj)
-                startActivity(explicitIntent)
+                val intent =
+                    Intent(this@CheatViewPageIndicator, SubmitCheatFormActivity::class.java)
+                intent.putExtra("gameObj", gameObj)
+                startActivity(intent)
             }
         } catch (e2: Exception) {
             Log.e(TAG, "ERROR: " + packageName + "/" + title + "... " + e2.message)
@@ -299,7 +297,7 @@ class CheatViewPageIndicatorActivity : AppCompatActivity(), GenericCallback,
             }
             R.id.action_submit_cheat -> {
                 explicitIntent =
-                    Intent(this@CheatViewPageIndicatorActivity, SubmitCheatFormActivity::class.java)
+                    Intent(this@CheatViewPageIndicator, SubmitCheatFormActivity::class.java)
                 explicitIntent.putExtra("gameObj", gameObj)
                 startActivity(explicitIntent)
                 true
@@ -311,7 +309,7 @@ class CheatViewPageIndicatorActivity : AppCompatActivity(), GenericCallback,
             R.id.action_forum -> {
                 if (Reachability.reachability.isReachable) {
                     explicitIntent =
-                        Intent(this@CheatViewPageIndicatorActivity, CheatForumActivity::class.java)
+                        Intent(this@CheatViewPageIndicator, CheatForumActivity::class.java)
                     explicitIntent.putExtra("gameObj", gameObj)
                     explicitIntent.putExtra("cheatObj", visibleCheat)
                     resultContract.launch(explicitIntent)
@@ -336,7 +334,7 @@ class CheatViewPageIndicatorActivity : AppCompatActivity(), GenericCallback,
             R.id.action_metainfo -> {
                 if (Reachability.reachability.isReachable) {
                     CheatMetaDialog(
-                        this@CheatViewPageIndicatorActivity,
+                        this@CheatViewPageIndicator,
                         visibleCheat!!,
                         outerLayout,
                         tools
@@ -349,7 +347,7 @@ class CheatViewPageIndicatorActivity : AppCompatActivity(), GenericCallback,
             R.id.action_login -> {
                 resultContract.launch(
                     Intent(
-                        this@CheatViewPageIndicatorActivity,
+                        this@CheatViewPageIndicator,
                         LoginActivity::class.java
                     )
                 )
@@ -405,7 +403,7 @@ class CheatViewPageIndicatorActivity : AppCompatActivity(), GenericCallback,
 
     override fun onCheatRated(cheatRatingFinishedEvent: CheatRatingFinishedEvent) {
         visibleCheat!!.memberRating = cheatRatingFinishedEvent.rating.toFloat()
-        cheatArray!![activePage].memberRating = cheatRatingFinishedEvent.rating.toFloat()
+        cheatList!![activePage].memberRating = cheatRatingFinishedEvent.rating.toFloat()
         invalidateOptionsMenu()
     }
 

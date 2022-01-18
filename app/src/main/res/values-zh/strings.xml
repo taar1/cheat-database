@@ -114,7 +114,7 @@
     <string name="top_members_title">成员 Top 20</string>
     <string name="top_members_visit_website">访问网站%1$s</string>
     <string name="top_members_no_website">成员不访问网站%1$s</string>
-    <string name="top_members_cheats_count"># 条秘笈</string>
+    <string name="top_members_cheats_count"># 条秘笈: %d</string>
 
     <!-- SHARE CHEAT -->
     <string name="share_title">Share cheat</string>

@@ -1,231 +1,211 @@
-package com.cheatdatabase.activity;
+package com.cheatdatabase.activity
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.ProgressBar;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-import com.applovin.adview.AppLovinAdView;
-import com.cheatdatabase.R;
-import com.cheatdatabase.activity.ui.mycheats.edit.EditCheatActivity;
-import com.cheatdatabase.adapters.MemberCheatRecycleListViewAdapter;
-import com.cheatdatabase.cheatdetailview.MemberCheatViewPageIndicator;
-import com.cheatdatabase.data.model.Cheat;
-import com.cheatdatabase.data.model.Member;
-import com.cheatdatabase.helpers.Konstanten;
-import com.cheatdatabase.helpers.Reachability;
-import com.cheatdatabase.helpers.Tools;
-import com.cheatdatabase.listeners.OnMyCheatListItemSelectedListener;
-import com.cheatdatabase.rest.RestApi;
-import com.cheatdatabase.widgets.DividerDecoration;
-import com.google.gson.Gson;
-import com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView;
-
-import java.util.List;
-
-import javax.inject.Inject;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import dagger.hilt.android.AndroidEntryPoint;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import android.content.Intent
+import android.os.Bundle
+import android.util.Log
+import android.view.MenuItem
+import android.view.View
+import android.widget.ProgressBar
+import android.widget.TextView
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.applovin.adview.AppLovinAdView
+import com.cheatdatabase.R
+import com.cheatdatabase.activity.ui.mycheats.edit.EditCheatActivity
+import com.cheatdatabase.adapters.MemberCheatRecycleListViewAdapter
+import com.cheatdatabase.cheatdetailview.MemberCheatViewPageIndicator
+import com.cheatdatabase.data.model.Cheat
+import com.cheatdatabase.data.model.Member
+import com.cheatdatabase.databinding.ActivityMemberCheatListBinding
+import com.cheatdatabase.helpers.Konstanten
+import com.cheatdatabase.helpers.Reachability
+import com.cheatdatabase.helpers.Tools
+import com.cheatdatabase.listeners.OnMyCheatListItemSelectedListener
+import com.cheatdatabase.rest.RestApi
+import com.cheatdatabase.widgets.DividerDecoration
+import com.google.gson.Gson
+import com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView
+import dagger.hilt.android.AndroidEntryPoint
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import javax.inject.Inject
 
 /**
  * Shows all cheats of one particular member.
  */
 @AndroidEntryPoint
-public class CheatsByMemberListActivity extends AppCompatActivity implements OnMyCheatListItemSelectedListener {
-
-    private final String TAG = CheatsByMemberListActivity.class.getSimpleName();
+class CheatsByMemberListActivity : AppCompatActivity(), OnMyCheatListItemSelectedListener {
 
     @Inject
-    Tools tools;
+    lateinit var tools: Tools
+
     @Inject
-    RestApi restApi;
+    lateinit var restApi: RestApi
 
-    @BindView(R.id.progress_bar)
-    ProgressBar progressBar;
-    @BindView(R.id.my_recycler_view)
-    FastScrollRecyclerView recyclerView;
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
-    @BindView(R.id.item_list_empty_view)
-    TextView emptyView;
-    @BindView(R.id.outer_layout)
-    ConstraintLayout outerLayout;
-    @BindView(R.id.ad_container)
-    AppLovinAdView appLovinAdView;
+    lateinit var progressBar: ProgressBar
+    lateinit var recyclerView: FastScrollRecyclerView
+    lateinit var toolbar: Toolbar
+    lateinit var emptyView: TextView
+    lateinit var outerLayout: ConstraintLayout
+    lateinit var appLovinAdView: AppLovinAdView
 
-    private MemberCheatRecycleListViewAdapter memberCheatRecycleListViewAdapter;
+    private var memberCheatRecycleListViewAdapter: MemberCheatRecycleListViewAdapter? = null
+    private var authorMember: Member? = null
+    private var cheatList: List<Cheat?>? = null
 
-    private Member authorMember;
-    private List<Cheat> cheatList;
+    private lateinit var binding: ActivityMemberCheatListBinding
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_member_cheat_list);
-        ButterKnife.bind(this);
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        binding = ActivityMemberCheatListBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         // The Member of whom to display the cheats.
-        authorMember = getIntent().getParcelableExtra("member");
-        if (authorMember != null) {
-            init();
+        authorMember = intent.getParcelableExtra("member")
 
-            memberCheatRecycleListViewAdapter = new MemberCheatRecycleListViewAdapter(this, tools.getMember(), this);
+        bindViews()
+        init()
 
-            // use this setting to improve performance if you know that changes
-            // in content do not change the layout size of the RecyclerView
-            recyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
-            recyclerView.addItemDecoration(new DividerDecoration(this));
-            recyclerView.getItemAnimator().setRemoveDuration(50);
-            recyclerView.setHasFixedSize(true);
+        memberCheatRecycleListViewAdapter =
+            MemberCheatRecycleListViewAdapter(this, tools.member, this)
 
-            if (Reachability.reachability.isReachable) {
-                getCheats();
-            } else {
-                Toast.makeText(this, R.string.no_internet, Toast.LENGTH_SHORT).show();
-            }
+        with(recyclerView) {
+            layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
+            addItemDecoration(DividerDecoration(context))
+            itemAnimator!!.removeDuration = 50
+            setHasFixedSize(true)
+        }
+
+        if (Reachability.reachability.isReachable) {
+            cheats
         } else {
-            finish();
+            Toast.makeText(this, R.string.no_internet, Toast.LENGTH_SHORT).show()
         }
     }
 
-    private void init() {
-        toolbar = tools.initToolbarBase(this, toolbar);
-
-        emptyView.setText(getString(R.string.no_member_cheats, authorMember.getUsername()));
-        emptyView.setVisibility(View.GONE);
-
-        appLovinAdView.loadNextAd();
-
-        if (toolbar != null) {
-            setSupportActionBar(toolbar);
-        }
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeButtonEnabled(true);
-        getSupportActionBar().setTitle(getString(R.string.members_cheats_title, authorMember.getUsername()));
+    private fun bindViews() {
+        progressBar = binding.progressBar
+        recyclerView = binding.myRecyclerView
+        toolbar = binding.includeToolbar.toolbar
+        emptyView = binding.itemListEmptyView
+        outerLayout = binding.outerLayout
+        appLovinAdView = binding.applovinInclude.adContainer
     }
 
-    void getCheats() {
-        progressBar.setVisibility(View.VISIBLE);
+    private fun init() {
+        toolbar = tools.initToolbarBase(this, toolbar)
+        emptyView.text = getString(R.string.no_member_cheats, authorMember!!.username)
+        emptyView.visibility = View.GONE
+        appLovinAdView.loadNextAd()
 
-        Call<List<Cheat>> call = restApi.getCheatsByMemberId(authorMember.getMid());
-        call.enqueue(new Callback<List<Cheat>>() {
-            @Override
-            public void onResponse(Call<List<Cheat>> games, Response<List<Cheat>> response) {
-                if (response.isSuccessful()) {
-                    cheatList = response.body();
+        supportActionBar?.title = getString(R.string.members_cheats_title, authorMember!!.username)
+    }
 
-                    tools.putString(Konstanten.PREFERENCES_TEMP_CHEAT_ARRAY_OBJECT_VIEW, new Gson().toJson(cheatList));
-
-                    updateUI();
-                } else {
-                    emptyView.setVisibility(View.GONE);
+    val cheats: Unit
+        get() {
+            progressBar.visibility = View.VISIBLE
+            val call = restApi.getCheatsByMemberId(
+                authorMember!!.mid
+            )
+            call.enqueue(object : Callback<List<Cheat?>?> {
+                override fun onResponse(
+                    games: Call<List<Cheat?>?>,
+                    response: Response<List<Cheat?>?>
+                ) {
+                    if (response.isSuccessful) {
+                        cheatList = response.body()
+                        tools.putString(
+                            Konstanten.PREFERENCES_TEMP_CHEAT_ARRAY_OBJECT_VIEW,
+                            Gson().toJson(cheatList)
+                        )
+                        updateUI()
+                    } else {
+                        emptyView.visibility = View.GONE
+                    }
+                    progressBar.visibility = View.GONE
                 }
 
-                progressBar.setVisibility(View.GONE);
-            }
+                override fun onFailure(call: Call<List<Cheat?>?>, t: Throwable) {
+                    Log.e(TAG, "getting member cheats has failed: " + t.localizedMessage)
+                    emptyView.visibility = View.VISIBLE
+                    progressBar.visibility = View.GONE
+                    tools.showSnackbar(outerLayout, getString(R.string.error_loading_cheats))
+                }
+            })
+        }
 
-            @Override
-            public void onFailure(Call<List<Cheat>> call, Throwable t) {
-                Log.e(TAG, "getting member cheats has failed: " + t.getLocalizedMessage());
-                emptyView.setVisibility(View.VISIBLE);
-                progressBar.setVisibility(View.GONE);
-
-                tools.showSnackbar(outerLayout, getString(R.string.error_loading_cheats));
-            }
-        });
-    }
-
-    private void updateUI() {
-        if ((cheatList != null) && (cheatList.size() > 0)) {
-            memberCheatRecycleListViewAdapter.setCheatList(cheatList);
-            memberCheatRecycleListViewAdapter.setMember(tools.getMember());
-            recyclerView.setAdapter(memberCheatRecycleListViewAdapter);
-
-            memberCheatRecycleListViewAdapter.notifyDataSetChanged();
-
-            emptyView.setVisibility(View.GONE);
+    private fun updateUI() {
+        if (!cheatList.isNullOrEmpty()) {
+            memberCheatRecycleListViewAdapter!!.setCheatList(cheatList!! as List<Cheat>)
+            recyclerView.adapter = memberCheatRecycleListViewAdapter
+            memberCheatRecycleListViewAdapter!!.notifyDataSetChanged()
+            emptyView.visibility = View.GONE
         } else {
-            emptyView.setVisibility(View.VISIBLE);
+            emptyView.visibility = View.VISIBLE
         }
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
+    override fun onResume() {
+        super.onResume()
         if (!Reachability.isRegistered()) {
-            Reachability.registerReachability(this);
+            Reachability.registerReachability(this)
         }
     }
 
-    @Override
-    protected void onStop() {
-        Reachability.unregister(this);
-        super.onStop();
+    override fun onStop() {
+        Reachability.unregister(this)
+        super.onStop()
     }
 
-    @Override
-    protected void onDestroy() {
-        if (appLovinAdView != null) {
-            appLovinAdView.destroy();
+    override fun onDestroy() {
+        appLovinAdView.destroy()
+        super.onDestroy()
+    }
+
+    public override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putParcelable("member", authorMember)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> {
+                onBackPressed()
+                return true
+            }
         }
-        super.onDestroy();
+        return super.onOptionsItemSelected(item)
     }
 
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putParcelable("member", authorMember);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                onBackPressed();
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public void onCheatListItemSelected(Cheat cheat, int position) {
-        tools.putInt(Konstanten.PREFERENCES_PAGE_SELECTED, position);
+    override fun onCheatListItemSelected(cheat: Cheat, position: Int) {
+        tools.putInt(Konstanten.PREFERENCES_PAGE_SELECTED, position)
 
         // Using local Preferences to pass data (PREFERENCES_TEMP_CHEAT_ARRAY_OBJECT_VIEW) for game objects (instead of intent) otherwise runs into TransactionTooLargeException when passing the array to the next activity.
         if (Reachability.reachability.isReachable) {
-            Intent intent = new Intent(CheatsByMemberListActivity.this, MemberCheatViewPageIndicator.class);
-            intent.putExtra("selectedPage", position);
-            intent.putExtra("layoutResourceId", R.layout.activity_cheatview_pager);
-            startActivity(intent);
+            val intent =
+                Intent(this@CheatsByMemberListActivity, MemberCheatViewPageIndicator::class.java)
+            intent.putExtra("selectedPage", position)
+            intent.putExtra("layoutResourceId", R.layout.activity_cheatview_pager)
+            startActivity(intent)
         } else {
-            Toast.makeText(this, R.string.no_internet, Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.no_internet, Toast.LENGTH_SHORT).show()
         }
     }
 
-    @Override
-    public void onCheatListItemEditSelected(Cheat cheat, int position) {
+    override fun onCheatListItemEditSelected(cheat: Cheat, position: Int) {
         // TODO create a edit cheat MVVM construct here....
-        Log.d(TAG, "XXXXX DDDDD onCheatListItemEditSelected: ");
+        val intent = Intent(this@CheatsByMemberListActivity, EditCheatActivity::class.java)
+        intent.putExtra("cheat", cheat)
+        startActivity(intent)
+    }
 
-        Intent intent = new Intent(CheatsByMemberListActivity.this, EditCheatActivity.class);
-        intent.putExtra("cheat", cheat);
-        startActivity(intent);
-
-
+    companion object {
+        private const val TAG = "CheatsByMemberListActiv"
     }
 }

@@ -1,52 +1,61 @@
-package com.cheatdatabase.adapters;
+package com.cheatdatabase.adapters
 
-import android.content.Context;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import android.content.Context
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
+import com.cheatdatabase.data.model.Member
+import com.cheatdatabase.databinding.TopmembersListItemBinding
+import com.cheatdatabase.holders.TopMembersListViewItemHolder
+import com.cheatdatabase.listeners.OnTopMemberListItemSelectedListener
 
-import androidx.recyclerview.widget.RecyclerView;
+class TopMembersListViewAdapter(
+    onTopMemberListItemSelectedListener: OnTopMemberListItemSelectedListener,
+    val context: Context
+) : RecyclerView.Adapter<TopMembersListViewItemHolder>() {
+    private var memberList: List<Member>
+    private val onTopMemberListItemSelectedListener: OnTopMemberListItemSelectedListener
 
-import com.cheatdatabase.R;
-import com.cheatdatabase.data.model.Member;
-import com.cheatdatabase.holders.TopMembersListViewItemHolder;
-import com.cheatdatabase.listeners.OnTopMemberListItemSelectedListener;
+    private var _binding: TopmembersListItemBinding? = null
+    private val binding get() = _binding!!
 
-import java.util.ArrayList;
-import java.util.List;
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int
+    ): TopMembersListViewItemHolder {
+        _binding = TopmembersListItemBinding.inflate(
+            LayoutInflater.from(parent.context),
+            parent,
+            false
+        )
 
-public class TopMembersListViewAdapter extends RecyclerView.Adapter<TopMembersListViewItemHolder> {
-    private Context context;
-    private List<Member> memberList;
-    private OnTopMemberListItemSelectedListener onTopMemberListItemSelectedListener;
-
-    public TopMembersListViewAdapter(OnTopMemberListItemSelectedListener onTopMemberListItemSelectedListener, Context context) {
-        memberList = new ArrayList<>();
-        this.context = context;
-
-        this.onTopMemberListItemSelectedListener = onTopMemberListItemSelectedListener;
+        return TopMembersListViewItemHolder(binding, context)
     }
 
-    @Override
-    public TopMembersListViewItemHolder onCreateViewHolder(final ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.topmembers_list_item, parent, false);
-        return new TopMembersListViewItemHolder(itemView, context);
+    override fun onBindViewHolder(holder: TopMembersListViewItemHolder, position: Int) {
+        holder.updateUI(memberList[position])
+        holder.itemView.setOnClickListener {
+            onTopMemberListItemSelectedListener.onMemberClicked(
+                memberList[position]
+            )
+        }
+        holder.website.setOnClickListener {
+            onTopMemberListItemSelectedListener.onWebsiteClicked(
+                memberList[position]
+            )
+        }
     }
 
-    public void onBindViewHolder(TopMembersListViewItemHolder holder, final int position) {
-        TopMembersListViewItemHolder topMembersListViewItemHolder = holder;
-        topMembersListViewItemHolder.updateUI(memberList.get(position));
-        topMembersListViewItemHolder.view.setOnClickListener(v -> onTopMemberListItemSelectedListener.onMemberClicked(memberList.get(position)));
-        topMembersListViewItemHolder.website.setOnClickListener(v -> onTopMemberListItemSelectedListener.onWebsiteClicked(memberList.get(position)));
+    fun setMemberList(members: List<Member>) {
+        memberList = members
     }
 
-    public void setMemberList(List<Member> members) {
-        memberList = members;
+    override fun getItemCount(): Int {
+        return memberList.size
     }
 
-    @Override
-    public int getItemCount() {
-        return memberList.size();
+    init {
+        memberList = ArrayList()
+        this.onTopMemberListItemSelectedListener = onTopMemberListItemSelectedListener
     }
-
 }

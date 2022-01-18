@@ -9,7 +9,7 @@ import com.cheatdatabase.data.model.Member
 import com.cheatdatabase.databinding.ListrowMemberCheatItemBinding
 import com.cheatdatabase.helpers.Konstanten
 
-class MemberCheatsListViewItemHolderK(
+class MemberCheatsListViewItemHolder(
     val binding: ListrowMemberCheatItemBinding,
     val context: Context
 ) :
@@ -20,7 +20,6 @@ class MemberCheatsListViewItemHolderK(
     fun setCheat(cheat: Cheat) {
 
         with(binding) {
-//            gameName.text = "${cheat.game.gameName} (${cheat.system.systemName})"
             gameName.text = context.getString(
                 R.string.game_name_system_name,
                 cheat.game.gameName,
@@ -39,14 +38,6 @@ class MemberCheatsListViewItemHolderK(
             } else {
                 germanFlag.visibility = View.GONE
             }
-
-            // TODO FIXME add this again when continue work on the "edit my cheat" functionality
-//        if (member.getMid() == cheat.getSubmittingMember().getMid()) {
-//            edit.setVisibility(View.VISIBLE);
-//        } else {
-//            edit.setVisibility(View.GONE);
-//        }
-            editImageButton.visibility = View.GONE
         }
     }
 

@@ -21,9 +21,8 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.applovin.adview.AppLovinAdView
 import com.cheatdatabase.CheatDatabaseApplication
 import com.cheatdatabase.R
-import com.cheatdatabase.activity.SubmitCheatFormActivity
 import com.cheatdatabase.adapters.CheatsByGameRecycleListViewAdapter
-import com.cheatdatabase.cheatdetailview.CheatViewPageIndicatorActivity
+import com.cheatdatabase.cheatdetailview.CheatViewPageIndicator
 import com.cheatdatabase.data.RoomCheatDatabase
 import com.cheatdatabase.data.model.Cheat
 import com.cheatdatabase.data.model.Game
@@ -387,7 +386,7 @@ class CheatsByGameListActivity : AppCompatActivity(), OnCheatListItemSelectedLis
             // Using local Preferences to pass data for large game objects
             // (instead of intent) such as Pokemon
             val explicitIntent =
-                Intent(this@CheatsByGameListActivity, CheatViewPageIndicatorActivity::class.java)
+                Intent(this@CheatsByGameListActivity, CheatViewPageIndicator::class.java)
             explicitIntent.putExtra("gameObj", gameObj)
             explicitIntent.putExtra("selectedPage", position)
             explicitIntent.putExtra("layoutResourceId", R.layout.activity_cheatview_pager)

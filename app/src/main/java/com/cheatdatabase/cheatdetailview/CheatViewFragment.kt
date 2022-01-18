@@ -62,7 +62,7 @@ class CheatViewFragment : Fragment(), CheatViewGalleryImageClickListener {
     private var game: Game? = null
     private var offset = 0
 
-    private var cheatViewPageIndicatorActivity: CheatViewPageIndicatorActivity? = null
+    private var cheatViewPageIndicator: CheatViewPageIndicator? = null
 
     companion object {
         private const val TAG = "CheatViewFragment"
@@ -88,7 +88,7 @@ class CheatViewFragment : Fragment(), CheatViewGalleryImageClickListener {
             game = savedInstanceState.getParcelable("game")
             offset = savedInstanceState.getInt("offset")
         }
-        cheatViewPageIndicatorActivity = activity as CheatViewPageIndicatorActivity?
+        cheatViewPageIndicator = activity as CheatViewPageIndicator?
     }
 
 
@@ -135,7 +135,7 @@ class CheatViewFragment : Fragment(), CheatViewGalleryImageClickListener {
             } else {
                 reloadView.visibility = View.VISIBLE
                 Toast.makeText(
-                    cheatViewPageIndicatorActivity,
+                    cheatViewPageIndicator,
                     R.string.no_internet,
                     Toast.LENGTH_SHORT
                 ).show()
@@ -150,7 +150,7 @@ class CheatViewFragment : Fragment(), CheatViewGalleryImageClickListener {
         if (Reachability.reachability.isReachable) {
             onlineContent
         } else {
-            Toast.makeText(cheatViewPageIndicatorActivity, R.string.no_internet, Toast.LENGTH_SHORT)
+            Toast.makeText(cheatViewPageIndicator, R.string.no_internet, Toast.LENGTH_SHORT)
                 .show()
         }
     }
@@ -171,7 +171,7 @@ class CheatViewFragment : Fragment(), CheatViewGalleryImageClickListener {
                 cheatViewGalleryListAdapter.setClickListener(this)
                 galleryRecyclerView.adapter = cheatViewGalleryListAdapter
                 val gridLayoutManager: RecyclerView.LayoutManager = GridLayoutManager(
-                    cheatViewPageIndicatorActivity,
+                    cheatViewPageIndicator,
                     2,
                     GridLayoutManager.HORIZONTAL,
                     false
@@ -246,18 +246,18 @@ class CheatViewFragment : Fragment(), CheatViewGalleryImageClickListener {
         val secondThColumn = "<b>" + th2[0].trim { it <= ' ' } + "</b>"
 
         /* Create a new row to be added. */
-        val trTh = TableRow(cheatViewPageIndicatorActivity)
+        val trTh = TableRow(cheatViewPageIndicator)
         trTh.layoutParams = ViewGroup.LayoutParams(
             ViewGroup.LayoutParams.WRAP_CONTENT,
             ViewGroup.LayoutParams.WRAP_CONTENT
         )
-        val tvFirstThCol = TextView(cheatViewPageIndicatorActivity)
+        val tvFirstThCol = TextView(cheatViewPageIndicator)
         tvFirstThCol.text = Html.fromHtml(firstThColumn)
         tvFirstThCol.setPadding(1, 1, 5, 1)
         tvFirstThCol.minimumWidth = Konstanten.TABLE_ROW_MINIMUM_WIDTH
         TextViewCompat.setTextAppearance(tvFirstThCol, R.style.NormalText)
         trTh.addView(tvFirstThCol)
-        val tvSecondThCol = TextView(cheatViewPageIndicatorActivity)
+        val tvSecondThCol = TextView(cheatViewPageIndicator)
         tvSecondThCol.text = Html.fromHtml(secondThColumn)
         tvSecondThCol.setPadding(5, 1, 1, 1)
         TextViewCompat.setTextAppearance(tvSecondThCol, R.style.NormalText)
@@ -278,19 +278,19 @@ class CheatViewFragment : Fragment(), CheatViewGalleryImageClickListener {
             val secondTdColumn = td2[0].replace("<br>".toRegex(), "\n").trim { it <= ' ' }
 
             /* Create a new row to be added. */
-            val trTd = TableRow(cheatViewPageIndicatorActivity)
+            val trTd = TableRow(cheatViewPageIndicator)
             trTd.layoutParams = ViewGroup.LayoutParams(
                 ViewGroup.LayoutParams.WRAP_CONTENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT
             )
-            val tvFirstTdCol = TextView(cheatViewPageIndicatorActivity)
+            val tvFirstTdCol = TextView(cheatViewPageIndicator)
             tvFirstTdCol.isSingleLine = false
             tvFirstTdCol.text = firstTdColumn
             tvFirstTdCol.setPadding(1, 1, 10, 1)
             tvFirstTdCol.minimumWidth = Konstanten.TABLE_ROW_MINIMUM_WIDTH
             TextViewCompat.setTextAppearance(tvFirstTdCol, R.style.NormalText)
             trTd.addView(tvFirstTdCol)
-            val tvSecondTdCol = TextView(cheatViewPageIndicatorActivity)
+            val tvSecondTdCol = TextView(cheatViewPageIndicator)
             tvSecondTdCol.isSingleLine = false
             tvSecondTdCol.text = secondTdColumn
             tvSecondTdCol.canScrollHorizontally(1)
@@ -340,7 +340,7 @@ class CheatViewFragment : Fragment(), CheatViewGalleryImageClickListener {
         get() {
             progressBar.visibility = View.VISIBLE
             val call: Call<Cheat> =
-                cheatViewPageIndicatorActivity!!.restApi.getCheatById(cheatObj.cheatId)
+                cheatViewPageIndicator!!.restApi.getCheatById(cheatObj.cheatId)
             call.enqueue(object : Callback<Cheat?> {
                 override fun onResponse(metaInfo: Call<Cheat?>, response: Response<Cheat?>) {
                     setCheatText(response.body())
@@ -356,7 +356,7 @@ class CheatViewFragment : Fragment(), CheatViewGalleryImageClickListener {
 
     private fun countForumPosts() {
         val call: Call<JsonObject> =
-            cheatViewPageIndicatorActivity!!.restApi.countForumPosts(cheatObj.cheatId)
+            cheatViewPageIndicator!!.restApi.countForumPosts(cheatObj.cheatId)
         call.enqueue(object : Callback<JsonObject?> {
             override fun onResponse(forum: Call<JsonObject?>, response: Response<JsonObject?>) {
                 val forumPostsCount: JsonObject? = response.body()

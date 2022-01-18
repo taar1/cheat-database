@@ -113,7 +113,7 @@
     <string name="top_members_title">Members Top 20</string>
     <string name="top_members_visit_website">Visit %1$s\'s website</string>
     <string name="top_members_no_website">Member %s has no website</string>
-    <string name="top_members_cheats_count"># of cheats</string>
+    <string name="top_members_cheats_count"># of cheats: %d</string>
 
     <!-- SHARE CHEAT -->
     <string name="share_title">Share cheat</string>
