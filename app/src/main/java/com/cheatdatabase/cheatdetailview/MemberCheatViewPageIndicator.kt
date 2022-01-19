@@ -36,7 +36,6 @@ import com.cheatdatabase.helpers.Konstanten
 import com.cheatdatabase.helpers.Reachability
 import com.cheatdatabase.helpers.Tools
 import com.cheatdatabase.rest.RestApi
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import dagger.hilt.android.AndroidEntryPoint
@@ -70,7 +69,6 @@ class MemberCheatViewPageIndicator : AppCompatActivity(), GenericCallback, OnChe
     lateinit var mToolbar: Toolbar
     lateinit var appLovinAdView: AppLovinAdView
     lateinit var mPager: ViewPager
-    lateinit var fab: FloatingActionButton
     lateinit var magicIndicator: MagicIndicator
 
     private var pageSelected = 0
@@ -152,7 +150,6 @@ class MemberCheatViewPageIndicator : AppCompatActivity(), GenericCallback, OnChe
         mToolbar = binding.toolbar
         appLovinAdView = binding.adContainer
         mPager = binding.pager
-        fab = binding.addNewCheatButton
         magicIndicator = binding.magicIndicator
     }
 
@@ -230,7 +227,8 @@ class MemberCheatViewPageIndicator : AppCompatActivity(), GenericCallback, OnChe
             magicIndicator.navigator = commonNavigator
             ViewPagerHelper.bind(magicIndicator, mPager)
             mPager.currentItem = pageSelected
-            fab.setOnClickListener {
+
+            binding.addNewCheatButton.setOnClickListener {
                 val intent =
                     Intent(this@MemberCheatViewPageIndicator, SubmitCheatFormActivity::class.java)
                 intent.putExtra("gameObj", gameObj)
