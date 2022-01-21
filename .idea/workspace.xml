@@ -118,10 +118,16 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4caff62e-c62f-40ca-acf0-73c680b13375" name="Default" comment="Tons of bug fixes.">
+    <list default="true" id="4caff62e-c62f-40ca-acf0-73c680b13375" name="Default" comment="Bug Fixes">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/cheatdetailview/CheatViewFragmentAdapter.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/cheatdetailview/CheatViewFragmentAdapter.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/cheatdetailview/CheatViewPageIndicator.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/cheatdetailview/CheatViewPageIndicator.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/cheatdetailview/FavoritesCheatViewPageIndicator.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/cheatdetailview/FavoritesCheatViewPageIndicator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/cheatdetailview/MemberCheatViewFragmentAdapter.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/cheatdetailview/MemberCheatViewFragmentAdapter.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/cheatdetailview/MemberCheatViewPageIndicator.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/cheatdetailview/MemberCheatViewPageIndicator.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_cheatview_pager.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_cheatview_pager.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/colors.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/colors.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/themes.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/themes.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -237,6 +243,7 @@
     <property name="VectorAssetImportPath" value="C:\Users\taar1\Downloads" />
     <property name="android-custom-viewC:/Users/taar1/.gradle/caches/modules-2/files-2.1/androidx.recyclerview/recyclerview/1.2.1/f0f93e67af3f7417bdd560d5142f6dec4fe629c3/recyclerview-1.2.1-sources.jar!/androidx/recyclerview/widget/RecyclerView.java_SELECTED" value="RecyclerView" />
     <property name="android-custom-viewC:/Users/taar1/.gradle/caches/modules-2/files-2.1/androidx.viewpager/viewpager/1.0.0/db045f92188b9d247d5f556866f8861ab68528f0/viewpager-1.0.0-sources.jar!/androidx/viewpager/widget/ViewPager.java_SELECTED" value="ViewPager" />
+    <property name="android-custom-viewC:/Users/taar1/.gradle/caches/modules-2/files-2.1/androidx.viewpager2/viewpager2/1.0.0/3c3569044e6969f1ee5c3aa03b08e6717a2d782f/viewpager2-1.0.0-sources.jar!/androidx/viewpager2/widget/ViewPager2.java_SELECTED" value="ViewPager2" />
     <property name="android-custom-viewC:/Users/taar1/.gradle/caches/modules-2/files-2.1/com.applovin/applovin-sdk/10.3.5/db6c667594c8d06f3f1acee55b3cba42928b01ec/applovin-sdk-10.3.5-sources.jar!/com/applovin/mediation/ads/MaxAdView.java_SELECTED" value="MaxAdView" />
     <property name="android-custom-viewC:/Users/taar1/.gradle/caches/modules-2/files-2.1/com.facebook.fresco/drawee/2.6.0/8a4ada02d0e83f5de056796e7d5fef2acaf8f27d/drawee-2.6.0-sources.jar!/com/facebook/drawee/view/SimpleDraweeView.java_SELECTED" value="SimpleDraweeView" />
     <property name="android-custom-viewC:/Users/taar1/.gradle/caches/modules-2/files-2.1/com.github.SherlockGougou/MagicIndicator/1.6.0/335dbd3fe1bc9a03027750bc77648451da7f7e3c/MagicIndicator-1.6.0-sources.jar!/net/lucode/hackware/magicindicator/MagicIndicator.java_SELECTED" value="MagicIndicator" />
@@ -798,13 +805,6 @@
       <option name="presentableId" value="Default" />
       <updated>1487274191999</updated>
     </task>
-    <task id="LOCAL-00142" summary="Release Version 2.5.18&#10;(+ library updates)">
-      <created>1595449945113</created>
-      <option name="number" value="00142" />
-      <option name="presentableId" value="LOCAL-00142" />
-      <option name="project" value="LOCAL" />
-      <updated>1595449945113</updated>
-    </task>
     <task id="LOCAL-00143" summary="2.5.19-preRelease">
       <created>1595451231326</created>
       <option name="number" value="00143" />
@@ -1141,7 +1141,14 @@
       <option name="project" value="LOCAL" />
       <updated>1642539081917</updated>
     </task>
-    <option name="localTasksCounter" value="191" />
+    <task id="LOCAL-00191" summary="Bug Fixes">
+      <created>1642620461668</created>
+      <option name="number" value="00191" />
+      <option name="presentableId" value="LOCAL-00191" />
+      <option name="project" value="LOCAL" />
+      <updated>1642620461669</updated>
+    </task>
+    <option name="localTasksCounter" value="192" />
     <servers />
   </component>
   <component name="TodoView">
@@ -1246,7 +1253,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
-    <MESSAGE value="Navigation Component: Fixing bugs with the fragments inside the nav controller" />
     <MESSAGE value="Navigation Component: Almost finished!" />
     <MESSAGE value="Move bottom banner ads from MainActivity to the Fragments" />
     <MESSAGE value="Get rid of startActivityForResult() everywhere (using the new &quot;registerForActivityResult&quot; method)" />
@@ -1271,7 +1277,8 @@
     <MESSAGE value="CheatListActivities converted to kotlin. Removed Butterknife in those classes." />
     <MESSAGE value="Replace deprecated &quot;getExternalStorageDirectory()&quot;" />
     <MESSAGE value="Tons of bug fixes." />
-    <option name="LAST_COMMIT_MESSAGE" value="Tons of bug fixes." />
+    <MESSAGE value="Bug Fixes" />
+    <option name="LAST_COMMIT_MESSAGE" value="Bug Fixes" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
@@ -1370,6 +1377,11 @@
           <url>file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/CheatsByMemberListActivity.kt</url>
           <line>134</line>
           <option name="timeStamp" value="252" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/cheatdetailview/CheatViewPageIndicator.kt</url>
+          <line>245</line>
+          <option name="timeStamp" value="253" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

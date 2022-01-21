@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="white">#FFFFFF</color>
+    <color name="white_transparent">#88ffffff</color>
     <color name="gold">#E5C100</color>
     <color name="goldenrod">#DAA520</color>
     <color name="red">#DD0000</color>

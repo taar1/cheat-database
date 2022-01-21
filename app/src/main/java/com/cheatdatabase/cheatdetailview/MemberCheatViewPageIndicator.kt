@@ -16,8 +16,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.viewpager.widget.ViewPager
-import androidx.viewpager.widget.ViewPager.OnPageChangeListener
+import androidx.viewpager2.widget.ViewPager2
 import com.applovin.adview.AppLovinAdView
 import com.cheatdatabase.R
 import com.cheatdatabase.activity.CheatForumActivity
@@ -39,8 +38,6 @@ import com.cheatdatabase.rest.RestApi
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import dagger.hilt.android.AndroidEntryPoint
-import net.lucode.hackware.magicindicator.MagicIndicator
-import net.lucode.hackware.magicindicator.ViewPagerHelper
 import net.lucode.hackware.magicindicator.buildins.UIUtil
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.CommonNavigator
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.CommonNavigatorAdapter
@@ -68,14 +65,13 @@ class MemberCheatViewPageIndicator : AppCompatActivity(), GenericCallback, OnChe
     lateinit var outerLayout: ConstraintLayout
     lateinit var mToolbar: Toolbar
     lateinit var appLovinAdView: AppLovinAdView
-    lateinit var mPager: ViewPager
-    lateinit var magicIndicator: MagicIndicator
+    lateinit var viewPager: ViewPager2
+//    lateinit var magicIndicator: FrameLayout
 
     private var pageSelected = 0
     private var cheatList: List<Cheat>? = null
     private var visibleCheat: Cheat? = null
     private var gameObj: Game = Game()
-    private var memberCheatViewFragmentAdapter: MemberCheatViewFragmentAdapter? = null
     private var activePage = 0
 
     private lateinit var settings: SharedPreferences
@@ -149,8 +145,8 @@ class MemberCheatViewPageIndicator : AppCompatActivity(), GenericCallback, OnChe
         outerLayout = binding.outerLayout
         mToolbar = binding.toolbar
         appLovinAdView = binding.adContainer
-        mPager = binding.pager
-        magicIndicator = binding.magicIndicator
+        viewPager = binding.pager
+//        magicIndicator = binding.magicIndicator
     }
 
     private fun init() {
@@ -163,17 +159,8 @@ class MemberCheatViewPageIndicator : AppCompatActivity(), GenericCallback, OnChe
 
     private fun initialisePaging() {
         try {
-            memberCheatViewFragmentAdapter =
-                MemberCheatViewFragmentAdapter(supportFragmentManager, cheatList!!)
-            mPager.adapter = memberCheatViewFragmentAdapter
-            mPager.addOnPageChangeListener(object : OnPageChangeListener {
-                override fun onPageScrolled(
-                    position: Int,
-                    positionOffset: Float,
-                    positionOffsetPixels: Int
-                ) {
-                }
-
+            viewPager.adapter = MemberCheatViewFragmentAdapter(this, cheatList!!)
+            viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
                 override fun onPageSelected(position: Int) {
                     // Save selected page
                     tools.putInt(Konstanten.PREFERENCES_PAGE_SELECTED, position)
@@ -195,9 +182,40 @@ class MemberCheatViewPageIndicator : AppCompatActivity(), GenericCallback, OnChe
                         ).show()
                     }
                 }
-
-                override fun onPageScrollStateChanged(state: Int) {}
             })
+
+//            viewPager.addOnPageChangeListener(object : OnPageChangeListener {
+//                override fun onPageScrolled(
+//                    position: Int,
+//                    positionOffset: Float,
+//                    positionOffsetPixels: Int
+//                ) {
+//                }
+//
+//                override fun onPageSelected(position: Int) {
+//                    // Save selected page
+//                    tools.putInt(Konstanten.PREFERENCES_PAGE_SELECTED, position)
+//                    activePage = position
+//                    try {
+//                        visibleCheat = cheatList!![position]
+//                        invalidateOptionsMenu()
+//                        gameObj = visibleCheat!!.game
+//                        gameObj.systemId = visibleCheat!!.system.systemId
+//                        gameObj.systemName = visibleCheat!!.system.systemName
+//                        supportActionBar!!.title = visibleCheat!!.game.gameName
+//                        supportActionBar!!.subtitle = visibleCheat!!.system.systemName
+//                    } catch (e: Exception) {
+//                        Log.e(TAG, e.message!!)
+//                        Toast.makeText(
+//                            this@MemberCheatViewPageIndicator,
+//                            R.string.err_somethings_wrong,
+//                            Toast.LENGTH_SHORT
+//                        ).show()
+//                    }
+//                }
+//
+//                override fun onPageScrollStateChanged(state: Int) {}
+//            })
             val commonNavigator = CommonNavigator(this)
             commonNavigator.isSkimOver = true
             commonNavigator.adapter = object : CommonNavigatorAdapter() {
@@ -212,7 +230,7 @@ class MemberCheatViewPageIndicator : AppCompatActivity(), GenericCallback, OnChe
                     clipPagerTitleView.normalColor =
                         Color.parseColor("#88ffffff") // White transparent
                     clipPagerTitleView.selectedColor = Color.WHITE
-                    clipPagerTitleView.setOnClickListener { mPager.currentItem = index }
+                    clipPagerTitleView.setOnClickListener { viewPager.currentItem = index }
                     return clipPagerTitleView
                 }
 
@@ -224,9 +242,9 @@ class MemberCheatViewPageIndicator : AppCompatActivity(), GenericCallback, OnChe
                     return indicator
                 }
             }
-            magicIndicator.navigator = commonNavigator
-            ViewPagerHelper.bind(magicIndicator, mPager)
-            mPager.currentItem = pageSelected
+//            magicIndicator.navigator = commonNavigator
+//            ViewPagerHelper.bind(magicIndicator, viewPager)
+            viewPager.currentItem = pageSelected
 
             binding.addNewCheatButton.setOnClickListener {
                 val intent =

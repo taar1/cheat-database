@@ -3,7 +3,6 @@ package com.cheatdatabase.cheatdetailview;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -38,17 +37,6 @@ import com.cheatdatabase.helpers.Tools;
 import com.cheatdatabase.rest.RestApi;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
-
-import net.lucode.hackware.magicindicator.MagicIndicator;
-import net.lucode.hackware.magicindicator.ViewPagerHelper;
-import net.lucode.hackware.magicindicator.buildins.UIUtil;
-import net.lucode.hackware.magicindicator.buildins.commonnavigator.CommonNavigator;
-import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.CommonNavigatorAdapter;
-import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerIndicator;
-import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerTitleView;
-import net.lucode.hackware.magicindicator.buildins.commonnavigator.indicators.LinePagerIndicator;
-import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.ColorTransitionPagerTitleView;
-import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.SimplePagerTitleView;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -184,36 +172,36 @@ public class FavoritesCheatViewPageIndicator extends AppCompatActivity implement
                 }
             });
 
-            MagicIndicator magicIndicator = findViewById(R.id.magic_indicator);
-            CommonNavigator commonNavigator = new CommonNavigator(this);
-            commonNavigator.setSkimOver(true);
-            commonNavigator.setAdapter(new CommonNavigatorAdapter() {
-                @Override
-                public int getCount() {
-                    return cheatArray == null ? 0 : cheatArray.size();
-                }
-
-                @Override
-                public IPagerTitleView getTitleView(Context context, final int index) {
-                    SimplePagerTitleView clipPagerTitleView = new ColorTransitionPagerTitleView(context);
-                    clipPagerTitleView.setText(cheatTitles[index]);
-                    clipPagerTitleView.setNormalColor(Color.parseColor("#88ffffff")); // White transparent
-                    clipPagerTitleView.setSelectedColor(Color.WHITE);
-                    clipPagerTitleView.setOnClickListener(v -> mPager.setCurrentItem(index));
-                    return clipPagerTitleView;
-                }
-
-                @Override
-                public IPagerIndicator getIndicator(Context context) {
-                    LinePagerIndicator indicator = new LinePagerIndicator(context);
-                    indicator.setMode(LinePagerIndicator.MODE_EXACTLY);
-                    indicator.setYOffset(UIUtil.dip2px(context, 3));
-                    indicator.setColors(Color.WHITE);
-                    return indicator;
-                }
-            });
-            magicIndicator.setNavigator(commonNavigator);
-            ViewPagerHelper.bind(magicIndicator, mPager);
+//            MagicIndicator magicIndicator = findViewById(R.id.magic_indicator);
+//            CommonNavigator commonNavigator = new CommonNavigator(this);
+//            commonNavigator.setSkimOver(true);
+//            commonNavigator.setAdapter(new CommonNavigatorAdapter() {
+//                @Override
+//                public int getCount() {
+//                    return cheatArray == null ? 0 : cheatArray.size();
+//                }
+//
+//                @Override
+//                public IPagerTitleView getTitleView(Context context, final int index) {
+//                    SimplePagerTitleView clipPagerTitleView = new ColorTransitionPagerTitleView(context);
+//                    clipPagerTitleView.setText(cheatTitles[index]);
+//                    clipPagerTitleView.setNormalColor(Color.parseColor("#88ffffff")); // White transparent
+//                    clipPagerTitleView.setSelectedColor(Color.WHITE);
+//                    clipPagerTitleView.setOnClickListener(v -> mPager.setCurrentItem(index));
+//                    return clipPagerTitleView;
+//                }
+//
+//                @Override
+//                public IPagerIndicator getIndicator(Context context) {
+//                    LinePagerIndicator indicator = new LinePagerIndicator(context);
+//                    indicator.setMode(LinePagerIndicator.MODE_EXACTLY);
+//                    indicator.setYOffset(UIUtil.dip2px(context, 3));
+//                    indicator.setColors(Color.WHITE);
+//                    return indicator;
+//                }
+//            });
+//            magicIndicator.setNavigator(commonNavigator);
+//            ViewPagerHelper.bind(magicIndicator, mPager);
             mPager.setCurrentItem(pageSelected);
 
             fab.setOnClickListener(v -> {

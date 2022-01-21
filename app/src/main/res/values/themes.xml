@@ -240,7 +240,10 @@
 
     <style name="cheat_detail_view_page_indicator">
         <item name="android:textColor">@color/white</item>
+        <item name="android:colorActivatedHighlight">@color/white_transparent</item>
         <item name="android:textStyle">normal</item>
+        <item name="android:itemTextAppearance">?android:textAppearanceSmall</item>
+        <item name="android:capitalize">characters</item>
         <item name="android:textSize">12sp</item>
         <item name="android:background">@color/color_primary_dark</item>
     </style>
