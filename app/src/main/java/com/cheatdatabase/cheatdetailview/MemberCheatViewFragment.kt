@@ -1,6 +1,6 @@
 package com.cheatdatabase.cheatdetailview
 
-import android.content.SharedPreferences
+import android.content.Intent
 import android.os.Bundle
 import android.text.Html
 import android.util.Log
@@ -17,7 +17,6 @@ import com.cheatdatabase.adapters.CheatViewGalleryListAdapter
 import com.cheatdatabase.callbacks.CheatViewGalleryImageClickListener
 import com.cheatdatabase.data.helper.CheatArrayHolder
 import com.cheatdatabase.data.model.Cheat
-import com.cheatdatabase.data.model.Member
 import com.cheatdatabase.data.model.Screenshot
 import com.cheatdatabase.databinding.FragmentMemberCheatDetailBinding
 import com.cheatdatabase.helpers.Konstanten
@@ -52,11 +51,7 @@ class MemberCheatViewFragment : Fragment(), CheatViewGalleryImageClickListener {
     lateinit var cheatObj: Cheat
     private var cheats: List<Cheat>? = null
     private var offset = 0
-    private var member: Member? = null
     private var cheatViewPageIndicatorActivity: MemberCheatViewPageIndicator? = null
-
-    lateinit var editor: SharedPreferences.Editor
-
 
     companion object {
         private const val TAG = "MemberCheatViewFragment"
@@ -82,14 +77,8 @@ class MemberCheatViewFragment : Fragment(), CheatViewGalleryImageClickListener {
             cheats = cheatArrayHolder?.cheatList
             offset = savedInstanceState.getInt("offset")
         }
-        cheatViewPageIndicatorActivity = activity as MemberCheatViewPageIndicator?
-        val settings = tools.sharedPreferences
-        editor = settings.edit()
 
-        member = Gson().fromJson(
-            settings.getString(Konstanten.MEMBER_OBJECT, null),
-            Member::class.java
-        )
+        cheatViewPageIndicatorActivity = activity as MemberCheatViewPageIndicator?
     }
 
     override fun onCreateView(
@@ -117,7 +106,7 @@ class MemberCheatViewFragment : Fragment(), CheatViewGalleryImageClickListener {
         super.onViewCreated(view, savedInstanceState)
 
         cheatObj = cheats!![offset]
-        cheatRating
+        getCheatRating()
         tvCheatTitle.text = cheatObj.cheatTitle
 
         tvTextBeforeTable.visibility = View.VISIBLE
@@ -159,15 +148,13 @@ class MemberCheatViewFragment : Fragment(), CheatViewGalleryImageClickListener {
          */
         if (cheatObj.cheatText == null || cheatObj.cheatText.length < 10) {
             progressBar.visibility = View.VISIBLE
-            cheatBody
+            getCheatBody()
         } else {
             progressBar.visibility = View.GONE
             populateView()
         }
-        editor.putString("cheat$offset", Gson().toJson(cheatObj))
-        editor.apply()
+        tools.preferencesEditor.putString("cheat$offset", Gson().toJson(cheatObj))
     }
-
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
@@ -306,26 +293,25 @@ class MemberCheatViewFragment : Fragment(), CheatViewGalleryImageClickListener {
         webview?.loadDataWithBaseURL("", cheatObj.cheatText, "text/html", "UTF-8", "")
     }
 
+    private fun getCheatBody() {
+        val call: Call<Cheat> =
+            cheatViewPageIndicatorActivity!!.restApi.getCheatById(cheatObj.cheatId)
 
-    private val cheatBody: Unit
-        private get() {
-            val call: Call<Cheat> =
-                cheatViewPageIndicatorActivity!!.restApi.getCheatById(cheatObj.cheatId)
-            call.enqueue(object : Callback<Cheat?> {
-                override fun onResponse(metaInfo: Call<Cheat?>, response: Response<Cheat?>) {
-                    updateUI(response.body())
-                }
+        call.enqueue(object : Callback<Cheat?> {
+            override fun onResponse(metaInfo: Call<Cheat?>, response: Response<Cheat?>) {
+                updateUI(response.body())
+            }
 
-                override fun onFailure(call: Call<Cheat?>, e: Throwable) {
-                    Log.e(TAG, "getCheatBody onFailure: " + e.localizedMessage)
-                    tools.showSnackbar(
-                        mainLayout,
-                        requireContext().getString(R.string.err_somethings_wrong),
-                        5000
-                    )
-                }
-            })
-        }
+            override fun onFailure(call: Call<Cheat?>, e: Throwable) {
+                Log.e(TAG, "getCheatBody onFailure: " + e.localizedMessage)
+                tools.showSnackbar(
+                    mainLayout,
+                    requireContext().getString(R.string.err_somethings_wrong),
+                    5000
+                )
+            }
+        })
+    }
 
     private fun updateUI(cheat: Cheat?) {
         if (cheat?.style == Konstanten.CHEAT_TEXT_FORMAT_WALKTHROUGH) {
@@ -336,46 +322,38 @@ class MemberCheatViewFragment : Fragment(), CheatViewGalleryImageClickListener {
         populateView()
     }
 
-    private val cheatRating: Unit
-        get() {
-            if (member != null) {
-                val call: Call<JsonObject> =
-                    cheatViewPageIndicatorActivity!!.restApi.getMemberRatingByCheatId(
-                        member!!.mid, cheatObj.cheatId
+    private fun getCheatRating() {
+        tools.member?.let {
+            val call: Call<JsonObject> =
+                cheatViewPageIndicatorActivity!!.restApi.getMemberRatingByCheatId(
+                    it.mid, cheatObj.cheatId
+                )
+            call.enqueue(object : Callback<JsonObject?> {
+                override fun onResponse(
+                    ratingInfo: Call<JsonObject?>,
+                    response: Response<JsonObject?>
+                ) {
+                    val ratingJsonObj: JsonObject? = response.body()
+                    Log.d(
+                        TAG, "getCheatRating SUCCESS: " + ratingJsonObj?.get("rating")?.asFloat
                     )
-                call.enqueue(object : Callback<JsonObject?> {
-                    override fun onResponse(
-                        ratingInfo: Call<JsonObject?>,
-                        response: Response<JsonObject?>
-                    ) {
-                        val ratingJsonObj: JsonObject? = response.body()
-                        Log.d(
-                            TAG, "getCheatRating SUCCESS: " + ratingJsonObj?.get("rating")?.asFloat
-                        )
-                        val cheatRating: Float? = ratingJsonObj?.get("rating")?.asFloat
-                        if (cheatRating != null && cheatRating > 0) {
-                            cheatViewPageIndicatorActivity!!.setRating(offset, cheatRating)
-                        }
+                    val cheatRating: Float? = ratingJsonObj?.get("rating")?.asFloat
+                    if (cheatRating != null && cheatRating > 0) {
+                        cheatViewPageIndicatorActivity!!.setRating(offset, cheatRating)
                     }
+                }
 
-                    override fun onFailure(call: Call<JsonObject?>, t: Throwable) {
-                    }
-                })
-            }
+                override fun onFailure(call: Call<JsonObject?>, t: Throwable) {
+                }
+            })
         }
+    }
 
-    // TODO FIXME gallery viewer ersetzen
-    // TODO FIXME gallery viewer ersetzen
-    // TODO FIXME gallery viewer ersetzen
-    // TODO FIXME gallery viewer ersetzen
     override fun onScreenshotClicked(screenshot: Screenshot, position: Int) {
-//        StfalconImageViewer.Builder(
-//            cheatViewPageIndicatorActivity,
-//            cheatObj.screenshotList
-//        ) { imageView: ImageView?, image: Screenshot ->
-//            Picasso.get().load(image.fullPath).placeholder(R.drawable.image_placeholder)
-//                .into(imageView)
-//        }.withStartPosition(position).show()
+        val intent = Intent(activity, SingleImageViewerActivity::class.java)
+        intent.putExtra("image_full_path", screenshot.fullPath)
+        intent.putExtra("cheat_title", cheatObj.cheatTitle)
+        startActivity(intent)
     }
 
 

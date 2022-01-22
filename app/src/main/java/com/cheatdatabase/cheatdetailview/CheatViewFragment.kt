@@ -36,7 +36,7 @@ import javax.inject.Inject
  * Cheat Detail View Fragment.
  *
  * @author Dominik Erbsland
- * @version 1.2
+ * @version 1.3
  */
 @AndroidEntryPoint
 class CheatViewFragment : Fragment(), CheatViewGalleryImageClickListener {
@@ -58,7 +58,6 @@ class CheatViewFragment : Fragment(), CheatViewGalleryImageClickListener {
     lateinit var reloadView: ImageView
 
     private lateinit var cheatObj: Cheat
-    private var cheatList: List<Cheat>?
     private var game: Game? = null
     private var offset = 0
 
@@ -74,10 +73,6 @@ class CheatViewFragment : Fragment(), CheatViewGalleryImageClickListener {
             cheatViewFragment.offset = offset
             return cheatViewFragment
         }
-    }
-
-    init {
-        cheatList = ArrayList()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -123,15 +118,16 @@ class CheatViewFragment : Fragment(), CheatViewGalleryImageClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        if (cheatList != null && game != null) {
-            cheatList = game?.cheatList
-            cheatObj = cheatList!![offset]
+        if (game != null) {
+            cheatObj = game?.cheatList!![offset]
             tvCheatTitle.text = cheatObj.cheatTitle
+
             tvTextBeforeTable.visibility = View.VISIBLE
             tvSwipeHorizontallyInfoText.visibility = View.INVISIBLE
             progressBar.visibility = View.INVISIBLE
+
             if (Reachability.reachability.isReachable) {
-                onlineContent
+                getContentOnline()
             } else {
                 reloadView.visibility = View.VISIBLE
                 Toast.makeText(
@@ -142,13 +138,16 @@ class CheatViewFragment : Fragment(), CheatViewGalleryImageClickListener {
             }
             countForumPosts()
         } else {
-            tools.showSnackbar(mainLayout, getString(R.string.err_data_not_accessible))
+            tools.showSnackbar(
+                activity?.findViewById(android.R.id.content),
+                getString(R.string.err_data_not_accessible)
+            )
         }
     }
 
     private fun clickReload() {
         if (Reachability.reachability.isReachable) {
-            onlineContent
+            getContentOnline()
         } else {
             Toast.makeText(cheatViewPageIndicator, R.string.no_internet, Toast.LENGTH_SHORT)
                 .show()
@@ -160,46 +159,45 @@ class CheatViewFragment : Fragment(), CheatViewGalleryImageClickListener {
      * complete (trimmed for the search results) and therefore has to be
      * re-fetched in a background process.
      */
-    private val onlineContent: Unit
-        get() {
-            reloadView.visibility = View.GONE
+    private fun getContentOnline() {
+        reloadView.visibility = View.GONE
 
-            // Get thumbnails if there are screenshots.
-            if (cheatObj.hasScreenshots()) {
-                val cheatViewGalleryListAdapter = CheatViewGalleryListAdapter()
-                cheatViewGalleryListAdapter.setScreenshotList(cheatObj.screenshotList)
-                cheatViewGalleryListAdapter.setClickListener(this)
-                galleryRecyclerView.adapter = cheatViewGalleryListAdapter
-                val gridLayoutManager: RecyclerView.LayoutManager = GridLayoutManager(
-                    cheatViewPageIndicator,
-                    2,
-                    GridLayoutManager.HORIZONTAL,
-                    false
-                )
-                galleryRecyclerView.layoutManager = gridLayoutManager
-                galleryRecyclerView.visibility = View.VISIBLE
-                if (cheatObj.screenshotList == null || cheatObj.screenshotList.size <= 3) {
-                    tvSwipeHorizontallyInfoText.visibility = View.GONE
-                } else {
-                    tvSwipeHorizontallyInfoText.visibility = View.VISIBLE
-                }
-            } else {
+        // Get thumbnails if there are screenshots.
+        if (cheatObj.hasScreenshots()) {
+            val cheatViewGalleryListAdapter = CheatViewGalleryListAdapter()
+            cheatViewGalleryListAdapter.setScreenshotList(cheatObj.screenshotList)
+            cheatViewGalleryListAdapter.setClickListener(this)
+            galleryRecyclerView.adapter = cheatViewGalleryListAdapter
+            val gridLayoutManager: RecyclerView.LayoutManager = GridLayoutManager(
+                cheatViewPageIndicator,
+                2,
+                GridLayoutManager.HORIZONTAL,
+                false
+            )
+            galleryRecyclerView.layoutManager = gridLayoutManager
+            galleryRecyclerView.visibility = View.VISIBLE
+            if (cheatObj.screenshotList == null || cheatObj.screenshotList.size <= 3) {
                 tvSwipeHorizontallyInfoText.visibility = View.GONE
-                galleryRecyclerView.visibility = View.GONE
-            }
-            /**
-             * If the user came from the search results the cheat-text might not be
-             * complete (trimmed for the search results) and therefore has to be
-             * re-fetched in a background process.
-             */
-            if (cheatObj.cheatText == null || cheatObj.cheatText.length < 10) {
-                progressBar.visibility = View.VISIBLE
-                cheatBody
             } else {
-                populateView()
+                tvSwipeHorizontallyInfoText.visibility = View.VISIBLE
             }
-            tools.putString("cheat$offset", Gson().toJson(cheatObj))
+        } else {
+            tvSwipeHorizontallyInfoText.visibility = View.GONE
+            galleryRecyclerView.visibility = View.GONE
         }
+        /**
+         * If the user came from the search results the cheat-text might not be
+         * complete (trimmed for the search results) and therefore has to be
+         * re-fetched in a background process.
+         */
+        if (cheatObj.cheatText == null || cheatObj.cheatText.length < 10) {
+            progressBar.visibility = View.VISIBLE
+            cheatBody
+        } else {
+            populateView()
+        }
+        tools.putString("cheat$offset", Gson().toJson(cheatObj))
+    }
 
     private fun populateView() {
         try {
@@ -218,14 +216,11 @@ class CheatViewFragment : Fragment(), CheatViewGalleryImageClickListener {
         mainTable.visibility = View.VISIBLE
         mainTable.isHorizontalScrollBarEnabled = true
 
-        // Cheat text before the table
-        var textBeforeTable: Array<String>?
-
         // Some cheats start right with a table
         if (cheatObj.cheatText.startsWith("<br><table")) {
             tvTextBeforeTable.visibility = View.GONE
         } else {
-            textBeforeTable = cheatObj.cheatText.split("<br><br>").toTypedArray()
+            val textBeforeTable = cheatObj.cheatText.split("<br><br>").toTypedArray()
             if (textBeforeTable[0].trim { it <= ' ' }.length > 2) {
                 tvTextBeforeTable.text =
                     textBeforeTable[0].replace("<br>".toRegex(), "\n").trim { it <= ' ' }
@@ -252,18 +247,23 @@ class CheatViewFragment : Fragment(), CheatViewGalleryImageClickListener {
             ViewGroup.LayoutParams.WRAP_CONTENT
         )
         val tvFirstThCol = TextView(cheatViewPageIndicator)
-        tvFirstThCol.text = Html.fromHtml(firstThColumn)
-        tvFirstThCol.setPadding(1, 1, 5, 1)
-        tvFirstThCol.minimumWidth = Konstanten.TABLE_ROW_MINIMUM_WIDTH
+        with(tvFirstThCol) {
+            text = Html.fromHtml(firstThColumn)
+            setPadding(1, 1, 5, 1)
+            minimumWidth = Konstanten.TABLE_ROW_MINIMUM_WIDTH
+        }
         TextViewCompat.setTextAppearance(tvFirstThCol, R.style.NormalText)
         trTh.addView(tvFirstThCol)
         val tvSecondThCol = TextView(cheatViewPageIndicator)
-        tvSecondThCol.text = Html.fromHtml(secondThColumn)
-        tvSecondThCol.setPadding(5, 1, 1, 1)
+        with(tvSecondThCol) {
+            text = Html.fromHtml(secondThColumn)
+            setPadding(5, 1, 1, 1)
+        }
         TextViewCompat.setTextAppearance(tvSecondThCol, R.style.NormalText)
         trTh.addView(tvSecondThCol)
 
-        /* Add row to TableLayout. */mainTable.addView(
+        // Add row to TableLayout.
+        mainTable.addView(
             trTh,
             TableLayout.LayoutParams(
                 ViewGroup.LayoutParams.WRAP_CONTENT,
@@ -284,21 +284,26 @@ class CheatViewFragment : Fragment(), CheatViewGalleryImageClickListener {
                 ViewGroup.LayoutParams.WRAP_CONTENT
             )
             val tvFirstTdCol = TextView(cheatViewPageIndicator)
-            tvFirstTdCol.isSingleLine = false
-            tvFirstTdCol.text = firstTdColumn
-            tvFirstTdCol.setPadding(1, 1, 10, 1)
-            tvFirstTdCol.minimumWidth = Konstanten.TABLE_ROW_MINIMUM_WIDTH
+            with(tvFirstTdCol) {
+                isSingleLine = false
+                text = firstTdColumn
+                setPadding(1, 1, 10, 1)
+                minimumWidth = Konstanten.TABLE_ROW_MINIMUM_WIDTH
+            }
             TextViewCompat.setTextAppearance(tvFirstTdCol, R.style.NormalText)
             trTd.addView(tvFirstTdCol)
             val tvSecondTdCol = TextView(cheatViewPageIndicator)
-            tvSecondTdCol.isSingleLine = false
-            tvSecondTdCol.text = secondTdColumn
-            tvSecondTdCol.canScrollHorizontally(1)
-            tvSecondTdCol.setPadding(10, 1, 30, 1)
+            with(tvSecondTdCol) {
+                isSingleLine = false
+                text = secondTdColumn
+                canScrollHorizontally(1)
+                setPadding(10, 1, 30, 1)
+            }
             TextViewCompat.setTextAppearance(tvSecondTdCol, R.style.NormalText)
             trTd.addView(tvSecondTdCol)
 
-            /* Add row to TableLayout. */mainTable.addView(
+            // Add row to TableLayout.
+            mainTable.addView(
                 trTd,
                 TableLayout.LayoutParams(
                     ViewGroup.LayoutParams.WRAP_CONTENT,
@@ -379,20 +384,11 @@ class CheatViewFragment : Fragment(), CheatViewGalleryImageClickListener {
         }
     }
 
-
     override fun onScreenshotClicked(screenshot: Screenshot, position: Int) {
-//        StfalconImageViewer.Builder(            cheatViewPageIndicatorActivity,            cheatObj.screenshotList        )
-//        { imageView: ImageView?, image: Screenshot ->
-//            Picasso.get().load(image.fullPath).placeholder(R.drawable.image_placeholder)
-//                .into(imageView)
-//        }.withStartPosition(position).show()
-
-        // TODO replace with some image viewer at some point...
         val intent = Intent(activity, SingleImageViewerActivity::class.java)
         intent.putExtra("image_full_path", screenshot.fullPath)
         intent.putExtra("cheat_title", cheatObj.cheatTitle)
         startActivity(intent)
     }
-
 
 }

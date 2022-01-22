@@ -56,15 +56,12 @@ class CheatViewPageIndicator : AppCompatActivity(), GenericCallback,
     lateinit var mToolbar: Toolbar
     lateinit var appLovinAdView: AppLovinAdView
     lateinit var viewPager: ViewPager2
-
-    //    lateinit var frameLayout: FrameLayout
     lateinit var tabLayout: TabLayout
 
     private var pageSelected = 0
     private var gameObj: Game? = null
     private var cheatList: ArrayList<Cheat>? = null
     private var visibleCheat: Cheat? = null
-    private var activePage = 0
 
     private lateinit var binding: ActivityCheatviewPagerBinding
 
@@ -115,7 +112,6 @@ class CheatViewPageIndicator : AppCompatActivity(), GenericCallback,
         tools.putString(Konstanten.PREFERENCES_TEMP_GAME_OBJECT_VIEW, Gson().toJson(gameObj))
 
         pageSelected = intent.getIntExtra("selectedPage", 0)
-        activePage = pageSelected
 
         if (gameObj == null) {
             finish()
@@ -146,7 +142,6 @@ class CheatViewPageIndicator : AppCompatActivity(), GenericCallback,
         mToolbar = binding.toolbar
         appLovinAdView = binding.adContainer
         viewPager = binding.pager
-//        frameLayout = binding.magicIndicator
         tabLayout = binding.tabLayout
     }
 
@@ -162,11 +157,12 @@ class CheatViewPageIndicator : AppCompatActivity(), GenericCallback,
 
     private fun initialisePaging() {
         viewPager.adapter = CheatViewFragmentAdapter(this, gameObj!!, cheatList!!)
+        viewPager.currentItem = pageSelected
         viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 // Save the last selected page
                 tools.putInt(Konstanten.PREFERENCES_PAGE_SELECTED, position)
-                activePage = position
+                pageSelected = position
                 try {
                     visibleCheat = cheatList!![position]
                     invalidateOptionsMenu()
@@ -179,71 +175,6 @@ class CheatViewPageIndicator : AppCompatActivity(), GenericCallback,
                 }
             }
         })
-
-
-        TabLayoutMediator(binding.tabLayout, viewPager) { tab, position ->
-//            tab.text = cheatList!![position].toString()
-            if (position == 0) tab.text = "All time" else tab.text = "Today"
-        }.attach()
-
-//            viewPager.addOnPageChangeListener(object : OnPageChangeListener {
-//                override fun onPageScrolled(
-//                    position: Int,
-//                    positionOffset: Float,
-//                    positionOffsetPixels: Int
-//                ) {
-//                }
-//
-//                override fun onPageSelected(position: Int) {
-//                    // Save the last selected page
-//                    editor.putInt(Konstanten.PREFERENCES_PAGE_SELECTED, position).apply()
-//                    activePage = position
-//                    try {
-//                        visibleCheat = cheatList!![position]
-//                        invalidateOptionsMenu()
-//                    } catch (e: Exception) {
-//                        Toast.makeText(
-//                            this@CheatViewPageIndicator,
-//                            R.string.err_somethings_wrong,
-//                            Toast.LENGTH_SHORT
-//                        ).show()
-//                    }
-//                }
-//
-//                override fun onPageScrollStateChanged(state: Int) {}
-//            })
-//
-//        val commonNavigator = CommonNavigator(this)
-//        commonNavigator.isSkimOver = true
-//        commonNavigator.adapter = object : CommonNavigatorAdapter() {
-//            override fun getCount(): Int {
-//                return if (cheatList == null) 0 else cheatList!!.size
-//            }
-//
-//            override fun getTitleView(context: Context, index: Int): IPagerTitleView {
-//                val clipPagerTitleView: SimplePagerTitleView =
-//                    ColorTransitionPagerTitleView(context)
-//                clipPagerTitleView.text = cheatList!![index].cheatTitle
-//                clipPagerTitleView.normalColor =
-//                    Color.parseColor("#88ffffff") // White transparent
-//                clipPagerTitleView.selectedColor = Color.WHITE
-//                clipPagerTitleView.setOnClickListener { viewPager.currentItem = index }
-//                return clipPagerTitleView
-//            }
-//
-//            override fun getIndicator(context: Context): IPagerIndicator {
-//                val indicator = LinePagerIndicator(context)
-//                indicator.mode = LinePagerIndicator.MODE_EXACTLY
-//                indicator.yOffset = UIUtil.dip2px(context, 3.0).toFloat()
-//                indicator.setColors(Color.WHITE)
-//                return indicator
-//            }
-//        }
-
-//            magicIndicator.navigator = commonNavigator
-//            ViewPagerHelper.bind(magicIndicator, viewPager)
-
-        viewPager.currentItem = pageSelected
 
         binding.addNewCheatButton.setOnClickListener {
             val intent =
@@ -409,7 +340,7 @@ class CheatViewPageIndicator : AppCompatActivity(), GenericCallback,
 
     override fun onCheatRated(cheatRatingFinishedEvent: CheatRatingFinishedEvent) {
         visibleCheat!!.memberRating = cheatRatingFinishedEvent.rating.toFloat()
-        cheatList!![activePage].memberRating = cheatRatingFinishedEvent.rating.toFloat()
+        cheatList!![pageSelected].memberRating = cheatRatingFinishedEvent.rating.toFloat()
         invalidateOptionsMenu()
     }
 

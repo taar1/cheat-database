@@ -1,4 +1,5 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/outer_layout"
     android:background="?android:attr/selectableItemBackground"
     android:gravity="center_vertical"
@@ -25,7 +26,7 @@
             android:id="@+id/system_name"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
-            android:text="@string/placeholder"
+            tools:text="@string/placeholder"
             android:textAppearance="@style/GameTitle"
             android:textIsSelectable="false" />
 
@@ -33,7 +34,7 @@
             android:id="@+id/subtitle"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
-            android:text="@string/placeholder"
+            tools:text="@string/placeholder"
             android:textAppearance="@style/ListSubItemPhoneMedium"
             android:textColor="@color/subtitle"
             android:textIsSelectable="false" />

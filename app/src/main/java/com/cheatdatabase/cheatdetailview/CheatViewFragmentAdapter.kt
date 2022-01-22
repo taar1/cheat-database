@@ -19,8 +19,4 @@ class CheatViewFragmentAdapter(
     override fun getItemCount(): Int {
         return cheatArray.size
     }
-
-//    override fun getPageTitle(position: Int): CharSequence? {
-//        return cheatArray[position].cheatTitle
-//    }
 }

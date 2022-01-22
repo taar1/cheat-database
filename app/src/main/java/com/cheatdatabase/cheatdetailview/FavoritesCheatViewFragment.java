@@ -1,5 +1,6 @@
 package com.cheatdatabase.cheatdetailview;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
@@ -400,11 +401,9 @@ public class FavoritesCheatViewFragment extends Fragment implements FavoritesChe
 
     @Override
     public void onScreenshotClicked(File screenshot, int position) {
-        // TODO FIXME image viewer ersetzen
-        // TODO FIXME image viewer ersetzen
-        // TODO FIXME image viewer ersetzen
-        // TODO FIXME image viewer ersetzen
-        //new StfalconImageViewer.Builder<>(favoritesCheatViewPageIndicatorActivity, screenshotList, (imageView, image) -> Picasso.get().load(image).placeholder(R.drawable.image_placeholder).into(imageView)).withStartPosition(position).show();
+        Intent intent = new Intent(getActivity(), SingleImageViewerActivity.class);
+        intent.putExtra("image_full_path", screenshot.getAbsolutePath());
+        intent.putExtra("cheat_title", cheatObj.getCheatTitle());
+        startActivity(intent);
     }
-
 }

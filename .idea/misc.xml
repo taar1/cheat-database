@@ -9,6 +9,7 @@
         <entry key="..\:/Development/Android/Workspaces/cheat-database/app/src/main/res/layout/activity_game_list.xml" value="0.165" />
         <entry key="..\:/Development/Android/Workspaces/cheat-database/app/src/main/res/layout/activity_main.xml" value="0.19655521783181357" />
         <entry key="..\:/Development/Android/Workspaces/cheat-database/app/src/main/res/layout/activity_member_cheat_list.xml" value="0.264" />
+        <entry key="..\:/Development/Android/Workspaces/cheat-database/app/src/main/res/layout/activity_recover.xml" value="0.18333333333333332" />
         <entry key="..\:/Development/Android/Workspaces/cheat-database/app/src/main/res/layout/activity_submit_cheat_layout.xml" value="0.39010416666666664" />
         <entry key="..\:/Development/Android/Workspaces/cheat-database/app/src/main/res/layout/adview_facebook.xml" value="0.4046875" />
         <entry key="..\:/Development/Android/Workspaces/cheat-database/app/src/main/res/layout/adview_max_ad.xml" value="0.4046875" />
@@ -27,6 +28,8 @@
         <entry key="..\:/Development/Android/Workspaces/cheat-database/app/src/main/res/layout/include_fastscroll_recyclerview.xml" value="0.396286231884058" />
         <entry key="..\:/Development/Android/Workspaces/cheat-database/app/src/main/res/layout/inmobi_native_ad_unit.xml" value="0.28854166666666664" />
         <entry key="..\:/Development/Android/Workspaces/cheat-database/app/src/main/res/layout/layout_cheatview_meta_dialog.xml" value="0.4041666666666667" />
+        <entry key="..\:/Development/Android/Workspaces/cheat-database/app/src/main/res/layout/listrow_ad_item.xml" value="0.18229166666666666" />
+        <entry key="..\:/Development/Android/Workspaces/cheat-database/app/src/main/res/layout/listrow_cheat_item.xml" value="0.18229166666666666" />
         <entry key="..\:/Development/Android/Workspaces/cheat-database/app/src/main/res/layout/listrow_gamebysystem_item.xml" value="0.4041666666666667" />
         <entry key="..\:/Development/Android/Workspaces/cheat-database/app/src/main/res/layout/listrow_member_cheat_item.xml" value="0.25181159420289856" />
         <entry key="..\:/Development/Android/Workspaces/cheat-database/app/src/main/res/layout/menu_counter.xml" value="0.25181159420289856" />

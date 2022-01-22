@@ -25,7 +25,7 @@
                 android:id="@+id/text_cheat_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/placeholder"
+                tools:text="@string/placeholder"
                 android:textAppearance="@style/CheatTitle"
                 android:textIsSelectable="false" />
 
