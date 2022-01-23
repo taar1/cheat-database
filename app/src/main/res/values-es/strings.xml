@@ -44,7 +44,6 @@
     <!-- ERROR MESSAGES -->
     <string name="err">Error</string>
     <string name="err_username_used">Este usuario ya existe.</string>
-    <string name="err_email_invalid">Email no válido.</string>
     <string name="err_email_used">Esta dirección de email ya existe.</string>
     <string name="err_creating_user_account">Ha habido un problema creando la cuenta. Vuelve a intentarlo más tarde. Si el problema persiste, puedes registrarte en www.cheat-database.com/register.</string>
     <string name="err_email_user_not_found">No se ha encontrado ningún usuario con este email.</string>
@@ -56,7 +55,6 @@
     <string name="add_favorite">Añadir a tus favoritos</string>
     <string name="add_favorite_ok">Truco añadido a tus favoritos.</string>
     <string name="remove_favorite">Eliminar de tus favoritos</string>
-    <string name="favorite_error">El truco ya está en tus favoritos.</string>
     <string name="favorite_empty">Todavía no tienes favoritos. Antes de acceder, necesitas añadir trucos a tus favoritos.</string>
     <string name="add_favorites_ok">Trucos añadidos a tus favoritos.</string>
     <string name="add_all_favorites">Añadir todos los trucos a tus favoritos</string>
@@ -119,7 +117,6 @@
 
     <!-- SHARE CHEAT -->
     <string name="share_title">Compartir truco</string>
-    <string name="share_error_no_client">No hay ningún cliente de correo instalado.</string>
     <string name="share_email_subject">Acabo de encontrar este truco para %s</string>
 
     <!-- NEW STRINGS -->

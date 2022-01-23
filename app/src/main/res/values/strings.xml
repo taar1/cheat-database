@@ -23,7 +23,6 @@
 
     <!-- MAIN MENU -->
     <string name="favorites">Favorites</string>
-    <string name="goto_news">News</string>
     <string name="goto_games_and_cheats">Games &amp; Cheats</string>
     <string name="goto_cheat">To cheat</string>
 
@@ -53,7 +52,6 @@
     <string name="err">Error</string>
     <string name="err_occurred">An error occurred. Try again later.</string>
     <string name="err_username_used">This username is already being used.</string>
-    <string name="err_email_invalid">Email is not valid.</string>
     <string name="err_email_used">This email address is already being used.</string>
     <string name="err_creating_user_account">There was a problem creating the user account. Please try again a bit later. If the problem remains you can also register at www.cheat-database.com/register.</string>
     <string name="err_email_user_not_found">No user found with this email address.</string>
@@ -66,7 +64,6 @@
     <string name="add_favorite">Add to your favorites</string>
     <string name="add_favorite_ok">Cheat successfully added to your favorites.</string>
     <string name="remove_favorite">Remove from your favorites</string>
-    <string name="favorite_error">Cheat already exists in your favorites.</string>
     <string name="favorite_empty">You have no favorites yet. Before you can access this view you have to add some cheats to your favorites.</string>
     <string name="add_favorites_ok">Cheats successfully added to your favorites.</string>
 
@@ -125,14 +122,12 @@
     <string name="meta_average_rating2">based on %s votes</string>
     <string name="meta_member_homepage">website</string>
     <string name="top_members_title">Members Top 20</string>
-    <string name="top_members_top_helping">Top Helping Members</string>
 
     <!-- SHARE CHEAT -->
     <string name="top_members_visit_website">Visit %1$s\'s website</string>
     <string name="top_members_no_website">Member %s has no website</string>
     <string name="top_members_cheats_count">Number of cheats: %d</string>
     <string name="share_title">Share cheat</string>
-    <string name="share_error_no_client">There are no email clients installed.</string>
 
     <!-- NEW STRINGS -->
     <string name="share_email_subject">I just found this cheat for %s</string>
@@ -143,16 +138,12 @@
     <string name="action_settings">Settings</string>
     <string name="search_game">Search Game</string>
     <string name="title_activity_search_result">SearchResultActivity</string>
-    <string name="drawer_open">Open navigation drawer</string>
-    <string name="drawer_close">Close navigation drawer</string>
 
     <!-- NEW VALUES FROM VERSION 2.0 -->
     <string name="cheats_count">Number of cheats:</string>
     <string name="title_cheat_list">Cheats</string>
     <string name="title_cheat_detail">Cheat Detail</string>
-    <string name="title_cheat_details">Cheat Details</string>
     <string name="game_search_results_title">Search Results for &#8220;%1$s&#8221;</string>
-    <string name="button_dismiss">Dismiss</string>
     <string name="contactform_title">Contact Us</string>
     <string name="contactform_sendmessage">Send Message</string>
     <string name="contactform_yourmessage">Your message</string>
@@ -169,7 +160,6 @@
     <string name="submit_cheat_instructions_activity_subtitle">To submit you first have to search the database for the game you want to submit a cheat for. In the game view select the menu item \"Submit Cheat\" to reach the submission form.\n\nPlease note that you have to be logged in as a member in order to be able to submit cheats.</string>
     <string name="already_logged_in">You are already signed in with %s. Would you like to sign out?</string>
     <string name="sign_out">Sign Out</string>
-    <string name="login_to_submit">Login to submit</string>
     <string name="recover_login">Recovering Login Data</string>
     <string name="recover_login_success">Login data successfully recovered. Check your email.</string>
     <string name="err_username_too_short">The entered username is too short.</string>
@@ -206,7 +196,6 @@
     <string name="error_adding_favorites">Error: The cheats could not be added to your favorites.</string>
 
     <string name="drawer_my_cheats">My Cheats <sup><small>BETA</small></sup></string>
-    <string name="coming_soon">Coming soon…</string>
     <string name="unpublished_cheats">Unpublished Cheats</string>
     <string name="cheats_waiting_for_approval">Cheats waiting for approval %1$s\nand rejected cheats %2$s</string>
     <string name="published_cheats">Published Cheats</string>
@@ -228,7 +217,6 @@
     <string name="my_score">My Score: -</string>
     <string name="earn_points_submitting_cheats">Earn points by submitting your own cheats and redeem them for actual money! Coming soon!</string>
     <string name="enter_cheat_here">Enter your cheat here:</string>
-    <string name="number_of_cheats">%1$d Cheats</string>
     <string name="error_loading_cheats">Error loading the Cheats. Please try again later.</string>
     <string name="error_fetch_unpublished_cheats">There was a problem fetching your cheats. Try again alter.</string>
     <string name="error_deleting_cheat">There was an error deleting this cheat. Please try again later.</string>
@@ -259,8 +247,6 @@ The following contents are not allowed:\n\n
 - Third-party code that downloads or executes code not intended in the app/game\n
 - Cheats/code that enables or is associated with the distribution or installation of malicious software\n\n
 Submitted tricks that violate one or more of the above points will be deleted.</string>
-    <string name="ios_games_unsupported">iOS games no longer available.</string>
-    <string name="android_games_unsupported">Android games no longer available.</string>
     <string name="submission_status">Submission Status:</string>
     <string name="cheat_title">Cheat Title</string>
     <string name="edit_and_re_submit">Edit and Re-Submit</string>

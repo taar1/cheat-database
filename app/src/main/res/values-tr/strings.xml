@@ -36,7 +36,6 @@
     <!-- ERROR MESSAGES -->
     <string name="err">Error</string>
     <string name="err_username_used">Bu kullanıcı adı şu anda kullanımda.</string>
-    <string name="err_email_invalid">Email geçerli değil.</string>
     <string name="err_email_used">Bu email adresi zaten kullanılıyor.</string>
     <string name="err_creating_user_account">Kullanıcı hesabını oluştururken bir hata meydana geldi. Lütfen daha sonra tekrar deneyin. If the problem remains you can also register at www.cheat-database.com/register.</string>
     <string name="err_email_user_not_found">No user found with this email address.</string>
@@ -46,7 +45,6 @@
     <string name="add_favorite">Favorilerime ekle</string>
     <string name="add_favorite_ok">İpucu, Favorilerime başarıyla eklendi.</string>
     <string name="remove_favorite">Favorilerimden çıkart</string>
-    <string name="favorite_error">İpucu zaten Favori Listesinde kayıtlı.</string>
     <string name="favorite_empty">Henüz bir Favori Listeniz yok. Bu kısma ulaşmadan önce Favori listenize birkaç ipucu eklemelisiniz.</string>
     <string name="add_favorites_ok">Cheats successfully added to your favorites.</string>
     <string name="add_all_favorites">Add all cheats to favorites</string>
@@ -105,7 +103,6 @@
 
     <!-- SHARE CHEAT -->
     <string name="share_title">Share cheat</string>
-    <string name="share_error_no_client">There are no email clients installed.</string>
     <string name="share_email_subject">I just found this cheat for %s</string>
 
 </resources>

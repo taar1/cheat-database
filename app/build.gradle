@@ -248,9 +248,6 @@ dependencies {
     // Testing Navigation
     androidTestImplementation "androidx.navigation:navigation-testing:$nav_version"
 
-    // Jetpack Compose Integration
-    implementation 'androidx.navigation:navigation-compose:2.4.0-rc01'
-
     // Applovin Revenue: https://dash.applovin.com/o/analytics/index#date_range=today&app_id=60067980&type=thirdparty_impressions&compare=false&show_unique=true
     implementation 'com.applovin:applovin-sdk:11.0.0'
 }

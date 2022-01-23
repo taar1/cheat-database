@@ -20,7 +20,6 @@
     <!-- MAIN MENU -->
     <string name="favorites">Meine Favoriten</string>
     <string name="goto_cheat">Zum Cheat</string>
-    <string name="goto_news">News</string>
     <string name="goto_games_and_cheats">Games &amp; Cheats</string>
     <string name="menu_more_apps">Mehr Apps von uns</string>
 
@@ -49,7 +48,6 @@
     <string name="err">Fehler</string>
     <string name="err_occurred">Es ist ein Fehler aufgetreten. Versuche es später nocheinmal.</string>
     <string name="err_username_used">Dieser Benutzername wird bereits verwendet.</string>
-    <string name="err_email_invalid">Ungültige E-Mail Adresse.</string>
     <string name="err_email_used">Diese E-Mail Adresse wird bereits verwendet.</string>
     <string name="err_creating_user_account">Es gab ein Problem beim Erstellen des Accounts. Bitte versuche es später noch einmal. Sollte das Problem bestehen bleiben besuche www.cheat-database.com/register für eine Registration.</string>
     <string name="err_email_user_not_found">Kein Benutzer mit dieser E-Mail Adresse gefunden.</string>
@@ -62,7 +60,6 @@
     <string name="add_favorite">Zu Favoriten hinzufügen</string>
     <string name="add_favorite_ok">Cheat wurde zu den Favoriten hinzugefügt.</string>
     <string name="remove_favorite">Von den Favoriten entfernen</string>
-    <string name="favorite_error">Cheat konnte nicht hinzugefügt werden, da er bereits in den Favoriten existiert.</string>
     <string name="favorite_empty">Es befinden sich noch keine Favoriten in der Liste. Füge erst einen Cheat zu dieser Liste hinzu.</string>
     <string name="add_favorites_ok">Die Cheats wurden zu den Favoriten hinzugefügt.</string>
     <string name="add_all_favorites">Alle Cheats zu den Favoriten hinzufügen</string>
@@ -124,14 +121,12 @@
 
     <!-- TOP MEMBERS -->
     <string name="top_members_title">Mitglieder Top 20</string>
-    <string name="top_members_top_helping">Top Members</string>
     <string name="top_members_visit_website">Besuche %1$s\'s Website</string>
     <string name="top_members_no_website">%1$s hat keine Website</string>
     <string name="top_members_cheats_count">Anzahl Cheats: %d</string>
 
     <!-- SHARE CHEAT -->
     <string name="share_title">Cheat teilen</string>
-    <string name="share_error_no_client">Es ist keine E-Mail Applikation installiert.</string>
     <string name="share_email_subject">Ich habe soeben diesen Cheat für %1$s entdeckt</string>
 
     <!-- NEW STRINGS -->
@@ -142,16 +137,12 @@
     <string name="action_settings">Einstellungen</string>
     <string name="search_game">Game suchen</string>
     <string name="title_activity_search_result">SearchResultActivity</string>
-    <string name="drawer_open">Öffne den Navigation Drawer</string>
-    <string name="drawer_close">Schliesse den Navigation Drawer</string>
     <string name="cheats_count">Anzahl Cheats:</string>
 
     <!-- NEW VALUES FROM VERSION 2.0 -->
     <string name="title_cheat_list">Cheats</string>
     <string name="title_cheat_detail">Cheat Detail</string>
-    <string name="title_cheat_details">Cheat Details</string>
     <string name="game_search_results_title">Suchresultate für &#8220;%1$s&#8221;</string>
-    <string name="button_dismiss">Ausblenden</string>
     <string name="contactform_title">Kontaktiere uns</string>
     <string name="contactform_sendmessage">Nachricht senden</string>
     <string name="contactform_yourmessage">Deine Nachricht</string>
@@ -169,7 +160,6 @@
     <string name="already_logged_in">Du bist bereits als %s eingeloggt. Möchtest du ausloggen?</string>
 
     <string name="sign_out">Ausloggen</string>
-    <string name="login_to_submit">Einloggen um einzusenden</string>
     <string name="recover_login">Zugangsdaten zusenden</string>
     <string name="recover_login_success">Zugangsdaten wurden verschickt. Checke deine E-Mails.</string>
     <string name="err_username_too_short">Der eingegebene Benutzername ist zu kurz.</string>
@@ -211,7 +201,6 @@
     <string name="error_adding_favorites">Fehler: Die Cheats konnten nicht zu den Favoriten hinzugefügt werden.</string>
 
     <string name="drawer_my_cheats">Meine Cheats <sup><small>BETA</small></sup></string>
-    <string name="coming_soon">Kommt bald…</string>
     <string name="unpublished_cheats">Unveröffentlichte Cheats</string>
     <string name="cheats_waiting_for_approval">Cheats die noch geprüft werden %1$s \nund abgelehnte Cheats %2$s</string>
     <string name="published_cheats">Veröffentlichte Cheats</string>
@@ -232,7 +221,6 @@
     <string name="my_score">Punkte: -</string>
     <string name="earn_points_submitting_cheats">Verdiene Punkte durch Einsenden von Cheats und löse diese gegen echtes Geld ein! Coming soon!</string>
     <string name="enter_cheat_here">Gib hier deinen Cheat ein:</string>
-    <string name="number_of_cheats">%1$d Cheats</string>
     <string name="error_loading_cheats">Fehler beim Laden der Cheats. Versuche es später nochmals.</string>
     <string name="error_fetch_unpublished_cheats">Fehler beim Laden deiner Cheats. Versuche es später nochmals.</string>
     <string name="error_deleting_cheat">Fehler beim Löschen des Cheats. Versuche es später nochmals.</string>
@@ -260,6 +248,4 @@
 - Drittanbietercode, der Code herunterlädt oder ausführt, welcher im Original-Spiel nicht vorgesehen ist\n\n
 - Cheats/Code, der die Verteilung oder Installation von schädlicher Software ermöglichen oder damit in Verbindung stehen\n\nEingesandte Tricks, die gegen eine oder mehrere der oben genannten Punkten verstossen, werden gelöscht.</string>
 
-    <string name="ios_games_unsupported">iOS Games nicht mehr verfügbar.</string>
-    <string name="android_games_unsupported">Android Games nicht mehr verfügbar.</string>
 </resources>

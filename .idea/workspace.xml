@@ -118,9 +118,77 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4caff62e-c62f-40ca-acf0-73c680b13375" name="Default" comment="Bug Fixes">
+    <list default="true" id="4caff62e-c62f-40ca-acf0-73c680b13375" name="Default" comment="2.7.4-preRelease">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/holders/InMobiNativeAdListViewItemHolder.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/color/menu_item_color_state.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-hdpi/ic_action_warning.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-hdpi/ic_add_black_48dp.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-hdpi/ic_paragraph.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-hdpi/ratingbarorange_btn_rating_star_off_focused_holo_dark.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-hdpi/ratingbarorange_btn_rating_star_off_normal_holo_dark.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-hdpi/ratingbarorange_btn_rating_star_off_pressed_holo_dark.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-hdpi/ratingbarorange_btn_rating_star_on_focused_holo_dark.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-hdpi/ratingbarorange_btn_rating_star_on_normal_holo_dark.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-hdpi/ratingbarorange_btn_rating_star_on_pressed_holo_dark.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-mdpi/ic_action_warning.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-mdpi/ic_add_black_48dp.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-mdpi/ic_paragraph.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-mdpi/ratingbarorange_btn_rating_star_off_focused_holo_dark.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-mdpi/ratingbarorange_btn_rating_star_off_normal_holo_dark.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-mdpi/ratingbarorange_btn_rating_star_off_pressed_holo_dark.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-mdpi/ratingbarorange_btn_rating_star_on_focused_holo_dark.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-mdpi/ratingbarorange_btn_rating_star_on_normal_holo_dark.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-mdpi/ratingbarorange_btn_rating_star_on_pressed_holo_dark.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-xhdpi/ic_action_warning.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-xhdpi/ic_add_black_48dp.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-xhdpi/ic_paragraph.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-xhdpi/ratingbarorange_btn_rating_star_off_focused_holo_dark.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-xhdpi/ratingbarorange_btn_rating_star_off_normal_holo_dark.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-xhdpi/ratingbarorange_btn_rating_star_off_pressed_holo_dark.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-xhdpi/ratingbarorange_btn_rating_star_on_focused_holo_dark.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-xhdpi/ratingbarorange_btn_rating_star_on_normal_holo_dark.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-xhdpi/ratingbarorange_btn_rating_star_on_pressed_holo_dark.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-xxhdpi/ic_action_warning.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-xxhdpi/ic_add_black_48dp.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-xxhdpi/ic_paragraph.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-xxhdpi/ratingbarorange_btn_rating_star_off_focused_holo_dark.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-xxhdpi/ratingbarorange_btn_rating_star_off_normal_holo_dark.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-xxhdpi/ratingbarorange_btn_rating_star_off_pressed_holo_dark.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-xxhdpi/ratingbarorange_btn_rating_star_on_focused_holo_dark.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-xxhdpi/ratingbarorange_btn_rating_star_on_normal_holo_dark.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-xxhdpi/ratingbarorange_btn_rating_star_on_pressed_holo_dark.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-xxxhdpi/ic_add_black_48dp.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-xxxhdpi/ic_paragraph.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/ic_drawer_upload.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/ic_edit.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/ic_info.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/ic_info_circle.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/ic_send.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/ic_send_button.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/ratingbarorange_ratingbar_full_empty_holo_dark.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/ratingbarorange_ratingbar_full_filled_holo_dark.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/ratingbarorange_ratingbar_full_holo_dark.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/font/my_lato_bold.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/adview_facebook.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/dialog_bad_rating.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/inmobi_native_ad_unit.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/listrow_ad_item.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/listrow_unpublished_cheat_item.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/recycler_view_item.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/values-da/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values-da/strings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/values-de/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values-de/strings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/values-es/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values-es/strings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/values-fil/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values-fil/strings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/values-tr/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values-tr/strings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/values-zh-rTW/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values-zh-rTW/strings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/values-zh/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values-zh/strings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/colors.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/colors.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/dimen.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/dimen.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/integers.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/integers.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/themes.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/themes.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -130,7 +198,7 @@
   <component name="CreatePatchCommitExecutor">
     <option name="PATCH_PATH" value="" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[C:\Users\taar1\.android\avd\Pixel_4_API_29.avd]" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[fd8b7031]" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
@@ -188,7 +256,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="ViewPager2_implementation" />
+        <entry key="$PROJECT_DIR$" value="master" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -799,13 +867,6 @@
       <option name="presentableId" value="Default" />
       <updated>1487274191999</updated>
     </task>
-    <task id="LOCAL-00143" summary="2.5.19-preRelease">
-      <created>1595451231326</created>
-      <option name="number" value="00143" />
-      <option name="presentableId" value="LOCAL-00143" />
-      <option name="project" value="LOCAL" />
-      <updated>1595451231327</updated>
-    </task>
     <task id="LOCAL-00144" summary="Make rejected cheat alertdialog less transparent&#10;Add bottom padding for unpublished cheats recyclerview">
       <created>1595513355011</created>
       <option name="number" value="00144" />
@@ -1142,7 +1203,14 @@
       <option name="project" value="LOCAL" />
       <updated>1642620461669</updated>
     </task>
-    <option name="localTasksCounter" value="192" />
+    <task id="LOCAL-00192" summary="2.7.4-preRelease">
+      <created>1642936768482</created>
+      <option name="number" value="00192" />
+      <option name="presentableId" value="LOCAL-00192" />
+      <option name="project" value="LOCAL" />
+      <updated>1642936768482</updated>
+    </task>
+    <option name="localTasksCounter" value="193" />
     <servers />
   </component>
   <component name="TodoView">
@@ -1247,7 +1315,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
-    <MESSAGE value="Navigation Component: Almost finished!" />
     <MESSAGE value="Move bottom banner ads from MainActivity to the Fragments" />
     <MESSAGE value="Get rid of startActivityForResult() everywhere (using the new &quot;registerForActivityResult&quot; method)" />
     <MESSAGE value="Adding some info dialog when submitting a cheat to hopefully avoid the Google ban??" />
@@ -1272,7 +1339,8 @@
     <MESSAGE value="Replace deprecated &quot;getExternalStorageDirectory()&quot;" />
     <MESSAGE value="Tons of bug fixes." />
     <MESSAGE value="Bug Fixes" />
-    <option name="LAST_COMMIT_MESSAGE" value="Bug Fixes" />
+    <MESSAGE value="2.7.4-preRelease" />
+    <option name="LAST_COMMIT_MESSAGE" value="2.7.4-preRelease" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>

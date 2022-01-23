@@ -20,7 +20,6 @@
     <!-- MAIN MENU -->
     <string name="favorites">Mine favoritter</string>
     <string name="goto_cheat">Til cheaten</string>
-    <string name="goto_news">News</string>
     <string name="menu_more_apps">More Apps from us</string>
 
     <!-- REPORT CHEAT -->
@@ -47,7 +46,6 @@
     <!-- ERROR MESSAGES -->
     <string name="err">Error</string>
     <string name="err_username_used">Brugernavnet er optaget.</string>
-    <string name="err_email_invalid">Ugyldig e-mail-adresse.</string>
     <string name="err_email_used">E-mail-adressen er optaget.</string>
     <string name="err_creating_user_account">Der var et problem med oprettelsen af din brugerkonto. Prøv venligst igen senere. If the problem remains you can also register at www.cheat-database.com/register.</string>
     <string name="err_email_user_not_found">No user found with this email address.</string>
@@ -59,7 +57,6 @@
     <string name="add_favorite">Tilføj til favoritter</string>
     <string name="add_favorite_ok">Cheaten er blevet tilføjet til dine favoritter.</string>
     <string name="remove_favorite">Fjern fra favoritterne</string>
-    <string name="favorite_error">Cheaten kunne ikke blive tilføjet, fordi den allerede er en favorit.</string>
     <string name="favorite_empty">Der er ingen favoritter i listen endnu. Tilføj en cheat til listen først.</string>
     <string name="add_favorites_ok">Cheats successfully added to your favorites.</string>
     <string name="add_all_favorites">Add all cheats to favorites</string>
@@ -127,7 +124,6 @@
 
     <!-- SHARE CHEAT -->
     <string name="share_title">Share cheat</string>
-    <string name="share_error_no_client">There are no email clients installed.</string>
     <string name="share_email_subject">I just found this cheat for %s</string>
 
 </resources>

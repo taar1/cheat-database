@@ -44,7 +44,6 @@
     <!-- ERROR MESSAGES -->
     <string name="err">Error</string>
     <string name="err_username_used">Ang username na ito na gamit na.</string>
-    <string name="err_email_invalid">Ang email na ito ay hindi valid.</string>
     <string name="err_email_used">Ang email address na ito ay gamit na.</string>
     <string name="err_creating_user_account">Nag ka problema sa pag gawa ng account na ito. Please try again a bit later. If the problem remains you can also register at www.cheat-database.com/register.</string>
     <string name="err_email_user_not_found">Walang user na nakita na gumagamit ng email address na ito.</string>
@@ -56,7 +55,6 @@
     <string name="add_favorite">Add to your favorites</string>
     <string name="add_favorite_ok">Na i add na ang cheat sa favorites.</string>
     <string name="remove_favorite">Alisin sa favorites</string>
-    <string name="favorite_error">Cheat already exists in your favorites.</string>
     <string name="favorite_empty">Wala pang napiling favorites. Bago ma access ang view na ito kailangan mo magdagdag ng favorite muna.</string>
     <string name="add_favorites_ok">Cheats successfully added sa favorites.</string>
     <string name="add_all_favorites">Add all cheats to favorites</string>
@@ -118,7 +116,6 @@
 
     <!-- SHARE CHEAT -->
     <string name="share_title">Share cheat</string>
-    <string name="share_error_no_client">There are no email clients installed.</string>
     <string name="share_email_subject">I just found this cheat for %s</string>
 
 </resources>

@@ -43,7 +43,6 @@
 
     <!-- ERROR MESSAGES -->
     <string name="err_username_used">使用者名已被他人註冊使用。</string>
-    <string name="err_email_invalid">Email位址無效。</string>
     <string name="err_email_used">此Email已被他人註冊使用。</string>
     <string name="err_email_user_not_found">No user found with this email address.</string>
     <string name="err_creating_user_account">建立使用者賬戶時錯誤。請稍後重試。 If the problem remains you can also register at www.cheat-database.com/register.</string>
@@ -55,7 +54,6 @@
     <string name="add_favorite">新增到我的個人收藏</string>
     <string name="add_favorite_ok">秘籍成功新增到個人收藏。</string>
     <string name="remove_favorite">從個人收藏中移除</string>
-    <string name="favorite_error">此秘籍已經存在於個人收藏中了。</string>
     <string name="favorite_empty">您尚沒有任何收藏。當檢視這個檢視之前您需要新增一些密接到個人收藏中。</string>
     <string name="add_favorites_ok">Cheats successfully added to your favorites.</string>
     <string name="add_all_favorites">Add all cheats to favorites</string>
@@ -117,7 +115,6 @@
 
     <!-- SHARE CHEAT -->
     <string name="share_title">Share cheat</string>
-    <string name="share_error_no_client">There are no email clients installed.</string>
     <string name="share_email_subject">I just found this cheat for %s</string>
 
 </resources>
