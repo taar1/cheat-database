@@ -70,6 +70,16 @@ class MemberCheatViewFragment : Fragment(), CheatViewGalleryImageClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        // TODO FIXME hier crasht es ab und zu... (vom forum zurückkehren zu den cheats)
+        // TODO FIXME hier crasht es ab und zu... (vom forum zurückkehren zu den cheats)
+        // TODO FIXME hier crasht es ab und zu... (vom forum zurückkehren zu den cheats)
+        // TODO FIXME hier crasht es ab und zu... (vom forum zurückkehren zu den cheats)
+
+        // irgendwo gibt es ein TransactionTooLargeException wenn man durch swipt
+        // irgendwo gibt es ein TransactionTooLargeException wenn man durch swipt
+        // irgendwo gibt es ein TransactionTooLargeException wenn man durch swipt
+        // irgendwo gibt es ein TransactionTooLargeException wenn man durch swipt
+
         // If the screen has been rotated we re-set the values
         if (savedInstanceState != null) {
             val cheatArrayHolder: CheatArrayHolder? =

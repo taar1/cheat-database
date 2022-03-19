@@ -21,7 +21,7 @@ class MemberCheatsListViewItemHolder(
 
         with(binding) {
             gameName.text = context.getString(
-                R.string.game_name_system_name,
+                R.string.text_before_and_in_braces,
                 cheat.game.gameName,
                 cheat.system.systemName
             )

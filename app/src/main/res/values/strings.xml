@@ -251,7 +251,7 @@ Submitted tricks that violate one or more of the above points will be deleted.</
     <string name="cheat_title">Cheat Title</string>
     <string name="edit_and_re_submit">Edit and Re-Submit</string>
 
-    <string name="game_name_system_name">%1$s (%2$s)</string>
+    <string name="text_before_and_in_braces">%1$s (%2$s)</string>
     <string name="quoted_text">"%s"</string>
 
 </resources>

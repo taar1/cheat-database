@@ -1,236 +1,232 @@
-package com.cheatdatabase.activity;
+package com.cheatdatabase.activity
 
-import android.app.SearchManager;
-import android.content.Context;
-import android.content.Intent;
-import android.graphics.Color;
-import android.os.Bundle;
-import android.os.CountDownTimer;
-import android.util.Log;
-import android.view.Gravity;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup.LayoutParams;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ScrollView;
-import android.widget.TableLayout;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.SearchView;
-import androidx.appcompat.widget.Toolbar;
-
-import com.applovin.adview.AppLovinAdView;
-import com.cheatdatabase.R;
-import com.cheatdatabase.callbacks.GenericCallback;
-import com.cheatdatabase.callbacks.OnCheatRated;
-import com.cheatdatabase.data.model.Cheat;
-import com.cheatdatabase.data.model.ForumPost;
-import com.cheatdatabase.data.model.Game;
-import com.cheatdatabase.dialogs.CheatMetaDialog;
-import com.cheatdatabase.dialogs.RateCheatMaterialDialog;
-import com.cheatdatabase.dialogs.ReportCheatMaterialDialog;
-import com.cheatdatabase.events.CheatRatingFinishedEvent;
-import com.cheatdatabase.helpers.AeSimpleMD5;
-import com.cheatdatabase.helpers.Konstanten;
-import com.cheatdatabase.helpers.Reachability;
-import com.cheatdatabase.helpers.Tools;
-import com.cheatdatabase.rest.RestApi;
-
-import org.jetbrains.annotations.NotNull;
-
-import java.security.NoSuchAlgorithmException;
-import java.util.Calendar;
-import java.util.List;
-
-import javax.inject.Inject;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import dagger.hilt.android.AndroidEntryPoint;
-import needle.Needle;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import android.app.SearchManager
+import android.content.Intent
+import android.graphics.Color
+import android.os.Bundle
+import android.os.CountDownTimer
+import android.util.Log
+import android.view.*
+import android.widget.*
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
+import androidx.appcompat.widget.Toolbar
+import com.applovin.adview.AppLovinAdView
+import com.cheatdatabase.R
+import com.cheatdatabase.callbacks.GenericCallback
+import com.cheatdatabase.callbacks.OnCheatRated
+import com.cheatdatabase.data.model.Cheat
+import com.cheatdatabase.data.model.ForumPost
+import com.cheatdatabase.data.model.Game
+import com.cheatdatabase.databinding.ActivityCheatForumBinding
+import com.cheatdatabase.dialogs.CheatMetaDialog
+import com.cheatdatabase.dialogs.RateCheatMaterialDialog
+import com.cheatdatabase.dialogs.ReportCheatMaterialDialog
+import com.cheatdatabase.events.CheatRatingFinishedEvent
+import com.cheatdatabase.helpers.AeSimpleMD5
+import com.cheatdatabase.helpers.Konstanten
+import com.cheatdatabase.helpers.Reachability
+import com.cheatdatabase.helpers.Tools
+import com.cheatdatabase.rest.RestApi
+import dagger.hilt.android.AndroidEntryPoint
+import needle.Needle
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import java.security.NoSuchAlgorithmException
+import java.util.*
+import javax.inject.Inject
 
 /**
  * Displaying the forum of one cheat.
  */
 @AndroidEntryPoint
-public class CheatForumActivity extends AppCompatActivity implements GenericCallback, OnCheatRated {
-
-    private static final String TAG = CheatForumActivity.class.getSimpleName();
-
-    private Cheat cheatObj;
-    private Game gameObj;
+class CheatForumActivity : AppCompatActivity(), GenericCallback, OnCheatRated {
+    private var cheatObj: Cheat? = null
+    private var gameObj: Game? = null
 
     @Inject
-    Tools tools;
+    lateinit var tools: Tools
+
     @Inject
-    RestApi restApi;
+    lateinit var restApi: RestApi
 
-    @BindView(R.id.outer_layout)
-    LinearLayout outerLayout;
-    @BindView(R.id.toolbar)
-    Toolbar mToolbar;
-    @BindView(R.id.main_forum)
-    LinearLayout llForumMain;
-    @BindView(R.id.text_cheat_title)
-    TextView tvCheatTitle;
-    @BindView(R.id.textview_empty)
-    TextView tvEmpty;
-    @BindView(R.id.sv)
-    ScrollView sv;
-    @BindView(R.id.reload)
-    ImageView reloadView;
-    @BindView(R.id.forum_text_input)
-    EditText editText;
-    @BindView(R.id.submit_button)
-    Button postButton;
-    @BindView(R.id.ad_container)
-    AppLovinAdView appLovinAdView;
+    lateinit var outerLayout: LinearLayout
+    lateinit var mToolbar: Toolbar
+    lateinit var llForumMain: LinearLayout
+    lateinit var tvCheatTitle: TextView
+    lateinit var tvEmpty: TextView
+    lateinit var sv: ScrollView
+    lateinit var reloadView: ImageView
+    lateinit var editText: EditText
+    lateinit var postButton: Button
+    lateinit var appLovinAdView: AppLovinAdView
 
-    private final ActivityResultLauncher<Intent> resultContract =
-            registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), getActivityResultRegistry(), activityResult -> {
-                int intentReturnCode = activityResult.getResultCode();
-                if (intentReturnCode == Konstanten.REGISTER_SUCCESS_RETURN_CODE) {
-                    tools.showSnackbar(outerLayout, getString(R.string.register_thanks));
-                } else if (intentReturnCode == Konstanten.LOGIN_SUCCESS_RETURN_CODE) {
-                    tools.showSnackbar(outerLayout, getString(R.string.login_ok));
-                } else if (activityResult.getResultCode() == Konstanten.RECOVER_PASSWORD_ATTEMPT) {
-                    tools.showSnackbar(outerLayout, getString(R.string.recover_login_success));
-                }
-                invalidateOptionsMenu();
-            });
+    private lateinit var binding: ActivityCheatForumBinding
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_cheat_forum);
-        ButterKnife.bind(this);
+    private val resultContract = registerForActivityResult(
+        StartActivityForResult(),
+        activityResultRegistry
+    ) { activityResult: ActivityResult ->
+        val intentReturnCode = activityResult.resultCode
+        when {
+            intentReturnCode == Konstanten.REGISTER_SUCCESS_RETURN_CODE -> {
+                tools.showSnackbar(outerLayout, getString(R.string.register_thanks))
+            }
+            intentReturnCode == Konstanten.LOGIN_SUCCESS_RETURN_CODE -> {
+                tools.showSnackbar(outerLayout, getString(R.string.login_ok))
+            }
+            activityResult.resultCode == Konstanten.RECOVER_PASSWORD_ATTEMPT -> {
+                tools.showSnackbar(outerLayout, getString(R.string.recover_login_success))
+            }
+        }
+        invalidateOptionsMenu()
+    }
 
-        cheatObj = getIntent().getParcelableExtra("cheatObj");
-        gameObj = getIntent().getParcelableExtra("gameObj");
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        binding = ActivityCheatForumBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        cheatObj = intent.getParcelableExtra("cheatObj")
+        gameObj = intent.getParcelableExtra("gameObj")
 
         if (cheatObj == null || gameObj == null) {
-            Toast.makeText(this, R.string.err_somethings_wrong, Toast.LENGTH_LONG).show();
-            finish();
+            Toast.makeText(this, R.string.err_somethings_wrong, Toast.LENGTH_LONG).show()
+            finish()
         } else {
-            init();
-
-            tvCheatTitle.setText(cheatObj.getCheatTitle() + " (" + getString(R.string.forum) + ")");
-
+            bindViews()
+            init()
+            tvCheatTitle.text = getString(
+                R.string.text_before_and_in_braces,
+                cheatObj!!.cheatTitle,
+                getString(R.string.forum)
+            )
             if (Reachability.reachability.isReachable) {
-                reloadView.setVisibility(View.GONE);
-                fetchForumPosts();
+                reloadView.visibility = View.GONE
+                fetchForumPosts()
             } else {
-                reloadView.setVisibility(View.VISIBLE);
-                reloadView.setOnClickListener(v -> {
+                reloadView.visibility = View.VISIBLE
+                reloadView.setOnClickListener {
                     if (Reachability.reachability.isReachable) {
-                        fetchForumPosts();
+                        fetchForumPosts()
                     } else {
-                        Toast.makeText(CheatForumActivity.this, R.string.no_internet, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(
+                            this@CheatForumActivity,
+                            R.string.no_internet,
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
-                });
-                Toast.makeText(CheatForumActivity.this, R.string.no_internet, Toast.LENGTH_SHORT).show();
+                }
+                Toast.makeText(this@CheatForumActivity, R.string.no_internet, Toast.LENGTH_SHORT)
+                    .show()
             }
-
-            postButton.setOnClickListener(v -> {
+            postButton.setOnClickListener {
                 if (Reachability.reachability.isReachable) {
-                    if (editText.getText().toString().trim().length() > 0) {
-                        submitPost();
+                    if (editText.text.toString().trim { it <= ' ' }.isNotEmpty()) {
+                        submitPost()
                     } else {
-                        Toast.makeText(CheatForumActivity.this, R.string.fill_everything, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(
+                            this@CheatForumActivity,
+                            R.string.fill_everything,
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
                 } else {
-                    Toast.makeText(CheatForumActivity.this, R.string.no_internet, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(
+                        this@CheatForumActivity,
+                        R.string.no_internet,
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
-            });
+            }
         }
     }
 
-    private void init() {
+    private fun bindViews() {
+        outerLayout = binding.outerLayout
+        mToolbar = binding.toolbar
+        llForumMain = binding.mainForum
+        tvCheatTitle = binding.textCheatTitle
+        tvEmpty = binding.textviewEmpty
+        sv = binding.sv
+        reloadView = binding.reload
+        editText = binding.forumTextInput
+        postButton = binding.submitButton
+        appLovinAdView = binding.adContainer
+    }
+
+    private fun init() {
         if (!Reachability.isRegistered()) {
-            Reachability.registerReachability(this);
+            Reachability.registerReachability(this)
         }
 
-        appLovinAdView.loadNextAd();
+        setSupportActionBar(mToolbar)
+        supportActionBar!!.title = gameObj?.gameName ?: ""
+        supportActionBar!!.subtitle = gameObj?.systemName ?: ""
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        supportActionBar!!.setHomeButtonEnabled(true)
 
-        if (mToolbar != null) {
-            setSupportActionBar(mToolbar);
-        }
-        getSupportActionBar().setTitle((gameObj.getGameName() != null ? gameObj.getGameName() : ""));
-        getSupportActionBar().setSubtitle((gameObj.getSystemName() != null ? gameObj.getSystemName() : ""));
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeButtonEnabled(true);
-
-        appLovinAdView.loadNextAd();
+        appLovinAdView.loadNextAd()
     }
 
     /**
      * Submits the forum post and scrolls down to the bottom of the list.
      */
-    private void submitPost() {
-        if (tools.getMember() == null) {
-            Toast.makeText(this, R.string.error_login_required, Toast.LENGTH_LONG).show();
+    private fun submitPost() {
+        if (tools.member == null) {
+            Toast.makeText(this, R.string.error_login_required, Toast.LENGTH_LONG).show()
         } else {
             // get the current date
-            final Calendar c = Calendar.getInstance();
-            int mYear = c.get(Calendar.YEAR);
-            int mMonth = c.get(Calendar.MONTH);
-            int mDay = c.get(Calendar.DAY_OF_MONTH);
-            int mHour = c.get(Calendar.HOUR_OF_DAY);
-            String leadingZeroHour = String.valueOf(mHour);
-            if (leadingZeroHour.length() == 1) {
-                leadingZeroHour = "0" + mHour;
+            val c = Calendar.getInstance()
+            val mYear = c[Calendar.YEAR]
+            val mMonth = c[Calendar.MONTH]
+            val mDay = c[Calendar.DAY_OF_MONTH]
+            val mHour = c[Calendar.HOUR_OF_DAY]
+            var leadingZeroHour = mHour.toString()
+            if (leadingZeroHour.length == 1) {
+                leadingZeroHour = "0$mHour"
             }
-            int mMin = c.get(Calendar.MINUTE);
-            String leadingZeroMin = String.valueOf(mMin);
-            if (leadingZeroMin.length() == 1) {
-                leadingZeroMin = "0" + mMin;
+            val mMin = c[Calendar.MINUTE]
+            var leadingZeroMin = mMin.toString()
+            if (leadingZeroMin.length == 1) {
+                leadingZeroMin = "0$mMin"
             }
             // int mdate = c.get(Calendar.DATE);
-
-            String[] months = getResources().getStringArray(R.array.months);
-
-            ForumPost forumPost = new ForumPost();
-            forumPost.setText(editText.getText().toString().trim());
-            forumPost.setUsername(tools.getMember().getUsername());
-            forumPost.setName(tools.getMember().getUsername());
-            forumPost.setEmail(tools.getMember().getEmail());
-            forumPost.setCreated(months[mMonth] + " " + mDay + ", " + mYear + " / " + leadingZeroHour + ":" + leadingZeroMin);
-
+            val months = resources.getStringArray(R.array.months)
+            val forumPost = ForumPost()
+            forumPost.text = editText.text.toString().trim { it <= ' ' }
+            forumPost.username = tools.member.username
+            forumPost.name = tools.member.username
+            forumPost.email = tools.member.email
+            forumPost.created =
+                months[mMonth].toString() + " " + mDay + ", " + mYear + " / " + leadingZeroHour + ":" + leadingZeroMin
             if (Reachability.reachability.isReachable) {
-                llForumMain.addView(createForumPosts(forumPost), new TableLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+                llForumMain.addView(
+                    createForumPosts(forumPost),
+                    TableLayout.LayoutParams(
+                        ViewGroup.LayoutParams.MATCH_PARENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT
+                    )
+                )
 
                 // Führt die ScrollView bis ganz nach unten zum neusten Post
-                sv.post(() -> sv.fullScroll(View.FOCUS_DOWN));
-                editText.setEnabled(false);
-                postButton.setEnabled(false);
-
-                new CountDownTimer(5000, 1000) {
-                    @Override
-                    public void onTick(long millisUntilFinished) {
+                sv.post { sv.fullScroll(View.FOCUS_DOWN) }
+                editText.isEnabled = false
+                postButton.isEnabled = false
+                object : CountDownTimer(5000, 1000) {
+                    override fun onTick(millisUntilFinished: Long) {}
+                    override fun onFinish() {
+                        postButton.isEnabled = true
+                        editText.isEnabled = true
                     }
-
-                    @Override
-                    public void onFinish() {
-                        postButton.setEnabled(true);
-                        editText.setEnabled(true);
-                    }
-                }.start();
-
-                submitForumPost(forumPost);
-
+                }.start()
+                submitForumPost(forumPost)
             } else {
-                Toast.makeText(this, R.string.no_internet, Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.no_internet, Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -241,239 +237,273 @@ public class CheatForumActivity extends AppCompatActivity implements GenericCall
      * @param forumPost
      * @return
      */
-    private LinearLayout createForumPosts(ForumPost forumPost) {
-        LinearLayout tl = new LinearLayout(this);
-        tl.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
-        tl.setGravity(Gravity.TOP);
-        tl.setBackgroundColor(Color.BLACK);
-        tl.setOrientation(LinearLayout.VERTICAL);
+    private fun createForumPosts(forumPost: ForumPost): LinearLayout {
+        // TODO FIXME hier das layout auf cards ändern? hm..
+        // TODO FIXME hier das layout auf cards ändern? hm..
+        // TODO FIXME hier das layout auf cards ändern? hm..
+//        val cardLayoutPortrait = CardLayoutPortrait(this, null)
+//        cardLayoutPortrait.layoutParams = ViewGroup.LayoutParams(
+//            ViewGroup.LayoutParams.WRAP_CONTENT,
+//            ViewGroup.LayoutParams.WRAP_CONTENT
+//        )
+//        cardLayoutPortrait.setBackgroundColor(Color.RED)
 
-        TextView tvFirstThCol = new TextView(this);
-        TextView tvSecondThCol = new TextView(this);
+
+        val tl = LinearLayout(this)
+        tl.layoutParams = ViewGroup.LayoutParams(
+            ViewGroup.LayoutParams.WRAP_CONTENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        )
+        tl.gravity = Gravity.TOP
+        tl.setBackgroundColor(Color.BLACK)
+        tl.orientation = LinearLayout.VERTICAL
+        val tvFirstThCol = TextView(this)
+        val tvSecondThCol = TextView(this)
 
         // TODO hier noch programmatisch die FONT auf LATO setzen
 //        tvFirstThCol.setTypeface(latoFontBold);
 //        tvSecondThCol.setTypeface(latoFontBold);
 
         // Headerinfo of Forumpost
-        LinearLayout rowForumPostHeader = new LinearLayout(this);
-        rowForumPostHeader.setBackgroundColor(Color.DKGRAY);
-        rowForumPostHeader.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
-        rowForumPostHeader.setGravity(Gravity.CENTER_HORIZONTAL);
-        rowForumPostHeader.setPadding(5, 5, 10, 5);
-        rowForumPostHeader.setOrientation(LinearLayout.HORIZONTAL);
-
-        if (!forumPost.getUsername().equalsIgnoreCase("null")) {
-            tvFirstThCol.setText(forumPost.getUsername().trim());
+        val rowForumPostHeader = LinearLayout(this)
+        rowForumPostHeader.setBackgroundColor(Color.DKGRAY)
+        rowForumPostHeader.layoutParams = ViewGroup.LayoutParams(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        )
+        rowForumPostHeader.gravity = Gravity.CENTER_HORIZONTAL
+        rowForumPostHeader.setPadding(5, 5, 10, 5)
+        rowForumPostHeader.orientation = LinearLayout.HORIZONTAL
+        if (!forumPost.username.equals("null", ignoreCase = true)) {
+            tvFirstThCol.text = forumPost.username.trim { it <= ' ' }
         } else {
-            tvFirstThCol.setText(forumPost.getName().trim());
+            tvFirstThCol.text = forumPost.name.trim { it <= ' ' }
         }
-        tvFirstThCol.setTextColor(Color.WHITE);
-        tvFirstThCol.setGravity(Gravity.START);
-        tvFirstThCol.setSingleLine(true);
-        tvFirstThCol.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
-
-        tvSecondThCol.setText(forumPost.getCreated());
-        tvSecondThCol.setTextColor(Color.LTGRAY);
-        tvSecondThCol.setGravity(Gravity.END);
-        tvSecondThCol.setSingleLine(true);
-        tvSecondThCol.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
-
-        rowForumPostHeader.addView(tvFirstThCol);
-        rowForumPostHeader.addView(tvSecondThCol);
-
-        tl.addView(rowForumPostHeader);
+        tvFirstThCol.setTextColor(Color.WHITE)
+        tvFirstThCol.gravity = Gravity.START
+        tvFirstThCol.isSingleLine = true
+        tvFirstThCol.layoutParams = ViewGroup.LayoutParams(
+            ViewGroup.LayoutParams.WRAP_CONTENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        )
+        tvSecondThCol.text = forumPost.created
+        tvSecondThCol.setTextColor(Color.LTGRAY)
+        tvSecondThCol.gravity = Gravity.END
+        tvSecondThCol.isSingleLine = true
+        tvSecondThCol.layoutParams = ViewGroup.LayoutParams(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        )
+        rowForumPostHeader.addView(tvFirstThCol)
+        rowForumPostHeader.addView(tvSecondThCol)
+        tl.addView(rowForumPostHeader)
 
         // Forum-Post
-        TextView tvForumPost = new TextView(this);
-        tvForumPost.setText(forumPost.getText());
-        tvForumPost.setBackgroundColor(Color.BLACK);
-        tvForumPost.setTextColor(Color.WHITE);
-        tvForumPost.setPadding(10, 10, 10, 40);
+        val tvForumPost = TextView(this)
+        tvForumPost.text = forumPost.text
+        tvForumPost.setBackgroundColor(Color.BLACK)
+        tvForumPost.setTextColor(Color.WHITE)
+        tvForumPost.setPadding(10, 10, 10, 40)
         // TODO hier noch programmatisch die FONT auf LATO setzen
 //        tvForumPost.setTypeface(latoFontLight);
-        tvForumPost.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+        tvForumPost.layoutParams = ViewGroup.LayoutParams(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.MATCH_PARENT
+        )
+        tl.addView(tvForumPost)
 
-        tl.addView(tvForumPost);
-
-        return tl;
+//        cardLayoutPortrait.addView(tl)
+        return tl
     }
 
-
-    @Override
-    protected void onResume() {
-        super.onResume();
+    override fun onResume() {
+        super.onResume()
         if (!Reachability.isRegistered()) {
-            Reachability.registerReachability(this);
+            Reachability.registerReachability(this)
         }
     }
 
-    @Override
-    protected void onStop() {
-        Reachability.unregister(this);
-        super.onStop();
+    override fun onStop() {
+        Reachability.unregister(this)
+        super.onStop()
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.handset_forum_menu, menu);
-
-        if (tools.getMember() != null) {
-            getMenuInflater().inflate(R.menu.signout_menu, menu);
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.handset_forum_menu, menu)
+        if (tools.member != null) {
+            menuInflater.inflate(R.menu.signout_menu, menu)
         } else {
-            getMenuInflater().inflate(R.menu.signin_menu, menu);
+            menuInflater.inflate(R.menu.signin_menu, menu)
         }
 
         // Search
-        getMenuInflater().inflate(R.menu.search_menu, menu);
+        menuInflater.inflate(R.menu.search_menu, menu)
 
         // Associate searchable configuration with the SearchView
-        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-
-        return super.onCreateOptionsMenu(menu);
+        val searchManager = getSystemService(SEARCH_SERVICE) as SearchManager
+        val searchView = menu.findItem(R.id.search).actionView as SearchView
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(componentName))
+        return super.onCreateOptionsMenu(menu)
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-            case R.id.action_cheatview:
-                onBackPressed();
-                return true;
-            case R.id.action_rate:
-                showRatingDialog();
-                return true;
-            case R.id.action_add_to_favorites:
-                tools.showSnackbar(outerLayout, getString(R.string.favorite_adding));
-                int memberId = 0;
-                if (tools.getMember() != null) {
-                    memberId = tools.getMember().getMid();
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            android.R.id.home, R.id.action_cheatview -> {
+                onBackPressed()
+                true
+            }
+            R.id.action_rate -> {
+                showRatingDialog()
+                true
+            }
+            R.id.action_add_to_favorites -> {
+                tools.showSnackbar(outerLayout, getString(R.string.favorite_adding))
+                var memberId = 0
+                if (tools.member != null) {
+                    memberId = tools.member.mid
                 }
-                tools.addFavorite(cheatObj, memberId, this);
-                return true;
-            case R.id.action_share:
-                tools.shareCheat(cheatObj);
-                return true;
-            case R.id.action_metainfo:
-                new CheatMetaDialog(CheatForumActivity.this, cheatObj, outerLayout, tools).show();
-                return true;
-            case R.id.action_report:
-                showReportDialog();
-                return true;
-            case R.id.action_submit_cheat:
-                Intent explicitIntent = new Intent(this, SubmitCheatFormActivity.class);
-                explicitIntent.putExtra("gameObj", gameObj);
-                startActivity(explicitIntent);
-                return true;
-            case R.id.action_login:
-                resultContract.launch(new Intent(this, LoginActivity.class));
-                return true;
-            case R.id.action_logout:
-                tools.logout();
-                tools.showSnackbar(outerLayout, getString(R.string.logout_ok));
-                invalidateOptionsMenu();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+                tools.addFavorite(cheatObj, memberId, this)
+                true
+            }
+            R.id.action_share -> {
+                tools.shareCheat(cheatObj)
+                true
+            }
+            R.id.action_metainfo -> {
+                CheatMetaDialog(this@CheatForumActivity, cheatObj!!, outerLayout, tools).show()
+                true
+            }
+            R.id.action_report -> {
+                showReportDialog()
+                true
+            }
+            R.id.action_submit_cheat -> {
+                val explicitIntent = Intent(this, SubmitCheatFormActivity::class.java)
+                explicitIntent.putExtra("gameObj", gameObj)
+                startActivity(explicitIntent)
+                true
+            }
+            R.id.action_login -> {
+                resultContract.launch(Intent(this, LoginActivity::class.java))
+                true
+            }
+            R.id.action_logout -> {
+                tools.logout()
+                tools.showSnackbar(outerLayout, getString(R.string.logout_ok))
+                invalidateOptionsMenu()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
         }
     }
 
-    public void showReportDialog() {
-        if ((tools.getMember() == null) || (tools.getMember().getMid() == 0)) {
-            Toast.makeText(this, R.string.error_login_required, Toast.LENGTH_LONG).show();
+    private fun showReportDialog() {
+        if (tools.member == null || tools.member.mid == 0) {
+            Toast.makeText(this, R.string.error_login_required, Toast.LENGTH_LONG).show()
         } else {
-            new ReportCheatMaterialDialog(this, cheatObj, tools.getMember(), outerLayout, tools);
+            ReportCheatMaterialDialog(this, cheatObj!!, tools.member, outerLayout, tools)
         }
     }
 
-    public void showRatingDialog() {
-        if ((tools.getMember() == null) || (tools.getMember().getMid() == 0)) {
-            Toast.makeText(this, R.string.error_login_required, Toast.LENGTH_LONG).show();
+    private fun showRatingDialog() {
+        if (tools.member == null || tools.member.mid == 0) {
+            Toast.makeText(this, R.string.error_login_required, Toast.LENGTH_LONG).show()
         } else {
-            new RateCheatMaterialDialog(this, cheatObj, outerLayout, tools, restApi, this);
+            RateCheatMaterialDialog(this, cheatObj!!, outerLayout, tools, restApi, this)
         }
     }
 
-    private void submitForumPost(ForumPost forumPost) {
-        Call<Void> call;
+    private fun submitForumPost(forumPost: ForumPost) {
+        val call: Call<Void>
         try {
-            call = restApi.insertForum(tools.getMember().getMid(), cheatObj.getCheatId(), AeSimpleMD5.MD5(tools.getMember().getPassword()), forumPost.getText());
-            call.enqueue(new Callback<Void>() {
-                @Override
-                public void onResponse(Call<Void> forumPost, Response<Void> response) {
-                    Log.d(TAG, "submit forum post SUCCESS");
-
-                    Intent output = new Intent();
-                    output.putExtra("newForumCount", cheatObj.getForumCount() + 1);
-                    setResult(RESULT_OK, output);
-                    updateUI();
+            call = restApi.insertForum(
+                tools.member.mid, cheatObj!!.cheatId, AeSimpleMD5.MD5(
+                    tools.member.password
+                ), forumPost.text
+            )
+            call.enqueue(object : Callback<Void?> {
+                override fun onResponse(forumPost: Call<Void?>, response: Response<Void?>) {
+                    Log.d(TAG, "submit forum post SUCCESS")
+                    val output = Intent()
+                    output.putExtra("newForumCount", cheatObj!!.forumCount + 1)
+                    setResult(RESULT_OK, output)
+                    updateUI()
                 }
 
-                @Override
-                public void onFailure(Call<Void> call, Throwable e) {
-                    Log.e(TAG, "Submit forum post FAIL: " + e.getLocalizedMessage());
-                    Toast.makeText(CheatForumActivity.this, R.string.err_occurred, Toast.LENGTH_LONG).show();
+                override fun onFailure(call: Call<Void?>, e: Throwable) {
+                    Log.e(TAG, "Submit forum post FAIL: " + e.localizedMessage)
+                    Toast.makeText(
+                        this@CheatForumActivity,
+                        R.string.err_occurred,
+                        Toast.LENGTH_LONG
+                    ).show()
                 }
-            });
-        } catch (NoSuchAlgorithmException e) {
-            Log.e(TAG, "postForumEntry: ", e);
+            })
+        } catch (e: NoSuchAlgorithmException) {
+            Log.e(TAG, "postForumEntry: ", e)
         }
     }
 
-    private void updateUI() {
-        Needle.onMainThread().execute(() -> {
-            editText.setText("");
-            tvEmpty.setVisibility(View.GONE);
-            Toast.makeText(CheatForumActivity.this, R.string.forum_submit_ok, Toast.LENGTH_LONG).show();
-        });
+    private fun updateUI() {
+        Needle.onMainThread().execute {
+            editText.setText("")
+            tvEmpty.visibility = View.GONE
+            Toast.makeText(this@CheatForumActivity, R.string.forum_submit_ok, Toast.LENGTH_LONG)
+                .show()
+        }
     }
 
-    void fetchForumPosts() {
-        Call<List<ForumPost>> call = restApi.getForum(cheatObj.getCheatId());
-        call.enqueue(new Callback<List<ForumPost>>() {
-            @Override
-            public void onResponse(Call<List<ForumPost>> forum, Response<List<ForumPost>> response) {
-                List<ForumPost> forumThread = response.body();
-
-                reloadView.setVisibility(View.GONE);
-
-                llForumMain.removeAllViews();
-                if (forumThread.size() > 0) {
-                    tvEmpty.setVisibility(View.GONE);
-
-                    for (ForumPost forumPost : forumThread) {
-                        LinearLayout linearLayout = createForumPosts(forumPost);
-                        llForumMain.addView(linearLayout, new TableLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+    private fun fetchForumPosts() {
+        val call = restApi.getForum(
+            cheatObj!!.cheatId
+        )
+        call.enqueue(object : Callback<List<ForumPost>> {
+            override fun onResponse(
+                forum: Call<List<ForumPost>>,
+                response: Response<List<ForumPost>>
+            ) {
+                val forumThread = response.body()!!
+                reloadView.visibility = View.GONE
+                llForumMain.removeAllViews()
+                if (forumThread.isNotEmpty()) {
+                    tvEmpty.visibility = View.GONE
+                    for (forumPost in forumThread) {
+                        val linearLayout = createForumPosts(forumPost)
+                        llForumMain.addView(
+                            linearLayout,
+                            TableLayout.LayoutParams(
+                                ViewGroup.LayoutParams.MATCH_PARENT,
+                                ViewGroup.LayoutParams.MATCH_PARENT
+                            )
+                        )
                     }
                 } else {
-                    tvEmpty.setVisibility(View.VISIBLE);
+                    tvEmpty.visibility = View.VISIBLE
                 }
             }
 
-            @Override
-            public void onFailure(Call<List<ForumPost>> call, Throwable e) {
-                tvEmpty.setVisibility(View.VISIBLE);
+            override fun onFailure(call: Call<List<ForumPost>>, e: Throwable) {
+                tvEmpty.visibility = View.VISIBLE
             }
-        });
+        })
     }
 
-    @Override
-    public void success() {
-        Log.d(TAG, "CheatForumActivity ADD FAV success: ");
-        tools.showSnackbar(outerLayout, getString(R.string.add_favorite_ok));
+    override fun success() {
+        Log.d(TAG, "CheatForumActivity ADD FAV success: ")
+        tools.showSnackbar(outerLayout, getString(R.string.add_favorite_ok))
     }
 
-    @Override
-    public void fail(Exception e) {
-        Log.d(TAG, "CheatForumActivity ADD FAV fail: ");
-        tools.showSnackbar(outerLayout, getString(R.string.error_adding_favorite));
+    override fun fail(e: Exception) {
+        Log.d(TAG, "CheatForumActivity ADD FAV fail: ")
+        tools.showSnackbar(outerLayout, getString(R.string.error_adding_favorite))
     }
 
-    @Override
-    public void onCheatRated(@NotNull CheatRatingFinishedEvent cheatRatingFinishedEvent) {
-        Log.d(TAG, "OnEvent result: " + cheatRatingFinishedEvent.getRating());
-        cheatObj.setMemberRating(cheatRatingFinishedEvent.getRating());
+    override fun onCheatRated(cheatRatingFinishedEvent: CheatRatingFinishedEvent) {
+        Log.d(TAG, "OnEvent result: " + cheatRatingFinishedEvent.rating)
+        cheatObj!!.memberRating = cheatRatingFinishedEvent.rating.toFloat()
+    }
+
+    companion object {
+        private const val TAG = "CheatForumActivity"
     }
 }

@@ -2,7 +2,6 @@ package com.cheatdatabase.fragments
 
 import android.app.Application
 import android.util.Log
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -12,8 +11,9 @@ import com.cheatdatabase.data.model.SystemModel
 import com.cheatdatabase.data.repository.SystemRepository
 import kotlinx.coroutines.launch
 import java.io.IOException
+import javax.inject.Inject
 
-class SystemConsoleListViewModel @ViewModelInject constructor(app: Application) : AndroidViewModel(app) {
+class SystemConsoleListViewModel @Inject constructor(app: Application) : AndroidViewModel(app) {
     private val TAG = "SystemConsoleListViewMo"
 
     private val repository: SystemRepository = SystemRepository(RoomCheatDatabase.getDatabase(app))

@@ -38,7 +38,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 /**
- * Swipe through cheats horizontally with this CheatViewPageIndicatorActivity.
+ * Swipe through cheats horizontally.
  *
  * @author Dominik Erbsland
  */

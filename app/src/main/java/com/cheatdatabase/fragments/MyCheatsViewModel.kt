@@ -2,7 +2,6 @@ package com.cheatdatabase.fragments
 
 import android.app.Application
 import android.util.Log
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -13,8 +12,9 @@ import com.cheatdatabase.data.repository.MyCheatsRepository
 import com.cheatdatabase.helpers.AeSimpleMD5
 import kotlinx.coroutines.launch
 import java.io.IOException
+import javax.inject.Inject
 
-class MyCheatsViewModel @ViewModelInject constructor(app: Application) : AndroidViewModel(app) {
+class MyCheatsViewModel @Inject constructor(app: Application) : AndroidViewModel(app) {
     private val TAG = "MyCheatsViewModel"
 
     private val repository: MyCheatsRepository = MyCheatsRepository()

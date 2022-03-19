@@ -1,10 +1,8 @@
 package com.cheatdatabase.cheatdetailview
 
 import android.app.SearchManager
-import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
-import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
@@ -35,21 +33,15 @@ import com.cheatdatabase.helpers.Konstanten
 import com.cheatdatabase.helpers.Reachability
 import com.cheatdatabase.helpers.Tools
 import com.cheatdatabase.rest.RestApi
+import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import dagger.hilt.android.AndroidEntryPoint
-import net.lucode.hackware.magicindicator.buildins.UIUtil
-import net.lucode.hackware.magicindicator.buildins.commonnavigator.CommonNavigator
-import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.CommonNavigatorAdapter
-import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerIndicator
-import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerTitleView
-import net.lucode.hackware.magicindicator.buildins.commonnavigator.indicators.LinePagerIndicator
-import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.ColorTransitionPagerTitleView
-import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.SimplePagerTitleView
 import javax.inject.Inject
 
 /**
- * Horizontal sliding through cheats submitted by members.
+ * Swipe through cheats horizontally submitted by members.
  *
  * @author Dominik Erbsland
  */
@@ -66,7 +58,7 @@ class MemberCheatViewPageIndicator : AppCompatActivity(), GenericCallback, OnChe
     lateinit var mToolbar: Toolbar
     lateinit var appLovinAdView: AppLovinAdView
     lateinit var viewPager: ViewPager2
-//    lateinit var magicIndicator: FrameLayout
+    lateinit var tabLayout: TabLayout
 
     private var pageSelected = 0
     private var cheatList: List<Cheat>? = null
@@ -93,6 +85,11 @@ class MemberCheatViewPageIndicator : AppCompatActivity(), GenericCallback, OnChe
             }
             activityResult.resultCode == Konstanten.RECOVER_PASSWORD_ATTEMPT -> {
                 tools.showSnackbar(outerLayout, getString(R.string.recover_login_success))
+            }
+            activityResult.resultCode == FORUM_POST_ADDED_REQUEST -> {
+                val newForumCount = activityResult.data!!
+                    .getIntExtra("newForumCount", visibleCheat!!.forumCount)
+                visibleCheat!!.forumCount = newForumCount
             }
         }
         invalidateOptionsMenu()
@@ -134,6 +131,10 @@ class MemberCheatViewPageIndicator : AppCompatActivity(), GenericCallback, OnChe
                 handleNullPointerException()
             }
         }
+
+        TabLayoutMediator(binding.tabLayout, viewPager) { tab, position ->
+            tab.text = cheatList!![position].cheatTitle
+        }.attach()
     }
 
     private fun handleNullPointerException() {
@@ -158,31 +159,30 @@ class MemberCheatViewPageIndicator : AppCompatActivity(), GenericCallback, OnChe
     }
 
     private fun initialisePaging() {
-        try {
-            viewPager.adapter = MemberCheatViewFragmentAdapter(this, cheatList!!)
-            viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
-                override fun onPageSelected(position: Int) {
-                    // Save selected page
-                    tools.putInt(Konstanten.PREFERENCES_PAGE_SELECTED, position)
-                    activePage = position
-                    try {
-                        visibleCheat = cheatList!![position]
-                        invalidateOptionsMenu()
-                        gameObj = visibleCheat!!.game
-                        gameObj.systemId = visibleCheat!!.system.systemId
-                        gameObj.systemName = visibleCheat!!.system.systemName
-                        supportActionBar!!.title = visibleCheat!!.game.gameName
-                        supportActionBar!!.subtitle = visibleCheat!!.system.systemName
-                    } catch (e: Exception) {
-                        Log.e(TAG, e.message!!)
-                        Toast.makeText(
-                            this@MemberCheatViewPageIndicator,
-                            R.string.err_somethings_wrong,
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    }
+        viewPager.adapter = MemberCheatViewFragmentAdapter(this, cheatList!!)
+        viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                // Save selected page
+                tools.putInt(Konstanten.PREFERENCES_PAGE_SELECTED, position)
+                activePage = position
+                try {
+                    visibleCheat = cheatList!![position]
+                    invalidateOptionsMenu()
+                    gameObj = visibleCheat!!.game
+                    gameObj.systemId = visibleCheat!!.system.systemId
+                    gameObj.systemName = visibleCheat!!.system.systemName
+                    supportActionBar!!.title = visibleCheat!!.game.gameName
+                    supportActionBar!!.subtitle = visibleCheat!!.system.systemName
+                } catch (e: Exception) {
+                    Log.e(TAG, e.message!!)
+                    Toast.makeText(
+                        this@MemberCheatViewPageIndicator,
+                        R.string.err_somethings_wrong,
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
-            })
+            }
+        })
 
 //            viewPager.addOnPageChangeListener(object : OnPageChangeListener {
 //                override fun onPageScrolled(
@@ -216,44 +216,41 @@ class MemberCheatViewPageIndicator : AppCompatActivity(), GenericCallback, OnChe
 //
 //                override fun onPageScrollStateChanged(state: Int) {}
 //            })
-            val commonNavigator = CommonNavigator(this)
-            commonNavigator.isSkimOver = true
-            commonNavigator.adapter = object : CommonNavigatorAdapter() {
-                override fun getCount(): Int {
-                    return if (cheatList == null) 0 else cheatList!!.size
-                }
-
-                override fun getTitleView(context: Context, index: Int): IPagerTitleView {
-                    val clipPagerTitleView: SimplePagerTitleView =
-                        ColorTransitionPagerTitleView(context)
-                    clipPagerTitleView.text = cheatList!![index].cheatTitle
-                    clipPagerTitleView.normalColor =
-                        Color.parseColor("#88ffffff") // White transparent
-                    clipPagerTitleView.selectedColor = Color.WHITE
-                    clipPagerTitleView.setOnClickListener { viewPager.currentItem = index }
-                    return clipPagerTitleView
-                }
-
-                override fun getIndicator(context: Context): IPagerIndicator {
-                    val indicator = LinePagerIndicator(context)
-                    indicator.mode = LinePagerIndicator.MODE_EXACTLY
-                    indicator.yOffset = UIUtil.dip2px(context, 3.0).toFloat()
-                    indicator.setColors(Color.WHITE)
-                    return indicator
-                }
-            }
+//            val commonNavigator = CommonNavigator(this)
+//            commonNavigator.isSkimOver = true
+//            commonNavigator.adapter = object : CommonNavigatorAdapter() {
+//                override fun getCount(): Int {
+//                    return if (cheatList == null) 0 else cheatList!!.size
+//                }
+//
+//                override fun getTitleView(context: Context, index: Int): IPagerTitleView {
+//                    val clipPagerTitleView: SimplePagerTitleView =
+//                        ColorTransitionPagerTitleView(context)
+//                    clipPagerTitleView.text = cheatList!![index].cheatTitle
+//                    clipPagerTitleView.normalColor =
+//                        Color.parseColor("#88ffffff") // White transparent
+//                    clipPagerTitleView.selectedColor = Color.WHITE
+//                    clipPagerTitleView.setOnClickListener { viewPager.currentItem = index }
+//                    return clipPagerTitleView
+//                }
+//
+//                override fun getIndicator(context: Context): IPagerIndicator {
+//                    val indicator = LinePagerIndicator(context)
+//                    indicator.mode = LinePagerIndicator.MODE_EXACTLY
+//                    indicator.yOffset = UIUtil.dip2px(context, 3.0).toFloat()
+//                    indicator.setColors(Color.WHITE)
+//                    return indicator
+//                }
+//            }
 //            magicIndicator.navigator = commonNavigator
 //            ViewPagerHelper.bind(magicIndicator, viewPager)
-            viewPager.currentItem = pageSelected
+        viewPager.currentItem = pageSelected
 
-            binding.addNewCheatButton.setOnClickListener {
-                val intent =
-                    Intent(this@MemberCheatViewPageIndicator, SubmitCheatFormActivity::class.java)
-                intent.putExtra("gameObj", gameObj)
-                startActivity(intent)
-            }
-        } catch (e2: Exception) {
-            Log.e(TAG, "ERROR: " + packageName + "/" + title + "... " + e2.message)
+        binding.addNewCheatButton.setOnClickListener {
+            val intent =
+                Intent(this@MemberCheatViewPageIndicator, SubmitCheatFormActivity::class.java)
+            intent.putExtra("gameObj", gameObj)
+            startActivity(intent)
         }
     }
 
@@ -401,5 +398,6 @@ class MemberCheatViewPageIndicator : AppCompatActivity(), GenericCallback, OnChe
 
     companion object {
         private const val TAG = "MemberCheatViewPageIndi"
+        const val FORUM_POST_ADDED_REQUEST = 176
     }
 }
