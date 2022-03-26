@@ -69,7 +69,7 @@
 
     <!-- FORUM -->
     <string name="add_all_favorites">Add all cheats to favorites</string>
-    <string name="favorite_adding">Adding favorites&#8230;&#8230;&#8230;</string>
+    <string name="favorite_adding">Adding favorites&#8230;</string>
     <string name="forum" translatable="false">Forum</string>
     <string name="forum_goto">Go to forum</string>
     <string name="forum_button_submit">Post</string>

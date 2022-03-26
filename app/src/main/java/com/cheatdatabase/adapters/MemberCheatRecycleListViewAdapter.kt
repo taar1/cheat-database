@@ -15,7 +15,7 @@ import java.util.*
 
 class MemberCheatRecycleListViewAdapter(
     private val onMyCheatListItemSelectedListener: OnMyCheatListItemSelectedListener,
-    val member: Member,
+    val member: Member?,
     val context: Context
 ) : RecyclerView.Adapter<MemberCheatsListViewItemHolder>(), SectionedAdapter,
     MeasurableAdapter<MemberCheatsListViewItemHolder?> {

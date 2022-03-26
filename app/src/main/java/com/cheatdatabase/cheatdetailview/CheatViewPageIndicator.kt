@@ -61,7 +61,7 @@ class CheatViewPageIndicator : AppCompatActivity(), GenericCallback,
     private var pageSelected = 0
     private var gameObj: Game? = null
     private var cheatList: ArrayList<Cheat>? = null
-    private var visibleCheat: Cheat? = null
+    private lateinit var visibleCheat: Cheat
 
     private lateinit var binding: ActivityCheatviewPagerBinding
 
@@ -82,8 +82,8 @@ class CheatViewPageIndicator : AppCompatActivity(), GenericCallback,
             }
             activityResult.resultCode == FORUM_POST_ADDED_REQUEST -> {
                 val newForumCount = activityResult.data!!
-                    .getIntExtra("newForumCount", visibleCheat!!.forumCount)
-                visibleCheat!!.forumCount = newForumCount
+                    .getIntExtra("newForumCount", visibleCheat.forumCount)
+                visibleCheat.forumCount = newForumCount
             }
         }
         invalidateOptionsMenu()
@@ -185,7 +185,7 @@ class CheatViewPageIndicator : AppCompatActivity(), GenericCallback,
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        if (visibleCheat != null && visibleCheat!!.memberRating > 0) {
+        if (visibleCheat.memberRating > 0) {
             menuInflater.inflate(R.menu.handset_cheatview_rating_on_menu, menu)
         } else {
             menuInflater.inflate(R.menu.handset_cheatview_rating_off_menu, menu)
@@ -196,12 +196,12 @@ class CheatViewPageIndicator : AppCompatActivity(), GenericCallback,
             menuInflater.inflate(R.menu.signin_menu, menu)
         }
         var postOrPosts = getString(R.string.forum_many_posts)
-        if (visibleCheat!!.forumCount == 1) {
+        if (visibleCheat.forumCount == 1) {
             postOrPosts = getString(R.string.forum_single_post)
         }
         val forumMenuItem = menu.findItem(R.id.action_forum)
         forumMenuItem.title =
-            getString(R.string.forum_amount_posts, visibleCheat!!.forumCount, postOrPosts)
+            getString(R.string.forum_amount_posts, visibleCheat.forumCount, postOrPosts)
 
         // Search
         menuInflater.inflate(R.menu.search_menu, menu)
@@ -216,12 +216,12 @@ class CheatViewPageIndicator : AppCompatActivity(), GenericCallback,
     override fun onPrepareOptionsMenu(menu: Menu): Boolean {
         super.onPrepareOptionsMenu(menu)
         var postOrPosts = getString(R.string.forum_many_posts)
-        if (visibleCheat!!.forumCount == 1) {
+        if (visibleCheat.forumCount == 1) {
             postOrPosts = getString(R.string.forum_single_post)
         }
         val forumMenuItem = menu.findItem(R.id.action_forum)
         forumMenuItem.title =
-            getString(R.string.forum_amount_posts, visibleCheat!!.forumCount, postOrPosts)
+            getString(R.string.forum_amount_posts, visibleCheat.forumCount, postOrPosts)
         return true
     }
 
@@ -247,8 +247,7 @@ class CheatViewPageIndicator : AppCompatActivity(), GenericCallback,
                 if (Reachability.reachability.isReachable) {
                     explicitIntent =
                         Intent(this@CheatViewPageIndicator, CheatForumActivity::class.java)
-                    explicitIntent.putExtra("gameObj", gameObj)
-                    explicitIntent.putExtra("cheatObj", visibleCheat)
+                    explicitIntent.putExtra("cheatId", visibleCheat.cheatId)
                     resultContract.launch(explicitIntent)
                 } else {
                     Toast.makeText(this, R.string.no_internet, Toast.LENGTH_SHORT).show()
@@ -272,7 +271,7 @@ class CheatViewPageIndicator : AppCompatActivity(), GenericCallback,
                 if (Reachability.reachability.isReachable) {
                     CheatMetaDialog(
                         this@CheatViewPageIndicator,
-                        visibleCheat!!,
+                        visibleCheat,
                         outerLayout,
                         tools
                     ).show()
@@ -318,7 +317,7 @@ class CheatViewPageIndicator : AppCompatActivity(), GenericCallback,
         if (tools.member == null || tools.member.mid == 0) {
             Toast.makeText(this, R.string.error_login_required, Toast.LENGTH_SHORT).show()
         } else {
-            ReportCheatMaterialDialog(this, visibleCheat!!, tools.member, outerLayout, tools)
+            ReportCheatMaterialDialog(this, visibleCheat, tools.member, outerLayout, tools)
         }
     }
 
@@ -326,7 +325,7 @@ class CheatViewPageIndicator : AppCompatActivity(), GenericCallback,
         if (tools.member == null || tools.member.mid == 0) {
             Toast.makeText(this, R.string.error_login_to_rate, Toast.LENGTH_LONG).show()
         } else {
-            RateCheatMaterialDialog(this, visibleCheat!!, outerLayout, tools, restApi, this)
+            RateCheatMaterialDialog(this, visibleCheat, outerLayout, tools, restApi, this)
         }
     }
 
@@ -339,7 +338,7 @@ class CheatViewPageIndicator : AppCompatActivity(), GenericCallback,
     }
 
     override fun onCheatRated(cheatRatingFinishedEvent: CheatRatingFinishedEvent) {
-        visibleCheat!!.memberRating = cheatRatingFinishedEvent.rating.toFloat()
+        visibleCheat.memberRating = cheatRatingFinishedEvent.rating.toFloat()
         cheatList!![pageSelected].memberRating = cheatRatingFinishedEvent.rating.toFloat()
         invalidateOptionsMenu()
     }

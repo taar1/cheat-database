@@ -33,7 +33,6 @@ import com.cheatdatabase.helpers.Konstanten
 import com.cheatdatabase.helpers.Reachability
 import com.cheatdatabase.helpers.Tools
 import com.cheatdatabase.rest.RestApi
-import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -58,11 +57,10 @@ class MemberCheatViewPageIndicator : AppCompatActivity(), GenericCallback, OnChe
     lateinit var mToolbar: Toolbar
     lateinit var appLovinAdView: AppLovinAdView
     lateinit var viewPager: ViewPager2
-    lateinit var tabLayout: TabLayout
 
     private var pageSelected = 0
     private var cheatList: List<Cheat>? = null
-    private var visibleCheat: Cheat? = null
+    private lateinit var visibleCheat: Cheat
     private var gameObj: Game = Game()
     private var activePage = 0
 
@@ -88,8 +86,8 @@ class MemberCheatViewPageIndicator : AppCompatActivity(), GenericCallback, OnChe
             }
             activityResult.resultCode == FORUM_POST_ADDED_REQUEST -> {
                 val newForumCount = activityResult.data!!
-                    .getIntExtra("newForumCount", visibleCheat!!.forumCount)
-                visibleCheat!!.forumCount = newForumCount
+                    .getIntExtra("newForumCount", visibleCheat.forumCount)
+                visibleCheat.forumCount = newForumCount
             }
         }
         invalidateOptionsMenu()
@@ -111,21 +109,21 @@ class MemberCheatViewPageIndicator : AppCompatActivity(), GenericCallback, OnChe
                 null
             ), type
         )
-        if (cheatList == null || cheatList!!.isEmpty()) {
+        if (cheatList.isNullOrEmpty()) {
             cheatList = intent.getParcelableArrayListExtra("cheatList")
         }
-        if (cheatList == null || cheatList!!.isEmpty()) {
+        if (cheatList.isNullOrEmpty()) {
             handleNullPointerException()
         } else {
             pageSelected = intent.getIntExtra("selectedPage", 0)
             activePage = pageSelected
             try {
                 visibleCheat = cheatList!![pageSelected]
-                gameObj = visibleCheat!!.game
-                gameObj.systemId = visibleCheat!!.system.systemId
-                gameObj.systemName = visibleCheat!!.system.systemName
-                supportActionBar!!.title = visibleCheat!!.game.gameName
-                supportActionBar!!.subtitle = visibleCheat!!.system.systemName
+                gameObj = visibleCheat.game
+                gameObj.systemId = visibleCheat.system.systemId
+                gameObj.systemName = visibleCheat.system.systemName
+                supportActionBar!!.title = visibleCheat.game.gameName
+                supportActionBar!!.subtitle = visibleCheat.system.systemName
                 initialisePaging()
             } catch (e: NullPointerException) {
                 handleNullPointerException()
@@ -147,7 +145,6 @@ class MemberCheatViewPageIndicator : AppCompatActivity(), GenericCallback, OnChe
         mToolbar = binding.toolbar
         appLovinAdView = binding.adContainer
         viewPager = binding.pager
-//        magicIndicator = binding.magicIndicator
     }
 
     private fun init() {
@@ -168,11 +165,11 @@ class MemberCheatViewPageIndicator : AppCompatActivity(), GenericCallback, OnChe
                 try {
                     visibleCheat = cheatList!![position]
                     invalidateOptionsMenu()
-                    gameObj = visibleCheat!!.game
-                    gameObj.systemId = visibleCheat!!.system.systemId
-                    gameObj.systemName = visibleCheat!!.system.systemName
-                    supportActionBar!!.title = visibleCheat!!.game.gameName
-                    supportActionBar!!.subtitle = visibleCheat!!.system.systemName
+                    gameObj = visibleCheat.game
+                    gameObj.systemId = visibleCheat.system.systemId
+                    gameObj.systemName = visibleCheat.system.systemName
+                    supportActionBar!!.title = visibleCheat.game.gameName
+                    supportActionBar!!.subtitle = visibleCheat.system.systemName
                 } catch (e: Exception) {
                     Log.e(TAG, e.message!!)
                     Toast.makeText(
@@ -184,66 +181,6 @@ class MemberCheatViewPageIndicator : AppCompatActivity(), GenericCallback, OnChe
             }
         })
 
-//            viewPager.addOnPageChangeListener(object : OnPageChangeListener {
-//                override fun onPageScrolled(
-//                    position: Int,
-//                    positionOffset: Float,
-//                    positionOffsetPixels: Int
-//                ) {
-//                }
-//
-//                override fun onPageSelected(position: Int) {
-//                    // Save selected page
-//                    tools.putInt(Konstanten.PREFERENCES_PAGE_SELECTED, position)
-//                    activePage = position
-//                    try {
-//                        visibleCheat = cheatList!![position]
-//                        invalidateOptionsMenu()
-//                        gameObj = visibleCheat!!.game
-//                        gameObj.systemId = visibleCheat!!.system.systemId
-//                        gameObj.systemName = visibleCheat!!.system.systemName
-//                        supportActionBar!!.title = visibleCheat!!.game.gameName
-//                        supportActionBar!!.subtitle = visibleCheat!!.system.systemName
-//                    } catch (e: Exception) {
-//                        Log.e(TAG, e.message!!)
-//                        Toast.makeText(
-//                            this@MemberCheatViewPageIndicator,
-//                            R.string.err_somethings_wrong,
-//                            Toast.LENGTH_SHORT
-//                        ).show()
-//                    }
-//                }
-//
-//                override fun onPageScrollStateChanged(state: Int) {}
-//            })
-//            val commonNavigator = CommonNavigator(this)
-//            commonNavigator.isSkimOver = true
-//            commonNavigator.adapter = object : CommonNavigatorAdapter() {
-//                override fun getCount(): Int {
-//                    return if (cheatList == null) 0 else cheatList!!.size
-//                }
-//
-//                override fun getTitleView(context: Context, index: Int): IPagerTitleView {
-//                    val clipPagerTitleView: SimplePagerTitleView =
-//                        ColorTransitionPagerTitleView(context)
-//                    clipPagerTitleView.text = cheatList!![index].cheatTitle
-//                    clipPagerTitleView.normalColor =
-//                        Color.parseColor("#88ffffff") // White transparent
-//                    clipPagerTitleView.selectedColor = Color.WHITE
-//                    clipPagerTitleView.setOnClickListener { viewPager.currentItem = index }
-//                    return clipPagerTitleView
-//                }
-//
-//                override fun getIndicator(context: Context): IPagerIndicator {
-//                    val indicator = LinePagerIndicator(context)
-//                    indicator.mode = LinePagerIndicator.MODE_EXACTLY
-//                    indicator.yOffset = UIUtil.dip2px(context, 3.0).toFloat()
-//                    indicator.setColors(Color.WHITE)
-//                    return indicator
-//                }
-//            }
-//            magicIndicator.navigator = commonNavigator
-//            ViewPagerHelper.bind(magicIndicator, viewPager)
         viewPager.currentItem = pageSelected
 
         binding.addNewCheatButton.setOnClickListener {
@@ -255,7 +192,7 @@ class MemberCheatViewPageIndicator : AppCompatActivity(), GenericCallback, OnChe
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        if (visibleCheat != null && visibleCheat!!.memberRating > 0) {
+        if (visibleCheat != null && visibleCheat.memberRating > 0) {
             menuInflater.inflate(R.menu.handset_cheatview_rating_on_menu, menu)
         } else {
             menuInflater.inflate(R.menu.handset_cheatview_rating_off_menu, menu)
@@ -297,9 +234,8 @@ class MemberCheatViewPageIndicator : AppCompatActivity(), GenericCallback, OnChe
             R.id.action_forum -> {
                 explicitIntent =
                     Intent(this@MemberCheatViewPageIndicator, CheatForumActivity::class.java)
-                explicitIntent.putExtra("gameObj", gameObj)
-                explicitIntent.putExtra("cheatObj", visibleCheat)
-                explicitIntent.putExtra("cheatList", Gson().toJson(cheatList))
+                explicitIntent.putExtra("cheatId", visibleCheat.cheatId)
+
                 startActivity(explicitIntent)
                 true
             }
@@ -319,7 +255,7 @@ class MemberCheatViewPageIndicator : AppCompatActivity(), GenericCallback, OnChe
             R.id.action_metainfo -> {
                 CheatMetaDialog(
                     this@MemberCheatViewPageIndicator,
-                    visibleCheat!!,
+                    visibleCheat,
                     outerLayout,
                     tools
                 ).show()
@@ -352,7 +288,7 @@ class MemberCheatViewPageIndicator : AppCompatActivity(), GenericCallback, OnChe
         if (tools.member == null || tools.member.mid == 0) {
             Toast.makeText(this, R.string.error_login_required, Toast.LENGTH_SHORT).show()
         } else {
-            ReportCheatMaterialDialog(this, visibleCheat!!, tools.member, outerLayout, tools)
+            ReportCheatMaterialDialog(this, visibleCheat, tools.member, outerLayout, tools)
         }
     }
 
@@ -360,12 +296,12 @@ class MemberCheatViewPageIndicator : AppCompatActivity(), GenericCallback, OnChe
         if (tools.member == null || tools.member.mid == 0) {
             Toast.makeText(this, R.string.error_login_required, Toast.LENGTH_LONG).show()
         } else {
-            RateCheatMaterialDialog(this, visibleCheat!!, outerLayout, tools, restApi, this)
+            RateCheatMaterialDialog(this, visibleCheat, outerLayout, tools, restApi, this)
         }
     }
 
     override fun onCheatRated(cheatRatingFinishedEvent: CheatRatingFinishedEvent) {
-        visibleCheat!!.memberRating = cheatRatingFinishedEvent.rating.toFloat()
+        visibleCheat.memberRating = cheatRatingFinishedEvent.rating.toFloat()
         cheatList!![activePage].memberRating = cheatRatingFinishedEvent.rating.toFloat()
         invalidateOptionsMenu()
     }

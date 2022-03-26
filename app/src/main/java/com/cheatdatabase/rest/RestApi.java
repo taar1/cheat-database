@@ -236,6 +236,10 @@ public interface RestApi {
     Call<List<ForumPost>> getForum(@Field("cheatId") int cheatId);
 
     @FormUrlEncoded
+    @POST("getCheatWithForum.php")
+    Call<JsonObject> getCheatWithForum(@Field("cheatId") int cheatId);
+
+    @FormUrlEncoded
     @POST("countForumPosts.php")
     Call<JsonObject> countForumPosts(@Field("cheatId") int cheatId);
 
