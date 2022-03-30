@@ -215,13 +215,6 @@ class FavoriteCheatListActivity : AppCompatActivity(), OnCheatListItemSelectedLi
         return false
     }
 
-    // Save the position of the last element
-    override fun onSaveInstanceState(outState: Bundle) {
-        //outState.putInt("position", lastPosition);
-        outState.putParcelable("gameObj", lastGameObj)
-        super.onSaveInstanceState(outState)
-    }
-
     public override fun onResume() {
         super.onResume()
         if (!Reachability.isRegistered()) {
@@ -234,7 +227,7 @@ class FavoriteCheatListActivity : AppCompatActivity(), OnCheatListItemSelectedLi
         super.onStop()
     }
 
-    fun addNewCheat() {
+    private fun addNewCheat() {
         val explicitIntent =
             Intent(this@FavoriteCheatListActivity, SubmitCheatFormActivity::class.java)
         explicitIntent.putExtra("gameObj", gameObj)

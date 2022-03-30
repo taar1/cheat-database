@@ -15,7 +15,6 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.constraintlayout.widget.ConstraintLayout
-import butterknife.OnClick
 import com.cheatdatabase.R
 import com.cheatdatabase.data.model.Game
 import com.cheatdatabase.data.model.UnpublishedCheat
@@ -91,6 +90,9 @@ class SubmitCheatFormActivity : AppCompatActivity() {
         bindViews()
         init()
 
+        // TODO "verstanden" button farbe ist noch violett...
+        // TODO "verstanden" button farbe ist noch violett...
+
         showAlertDialog(
             R.string.before_you_post,
             R.string.rules_for_submissions,
@@ -100,7 +102,7 @@ class SubmitCheatFormActivity : AppCompatActivity() {
         gameObj = intent.getParcelableExtra("gameObj")!!
         val unpublishedCheat: UnpublishedCheat? = intent.getParcelableExtra("unpublishedCheat")
 
-        toolbar.title = gameObj.gameName
+        title = gameObj.gameName
         toolbar.subtitle = gameObj.systemName
 
         if (unpublishedCheat != null) {
@@ -116,10 +118,26 @@ class SubmitCheatFormActivity : AppCompatActivity() {
         cheatText = binding.editCheatText
         checkBoxTerms = binding.checkboxTerms
         toolbar = binding.toolbarLayout.toolbar
+
+        binding.guidelines.setOnClickListener {
+            showAlertDialog(
+                R.string.submit_cheat_instructions_title,
+                R.string.submit_cheat_guidelines,
+                R.string.ok
+            )
+        }
+
+        binding.termsConditions.setOnClickListener {
+            showAlertDialog(
+                R.string.submit_cheat_consent_title,
+                R.string.submit_cheat_consent_text,
+                R.string.ok
+            )
+        }
     }
 
     private fun init() {
-        setSupportActionBar(toolbar)
+        setSupportActionBar(binding.toolbarLayout.toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setHomeButtonEnabled(true)
     }
@@ -146,24 +164,6 @@ class SubmitCheatFormActivity : AppCompatActivity() {
             }
             else -> super.onOptionsItemSelected(item)
         }
-    }
-
-    @OnClick(R.id.guidelines)
-    fun guidelinesClicked() {
-        showAlertDialog(
-            R.string.submit_cheat_instructions_title,
-            R.string.submit_cheat_guidelines,
-            R.string.ok
-        )
-    }
-
-    @OnClick(R.id.terms_conditions)
-    fun termsAndConditionsClicked() {
-        showAlertDialog(
-            R.string.submit_cheat_consent_title,
-            R.string.submit_cheat_consent_text,
-            R.string.ok
-        )
     }
 
     private fun sendButtonClicked() {
@@ -272,7 +272,7 @@ class SubmitCheatFormActivity : AppCompatActivity() {
         MaterialAlertDialogBuilder(this)
             .setTitle(title)
             .setMessage(bodyText)
-            .setPositiveButton(buttonText) { dialog, _ ->
+            .setPositiveButton(buttonText) { _, _ ->
                 if (title == R.string.thanks) {
                     Handler(Looper.getMainLooper()).postDelayed({
                         finish()

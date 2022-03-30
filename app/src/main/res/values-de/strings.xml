@@ -220,7 +220,7 @@
     <string name="no_member_cheats">Leider hat %1$s keine veröffentlichte Cheats.</string>
     <string name="my_score">Punkte: -</string>
     <string name="earn_points_submitting_cheats">Verdiene Punkte durch Einsenden von Cheats und löse diese gegen echtes Geld ein! Coming soon!</string>
-    <string name="enter_cheat_here">Gib hier deinen Cheat ein:</string>
+    <string name="enter_cheat_here">Gib hier deinen Text ein:</string>
     <string name="error_loading_cheats">Fehler beim Laden der Cheats. Versuche es später nochmals.</string>
     <string name="error_fetch_unpublished_cheats">Fehler beim Laden deiner Cheats. Versuche es später nochmals.</string>
     <string name="error_deleting_cheat">Fehler beim Löschen des Cheats. Versuche es später nochmals.</string>

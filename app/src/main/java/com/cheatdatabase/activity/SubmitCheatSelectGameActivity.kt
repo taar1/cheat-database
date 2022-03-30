@@ -6,8 +6,8 @@ import android.os.Bundle
 import android.view.Menu
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
-import androidx.appcompat.widget.Toolbar
 import com.cheatdatabase.R
+import com.cheatdatabase.databinding.SubmitCheatActivityBinding
 import com.cheatdatabase.fragments.SubmitCheatFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -18,15 +18,16 @@ class SubmitCheatSelectGameActivity : AppCompatActivity() {
 
     lateinit var toolbarMenu: Menu
     lateinit var searchView: SearchView
-    lateinit var toolbar: Toolbar
+
+    lateinit var binder: SubmitCheatActivityBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setContentView(R.layout.submit_cheat_activity)
+        binder = SubmitCheatActivityBinding.inflate(layoutInflater)
 
-        toolbar = findViewById(R.id.toolbar)
-        setSupportActionBar(toolbar)
+        setContentView(binder.root)
+        setSupportActionBar(binder.includeToolbar.toolbar)
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 

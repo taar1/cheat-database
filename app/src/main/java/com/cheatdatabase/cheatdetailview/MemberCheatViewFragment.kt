@@ -15,7 +15,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.cheatdatabase.R
 import com.cheatdatabase.adapters.CheatViewGalleryListAdapter
 import com.cheatdatabase.callbacks.CheatViewGalleryImageClickListener
-import com.cheatdatabase.data.helper.CheatArrayHolder
 import com.cheatdatabase.data.model.Cheat
 import com.cheatdatabase.data.model.Screenshot
 import com.cheatdatabase.databinding.FragmentMemberCheatDetailBinding
@@ -69,25 +68,6 @@ class MemberCheatViewFragment : Fragment(), CheatViewGalleryImageClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        // TODO FIXME hier crasht es ab und zu... (vom forum zurückkehren zu den cheats)
-        // TODO FIXME hier crasht es ab und zu... (vom forum zurückkehren zu den cheats)
-        // TODO FIXME hier crasht es ab und zu... (vom forum zurückkehren zu den cheats)
-        // TODO FIXME hier crasht es ab und zu... (vom forum zurückkehren zu den cheats)
-
-        // irgendwo gibt es ein TransactionTooLargeException wenn man durch swipt
-        // irgendwo gibt es ein TransactionTooLargeException wenn man durch swipt
-        // irgendwo gibt es ein TransactionTooLargeException wenn man durch swipt
-        // irgendwo gibt es ein TransactionTooLargeException wenn man durch swipt
-
-        // If the screen has been rotated we re-set the values
-        if (savedInstanceState != null) {
-            val cheatArrayHolder: CheatArrayHolder? =
-                savedInstanceState.getParcelable("cheatArrayHolder")
-            cheats = cheatArrayHolder?.cheatList
-            offset = savedInstanceState.getInt("offset")
-        }
-
         cheatViewPageIndicatorActivity = activity as MemberCheatViewPageIndicator?
     }
 
@@ -164,12 +144,6 @@ class MemberCheatViewFragment : Fragment(), CheatViewGalleryImageClickListener {
             populateView()
         }
         tools.preferencesEditor.putString("cheat$offset", Gson().toJson(cheatObj))
-    }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        outState.putParcelable("cheatArrayHolder", CheatArrayHolder(cheats))
-        outState.putInt("offset", offset)
     }
 
     private fun populateView() {
@@ -360,11 +334,11 @@ class MemberCheatViewFragment : Fragment(), CheatViewGalleryImageClickListener {
     }
 
     override fun onScreenshotClicked(screenshot: Screenshot, position: Int) {
-        val intent = Intent(activity, SingleImageViewerActivity::class.java)
-        intent.putExtra("image_full_path", screenshot.fullPath)
-        intent.putExtra("cheat_title", cheatObj.cheatTitle)
+        val intent = Intent(activity, SingleImageViewerActivity::class.java).apply {
+            putExtra("image_full_path", screenshot.fullPath)
+            putExtra("cheat_title", cheatObj.cheatTitle)
+        }
         startActivity(intent)
     }
-
 
 }

@@ -131,6 +131,7 @@
             android:name=".cheatdetailview.MemberCheatViewPageIndicator"
             android:exported="false"
             android:parentActivityName=".activity.CheatsByMemberListActivity"
+            android:screenOrientation="portrait"
             android:uiOptions="splitActionBarWhenNarrow">
             <meta-data
                 android:name="android.app.default_searchable"
@@ -141,6 +142,7 @@
             android:exported="false"
             android:label="@string/title_cheat_detail"
             android:parentActivityName=".activity.CheatsByGameListActivity"
+            android:screenOrientation="portrait"
             android:uiOptions="splitActionBarWhenNarrow">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -166,6 +168,7 @@
             android:name=".cheatdetailview.FavoritesCheatViewPageIndicator"
             android:exported="false"
             android:label="@string/title_cheat_detail"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.Navyblue"
             android:uiOptions="splitActionBarWhenNarrow">
             <meta-data

@@ -216,7 +216,7 @@
     <string name="no_member_cheats">Unfortunately %1$s has no published cheats.</string>
     <string name="my_score">My Score: -</string>
     <string name="earn_points_submitting_cheats">Earn points by submitting your own cheats and redeem them for actual money! Coming soon!</string>
-    <string name="enter_cheat_here">Enter your cheat here:</string>
+    <string name="enter_cheat_here">Enter your trick here:</string>
     <string name="error_loading_cheats">Error loading the Cheats. Please try again later.</string>
     <string name="error_fetch_unpublished_cheats">There was a problem fetching your cheats. Try again alter.</string>
     <string name="error_deleting_cheat">There was an error deleting this cheat. Please try again later.</string>

@@ -16,18 +16,20 @@ class SingleImageViewerActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val uri: Uri = Uri.parse(intent.getStringExtra("image_full_path"))
-        binding.webview.webViewClient = WebViewClient()
-        binding.webview.loadUrl(uri.toString())
+        title = intent.getStringExtra("cheat_title")
 
-        binding.webview.settings.builtInZoomControls = true
-        binding.webview.settings.loadWithOverviewMode = true
-        binding.webview.settings.useWideViewPort = true
+        with(binding) {
+            webview.webViewClient = WebViewClient()
+            webview.loadUrl(uri.toString())
+
+            webview.settings.builtInZoomControls = true
+            webview.settings.loadWithOverviewMode = true
+            webview.settings.useWideViewPort = true
+        }
 
         setSupportActionBar(binding.includeToolbar.toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setHomeButtonEnabled(true)
-
-        title = intent.getStringExtra("cheat_title")
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

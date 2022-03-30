@@ -171,7 +171,7 @@ class MemberCheatViewPageIndicator : AppCompatActivity(), GenericCallback, OnChe
                     supportActionBar!!.title = visibleCheat.game.gameName
                     supportActionBar!!.subtitle = visibleCheat.system.systemName
                 } catch (e: Exception) {
-                    Log.e(TAG, e.message!!)
+                    Log.e(TAG, "XXXXX ".plus(e.message!!))
                     Toast.makeText(
                         this@MemberCheatViewPageIndicator,
                         R.string.err_somethings_wrong,
@@ -192,7 +192,7 @@ class MemberCheatViewPageIndicator : AppCompatActivity(), GenericCallback, OnChe
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        if (visibleCheat != null && visibleCheat.memberRating > 0) {
+        if (visibleCheat.memberRating > 0) {
             menuInflater.inflate(R.menu.handset_cheatview_rating_on_menu, menu)
         } else {
             menuInflater.inflate(R.menu.handset_cheatview_rating_off_menu, menu)

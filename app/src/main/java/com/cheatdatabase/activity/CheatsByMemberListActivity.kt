@@ -7,7 +7,6 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.ProgressBar
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -22,7 +21,6 @@ import com.cheatdatabase.data.model.Cheat
 import com.cheatdatabase.data.model.Member
 import com.cheatdatabase.databinding.ActivityMemberCheatListBinding
 import com.cheatdatabase.helpers.Konstanten
-import com.cheatdatabase.helpers.Reachability
 import com.cheatdatabase.helpers.Tools
 import com.cheatdatabase.listeners.OnMyCheatListItemSelectedListener
 import com.cheatdatabase.rest.RestApi
@@ -82,11 +80,7 @@ class CheatsByMemberListActivity : AppCompatActivity(), OnMyCheatListItemSelecte
             setHasFixedSize(true)
         }
 
-        if (Reachability.reachability.isReachable) {
-            cheats
-        } else {
-            Toast.makeText(this, R.string.no_internet, Toast.LENGTH_SHORT).show()
-        }
+        getCheats()
     }
 
     private fun bindViews() {
@@ -107,38 +101,36 @@ class CheatsByMemberListActivity : AppCompatActivity(), OnMyCheatListItemSelecte
         supportActionBar?.title = getString(R.string.members_cheats_title, authorMember!!.username)
     }
 
-    val cheats: Unit
-        get() {
-            progressBar.visibility = View.VISIBLE
-            val call = restApi.getCheatsByMemberId(
-                authorMember!!.mid
-            )
-            call.enqueue(object : Callback<List<Cheat?>?> {
-                override fun onResponse(
-                    games: Call<List<Cheat?>?>,
-                    response: Response<List<Cheat?>?>
-                ) {
-                    if (response.isSuccessful) {
-                        cheatList = response.body()
-                        tools.putString(
-                            Konstanten.PREFERENCES_TEMP_CHEAT_ARRAY_OBJECT_VIEW,
-                            Gson().toJson(cheatList)
-                        )
-                        updateUI()
-                    } else {
-                        emptyView.visibility = View.GONE
-                    }
-                    progressBar.visibility = View.GONE
-                }
+    private fun getCheats() {
+        progressBar.visibility = View.VISIBLE
 
-                override fun onFailure(call: Call<List<Cheat?>?>, t: Throwable) {
-                    Log.e(TAG, "getting member cheats has failed: " + t.localizedMessage)
-                    emptyView.visibility = View.VISIBLE
-                    progressBar.visibility = View.GONE
-                    tools.showSnackbar(outerLayout, getString(R.string.error_loading_cheats))
+        val call = restApi.getCheatsByMemberId(authorMember!!.mid)
+        call.enqueue(object : Callback<List<Cheat?>?> {
+            override fun onResponse(
+                games: Call<List<Cheat?>?>,
+                response: Response<List<Cheat?>?>
+            ) {
+                if (response.isSuccessful) {
+                    cheatList = response.body()
+                    tools.putString(
+                        Konstanten.PREFERENCES_TEMP_CHEAT_ARRAY_OBJECT_VIEW,
+                        Gson().toJson(cheatList)
+                    )
+                    updateUI()
+                } else {
+                    emptyView.visibility = View.GONE
                 }
-            })
-        }
+                progressBar.visibility = View.GONE
+            }
+
+            override fun onFailure(call: Call<List<Cheat?>?>, t: Throwable) {
+                Log.e(TAG, "getting member cheats has failed: " + t.localizedMessage)
+                emptyView.visibility = View.VISIBLE
+                progressBar.visibility = View.GONE
+                tools.showSnackbar(outerLayout, getString(R.string.error_loading_cheats))
+            }
+        })
+    }
 
     private fun updateUI() {
         if (!cheatList.isNullOrEmpty()) {
@@ -151,26 +143,9 @@ class CheatsByMemberListActivity : AppCompatActivity(), OnMyCheatListItemSelecte
         }
     }
 
-    override fun onResume() {
-        super.onResume()
-        if (!Reachability.isRegistered()) {
-            Reachability.registerReachability(this)
-        }
-    }
-
-    override fun onStop() {
-        Reachability.unregister(this)
-        super.onStop()
-    }
-
     override fun onDestroy() {
         appLovinAdView.destroy()
         super.onDestroy()
-    }
-
-    public override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        outState.putParcelable("member", authorMember)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -187,15 +162,11 @@ class CheatsByMemberListActivity : AppCompatActivity(), OnMyCheatListItemSelecte
         tools.putInt(Konstanten.PREFERENCES_PAGE_SELECTED, position)
 
         // Using local Preferences to pass data (PREFERENCES_TEMP_CHEAT_ARRAY_OBJECT_VIEW) for game objects (instead of intent) otherwise runs into TransactionTooLargeException when passing the array to the next activity.
-        if (Reachability.reachability.isReachable) {
-            val intent =
-                Intent(this@CheatsByMemberListActivity, MemberCheatViewPageIndicator::class.java)
-            intent.putExtra("selectedPage", position)
-            intent.putExtra("layoutResourceId", R.layout.activity_cheatview_pager)
-            startActivity(intent)
-        } else {
-            Toast.makeText(this, R.string.no_internet, Toast.LENGTH_SHORT).show()
-        }
+        val intent =
+            Intent(this@CheatsByMemberListActivity, MemberCheatViewPageIndicator::class.java)
+        intent.putExtra("selectedPage", position)
+        intent.putExtra("layoutResourceId", R.layout.activity_cheatview_pager)
+        startActivity(intent)
     }
 
     override fun onCheatListItemEditSelected(cheat: Cheat, position: Int) {

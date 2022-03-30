@@ -113,24 +113,11 @@ public class FavoritesCheatViewFragment extends Fragment implements FavoritesChe
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // If the screen has been rotated we re-set the values
-        if (savedInstanceState != null) {
-            game = savedInstanceState.getParcelable("game");
-            offset = savedInstanceState.getInt("offset");
-        }
-
         favoritesCheatViewPageIndicatorActivity = (FavoritesCheatViewPageIndicator) getActivity();
 
         settings = getActivity().getSharedPreferences(Konstanten.PREFERENCES_FILE, 0);
 
         member = new Gson().fromJson(settings.getString(Konstanten.MEMBER_OBJECT, null), Member.class);
-    }
-
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putParcelable("game", game);
-        outState.putInt("offset", offset);
     }
 
     @Override

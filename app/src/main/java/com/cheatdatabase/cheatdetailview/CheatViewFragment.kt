@@ -77,20 +77,7 @@ class CheatViewFragment : Fragment(), CheatViewGalleryImageClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        // If the screen has been rotated we re-set the values
-        if (savedInstanceState != null) {
-            game = savedInstanceState.getParcelable("game")
-            offset = savedInstanceState.getInt("offset")
-        }
         cheatViewPageIndicator = activity as CheatViewPageIndicator?
-    }
-
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        outState.putParcelable("game", game)
-        outState.putInt("offset", offset)
     }
 
     override fun onCreateView(
@@ -132,7 +119,7 @@ class CheatViewFragment : Fragment(), CheatViewGalleryImageClickListener {
                 reloadView.visibility = View.VISIBLE
                 Toast.makeText(
                     cheatViewPageIndicator,
-                    R.string.no_internet,
+                    getString(R.string.no_internet).plus(" 10"),
                     Toast.LENGTH_SHORT
                 ).show()
             }
@@ -149,7 +136,11 @@ class CheatViewFragment : Fragment(), CheatViewGalleryImageClickListener {
         if (Reachability.reachability.isReachable) {
             getContentOnline()
         } else {
-            Toast.makeText(cheatViewPageIndicator, R.string.no_internet, Toast.LENGTH_SHORT)
+            Toast.makeText(
+                cheatViewPageIndicator,
+                getString(R.string.no_internet).plus(" 20"),
+                Toast.LENGTH_SHORT
+            )
                 .show()
         }
     }
