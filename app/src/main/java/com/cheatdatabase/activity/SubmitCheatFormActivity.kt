@@ -269,7 +269,7 @@ class SubmitCheatFormActivity : AppCompatActivity() {
 
     private fun showAlertDialog(title: Int, bodyText: Int, buttonText: Int) {
 
-        MaterialAlertDialogBuilder(this)
+        MaterialAlertDialogBuilder(this, R.style.SimpleAlertDialog)
             .setTitle(title)
             .setMessage(bodyText)
             .setPositiveButton(buttonText) { _, _ ->

@@ -26,7 +26,8 @@ class ReportCheatMaterialDialog(
     val tools: Tools
 ) {
 
-    private var madb: MaterialAlertDialogBuilder = MaterialAlertDialogBuilder(activity)
+    private var madb: MaterialAlertDialogBuilder =
+        MaterialAlertDialogBuilder(activity, R.style.SimpleAlertDialog)
     private var materialDialog: AlertDialog
 
     private val restApi: RestApi =

@@ -28,8 +28,8 @@ class RateCheatMaterialDialog(
     private val restApi: RestApi,
     private val onCheatRated: OnCheatRated
 ) {
-    private var madb: MaterialAlertDialogBuilder = MaterialAlertDialogBuilder(activity)
-
+    private var madb: MaterialAlertDialogBuilder =
+        MaterialAlertDialogBuilder(activity, R.style.SimpleAlertDialog)
     private var newRatingBarValue: Int
 
     init {

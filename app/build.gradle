@@ -15,8 +15,8 @@ applovin {
 
 String APK_ID = "com.cheatdatabase"
 String APK_NAME = "Cheat-Database"
-int VERSION_CODE = 76
-String VERSION_NAME = "2.7.4-preRelease"
+int VERSION_CODE = 77
+String VERSION_NAME = "2.7.4"
 
 android {
     compileSdkVersion 32
