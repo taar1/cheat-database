@@ -80,12 +80,13 @@ public interface RestApi {
      * 4: R.string.err_other_problem
      *
      * @param username Desired username
+     * @param pw_md5 MD5 of PW
      * @param email    User email address
      * @return JsonObject
      */
     @FormUrlEncoded
     @POST("registerMember.php")
-    Call<JsonObject> register(@Field("username") String username, @Field("email") String email);
+    Call<JsonObject> register(@Field("username") String username, @Field("pw_md5") String pw_md5, @Field("email") String email);
 
     /**
      * Authenticates the user and returns a Member object.

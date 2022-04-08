@@ -12,7 +12,6 @@ import com.cheatdatabase.helpers.TrackingUtils;
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.Tracker;
 import com.google.firebase.analytics.FirebaseAnalytics;
-import com.gu.toolargetool.TooLargeTool;
 
 import java.util.List;
 import java.util.TreeMap;
@@ -56,10 +55,6 @@ public class CheatDatabaseApplication extends Application implements Application
         super.onCreate();
 
         currentApplicationInstance = this;
-
-        // das kann wieder entfernt werden, wenn ich die exception gefunden habe
-        // https://github.com/guardian/toolargetool
-        TooLargeTool.startLogging(this);
 
         init();
     }

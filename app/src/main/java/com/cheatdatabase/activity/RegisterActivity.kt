@@ -1,138 +1,141 @@
-package com.cheatdatabase.activity;
+package com.cheatdatabase.activity
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.os.Bundle;
-import android.text.TextUtils;
-import android.view.View;
-import android.view.inputmethod.EditorInfo;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
-import com.cheatdatabase.R;
-import com.cheatdatabase.data.model.Member;
-import com.cheatdatabase.helpers.Konstanten;
-import com.cheatdatabase.helpers.Reachability;
-import com.cheatdatabase.helpers.Tools;
-import com.cheatdatabase.rest.RestApi;
-import com.google.gson.JsonObject;
-
-import javax.inject.Inject;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-import dagger.hilt.android.AndroidEntryPoint;
-import needle.Needle;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
+import android.os.Bundle
+import android.text.TextUtils
+import android.view.KeyEvent
+import android.view.View
+import android.view.View.OnFocusChangeListener
+import android.view.inputmethod.EditorInfo
+import android.widget.Button
+import android.widget.LinearLayout
+import android.widget.TextView
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
+import com.cheatdatabase.R
+import com.cheatdatabase.data.model.Member
+import com.cheatdatabase.databinding.ActivityRegisterBinding
+import com.cheatdatabase.helpers.AeSimpleMD5
+import com.cheatdatabase.helpers.Konstanten
+import com.cheatdatabase.helpers.Reachability
+import com.cheatdatabase.helpers.Tools
+import com.cheatdatabase.rest.RestApi
+import com.google.android.material.textfield.TextInputEditText
+import com.google.gson.JsonObject
+import dagger.hilt.android.AndroidEntryPoint
+import needle.Needle
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import java.security.NoSuchAlgorithmException
+import javax.inject.Inject
 
 /**
  * Activity which displays a login screen to the user, offering registration as
  * well.
  */
 @AndroidEntryPoint
-public class RegisterActivity extends AppCompatActivity {
-
-    /**
-     * The default email to populate the email field with.
-     */
-    public static final String EXTRA_EMAIL = "com.example.android.authenticatordemo.extra.EMAIL";
+class RegisterActivity : AppCompatActivity() {
 
     @Inject
-    Tools tools;
+    lateinit var tools: Tools
+
     @Inject
-    RestApi restApi;
+    lateinit var restApi: RestApi
 
-    @BindView(R.id.email)
-    EditText mEmailView;
-    @BindView(R.id.username)
-    EditText mUsernameView;
-    @BindView(R.id.login_form)
-    LinearLayout mLoginFormView;
-    @BindView(R.id.send_status)
-    View mLoginStatusView;
-    @BindView(R.id.send_status_message)
-    TextView mLoginStatusMessageView;
-    @BindView(R.id.register_button)
-    Button registerButton;
-    @BindView(R.id.toolbar)
-    Toolbar mToolbar;
+    lateinit var email: TextInputEditText
+    lateinit var username: TextInputEditText
+    lateinit var password: TextInputEditText
+    lateinit var passwordRepeat: TextInputEditText
+    lateinit var registerFormLayout: LinearLayout
+    lateinit var sendStatusLayout: LinearLayout
+    lateinit var sendStatusMessage: TextView
+    lateinit var registerButton: Button
+    lateinit var toolbar: Toolbar
 
-    // Values for email and password at the time of the login attempt.
-    private String mEmail;
+    lateinit var binding: ActivityRegisterBinding
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
 
-        setContentView(R.layout.activity_register);
-        ButterKnife.bind(this);
+        binding = ActivityRegisterBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        init();
+        bindViews()
+        init()
+
+        // TODO diese klasse fixen....
+        // TODO diese klasse fixen....
+        // TODO diese klasse fixen....
+        // TODO diese klasse fixen....
+        // TODO diese klasse fixen....
 
         // Set up the login form.
-        mEmail = getIntent().getStringExtra(EXTRA_EMAIL);
-        mEmailView.setText(mEmail);
-
-        mUsernameView.setOnEditorActionListener((textView, id, keyEvent) -> {
+        val mEmail = intent.getStringExtra(EXTRA_EMAIL)
+        email.setText(mEmail)
+        username.setOnEditorActionListener { textView: TextView?, id: Int, keyEvent: KeyEvent? ->
             if (id == 222 || id == EditorInfo.IME_NULL) {
                 if (Reachability.reachability.isReachable) {
-                    attemptRegister();
-                    return true;
+                    attemptRegister()
+                    return@setOnEditorActionListener true
                 } else {
-                    Toast.makeText(RegisterActivity.this, R.string.no_internet, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this@RegisterActivity, R.string.no_internet, Toast.LENGTH_SHORT)
+                        .show()
                 }
-
             }
-            return false;
-        });
-        mUsernameView.setOnFocusChangeListener((v, hasFocus) -> {
+            false
+        }
+        username.onFocusChangeListener = OnFocusChangeListener { v: View?, hasFocus: Boolean ->
             if (!hasFocus) {
-                String fixedUsername = mUsernameView.getText().toString();
-                fixedUsername = fixedUsername.replaceAll("\\s", "");
-                mUsernameView.setText(fixedUsername);
+                var fixedUsername = username.text.toString()
+                fixedUsername = fixedUsername.replace("\\s".toRegex(), "")
+                username.setText(fixedUsername)
             }
-        });
-
+        }
     }
 
-    @OnClick(R.id.register_button)
-    void registerButtonClicked() {
+    private fun bindViews() {
+        email = binding.email
+        username = binding.username
+        password = binding.password
+        passwordRepeat = binding.passwordRepeat
+        registerFormLayout = binding.registerForm
+        sendStatusLayout = binding.sendStatus
+        sendStatusMessage = binding.sendStatusMessage
+        registerButton = binding.registerButton
+        toolbar = binding.includeToolbar.toolbar
+    }
+
+    fun registerButtonClicked() {
         if (Reachability.reachability.isReachable) {
-            attemptRegister();
+            attemptRegister()
         } else {
-            Toast.makeText(RegisterActivity.this, R.string.no_internet, Toast.LENGTH_SHORT).show();
+            Toast.makeText(this@RegisterActivity, R.string.no_internet, Toast.LENGTH_SHORT).show()
         }
     }
 
-    private void init() {
-        if (mToolbar != null) {
-            setSupportActionBar(mToolbar);
+    private fun init() {
+        setSupportActionBar(toolbar)
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        supportActionBar!!.setHomeButtonEnabled(true)
+
+        registerButton.setOnClickListener {
+            registerButtonClicked()
         }
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeButtonEnabled(true);
     }
 
-    @Override
-    public void onPause() {
-        Reachability.unregister(this);
-        super.onPause();
+    public override fun onPause() {
+        Reachability.unregister(this)
+        super.onPause()
     }
 
-    @Override
-    protected void onResume() {
+    override fun onResume() {
         if (!Reachability.isRegistered()) {
-            Reachability.registerReachability(this);
+            Reachability.registerReachability(this)
         }
-        super.onResume();
+        super.onResume()
     }
 
     /**
@@ -140,156 +143,175 @@ public class RegisterActivity extends AppCompatActivity {
      * If there are form errors (invalid email, missing fields, etc.), the
      * errors are presented and no actual login attempt is made.
      */
-    public void attemptRegister() {
+    private fun attemptRegister() {
         // Reset errors.
-        mEmailView.setError(null);
-        mUsernameView.setError(null);
+        email.error = null
+        username.error = null
 
         // Store values at the time of the login attempt.
-        mEmail = mEmailView.getText().toString();
-        String mUsername = mUsernameView.getText().toString();
-        mUsername = mUsername.replaceAll("\\s", "");
-
-        boolean cancel = false;
-        View focusView = null;
+        val mEmail = email.text.toString()
+        var mUsername = username.text.toString()
+        mUsername = mUsername.replace("\\s".toRegex(), "")
+        var cancel = false
+        var focusView: View? = null
 
         // Check for a valid password.
         if (TextUtils.isEmpty(mUsername)) {
-            mUsernameView.setError(getString(R.string.error_field_required));
-            focusView = mUsernameView;
-            cancel = true;
-        } else if (mUsername.length() < 4) {
-            mUsernameView.setError(getString(R.string.err_username_too_short));
-            focusView = mUsernameView;
-            cancel = true;
+            username.error = getString(R.string.error_field_required)
+            focusView = username
+            cancel = true
+        } else if (mUsername.length < 4) {
+            username.error = getString(R.string.err_username_too_short)
+            focusView = username
+            cancel = true
         }
 
         // Check for a valid email address.
         if (TextUtils.isEmpty(mEmail)) {
-            mEmailView.setError(getString(R.string.error_field_required));
-            focusView = mEmailView;
-            cancel = true;
-        } else if (!mEmail.contains("@")) {
-            mEmailView.setError(getString(R.string.error_invalid_email));
-            focusView = mEmailView;
-            cancel = true;
+            email.error = getString(R.string.error_field_required)
+            focusView = email
+            cancel = true
+        } else if (mEmail.contains("@").not()) {
+            email.error = getString(R.string.error_invalid_email)
+            focusView = email
+            cancel = true
         }
-
         if (cancel) {
             // There was an error; don't attempt login and focus the first
             // form field with an error.
-            focusView.requestFocus();
+            focusView!!.requestFocus()
         } else {
             // Delete locally saved member object
-            tools.removeValue(Konstanten.MEMBER_OBJECT);
+            tools.removeValue(Konstanten.MEMBER_OBJECT)
 
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
-            mLoginStatusMessageView.setText(R.string.register_progress_registering);
-            showProgress(true);
+            sendStatusMessage.setText(R.string.register_progress_registering)
+            showProgress(true)
 
-            registerTask(mUsernameView.getText().toString().trim(), mEmailView.getText().toString().trim());
+            registerTask(
+                username.text.toString().trim { it <= ' ' },
+                password.text.toString(),
+                email.text.toString().trim { it <= ' ' })
         }
     }
 
     /**
      * Shows the progress UI and hides the login form.
      */
-    private void showProgress(final boolean show) {
+    private fun showProgress(show: Boolean) {
         // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
         // for very easy animations. If available, use these APIs to fade-in
         // the progress spinner.
-        int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
-
-        mLoginStatusView.setVisibility(View.VISIBLE);
-        mLoginStatusView.animate().setDuration(shortAnimTime).alpha(show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                mLoginStatusView.setVisibility(show ? View.VISIBLE : View.GONE);
-            }
-        });
-
-        mLoginFormView.setVisibility(View.VISIBLE);
-        mLoginFormView.animate().setDuration(shortAnimTime).alpha(show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-            }
-        });
+        val shortAnimTime = resources.getInteger(android.R.integer.config_shortAnimTime)
+        sendStatusLayout.visibility = View.VISIBLE
+        sendStatusLayout.animate().setDuration(shortAnimTime.toLong())
+            .alpha(if (show) 1 else 0.toFloat()).setListener(object : AnimatorListenerAdapter() {
+                override fun onAnimationEnd(animation: Animator) {
+                    sendStatusLayout.visibility = if (show) View.VISIBLE else View.GONE
+                }
+            })
+        registerFormLayout.visibility = View.VISIBLE
+        registerFormLayout.animate().setDuration(shortAnimTime.toLong())
+            .alpha(if (show) 0 else 1.toFloat()).setListener(object : AnimatorListenerAdapter() {
+                override fun onAnimationEnd(animation: Animator) {
+                    registerFormLayout.visibility = if (show) View.GONE else View.VISIBLE
+                }
+            })
     }
 
     /**
      * Represents an asynchronous registration task used to authenticate the
      * user.
      */
-    void registerTask(String username, String email) {
-        Call<JsonObject> call = restApi.register(username, email);
-        call.enqueue(new Callback<JsonObject>() {
-            @Override
-            public void onResponse(Call<JsonObject> forum, Response<JsonObject> response) {
-                JsonObject registerResponse = response.body();
+    private fun registerTask(username: String?, password: String, email: String?) {
+        val password_md5: String
+        try {
+            password_md5 = AeSimpleMD5.MD5(password.trim { it <= ' ' })
+            val call = restApi.register(username, password_md5, email)
+            call.enqueue(object : Callback<JsonObject?> {
+                override fun onResponse(forum: Call<JsonObject?>, response: Response<JsonObject?>) {
+                    val registerResponse = response.body()
 
-                // register_ok, username_already_exists, email_already_exists, parameters_too_short, other_error
-                String returnValue = registerResponse.get("returnValue").getAsString();
-
-                if (returnValue.equalsIgnoreCase("register_ok")) {
-
-                    Member member = new Member();
-                    member.setMid(registerResponse.get("memberId").getAsInt());
-                    member.setUsername(registerResponse.get("username").getAsString());
-                    member.setEmail(registerResponse.get("email").getAsString());
-                    member.setPassword(registerResponse.get("pw").getAsString());
-                    //member.writeMemberData(member, tools.getSharedPreferences());
-
-                    tools.putMember(member);
-
-                    registerTaskFinished(true, 0);
-                } else if (returnValue.equalsIgnoreCase("username_already_exists")) {
-                    registerTaskFinished(false, 1);
-                } else if (returnValue.equalsIgnoreCase("email_already_exists")) {
-                    registerTaskFinished(false, 2);
-                } else if (returnValue.equalsIgnoreCase("parameters_too_short")) {
-                    registerTaskFinished(false, 4);
-                } else if (returnValue.equalsIgnoreCase("other_error")) {
-                    registerTaskFinished(false, 99);
+                    // register_ok, username_already_exists, email_already_exists, parameters_too_short, other_error
+                    val returnValue = registerResponse!!["returnValue"].asString
+                    when {
+                        returnValue.equals("register_ok", ignoreCase = true) -> {
+                            val member = Member()
+                            member.mid = registerResponse["memberId"].asInt
+                            member.username = registerResponse["username"].asString
+                            member.email = registerResponse["email"].asString
+                            member.password = registerResponse["pw"].asString
+                            //member.writeMemberData(member, tools.getSharedPreferences());
+                            tools.putMember(member)
+                            registerTaskFinished(true, 0)
+                        }
+                        returnValue.equals("username_already_exists", ignoreCase = true) -> {
+                            registerTaskFinished(false, 1)
+                        }
+                        returnValue.equals("email_already_exists", ignoreCase = true) -> {
+                            registerTaskFinished(false, 2)
+                        }
+                        returnValue.equals("parameters_too_short", ignoreCase = true) -> {
+                            registerTaskFinished(false, 4)
+                        }
+                        returnValue.equals("other_error", ignoreCase = true) -> {
+                            registerTaskFinished(false, 99)
+                        }
+                    }
                 }
-            }
 
-            @Override
-            public void onFailure(Call<JsonObject> call, Throwable e) {
-                registerTaskFinished(false, 99);
-            }
-        });
-    }
-
-    void registerTaskFinished(boolean success, int errorCode) {
-        Needle.onMainThread().execute(() -> {
-            showProgress(false);
-            if (success) {
-                setResult(Konstanten.REGISTER_SUCCESS_RETURN_CODE);
-                finish();
-            } else {
-                displayError(errorCode);
-            }
-        });
-    }
-
-    private void displayError(int errorCode) {
-        switch (errorCode) {
-            case 1: // username_already_exists
-                mUsernameView.setError(getString(R.string.err_username_used));
-                mUsernameView.requestFocus();
-                break;
-            case 2: // email_already_exists
-                mEmailView.setError(getString(R.string.err_email_used));
-                mEmailView.requestFocus();
-                break;
-            case 4:
-                mUsernameView.setError(getString(R.string.err_parameter_too_short));
-                mUsernameView.requestFocus();
-                break;
-            default:
-                Toast.makeText(RegisterActivity.this, R.string.err_creating_user_account, Toast.LENGTH_LONG).show();
+                override fun onFailure(call: Call<JsonObject?>, e: Throwable) {
+                    registerTaskFinished(false, 99)
+                }
+            })
+        } catch (e: NoSuchAlgorithmException) {
+            registerTaskFinished(false, 9)
         }
+    }
+
+    fun registerTaskFinished(success: Boolean, errorCode: Int) {
+        Needle.onMainThread().execute {
+            showProgress(false)
+            if (success) {
+                setResult(Konstanten.REGISTER_SUCCESS_RETURN_CODE)
+                finish()
+            } else {
+                displayError(errorCode)
+            }
+        }
+    }
+
+    private fun displayError(errorCode: Int) {
+        when (errorCode) {
+            1 -> {
+                username.error = getString(R.string.err_username_used)
+                username.requestFocus()
+            }
+            2 -> {
+                email.error = getString(R.string.err_email_used)
+                email.requestFocus()
+            }
+            4 -> {
+                username.error = getString(R.string.err_parameter_too_short)
+                username.requestFocus()
+            }
+            9 -> {
+                username.error = "Error submitting registration data securely. Please try again."
+                username.requestFocus()
+            }
+            else -> Toast.makeText(
+                this@RegisterActivity,
+                R.string.err_creating_user_account,
+                Toast.LENGTH_LONG
+            ).show()
+        }
+    }
+
+    companion object {
+        /**
+         * The default email to populate the email field with.
+         */
+        const val EXTRA_EMAIL = "com.example.android.authenticatordemo.extra.EMAIL"
     }
 }
