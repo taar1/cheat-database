@@ -33,8 +33,7 @@ import java.security.NoSuchAlgorithmException
 import javax.inject.Inject
 
 /**
- * Activity which displays a login screen to the user, offering registration as
- * well.
+ * Activity which displays a registration form.
  */
 @AndroidEntryPoint
 class RegisterActivity : AppCompatActivity() {
