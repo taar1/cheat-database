@@ -254,4 +254,8 @@ Submitted tricks that violate one or more of the above points will be deleted.</
     <string name="text_before_and_in_braces">%1$s (%2$s)</string>
     <string name="quoted_text">"%s"</string>
 
+    <string name="error_submit_security">"Error submitting registration data securely. Please try again."</string>
+    <string name="registration_successful">Registration successful!</string>
+    <string name="automatically_logged_in">You are now automatically logged-in.</string>
+
 </resources>

@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!-- MATERIAL DESIGN THEME FOR ANDROID 5 LOLLIPOP -->
-    <!-- http://antonioleiva.com/material-design-everywhere/ -->
     <style name="Theme.Navyblue" parent="AppThemeBase">
-        <!--<item name="windowNoTitle">true</item>-->
         <item name="windowActionBar">false</item>
 
         <item name="android:windowContentTransitions">true</item>
@@ -18,7 +15,21 @@
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
         <item name="android:windowTranslucentStatus">false</item>
 
+        <item name="android:textColorHint">@color/color_primary_light</item>
+        <item name="colorAccent">@android:color/white</item>
+        <item name="colorControlNormal">@color/dark_red</item>
+        <item name="colorControlActivated">@color/green</item>
+        <item name="colorControlHighlight">@color/gray</item>
+
         <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
     </style>
 
+
+    <style name="EditTextHint" parent="TextAppearance.AppCompat">
+        <item name="android:textColorHint">@color/color_primary_light</item>
+        <item name="colorAccent">@android:color/white</item>
+        <item name="colorControlNormal">@color/dark_red</item>
+        <item name="colorControlActivated">@color/green</item>
+        <item name="colorControlHighlight">@color/gray</item>
+    </style>
 </resources>

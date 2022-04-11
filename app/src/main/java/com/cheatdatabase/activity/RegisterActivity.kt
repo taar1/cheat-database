@@ -3,17 +3,17 @@ package com.cheatdatabase.activity
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.os.Bundle
-import android.text.TextUtils
 import android.view.KeyEvent
 import android.view.View
 import android.view.View.OnFocusChangeListener
 import android.view.inputmethod.EditorInfo
 import android.widget.Button
-import android.widget.LinearLayout
+import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.core.view.isVisible
 import com.cheatdatabase.R
 import com.cheatdatabase.data.model.Member
 import com.cheatdatabase.databinding.ActivityRegisterBinding
@@ -25,7 +25,6 @@ import com.cheatdatabase.rest.RestApi
 import com.google.android.material.textfield.TextInputEditText
 import com.google.gson.JsonObject
 import dagger.hilt.android.AndroidEntryPoint
-import needle.Needle
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -48,10 +47,13 @@ class RegisterActivity : AppCompatActivity() {
     lateinit var username: TextInputEditText
     lateinit var password: TextInputEditText
     lateinit var passwordRepeat: TextInputEditText
-    lateinit var registerFormLayout: LinearLayout
-    lateinit var sendStatusLayout: LinearLayout
     lateinit var sendStatusMessage: TextView
     lateinit var registerButton: Button
+    lateinit var registerSuccessTitle: TextView
+    lateinit var registerSuccessText: TextView
+
+
+    lateinit var progressBar: ProgressBar
     lateinit var toolbar: Toolbar
 
     lateinit var binding: ActivityRegisterBinding
@@ -100,14 +102,15 @@ class RegisterActivity : AppCompatActivity() {
         username = binding.username
         password = binding.password
         passwordRepeat = binding.passwordRepeat
-        registerFormLayout = binding.registerForm
-        sendStatusLayout = binding.sendStatus
         sendStatusMessage = binding.sendStatusMessage
+        progressBar = binding.progressBar
         registerButton = binding.registerButton
         toolbar = binding.includeToolbar.toolbar
+        registerSuccessTitle = binding.registerSuccessTitle
+        registerSuccessText = binding.registerSuccessText
     }
 
-    fun registerButtonClicked() {
+    private fun registerButtonClicked() {
         if (Reachability.reachability.isReachable) {
             attemptRegister()
         } else {
@@ -147,15 +150,55 @@ class RegisterActivity : AppCompatActivity() {
         email.error = null
         username.error = null
 
-        // Store values at the time of the login attempt.
-        val mEmail = email.text.toString()
-        var mUsername = username.text.toString()
-        mUsername = mUsername.replace("\\s".toRegex(), "")
         var cancel = false
         var focusView: View? = null
 
-        // Check for a valid password.
-        if (TextUtils.isEmpty(mUsername)) {
+        // Store values at the time of the login attempt.
+        var mUsername = username.text.toString()
+        mUsername = mUsername.replace("\\s".toRegex(), "")
+
+        // Verify password
+        val mPassworRepeat = passwordRepeat.text.toString().trim()
+        if (mPassworRepeat.isEmpty()) {
+            passwordRepeat.error = getString(R.string.error_password_too_short)
+            focusView = passwordRepeat
+            cancel = true
+        } else if (mPassworRepeat.length < 8) {
+            passwordRepeat.error = getString(R.string.error_password_too_short)
+            focusView = passwordRepeat
+            cancel = true
+        } else if (!mPassworRepeat.equals(password)) {
+            password.error = getString(R.string.error_password_not_identical)
+            passwordRepeat.error = getString(R.string.error_password_not_identical)
+            focusView = passwordRepeat
+            cancel = true
+        }
+
+        val mPassword = password.text.toString().trim()
+        if (mPassword.isEmpty()) {
+            password.error = getString(R.string.error_password_too_short)
+            focusView = password
+            cancel = true
+        } else if (mPassword.length < 8) {
+            password.error = getString(R.string.error_password_too_short)
+            focusView = password
+            cancel = true
+        }
+
+        // Check for a valid email address.
+        val mEmail = email.text.toString()
+        if (mEmail.isEmpty()) {
+            email.error = getString(R.string.error_field_required)
+            focusView = email
+            cancel = true
+        } else if (mEmail.contains("@").not()) {
+            email.error = getString(R.string.error_invalid_email)
+            focusView = email
+            cancel = true
+        }
+
+        // Check for a valid username
+        if (mUsername.isEmpty()) {
             username.error = getString(R.string.error_field_required)
             focusView = username
             cancel = true
@@ -165,20 +208,10 @@ class RegisterActivity : AppCompatActivity() {
             cancel = true
         }
 
-        // Check for a valid email address.
-        if (TextUtils.isEmpty(mEmail)) {
-            email.error = getString(R.string.error_field_required)
-            focusView = email
-            cancel = true
-        } else if (mEmail.contains("@").not()) {
-            email.error = getString(R.string.error_invalid_email)
-            focusView = email
-            cancel = true
-        }
         if (cancel) {
-            // There was an error; don't attempt login and focus the first
+            // There was an error; don't attempt register and focus the first
             // form field with an error.
-            focusView!!.requestFocus()
+            focusView?.requestFocus()
         } else {
             // Delete locally saved member object
             tools.removeValue(Konstanten.MEMBER_OBJECT)
@@ -187,8 +220,9 @@ class RegisterActivity : AppCompatActivity() {
             // perform the user login attempt.
             sendStatusMessage.setText(R.string.register_progress_registering)
             showProgress(true)
+            setRegisterSuccessVisibility(false)
 
-            registerTask(
+            registerNewAccount(
                 username.text.toString().trim { it <= ' ' },
                 password.text.toString(),
                 email.text.toString().trim { it <= ' ' })
@@ -196,34 +230,56 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     /**
-     * Shows the progress UI and hides the login form.
+     * Shows the progress UI and hides the register form.
      */
-    private fun showProgress(show: Boolean) {
-        // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
-        // for very easy animations. If available, use these APIs to fade-in
-        // the progress spinner.
+    private fun showProgress(showProgress: Boolean) {
         val shortAnimTime = resources.getInteger(android.R.integer.config_shortAnimTime)
-        sendStatusLayout.visibility = View.VISIBLE
-        sendStatusLayout.animate().setDuration(shortAnimTime.toLong())
-            .alpha(if (show) 1 else 0.toFloat()).setListener(object : AnimatorListenerAdapter() {
+        progressBar.visibility = View.VISIBLE
+        sendStatusMessage.visibility = View.VISIBLE
+
+        progressBar.animate().setDuration(shortAnimTime.toLong())
+            .alpha((if (showProgress) 1 else 0).toFloat())
+            .setListener(object : AnimatorListenerAdapter() {
                 override fun onAnimationEnd(animation: Animator) {
-                    sendStatusLayout.visibility = if (show) View.VISIBLE else View.GONE
+                    progressBar.visibility = if (showProgress) View.VISIBLE else View.GONE
+                    sendStatusMessage.visibility = if (showProgress) View.VISIBLE else View.GONE
                 }
             })
-        registerFormLayout.visibility = View.VISIBLE
-        registerFormLayout.animate().setDuration(shortAnimTime.toLong())
-            .alpha(if (show) 0 else 1.toFloat()).setListener(object : AnimatorListenerAdapter() {
-                override fun onAnimationEnd(animation: Animator) {
-                    registerFormLayout.visibility = if (show) View.GONE else View.VISIBLE
-                }
-            })
+
+
+        setRegisterFormVisibility(!showProgress)
+//        registerFormLayout.visibility = View.VISIBLE
+//        registerFormLayout.animate().setDuration(shortAnimTime.toLong())
+//            .alpha(if (showProgress) 0 else 1.toFloat()).setListener(object : AnimatorListenerAdapter() {
+//                override fun onAnimationEnd(animation: Animator) {
+//                    handleRegisterFormVisibility(!showProgress)
+//                }
+//            })
+    }
+
+    private fun setRegisterFormVisibility(isVisible: Boolean) {
+        email.isVisible = isVisible
+        username.isVisible = isVisible
+        password.isVisible = isVisible
+        passwordRepeat.isVisible = isVisible
+        registerButton.isVisible = isVisible
+    }
+
+    private fun setRegisterSuccessVisibility(isVisible: Boolean) {
+        registerSuccessTitle.isVisible = isVisible
+        registerSuccessText.isVisible = isVisible
     }
 
     /**
      * Represents an asynchronous registration task used to authenticate the
      * user.
      */
-    private fun registerTask(username: String?, password: String, email: String?) {
+    private fun registerNewAccount(username: String?, password: String, email: String?) {
+        // TODO FIXME coroutine...
+        // TODO FIXME coroutine...
+        // TODO FIXME coroutine...
+        // TODO FIXME coroutine...
+
         val password_md5: String
         try {
             password_md5 = AeSimpleMD5.MD5(password.trim { it <= ' ' })
@@ -270,14 +326,12 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     fun registerTaskFinished(success: Boolean, errorCode: Int) {
-        Needle.onMainThread().execute {
-            showProgress(false)
-            if (success) {
-                setResult(Konstanten.REGISTER_SUCCESS_RETURN_CODE)
-                finish()
-            } else {
-                displayError(errorCode)
-            }
+        showProgress(false)
+        if (success) {
+            setResult(Konstanten.REGISTER_SUCCESS_RETURN_CODE)
+            setRegisterSuccessVisibility(true)
+        } else {
+            displayError(errorCode)
         }
     }
 
@@ -296,7 +350,7 @@ class RegisterActivity : AppCompatActivity() {
                 username.requestFocus()
             }
             9 -> {
-                username.error = "Error submitting registration data securely. Please try again."
+                username.error = getString(R.string.error_submit_security)
                 username.requestFocus()
             }
             else -> Toast.makeText(

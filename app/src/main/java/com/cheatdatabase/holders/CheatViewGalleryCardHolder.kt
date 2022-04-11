@@ -15,14 +15,14 @@ class CheatViewGalleryCardHolder(val view: View) : RecyclerView.ViewHolder(view)
 
     var screenshot: Screenshot? = null
         set(screenshot) {
-            Picasso.get().load(screenshot?.fullPath).placeholder(R.drawable.image_placeholder)
+            Picasso.get().load(screenshot?.fullPath).placeholder(R.drawable.ic_baseline_image)
                 .into(cardImage)
             field = screenshot
         }
 
     var screenshotFile: File? = null
         set(screenshotFile) {
-            Picasso.get().load(screenshotFile!!).placeholder(R.drawable.image_placeholder)
+            Picasso.get().load(screenshotFile!!).placeholder(R.drawable.ic_baseline_image)
                 .into(cardImage)
             field = screenshotFile
         }

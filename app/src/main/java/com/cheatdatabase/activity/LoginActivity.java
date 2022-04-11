@@ -241,7 +241,7 @@ public class LoginActivity extends AppCompatActivity implements AlreadyLoggedInD
             focusView = mPasswordView;
             cancel = true;
         } else if (mPassword.length() < 4) {
-            mPasswordView.setError(getString(R.string.error_invalid_password));
+            mPasswordView.setError(getString(R.string.error_password_too_short));
             focusView = mPasswordView;
             cancel = true;
         }

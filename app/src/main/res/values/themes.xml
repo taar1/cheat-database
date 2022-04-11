@@ -278,4 +278,12 @@
         <item name="itemTextColor">?attr/colorNavigationItem</item>
         <item name="itemBackground">?attr/drawableNavigationItemBackground</item>
     </style>
+
+    <style name="EditTextHint" parent="TextAppearance.AppCompat">
+        <item name="android:textColorHint">@color/color_primary_light</item>
+        <item name="colorAccent">@android:color/white</item>
+        <item name="colorControlNormal">@color/dark_red</item>
+        <item name="colorControlActivated">@color/green</item>
+        <item name="colorControlHighlight">@color/gray</item>
+    </style>
 </resources>

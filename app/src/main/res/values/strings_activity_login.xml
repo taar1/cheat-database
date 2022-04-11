@@ -16,8 +16,9 @@
     <string name="login_progress_signing_in">Signing in&#8230;</string>
     <string name="register_progress_registering">Registering account&#8230;</string>
     <string name="error_invalid_email">This email address is invalid</string>
-    <string name="error_invalid_password">This password is too short</string>
+    <string name="error_password_too_short">This password is too short</string>
     <string name="error_incorrect_password">This password is incorrect</string>
+    <string name="error_password_not_identical">The passwords don\'t match.</string>
     <string name="error_field_required">This field is required</string>
 
 </resources>
