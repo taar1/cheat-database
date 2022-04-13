@@ -119,19 +119,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4caff62e-c62f-40ca-acf0-73c680b13375" name="Default" comment="Register User refactoring">
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ic_baseline_image.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/helpers/ResponseCode.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/LoginActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/LoginActivity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/RegisterActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/RegisterActivity.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/holders/CheatViewGalleryCardHolder.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/holders/CheatViewGalleryCardHolder.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_register.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_register.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/gallery_card.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/gallery_card.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/values-v22/themes.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values-v22/themes.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/values-v23/themes.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values-v23/themes.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/strings_activity_login.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/strings_activity_login.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/themes.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/themes.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -186,6 +176,7 @@
         <option value="layoutResourceFile_vertical" />
         <option value="Kotlin Class" />
         <option value="Kotlin Interface" />
+        <option value="Kotlin Enum" />
       </list>
     </option>
   </component>
@@ -811,13 +802,6 @@
       <option name="presentableId" value="Default" />
       <updated>1487274191999</updated>
     </task>
-    <task id="LOCAL-00150" summary="Retrofit is now almost completely injected with HILT. Except in Dialog classes where it's not possible yet.">
-      <created>1596055836576</created>
-      <option name="number" value="00150" />
-      <option name="presentableId" value="LOCAL-00150" />
-      <option name="project" value="LOCAL" />
-      <updated>1596055836576</updated>
-    </task>
     <task id="LOCAL-00151" summary="Trying to get Fragment Injection (Hilt) to work. NOT WORKING!&#10;- Add: MainFragmentFactory.kt&#10;- Add: MainFragmentFactoryEntryPoint.kt&#10;- Add: MainNavHostFragment.kt">
       <created>1596660098929</created>
       <option name="number" value="00151" />
@@ -1154,7 +1138,14 @@
       <option name="project" value="LOCAL" />
       <updated>1649450615547</updated>
     </task>
-    <option name="localTasksCounter" value="199" />
+    <task id="LOCAL-00199" summary="Register User refactoring">
+      <created>1649709174434</created>
+      <option name="number" value="00199" />
+      <option name="presentableId" value="LOCAL-00199" />
+      <option name="project" value="LOCAL" />
+      <updated>1649709174435</updated>
+    </task>
+    <option name="localTasksCounter" value="200" />
     <servers />
   </component>
   <component name="TodoView">

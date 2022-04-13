@@ -14,21 +14,19 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.isVisible
+import androidx.lifecycle.lifecycleScope
 import com.cheatdatabase.R
 import com.cheatdatabase.data.model.Member
 import com.cheatdatabase.databinding.ActivityRegisterBinding
-import com.cheatdatabase.helpers.AeSimpleMD5
-import com.cheatdatabase.helpers.Konstanten
-import com.cheatdatabase.helpers.Reachability
-import com.cheatdatabase.helpers.Tools
+import com.cheatdatabase.helpers.*
 import com.cheatdatabase.rest.RestApi
 import com.google.android.material.textfield.TextInputEditText
 import com.google.gson.JsonObject
 import dagger.hilt.android.AndroidEntryPoint
-import retrofit2.Call
-import retrofit2.Callback
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import retrofit2.Response
-import java.security.NoSuchAlgorithmException
 import javax.inject.Inject
 
 /**
@@ -66,12 +64,6 @@ class RegisterActivity : AppCompatActivity() {
 
         bindViews()
         init()
-
-        // TODO diese klasse fixen....
-        // TODO diese klasse fixen....
-        // TODO diese klasse fixen....
-        // TODO diese klasse fixen....
-        // TODO diese klasse fixen....
 
         // Set up the login form.
         val mEmail = intent.getStringExtra(EXTRA_EMAIL)
@@ -158,23 +150,24 @@ class RegisterActivity : AppCompatActivity() {
         mUsername = mUsername.replace("\\s".toRegex(), "")
 
         // Verify password
-        val mPassworRepeat = passwordRepeat.text.toString().trim()
-        if (mPassworRepeat.isEmpty()) {
+        val mPassword = password.text.toString().trim()
+        val mPasswordRepeat = passwordRepeat.text.toString().trim()
+
+        if (mPasswordRepeat.isEmpty()) {
             passwordRepeat.error = getString(R.string.error_password_too_short)
             focusView = passwordRepeat
             cancel = true
-        } else if (mPassworRepeat.length < 8) {
+        } else if (mPasswordRepeat.length < 8) {
             passwordRepeat.error = getString(R.string.error_password_too_short)
             focusView = passwordRepeat
             cancel = true
-        } else if (!mPassworRepeat.equals(password)) {
+        } else if (mPasswordRepeat != mPassword) {
             password.error = getString(R.string.error_password_not_identical)
             passwordRepeat.error = getString(R.string.error_password_not_identical)
             focusView = passwordRepeat
             cancel = true
         }
 
-        val mPassword = password.text.toString().trim()
         if (mPassword.isEmpty()) {
             password.error = getString(R.string.error_password_too_short)
             focusView = password
@@ -275,81 +268,125 @@ class RegisterActivity : AppCompatActivity() {
      * user.
      */
     private fun registerNewAccount(username: String?, password: String, email: String?) {
-        // TODO FIXME coroutine...
-        // TODO FIXME coroutine...
-        // TODO FIXME coroutine...
-        // TODO FIXME coroutine...
 
-        val password_md5: String
-        try {
-            password_md5 = AeSimpleMD5.MD5(password.trim { it <= ' ' })
-            val call = restApi.register(username, password_md5, email)
-            call.enqueue(object : Callback<JsonObject?> {
-                override fun onResponse(forum: Call<JsonObject?>, response: Response<JsonObject?>) {
-                    val registerResponse = response.body()
+        var respondeCode: ResponseCode = ResponseCode.OTHER_ERROR
 
-                    // register_ok, username_already_exists, email_already_exists, parameters_too_short, other_error
-                    val returnValue = registerResponse!!["returnValue"].asString
-                    when {
-                        returnValue.equals("register_ok", ignoreCase = true) -> {
-                            val member = Member()
-                            member.mid = registerResponse["memberId"].asInt
-                            member.username = registerResponse["username"].asString
-                            member.email = registerResponse["email"].asString
-                            member.password = registerResponse["pw"].asString
-                            //member.writeMemberData(member, tools.getSharedPreferences());
-                            tools.putMember(member)
-                            registerTaskFinished(true, 0)
-                        }
-                        returnValue.equals("username_already_exists", ignoreCase = true) -> {
-                            registerTaskFinished(false, 1)
-                        }
-                        returnValue.equals("email_already_exists", ignoreCase = true) -> {
-                            registerTaskFinished(false, 2)
-                        }
-                        returnValue.equals("parameters_too_short", ignoreCase = true) -> {
-                            registerTaskFinished(false, 4)
-                        }
-                        returnValue.equals("other_error", ignoreCase = true) -> {
-                            registerTaskFinished(false, 99)
-                        }
-                    }
+        lifecycleScope.launch(Dispatchers.IO) {
+
+            val passwordMD5 = AeSimpleMD5.MD5(password.trim { it <= ' ' })
+            val call = restApi.register(username, passwordMD5, email)
+
+            val response: Response<JsonObject> = call.execute()
+            val registerResponse: JsonObject? = response.body()
+
+            // register_ok, username_already_exists, email_already_exists, parameters_too_short, other_error
+            val returnValue = registerResponse!!["returnValue"].asString
+            when {
+                returnValue.equals("register_ok", ignoreCase = true) -> {
+                    val member = Member()
+                    member.mid = registerResponse["memberId"].asInt
+                    member.username = registerResponse["username"].asString
+                    member.email = registerResponse["email"].asString
+                    member.password = registerResponse["pw"].asString
+                    //member.writeMemberData(member, tools.getSharedPreferences());
+                    tools.putMember(member)
+
+                    respondeCode = ResponseCode.REGISTER_OK
                 }
-
-                override fun onFailure(call: Call<JsonObject?>, e: Throwable) {
-                    registerTaskFinished(false, 99)
+                returnValue.equals("username_already_exists", ignoreCase = true) -> {
+                    respondeCode = ResponseCode.USERNAME_ALREADY_EXISTS
                 }
-            })
-        } catch (e: NoSuchAlgorithmException) {
-            registerTaskFinished(false, 9)
+                returnValue.equals("email_already_exists", ignoreCase = true) -> {
+                    respondeCode = ResponseCode.EMAIL_ALREADY_EXISTS
+                }
+                returnValue.equals("parameters_too_short", ignoreCase = true) -> {
+                    respondeCode = ResponseCode.PARAMETERS_TOO_SHORT
+                }
+                returnValue.equals("other_error", ignoreCase = true) -> {
+                    respondeCode = ResponseCode.OTHER_ERROR
+                }
+            }
+
+
+//            call.execute(object : Callback<JsonObject?> {
+//                override fun onResponse(
+//                    forum: Call<JsonObject?>, response: Response<JsonObject?>
+//                ) {
+//                    val registerResponse = response.body()
+//
+//                    // register_ok, username_already_exists, email_already_exists, parameters_too_short, other_error
+//                    val returnValue = registerResponse!!["returnValue"].asString
+//                    when {
+//                        returnValue.equals("register_ok", ignoreCase = true) -> {
+//                            val member = Member()
+//                            member.mid = registerResponse["memberId"].asInt
+//                            member.username = registerResponse["username"].asString
+//                            member.email = registerResponse["email"].asString
+//                            member.password = registerResponse["pw"].asString
+//                            //member.writeMemberData(member, tools.getSharedPreferences());
+//                            tools.putMember(member)
+//
+//                            respondeCode = ResponseCode.REGISTER_OK
+//                        }
+//                        returnValue.equals("username_already_exists", ignoreCase = true) -> {
+//                            respondeCode = ResponseCode.USERNAME_ALREADY_EXISTS
+//                        }
+//                        returnValue.equals("email_already_exists", ignoreCase = true) -> {
+//                            respondeCode = ResponseCode.EMAIL_ALREADY_EXISTS
+//                        }
+//                        returnValue.equals("parameters_too_short", ignoreCase = true) -> {
+//                            respondeCode = ResponseCode.PARAMETERS_TOO_SHORT
+//                        }
+//                        returnValue.equals("other_error", ignoreCase = true) -> {
+//                            respondeCode = ResponseCode.OTHER_ERROR
+//                        }
+//                    }
+//                }
+//
+//                override fun onFailure(call: Call<JsonObject?>, e: Throwable) {
+//                    respondeCode = ResponseCode.OTHER_ERROR
+//                }
+//
+//
+//            })
+
+            withContext(Dispatchers.Main) {
+                registerTaskFinished(respondeCode)
+            }
         }
     }
 
-    fun registerTaskFinished(success: Boolean, errorCode: Int) {
+    private fun registerTaskFinished(respondeCode: ResponseCode) {
         showProgress(false)
-        if (success) {
+
+        // TODO FIXME bei success soll es die activity nicht schliessen....
+        // TODO FIXME bei success soll es die activity nicht schliessen....
+        // TODO FIXME bei success soll es die activity nicht schliessen....
+        // TODO FIXME bei success soll es die activity nicht schliessen....
+
+        if (respondeCode == ResponseCode.REGISTER_OK) {
             setResult(Konstanten.REGISTER_SUCCESS_RETURN_CODE)
             setRegisterSuccessVisibility(true)
         } else {
-            displayError(errorCode)
+            displayError(respondeCode)
         }
     }
 
-    private fun displayError(errorCode: Int) {
-        when (errorCode) {
-            1 -> {
+    private fun displayError(respondeCode: ResponseCode) {
+        when (respondeCode) {
+            ResponseCode.USERNAME_ALREADY_EXISTS -> {
                 username.error = getString(R.string.err_username_used)
                 username.requestFocus()
             }
-            2 -> {
+            ResponseCode.EMAIL_ALREADY_EXISTS -> {
                 email.error = getString(R.string.err_email_used)
                 email.requestFocus()
             }
-            4 -> {
+            ResponseCode.PARAMETERS_TOO_SHORT -> {
                 username.error = getString(R.string.err_parameter_too_short)
                 username.requestFocus()
             }
-            9 -> {
+            ResponseCode.OTHER_ERROR -> {
                 username.error = getString(R.string.error_submit_security)
                 username.requestFocus()
             }
