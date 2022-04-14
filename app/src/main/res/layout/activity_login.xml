@@ -5,7 +5,9 @@
     android:orientation="vertical"
     tools:context="com.cheatdatabase.activity.LoginActivity">
 
-    <include layout="@layout/toolbar" />
+    <include
+        android:id="@+id/include_toolbar"
+        layout="@layout/toolbar" />
 
     <RelativeLayout
         android:layout_width="match_parent"

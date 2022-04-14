@@ -49,8 +49,6 @@ class RegisterActivity : AppCompatActivity() {
     lateinit var registerButton: Button
     lateinit var registerSuccessTitle: TextView
     lateinit var registerSuccessText: TextView
-
-
     lateinit var progressBar: ProgressBar
     lateinit var toolbar: Toolbar
 
@@ -112,8 +110,8 @@ class RegisterActivity : AppCompatActivity() {
 
     private fun init() {
         setSupportActionBar(toolbar)
-        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-        supportActionBar!!.setHomeButtonEnabled(true)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setHomeButtonEnabled(true)
 
         registerButton.setOnClickListener {
             registerButtonClicked()
@@ -346,8 +344,6 @@ class RegisterActivity : AppCompatActivity() {
 //                override fun onFailure(call: Call<JsonObject?>, e: Throwable) {
 //                    respondeCode = ResponseCode.OTHER_ERROR
 //                }
-//
-//
 //            })
 
             withContext(Dispatchers.Main) {
@@ -365,6 +361,7 @@ class RegisterActivity : AppCompatActivity() {
         // TODO FIXME bei success soll es die activity nicht schliessen....
 
         if (respondeCode == ResponseCode.REGISTER_OK) {
+            tools.hideKeyboard(this, binding.outerLayout)
             setResult(Konstanten.REGISTER_SUCCESS_RETURN_CODE)
             setRegisterSuccessVisibility(true)
         } else {
