@@ -196,6 +196,12 @@
                 android:value=".search.SearchResultsActivity" />
         </activity>
 
+        <activity
+            android:name=".activity.AuthenticationActivity"
+            android:configChanges="orientation|screenSize"
+            android:label="@string/title_activity_login"
+            android:windowSoftInputMode="adjustResize|stateVisible" />
+
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
@@ -204,10 +210,6 @@
             android:value="true" /> <!-- =========== -->
         <!-- AD NETWORKS -->
         <!-- =========== -->
-        <meta-data
-            android:name="io.fabric.ApiKey"
-            android:value="887f8ad41ac6b3277f277e83ddc0103a7215fc26" />
-
         <provider
             android:name=".search.SearchSuggestionProvider"
             android:authorities="com.cheatdatabase.search.SearchSuggestionProvider" /> <!-- GOOGLE ANALYTICS -->

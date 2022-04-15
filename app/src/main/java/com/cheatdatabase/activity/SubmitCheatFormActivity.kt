@@ -292,7 +292,7 @@ class SubmitCheatFormActivity : AppCompatActivity() {
     }
 
     private fun login() {
-        resultContract.launch(Intent(this, LoginActivity::class.java))
+        resultContract.launch(Intent(this, AuthenticationActivity::class.java))
     }
 
 }

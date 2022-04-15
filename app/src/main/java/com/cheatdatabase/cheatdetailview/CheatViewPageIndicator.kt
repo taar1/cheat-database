@@ -15,8 +15,8 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.viewpager2.widget.ViewPager2
 import com.applovin.adview.AppLovinAdView
 import com.cheatdatabase.R
+import com.cheatdatabase.activity.AuthenticationActivity
 import com.cheatdatabase.activity.CheatForumActivity
-import com.cheatdatabase.activity.LoginActivity
 import com.cheatdatabase.activity.SubmitCheatFormActivity
 import com.cheatdatabase.callbacks.GenericCallback
 import com.cheatdatabase.callbacks.OnCheatRated
@@ -284,7 +284,7 @@ class CheatViewPageIndicator : AppCompatActivity(), GenericCallback,
                 resultContract.launch(
                     Intent(
                         this@CheatViewPageIndicator,
-                        LoginActivity::class.java
+                        AuthenticationActivity::class.java
                     )
                 )
                 true

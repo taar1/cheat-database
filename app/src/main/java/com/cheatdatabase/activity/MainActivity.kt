@@ -167,7 +167,7 @@ class MainActivity : AppCompatActivity() {
                 true
             }
             R.id.action_login -> {
-                resultContract.launch(Intent(this, LoginActivity::class.java))
+                resultContract.launch(Intent(this, AuthenticationActivity::class.java))
                 true
             }
             R.id.action_logout -> {

@@ -305,47 +305,6 @@ class RegisterActivity : AppCompatActivity() {
                 }
             }
 
-
-//            call.execute(object : Callback<JsonObject?> {
-//                override fun onResponse(
-//                    forum: Call<JsonObject?>, response: Response<JsonObject?>
-//                ) {
-//                    val registerResponse = response.body()
-//
-//                    // register_ok, username_already_exists, email_already_exists, parameters_too_short, other_error
-//                    val returnValue = registerResponse!!["returnValue"].asString
-//                    when {
-//                        returnValue.equals("register_ok", ignoreCase = true) -> {
-//                            val member = Member()
-//                            member.mid = registerResponse["memberId"].asInt
-//                            member.username = registerResponse["username"].asString
-//                            member.email = registerResponse["email"].asString
-//                            member.password = registerResponse["pw"].asString
-//                            //member.writeMemberData(member, tools.getSharedPreferences());
-//                            tools.putMember(member)
-//
-//                            respondeCode = ResponseCode.REGISTER_OK
-//                        }
-//                        returnValue.equals("username_already_exists", ignoreCase = true) -> {
-//                            respondeCode = ResponseCode.USERNAME_ALREADY_EXISTS
-//                        }
-//                        returnValue.equals("email_already_exists", ignoreCase = true) -> {
-//                            respondeCode = ResponseCode.EMAIL_ALREADY_EXISTS
-//                        }
-//                        returnValue.equals("parameters_too_short", ignoreCase = true) -> {
-//                            respondeCode = ResponseCode.PARAMETERS_TOO_SHORT
-//                        }
-//                        returnValue.equals("other_error", ignoreCase = true) -> {
-//                            respondeCode = ResponseCode.OTHER_ERROR
-//                        }
-//                    }
-//                }
-//
-//                override fun onFailure(call: Call<JsonObject?>, e: Throwable) {
-//                    respondeCode = ResponseCode.OTHER_ERROR
-//                }
-//            })
-
             withContext(Dispatchers.Main) {
                 registerTaskFinished(respondeCode)
             }
@@ -354,11 +313,6 @@ class RegisterActivity : AppCompatActivity() {
 
     private fun registerTaskFinished(respondeCode: ResponseCode) {
         showProgress(false)
-
-        // TODO FIXME bei success soll es die activity nicht schliessen....
-        // TODO FIXME bei success soll es die activity nicht schliessen....
-        // TODO FIXME bei success soll es die activity nicht schliessen....
-        // TODO FIXME bei success soll es die activity nicht schliessen....
 
         if (respondeCode == ResponseCode.REGISTER_OK) {
             tools.hideKeyboard(this, binding.outerLayout)

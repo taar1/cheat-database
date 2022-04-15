@@ -1,0 +1,141 @@
+package com.cheatdatabase.activity
+
+import android.app.SearchManager
+import android.content.Context
+import android.content.Intent
+import android.os.Bundle
+import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
+import android.widget.Toast
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
+import com.cheatdatabase.R
+import com.cheatdatabase.databinding.AuthenticationActivityBinding
+import com.cheatdatabase.dialogs.AlreadyLoggedInDialog
+import com.cheatdatabase.fragments.LoginFragment
+import com.cheatdatabase.helpers.Konstanten
+import com.cheatdatabase.helpers.Tools
+import com.cheatdatabase.rest.RestApi
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
+
+@AndroidEntryPoint
+class AuthenticationActivity : AppCompatActivity(),
+    AlreadyLoggedInDialog.AlreadyLoggedInDialogListener {
+
+    @Inject
+    lateinit var tools: Tools
+
+    @Inject
+    lateinit var restApi: RestApi
+
+    lateinit var toolbarMenu: Menu
+    lateinit var searchView: SearchView
+
+    lateinit var binder: AuthenticationActivityBinding
+
+    private val resultContract = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult(),
+        activityResultRegistry
+    ) { activityResult: ActivityResult ->
+        val intentReturnCode = activityResult.resultCode
+        when {
+            intentReturnCode == Konstanten.REGISTER_SUCCESS_RETURN_CODE -> {
+                setResult(Konstanten.REGISTER_SUCCESS_RETURN_CODE)
+                finish()
+            }
+            intentReturnCode == Konstanten.RECOVER_PASSWORD_SUCCESS_RETURN_CODE -> {
+                setResult(Konstanten.RECOVER_PASSWORD_SUCCESS_RETURN_CODE)
+            }
+            activityResult.resultCode == Konstanten.RECOVER_PASSWORD_ATTEMPT -> {
+                setResult(Konstanten.RECOVER_PASSWORD_ATTEMPT)
+            }
+        }
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        binder = AuthenticationActivityBinding.inflate(layoutInflater)
+
+        setContentView(binder.root)
+        setSupportActionBar(binder.includeToolbar.toolbar)
+
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        if (savedInstanceState == null) {
+            supportFragmentManager.beginTransaction()
+                .replace(
+                    R.id.container, LoginFragment.newInstance(this)
+                )
+                .commitNow()
+        }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        toolbarMenu = menu
+        menu.clear()
+        menuInflater.inflate(R.menu.search_menu, menu)
+
+        val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
+        searchView = menu.findItem(R.id.search).actionView as SearchView
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(componentName))
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            android.R.id.home -> {
+                onBackPressed()
+                true
+            }
+            R.id.action_register -> {
+                resultContract.launch(Intent(this, RegisterActivity::class.java))
+                true
+            }
+            R.id.action_forgot_password -> {
+                resultContract.launch(Intent(this, RecoverActivity::class.java))
+                true
+            }
+            R.id.action_logout -> {
+                tools.logout()
+                invalidateOptionsMenu()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
+    }
+
+    fun forgotPassword() {
+        Log.d("TAG", "forgotPassword: CLICKED")
+        // TODO
+        // TODO
+        // TODO
+//        supportFragmentManager.beginTransaction()
+//            .replace(R.id.container, RecoverPasswordFragment.newInstance(this))
+//            .commitNow()
+    }
+
+    /**
+     * Close dialog and logout.
+     */
+    override fun onFinishDialog(signOutNow: Boolean) {
+        if (signOutNow) {
+            tools.removeValue(Konstanten.MEMBER_OBJECT)
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.container, LoginFragment.newInstance(this))
+                .commitNow()
+            Toast.makeText(this, R.string.logout_ok, Toast.LENGTH_LONG).show()
+        } else {
+            finish()
+        }
+    }
+}

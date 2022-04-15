@@ -1,39 +1,34 @@
-package com.cheatdatabase.dialogs;
+package com.cheatdatabase.dialogs
 
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.os.Bundle;
+import android.app.AlertDialog
+import android.app.Dialog
+import android.content.DialogInterface
+import android.os.Bundle
+import androidx.fragment.app.DialogFragment
+import com.cheatdatabase.R
+import com.cheatdatabase.data.model.Member
 
-import androidx.fragment.app.DialogFragment;
+class AlreadyLoggedInDialog(val member: Member) : DialogFragment() {
 
-import com.cheatdatabase.R;
-import com.cheatdatabase.data.model.Member;
-import com.cheatdatabase.helpers.Konstanten;
-import com.google.gson.Gson;
-
-public class AlreadyLoggedInDialog extends DialogFragment {
-
-    public interface AlreadyLoggedInDialogListener {
-        void onFinishDialog(boolean signOutNow);
+    interface AlreadyLoggedInDialogListener {
+        fun onFinishDialog(signOutNow: Boolean)
     }
 
-    public AlreadyLoggedInDialog() {
-        // TODO abfangen, wenn der dialog ohne eingabe geschlossen wird.
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        val builder = AlertDialog.Builder(activity)
+        builder.setMessage(getString(R.string.already_logged_in, member.email))
+            .setPositiveButton(R.string.sign_out) { _: DialogInterface?, _: Int ->
+                val activity = activity as AlreadyLoggedInDialogListener?
+                activity?.onFinishDialog(true)
+            }.setNegativeButton(R.string.cancel) { _: DialogInterface?, _: Int ->
+                val activity = activity as AlreadyLoggedInDialogListener?
+                activity?.onFinishDialog(false)
+            }
+        builder.setCancelable(false)
+        return builder.create()
     }
 
-    @Override
-    public Dialog onCreateDialog(Bundle savedInstanceState) {
-        final Member member = new Gson().fromJson(getActivity().getSharedPreferences(Konstanten.PREFERENCES_FILE, 0).getString(Konstanten.MEMBER_OBJECT, null), Member.class);
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setMessage(getString(R.string.already_logged_in, member.getEmail())).setPositiveButton(R.string.sign_out, (dialog, id) -> {
-            AlreadyLoggedInDialogListener activity = (AlreadyLoggedInDialogListener) getActivity();
-            activity.onFinishDialog(true);
-        }).setNegativeButton(R.string.cancel, (dialog, id) -> {
-            AlreadyLoggedInDialogListener activity = (AlreadyLoggedInDialogListener) getActivity();
-            activity.onFinishDialog(false);
-        });
-        builder.setCancelable(false);
-        return builder.create();
+    companion object {
+        const val TAG = "AlreadyLoggedInDialog"
     }
 }

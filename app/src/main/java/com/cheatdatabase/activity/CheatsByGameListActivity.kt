@@ -209,7 +209,7 @@ class CheatsByGameListActivity : AppCompatActivity(), OnCheatListItemSelectedLis
                 resultContract.launch(
                     Intent(
                         this@CheatsByGameListActivity,
-                        LoginActivity::class.java
+                        AuthenticationActivity::class.java
                     )
                 )
                 true

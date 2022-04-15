@@ -19,8 +19,8 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.applovin.adview.AppLovinAdView;
 import com.cheatdatabase.R;
+import com.cheatdatabase.activity.AuthenticationActivity;
 import com.cheatdatabase.activity.CheatForumActivity;
-import com.cheatdatabase.activity.LoginActivity;
 import com.cheatdatabase.activity.SubmitCheatFormActivity;
 import com.cheatdatabase.callbacks.OnCheatRated;
 import com.cheatdatabase.data.RoomCheatDatabase;
@@ -279,7 +279,7 @@ public class FavoritesCheatViewPageIndicator extends AppCompatActivity implement
                 }
                 return true;
             case R.id.action_login:
-                resultContract.launch(new Intent(FavoritesCheatViewPageIndicator.this, LoginActivity.class));
+                resultContract.launch(new Intent(FavoritesCheatViewPageIndicator.this, AuthenticationActivity.class));
                 return true;
             case R.id.action_logout:
                 tools.logout();

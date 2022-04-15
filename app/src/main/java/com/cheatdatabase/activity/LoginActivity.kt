@@ -36,6 +36,7 @@ import javax.inject.Inject
  * well.
  */
 @AndroidEntryPoint
+@Deprecated("use AuthenticationActivity.kt with LoginFragment.kt")
 class LoginActivity : AppCompatActivity(), AlreadyLoggedInDialogListener {
 
     @Inject
@@ -56,7 +57,7 @@ class LoginActivity : AppCompatActivity(), AlreadyLoggedInDialogListener {
     lateinit var progressBar: ProgressBar
 
     // Values for email and password at the time of the login attempt.
-    private var mEmail: String? = null
+//    private var mEmail: String? = null
 
     lateinit var binding: ActivityLoginBinding
 
@@ -89,7 +90,7 @@ class LoginActivity : AppCompatActivity(), AlreadyLoggedInDialogListener {
         init()
 
         // Set up the login form.
-        mEmail = intent.getStringExtra(EXTRA_EMAIL)
+        val mEmail = intent.getStringExtra(EXTRA_EMAIL)
         emailView.setText(mEmail)
         if (tools.member != null && tools.member.email != null) {
             emailView.setText(tools.member.email)
@@ -114,7 +115,7 @@ class LoginActivity : AppCompatActivity(), AlreadyLoggedInDialogListener {
             passwordView.isEnabled = false
             loginButton.isEnabled = false
             val fm = supportFragmentManager
-            val alreadyLoggedInDialog = AlreadyLoggedInDialog()
+            val alreadyLoggedInDialog = AlreadyLoggedInDialog(tools.member)
             alreadyLoggedInDialog.show(fm, "already_logged_in")
         } else {
             emailView.isEnabled = true
@@ -227,7 +228,7 @@ class LoginActivity : AppCompatActivity(), AlreadyLoggedInDialogListener {
         passwordView.error = null
 
         // Store values at the time of the login attempt.
-        mEmail = emailView.text.toString()
+        val mEmail = emailView.text.toString()
         val mPassword = passwordView.text.toString()
         var cancel = false
         var focusView: View? = null
@@ -248,12 +249,7 @@ class LoginActivity : AppCompatActivity(), AlreadyLoggedInDialogListener {
             emailView.error = getString(R.string.error_field_required)
             focusView = emailView
             cancel = true
-        } else if (!mEmail.contains("@")) {
-
-            // TODO FIXME...
-            // TODO FIXME...
-            // TODO FIXME...
-            // TODO FIXME...
+        } else if (mEmail.contains("@").not()) {
             emailView.error = getString(R.string.error_invalid_email)
             focusView = emailView
             cancel = true
