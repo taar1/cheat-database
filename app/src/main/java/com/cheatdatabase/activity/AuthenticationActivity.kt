@@ -1,7 +1,5 @@
 package com.cheatdatabase.activity
 
-import android.app.SearchManager
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -16,6 +14,7 @@ import com.cheatdatabase.R
 import com.cheatdatabase.databinding.AuthenticationActivityBinding
 import com.cheatdatabase.dialogs.AlreadyLoggedInDialog
 import com.cheatdatabase.fragments.LoginFragment
+import com.cheatdatabase.fragments.RegistrationFragment
 import com.cheatdatabase.helpers.Konstanten
 import com.cheatdatabase.helpers.Tools
 import com.cheatdatabase.rest.RestApi
@@ -76,14 +75,15 @@ class AuthenticationActivity : AppCompatActivity(),
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        super.onCreateOptionsMenu(menu)
+
         toolbarMenu = menu
         menu.clear()
-        menuInflater.inflate(R.menu.search_menu, menu)
-
-        val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
-        searchView = menu.findItem(R.id.search).actionView as SearchView
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(componentName))
-        return super.onCreateOptionsMenu(menu)
+        menuInflater.inflate(R.menu.register_menu, menu)
+        if (tools.member != null) {
+            menuInflater.inflate(R.menu.signout_menu, menu)
+        }
+        return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -92,10 +92,15 @@ class AuthenticationActivity : AppCompatActivity(),
                 onBackPressed()
                 true
             }
+
             R.id.action_register -> {
-                resultContract.launch(Intent(this, RegisterActivity::class.java))
+                supportFragmentManager.beginTransaction()
+                    .replace(R.id.container, RegistrationFragment.newInstance(this))
+                    .commitNow()
                 true
             }
+
+            // TODO RecoverFragment...
             R.id.action_forgot_password -> {
                 resultContract.launch(Intent(this, RecoverActivity::class.java))
                 true
