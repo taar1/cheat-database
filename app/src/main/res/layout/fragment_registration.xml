@@ -4,6 +4,7 @@
     android:id="@+id/outer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/bg"
     tools:context="com.cheatdatabase.activity.AuthenticationActivity">
 
     <!-- Register form -->
@@ -11,12 +12,12 @@
         android:id="@+id/username_input_layout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginEnd="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/include_toolbar">
+        app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/username"
@@ -28,7 +29,6 @@
             android:imeOptions="actionUnspecified"
             android:inputType="text"
             android:maxLines="1"
-            android:padding="16dp"
             android:singleLine="true" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -36,9 +36,9 @@
         android:id="@+id/email_input_layout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginEnd="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/username_input_layout">
@@ -49,8 +49,6 @@
             android:layout_height="wrap_content"
             android:hint="@string/prompt_email"
             android:inputType="textEmailAddress"
-            android:maxLines="1"
-            android:padding="16dp"
             android:singleLine="true" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -58,9 +56,9 @@
         android:id="@+id/password_input_layout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginEnd="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/email_input_layout">
@@ -71,8 +69,7 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="@string/prompt_password"
-            android:inputType="textPassword"
-            android:padding="16dp" />
+            android:inputType="textPassword" />
     </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -80,9 +77,9 @@
         android:id="@+id/password_repeat_input_layout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginEnd="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/password_input_layout">
@@ -93,26 +90,24 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="@string/prompt_password_repeat"
-            android:inputType="textPassword"
-            android:padding="16dp" />
+            android:inputType="textPassword" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/register_button"
         style="@style/DefaultButtonStyle"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="60dp"
-        android:layout_marginStart="16dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="16dp"
         android:text="@string/action_register_short"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/password_repeat_input_layout" />
+
 
     <ProgressBar
         android:id="@+id/progress_bar"
-        style="?android:attr/progressBarStyleLarge"
+        style="@android:style/Widget.ProgressBar.Large.Inverse"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="120dp"
@@ -120,7 +115,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/include_toolbar"
         app:layout_constraintTop_toTopOf="parent"
         tools:visibility="visible" />
 
@@ -148,7 +142,7 @@
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/include_toolbar"
+        app:layout_constraintTop_toBottomOf="parent"
         tools:visibility="visible" />
 
     <TextView
@@ -156,7 +150,7 @@
         style="@style/NormalText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:gravity="center"
         android:text="@string/automatically_logged_in"
         android:visibility="gone"

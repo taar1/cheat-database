@@ -19,8 +19,10 @@ import com.cheatdatabase.helpers.Konstanten
 import com.cheatdatabase.helpers.Tools
 import com.cheatdatabase.rest.RestApi
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import javax.inject.Inject
 
+@OptIn(ExperimentalCoroutinesApi::class)
 @AndroidEntryPoint
 class AuthenticationActivity : AppCompatActivity(),
     AlreadyLoggedInDialog.AlreadyLoggedInDialogListener {
@@ -68,7 +70,7 @@ class AuthenticationActivity : AppCompatActivity(),
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
                 .replace(
-                    R.id.container, LoginFragment.newInstance(this)
+                    R.id.container, LoginFragment.newInstance(this), "LoginFragment"
                 )
                 .commitNow()
         }
@@ -79,14 +81,28 @@ class AuthenticationActivity : AppCompatActivity(),
 
         toolbarMenu = menu
         menu.clear()
-        menuInflater.inflate(R.menu.register_menu, menu)
-        if (tools.member != null) {
-            menuInflater.inflate(R.menu.signout_menu, menu)
+
+        when (supportFragmentManager.fragments[0].tag) {
+            "LoginFragment" -> {
+                menuInflater.inflate(R.menu.register_menu, menu)
+            }
+            "RegistrationFragment" -> {
+                menuInflater.inflate(R.menu.login_menu, menu)
+            }
+            "RecoverPasswordFragment" -> {
+                menuInflater.inflate(R.menu.login_menu, menu)
+            }
+            else -> {
+                if (tools.member != null) {
+                    menuInflater.inflate(R.menu.signout_menu, menu)
+                }
+            }
         }
         return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        invalidateOptionsMenu()
         return when (item.itemId) {
             android.R.id.home -> {
                 onBackPressed()
@@ -95,8 +111,22 @@ class AuthenticationActivity : AppCompatActivity(),
 
             R.id.action_register -> {
                 supportFragmentManager.beginTransaction()
-                    .replace(R.id.container, RegistrationFragment.newInstance(this))
+                    .replace(
+                        R.id.container,
+                        RegistrationFragment.newInstance(this),
+                        "RegistrationFragment"
+                    )
                     .commitNow()
+                title = getString(R.string.register)
+                true
+            }
+            R.id.action_login -> {
+                supportFragmentManager.beginTransaction()
+                    .replace(
+                        R.id.container, LoginFragment.newInstance(this), "LoginFragment"
+                    )
+                    .commitNow()
+                title = getString(R.string.action_sign_in_short)
                 true
             }
 
@@ -107,7 +137,6 @@ class AuthenticationActivity : AppCompatActivity(),
             }
             R.id.action_logout -> {
                 tools.logout()
-                invalidateOptionsMenu()
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -123,9 +152,8 @@ class AuthenticationActivity : AppCompatActivity(),
         Log.d("TAG", "forgotPassword: CLICKED")
         // TODO
         // TODO
-        // TODO
 //        supportFragmentManager.beginTransaction()
-//            .replace(R.id.container, RecoverPasswordFragment.newInstance(this))
+//            .replace(R.id.container, RecoverPasswordFragment.newInstance(this), "RecoverPasswordFragment")
 //            .commitNow()
     }
 
@@ -136,11 +164,12 @@ class AuthenticationActivity : AppCompatActivity(),
         if (signOutNow) {
             tools.removeValue(Konstanten.MEMBER_OBJECT)
             supportFragmentManager.beginTransaction()
-                .replace(R.id.container, LoginFragment.newInstance(this))
+                .replace(R.id.container, LoginFragment.newInstance(this), "LoginFragment")
                 .commitNow()
             Toast.makeText(this, R.string.logout_ok, Toast.LENGTH_LONG).show()
         } else {
             finish()
         }
     }
+
 }

@@ -89,6 +89,7 @@ class RegistrationFragment(val activity: AuthenticationActivity) : Fragment() {
         }
     }
 
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
@@ -115,17 +116,9 @@ class RegistrationFragment(val activity: AuthenticationActivity) : Fragment() {
     }
 
 
-    private fun registerButtonClicked() {
-        if (Reachability.reachability.isReachable) {
-            attemptRegister()
-        } else {
-            Toast.makeText(activity, R.string.no_internet, Toast.LENGTH_SHORT).show()
-        }
-    }
-
     private fun init() {
         registerButton.setOnClickListener {
-            registerButtonClicked()
+            attemptRegister()
         }
     }
 

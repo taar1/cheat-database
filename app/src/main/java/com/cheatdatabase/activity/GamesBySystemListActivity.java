@@ -180,7 +180,7 @@ public class GamesBySystemListActivity extends AppCompatActivity implements OnGa
         // Handle action buttons
         switch (item.getItemId()) {
             case R.id.action_login:
-                resultContract.launch(new Intent(this, LoginActivity.class));
+                resultContract.launch(new Intent(this, AuthenticationActivity.class));
                 return true;
             case R.id.action_logout:
                 tools.logout();

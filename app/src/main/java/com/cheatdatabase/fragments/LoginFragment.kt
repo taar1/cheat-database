@@ -8,7 +8,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.cheatdatabase.R
@@ -16,7 +15,10 @@ import com.cheatdatabase.activity.AuthenticationActivity
 import com.cheatdatabase.data.model.Member
 import com.cheatdatabase.databinding.FragmentLoginBinding
 import com.cheatdatabase.dialogs.AlreadyLoggedInDialog
-import com.cheatdatabase.helpers.*
+import com.cheatdatabase.helpers.AeSimpleMD5
+import com.cheatdatabase.helpers.Konstanten
+import com.cheatdatabase.helpers.ResponseCode
+import com.cheatdatabase.helpers.Tools
 import com.cheatdatabase.rest.RestApi
 import com.google.gson.JsonObject
 import dagger.hilt.android.AndroidEntryPoint
@@ -41,7 +43,6 @@ class LoginFragment(val activity: AuthenticationActivity) : Fragment() {
     lateinit var passwordEditText: EditText
     lateinit var forgotPassword: TextView
     lateinit var loginButton: Button
-    lateinit var cancelButton: Button
     lateinit var progressBar: ProgressBar
     lateinit var signingInMessage: TextView
 
@@ -83,6 +84,7 @@ class LoginFragment(val activity: AuthenticationActivity) : Fragment() {
         }
     }
 
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
@@ -103,33 +105,16 @@ class LoginFragment(val activity: AuthenticationActivity) : Fragment() {
         signingInMessage = binding.signingInMessage
         forgotPassword = binding.txtSendLogin
         loginButton = binding.loginButton
-        cancelButton = binding.cancelButton
     }
 
     private fun init() {
         loginButton.setOnClickListener {
-            loginButtonClicked()
+            attemptLogin()
         }
 
         forgotPassword.setOnClickListener {
             activity.forgotPassword()
         }
-
-        cancelButton.setOnClickListener {
-            cancelButtonClicked()
-        }
-    }
-
-    private fun loginButtonClicked() {
-        if (Reachability.reachability.isReachable) {
-            attemptLogin()
-        } else {
-            Toast.makeText(activity, R.string.no_internet, Toast.LENGTH_SHORT).show()
-        }
-    }
-
-    private fun cancelButtonClicked() {
-        activity.setResult(AppCompatActivity.RESULT_CANCELED)
     }
 
     /**
@@ -250,6 +235,8 @@ class LoginFragment(val activity: AuthenticationActivity) : Fragment() {
 
         if (respondeCode == ResponseCode.LOGIN_OK) {
             activity.setResult(Konstanten.LOGIN_SUCCESS_RETURN_CODE)
+            activity.finish()
+
         } else {
             displayError(respondeCode)
         }

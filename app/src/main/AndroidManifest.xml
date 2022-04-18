@@ -89,23 +89,23 @@
                 android:name="android.app.default_searchable"
                 android:value="com.cheatdatabase.search.SearchResultsActivity" />
         </activity>
-        <activity
-            android:name=".activity.LoginActivity"
-            android:exported="false"
-            android:label="@string/title_activity_login"
-            android:windowSoftInputMode="adjustResize|stateVisible" />
-        <activity
-            android:name=".activity.RecoverActivity"
-            android:exported="false"
-            android:label="@string/title_activity_recover"
-            android:parentActivityName=".activity.LoginActivity"
-            android:windowSoftInputMode="adjustResize|stateVisible" />
-        <activity
-            android:name=".activity.RegisterActivity"
-            android:exported="false"
-            android:label="@string/title_activity_register"
-            android:parentActivityName=".activity.LoginActivity"
-            android:windowSoftInputMode="adjustResize|stateVisible" />
+        <!--        <activity-->
+        <!--            android:name=".activity.LoginActivity"-->
+        <!--            android:exported="false"-->
+        <!--            android:label="@string/title_activity_login"-->
+        <!--            android:windowSoftInputMode="adjustResize|stateVisible" />-->
+        <!--        <activity-->
+        <!--            android:name=".activity.RecoverActivity"-->
+        <!--            android:exported="false"-->
+        <!--            android:label="@string/title_activity_recover"-->
+        <!--            android:parentActivityName=".activity.LoginActivity"-->
+        <!--            android:windowSoftInputMode="adjustResize|stateVisible" />-->
+        <!--        <activity-->
+        <!--            android:name=".activity.RegisterActivity"-->
+        <!--            android:exported="false"-->
+        <!--            android:label="@string/title_activity_register"-->
+        <!--            android:parentActivityName=".activity.LoginActivity"-->
+        <!--            android:windowSoftInputMode="adjustResize|stateVisible" />-->
         <activity
             android:name=".activity.CheatForumActivity"
             android:exported="false"

@@ -6,7 +6,8 @@
     </shared>
   </component>
   <component name="AndroidLogFilters">
-    <option name="TOOL_WINDOW_LOG_LEVEL" value="error" />
+    <option name="TOOL_WINDOW_CUSTOM_FILTER" value="XXXXX" />
+    <option name="TOOL_WINDOW_LOG_LEVEL" value="verbose" />
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="No Filters" />
     <option name="TOOL_WINDOW_REGEXP_FILTER" value="false" />
   </component>
@@ -118,12 +119,19 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4caff62e-c62f-40ca-acf0-73c680b13375" name="Default" comment="Getting rid of LoginActivity.kt in favor of AuthenticationActivity.kt with LoginFragment.kt (RegisterFragment and RecoverFragment to follow)">
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/fragments/RegistrationFragment.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_registration.xml" afterDir="false" />
+    <list default="true" id="4caff62e-c62f-40ca-acf0-73c680b13375" name="Default" comment="RegistrationFragment.kt">
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/menu/login_menu.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/AuthenticationActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/AuthenticationActivity.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/GamesBySystemListActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/GamesBySystemListActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/fragments/LoginFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/fragments/LoginFragment.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/fragments/RegistrationFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/fragments/RegistrationFragment.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_login.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_login.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_registration.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_registration.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/menu/register_menu.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/menu/register_menu.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/strings_activity_login.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/strings_activity_login.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -133,7 +141,7 @@
   <component name="CreatePatchCommitExecutor">
     <option name="PATCH_PATH" value="" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[C:\Users\taar1\.android\avd\Pixel_5_API_30.avd]" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[1dcb6e8b]" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
@@ -256,7 +264,7 @@
     <property name="device.picker.selection" value="6ea89d94" />
     <property name="extract.method.default.visibility" value="private" />
     <property name="ignore.virus.scanning.warn.message" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/app/src/main/res/layout" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/app/src/main/res/menu" />
     <property name="project.structure.last.edited" value="Suggestions" />
     <property name="project.structure.proportion" value="0.17" />
     <property name="project.structure.side.proportion" value="0.2" />
@@ -305,11 +313,11 @@
       <recent name="com.cheatdatabase.activity" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Development\Android\Workspaces\cheat-database\app\src\main\res\menu" />
       <recent name="D:\Development\Android\Workspaces\cheat-database\app\src\main\res\layout" />
       <recent name="$PROJECT_DIR$/app/src/huaweiFlavor/res/values" />
       <recent name="$PROJECT_DIR$/app/src/huaweiFlavor/java/com.cheatdatabase.helpers" />
       <recent name="$PROJECT_DIR$/app/src/googlePlayFlavor/res/values" />
-      <recent name="$PROJECT_DIR$/app/src/main/res/layout" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/app/src/main/res/layout-v17" />
@@ -790,7 +798,6 @@
         <item itemvalue="Android Instrumented Tests.testMe()" />
         <item itemvalue="Android Instrumented Tests.itemWithText_doesN...()" />
         <item itemvalue="Android Instrumented Tests.MainActivityTest" />
-        <item itemvalue="Gradle.cheat-database [androidDependencies]" />
       </list>
     </recent_temporary>
   </component>
@@ -806,13 +813,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1487274191999</updated>
-    </task>
-    <task id="LOCAL-00154" summary="Working on Espresso Tests">
-      <created>1601499311988</created>
-      <option name="number" value="00154" />
-      <option name="presentableId" value="LOCAL-00154" />
-      <option name="project" value="LOCAL" />
-      <updated>1601499311988</updated>
     </task>
     <task id="LOCAL-00155" summary="Click on EDIT icon in &quot;my cheats&quot; goes to (non-existent) &quot;edit cheat&quot; form.">
       <created>1602188090565</created>
@@ -1150,7 +1150,14 @@
       <option name="project" value="LOCAL" />
       <updated>1650054489073</updated>
     </task>
-    <option name="localTasksCounter" value="203" />
+    <task id="LOCAL-00203" summary="RegistrationFragment.kt">
+      <created>1650130360079</created>
+      <option name="number" value="00203" />
+      <option name="presentableId" value="LOCAL-00203" />
+      <option name="project" value="LOCAL" />
+      <updated>1650130360080</updated>
+    </task>
+    <option name="localTasksCounter" value="204" />
     <servers />
   </component>
   <component name="TodoView">
@@ -1255,7 +1262,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
-    <MESSAGE value="Fixing some small bugs" />
     <MESSAGE value="Many changes, adjustments towards latest android + kotlin" />
     <MESSAGE value="Adapter in kotlin umwandeln und viewbinding einbauen" />
     <MESSAGE value="Updating JUnit Tests" />
@@ -1280,7 +1286,8 @@
     <MESSAGE value="Register User refactoring" />
     <MESSAGE value="LoginActivity refactoring (untested)" />
     <MESSAGE value="Getting rid of LoginActivity.kt in favor of AuthenticationActivity.kt with LoginFragment.kt (RegisterFragment and RecoverFragment to follow)" />
-    <option name="LAST_COMMIT_MESSAGE" value="Getting rid of LoginActivity.kt in favor of AuthenticationActivity.kt with LoginFragment.kt (RegisterFragment and RecoverFragment to follow)" />
+    <MESSAGE value="RegistrationFragment.kt" />
+    <option name="LAST_COMMIT_MESSAGE" value="RegistrationFragment.kt" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
@@ -1339,6 +1346,25 @@
           <url>file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/CheatsByMemberListActivity.kt</url>
           <line>104</line>
           <option name="timeStamp" value="257" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/fragments/RegistrationFragment.kt</url>
+          <line>264</line>
+          <option name="timeStamp" value="260" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="kotlin-function">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/fragments/RegistrationFragment.kt</url>
+          <line>309</line>
+          <properties class="com.cheatdatabase.fragments.RegistrationFragment" method="displayError">
+            <option name="EMULATED" value="true" />
+          </properties>
+          <option name="timeStamp" value="258" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="kotlin-function">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/fragments/RegistrationFragment.kt</url>
+          <line>129</line>
+          <properties class="com.cheatdatabase.fragments.RegistrationFragment" method="attemptRegister" />
+          <option name="timeStamp" value="261" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

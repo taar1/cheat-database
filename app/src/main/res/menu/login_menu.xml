@@ -2,9 +2,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/action_register"
-        android:title="@string/register"
+        android:id="@+id/action_login"
+        android:orderInCategory="1000"
+        android:title="@string/action_sign_in_short"
         app:showAsAction="ifRoom|withText" />
+
     <item
         android:id="@+id/action_forgot_password"
         android:title="@string/action_forgot_password"

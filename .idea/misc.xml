@@ -25,7 +25,7 @@
         <entry key="..\:/Development/Android/Workspaces/cheat-database/app/src/main/res/layout/fragment_login.xml" value="0.39402173913043476" />
         <entry key="..\:/Development/Android/Workspaces/cheat-database/app/src/main/res/layout/fragment_member_cheat_detail.xml" value="0.4041666666666667" />
         <entry key="..\:/Development/Android/Workspaces/cheat-database/app/src/main/res/layout/fragment_my_cheats_overview.xml" value="0.25181159420289856" />
-        <entry key="..\:/Development/Android/Workspaces/cheat-database/app/src/main/res/layout/fragment_registration.xml" value="0.17962962962962964" />
+        <entry key="..\:/Development/Android/Workspaces/cheat-database/app/src/main/res/layout/fragment_registration.xml" value="0.39402173913043476" />
         <entry key="..\:/Development/Android/Workspaces/cheat-database/app/src/main/res/layout/fragment_systemlist.xml" value="0.21354166666666666" />
         <entry key="..\:/Development/Android/Workspaces/cheat-database/app/src/main/res/layout/gallery_card.xml" value="0.39221014492753625" />
         <entry key="..\:/Development/Android/Workspaces/cheat-database/app/src/main/res/layout/image_viewer_fresco.xml" value="0.39266304347826086" />
@@ -56,6 +56,10 @@
         <entry key="..\:/Development/Android/Workspaces/cheat-database/app/src/main/res/menu/handset_cheatview_rating_off_menu.xml" value="0.4041666666666667" />
         <entry key="..\:/Development/Android/Workspaces/cheat-database/app/src/main/res/menu/handset_cheatview_rating_on_menu.xml" value="0.1" />
         <entry key="..\:/Development/Android/Workspaces/cheat-database/app/src/main/res/menu/handset_forum_menu.xml" value="0.4041666666666667" />
+        <entry key="..\:/Development/Android/Workspaces/cheat-database/app/src/main/res/menu/login_menu.xml" value="0.4" />
+        <entry key="..\:/Development/Android/Workspaces/cheat-database/app/src/main/res/menu/register_menu.xml" value="0.4" />
+        <entry key="..\:/Development/Android/Workspaces/cheat-database/app/src/main/res/menu/signin_menu.xml" value="0.4" />
+        <entry key="..\:/Development/Android/Workspaces/cheat-database/app/src/main/res/menu/signout_menu.xml" value="0.4" />
       </map>
     </option>
   </component>
