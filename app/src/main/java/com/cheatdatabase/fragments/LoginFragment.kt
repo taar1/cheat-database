@@ -208,7 +208,6 @@ class LoginFragment(val activity: AuthenticationActivity) : Fragment() {
                     member.username = registerResponse["username"].asString
                     member.email = registerResponse["email"].asString
                     member.password = password
-                    //member.writeMemberData(member, tools.getSharedPreferences());
                     tools.putMember(member)
 
                     respondeCode = ResponseCode.LOGIN_OK
@@ -236,7 +235,6 @@ class LoginFragment(val activity: AuthenticationActivity) : Fragment() {
         if (respondeCode == ResponseCode.LOGIN_OK) {
             activity.setResult(Konstanten.LOGIN_SUCCESS_RETURN_CODE)
             activity.finish()
-
         } else {
             displayError(respondeCode)
         }
@@ -259,6 +257,4 @@ class LoginFragment(val activity: AuthenticationActivity) : Fragment() {
             else -> Toast.makeText(activity, R.string.err_occurred, Toast.LENGTH_LONG).show()
         }
     }
-
-
 }
