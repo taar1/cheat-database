@@ -121,12 +121,7 @@ class AuthenticationActivity : AppCompatActivity(),
                 true
             }
             R.id.action_login -> {
-                supportFragmentManager.beginTransaction()
-                    .replace(
-                        R.id.container, LoginFragment.newInstance(this), "LoginFragment"
-                    )
-                    .commitNow()
-                title = getString(R.string.action_sign_in_short)
+                goToLoginFragment()
                 true
             }
 
@@ -155,6 +150,15 @@ class AuthenticationActivity : AppCompatActivity(),
 //        supportFragmentManager.beginTransaction()
 //            .replace(R.id.container, RecoverPasswordFragment.newInstance(this), "RecoverPasswordFragment")
 //            .commitNow()
+    }
+
+    fun goToLoginFragment() {
+        supportFragmentManager.beginTransaction()
+            .replace(
+                R.id.container, LoginFragment.newInstance(this), "LoginFragment"
+            )
+            .commitNow()
+        title = getString(R.string.action_sign_in_short)
     }
 
     /**

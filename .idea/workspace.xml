@@ -121,7 +121,8 @@
   <component name="ChangeListManager">
     <list default="true" id="4caff62e-c62f-40ca-acf0-73c680b13375" name="Default" comment="LoginFragment.kt more or less finished now (login works).">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/fragments/LoginFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/fragments/LoginFragment.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/AuthenticationActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/AuthenticationActivity.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/fragments/RegistrationFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/fragments/RegistrationFragment.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -804,13 +805,6 @@
       <option name="presentableId" value="Default" />
       <updated>1487274191999</updated>
     </task>
-    <task id="LOCAL-00156" summary="Adding EditCheatActivity (MVVM) - still empty...">
-      <created>1602189557578</created>
-      <option name="number" value="00156" />
-      <option name="presentableId" value="LOCAL-00156" />
-      <option name="project" value="LOCAL" />
-      <updated>1602189557578</updated>
-    </task>
     <task id="LOCAL-00157" summary="Added link from my own cheats -&gt; edit cheat activity">
       <created>1602277642300</created>
       <option name="number" value="00157" />
@@ -1147,7 +1141,14 @@
       <option name="project" value="LOCAL" />
       <updated>1650315272875</updated>
     </task>
-    <option name="localTasksCounter" value="205" />
+    <task id="LOCAL-00205" summary="LoginFragment.kt more or less finished now (login works).">
+      <created>1650315491383</created>
+      <option name="number" value="00205" />
+      <option name="presentableId" value="LOCAL-00205" />
+      <option name="project" value="LOCAL" />
+      <updated>1650315491383</updated>
+    </task>
+    <option name="localTasksCounter" value="206" />
     <servers />
   </component>
   <component name="TodoView">
@@ -1337,24 +1338,13 @@
           <line>104</line>
           <option name="timeStamp" value="257" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="kotlin-line">
-          <url>file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/fragments/RegistrationFragment.kt</url>
-          <line>264</line>
-          <option name="timeStamp" value="260" />
-        </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="kotlin-function">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/fragments/RegistrationFragment.kt</url>
-          <line>309</line>
+          <line>316</line>
           <properties class="com.cheatdatabase.fragments.RegistrationFragment" method="displayError">
             <option name="EMULATED" value="true" />
           </properties>
           <option name="timeStamp" value="258" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="kotlin-function">
-          <url>file://$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/fragments/RegistrationFragment.kt</url>
-          <line>129</line>
-          <properties class="com.cheatdatabase.fragments.RegistrationFragment" method="attemptRegister" />
-          <option name="timeStamp" value="261" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

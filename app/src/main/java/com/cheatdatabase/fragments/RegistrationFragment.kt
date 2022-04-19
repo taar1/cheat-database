@@ -2,6 +2,8 @@ package com.cheatdatabase.fragments
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.KeyEvent
 import android.view.LayoutInflater
@@ -17,9 +19,11 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.cheatdatabase.R
 import com.cheatdatabase.activity.AuthenticationActivity
-import com.cheatdatabase.data.model.Member
 import com.cheatdatabase.databinding.FragmentRegistrationBinding
-import com.cheatdatabase.helpers.*
+import com.cheatdatabase.helpers.AeSimpleMD5
+import com.cheatdatabase.helpers.Konstanten
+import com.cheatdatabase.helpers.ResponseCode
+import com.cheatdatabase.helpers.Tools
 import com.cheatdatabase.rest.RestApi
 import com.google.android.material.textfield.TextInputEditText
 import com.google.gson.JsonObject
@@ -68,15 +72,10 @@ class RegistrationFragment(val activity: AuthenticationActivity) : Fragment() {
         init()
 
         email.setText(tools.member?.email)
-        username.setOnEditorActionListener { textView: TextView?, id: Int, keyEvent: KeyEvent? ->
+        username.setOnEditorActionListener { _: TextView?, id: Int, _: KeyEvent? ->
             if (id == 222 || id == EditorInfo.IME_NULL) {
-                if (Reachability.reachability.isReachable) {
-                    attemptRegister()
-                    return@setOnEditorActionListener true
-                } else {
-                    Toast.makeText(activity, R.string.no_internet, Toast.LENGTH_SHORT)
-                        .show()
-                }
+                attemptRegister()
+                return@setOnEditorActionListener true
             }
             false
         }
@@ -143,19 +142,23 @@ class RegistrationFragment(val activity: AuthenticationActivity) : Fragment() {
         val mPassword = password.text.toString().trim()
         val mPasswordRepeat = passwordRepeat.text.toString().trim()
 
-        if (mPasswordRepeat.isEmpty()) {
-            passwordRepeat.error = getString(R.string.error_password_too_short)
-            focusView = passwordRepeat
-            cancel = true
-        } else if (mPasswordRepeat.length < 8) {
-            passwordRepeat.error = getString(R.string.error_password_too_short)
-            focusView = passwordRepeat
-            cancel = true
-        } else if (mPasswordRepeat != mPassword) {
-            password.error = getString(R.string.error_password_not_identical)
-            passwordRepeat.error = getString(R.string.error_password_not_identical)
-            focusView = passwordRepeat
-            cancel = true
+        when {
+            mPasswordRepeat.isEmpty() -> {
+                passwordRepeat.error = getString(R.string.error_password_too_short)
+                focusView = passwordRepeat
+                cancel = true
+            }
+            mPasswordRepeat.length < 8 -> {
+                passwordRepeat.error = getString(R.string.error_password_too_short)
+                focusView = passwordRepeat
+                cancel = true
+            }
+            mPasswordRepeat != mPassword -> {
+                password.error = getString(R.string.error_password_not_identical)
+                passwordRepeat.error = getString(R.string.error_password_not_identical)
+                focusView = passwordRepeat
+                cancel = true
+            }
         }
 
         if (mPassword.isEmpty()) {
@@ -265,14 +268,6 @@ class RegistrationFragment(val activity: AuthenticationActivity) : Fragment() {
             val returnValue = registerResponse!!["returnValue"].asString
             when {
                 returnValue.equals("register_ok", ignoreCase = true) -> {
-                    val member = Member()
-                    member.mid = registerResponse["memberId"].asInt
-                    member.username = registerResponse["username"].asString
-                    member.email = registerResponse["email"].asString
-                    member.password = registerResponse["pw"].asString
-                    //member.writeMemberData(member, tools.getSharedPreferences());
-                    tools.putMember(member)
-
                     respondeCode = ResponseCode.REGISTER_OK
                 }
                 returnValue.equals("username_already_exists", ignoreCase = true) -> {
@@ -299,11 +294,23 @@ class RegistrationFragment(val activity: AuthenticationActivity) : Fragment() {
         showProgress(false)
 
         if (respondeCode == ResponseCode.REGISTER_OK) {
-            tools.hideKeyboard(activity, binding.outerLayout)
-            activity.setResult(Konstanten.REGISTER_SUCCESS_RETURN_CODE)
-            setRegisterSuccessVisibility(true)
+            showRegistrationSuccessfulDialog()
         } else {
             displayError(respondeCode)
+        }
+    }
+
+    private fun showRegistrationSuccessfulDialog() {
+        val builder = AlertDialog.Builder(activity)
+        with(builder) {
+            setTitle(getString(R.string.registration_successful))
+                .setMessage("You can now login.")
+                .setPositiveButton(R.string.ok) { _: DialogInterface?, _: Int ->
+                    activity.goToLoginFragment()
+                    activity.invalidateOptionsMenu()
+                }
+            setCancelable(false)
+            create().show()
         }
     }
 
