@@ -39,6 +39,7 @@ import retrofit2.Response;
  * well.
  */
 @AndroidEntryPoint
+@Deprecated()
 public class RecoverActivity extends AppCompatActivity {
     private static final String TAG = "RecoverActivity";
     /**

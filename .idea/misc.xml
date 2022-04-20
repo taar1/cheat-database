@@ -11,7 +11,7 @@
         <entry key="..\:/Development/Android/Workspaces/cheat-database/app/src/main/res/layout/activity_login.xml" value="0.39402173913043476" />
         <entry key="..\:/Development/Android/Workspaces/cheat-database/app/src/main/res/layout/activity_main.xml" value="0.19655521783181357" />
         <entry key="..\:/Development/Android/Workspaces/cheat-database/app/src/main/res/layout/activity_member_cheat_list.xml" value="0.264" />
-        <entry key="..\:/Development/Android/Workspaces/cheat-database/app/src/main/res/layout/activity_recover.xml" value="0.18333333333333332" />
+        <entry key="..\:/Development/Android/Workspaces/cheat-database/app/src/main/res/layout/activity_recover.xml" value="0.25" />
         <entry key="..\:/Development/Android/Workspaces/cheat-database/app/src/main/res/layout/activity_register.xml" value="0.25" />
         <entry key="..\:/Development/Android/Workspaces/cheat-database/app/src/main/res/layout/activity_submit_cheat_layout.xml" value="0.39010416666666664" />
         <entry key="..\:/Development/Android/Workspaces/cheat-database/app/src/main/res/layout/adview_facebook.xml" value="0.4046875" />
@@ -25,6 +25,7 @@
         <entry key="..\:/Development/Android/Workspaces/cheat-database/app/src/main/res/layout/fragment_login.xml" value="0.39402173913043476" />
         <entry key="..\:/Development/Android/Workspaces/cheat-database/app/src/main/res/layout/fragment_member_cheat_detail.xml" value="0.4041666666666667" />
         <entry key="..\:/Development/Android/Workspaces/cheat-database/app/src/main/res/layout/fragment_my_cheats_overview.xml" value="0.25181159420289856" />
+        <entry key="..\:/Development/Android/Workspaces/cheat-database/app/src/main/res/layout/fragment_recover.xml" value="0.25" />
         <entry key="..\:/Development/Android/Workspaces/cheat-database/app/src/main/res/layout/fragment_registration.xml" value="0.39402173913043476" />
         <entry key="..\:/Development/Android/Workspaces/cheat-database/app/src/main/res/layout/fragment_systemlist.xml" value="0.21354166666666666" />
         <entry key="..\:/Development/Android/Workspaces/cheat-database/app/src/main/res/layout/gallery_card.xml" value="0.39221014492753625" />

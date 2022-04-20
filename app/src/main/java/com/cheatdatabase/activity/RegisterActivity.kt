@@ -32,6 +32,7 @@ import javax.inject.Inject
 /**
  * Activity which displays a registration form.
  */
+@Deprecated("use AuthenticationActivity.kt with RegistrationFragment.kt")
 @AndroidEntryPoint
 class RegisterActivity : AppCompatActivity() {
 
