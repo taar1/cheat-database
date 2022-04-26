@@ -306,7 +306,7 @@ class RegistrationFragment(val activity: AuthenticationActivity) : Fragment() {
             setTitle(getString(R.string.registration_successful))
                 .setMessage("You can now login.")
                 .setPositiveButton(R.string.ok) { _: DialogInterface?, _: Int ->
-                    activity.goToLoginFragment()
+                    activity.loginFragment()
                     activity.invalidateOptionsMenu()
                 }
             setCancelable(false)

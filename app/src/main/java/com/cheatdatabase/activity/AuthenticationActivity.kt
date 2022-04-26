@@ -1,8 +1,6 @@
 package com.cheatdatabase.activity
 
-import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
@@ -14,6 +12,7 @@ import com.cheatdatabase.R
 import com.cheatdatabase.databinding.AuthenticationActivityBinding
 import com.cheatdatabase.dialogs.AlreadyLoggedInDialog
 import com.cheatdatabase.fragments.LoginFragment
+import com.cheatdatabase.fragments.RecoverFragment
 import com.cheatdatabase.fragments.RegistrationFragment
 import com.cheatdatabase.helpers.Konstanten
 import com.cheatdatabase.helpers.Tools
@@ -89,8 +88,8 @@ class AuthenticationActivity : AppCompatActivity(),
             "RegistrationFragment" -> {
                 menuInflater.inflate(R.menu.login_menu, menu)
             }
-            "RecoverPasswordFragment" -> {
-                menuInflater.inflate(R.menu.login_menu, menu)
+            "RecoverFragment" -> {
+                menu.clear()
             }
             else -> {
                 if (tools.member != null) {
@@ -102,7 +101,6 @@ class AuthenticationActivity : AppCompatActivity(),
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        invalidateOptionsMenu()
         return when (item.itemId) {
             android.R.id.home -> {
                 onBackPressed()
@@ -110,24 +108,16 @@ class AuthenticationActivity : AppCompatActivity(),
             }
 
             R.id.action_register -> {
-                supportFragmentManager.beginTransaction()
-                    .replace(
-                        R.id.container,
-                        RegistrationFragment.newInstance(this),
-                        "RegistrationFragment"
-                    )
-                    .commitNow()
-                title = getString(R.string.register)
+                registrationFragment()
                 true
             }
             R.id.action_login -> {
-                goToLoginFragment()
+                loginFragment()
                 true
             }
 
-            // TODO RecoverFragment...
             R.id.action_forgot_password -> {
-                resultContract.launch(Intent(this, RecoverActivity::class.java))
+                resetPasswordFragment()
                 true
             }
             R.id.action_logout -> {
@@ -143,22 +133,32 @@ class AuthenticationActivity : AppCompatActivity(),
         return true
     }
 
-    fun forgotPassword() {
-        Log.d("TAG", "forgotPassword: CLICKED")
-        // TODO
-        // TODO
-//        supportFragmentManager.beginTransaction()
-//            .replace(R.id.container, RecoverPasswordFragment.newInstance(this), "RecoverPasswordFragment")
-//            .commitNow()
+    fun resetPasswordFragment() {
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.container, RecoverFragment.newInstance(this), "RecoverFragment")
+            .commitNow()
+        title = getString(R.string.reset_password)
+        invalidateOptionsMenu()
     }
 
-    fun goToLoginFragment() {
+    fun loginFragment() {
         supportFragmentManager.beginTransaction()
             .replace(
                 R.id.container, LoginFragment.newInstance(this), "LoginFragment"
             )
             .commitNow()
         title = getString(R.string.action_sign_in_short)
+        invalidateOptionsMenu()
+    }
+
+    fun registrationFragment() {
+        supportFragmentManager.beginTransaction()
+            .replace(
+                R.id.container, RegistrationFragment.newInstance(this), "RegistrationFragment"
+            )
+            .commitNow()
+        title = getString(R.string.register)
+        invalidateOptionsMenu()
     }
 
     /**

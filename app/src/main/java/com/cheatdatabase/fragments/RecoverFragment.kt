@@ -258,8 +258,8 @@ class RecoverFragment(val activity: AuthenticationActivity) : Fragment() {
     }
 
     private fun setRegisterSuccessVisibility(isVisible: Boolean) {
-        registerSuccessTitle.isVisible = isVisible
-        registerSuccessText.isVisible = isVisible
+//        registerSuccessTitle.isVisible = isVisible
+//        registerSuccessText.isVisible = isVisible
     }
 
     /**
@@ -320,7 +320,7 @@ class RecoverFragment(val activity: AuthenticationActivity) : Fragment() {
             setTitle(getString(R.string.registration_successful))
                 .setMessage("You can now login.")
                 .setPositiveButton(R.string.ok) { _: DialogInterface?, _: Int ->
-                    activity.goToLoginFragment()
+                    activity.loginFragment()
                     activity.invalidateOptionsMenu()
                 }
             setCancelable(false)
@@ -330,25 +330,17 @@ class RecoverFragment(val activity: AuthenticationActivity) : Fragment() {
 
     private fun displayError(respondeCode: ResponseCode) {
         when (respondeCode) {
-            ResponseCode.USERNAME_ALREADY_EXISTS -> {
-                username.error = getString(R.string.err_username_used)
-                username.requestFocus()
-            }
-            ResponseCode.EMAIL_ALREADY_EXISTS -> {
-                email.error = getString(R.string.err_email_used)
+            ResponseCode.EMAIL_NOT_FOUND -> {
+                email.error = getString(R.string.email_not_found)
                 email.requestFocus()
             }
-            ResponseCode.PARAMETERS_TOO_SHORT -> {
-                username.error = getString(R.string.err_parameter_too_short)
-                username.requestFocus()
-            }
-            ResponseCode.OTHER_ERROR -> {
-                username.error = getString(R.string.error_submit_security)
-                username.requestFocus()
+            ResponseCode.RECOVERY_CODE_WRONG -> {
+                recoveryCode.error = getString(R.string.wrong_recovery_code)
+                recoveryCode.requestFocus()
             }
             else -> Toast.makeText(
                 activity,
-                R.string.err_creating_user_account,
+                "Account could not be restored.",
                 Toast.LENGTH_LONG
             ).show()
         }

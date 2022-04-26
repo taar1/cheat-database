@@ -257,7 +257,9 @@ Submitted tricks that violate one or more of the above points will be deleted.</
     <string name="error_submit_security">"Error submitting registration data securely. Please try again."</string>
     <string name="registration_successful">Registration successful!</string>
     <string name="automatically_logged_in">You are now automatically logged-in.</string>
-    <string name="recover_password">Recover password</string>
+    <string name="reset_password">Reset password</string>
     <string name="recovery_code">Recovery Code</string>
+    <string name="email_not_found">E-Mail address not found in database.</string>
+    <string name="wrong_recovery_code">Wrong Recovery Code</string>
 
 </resources>

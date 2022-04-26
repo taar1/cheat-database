@@ -113,7 +113,7 @@ class LoginFragment(val activity: AuthenticationActivity) : Fragment() {
         }
 
         forgotPassword.setOnClickListener {
-            activity.forgotPassword()
+            activity.resetPasswordFragment()
         }
     }
 
