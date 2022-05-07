@@ -256,7 +256,7 @@ class RegistrationFragment(val activity: AuthenticationActivity) : Fragment() {
 
         var respondeCode: ResponseCode = ResponseCode.OTHER_ERROR
 
-        lifecycleScope.launch(Dispatchers.IO) {
+        viewLifecycleOwner.lifecycleScope.launch(Dispatchers.IO) {
 
             val passwordMD5 = AeSimpleMD5.MD5(password.trim { it <= ' ' })
             val call = restApi.register(username, passwordMD5, email)

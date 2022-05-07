@@ -12,7 +12,7 @@ import com.cheatdatabase.R
 import com.cheatdatabase.databinding.AuthenticationActivityBinding
 import com.cheatdatabase.dialogs.AlreadyLoggedInDialog
 import com.cheatdatabase.fragments.LoginFragment
-import com.cheatdatabase.fragments.RecoverFragment
+import com.cheatdatabase.fragments.RecoverLoginFragment
 import com.cheatdatabase.fragments.RegistrationFragment
 import com.cheatdatabase.helpers.Konstanten
 import com.cheatdatabase.helpers.Tools
@@ -135,7 +135,7 @@ class AuthenticationActivity : AppCompatActivity(),
 
     fun resetPasswordFragment() {
         supportFragmentManager.beginTransaction()
-            .replace(R.id.container, RecoverFragment.newInstance(this), "RecoverFragment")
+            .replace(R.id.container, RecoverLoginFragment.newInstance(this), "RecoverFragment")
             .commitNow()
         title = getString(R.string.reset_password)
         invalidateOptionsMenu()

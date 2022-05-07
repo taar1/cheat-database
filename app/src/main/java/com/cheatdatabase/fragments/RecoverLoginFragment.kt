@@ -35,7 +35,7 @@ import javax.inject.Inject
 
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
-class RecoverFragment(val activity: AuthenticationActivity) : Fragment() {
+class RecoverLoginFragment(val activity: AuthenticationActivity) : Fragment() {
 
     @Inject
     lateinit var tools: Tools
@@ -82,8 +82,8 @@ class RecoverFragment(val activity: AuthenticationActivity) : Fragment() {
     companion object {
         private const val TAG = "RecoverFragment"
 
-        fun newInstance(activity: AuthenticationActivity): RecoverFragment {
-            return RecoverFragment(activity)
+        fun newInstance(activity: AuthenticationActivity): RecoverLoginFragment {
+            return RecoverLoginFragment(activity)
         }
     }
 
@@ -227,9 +227,35 @@ class RecoverFragment(val activity: AuthenticationActivity) : Fragment() {
     }
 
     private fun sendRecoveryCodeByEmail(email: String) {
-        // TODO send recovery code by email
-        // TODO show dialog telling the user to enter recovery code and new password
-        // TODO show remaining fields (recovery code, password, password repeat)
+        var respondeCode: ResponseCode = ResponseCode.OTHER_ERROR
+
+        viewLifecycleOwner.lifecycleScope.launch(Dispatchers.IO) {
+            val call = restApi.sendRecoveryCode(AeSimpleMD5.MD5(email))
+
+            val response: Response<JsonObject> = call.execute()
+            val registerResponse: JsonObject? = response.body()
+
+            //no_user_found|invalid_email|recovery_code_sent|sending_email_failed
+            val returnValue = registerResponse!!["returnValue"].asString
+            when {
+                returnValue.equals("no_user_found", ignoreCase = true) -> {
+                    respondeCode = ResponseCode.NO_USER_FOUND
+                }
+                returnValue.equals("invalid_email", ignoreCase = true) -> {
+                    respondeCode = ResponseCode.INVALID_EMAIL
+                }
+                returnValue.equals("recovery_code_sent", ignoreCase = true) -> {
+                    respondeCode = ResponseCode.RECOVERY_CODE_SENT
+                }
+                returnValue.equals("sending_email_failed", ignoreCase = true) -> {
+                    respondeCode = ResponseCode.SENDING_EMAIL_FAILED
+                }
+            }
+
+            withContext(Dispatchers.Main) {
+                sendRecoveryCodeTaskFinished(respondeCode)
+            }
+        }
     }
 
     private fun showProgress(showProgress: Boolean) {
@@ -262,52 +288,12 @@ class RecoverFragment(val activity: AuthenticationActivity) : Fragment() {
 //        registerSuccessText.isVisible = isVisible
     }
 
-    /**
-     * Represents an asynchronous registration task used to authenticate the
-     * user.
-     */
-    private fun registerNewAccount(username: String, password: String, email: String) {
-
-        var respondeCode: ResponseCode = ResponseCode.OTHER_ERROR
-
-        lifecycleScope.launch(Dispatchers.IO) {
-
-            val passwordMD5 = AeSimpleMD5.MD5(password.trim { it <= ' ' })
-            val call = restApi.register(username, passwordMD5, email)
-
-            val response: Response<JsonObject> = call.execute()
-            val registerResponse: JsonObject? = response.body()
-
-            // register_ok, username_already_exists, email_already_exists, parameters_too_short, other_error
-            val returnValue = registerResponse!!["returnValue"].asString
-            when {
-                returnValue.equals("register_ok", ignoreCase = true) -> {
-                    respondeCode = ResponseCode.REGISTER_OK
-                }
-                returnValue.equals("username_already_exists", ignoreCase = true) -> {
-                    respondeCode = ResponseCode.USERNAME_ALREADY_EXISTS
-                }
-                returnValue.equals("email_already_exists", ignoreCase = true) -> {
-                    respondeCode = ResponseCode.EMAIL_ALREADY_EXISTS
-                }
-                returnValue.equals("parameters_too_short", ignoreCase = true) -> {
-                    respondeCode = ResponseCode.PARAMETERS_TOO_SHORT
-                }
-                returnValue.equals("other_error", ignoreCase = true) -> {
-                    respondeCode = ResponseCode.OTHER_ERROR
-                }
-            }
-
-            withContext(Dispatchers.Main) {
-                registerTaskFinished(respondeCode)
-            }
-        }
-    }
-
-    private fun registerTaskFinished(respondeCode: ResponseCode) {
+    private fun sendRecoveryCodeTaskFinished(respondeCode: ResponseCode) {
         showProgress(false)
 
-        if (respondeCode == ResponseCode.REGISTER_OK) {
+        if (respondeCode == ResponseCode.RECOVERY_CODE_SENT) {
+            // TODO: Show dialog that recovery code has been sent
+            // TODO: Update UI to enter recovery code
             showRegistrationSuccessfulDialog()
         } else {
             displayError(respondeCode)

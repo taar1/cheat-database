@@ -101,6 +101,16 @@ public interface RestApi {
     Call<JsonObject> login(@Field("username") String username, @Field("password") String password_md5);
 
     /**
+     * Sends a recovery code to the user's email address.
+     *
+     * @param email_md5
+     * @return JsonObject
+     */
+    @FormUrlEncoded
+    @POST("sendRecoveryCode.php")
+    Call<JsonObject> sendRecoveryCode(@Field("email") String email_md5);
+
+    /**
      * Submit a cheat.
      *
      * @param memberId   Member ID
