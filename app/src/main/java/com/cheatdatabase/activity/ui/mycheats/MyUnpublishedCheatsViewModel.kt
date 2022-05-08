@@ -14,16 +14,11 @@ import kotlinx.coroutines.launch
 class MyUnpublishedCheatsViewModel(application: Application) :
     AndroidViewModel(application) {
 
-    companion object {
-        private const val TAG = "MyUnpublishedCheatsView"
-    }
-
     private val member: Member
-
-    var fetchListener: MyUnpublishedCheatsListener? = null
-
     private val settings: SharedPreferences =
         application.getSharedPreferences(Konstanten.PREFERENCES_FILE, 0)
+
+    var fetchListener: MyUnpublishedCheatsListener? = null
 
     fun getMyUnpublishedCheatsByCoroutines() {
         viewModelScope.launch {
