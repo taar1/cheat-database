@@ -14,7 +14,6 @@ import com.applovin.adview.AppLovinAdView
 import com.cheatdatabase.R
 import com.cheatdatabase.data.model.ForumPost
 import com.cheatdatabase.databinding.ActivityCheatForumBinding
-import com.cheatdatabase.helpers.AeSimpleMD5
 import com.cheatdatabase.helpers.Konstanten
 import com.cheatdatabase.helpers.Reachability
 import com.cheatdatabase.helpers.Tools
@@ -322,9 +321,7 @@ class CheatForumActivity : AppCompatActivity() {
 
     private fun submitForumPost(forumPost: ForumPost) {
         val call: Call<Void> = restApi.insertForum(
-            tools.member.mid, cheatId, AeSimpleMD5.MD5(
-                tools.member.password
-            ), forumPost.text
+            tools.member.mid, cheatId, tools.member.passwordMd5, forumPost.text
         )
         call.enqueue(object : Callback<Void?> {
             override fun onResponse(forumPost: Call<Void?>, response: Response<Void?>) {

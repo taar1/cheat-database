@@ -89,7 +89,7 @@ public class Tools {
     /**
      * Writes the member (after register or after login) to the sharedPreferences.
      *
-     * @param member
+     * @param member Member
      */
     public void putMember(Member member) {
         editor.putString(Konstanten.MEMBER_OBJECT, new Gson().toJson(member));

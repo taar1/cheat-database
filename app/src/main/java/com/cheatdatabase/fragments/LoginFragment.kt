@@ -207,7 +207,7 @@ class LoginFragment(val activity: AuthenticationActivity) : Fragment() {
                     member.mid = registerResponse["memberId"].asInt
                     member.username = registerResponse["username"].asString
                     member.email = registerResponse["email"].asString
-                    member.password = password
+                    member.passwordMd5 = passwordMD5
                     tools.putMember(member)
 
                     respondeCode = ResponseCode.LOGIN_OK

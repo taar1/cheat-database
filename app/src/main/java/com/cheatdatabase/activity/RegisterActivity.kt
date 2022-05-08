@@ -286,8 +286,7 @@ class RegisterActivity : AppCompatActivity() {
                     member.mid = registerResponse["memberId"].asInt
                     member.username = registerResponse["username"].asString
                     member.email = registerResponse["email"].asString
-                    member.password = registerResponse["pw"].asString
-                    //member.writeMemberData(member, tools.getSharedPreferences());
+                    member.passwordMd5 = passwordMD5
                     tools.putMember(member)
 
                     respondeCode = ResponseCode.REGISTER_OK

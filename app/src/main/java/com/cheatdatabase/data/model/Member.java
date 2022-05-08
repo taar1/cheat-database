@@ -32,15 +32,15 @@ public class Member implements Parcelable {
     private boolean banned;
 
     private Bitmap avatar;
-    private String password;
+    private String passwordMd5;
 
     @Inject
     public Member() {
     }
 
-    public Member(String username, String password, String email, int mid, boolean banned) {
+    public Member(String username, String passwordMd5, String email, int mid, boolean banned) {
         this.username = username;
-        this.password = password;
+        this.passwordMd5 = passwordMd5;
         this.email = email;
         this.mid = mid;
         this.banned = banned;
@@ -48,7 +48,7 @@ public class Member implements Parcelable {
 
     protected Member(Parcel in) {
         username = in.readString();
-        password = in.readString();
+        passwordMd5 = in.readString();
         email = in.readString();
         website = in.readString();
         city = in.readString();
@@ -112,12 +112,6 @@ public class Member implements Parcelable {
         return mid;
     }
 
-    /**
-     * @return the password
-     */
-    public String getPassword() {
-        return password;
-    }
 
     /**
      * @return the username
@@ -190,13 +184,6 @@ public class Member implements Parcelable {
     }
 
     /**
-     * @param password the password to set
-     */
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    /**
      * @param username the username to set
      */
     public void setUsername(String username) {
@@ -207,16 +194,12 @@ public class Member implements Parcelable {
         this.website = website;
     }
 
-    /**
-     * Removes the member data from the shared preferences (Logout).
-     *
-     * @param settings
-     */
-    public void removeMemberData(SharedPreferences settings) {
-        SharedPreferences.Editor editor = settings.edit();
+    public String getPasswordMd5() {
+        return passwordMd5;
+    }
 
-        editor.remove(Konstanten.MEMBER_OBJECT);
-        editor.apply();
+    public void setPasswordMd5(String passwordMd5) {
+        this.passwordMd5 = passwordMd5;
     }
 
     @Override
@@ -227,7 +210,7 @@ public class Member implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(username);
-        dest.writeString(password);
+        dest.writeString(passwordMd5);
         dest.writeString(email);
         dest.writeString(website);
         dest.writeString(city);

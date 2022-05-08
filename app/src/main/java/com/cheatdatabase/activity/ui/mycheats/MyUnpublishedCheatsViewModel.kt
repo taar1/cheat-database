@@ -1,47 +1,50 @@
 package com.cheatdatabase.activity.ui.mycheats
 
 import android.app.Application
-import android.content.SharedPreferences
 import androidx.lifecycle.AndroidViewModel
-import com.cheatdatabase.data.model.Member
+import androidx.lifecycle.viewModelScope
 import com.cheatdatabase.data.model.UnpublishedCheat
 import com.cheatdatabase.data.repository.MyCheatsRepository
-import com.cheatdatabase.helpers.AeSimpleMD5
-import com.cheatdatabase.helpers.Coroutines
-import com.cheatdatabase.helpers.Konstanten
-import com.google.gson.Gson
+import com.cheatdatabase.helpers.Tools
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 class MyUnpublishedCheatsViewModel(application: Application) :
     AndroidViewModel(application) {
 
-    val TAG = "MyUnpublishedCheatsView"
+    companion object {
+        private const val TAG = "MyUnpublishedCheatsView"
+    }
 
-    private val member: Member
+    @Inject
+    lateinit var tools: Tools
 
     var fetchListener: MyUnpublishedCheatsListener? = null
 
-    private val settings: SharedPreferences =
-        application.getSharedPreferences(Konstanten.PREFERENCES_FILE, 0)
-
     fun getMyUnpublishedCheatsByCoroutines() {
-        Coroutines.main {
-            val response = MyCheatsRepository().getMyUnpublishedCheats(
-                member.mid,
-                AeSimpleMD5.MD5(member.password)
-            )
-
-            if (response.isSuccessful) {
-                fetchListener?.fetchUnpublishedCheatsSuccess(response.body()!!)
-            } else {
+        viewModelScope.launch {
+            if (tools.member.passwordMd5.isNullOrBlank() || tools.member.mid == 0) {
                 fetchListener?.fetchUnpublishedCheatsFail()
+            } else {
+                val response =
+                    MyCheatsRepository().getMyUnpublishedCheats(
+                        tools.member.mid,
+                        tools.member.passwordMd5
+                    )
+
+                if (response.isSuccessful) {
+                    fetchListener?.fetchUnpublishedCheatsSuccess(response.body()!!)
+                } else {
+                    fetchListener?.fetchUnpublishedCheatsFail()
+                }
             }
         }
     }
 
     fun deleteUnpublishedCheat(unpublishedCheat: UnpublishedCheat) {
-        Coroutines.main {
+        viewModelScope.launch {
             val response = MyCheatsRepository().deleteUnpublishedCheat(
-                unpublishedCheat, member
+                unpublishedCheat, tools.member
             )
 
             if (response.isSuccessful) {
@@ -52,16 +55,6 @@ class MyUnpublishedCheatsViewModel(application: Application) :
                 fetchListener?.deleteUnpublishedCheatFailed()
             }
         }
-    }
-
-    init {
-        // TODO use tools.getMember()
-        member = Gson().fromJson(
-            settings.getString(
-                Konstanten.MEMBER_OBJECT,
-                null
-            ), Member::class.java
-        )
     }
 
 }

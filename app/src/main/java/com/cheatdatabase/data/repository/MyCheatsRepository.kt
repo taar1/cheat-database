@@ -4,7 +4,6 @@ import com.cheatdatabase.data.model.HttpPostReturnValue
 import com.cheatdatabase.data.model.Member
 import com.cheatdatabase.data.model.MyCheatsCount
 import com.cheatdatabase.data.model.UnpublishedCheat
-import com.cheatdatabase.helpers.AeSimpleMD5
 import com.cheatdatabase.rest.KotlinRestApi
 import com.cheatdatabase.rest.SafeApiRequest
 import retrofit2.Response
@@ -24,7 +23,7 @@ class MyCheatsRepository : SafeApiRequest() {
     ): Response<HttpPostReturnValue> {
         return KotlinRestApi().deleteUnpublishedCheat(
             member.mid,
-            AeSimpleMD5.MD5(member.password),
+            member.passwordMd5,
             unpublishedCheat.cheatId,
             unpublishedCheat.game.gameId,
             unpublishedCheat.tableInfo

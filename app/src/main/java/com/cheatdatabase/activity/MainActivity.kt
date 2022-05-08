@@ -4,6 +4,7 @@ import android.app.SearchManager
 import android.content.Intent
 import android.os.Bundle
 import android.provider.SearchRecentSuggestions
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.TextView
@@ -69,7 +70,7 @@ class MainActivity : AppCompatActivity() {
                 tools.showSnackbar(drawerLayout, getString(R.string.register_thanks))
             }
 
-            viewModel.getMyCheatsCount(tools.member)
+            //viewModel.getMyCheatsCount(tools.member)
         }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -203,6 +204,10 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
+
+        Log.d(TAG, "XXXXX tools.member.passwordMd5: ${tools.member.passwordMd5}")
+        Log.d(TAG, "XXXXX tools.member.mid: ${tools.member.mid}")
+
         viewModel.getMyCheatsCount(tools.member)
     }
 }
