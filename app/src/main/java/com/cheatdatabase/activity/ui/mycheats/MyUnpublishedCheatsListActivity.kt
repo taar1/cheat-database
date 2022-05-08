@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import com.cheatdatabase.R
+import com.cheatdatabase.databinding.UnpublishedCheatsActivityBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -11,11 +12,16 @@ class MyUnpublishedCheatsListActivity : AppCompatActivity() {
 
     lateinit var toolbar: Toolbar
 
+    lateinit var binding: UnpublishedCheatsActivityBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.unpublished_cheats_activity)
 
-        toolbar = findViewById(R.id.toolbar)
+        binding = UnpublishedCheatsActivityBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        toolbar = binding.includeToolbar.toolbar
+
         setSupportActionBar(toolbar)
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -34,7 +40,6 @@ class MyUnpublishedCheatsListActivity : AppCompatActivity() {
     fun setToolbarSubtitle(subtitle: String) {
         toolbar.subtitle = subtitle
     }
-
 
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()

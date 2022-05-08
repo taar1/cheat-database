@@ -1,13 +1,15 @@
 package com.cheatdatabase.activity.ui.mycheats
 
 import android.app.Application
+import android.content.SharedPreferences
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
+import com.cheatdatabase.data.model.Member
 import com.cheatdatabase.data.model.UnpublishedCheat
 import com.cheatdatabase.data.repository.MyCheatsRepository
-import com.cheatdatabase.helpers.Tools
+import com.cheatdatabase.helpers.Konstanten
+import com.google.gson.Gson
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 class MyUnpublishedCheatsViewModel(application: Application) :
     AndroidViewModel(application) {
@@ -16,20 +18,22 @@ class MyUnpublishedCheatsViewModel(application: Application) :
         private const val TAG = "MyUnpublishedCheatsView"
     }
 
-    @Inject
-    lateinit var tools: Tools
+    private val member: Member
 
     var fetchListener: MyUnpublishedCheatsListener? = null
 
+    private val settings: SharedPreferences =
+        application.getSharedPreferences(Konstanten.PREFERENCES_FILE, 0)
+
     fun getMyUnpublishedCheatsByCoroutines() {
         viewModelScope.launch {
-            if (tools.member.passwordMd5.isNullOrBlank() || tools.member.mid == 0) {
+            if (member.passwordMd5.isNullOrBlank() || member.mid == 0) {
                 fetchListener?.fetchUnpublishedCheatsFail()
             } else {
                 val response =
                     MyCheatsRepository().getMyUnpublishedCheats(
-                        tools.member.mid,
-                        tools.member.passwordMd5
+                        member.mid,
+                        member.passwordMd5
                     )
 
                 if (response.isSuccessful) {
@@ -44,7 +48,7 @@ class MyUnpublishedCheatsViewModel(application: Application) :
     fun deleteUnpublishedCheat(unpublishedCheat: UnpublishedCheat) {
         viewModelScope.launch {
             val response = MyCheatsRepository().deleteUnpublishedCheat(
-                unpublishedCheat, tools.member
+                unpublishedCheat, member
             )
 
             if (response.isSuccessful) {
@@ -55,6 +59,15 @@ class MyUnpublishedCheatsViewModel(application: Application) :
                 fetchListener?.deleteUnpublishedCheatFailed()
             }
         }
+    }
+
+    init {
+        member = Gson().fromJson(
+            settings.getString(
+                Konstanten.MEMBER_OBJECT,
+                null
+            ), Member::class.java
+        )
     }
 
 }

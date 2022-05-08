@@ -39,6 +39,9 @@ class MyUnpublishedCheatsListFragment(val activity: MyUnpublishedCheatsListActiv
     MyUnpublishedCheatsListItemSelectedListener,
     MyUnpublishedCheatsListener {
 
+    @Inject
+    lateinit var tools: Tools
+
     companion object {
         const val TAG = "MyUnpublishedCheatsFt"
 
@@ -46,9 +49,6 @@ class MyUnpublishedCheatsListFragment(val activity: MyUnpublishedCheatsListActiv
             return MyUnpublishedCheatsListFragment(activity)
         }
     }
-
-    @Inject
-    lateinit var tools: Tools
 
     var cheatPositionInList: Int = 0
     var myUnpublishedCheatsViewModel: MyUnpublishedCheatsViewModel? = null
