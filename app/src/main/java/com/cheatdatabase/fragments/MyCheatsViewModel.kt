@@ -41,17 +41,17 @@ class MyCheatsViewModel @Inject constructor(app: Application) : AndroidViewModel
                     if (response.isSuccessful) {
                         _myCheats.postValue(response.body())
                     } else {
-                        _myCheats.postValue(null)
+                        _myCheats.postValue(MyCheatsCount(0, 0, 0))
                     }
 
                     Log.d(TAG, "XXXXX getMyCheatsCount: NETWORK OK")
                 } catch (networkError: IOException) {
                     Log.d(TAG, "XXXXX getMyCheatsCount: IOException NO_NETWORK")
-                    _myCheats.postValue(null)
+                    _myCheats.postValue(MyCheatsCount(0, 0, 0))
                 }
             }
         } else {
-            _myCheats.postValue(null)
+            _myCheats.postValue(MyCheatsCount(0, 0, 0))
         }
     }
 

@@ -252,5 +252,13 @@
     <string name="recovery_code">Wiederherstellungscode</string>
     <string name="email_not_found">E-Mail address not found in database.</string>
     <string name="wrong_recovery_code">Wrong Recovery Code</string>
+    <string name="recovery_code_sent">Recovery Code sent</string>
+    <string name="recover_code_sent_text">The recovery code has been sent to your email address. Make sure to check your spam folder. If you didn\'t get the code or need further assistance please contact us through email: support@cheat-database.com.</string>
+    <string name="error_sending_recovery_code">There was a problem sending the recovery code by email. Please contact us at: support@cheat-database.com</string>
+    <string name="password_reset_success">Password Reset successful</string>
+    <string name="password_reset_success_text">The password has been reset successfully. You can now login with your new password.</string>
+    <string name="invalid_data">Your entered data could not be verified.</string>
+    <string name="recovery_code_wrong">Recovery code could not be verified.</string>
+    <string name="send_recovery_code">Send Recovery Code</string>
 
 </resources>

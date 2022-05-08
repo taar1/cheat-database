@@ -188,7 +188,7 @@ class LoginFragment(val activity: AuthenticationActivity) : Fragment() {
             })
     }
 
-    private fun loginTask(username: String?, password: String) {
+    private fun loginTask(username: String, password: String) {
 
         var respondeCode: ResponseCode = ResponseCode.OTHER_ERROR
 

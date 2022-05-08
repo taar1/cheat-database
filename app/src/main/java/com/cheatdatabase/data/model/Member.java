@@ -207,19 +207,6 @@ public class Member implements Parcelable {
         this.website = website;
     }
 
-//    /**
-//     * Schreibt die Member-Daten ins Flatfile
-//     *
-//     * @param member
-//     * @param settings
-//     */
-//    public void writeMemberData(Member member, SharedPreferences settings) {
-//        SharedPreferences.Editor editor = settings.edit();
-//
-//        editor.putString(Konstanten.MEMBER_OBJECT, new Gson().toJson(member));
-//        editor.apply();
-//    }
-
     /**
      * Removes the member data from the shared preferences (Logout).
      *

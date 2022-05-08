@@ -111,6 +111,18 @@ public interface RestApi {
     Call<JsonObject> sendRecoveryCode(@Field("email") String email_md5);
 
     /**
+     * Resets the password of a member.
+     *
+     * @param email_md5         the email MD5 hash
+     * @param recovery_code_md5 the recovery code MD5 hash
+     * @param new_password      the new desired password
+     * @return JsonObject
+     */
+    @FormUrlEncoded
+    @POST("resetPassword.php")
+    Call<JsonObject> resetPassword(@Field("email") String email_md5, @Field("recovery_code") String recovery_code_md5, @Field("new_password") String new_password);
+
+    /**
      * Submit a cheat.
      *
      * @param memberId   Member ID
