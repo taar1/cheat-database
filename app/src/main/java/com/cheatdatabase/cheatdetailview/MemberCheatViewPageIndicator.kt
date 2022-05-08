@@ -4,7 +4,6 @@ import android.app.SearchManager
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
@@ -171,7 +170,6 @@ class MemberCheatViewPageIndicator : AppCompatActivity(), GenericCallback, OnChe
                     supportActionBar!!.title = visibleCheat.game.gameName
                     supportActionBar!!.subtitle = visibleCheat.system.systemName
                 } catch (e: Exception) {
-                    Log.e(TAG, "XXXXX ".plus(e.message!!))
                     Toast.makeText(
                         this@MemberCheatViewPageIndicator,
                         R.string.err_somethings_wrong,

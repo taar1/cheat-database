@@ -83,7 +83,6 @@ class SystemConsoleListViewModel @Inject constructor(app: Application) : Android
 
             // If data is empty show a error message
             if (repository.systemsList.isNullOrEmpty()) {
-                Log.d(TAG, "XXXXX refreshDataFromRepository: isNullOrEmpty")
                 _eventNetworkError.value = true
             }
         }
