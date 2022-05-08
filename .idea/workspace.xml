@@ -118,8 +118,10 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4caff62e-c62f-40ca-acf0-73c680b13375" name="Default" comment="Further work on login recovery feature.">
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/fragments/LoginFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/fragments/LoginFragment.kt" afterDir="false" />
+    <list default="true" id="4caff62e-c62f-40ca-acf0-73c680b13375" name="Default" comment="Coroutines scope fix">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -129,7 +131,7 @@
   <component name="CreatePatchCommitExecutor">
     <option name="PATCH_PATH" value="" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[C:\Users\taar1\.android\avd\Pixel_5_API_30.avd]" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[1dcb6e8b]" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
@@ -802,13 +804,6 @@
       <option name="presentableId" value="Default" />
       <updated>1487274191999</updated>
     </task>
-    <task id="LOCAL-00161" summary="Version with MVVM SystemConsoleListFragment.kt and Repository pattern. WORKING (except clicking a system when you get forawarded to GamesBySystemListActivity)">
-      <created>1603653404980</created>
-      <option name="number" value="00161" />
-      <option name="presentableId" value="LOCAL-00161" />
-      <option name="project" value="LOCAL" />
-      <updated>1603653404980</updated>
-    </task>
     <task id="LOCAL-00162" summary="System List Fragment neu mit: Kotlin, Coroutines, MVVM, Offlince Room Caching">
       <created>1604324995560</created>
       <option name="number" value="00162" />
@@ -1145,7 +1140,14 @@
       <option name="project" value="LOCAL" />
       <updated>1651960236019</updated>
     </task>
-    <option name="localTasksCounter" value="210" />
+    <task id="LOCAL-00210" summary="Coroutines scope fix">
+      <created>1651960272664</created>
+      <option name="number" value="00210" />
+      <option name="presentableId" value="LOCAL-00210" />
+      <option name="project" value="LOCAL" />
+      <updated>1651960272664</updated>
+    </task>
+    <option name="localTasksCounter" value="211" />
     <servers />
   </component>
   <component name="TodoView">
@@ -1250,7 +1252,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
-    <MESSAGE value="Apploving native ads implementiert (FUNKTIONIEREN)&#10;StfalconImageViewer auskommentiert, da gradle es nicht mehr laden kann. suche nach alternativen..." />
     <MESSAGE value="Facebook ads entfernt, inmobi dependencies entfernt&#10;alles auf applovin umgestellt&#10;bug fixes" />
     <MESSAGE value="Fixing many crashes&#10;Fixing the dimming bug when displaying a dialog" />
     <MESSAGE value="Share Cheat dialog geupdatet" />
@@ -1275,7 +1276,8 @@
     <MESSAGE value="Started RecoverFragment.kt" />
     <MESSAGE value="Recover Fragment work" />
     <MESSAGE value="Further work on login recovery feature." />
-    <option name="LAST_COMMIT_MESSAGE" value="Further work on login recovery feature." />
+    <MESSAGE value="Coroutines scope fix" />
+    <option name="LAST_COMMIT_MESSAGE" value="Coroutines scope fix" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
