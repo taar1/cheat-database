@@ -14,7 +14,6 @@
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
         <item name="android:windowTranslucentStatus">false</item>
 
-
         <item name="android:textColorHint">@color/color_primary_light</item>
         <item name="colorAccent">@android:color/white</item>
         <item name="colorControlNormal">@color/dark_red</item>
@@ -22,6 +21,9 @@
         <item name="colorControlHighlight">@color/gray</item>
 
         <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
+
+        <item name="textInputStyle">@style/TextInputLayoutTheme</item>
+        <item name="ratingBarStyle">@style/RatingBar</item>
     </style>
 
     <style name="EditTextHint" parent="TextAppearance.AppCompat">
@@ -32,4 +34,27 @@
         <item name="colorControlHighlight">@color/gray</item>
     </style>
 
+    <style name="TextInputLayoutTheme" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <!-- Color of the hint text inside the input field -->
+        <item name="android:textColorHint">@color/white</item>
+
+        <!-- The color of the label when it is collapsed and the text field is active -->
+        <item name="hintTextColor">@color/white</item>
+
+        <!-- Stroke color of the inactive input text layout -->
+        <item name="colorOutline">@color/color_primary_light</item>
+        <item name="textOutlineColor">@color/color_primary_light</item>
+
+        <!-- Stroke color of the ACTIVE input text layout -->
+        <item name="boxStrokeColor">@color/gray_light</item>
+        <item name="boxStrokeWidth">1dp</item>
+    </style>
+
+    <!--    TODO FIXME:..-->
+    <!--    TODO FIXME:..-->
+    <!--    TODO FIXME:..-->
+    <style name="RatingBar" parent="Theme.AppCompat">
+        <item name="colorControlNormal">@color/dark_gray</item>
+        <item name="colorControlActivated">@color/color_accent</item>
+    </style>
 </resources>

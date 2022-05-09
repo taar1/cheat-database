@@ -6,7 +6,6 @@
     android:background="@drawable/bg"
     tools:context="com.cheatdatabase.activity.AuthenticationActivity">
 
-
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/email_input_layout"
         android:layout_width="0dp"
