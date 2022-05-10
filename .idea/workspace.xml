@@ -792,13 +792,6 @@
       <option name="presentableId" value="Default" />
       <updated>1487274191999</updated>
     </task>
-    <task id="LOCAL-00169" summary="Adding some info dialog when submitting a cheat to hopefully avoid the Google ban??">
-      <created>1605040709132</created>
-      <option name="number" value="00169" />
-      <option name="presentableId" value="LOCAL-00169" />
-      <option name="project" value="LOCAL" />
-      <updated>1605040709134</updated>
-    </task>
     <task id="LOCAL-00170" summary="Excluding everything Android and iOS.">
       <created>1605100043506</created>
       <option name="number" value="00170" />
@@ -1135,7 +1128,14 @@
       <option name="project" value="LOCAL" />
       <updated>1652213374503</updated>
     </task>
-    <option name="localTasksCounter" value="218" />
+    <task id="LOCAL-00218" summary="NEXT VERSION: 2.7.5-preRelease">
+      <created>1652215571627</created>
+      <option name="number" value="00218" />
+      <option name="presentableId" value="LOCAL-00218" />
+      <option name="project" value="LOCAL" />
+      <updated>1652215571628</updated>
+    </task>
+    <option name="localTasksCounter" value="219" />
     <servers />
   </component>
   <component name="TodoView">
@@ -1240,7 +1240,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
-    <MESSAGE value="CheatListActivities converted to kotlin. Removed Butterknife in those classes." />
     <MESSAGE value="Replace deprecated &quot;getExternalStorageDirectory()&quot;" />
     <MESSAGE value="Tons of bug fixes." />
     <MESSAGE value="Bug Fixes" />
@@ -1265,7 +1264,8 @@
     <MESSAGE value="Fixing some more crashes" />
     <MESSAGE value="Cleaning up&#10;Fixing input text layout color theme" />
     <MESSAGE value="Version 2.7.5 ready" />
-    <option name="LAST_COMMIT_MESSAGE" value="Version 2.7.5 ready" />
+    <MESSAGE value="NEXT VERSION: 2.7.5-preRelease" />
+    <option name="LAST_COMMIT_MESSAGE" value="NEXT VERSION: 2.7.5-preRelease" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
