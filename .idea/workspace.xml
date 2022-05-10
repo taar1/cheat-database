@@ -120,18 +120,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4caff62e-c62f-40ca-acf0-73c680b13375" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/dialogs/RateAppDialog.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/dialogs/RateAppDialog.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/dialog_layout_rate_cheat.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/dialog_layout_rate_cheat.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/dialog_rate_app.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/dialog_rate_app.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/values-de/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values-de/strings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/values-v22/themes.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values-v22/themes.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/values-v23/themes.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values-v23/themes.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/strings_activity_login.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/styles.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/styles.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -141,7 +131,7 @@
   <component name="CreatePatchCommitExecutor">
     <option name="PATCH_PATH" value="" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[1dcb6e8b]" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[C:\Users\taar1\.android\avd\Pixel_5_API_30.avd]" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
@@ -231,9 +221,9 @@
     <property name="DEBUGGER_ID" value="Auto" />
     <property name="DeviceAndSnapshotComboBoxAction.selectedDevice" value="EPHUT19C24000346" />
     <property name="DeviceAndSnapshotComboBoxAction.selectionTime" value="2020-11-23T12:56:50.903Z" />
-    <property name="ExportApk.ApkPath" value="D:\Development\Android\APK\Cheat-Database\2.7.4" />
+    <property name="ExportApk.ApkPath" value="D:\Development\Android\APK\Cheat-Database\2.7.5" />
     <property name="ExportApk.BuildType" value="release" />
-    <property name="ExportApk.BuildVariants" value="amazonFlavorRelease" />
+    <property name="ExportApk.BuildVariants" value="amazonFlavorRelease&#10;huaweiFlavorRelease" />
     <property name="ExportApk.Flavors" value="googlePlayFlavor" />
     <property name="ExportApk.SignV1" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
@@ -264,7 +254,7 @@
     <property name="device.picker.selection" value="6ea89d94" />
     <property name="extract.method.default.visibility" value="private" />
     <property name="ignore.virus.scanning.warn.message" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/app/src/main/res/layout" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../APK/Cheat-Database/2.7.5" />
     <property name="project.structure.last.edited" value="Suggestions" />
     <property name="project.structure.proportion" value="0.17" />
     <property name="project.structure.side.proportion" value="0.2" />
@@ -802,13 +792,6 @@
       <option name="presentableId" value="Default" />
       <updated>1487274191999</updated>
     </task>
-    <task id="LOCAL-00168" summary="Get rid of startActivityForResult() everywhere (using the new &quot;registerForActivityResult&quot; method)">
-      <created>1604677055830</created>
-      <option name="number" value="00168" />
-      <option name="presentableId" value="LOCAL-00168" />
-      <option name="project" value="LOCAL" />
-      <updated>1604677055831</updated>
-    </task>
     <task id="LOCAL-00169" summary="Adding some info dialog when submitting a cheat to hopefully avoid the Google ban??">
       <created>1605040709132</created>
       <option name="number" value="00169" />
@@ -1145,7 +1128,14 @@
       <option name="project" value="LOCAL" />
       <updated>1652129622569</updated>
     </task>
-    <option name="localTasksCounter" value="217" />
+    <task id="LOCAL-00217" summary="Version 2.7.5 ready">
+      <created>1652213374502</created>
+      <option name="number" value="00217" />
+      <option name="presentableId" value="LOCAL-00217" />
+      <option name="project" value="LOCAL" />
+      <updated>1652213374503</updated>
+    </task>
+    <option name="localTasksCounter" value="218" />
     <servers />
   </component>
   <component name="TodoView">
@@ -1250,7 +1240,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
-    <MESSAGE value="Remove EventBus library from project" />
     <MESSAGE value="CheatListActivities converted to kotlin. Removed Butterknife in those classes." />
     <MESSAGE value="Replace deprecated &quot;getExternalStorageDirectory()&quot;" />
     <MESSAGE value="Tons of bug fixes." />
@@ -1275,7 +1264,8 @@
     <MESSAGE value="Fixing some crashes and bugs" />
     <MESSAGE value="Fixing some more crashes" />
     <MESSAGE value="Cleaning up&#10;Fixing input text layout color theme" />
-    <option name="LAST_COMMIT_MESSAGE" value="Cleaning up&#10;Fixing input text layout color theme" />
+    <MESSAGE value="Version 2.7.5 ready" />
+    <option name="LAST_COMMIT_MESSAGE" value="Version 2.7.5 ready" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
