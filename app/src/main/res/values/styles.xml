@@ -1,14 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="BlueRatingBar" parent="Theme.AppCompat">
-        <item name="colorControlNormal">#757575</item>
-        <item name="colorControlActivated">#0068bf</item>
-        <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
-        <item name="android:preferenceStyle">@style/PreferenceThemeOverlay.v14.Material</item>
-    </style>
-
-
     <style name="SearchStyle" parent="Theme.AppCompat">
         <item name="editTextColor">#FFFFFF</item>
         <item name="android:searchIcon">@drawable/ic_search</item>

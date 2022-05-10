@@ -29,11 +29,11 @@ class RateAppDialog @Inject constructor(@param:ActivityContext private val conte
         context.getSharedPreferences(Konstanten.PREFERENCES_FILE, Context.MODE_PRIVATE)
     private val editor: SharedPreferences.Editor = settings.edit()
 
-    private val APP_RATING_LOCAL = "app_rating_local"
     private var rating = 0
     private var pendingIntent: PendingIntent? = null
 
     companion object {
+        private const val APP_RATING_LOCAL = "app_rating_local"
         private const val MINIMUM_RATING_FOR_GOOGLE_PLAY = 4
     }
 

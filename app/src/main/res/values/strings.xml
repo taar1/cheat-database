@@ -271,4 +271,24 @@ Submitted tricks that violate one or more of the above points will be deleted.</
     <string name="recovery_code_wrong">Recovery code could not be verified.</string>
     <string name="send_recovery_code">Send Recovery Code</string>
 
+    <string name="title_activity_login">Login</string>
+    <string name="title_activity_register">Register Account</string>
+    <string name="title_activity_recover">Recover Login Data</string>
+
+    <!-- Strings related to login -->
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="prompt_password_repeat">Repeat Password</string>
+    <string name="prompt_username">Username</string>
+    <string name="action_sign_in_short">Login</string>
+    <string name="action_register_short">Register</string>
+    <string name="action_forgot_password">Recover lost password</string>
+    <string name="action_forgot_password_short">Recover</string>
+    <string name="login_progress_signing_in">Signing in&#8230;</string>
+    <string name="register_progress_registering">Registering account&#8230;</string>
+    <string name="error_invalid_email">This email address is invalid</string>
+    <string name="error_password_too_short">This password is too short</string>
+    <string name="error_incorrect_password">This password is incorrect</string>
+    <string name="error_password_not_identical">The passwords don\'t match.</string>
+    <string name="error_field_required">This field is required</string>
 </resources>

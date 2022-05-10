@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:stepSize="1.0"
-        android:theme="@style/BlueRatingBar" />
+        android:theme="@style/StarRatingBar" />
 
 
 </LinearLayout>

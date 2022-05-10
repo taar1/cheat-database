@@ -165,11 +165,6 @@
     <string name="err_username_too_short">Der eingegebene Benutzername ist zu kurz.</string>
 
     <string name="remove_favorite_neutral_ok">Favorit gelöscht.</string>
-    <string name="action_register_short">Registrieren</string>
-    <string name="action_forgot_password">Passwort wiederherstellen</string>
-    <string name="action_forgot_password_short">Wiederherstellen</string>
-    <string name="action_sign_in_short">Anmelden</string>
-    <string name="login_progress_signing_in">Logge ein...</string>
     <string name="rate_us">Bewerte uns</string>
 
 
@@ -250,15 +245,35 @@
 
     <string name="reset_password">Passwort zurücksetzen</string>
     <string name="recovery_code">Wiederherstellungscode</string>
-    <string name="email_not_found">E-Mail address not found in database.</string>
-    <string name="wrong_recovery_code">Wrong Recovery Code</string>
-    <string name="recovery_code_sent">Recovery Code sent</string>
-    <string name="recover_code_sent_text">The recovery code has been sent to your email address. Make sure to check your spam folder. If you didn\'t get the code or need further assistance please contact us through email: support@cheat-database.com.</string>
+    <string name="email_not_found">E-Mail-Adresse konnte nicht gefunden werden.</string>
+    <string name="wrong_recovery_code">Falscher Wiederherstellungscode</string>
+    <string name="recovery_code_sent">Wiederherstellungscode gesendet</string>
+    <string name="recover_code_sent_text">Der Wiederherstellungscode wurde an deine E-Mail-Adresse gesendet. Schaue auch im Spam-Ordner nach. Solltest du den Code nicht erhalten haben, kontaktiere uns per E-Mail: support@cheat-database.com.</string>
     <string name="error_sending_recovery_code">There was a problem sending the recovery code by email. Please contact us at: support@cheat-database.com</string>
-    <string name="password_reset_success">Password Reset successful</string>
-    <string name="password_reset_success_text">The password has been reset successfully. You can now login with your new password.</string>
-    <string name="invalid_data">Your entered data could not be verified.</string>
-    <string name="recovery_code_wrong">Recovery code could not be verified.</string>
-    <string name="send_recovery_code">Send Recovery Code</string>
+    <string name="password_reset_success">Passwort setzen erfolgreich</string>
+    <string name="password_reset_success_text">Das Passwort konnte erfolgreich gesetzt werden. Du kannst jetzt damit einloggen.</string>
+    <string name="invalid_data">Die eingegebenen Daten konnten nicht verifiziert werden.</string>
+    <string name="recovery_code_wrong">Wiederherstellungscode konnte nicht verifiziert werden.</string>
+    <string name="send_recovery_code">Wiederherstellungscode senden</string>
 
+    <string name="title_activity_login">Login</string>
+    <string name="title_activity_register">Register Account</string>
+    <string name="title_activity_recover">Recover Login Data</string>
+
+    <!-- Strings related to login -->
+    <string name="prompt_email">E-Mail</string>
+    <string name="prompt_password">Passwort</string>
+    <string name="prompt_password_repeat">Passwort wiederholen</string>
+    <string name="prompt_username">Benutzername</string>
+    <string name="action_sign_in_short">Anmelden</string>
+    <string name="action_register_short">Registrieren</string>
+    <string name="action_forgot_password">Passwort wiederherstellen</string>
+    <string name="action_forgot_password_short">Wiederherstellen</string>
+    <string name="login_progress_signing_in">Logge ein&#8230;</string>
+    <string name="register_progress_registering">Registriere Account&#8230;</string>
+    <string name="error_invalid_email">Die E-Mail-Adresse ist ungültig</string>
+    <string name="error_password_too_short">Dieses Passwort ist zu kurz</string>
+    <string name="error_incorrect_password">Dieses Passwort ist falsch</string>
+    <string name="error_password_not_identical">Die Passwörter stimmen nicht überein.</string>
+    <string name="error_field_required">Dieses Feld ist benötigt</string>
 </resources>

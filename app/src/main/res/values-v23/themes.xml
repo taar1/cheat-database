@@ -23,7 +23,7 @@
         <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
 
         <item name="textInputStyle">@style/TextInputLayoutTheme</item>
-        <item name="ratingBarStyle">@style/RatingBar</item>
+        <item name="ratingBarStyle">@style/StarRatingBar</item>
     </style>
 
     <style name="EditTextHint" parent="TextAppearance.AppCompat">
@@ -50,11 +50,8 @@
         <item name="boxStrokeWidth">1dp</item>
     </style>
 
-    <!--    TODO FIXME:..-->
-    <!--    TODO FIXME:..-->
-    <!--    TODO FIXME:..-->
-    <style name="RatingBar" parent="Theme.AppCompat">
-        <item name="colorControlNormal">@color/dark_gray</item>
-        <item name="colorControlActivated">@color/color_accent</item>
+    <style name="StarRatingBar" parent="Theme.AppCompat">
+        <item name="android:progressTint">@color/color_accent</item>
+        <item name="android:progressBackgroundTint">@color/gray</item>
     </style>
 </resources>
