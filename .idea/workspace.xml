@@ -119,26 +119,8 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4caff62e-c62f-40ca-acf0-73c680b13375" name="Default" comment="NEXT VERSION: 2.7.5-preRelease">
-      <change afterPath="$PROJECT_DIR$/.safedk/api/SafeDKAndroid-5.6.2.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.safedk/api/SafeDKAndroid-5.6.3.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.safedk/app_sdks.lst" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.safedk/hashes.safedk" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.safedk/list.enc" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.safedk/permissions_mapping.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.safedk/plugin.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.safedk/proguard-safedk.pro" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apks_signed/2.7.6/amazonFlavor/release/output-metadata.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apks_signed/2.7.6/huaweiFlavor/release/output-metadata.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/CheatsByGameListActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/CheatsByGameListActivity.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/ui/mycheats/MyUnpublishedCheatsListFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/ui/mycheats/MyUnpublishedCheatsListFragment.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/ui/mycheats/edit/EditCheatFragment.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/adapters/CheatsByGameRecycleListViewAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/adapters/CheatsByGameRecycleListViewAdapter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/adapters/GamesBySystemRecycleListViewAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/adapters/GamesBySystemRecycleListViewAdapter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
+    <list default="true" id="4caff62e-c62f-40ca-acf0-73c680b13375" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -814,13 +796,6 @@
       <option name="presentableId" value="Default" />
       <updated>1487274191999</updated>
     </task>
-    <task id="LOCAL-00170" summary="Excluding everything Android and iOS.">
-      <created>1605100043506</created>
-      <option name="number" value="00170" />
-      <option name="presentableId" value="LOCAL-00170" />
-      <option name="project" value="LOCAL" />
-      <updated>1605100043506</updated>
-    </task>
     <task id="LOCAL-00171" summary="Removed flawed caching from GamesBySystemListActivity">
       <created>1605124198371</created>
       <option name="number" value="00171" />
@@ -1157,7 +1132,14 @@
       <option name="project" value="LOCAL" />
       <updated>1652215571628</updated>
     </task>
-    <option name="localTasksCounter" value="219" />
+    <task id="LOCAL-00219" summary="Fixed bugs reported by Amazon review.&#10;Current version 2.7.5&#10;Next version: 2.7.7-preRelease">
+      <created>1655671046428</created>
+      <option name="number" value="00219" />
+      <option name="presentableId" value="LOCAL-00219" />
+      <option name="project" value="LOCAL" />
+      <updated>1655671046429</updated>
+    </task>
+    <option name="localTasksCounter" value="220" />
     <servers />
   </component>
   <component name="TodoView">
@@ -1262,7 +1244,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
-    <MESSAGE value="Replace deprecated &quot;getExternalStorageDirectory()&quot;" />
     <MESSAGE value="Tons of bug fixes." />
     <MESSAGE value="Bug Fixes" />
     <MESSAGE value="2.7.4-preRelease" />
@@ -1287,7 +1268,8 @@
     <MESSAGE value="Cleaning up&#10;Fixing input text layout color theme" />
     <MESSAGE value="Version 2.7.5 ready" />
     <MESSAGE value="NEXT VERSION: 2.7.5-preRelease" />
-    <option name="LAST_COMMIT_MESSAGE" value="NEXT VERSION: 2.7.5-preRelease" />
+    <MESSAGE value="Fixed bugs reported by Amazon review.&#10;Current version 2.7.5&#10;Next version: 2.7.7-preRelease" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed bugs reported by Amazon review.&#10;Current version 2.7.5&#10;Next version: 2.7.7-preRelease" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
