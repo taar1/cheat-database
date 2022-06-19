@@ -129,7 +129,6 @@ public class GamesBySystemRecycleListViewAdapter extends RecyclerView.Adapter<Re
         return 100;
     }
 
-    // Filter List by search word (not implemented yet)
     public void filterList(String filter) {
         if ((filter != null) && (filter.trim().length() > 2)) {
             // TODO filter the list and update gameList with filtered List

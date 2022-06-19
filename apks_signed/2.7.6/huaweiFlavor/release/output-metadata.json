@@ -1,0 +1,20 @@
+{
+  "version": 3,
+  "artifactType": {
+    "type": "APK",
+    "kind": "Directory"
+  },
+  "applicationId": "com.cheatdatabase",
+  "variantName": "huaweiFlavorRelease",
+  "elements": [
+    {
+      "type": "SINGLE",
+      "filters": [],
+      "attributes": [],
+      "versionCode": 80,
+      "versionName": "2.7.6-huawei",
+      "outputFile": "Cheat-Database-huaweiFlavor-release.apk"
+    }
+  ],
+  "elementType": "File"
+}

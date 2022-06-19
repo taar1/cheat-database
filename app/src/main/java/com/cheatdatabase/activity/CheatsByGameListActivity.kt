@@ -307,6 +307,7 @@ class CheatsByGameListActivity : AppCompatActivity(), OnCheatListItemSelectedLis
     }
 
     private fun updateUI() {
+        Log.d(TAG, "YYYYY updateUI: $cheatList")
         if (cheatList != null && cheatList!!.size > 0) {
             cheatsByGameRecycleListViewAdapter!!.setCheatList(cheatList)
             cheatsByGameRecycleListViewAdapter!!.filterList("")
@@ -338,7 +339,7 @@ class CheatsByGameListActivity : AppCompatActivity(), OnCheatListItemSelectedLis
         super.onStop()
     }
 
-    fun addNewCheat() {
+    private fun addNewCheat() {
         val explicitIntent =
             Intent(this@CheatsByGameListActivity, SubmitCheatFormActivity::class.java)
         explicitIntent.putExtra("gameObj", gameObj)
@@ -382,6 +383,7 @@ class CheatsByGameListActivity : AppCompatActivity(), OnCheatListItemSelectedLis
     override fun onCheatListItemSelected(cheat: Cheat, position: Int) {
         if (Reachability.reachability.isReachable) {
             tools.putInt(Konstanten.PREFERENCES_PAGE_SELECTED, position)
+
 
             // Using local Preferences to pass data for large game objects
             // (instead of intent) such as Pokemon

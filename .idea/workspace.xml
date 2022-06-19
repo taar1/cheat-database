@@ -6,7 +6,7 @@
     </shared>
   </component>
   <component name="AndroidLogFilters">
-    <option name="TOOL_WINDOW_CUSTOM_FILTER" value="XXXXX" />
+    <option name="TOOL_WINDOW_CUSTOM_FILTER" value="YYYYY" />
     <option name="TOOL_WINDOW_LOG_LEVEL" value="verbose" />
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="No Filters" />
     <option name="TOOL_WINDOW_REGEXP_FILTER" value="false" />
@@ -119,9 +119,26 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4caff62e-c62f-40ca-acf0-73c680b13375" name="Default" comment="">
+    <list default="true" id="4caff62e-c62f-40ca-acf0-73c680b13375" name="Default" comment="NEXT VERSION: 2.7.5-preRelease">
+      <change afterPath="$PROJECT_DIR$/.safedk/api/SafeDKAndroid-5.6.2.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.safedk/api/SafeDKAndroid-5.6.3.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.safedk/app_sdks.lst" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.safedk/hashes.safedk" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.safedk/list.enc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.safedk/permissions_mapping.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.safedk/plugin.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.safedk/proguard-safedk.pro" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apks_signed/2.7.6/amazonFlavor/release/output-metadata.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apks_signed/2.7.6/huaweiFlavor/release/output-metadata.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/CheatsByGameListActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/CheatsByGameListActivity.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/ui/mycheats/MyUnpublishedCheatsListFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/ui/mycheats/MyUnpublishedCheatsListFragment.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/activity/ui/mycheats/edit/EditCheatFragment.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/adapters/CheatsByGameRecycleListViewAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/adapters/CheatsByGameRecycleListViewAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/adapters/GamesBySystemRecycleListViewAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cheatdatabase/adapters/GamesBySystemRecycleListViewAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -131,7 +148,7 @@
   <component name="CreatePatchCommitExecutor">
     <option name="PATCH_PATH" value="" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[C:\Users\taar1\.android\avd\Pixel_5_API_30.avd]" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[1dcb6e8b]" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
@@ -182,7 +199,7 @@
   </component>
   <component name="GenerateSignedApkSettings">
     <option name="EXPORT_PRIVATE_KEY" value="false" />
-    <option name="KEY_STORE_PATH" value="D:\Google Drive\Software Development (Android Studio, Keystore etc.)\Cheat-Database\Android Keytool Keystore\enature.keystore" />
+    <option name="KEY_STORE_PATH" value="C:\Users\taar1\OneDrive\Documents\enature.keystore" />
     <option name="KEY_ALIAS" value="cheat-database" />
     <option name="REMEMBER_PASSWORDS" value="true" />
     <option name="BUILD_TARGET_KEY" value="apk" />
@@ -203,6 +220,9 @@
       <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
     </file-type-list>
   </component>
+  <component name="ProblemsViewState">
+    <option name="selectedIndex" value="2" />
+  </component>
   <component name="ProjectId" id="1ZrVJ5uxNTcUzsDbb7K5lTnZG5z" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
@@ -221,16 +241,17 @@
     <property name="DEBUGGER_ID" value="Auto" />
     <property name="DeviceAndSnapshotComboBoxAction.selectedDevice" value="EPHUT19C24000346" />
     <property name="DeviceAndSnapshotComboBoxAction.selectionTime" value="2020-11-23T12:56:50.903Z" />
-    <property name="ExportApk.ApkPath" value="D:\Development\Android\APK\Cheat-Database\2.7.5" />
+    <property name="ExportApk.ApkPath" value="C:\Users\taar1\Workspace\Android\my\cheat-database\apks_signed\2.7.6" />
     <property name="ExportApk.BuildType" value="release" />
     <property name="ExportApk.BuildVariants" value="amazonFlavorRelease&#10;huaweiFlavorRelease" />
     <property name="ExportApk.Flavors" value="googlePlayFlavor" />
     <property name="ExportApk.SignV1" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="RunOnceActivity.cidr.known.project.marker" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="SHOW_ALL_PROCESSES" value="false" />
-    <property name="ScreenshotViewer.SavePath" value="$PROJECT_DIR$/../../../../Google Drive/Software Development (Android Studio, Keystore etc.)/Cheat-Database/Screenshots/2.7.2" />
+    <property name="ScreenshotViewer.SavePath" value="$USER_HOME$/Google Drive/Software Development (Android Studio, Keystore etc.)/Cheat-Database/Screenshots/2.7.2" />
     <property name="SearchEverywhereHistoryKey" value="adapter&#9;FILE&#9;file:///Users/dominikerbsland/workspace/app/Android/cheat-database/app/src/main/java/com/cheatdatabase/adapters/GamesBySystemRecycleListViewAdapter.java&#10;Androidman&#9;FILE&#9;file:///Users/dominikerbsland/workspace/app/Android/cheat-database/app/src/main/AndroidManifest.xml&#10;topada&#9;FILE&#9;file:///Users/dominikerbsland/workspace/app/Android/cheat-database/app/src/main/java/com/cheatdatabase/adapters/TopMembersListViewAdapter.java&#10;topm&#9;FILE&#9;file:///Users/dominikerbsland/workspace/app/Android/cheat-database/app/src/main/res/layout/topmembers_list_item.xml&#10;drawer&#9;FILE&#9;file:///Users/dominikerbsland/workspace/app/Android/cheat-database/app/src/main/res/layout/drawer_header.xml&#10;_main&#9;FILE&#9;file:///Users/dominikerbsland/workspace/app/Android/cheat-database/app/src/main/res/layout/activity_main.xml&#10;manifest&#9;FILE&#9;file:///Users/dominikerbsland/workspace/app/Android/cheat-database/app/src/main/AndroidManifest.xml&#10;style&#9;FILE&#9;file:///Users/dominikerbsland/workspace/app/Android/cheat-database/app/src/main/res/values/styles.xml&#10;rating&#9;PSI&#9;JAVA://com.cheatdatabase.R.id#rating_layout&#10;include&#9;FILE&#9;file:///Users/dominikerbsland/workspace/app/Android/cheat-database/app/src/main/res/layout/include_fastscroll_recyclerview.xml&#10;cheatlist&#9;FILE&#9;file:///Users/dominikerbsland/workspace/app/Android/cheat-database/app/src/main/res/layout/activity_cheat_list.xml&#10;actigame&#9;FILE&#9;file:///Users/dominikerbsland/workspace/app/Android/cheat-database/app/src/main/res/layout/activity_game_list.xml&#10;string&#9;FILE&#9;file:///Users/dominikerbsland/workspace/app/Android/cheat-database/app/src/main/res/values/strings.xml&#10;main&#9;FILE&#9;file:///Users/dominikerbsland/workspace/app/Android/cheat-database/app/src/main/res/layout/activity_main.xml&#10;ma&#9;FILE&#9;file://C:/Users/taar1/Development/Android/GitHub/cheat-database/app/src/main/res/layout/activity_main.xml&#10;actimain&#9;FILE&#9;file://C:/Users/taar1/Development/Android/GitHub/cheat-database/app/src/main/res/layout/activity_main.xml&#10;activity_game&#9;FILE&#9;file://C:/Users/taar1/Development/Android/AndroidStudioProjects/Cheat-Database/app/src/main/res/layout-large-land/activity_gamelist.xml&#10;listrow_gamelist&#9;PSI&#9;JAVA://com.cheatdatabase.R.layout#listrow_gamelist&#10;listrow_game_item&#9;FILE&#9;file://C:/Users/taar1/Development/Android/AndroidStudioProjects/Cheat-Database/app/src/main/res/layout/listrow_game_item.xml&#10;game list&#9;PSI&#9;JAVA://com.cheatdatabase.R.layout#gamesearch_listrow_details&#10;gamelist&#9;PSI&#9;JAVA://com.cheatdatabase.R.layout#listrow_gamelist" />
     <property name="UI_DESIGNER_EDITOR_MODE.NlPaletteManager-NlEditorPanel.WIDTH" value="661" />
     <property name="UI_DESIGNER_EDITOR_MODE.NlPaletteManager-NlPreviewForm.SHOW" value="false" />
@@ -243,6 +264,7 @@
     <property name="android-custom-viewC:/Users/taar1/.gradle/caches/modules-2/files-2.1/com.applovin/applovin-sdk/10.3.5/db6c667594c8d06f3f1acee55b3cba42928b01ec/applovin-sdk-10.3.5-sources.jar!/com/applovin/mediation/ads/MaxAdView.java_SELECTED" value="MaxAdView" />
     <property name="android-custom-viewC:/Users/taar1/.gradle/caches/modules-2/files-2.1/com.facebook.fresco/drawee/2.6.0/8a4ada02d0e83f5de056796e7d5fef2acaf8f27d/drawee-2.6.0-sources.jar!/com/facebook/drawee/view/SimpleDraweeView.java_SELECTED" value="SimpleDraweeView" />
     <property name="android-custom-viewC:/Users/taar1/.gradle/caches/modules-2/files-2.1/com.github.SherlockGougou/MagicIndicator/1.6.0/335dbd3fe1bc9a03027750bc77648451da7f7e3c/MagicIndicator-1.6.0-sources.jar!/net/lucode/hackware/magicindicator/MagicIndicator.java_SELECTED" value="MagicIndicator" />
+    <property name="android-custom-viewC:/Users/taar1/AppData/Local/Android/Sdk/sources/android-32/android/view/View.java_SELECTED" value="View" />
     <property name="android-custom-viewD:/Development/Android/Workspaces/cheat-database/app/src/main/java/com/cheatdatabase/cheatdetailview/ZoomableDraweeView.kt_SELECTED" value="ZoomableDraweeView" />
     <property name="android.project.structure.last.selected" value="app" />
     <property name="android.project.structure.proportion" value="0.15" />

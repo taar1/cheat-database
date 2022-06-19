@@ -93,11 +93,21 @@ public class CheatsByGameRecycleListViewAdapter extends RecyclerView.Adapter<Rec
             final CheatListItem cheatListItem = (CheatListItem) listItems.get(position);
             CheatsByGameListViewItemHolder cheatsByGameListViewItemHolder = (CheatsByGameListViewItemHolder) holder;
             cheatsByGameListViewItemHolder.setCheat(cheatListItem.getCheat());
-            cheatsByGameListViewItemHolder.view.setOnClickListener(v -> listener.onCheatListItemSelected(cheatListItem.getCheat(), position));
+            cheatsByGameListViewItemHolder.view.setOnClickListener(v -> listener.onCheatListItemSelected(cheatListItem.getCheat(), getCorrectedPosition(cheatListItem)));
         } else if (type == ListItem.TYPE_APPLOVIN_NATIVE) {
             ApplovinNativeAdListViewItemHolder applovinNativeAdListViewItemHolder = (ApplovinNativeAdListViewItemHolder) holder;
             applovinNativeAdListViewItemHolder.showIt();
         }
+    }
+
+    private int getCorrectedPosition(CheatListItem selectedCheatListItem) {
+        for (int i = 0; i < cheatList.size(); i++) {
+            Cheat cheat = cheatList.get(i);
+            if (selectedCheatListItem.getCheat().getCheatId() == cheat.getCheatId()) {
+                return i;
+            }
+        }
+        return 0;
     }
 
     // Display the first letter of the game during fast scrolling
@@ -114,7 +124,6 @@ public class CheatsByGameRecycleListViewAdapter extends RecyclerView.Adapter<Rec
         }
     }
 
-    // Height of the scroll-bar at the right screen side
     @Override
     public int getViewTypeHeight(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, int viewType) {
         return 100;
